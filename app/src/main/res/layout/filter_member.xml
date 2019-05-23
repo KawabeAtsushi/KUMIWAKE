@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/filter_member"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:orientation="vertical"
+    android:parentActivityName=".MemberMain">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/form_marginTop"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/form_marginLeft"
+            android:text="@string/sex"
+            android:textColor="@color/hint"
+            android:textSize="@dimen/form_textSize" />
+
+        <RadioGroup
+            android:id="@+id/sexGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/radio_between_margin"
+            android:checkedButton="@+id/noSelectRadio"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/noSelectRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_specified" />
+
+            <RadioButton
+                android:id="@+id/manRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/man" />
+
+            <RadioButton
+                android:id="@+id/womanRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/woman" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/form_marginTop"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/min_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/form_between_margin"
+            android:background="@android:drawable/editbox_background_normal"
+            android:ems="2"
+            android:inputType="number"
+            android:maxLength="3"
+            android:padding="7dp"
+            android:singleLine="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/form_marginLeft"
+            android:text="@string/age2"
+            android:textColor="@color/hint"
+            android:textSize="@dimen/form_textSize" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="　"
+            android:textSize="@dimen/form_textSize" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" ≦ "
+            android:textSize="@dimen/form_textSize" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/form_marginLeft"
+            android:text="@string/age"
+            android:textColor="@color/hint"
+            android:textSize="@dimen/form_textSize" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" ≦ "
+            android:textSize="@dimen/form_textSize" />
+
+        <EditText
+            android:id="@+id/max_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/form_between_margin"
+            android:background="@android:drawable/editbox_background_normal"
+            android:ems="2"
+            android:inputType="number"
+            android:maxLength="3"
+            android:padding="7dp"
+            android:singleLine="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/form_marginLeft"
+            android:text="@string/age2"
+            android:textColor="@color/hint"
+            android:textSize="@dimen/form_textSize" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="　"
+            android:textSize="@dimen/form_textSize" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/error_age_range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/form_marginLeft"
+        android:text=""
+        android:textColor="@color/red"
+        android:textSize="12dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/form_marginTop"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/min_grade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/form_between_margin"
+            android:background="@android:drawable/editbox_background_normal"
+            android:ems="2"
+            android:inputType="number"
+            android:maxLength="3"
+            android:padding="7dp"
+            android:singleLine="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/form_marginLeft"
+            android:text="@string/grade2"
+            android:textColor="@color/hint"
+            android:textSize="@dimen/form_textSize" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" ≦ "
+            android:textSize="@dimen/form_textSize" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/form_marginLeft"
+            android:text="@string/grade"
+            android:textColor="@color/hint"
+            android:textSize="@dimen/form_textSize" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" ≦ "
+            android:textSize="@dimen/form_textSize" />
+
+        <EditText
+            android:id="@+id/max_grade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/form_between_margin"
+            android:background="@android:drawable/editbox_background_normal"
+            android:ems="2"
+            android:inputType="number"
+            android:maxLength="3"
+            android:padding="7dp"
+            android:singleLine="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/form_marginLeft"
+            android:text="@string/grade2"
+            android:textColor="@color/hint"
+            android:textSize="@dimen/form_textSize" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/error_grade_range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/form_marginLeft"
+        android:text=""
+        android:textColor="@color/red"
+        android:textSize="12dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/form_marginTop"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/form_marginLeft"
+            android:text="@string/group"
+            android:textColor="@color/hint"
+            android:textSize="@dimen/form_textSize" />
+
+        <Spinner
+            android:id="@+id/filter_belong_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            style="@android:style/Widget.Spinner.DropDown"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/form_marginTop"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/form_marginLeft"
+            android:text="@string/role"
+            android:textColor="@color/hint"
+            android:textSize="@dimen/form_textSize" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/two_em"
+            android:textSize="@dimen/form_textSize" />
+
+        <Spinner
+            android:id="@+id/filter_role_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:entries="@array/role"
+            style="@android:style/Widget.Spinner.DropDown"
+            />
+    </LinearLayout>
+
+</LinearLayout>
+

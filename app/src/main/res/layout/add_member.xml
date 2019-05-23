@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/add_member"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:parentActivityName=".MemberMain">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/request_background"
+            android:layout_gravity="center"
+            android:text="@string/add_member" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="#10ff0000"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/main_info"
+            android:textColor="@color/red" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/form_marginTop"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:text="@string/member_name"
+                android:textColor="@color/hint"
+                android:textSize="@dimen/form_textSize" />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/member_form_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/form_between_margin"
+                android:layout_marginRight="10dp"
+                app:hintTextAppearance="@style/AppTheme.Design.TextAppearance.Design.Hint">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/input_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/editbox_background_normal"
+                    android:ems="10"
+                    android:hint="@string/input_required"
+                    android:inputType="textPersonName"
+                    android:padding="7dp"
+                    android:singleLine="true" />
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/form_marginTop"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:text="@string/member_name_read"
+                android:textColor="@color/hint"
+                android:textSize="@dimen/form_textSize" />
+
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/input_name_read"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/form_marginTop"
+                android:layout_marginLeft="@dimen/form_between_margin"
+                android:layout_marginRight="10dp"
+                android:background="@android:drawable/editbox_background_normal"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:padding="7dp"
+                android:singleLine="true" />
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/form_marginTop"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:text="@string/sex"
+                android:textColor="@color/hint"
+                android:textSize="@dimen/form_textSize" />
+
+            <RadioGroup
+                android:id="@+id/sexGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/radio_between_margin"
+                android:checkedButton="@+id/manBtn"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/manBtn"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/man_radio_button"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/man"
+                    android:textColor="@drawable/radio_button_color" />
+
+                <RadioButton
+                    android:id="@+id/womanBtn"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/woman_radio_button"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/woman"
+                    android:textColor="@drawable/radio_button_color" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="#10000000"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/sub_info"
+            android:textColor="#000000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/form_marginTop"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:text="@string/age"
+                android:textColor="@color/hint"
+                android:textSize="@dimen/form_textSize" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/two_em"
+                android:textSize="@dimen/form_textSize" />
+            <EditText
+                android:id="@+id/input_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background_normal"
+                android:ems="2"
+                android:inputType="number"
+                android:padding="7dp"
+                android:layout_marginLeft="@dimen/form_between_margin"
+                android:maxLength="3"
+                android:singleLine="true"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:text="@string/age2"
+                android:textColor="@color/hint"
+                android:textSize="@dimen/form_textSize" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/form_marginTop"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:text="@string/grade"
+                android:textColor="@color/hint"
+                android:textSize="@dimen/form_textSize" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/two_em"
+                android:textSize="@dimen/form_textSize" />
+            <EditText
+                android:id="@+id/input_grade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background_normal"
+                android:ems="2"
+                android:inputType="number"
+                android:padding="7dp"
+                android:layout_marginLeft="@dimen/form_between_margin"
+                android:maxLength="2"
+                android:singleLine="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:text="@string/grade2"
+                android:textColor="@color/hint"
+                android:textSize="@dimen/form_textSize" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/form_marginTop"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:text="@string/group"
+                android:textColor="@color/hint"
+                android:textSize="@dimen/form_textSize" />
+
+            <!--spinner-->
+            <Button
+                android:id="@+id/select_group_spinner"
+                style="@android:style/Widget.Spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/form_between_margin"
+                android:layout_marginRight="10dp"
+                android:ellipsize="end"
+                android:hint="@string/select_belong_group"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/form_marginTop"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:text="@string/role"
+                android:textColor="@color/hint"
+                android:textSize="@dimen/form_textSize" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/two_em"
+                android:textSize="@dimen/form_textSize" />
+
+            <!--spinner-->
+            <Button
+                android:id="@+id/select_role_spinner"
+                style="@android:style/Widget.Spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/form_between_margin"
+                android:layout_marginRight="10dp"
+                android:ellipsize="end"
+                android:hint="@string/select_role"
+                android:singleLine="true" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
+
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/member_registration_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/under_button_height"
+        android:layout_gravity="center|bottom"
+        android:background="#ff4747"
+        android:clickable="true"
+        android:contextClickable="false"
+        android:enabled="true"
+        android:padding="16dp"
+        android:text="@string/registration"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+</FrameLayout>

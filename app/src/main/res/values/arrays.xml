@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources xml:space="preserve">
+
+    <string-array name="role">
+        <item>No selected</item>
+        <item>Leader</item>
+        <item>Executive</item>
+        <item>New</item>
+        <item>Graduate student</item>
+        <item>College student</item>
+        <item>High school student</item>
+        <item>Junior high school student</item>
+        <item>Elementary school student</item>
+        <item>Infant</item>
+        <item>Elderly</item>
+        <item>Adult</item>
+        <item>Child</item>
+        <item>Other</item>
+    </string-array>
+
+</resources>

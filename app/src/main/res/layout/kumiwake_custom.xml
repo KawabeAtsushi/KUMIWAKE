@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/normal_mode"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/background_img"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:src="@drawable/normal_img"
+        android:scaleType = "centerCrop"/>
+
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/normal_kumiwake_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/under_button_height"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:background="#3cee2f"
+        android:drawableRight="@drawable/ic_arrow_back"
+        android:paddingRight="10dp"
+        android:clickable="true"
+        android:contextClickable="false"
+        android:enabled="true"
+        android:text="@string/move_confirmation"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+
+    <ScrollView
+        android:id="@+id/custom_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/normal_kumiwake_button">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/normal_kumiwake_button"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/request_background"
+                android:text="@string/member"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/info_margin"
+                android:text="@string/select_leader"/>
+
+
+            <include layout="@layout/part_review_listview"
+                android:id="@+id/add_group_listview"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_margin="@dimen/form_between_margin" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/request_background"
+            android:text="@string/group"
+            android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/info_margin"
+                android:text="@string/select_group_info"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/group_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="@dimen/form_marginTop"
+                android:textSize="15sp" />
+
+            <ListView
+                android:id="@+id/kumiwake_group_listView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/form_marginTop"
+                />
+
+            <TextView
+                android:id="@+id/error_member_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:text="@string/require_correct_No"
+                android:textColor="@color/red"
+                android:textSize="@dimen/form_textSize"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/back_to_initial_mbNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="@string/back_to_initial_mbNo"/>
+
+        </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/request_background"
+                android:text="@string/kumiwake_conditions"
+                android:textSize="20sp" />
+
+            <CheckBox
+                android:id="@+id/even_fm_ratio_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:text="@string/even_out_male_female_ratio"
+                android:textSize="@dimen/form_textSize"
+                />
+
+            <CheckBox
+                android:id="@+id/even_age_ratio_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:text="@string/even_out_age_ratio"
+                android:textSize="@dimen/form_textSize"
+                />
+
+            <CheckBox
+                android:id="@+id/even_grade_ratio_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:text="@string/even_out_grade_ratio"
+                android:textSize="@dimen/form_textSize"
+                />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="5dp"
+                android:orientation="horizontal" >
+
+                <Spinner
+                    android:id="@+id/custom_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:prompt="@string/select_role"
+                    style="@android:style/Widget.Spinner.DropDown"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/even_out"
+                    android:textSize="@dimen/form_textSize" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

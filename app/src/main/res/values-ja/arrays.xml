@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources xml:space="preserve">
+
+    <string-array name="role">
+        <item>選択なし</item>
+        <item>代表者</item>
+        <item>幹部</item>
+        <item>新人</item>
+        <item>大学院生</item>
+        <item>大学生</item>
+        <item>高校生</item>
+        <item>中学生</item>
+        <item>小学生</item>
+        <item>幼児</item>
+        <item>高齢者</item>
+        <item>大人</item>
+        <item>小人</item>
+        <item>その他</item>
+    </string-array>
+
+</resources>

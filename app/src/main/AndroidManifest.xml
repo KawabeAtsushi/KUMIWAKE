@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pandatone.kumiwake">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon_1"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".kumiwake.MainActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".kumiwake.KumiwakeSelectMode"
+            android:label="@string/select_mode">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".kumiwake.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".kumiwake.QuickMode" />
+
+        <activity
+            android:name=".kumiwake.NormalMode" />
+
+        <activity
+            android:name=".kumiwake.KumiwakeCustom" />
+
+        <activity
+            android:name=".kumiwake.QuickKumiwakeConfirmation" />
+
+        <activity
+            android:name=".kumiwake.NormalKumiwakeConfirmation" />
+
+        <activity
+            android:name=".kumiwake.QuickKumiwakeResult" />
+
+        <activity
+            android:name=".kumiwake.NormalKumiwakeResult" />
+
+        <activity
+            android:name=".member.MemberMain" />
+
+        <activity
+            android:name=".sekigime.SekigimeDescription">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".kumiwake.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".sekigime.SelectTableType"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".sekigime.SquareTableCustom"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".sekigime.SekigimeResult"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".setting.SettingHelp">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".kumiwake.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".member.AddMember" />
+        <activity
+            android:name=".member.AddGroup" />
+
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
+
+        <activity android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+
+    </application>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+</manifest>

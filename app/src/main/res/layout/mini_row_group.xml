@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+    
+    <ImageView
+        android:layout_width="@dimen/mini_icon_size"
+        android:layout_height="@dimen/mini_icon_size"
+        android:padding="@dimen/mini_row_padding"
+        android:src="@drawable/user_group"
+        android:tint="@color/gray"
+        />
+
+    <TextView
+        android:id="@+id/groupName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/mini_row_padding"
+        android:layout_gravity="center_vertical"
+        android:text="TextView"
+        android:textSize="18sp"
+        android:ellipsize="end"
+        android:singleLine="true"/>
+
+    <TextView
+        android:id="@+id/memberNo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/mini_row_padding"
+        android:gravity="end"
+        android:textSize="18sp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:visibility="gone"/>
+
+</LinearLayout>

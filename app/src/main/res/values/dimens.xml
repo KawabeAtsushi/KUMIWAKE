@@ -1,0 +1,25 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_vertical_margin">10dp</dimen>
+    <dimen name="main_marginLeft">16dp</dimen>
+    <dimen name="main_marginRight">16dp</dimen>
+    <dimen name="main_marginBottom">25dp</dimen>
+    <dimen name="form_marginTop">7dp</dimen>
+    <dimen name="form_marginLeft">4dp</dimen>
+    <dimen name="form_between_margin">5dp</dimen>
+    <dimen name="info_margin">7dp</dimen>
+    <dimen name="radio_between_margin">7dp</dimen>
+    <dimen name="form_textSize">15dp</dimen>
+    <dimen name="row_padding">10dp</dimen>
+    <dimen name="mini_row_padding">3dp</dimen>
+    <dimen name="group_icon_size">58dp</dimen>
+    <dimen name="member_icon_size">50dp</dimen>
+    <dimen name="mini_icon_size">30dp</dimen>
+    <dimen name="ratio_text_size">23sp</dimen>
+    <dimen name="ratio_margin_size">8dp</dimen>
+    <dimen name="under_button_height">63dp</dimen>
+
+    <dimen name="spacing_double">16dp</dimen>
+    <dimen name="size_toolbar">48dp</dimen>
+    <dimen name="category_item_text_size">14sp</dimen>
+</resources>

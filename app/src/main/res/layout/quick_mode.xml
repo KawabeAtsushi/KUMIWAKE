@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/quick_mode"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/background_img"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:src="@drawable/quick_img"
+        android:scaleType = "centerCrop"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/quick_kumiwake_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/under_button_height"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:background="#3cee2f"
+        android:drawableRight="@drawable/ic_arrow_back"
+        android:paddingRight="10dp"
+        android:clickable="true"
+        android:contextClickable="false"
+        android:enabled="true"
+        android:text="@string/move_confirmation"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/quick_kumiwake_button">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:background="@drawable/request_background"
+                android:text="@string/require_group_no"
+                android:textColor="@color/gray"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/error_group_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:text=""
+                android:textColor="@color/red"
+                android:textSize="@dimen/form_textSize" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/number_of_group"
+                    android:textColor="@color/hint"
+                    android:textSize="@dimen/form_textSize" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/two_em"
+                    android:textSize="@dimen/form_textSize" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/input_group_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@android:drawable/editbox_background_normal"
+                    android:ems="3"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:maxLength="3"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/form_marginLeft"
+                    android:text="@string/group"
+                    android:textColor="@color/hint"
+                    android:textSize="@dimen/form_textSize" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/request_background"
+                android:text="@string/require_member_no"
+                android:textColor="@color/gray"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/error_member_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:text=""
+                android:textColor="@color/red"
+                android:textSize="@dimen/form_textSize" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/number_of_member"
+                    android:textColor="@color/hint"
+                    android:textSize="@dimen/form_textSize" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/two_em"
+                    android:textSize="@dimen/form_textSize" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/input_member_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@android:drawable/editbox_background_normal"
+                    android:ems="3"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:maxLength="3"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/form_marginLeft"
+                    android:text="@string/person"
+                    android:textColor="@color/hint"
+                    android:textSize="@dimen/form_textSize" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:text="@string/man"
+                    android:textColor="@color/man"
+                    android:textSize="@dimen/ratio_text_size" />
+
+                <TextView
+                    android:id="@+id/man_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ratio_margin_size"
+                    android:layout_marginRight="@dimen/ratio_margin_size"
+                    android:text="0"
+                    android:textColor="@color/man"
+                    android:textSize="@dimen/ratio_text_size" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/form_marginLeft"
+                    android:text=":"
+                    android:textColor="@color/hint"
+                    android:textSize="@dimen/ratio_text_size" />
+
+                <TextView
+                    android:id="@+id/woman_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ratio_margin_size"
+                    android:layout_marginRight="@dimen/ratio_margin_size"
+                    android:text="0"
+                    android:textColor="@color/woman"
+                    android:textSize="@dimen/ratio_text_size" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="@string/woman"
+                    android:textColor="@color/woman"
+                    android:textSize="@dimen/ratio_text_size" />
+
+            </LinearLayout>
+
+            <SeekBar
+                android:id="@+id/sex_seek_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:progress="100"
+                android:progressDrawable="@drawable/seekbar_progress"
+                android:thumb="@drawable/seekbar_control" />
+
+            <CheckBox
+                android:id="@+id/even_fm_ratio_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:text="@string/even_out_male_female_ratio"
+                android:textSize="@dimen/form_textSize" />
+
+            <CheckBox
+                android:id="@+id/even_person_ratio_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="30dp"
+                android:text="@string/even_out_person_ratio"
+                android:textSize="@dimen/form_textSize"
+                android:enabled="false"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="@dimen/group_icon_size"
+        android:layout_height="@dimen/group_icon_size"
+        android:paddingTop="@dimen/row_padding"
+        android:paddingBottom="@dimen/row_padding"
+        android:src="@drawable/user_group"
+        android:tint="@color/gray"
+        />
+
+    <EditText
+        android:id="@+id/editGroupName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/row_padding"
+        android:layout_gravity="center_vertical"
+        android:background="@android:drawable/editbox_background_normal"
+        android:ems="9"
+        android:inputType="textPersonName"
+        android:singleLine="true"/>
+
+
+        <EditText
+            android:id="@+id/editTheNumberOfMember"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/editbox_background_normal"
+            android:layout_gravity="center_vertical"
+            android:paddingTop="@dimen/row_padding"
+            android:paddingBottom="@dimen/row_padding"
+            android:paddingLeft="@dimen/row_padding"
+            android:ems="2"
+            android:inputType="number"
+            android:maxLength="3"
+            android:singleLine="true"
+            />
+
+    <TextView
+        android:id="@+id/person"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:paddingTop="@dimen/row_padding"
+        android:paddingBottom="@dimen/row_padding"
+        android:paddingRight="@dimen/row_padding"
+        android:text="@string/person"/>
+        </LinearLayout>
+
+    <TextView
+    android:id="@+id/leader"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:paddingBottom="@dimen/row_padding"
+    android:paddingLeft="@dimen/row_padding"
+    />
+
+</LinearLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="green">#34dc4f</color>
+    <color name="orange">#ffc02e</color>
+    <color name="hint">#000000</color>
+    <color name="gray">#6b6b6b</color>
+    <color name="red">#ff0000</color>
+    <color name="yellow">#fff000</color>
+    <color name="pink">#ff94aa</color>
+    <color name="checked_list">#2000bbff</color>
+    <color name="light_green">#78ff84</color>
+    <color name="light_red">#ff4545</color>
+    <color name="man">#33b5e5</color>
+    <color name="woman">#fc7373</color>
+    <color name="thin_green">#5078ff84</color>
+    <color name="thin_orange">#50ffc02e</color>
+    <color name="thin_man">#5033b5e5</color>
+    <color name="thin_woman">#50fc7373</color>
+    <color name="thin_white">#50FFFFFF</color>
+
+    <color name="touch_effect">#9ccc</color>
+
+
+    <color name="text_light">@android:color/white</color>
+    <color name="text_dark">#616161</color>
+
+    <!-- theme colors -->
+    <color name="blue_background">#84ffff</color>
+    <color name="blue_title">#03a9f4</color>
+    <color name="theme_blue_text">@color/text_light</color>
+
+    <color name="green_background">#80b9f6ca</color>
+    <color name="green_title">#1de9b6</color>
+    <color name="green_background_title">#b9f6ca</color>
+    <color name="theme_green_text">@color/text_dark</color>
+
+    <color name="red_background">#40ff8a80</color>
+    <color name="red_title">#ff5252</color>
+    <color name="red_background_title">#ff8a80</color>
+    <color name="theme_red_text">@color/text_light</color>
+
+    <color name="yellow_background">#60ffff8d</color>
+    <color name="yellow_title">#ffeb3b</color>
+    <color name="yellow_background_title">#ffff8d</color>
+    <color name="theme_yellow_text">@color/text_dark</color>
+
+</resources>

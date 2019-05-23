@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:tag="member"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/memberIcon"
+        android:layout_width="@dimen/member_icon_size"
+        android:layout_height="@dimen/member_icon_size"
+        android:padding="@dimen/row_padding"
+        android:src="@drawable/member_img" />
+
+    <TextView
+        android:id="@+id/memberName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="TextView"
+        android:textSize="20sp"
+        android:textColor="@color/gray"
+        android:ellipsize="end"
+        android:singleLine="true"/>
+
+</LinearLayout>

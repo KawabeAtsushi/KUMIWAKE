@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/add_group"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:parentActivityName=".MemberMain">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/request_background"
+            android:layout_gravity="center"
+            android:text="@string/add_group" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:text="@string/group_name"
+                android:textColor="@color/hint"
+                android:textSize="@dimen/form_textSize" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:text="@string/input_required"
+                android:textColor="#75ff0000"
+                android:textSize="@dimen/form_textSize" />
+
+        </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/group_form_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/form_between_margin"
+            android:layout_marginRight="10dp"
+            app:hintTextAppearance="@style/AppTheme.Design.TextAppearance.Design.Hint">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/input_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background_normal"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:padding="10dp"
+                android:singleLine="true" />
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/form_marginLeft"
+            android:layout_marginTop="@dimen/form_marginTop"
+            android:text="@string/belong_member"
+            android:textColor="@color/hint"
+            android:textSize="@dimen/form_textSize" />
+
+        <include
+            android:id="@+id/add_group_listview"
+            layout="@layout/part_review_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/form_between_margin" />
+
+
+    </LinearLayout>
+
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/group_registration_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/under_button_height"
+        android:layout_gravity="center|bottom"
+        android:background="#3cee2f"
+        android:clickable="true"
+        android:contextClickable="false"
+        android:enabled="true"
+        android:padding="16dp"
+        android:text="@string/create"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+
+</FrameLayout>

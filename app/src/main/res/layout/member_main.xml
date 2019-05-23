@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tool_bar_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue_title"
+        android:minHeight="@dimen/size_toolbar"
+        android:transitionName="explodeTv"
+        tools:targetApi="lollipop" />
+
+    <FrameLayout
+        android:id="@+id/member_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v4.view.PagerTitleStrip
+                android:id="@+id/pager_title_strip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:background="#33b5e5"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp"
+                android:textColor="#fff" />
+        </android.support.v4.view.ViewPager>
+
+        <Button
+            android:id="@+id/decisionBt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="22dp"
+            android:background="@drawable/simple_orange_button"
+            android:clickable="true"
+            android:paddingEnd="30dp"
+            android:paddingStart="30dp"
+            android:text="@string/decide"
+            android:textSize="20sp"
+            android:visibility="invisible" />
+
+    </FrameLayout>
+</LinearLayout>
