@@ -64,7 +64,6 @@ public class AddMember extends AppCompatActivity {
         if (position != -1) {
             setItem(position);
         }
-        setKeyboardListener();
     }
 
     public void findViews() {
@@ -413,27 +412,6 @@ public class AddMember extends AppCompatActivity {
                 GPdbAdapter.close();
             }
         }
-    }
-
-    public final void setKeyboardListener() {
-        final View activityRootView = (findViewById(R.id.add_member));
-        final android.support.v7.widget.AppCompatButton view
-                = (android.support.v7.widget.AppCompatButton) findViewById(R.id.member_registration_button);
-        activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            private final Rect r = new Rect();
-
-            @Override
-            public void onGlobalLayout() {
-                activityRootView.getWindowVisibleDisplayFrame(r);
-                // 画面の高さとビューの高さを比べる
-                int heightDiff = activityRootView.getRootView().getHeight() - r.height();
-                if (heightDiff > 100) {
-                    view.setVisibility(View.GONE);
-                } else {
-                    view.setVisibility(View.VISIBLE);
-                }
-            }
-        });
     }
 
 }

@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake.kumiwake;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -32,6 +33,7 @@ import butterknife.OnClick;
  */
 public class QuickMode extends AppCompatActivity implements TextWatcher {
     AppCompatEditText GpNoEditText, MbNoEditText;
+    @SuppressLint("StaticFieldLeak")
     static TextView errorGroup, errorMember, manNoText, womanNoText;
     ImageView backgroundImage;
     SeekBar seekBar;
@@ -65,7 +67,6 @@ public class QuickMode extends AppCompatActivity implements TextWatcher {
         int screenHeight = size.y;
         backgroundImage.getLayoutParams().height=screenHeight;
         MbNoEditText.addTextChangedListener(this);
-        setKeyboardListener();
     }
 
     public void findViews(){
@@ -168,26 +169,5 @@ public class QuickMode extends AppCompatActivity implements TextWatcher {
             }
         }
         return manList;
-    }
-
-    public final void setKeyboardListener() {
-        final View activityRootView = (findViewById(R.id.quick_mode));
-        final android.support.v7.widget.AppCompatButton view
-                = (android.support.v7.widget.AppCompatButton) findViewById(R.id.quick_kumiwake_button);
-        activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            private final Rect r = new Rect();
-
-            @Override
-            public void onGlobalLayout() {
-                activityRootView.getWindowVisibleDisplayFrame(r);
-                // 画面の高さとビューの高さを比べる
-                int heightDiff = activityRootView.getRootView().getHeight() - r.height();
-                if (heightDiff > 100) {
-                    view.setVisibility(View.GONE);
-                } else {
-                    view.setVisibility(View.VISIBLE);
-                }
-            }
-        });
     }
 }

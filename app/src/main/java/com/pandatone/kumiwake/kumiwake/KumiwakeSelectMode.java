@@ -32,7 +32,8 @@ public class KumiwakeSelectMode extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setTitle(R.string.kumiwake);
-        getSupportActionBar().setDisplayShowTitleEnabled(true);        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         normalmode=(TextView)findViewById(R.id.descriptionForNormalMode);
         quickmode=(TextView)findViewById(R.id.descriptionForQuickMode);

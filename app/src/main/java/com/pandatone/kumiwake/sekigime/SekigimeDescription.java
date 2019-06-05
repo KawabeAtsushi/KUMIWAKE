@@ -44,10 +44,9 @@ public class SekigimeDescription extends AppCompatActivity {
         int id = item.getItemId();
 
         // いつものUPナビゲーションの処理
-        switch (id) {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
+        if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

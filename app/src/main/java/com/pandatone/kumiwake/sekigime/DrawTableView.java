@@ -412,7 +412,7 @@ public class DrawTableView extends View {
         if (Normalmode) {
             name_initial = String.valueOf(arrayArrayNormal.get(position).get(i).getName().charAt(0));
         } else {
-            name_initial = arrayArrayQuick.get(position).get(i).substring(5);
+            name_initial = arrayArrayQuick.get(position).get(i).replaceAll("[^0-9]","");   //文字列から数値のみ抜き出し
         }
         Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setTextSize(r);
@@ -494,49 +494,54 @@ public class DrawTableView extends View {
         textPaint.setColor(Color.WHITE);
 
 
-        if (type.equals("square")) {
-            textY = (float) (double) (yP + 22*scale);
-            textStartX = 200 * scale;
-            if (point < square_no) {
-                textY = (float) yP + 150 * scale;
-            } else if (point < a) {
-                textY = (float) yP - 110 * scale;
-            } else if (point < (seatsNo + a) / 2) {
-                textStartX = (float) (double) (xP + 140 * scale);
-            } else {
-                textStartX = (float) (double) (xP - 90 * scale - textWidth - r);
-            }
-            balloonStartX = textStartX - r;
-            balloonEndX = textStartX + textWidth + r;
-            balloonStartY = textY - r - 15 * scale;
-            balloonEndY = textY + r - 25 * scale;
-        } else if (type.equals("parallel")) {
-            if (point < seatsNo / 2) {
-                textStartX = (float) (double) (xP + 140 * scale);
-            } else {
-                textStartX = (float) (double) (xP - 90 * scale - textWidth - r);
-            }
-            textY = (float) (double) (yP + 22 * scale);
-            balloonStartX = textStartX - r;
-            balloonEndX = textStartX + textWidth + r;
-            balloonStartY = textY - r - 15 * scale;
-            balloonEndY = textY + r - 25 * scale;
-        } else if (type.equals("circle")) {
+        switch (type) {
+            case "square":
+                textY = (float) (double) (yP + 22 * scale);
+                textStartX = 200 * scale;
+                if (point < square_no) {
+                    textY = (float) yP + 150 * scale;
+                } else if (point < a) {
+                    textY = (float) yP - 110 * scale;
+                } else if (point < (seatsNo + a) / 2) {
+                    textStartX = (float) (double) (xP + 140 * scale);
+                } else {
+                    textStartX = (float) (double) (xP - 90 * scale - textWidth - r);
+                }
+                balloonStartX = textStartX - r;
+                balloonEndX = textStartX + textWidth + r;
+                balloonStartY = textY - r - 15 * scale;
+                balloonEndY = textY + r - 25 * scale;
+                break;
+            case "parallel":
+                if (point < seatsNo / 2) {
+                    textStartX = (float) (double) (xP + 140 * scale);
+                } else {
+                    textStartX = (float) (double) (xP - 90 * scale - textWidth - r);
+                }
+                textY = (float) (double) (yP + 22 * scale);
+                balloonStartX = textStartX - r;
+                balloonEndX = textStartX + textWidth + r;
+                balloonStartY = textY - r - 15 * scale;
+                balloonEndY = textY + r - 25 * scale;
+                break;
+            case "circle":
 // 文字列の幅からX座標を計算
-            textStartX = -textWidth / 2;
+                textStartX = -textWidth / 2;
 // 文字列の高さからY座標を計算
-            textY = (60 / 2) * scale;
-            balloonStartX = textStartX - 20 * scale;
-            balloonEndX = -textStartX + 20 * scale;
-            balloonStartY = -textY - 5 * scale;
-            balloonEndY = textY + 20 * scale;
-        } else {
-            textStartX = (float) (double) (xP + 150 * scale);
-            textY = (float) (double) (yP + 22 * scale);
-            balloonStartX = textStartX - r;
-            balloonEndX = textStartX + textWidth + r;
-            balloonStartY = textY - r - 15 * scale;
-            balloonEndY = textY + r - 25 * scale;
+                textY = (60 / 2) * scale;
+                balloonStartX = textStartX - 20 * scale;
+                balloonEndX = -textStartX + 20 * scale;
+                balloonStartY = -textY - 5 * scale;
+                balloonEndY = textY + 20 * scale;
+                break;
+            default:
+                textStartX = (float) (double) (xP + 150 * scale);
+                textY = (float) (double) (yP + 22 * scale);
+                balloonStartX = textStartX - r;
+                balloonEndX = textStartX + textWidth + r;
+                balloonStartY = textY - r - 15 * scale;
+                balloonEndY = textY + r - 25 * scale;
+                break;
         }
 
 // 吹き出し用ペイントの生成

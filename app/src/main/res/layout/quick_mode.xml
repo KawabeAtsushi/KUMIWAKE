@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/quick_mode"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -10,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:src="@drawable/quick_img"
-        android:scaleType = "centerCrop"/>
+        android:scaleType = "centerCrop"
+        android:contentDescription="TODO" />
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/quick_kumiwake_button"
@@ -19,11 +21,11 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:background="#3cee2f"
-        android:drawableRight="@drawable/ic_arrow_back"
-        android:paddingRight="10dp"
         android:clickable="true"
-        android:contextClickable="false"
-        android:enabled="true"
+        android:drawableEnd="@drawable/ic_arrow_back"
+        android:drawableRight="@drawable/ic_arrow_back"
+        android:paddingEnd="10dp"
+        android:paddingRight="10dp"
         android:text="@string/move_confirmation"
         android:textColor="@android:color/white"
         android:textSize="20sp" />
@@ -55,7 +57,8 @@
                 android:layout_marginLeft="@dimen/form_marginLeft"
                 android:text=""
                 android:textColor="@color/red"
-                android:textSize="@dimen/form_textSize" />
+                android:textSize="@dimen/form_textSize"
+                android:layout_marginStart="@dimen/form_marginLeft" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -98,7 +101,8 @@
                     android:layout_marginLeft="@dimen/form_marginLeft"
                     android:text="@string/group"
                     android:textColor="@color/hint"
-                    android:textSize="@dimen/form_textSize" />
+                    android:textSize="@dimen/form_textSize"
+                    android:layout_marginStart="@dimen/form_marginLeft" />
 
             </LinearLayout>
 
@@ -121,7 +125,8 @@
                 android:layout_marginLeft="@dimen/form_marginLeft"
                 android:text=""
                 android:textColor="@color/red"
-                android:textSize="@dimen/form_textSize" />
+                android:textSize="@dimen/form_textSize"
+                android:layout_marginStart="@dimen/form_marginLeft" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -200,7 +205,8 @@
                     android:layout_marginLeft="@dimen/form_marginLeft"
                     android:text=":"
                     android:textColor="@color/hint"
-                    android:textSize="@dimen/ratio_text_size" />
+                    android:textSize="@dimen/ratio_text_size"
+                    android:layout_marginStart="@dimen/form_marginLeft" />
 
                 <TextView
                     android:id="@+id/woman_number"
@@ -248,7 +254,8 @@
                 android:layout_marginBottom="30dp"
                 android:text="@string/even_out_person_ratio"
                 android:textSize="@dimen/form_textSize"
-                android:enabled="false"/>
+                android:enabled="false"
+                android:layout_marginStart="10dp" />
 
 
         </LinearLayout>

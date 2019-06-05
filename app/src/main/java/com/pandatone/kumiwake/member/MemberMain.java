@@ -58,7 +58,6 @@ public class MemberMain extends AppCompatActivity implements SearchView.OnQueryT
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setViews();
-        setKeyboardListener();
         context = getApplicationContext();
         Intent i = getIntent();
         start_actionmode = i.getBooleanExtra("START_ACTIONMODE", false);
@@ -213,24 +212,4 @@ public class MemberMain extends AppCompatActivity implements SearchView.OnQueryT
         return context;
     }
 
-    public final void setKeyboardListener() {
-        final View activityRootView = (findViewById(R.id.member_layout));
-        activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            private final Rect r = new Rect();
-
-            @Override
-            public void onGlobalLayout() {
-                activityRootView.getWindowVisibleDisplayFrame(r);
-                // 画面の高さとビューの高さを比べる
-                int heightDiff = activityRootView.getRootView().getHeight() - r.height();
-                if (heightDiff > 100) {
-                    FragmentMember.fab.setVisibility(View.INVISIBLE);
-                    FragmentGroup.fab.setVisibility(View.INVISIBLE);
-                } else {
-                    FragmentMember.fab.setVisibility(View.VISIBLE);
-                    FragmentGroup.fab.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-    }
 }

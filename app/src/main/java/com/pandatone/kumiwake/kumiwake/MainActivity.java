@@ -42,7 +42,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         setViews();
 
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-2315101868638564/8665451539");
+        MobileAds.initialize(this, "ca-app-pub-2315101868638564~1560987130");
+        //MobileAds.initialize(getApplicationContext(), "ca-app-pub-2315101868638564/8665451539");
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice("BB707E3F7B5413908B2DD12063887489").build();

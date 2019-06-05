@@ -76,8 +76,6 @@ public class KumiwakeCustom extends AppCompatActivity {
         groupList.setAdapter(gpAdapter);
         setLeader();
 
-        setKeyboardListener();
-
         memberList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             //行をクリックした時の処理
@@ -315,26 +313,6 @@ public class KumiwakeCustom extends AppCompatActivity {
         } else {
             et.setTextColor(Color.BLACK);
         }
-    }
-
-    public final void setKeyboardListener() {
-        final View activityRootView = (findViewById(R.id.normal_mode));
-        final android.support.v7.widget.AppCompatButton view
-                = (android.support.v7.widget.AppCompatButton) findViewById(R.id.normal_kumiwake_button);
-        activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            private final Rect r = new Rect();
-
-            @Override
-            public void onGlobalLayout() {
-                activityRootView.getWindowVisibleDisplayFrame(r);
-                int heightDiff = activityRootView.getRootView().getHeight() - r.height();
-                if (heightDiff > 100) {
-                    view.setVisibility(View.GONE);
-                } else {
-                    view.setVisibility(View.VISIBLE);
-                }
-            }
-        });
     }
 
 }

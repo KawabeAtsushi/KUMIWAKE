@@ -56,7 +56,6 @@ public class NormalMode extends AppCompatActivity {
         memberArray = new ArrayList<Name>();
         addMember.setOnClickListener(clicked);
         numberOfSelectedMember.setText("0" + getString(R.string.person) + getString(R.string.selected));
-        setKeyboardListener();
     }
 
     public void findViews(){
@@ -152,23 +151,4 @@ public class NormalMode extends AppCompatActivity {
         });
     }
 
-    public final void setKeyboardListener() {
-        final View activityRootView = findViewById(R.id.normal_mode);
-        final android.support.v7.widget.AppCompatButton view
-                = (android.support.v7.widget.AppCompatButton) findViewById(R.id.normal_kumiwake_button);
-        activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            private final Rect r = new Rect();
-
-            @Override
-            public void onGlobalLayout() {
-                activityRootView.getWindowVisibleDisplayFrame(r);
-                int heightDiff = activityRootView.getRootView().getHeight() - r.height();
-                if (heightDiff > 100) {
-                    view.setVisibility(View.GONE);
-                } else {
-                    view.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-    }
 }

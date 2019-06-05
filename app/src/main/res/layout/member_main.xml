@@ -43,7 +43,6 @@
             android:layout_gravity="center|bottom"
             android:layout_marginBottom="22dp"
             android:background="@drawable/simple_orange_button"
-            android:clickable="true"
             android:paddingEnd="30dp"
             android:paddingStart="30dp"
             android:text="@string/decide"

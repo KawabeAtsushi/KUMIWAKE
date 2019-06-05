@@ -49,7 +49,6 @@ public class AddGroup extends AppCompatActivity {
         if (position != nextId) {
             setItem(position);
         }
-        setKeyboardListener();
         FragmentMember.DeleteBelongInfoAll(nextId);
     }
 
@@ -166,27 +165,6 @@ public class AddGroup extends AppCompatActivity {
             groupId = FragmentGroup.nameList.get(position).getId();
         }
         return groupId;
-    }
-
-    public final void setKeyboardListener() {
-        final View activityRootView = (findViewById(R.id.add_group));
-        final android.support.v7.widget.AppCompatButton view
-                = (android.support.v7.widget.AppCompatButton) findViewById(R.id.group_registration_button);
-        activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            private final Rect r = new Rect();
-
-            @Override
-            public void onGlobalLayout() {
-                activityRootView.getWindowVisibleDisplayFrame(r);
-                // 画面の高さとビューの高さを比べる
-                int heightDiff = activityRootView.getRootView().getHeight() - r.height();
-                if (heightDiff > 100) {
-                    view.setVisibility(View.INVISIBLE);
-                } else {
-                    view.setVisibility(View.VISIBLE);
-                }
-            }
-        });
     }
 
 }

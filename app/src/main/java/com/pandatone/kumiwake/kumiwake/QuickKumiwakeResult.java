@@ -252,19 +252,22 @@ public class QuickKumiwakeResult extends AppCompatActivity {
 
 class KumiwakeComparator implements Comparator<String> {
     public int compare(String s1, String s2) {
-        String s1_name = s1.substring(0, 5);
-        String s2_name = s2.substring(0, 5);
+        String s1_name = s1.replaceAll("[0-9]",""); //文字列から文字のみ抜き出し
+        String s2_name = s2.replaceAll("[0-9]","");
 
         int value = s1_name.compareTo(s2_name);
+
         if (value == 0) {
-            int s1_no = Integer.parseInt(s1.substring(5));
-            int s2_no = Integer.parseInt(s2.substring(5));
+            int s1_no = Integer.parseInt(s1.replaceAll("[^0-9]",""));   //文字列から数値のみ抜き出し
+            int s2_no = Integer.parseInt(s2.replaceAll("[^0-9]",""));
             if (s1_no < s2_no) {
                 value = -1;
             } else {
                 value = 1;
             }
         }
+
+
         return value;
     }
 }
