@@ -1,0 +1,263 @@
+package com.pandatone.kumiwake.kumiwake
+
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.Point
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.text.InputFilter
+import android.view.View
+import android.view.WindowManager
+import android.widget.*
+import butterknife.ButterKnife
+import butterknife.OnClick
+import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.adapter.EditGroupListAdapter
+import com.pandatone.kumiwake.adapter.MBListViewAdapter
+import com.pandatone.kumiwake.member.GroupListAdapter
+import com.pandatone.kumiwake.member.Name
+import kotlinx.android.synthetic.main.kumiwake_custom.*
+import kotlinx.android.synthetic.main.part_review_listview.*
+import java.util.*
+
+/**
+ * Created by atsushi_2 on 2016/05/27.
+ */
+abstract class KumiwakeCustom : AppCompatActivity() {
+    private var mbAdapter: MBListViewAdapter? = null
+    private var gpAdapter: EditGroupListAdapter? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        setContentView(R.layout.kumiwake_custom)
+        ButterKnife.bind(this)
+
+        memberArray = intent.getSerializableExtra("NormalModeMemberArray") as ArrayList<Name>
+        groupArray = intent.getSerializableExtra("NormalModeGroupArray") as ArrayList<GroupListAdapter.Group>
+        mbAdapter = MBListViewAdapter(this, memberArray, groupArray.size)
+        gpAdapter = EditGroupListAdapter(this, groupArray)
+        findViews()
+        setViews()
+        memberList.adapter = mbAdapter
+        groupList.adapter = gpAdapter
+        setLeader()
+
+        memberList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            //行をクリックした時の処理
+            memberList.requestFocus()
+            changeLeader(position)
+        }
+
+        scrollView.post { scrollView.fullScroll(ScrollView.FOCUS_UP) }
+
+        origMemberArray = memberArray
+    }
+
+    fun findViews() {
+//        scrollView = findViewById<View>(R.id.custom_scroll) as ScrollView
+//        memberList = findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.reviewListView) as ListView
+//        memberList.emptyView = findViewById<View>(R.id.add_group_listview).findViewById(R.id.emptyMemberList)
+//        groupList = findViewById<View>(R.id.kumiwake_group_listView) as ListView
+//        groupNo = findViewById<View>(R.id.group_no) as TextView
+
+
+        even_age_ratio_check.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (even_age_ratio_check.isChecked == true) {
+                even_grade_ratio_check.isEnabled = false
+                even_grade_ratio_check.isChecked = false
+            } else {
+                even_grade_ratio_check.isEnabled = true
+            }
+        }
+        even_grade_ratio_check.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (even_grade_ratio_check.isChecked == true) {
+                even_age_ratio_check.isEnabled = false
+                even_age_ratio_check.isChecked = false
+            } else {
+                even_age_ratio_check.isEnabled = true
+            }
+        }
+
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item)
+        adapter.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item
+        )
+        val strs = resources.getStringArray(R.array.role)
+        val list = ArrayList(Arrays.asList(*strs)) // 新インスタンスを生成
+        list.removeAt(1)
+        adapter.addAll(list)
+        custom_spinner.adapter = adapter
+    }
+
+    fun setViews() {
+        member_add_btn.visibility = View.GONE
+        mbAdapter?.let { MBListViewAdapter.setRowHeight(memberList, it) }
+        gpAdapter?.let { EditGroupListAdapter.setRowHeight(groupList, it) }
+        numberOfSelectedMember.text = memberArray.size.toString() + getString(R.string.person)
+        groupNo.text = groupArray.size.toString() + " " + getText(R.string.group)
+        val size = Point()
+        windowManager.defaultDisplay.getSize(size)
+        val screenHeight = size.y
+        background_img.layoutParams.height = screenHeight
+    }
+
+    fun setLeader() {
+        for (i in memberArray.indices) {
+            if (memberArray[i].role != null) {
+                if (memberArray[i].role.matches((".*" + getText(R.string.leader) + ".*").toRegex())) {
+
+                    val roleArray = memberArray[i].role.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
+                    val list = ArrayList(Arrays.asList<String>(*roleArray))
+                    val hs = HashSet<String>()
+                    hs.addAll(list)
+                    list.clear()
+                    list.addAll(hs)
+                    list.remove("")
+                    Collections.sort(list)
+                    val nowldNo = Integer.parseInt(list[0].substring(2))
+                    groupList.post {
+                        val leader = groupList.getChildAt(nowldNo - 1).findViewById<View>(R.id.leader) as TextView
+                        leader.text = getText(R.string.leader).toString() + ":" + memberArray[i].name
+                    }
+                }
+            }
+        }
+    }
+
+    @OnClick(R.id.normal_kumiwake_button)
+    internal fun onClicked() {
+        var memberSum = 0
+        var allowToNext: Boolean? = true
+        for (i in 0 until groupList.count) {
+            val memberNo = EditGroupListAdapter.getMemberNo(i)
+            memberSum += memberNo
+            if (memberNo <= 0 || memberSum > memberArray.size) {
+                allowToNext = false
+            }
+        }
+
+        if (allowToNext!!) {
+            recreateGrouplist()
+            val intent = Intent(this, NormalKumiwakeConfirmation::class.java)
+            intent.putExtra("NormalModeMemberArray", memberArray)
+            intent.putExtra("NormalModeGroupArray", newGroupArray)
+            intent.putExtra("EvenFMRatio", even_fm_ratio_check.isChecked)
+            intent.putExtra("EvenAgeRatio", even_age_ratio_check.isChecked)
+            intent.putExtra("EvenGradeRatio", even_grade_ratio_check.isChecked)
+            intent.putExtra("EvenRole", custom_spinner.selectedItem as String)
+            startActivity(intent)
+            overridePendingTransition(R.anim.in_right, R.anim.out_left)
+        } else {
+            val error_mbNo = findViewById<View>(R.id.error_member_no_txt) as TextView
+            error_mbNo.visibility = View.VISIBLE
+        }
+    }
+
+    @OnClick(R.id.back_to_initial_mbNo)
+    internal fun onbcClicked() {
+        var et: EditText
+        for (i in 0 until groupList.count) {
+            et = groupList.getChildAt(i).findViewById<View>(R.id.editTheNumberOfMember) as EditText
+            et.isFocusable = false
+            et.setText(groupArray[i].belongNo.toString())
+            et.isFocusableInTouchMode = true
+            et.setTextColor(Color.BLACK)
+        }
+    }
+
+    fun changeLeader(position: Int) {
+        val newRole = StringBuilder()
+        val roleItem = memberArray[position].role
+        if (roleItem.matches((".*" + getText(R.string.leader) + ".*").toRegex())) {
+            val list = deleteLeaderList(roleItem)
+            val nowldNo = Integer.parseInt(list[0].substring(2))
+            MBListViewAdapter.leaderNoArray?.removeAt(MBListViewAdapter.leaderNoArray!!.indexOf(nowldNo))
+            list.remove(list[0])
+            val leader = groupList.getChildAt(nowldNo - 1).findViewById<View>(R.id.leader) as TextView
+            leader.text = getText(R.string.leader).toString() + ":" + getText(R.string.nothing)
+
+            for (j in list.indices) {
+                newRole.append(list[j])
+                if (j != list.size - 1) {
+                    newRole.append(",")
+                }
+            }
+        } else {
+            MBListViewAdapter.ldNo = 1
+            while (MBListViewAdapter.leaderNoArray?.contains(MBListViewAdapter.ldNo)!!) {
+                MBListViewAdapter.ldNo++
+            }
+            if (MBListViewAdapter.ldNo != groupArray.size + 1) {
+                newRole.append(roleItem)
+                newRole.append("," + getText(R.string.leader))
+                val leader = groupList.getChildAt(MBListViewAdapter.ldNo - 1).findViewById<View>(R.id.leader) as TextView
+                leader.text = getText(R.string.leader).toString() + ":" + memberArray[position].name
+            }
+        }
+        memberArray[position] = Name(memberArray[position].id, memberArray[position].name,
+                memberArray[position].sex, memberArray[position].age,
+                memberArray[position].grade, memberArray[position].belong, newRole.toString(),
+                memberArray[position].name_read)
+        mbAdapter?.notifyDataSetChanged()
+    }
+
+    fun recreateGrouplist() {
+        newGroupArray = ArrayList()
+        for (i in 0 until groupList.count) {
+            val groupName = EditGroupListAdapter.getGroupName(i)
+            val memberNo = EditGroupListAdapter.getMemberNo(i)
+            newGroupArray.add(GroupListAdapter.Group(i, groupName, memberNo, null.toString()))
+        }
+    }
+
+    companion object {
+
+        lateinit var memberList: ListView
+        lateinit var groupList: ListView
+        //lateinit var numberOfSelectedMember: TextView
+        lateinit var groupNo: TextView
+        lateinit var scrollView: ScrollView
+
+        lateinit var memberArray: ArrayList<Name>
+        lateinit var origMemberArray: ArrayList<Name>
+        lateinit var groupArray: ArrayList<GroupListAdapter.Group>
+        lateinit var newGroupArray: ArrayList<GroupListAdapter.Group>
+
+        fun deleteLeaderList(roleItem: String): MutableList<String> {
+            val roleArray = roleItem.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
+            val list = ArrayList(Arrays.asList<String>(*roleArray))
+            val hs = HashSet<String>()
+            hs.addAll(list)
+            list.clear()
+            list.addAll(hs)
+            list.remove(MainActivity.context!!.getText(R.string.leader))
+            list.remove("")
+            Collections.sort(list)
+            return list
+        }
+
+        fun changeBelongNo(position: Int, addNo: Int) {
+            val et: EditText
+            var nowNo = 0
+            var newNo = 0
+            if (position == groupList.count - 1) {
+                et = groupList.getChildAt(0).findViewById<View>(R.id.editTheNumberOfMember) as EditText
+            } else {
+                et = groupList.getChildAt(position + 1).findViewById<View>(R.id.editTheNumberOfMember) as EditText
+            }
+            if (et.text.toString().length > 0) {
+                nowNo = Integer.parseInt(et.text.toString())
+            }
+            newNo = nowNo + addNo
+            et.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(3))
+            et.setText(newNo.toString())
+            if (newNo < 0) {
+                et.setTextColor(Color.RED)
+            } else {
+                et.setTextColor(Color.BLACK)
+            }
+        }
+    }
+
+}

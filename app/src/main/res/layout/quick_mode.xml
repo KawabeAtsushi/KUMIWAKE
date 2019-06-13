@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/quick_mode"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -15,7 +14,7 @@
         android:contentDescription="TODO" />
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/quick_kumiwake_button"
+        android:id="@+id/quick_kumiwake_btn"
         android:layout_width="match_parent"
         android:layout_height="@dimen/under_button_height"
         android:layout_alignParentBottom="true"
@@ -33,7 +32,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/quick_kumiwake_button">
+        android:layout_above="@id/quick_kumiwake_btn">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,7 +50,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/error_group_no"
+                android:id="@+id/error_group_no_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/form_marginLeft"
@@ -83,7 +82,7 @@
                     android:textSize="@dimen/form_textSize" />
 
                 <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/input_group_no"
+                    android:id="@+id/group_no_form"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -119,7 +118,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/error_member_no"
+                android:id="@+id/error_member_no_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/form_marginLeft"
@@ -151,7 +150,7 @@
                     android:textSize="@dimen/form_textSize" />
 
                 <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/input_member_no"
+                    android:id="@+id/member_no_form"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -189,7 +188,7 @@
                     android:textSize="@dimen/ratio_text_size" />
 
                 <TextView
-                    android:id="@+id/man_number"
+                    android:id="@+id/man_number_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/ratio_margin_size"
@@ -209,7 +208,7 @@
                     android:layout_marginStart="@dimen/form_marginLeft" />
 
                 <TextView
-                    android:id="@+id/woman_number"
+                    android:id="@+id/woman_number_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/ratio_margin_size"
@@ -229,7 +228,7 @@
             </LinearLayout>
 
             <SeekBar
-                android:id="@+id/sex_seek_bar"
+                android:id="@+id/sex_seekbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:max="100"
