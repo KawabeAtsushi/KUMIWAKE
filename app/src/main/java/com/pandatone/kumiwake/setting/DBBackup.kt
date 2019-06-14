@@ -5,7 +5,7 @@ import android.os.Environment
 import android.widget.Toast
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.MemberListAdapter
-import com.pandatone.kumiwake.member.GroupListAdapter
+import com.pandatone.kumiwake.adapter.GroupListAdapter
 import java.io.*
 
 object DBBackup {

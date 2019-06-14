@@ -109,16 +109,16 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
         kumiwake_group_listView.adapter = groupAdapter
     }
 
-    protected fun setRowHeight(listView: ListView, listAdapter: ArrayAdapter<String>) {
+    protected fun setRowHeight(listView: ListView, listAdp: ArrayAdapter<String>) {
             var totalHeight = 33
 
-            for (j in 0 until listAdapter.count) {
-                val item = listAdapter.getView(j, null, listView)
+            for (j in 0 until listAdp.count) {
+                val item = listAdp.getView(j, null, listView)
                 item.measure(0, 0)
                 totalHeight += item.measuredHeight
             }
 
-            listView.layoutParams.height = totalHeight + listView.dividerHeight * (listAdapter.count - 1)
+            listView.layoutParams.height = totalHeight + listView.dividerHeight * (listAdp.count - 1)
             listView.requestLayout()
         }
 }

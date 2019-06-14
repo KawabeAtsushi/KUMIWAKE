@@ -93,7 +93,7 @@ class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,
                 newRole.append(",LD$ldNo")
                 listElements[position] = Name(listElements[position].id, listElements[position].name, listElements[position].sex, listElements[position].age,
                         listElements[position].grade, listElements[position].belong,
-                        newRole.toString(), listElements[position].name_read)
+                        newRole.toString(), listElements[position].read)
                 ldNo++
             } else if (groupNo != 1000 && ldNo == groupNo + 1
                     && !listElements[position].role.matches((".*" + "LD" + ".*").toRegex())) {
@@ -108,7 +108,7 @@ class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,
                 listElements[position] = Name(listElements[position].id, listElements[position].name,
                         listElements[position].sex, listElements[position].age,
                         listElements[position].grade, listElements[position].belong,
-                        newRole.toString(), listElements[position].name_read)
+                        newRole.toString(), listElements[position].read)
             }
 
             if (groupNo != 2000 && listElements[position].role.matches((".*" + "LD" + ".*").toRegex())) {
@@ -133,16 +133,16 @@ class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,
         var ldNo = 1
         private var groupNo: Int = 0
 
-        fun setRowHeight(listView: ListView, listAdapter: MBListViewAdapter) {
+        fun setRowHeight(listView: ListView, listAdp: MBListViewAdapter) {
             var totalHeight = 33
 
-            for (j in 0 until listAdapter.count) {
-                val item = listAdapter.getView(j, null, listView)
+            for (j in 0 until listAdp.count) {
+                val item = listAdp.getView(j, null, listView)
                 item.measure(0, 0)
                 totalHeight += item.measuredHeight
             }
 
-            listView.layoutParams.height = totalHeight + listView.dividerHeight * (listAdapter.count - 1)
+            listView.layoutParams.height = totalHeight + listView.dividerHeight * (listAdp.count - 1)
             listView.requestLayout()
         }
     }

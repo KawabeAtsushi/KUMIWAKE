@@ -1,4 +1,4 @@
-package com.pandatone.kumiwake.member
+package com.pandatone.kumiwake.adapter
 
 import android.content.ContentValues
 import android.content.Context
@@ -6,16 +6,16 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.ArrayAdapter
+import com.pandatone.kumiwake.member.FragmentGroup
 import java.io.IOException
 import java.io.Serializable
 
 /**
  * Created by atsushi_2 on 2016/03/20.
  */
-class GroupListAdapter(private val context: Context) : ArrayAdapter<GroupListAdapter.Group>(context, 0) {
+class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(context, 0) {
 
-
-    protected var dbHelper: DatabaseHelper
+    private var dbHelper: DatabaseHelper
 
     val allNames: Cursor
         get() = db.query(TABLE_NAME, null, null, null, null, null, null)
@@ -75,13 +75,13 @@ class GroupListAdapter(private val context: Context) : ArrayAdapter<GroupListAda
 
     fun getCursor(c: Cursor) {
         val nameList = FragmentGroup.nameList
-        val listAdapter = FragmentGroup.listAdapter
+        val listAdp = FragmentGroup.listAdp
         var listItem: Group
 
         nameList.clear()
         if (c.moveToFirst()) {
             do {
-                listItem = GroupListAdapter.Group(
+                listItem = Group(
                         c.getInt(0),
                         c.getString(1),
                         c.getInt(2),
@@ -92,7 +92,7 @@ class GroupListAdapter(private val context: Context) : ArrayAdapter<GroupListAda
             } while (c.moveToNext())
         }
         c.close()
-        listAdapter.notifyDataSetChanged()
+        listAdp.notifyDataSetChanged()
     }
 
     @Throws(IOException::class)
@@ -178,7 +178,7 @@ class GroupListAdapter(private val context: Context) : ArrayAdapter<GroupListAda
         val GP_NAME = "gp_name"
         val GP_NAME_READ = "gp_name_read"
         val GP_BELONG = "gp_belong"
-        var db: SQLiteDatabase
+        lateinit var db: SQLiteDatabase
 
         val CREATE_TABLE = ("CREATE TABLE " + TABLE_NAME + " ("
                 + GP_ID + " INTEGER PRIMARY KEY," + GP_NAME + " TEXT NOT NULL,"

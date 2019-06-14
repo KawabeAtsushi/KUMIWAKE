@@ -8,7 +8,6 @@ import android.widget.BaseAdapter
 import android.widget.ListView
 import android.widget.TextView
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.member.GroupListAdapter
 import com.pandatone.kumiwake.member.Sort
 import java.util.*
 
@@ -53,16 +52,16 @@ class GPListViewAdapter(private val context: Context, nameList: ArrayList<GroupL
 
     companion object {
 
-        fun setRowHeight(listView: ListView, listAdapter: GPListViewAdapter) {
+        fun setRowHeight(listView: ListView, listAdp: GPListViewAdapter) {
             var totalHeight = 0
 
-            for (j in 0 until listAdapter.count) {
-                val item = listAdapter.getView(j, null, listView)
+            for (j in 0 until listAdp.count) {
+                val item = listAdp.getView(j, null, listView)
                 item.measure(0, 0)
                 totalHeight += item.measuredHeight
             }
 
-            listView.layoutParams.height = totalHeight + listView.dividerHeight * (listAdapter.count - 1)
+            listView.layoutParams.height = totalHeight + listView.dividerHeight * (listAdp.count - 1)
             listView.requestLayout()
         }
 

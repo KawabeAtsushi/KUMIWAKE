@@ -13,6 +13,7 @@ import android.widget.*
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
 import java.util.*
 
@@ -62,7 +63,7 @@ class AddMember : AppCompatActivity() {
         val listItem = FragmentMember.nameList[position]
         val listId = listItem.id
         val name = listItem.name
-        val name_read = listItem.name_read
+        val name_read = listItem.read
         val sex = listItem.sex
         val age = listItem.age.toString()
         val grade = listItem.grade.toString()
@@ -228,7 +229,7 @@ class AddMember : AppCompatActivity() {
         val role = roleSpinner!!.text.toString()
 
         dbAdapter!!.updateMember(listId, name, sex, age, grade, belong, role, name_read)
-        FragmentMember.loadName()
+        FragmentMember().loadName()
     }
 
     fun update(listId: Int) {

@@ -131,7 +131,7 @@ class MainActivity : Activity(), View.OnClickListener {
     companion object {
 
         val context: Context?
-            get() = MemberMain.context
+            get() = MemberMain().applicationContext
     }
 
 }

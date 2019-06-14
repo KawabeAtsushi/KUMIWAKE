@@ -21,6 +21,7 @@ import android.widget.ImageView
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.CustomPagerAdapter
 import com.pandatone.kumiwake.kumiwake.NormalMode
+import kotlinx.android.synthetic.main.member_main.*
 import java.io.IOException
 import java.util.*
 
@@ -29,8 +30,14 @@ import java.util.*
  */
 class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
 
+    lateinit var memberArray: ArrayList<Name>
     internal var manager = supportFragmentManager
-    internal var viewPager: ViewPager
+    internal lateinit var viewPager: ViewPager
+    internal var start_actionmode: Boolean = false
+    internal var kumiwake_select: Boolean = false
+    internal var groupId: Int = 0
+    internal var delete_icon_visible: Boolean = false
+    internal var page: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +49,6 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         supportActionBar!!.setDisplayShowTitleEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         setViews()
-        context = applicationContext
         val i = intent
         start_actionmode = i.getBooleanExtra("START_ACTIONMODE", false)
         groupId = i.getIntExtra("GROUP_ID", -1)
@@ -55,12 +61,11 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         viewPager = findViewById<View>(R.id.view_pager) as ViewPager
         val adapter = CustomPagerAdapter(manager)
         viewPager.adapter = adapter
-        decision = findViewById<View>(R.id.decisionBt) as Button
     }
 
     private fun visibleViews() {
         if (intent.getBooleanExtra("visible", false)) {
-            decision.visibility = View.VISIBLE
+            decisionBt.visibility = View.VISIBLE
             FragmentGroup.adviceInFG.visibility = View.VISIBLE
             FragmentMember.fab.hide()
             FragmentGroup.fab.hide()
@@ -109,8 +114,8 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
                 searchAutoComplete.setText("")
             } else {
                 searchView.onActionViewCollapsed()
-                FragmentMember.loadName()
-                FragmentGroup.loadName()
+                FragmentMember().loadName()
+                FragmentGroup().loadName()
             }
         }
 
@@ -160,7 +165,7 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
     override fun onQueryTextChange(newText: String): Boolean {
         try {
             if (page == 0) {
-                FragmentMember.selectName(newText)
+                FragmentMember().selectName(newText)
             } else {
                 FragmentGroup.selectGroup(newText)
             }
@@ -178,16 +183,8 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
     }
 
     companion object {
-        var context: Context? = null
-            private set
-        internal var decision: Button
-        internal var start_actionmode: Boolean = false
-        internal var delete_icon_visible: Boolean = false
-        internal var kumiwake_select: Boolean = false
-        internal var groupId: Int = 0
-        internal var page: Int = 0
-        internal var memberArray: ArrayList<Name>
-        internal var searchView: SearchView
+
+        internal lateinit var searchView: SearchView
     }
 
 }

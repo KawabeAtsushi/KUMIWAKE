@@ -14,7 +14,7 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.MBListViewAdapter
-import com.pandatone.kumiwake.member.GroupListAdapter
+import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.member.MemberMain
 import com.pandatone.kumiwake.member.Name
 import kotlinx.android.synthetic.main.normal_mode.*

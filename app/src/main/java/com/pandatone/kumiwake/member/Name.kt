@@ -5,23 +5,23 @@ import java.io.Serializable
 /**
  * Created by atsushi_2 on 2016/03/02.
  */
-class Name(id: Int, name: String, sex: String, age: Int, grade: Int, belong: String, role: String, name_read: String) : Serializable {
+class Name(id: Int, name: String, sex: String, age: Int, grade: Int, belong: String, role: String, read: String) : Serializable {
     var id: Int = 0
-        protected set
+        private set
     var name: String
-        protected set
-    var name_read: String
-        protected set
+        private set
+    var read: String
+        private set
     var sex: String
-        protected set
+        private set
     var age: Int = 0
-        protected set
+        private set
     var grade: Int = 0
-        protected set
+        private set
     var belong: String
-        protected set
+        private set
     var role: String
-        protected set
+        private set
 
     init {
         this.id = id
@@ -31,12 +31,12 @@ class Name(id: Int, name: String, sex: String, age: Int, grade: Int, belong: Str
         this.grade = grade
         this.belong = belong
         this.role = role
-        this.name_read = name_read
+        this.read = read
     }
 
-    override fun equals(obj: Any?): Boolean {
-        if (obj != null && obj is Name) {
-            val target = obj as Name?
+    override fun equals(other: Any?): Boolean {
+        if (other != null && other is Name) {
+            val target = other as Name?
 
             return target!!.id == this.id
         }

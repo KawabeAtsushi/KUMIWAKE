@@ -123,7 +123,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
 
     fun getCursor(c: Cursor) {
         val nameList = FragmentMember.nameList
-        val listAdapter = FragmentMember.listAdapter
+        val listAdp = FragmentMember().listAdp
         var listItem: Name
 
         nameList.clear()
@@ -164,7 +164,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
             } while (c.moveToNext())
         }
         c.close()
-        listAdapter.notifyDataSetChanged()
+        listAdp.notifyDataSetChanged()
     }
 
     fun addBelong(position: String, newBelong: String) {
@@ -179,13 +179,13 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
 
     }
 
-    fun saveName(name: String, sex: String, age: Int, grade: Int, belong: String, role: String, name_read: String) {
-        var name_read = name_read
+    fun saveName(name: String, sex: String, age: Int, grade: Int, belong: String, role: String, read: String) {
+        var read = read
 
         db.beginTransaction()          // トランザクション開始
 
-        if (name_read.isEmpty()) {
-            name_read = "ￚ no data ￚ"
+        if (read.isEmpty()) {
+            read = "ￚ no data ￚ"
         }
 
         try {
@@ -196,7 +196,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
             values.put(MB_GRADE, grade)
             values.put(MB_BELONG, belong)
             values.put(MB_ROLE, role)
-            values.put(MB_NAME_READ, name_read)
+            values.put(MB_NAME_READ, read)
             db.insert(TABLE_NAME, null, values)
 
             db.setTransactionSuccessful()      // トランザクションへコミット
@@ -207,11 +207,11 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         }
     }
 
-    fun updateMember(id: Int, name: String, sex: String, age: Int, grade: Int, belong: String, role: String, name_read: String) {
-        var name_read = name_read
+    fun updateMember(id: Int, name: String, sex: String, age: Int, grade: Int, belong: String, role: String, read: String) {
+        var read = read
 
-        if (name_read.isEmpty()) {
-            name_read = "ￚ no data ￚ"
+        if (read.isEmpty()) {
+            read = "ￚ no data ￚ"
         }
 
         open()
@@ -223,7 +223,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
             values.put(MB_GRADE, grade)
             values.put(MB_BELONG, belong)
             values.put(MB_ROLE, role)
-            values.put(MB_NAME_READ, name_read)
+            values.put(MB_NAME_READ, read)
 
             db.update(TABLE_NAME, values, "$MB_ID=?", arrayOf(id.toString()))
         } catch (e: Exception) {
@@ -239,7 +239,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         val TABLE_NAME = "member_info"
         val MB_ID = "_id"
         val MB_NAME = "mb_name"
-        val MB_NAME_READ = "mb_name_read"
+        val MB_NAME_READ = "mb_read"
         val MB_SEX = "mb_sex"
         val MB_AGE = "mb_age"
         val MB_GRADE = "mb_grade"

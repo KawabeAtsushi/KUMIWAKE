@@ -17,7 +17,7 @@ import com.google.android.gms.ads.MobileAds
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.MBListViewAdapter
 import com.pandatone.kumiwake.customize.CustomDialog
-import com.pandatone.kumiwake.member.GroupListAdapter
+import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.member.Name
 import com.pandatone.kumiwake.sekigime.SekigimeResult
 import com.pandatone.kumiwake.sekigime.SelectTableType

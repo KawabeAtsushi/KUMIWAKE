@@ -15,6 +15,9 @@ import java.util.*
 
 class NameListAdapter(private val context: Context, private val nameList: List<Name>) : BaseAdapter() {
     internal var params: LinearLayout.LayoutParams
+    private var nowData: String? = "ￚ no data ￚ"
+    private var preData = "ￚ no data ￚ"
+    private var mSelection = HashMap<Int, Boolean>()
 
     init {
         this.params = LinearLayout.LayoutParams(0, 1)
@@ -85,7 +88,7 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
         val nowItem = getItem(position)
 
         when (nowSort) {
-            "NAME" -> nowData = nowItem!!.name_read
+            "NAME" -> nowData = nowItem!!.read
             "AGE" -> nowData = nowItem!!.age.toString()
             "GRADE" -> nowData = nowItem!!.grade.toString()
         }
@@ -94,7 +97,7 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
             val preItem = getItem(position - 2)
 
             when (nowSort) {
-                "NAME" -> preData = preItem!!.name_read
+                "NAME" -> preData = preItem!!.read
                 "AGE" -> preData = preItem!!.age.toString()
                 "GRADE" -> preData = preItem!!.grade.toString()
             }
@@ -123,15 +126,14 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
         notifyDataSetChanged()
     }
 
-    companion object {
-        private var nowData: String? = "ￚ no data ￚ"
-        private var preData = "ￚ no data ￚ"
-        var nowSort = "ID"
-        private var mSelection = HashMap<Int, Boolean>()
 
-        fun isPositionChecked(position: Int): Boolean {
-            val result = mSelection[position]
-            return result ?: false
-        }
+    fun isPositionChecked(position: Int): Boolean {
+        val result = mSelection[position]
+        return result ?: false
     }
+
+    companion object{
+        internal var nowSort = "ID"
+    }
+
 }

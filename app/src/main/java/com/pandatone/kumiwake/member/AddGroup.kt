@@ -14,6 +14,7 @@ import android.widget.Toast
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MBListViewAdapter
 import java.util.*
 

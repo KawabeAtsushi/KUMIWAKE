@@ -9,10 +9,12 @@ import android.support.v7.app.AlertDialog
 import android.text.TextUtils
 import android.util.Log
 import android.view.*
+import android.widget.AbsListView
 import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.TextView
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.GroupNameListAdapter
 import java.io.IOException
 import java.util.*
@@ -21,26 +23,37 @@ import java.util.*
  * Created by atsushi_2 on 2016/02/23.
  */
 class FragmentGroup : ListFragment() {
-    private var parent: MemberMain? = null
+    private var parent = MemberMain()
+    private lateinit var listItem: GroupListAdapter.Group
+    private var checkedCount = 0
 
+    // 必須*
+    // Fragment生成時にシステムが呼び出す
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        dbAdapter = GroupListAdapter(activity)
-        nameList = ArrayList<Group>()
-        listAdapter = GroupNameListAdapter(activity, nameList)
-        listAdapter = listAdapter
+        dbAdapter = GroupListAdapter(requireContext())
+        nameList = ArrayList()
+        listAdp = GroupNameListAdapter(requireContext(), nameList)
+        listAdapter = listAdp;
         loadName()
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.tab_group, container, false)
+    // 必須*
+    // Fragmentが初めてUIを描画する時にシステムが呼び出す
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.tab_group, container, false)
         adviceInFG = view.findViewById<View>(R.id.advice_in_fg) as TextView
         fab = view.findViewById<View>(R.id.group_fab) as FloatingActionButton
-        fab.setOnClickListener { parent!!.moveGroup() }
+        fab.setOnClickListener { parent.moveGroup() }
+
+        // Fragmentとlayoutを紐付ける
+        super.onCreateView(inflater, container, savedInstanceState)
         return view
     }
 
 
+    // Viewの生成が完了した後に呼ばれる
+    // UIパーツの設定などを行う
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         ListCount = listView.count
         listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE_MODAL
@@ -48,7 +61,7 @@ class FragmentGroup : ListFragment() {
         listView.isFastScrollEnabled = true
         ListCount = listView.count
 
-        listView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+        listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
             val builder = android.support.v7.app.AlertDialog.Builder(activity!!)
             val builder2 = android.app.AlertDialog.Builder(activity)
@@ -58,7 +71,7 @@ class FragmentGroup : ListFragment() {
             val groupname = nameList[position].group
             if (MemberMain.searchView.isActivated == true)
                 MemberMain.searchView.onActionViewCollapsed()
-            FragmentMember.loadName()
+            FragmentMember().loadName()
 
             val Items = arrayOf(Sort.name_getContext()!!.getString(R.string.information), Sort.name_getContext()!!.getString(R.string.edit), Sort.name_getContext()!!.getString(R.string.delete))
             builder.setTitle(groupname)
@@ -83,16 +96,16 @@ class FragmentGroup : ListFragment() {
             dialog.show()
         }
 
-        if (parent!!.start_actionmode == true) {
-            listView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+        if (parent.start_actionmode) {
+            listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                 //行をクリックした時の処理
                 listView.startActionMode(Callback())
-                listView.setItemChecked(position, !listAdapter.isPositionChecked(position))
+                listView.setItemChecked(position, !listAdp.isPositionChecked(position))
             }
         }
 
-        listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { parent, view, position, id ->
-            listView.setItemChecked(position, !listAdapter.isPositionChecked(position))
+        listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, id ->
+            listView.setItemChecked(position, !listAdp.isPositionChecked(position))
             false
         }
 
@@ -123,7 +136,6 @@ class FragmentGroup : ListFragment() {
     }
 
     override fun onAttach(context: Context?) {
-        parent = context as MemberMain?
         super.onAttach(context)
     }
 
@@ -169,11 +181,11 @@ class FragmentGroup : ListFragment() {
                     listItem = nameList[i]
                     val listId = listItem.id
                     dbAdapter.selectDelete(listId.toString())     // DBから取得したIDが入っているデータを削除する
-                    FragmentMember.DeleteBelongInfoAll(listId)
+                    FragmentMember().DeleteBelongInfoAll(listId)
                 }
             }
             dbAdapter.close()    // DBを閉じる
-            listAdapter.clearSelection()
+            listAdp.clearSelection()
             listView.choiceMode = ListView.CHOICE_MODE_NONE
             listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE_MODAL
             loadName()
@@ -191,37 +203,37 @@ class FragmentGroup : ListFragment() {
     //////////////////////////////////////////////////////////////////////////////////////
 
 
-    private inner class Callback : ListView.MultiChoiceModeListener {
+    private inner class Callback : AbsListView.MultiChoiceModeListener {
 
         internal val list = listView.checkedItemPositions
 
         private val decision_clicked = View.OnClickListener {
             dbAdapter.open()     // DBの読み込み(読み書きの方)
-            if (parent!!.kumiwake_select == false) {
+            if (!parent.kumiwake_select) {
                 for (i in 0 until ListCount) {
                     val checked = list.get(i)
                     if (checked == true) {
                         listItem = nameList[i]
                         val myId = listItem.id
 
-                        val newId = parent!!.groupId
-                        FragmentMember.addGroupByGroup(newId, myId)
+                        val newId = parent.groupId
+                        FragmentMember().addGroupByGroup(newId, myId)
                     }
                 }
-                parent!!.finish()
+                parent.finish()
             } else {
 
                 for (i in 0 until ListCount) {
                     val checked = list.get(i)
-                    if (checked == true) {
+                    if (checked) {
                         listItem = nameList[i]
                         val myId = listItem.id
-                        FragmentMember.createKumiwakeListByGroup(myId)
+                        FragmentMember().createKumiwakeListByGroup(myId)
                     }
                 }
-                parent!!.moveKumiwake()
+                parent.moveKumiwake()
             }
-            listAdapter.clearSelection()
+            listAdp.clearSelection()
             dbAdapter.close()
         }
 
@@ -232,13 +244,13 @@ class FragmentGroup : ListFragment() {
             menu.getItem(2).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
             menu.getItem(3).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
             menu.getItem(4).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
-            parent!!.decision.setOnClickListener(decision_clicked)
+            parent.decision.setOnClickListener(decision_clicked)
             val searchIcon = menu.findItem(R.id.search_view)
             val deleteIcon = menu.findItem(R.id.item_delete)
             val itemfilter = menu.findItem(R.id.item_filter)
             itemfilter.isVisible = false
             searchIcon.isVisible = false
-            deleteIcon.isVisible = parent!!.delete_icon_visible
+            deleteIcon.isVisible = parent.delete_icon_visible
             return true
         }
 
@@ -264,7 +276,7 @@ class FragmentGroup : ListFragment() {
 
         override fun onDestroyActionMode(mode: ActionMode) {
             // 決定ボタン押下時
-            listAdapter.clearSelection()
+            listAdp.clearSelection()
         }
 
         override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
@@ -279,38 +291,35 @@ class FragmentGroup : ListFragment() {
             checkedCount = listView.checkedItemCount
 
             if (checked) {
-                listAdapter.setNewSelection(position, checked)
+                listAdp.setNewSelection(position, checked)
             } else {
-                listAdapter.removeSelection(position)
+                listAdp.removeSelection(position)
             }
             mode.title = checkedCount.toString() + getString(R.string.selected)
         }
 
     }
 
+    fun loadName() {
+        nameList.clear()
+        dbAdapter.open()
+        val c = dbAdapter.allNames
+        dbAdapter.getCursor(c)
+        dbAdapter.close()
+    }
+
     companion object {
-        internal var dbAdapter: GroupListAdapter
-        internal var listAdapter: GroupNameListAdapter
-        internal var nameList: MutableList<GroupListAdapter.Group>
-        internal var listItem: GroupListAdapter.Group
-        internal var fab: FloatingActionButton
-        internal var adviceInFG: TextView
+        internal lateinit var listAdp: GroupNameListAdapter
+        internal lateinit var dbAdapter: GroupListAdapter
+        internal lateinit var nameList: MutableList<GroupListAdapter.Group>
+        internal lateinit var fab: FloatingActionButton
+        internal lateinit var adviceInFG: TextView
         internal var ListCount: Int = 0
-        internal var checkedCount = 0
-
-
-        fun loadName() {
-            nameList.clear()
-            dbAdapter.open()
-            val c = dbAdapter.allNames
-            dbAdapter.getCursor(c)
-            dbAdapter.close()
-        }
 
         @Throws(IOException::class)
         fun selectGroup(newText: String) {
             if (TextUtils.isEmpty(newText)) {
-                dbAdapter.picGroup(null, null)
+                dbAdapter.picGroup(null.toString(), null.toString())
             } else {
                 dbAdapter.picGroup(newText, newText)
             }

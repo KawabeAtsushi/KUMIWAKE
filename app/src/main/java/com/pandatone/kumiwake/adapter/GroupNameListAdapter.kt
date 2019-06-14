@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.member.GroupListAdapter
 import com.pandatone.kumiwake.member.Sort
 import java.util.*
 
@@ -15,6 +14,8 @@ import java.util.*
  * Created by atsushi_2 on 2016/03/20.
  */
 class GroupNameListAdapter(private val context: Context, private val groupList: List<GroupListAdapter.Group>) : BaseAdapter() {
+
+    private var gSelection = HashMap<Int, Boolean>()
 
     override fun getCount(): Int {
         return groupList.size
@@ -47,7 +48,7 @@ class GroupNameListAdapter(private val context: Context, private val groupList: 
         nameTextView = v!!.findViewById<View>(R.id.groupName) as TextView
         numberOfMemberTextView = v.findViewById<View>(R.id.theNumberOfMember) as TextView
         nameTextView.text = listItem.group
-        numberOfMemberTextView.text = listItem.belongNo.toString() + Sort.name_getContext()!!.getText(R.string.person)
+        numberOfMemberTextView.text = "${listItem.belongNo}${Sort.name_getContext()!!.getText(R.string.person)}"
 
         return v
     }
@@ -67,12 +68,9 @@ class GroupNameListAdapter(private val context: Context, private val groupList: 
         notifyDataSetChanged()
     }
 
-    companion object {
-        private var gSelection = HashMap<Int, Boolean>()
-
-        fun isPositionChecked(position: Int): Boolean {
-            val result = gSelection[position]
-            return result ?: false
-        }
+    fun isPositionChecked(position: Int): Boolean {
+        val result = gSelection[position]
+        return result ?: false
     }
+
 }

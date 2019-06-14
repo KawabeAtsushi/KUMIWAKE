@@ -39,7 +39,7 @@ object MemberClick {
     }
 
     fun SetInfo(position: Int) {
-        name.text = context!!.getText(R.string.member_name).toString() + " : " + FragmentMember.nameList[position].name + " (" + FragmentMember.nameList[position].name_read + ")"
+        name.text = context!!.getText(R.string.member_name).toString() + " : " + FragmentMember.nameList[position].name + " (" + FragmentMember.nameList[position].read + ")"
         sex.text = context!!.getText(R.string.sex).toString() + " : " + FragmentMember.nameList[position].sex
         age.text = context!!.getText(R.string.age).toString() + " : " + FragmentMember.nameList[position].age.toString()
         grade.text = context!!.getText(R.string.grade).toString() + " : " + FragmentMember.nameList[position].grade.toString()

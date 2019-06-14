@@ -14,7 +14,7 @@ import butterknife.OnClick
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.EditGroupListAdapter
 import com.pandatone.kumiwake.adapter.MBListViewAdapter
-import com.pandatone.kumiwake.member.GroupListAdapter
+import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.member.Name
 import kotlinx.android.synthetic.main.kumiwake_custom.*
 import kotlinx.android.synthetic.main.part_review_listview.*
@@ -198,7 +198,7 @@ abstract class KumiwakeCustom : AppCompatActivity() {
         memberArray[position] = Name(memberArray[position].id, memberArray[position].name,
                 memberArray[position].sex, memberArray[position].age,
                 memberArray[position].grade, memberArray[position].belong, newRole.toString(),
-                memberArray[position].name_read)
+                memberArray[position].read)
         mbAdapter?.notifyDataSetChanged()
     }
 
