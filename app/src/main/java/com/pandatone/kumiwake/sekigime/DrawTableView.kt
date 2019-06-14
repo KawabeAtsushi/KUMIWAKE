@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake.sekigime
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.view.MotionEvent
@@ -11,19 +12,29 @@ import java.util.*
  * Created by atsushi_2 on 2016/07/15.
  */
 class DrawTableView(context: Context) : View(context) {
-    internal var square_no = SekigimeResult.square_no
-    internal var Normalmode: Boolean? = SekigimeResult.Normalmode
-    internal var doubleDeploy: Boolean? = SekigimeResult.doubleDeploy
-    internal var arrayArrayQuick = SekigimeResult.arrayArrayQuick
-    internal var arrayArrayNormal = SekigimeResult.arrayArrayNormal
-    private var xZahyou = 0f
-    private var yZahyou = 0f
+    private var square_no = SekigimeResult.square_no
+    private var Normalmode: Boolean? = SekigimeResult.Normalmode
+    private var doubleDeploy: Boolean? = SekigimeResult.doubleDeploy
+    private var arrayArrayQuick = SekigimeResult.arrayArrayQuick
+    private var arrayArrayNormal = SekigimeResult.arrayArrayNormal
+    private var xCoordinate = 0f
+    private var yCoordinate = 0f
     private var scale: Float = 0.toFloat()
+
+    private var canvasHeight: Float = 0.toFloat()
+    private var r: Float = 0.toFloat()
+    private var lastX = 0
+    private var lastY = 0
+    private var seatsNo: Int = 0
+    private var a: Int = 0
+    private var disp_width: Int = 0
+    private lateinit var x: ArrayList<Double>
+    private lateinit var y: ArrayList<Double>
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         memberNo(position)
         scale = resources.displayMetrics.density / 2
-        width = View.MeasureSpec.getSize(widthMeasureSpec)
+        disp_width = MeasureSpec.getSize(widthMeasureSpec)
         var height = 0
         when (tableType) {
             "square" -> height = (seatsNo - square_no * 2) * 68 + 450
@@ -31,7 +42,7 @@ class DrawTableView(context: Context) : View(context) {
             "circle" -> height = 810
             "counter" -> height = seatsNo * 132 + 100
         }
-        setMeasuredDimension(width, (height * scale).toInt())
+        setMeasuredDimension(disp_width, (height * scale).toInt())
     }
 
 
@@ -41,7 +52,7 @@ class DrawTableView(context: Context) : View(context) {
         x = ArrayList<Double>()
         y = ArrayList<Double>()
         memberNo(position)
-        canvasHeight = canvas.height.toFloat()
+        canvasHeight = height.toFloat()
         when (tableType) {
             "square" -> drawSquareTable(canvas)
             "parallel" -> drawParallelTable(canvas)
@@ -61,6 +72,7 @@ class DrawTableView(context: Context) : View(context) {
         invalidate()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
 
         val action = event.actionMasked
@@ -70,10 +82,10 @@ class DrawTableView(context: Context) : View(context) {
             parent.requestDisallowInterceptTouchEvent(false)
         }
 
-        if (Math.abs(event.x - xZahyou) > 1 && Math.abs(event.y - yZahyou) > 1) {
+        if (Math.abs(event.x - xCoordinate) > 1 && Math.abs(event.y - yCoordinate) > 1) {
 
-            xZahyou = event.x
-            yZahyou = event.y
+            xCoordinate = event.x
+            yCoordinate = event.y
             val xArray = x
             val yArray = y
             var x: Double?
@@ -81,10 +93,10 @@ class DrawTableView(context: Context) : View(context) {
 
             for (i in xArray.indices) {
                 x = xArray.get(i)
-                if (Math.abs(xZahyou - x!!) <= r) {
+                if (Math.abs(xCoordinate - x) <= r) {
                     for (j in yArray.indices) {
                         y = yArray.get(j)
-                        if (Math.abs(yZahyou - y!!) <= r && j == i) {
+                        if (Math.abs(yCoordinate - y) <= r && j == i) {
                             point = j
                             reDraw()
                         }
@@ -101,10 +113,11 @@ class DrawTableView(context: Context) : View(context) {
     ////////////////////角テーブル１//////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun drawSquareTable(canvas: Canvas) {
-        val cPaint: Paint
-        val sPaint: Paint
+    private fun drawSquareTable(canvas: Canvas) {
+        val cPaint: Paint = Paint()
+        val sPaint: Paint = Paint()
         val tableHeight: Int
+
         if (doubleDeploy!!) {
             if ((seatsNo - square_no * 2) % 2 == 0) {
                 tableHeight = 130 * (seatsNo - square_no * 2) / 2 + 235
@@ -120,19 +133,17 @@ class DrawTableView(context: Context) : View(context) {
         }
 
         // 机
-        cPaint = Paint()
         cPaint.color = Color.parseColor("#000000")
         cPaint.strokeWidth = 10 * scale
         cPaint.isAntiAlias = true
         cPaint.style = Paint.Style.STROKE
-        val rectRight = width - 180 * scale
+        val rectRight = disp_width - 180 * scale
         canvas.drawRect(180 * scale, 230 * scale, rectRight, tableHeight * scale, cPaint)
         cPaint.color = Color.parseColor("#90ffffff")
         cPaint.style = Paint.Style.FILL
         canvas.drawRect(180 * scale, 230 * scale, rectRight, tableHeight * scale, cPaint)
 
         //椅子
-        sPaint = Paint()
         sPaint.color = Color.parseColor("#000000")
         if (square_no > 5) {
             sPaint.strokeWidth = 3 * scale
@@ -179,8 +190,8 @@ class DrawTableView(context: Context) : View(context) {
         }
 
         canvas.translate((-transX * b).toFloat(), 0f)
-        last_x = 0
-        last_y = 0
+        lastX = 0
+        lastY = 0
         if (point < square_no) {
             setFocusGradation(canvas)
         }
@@ -210,13 +221,13 @@ class DrawTableView(context: Context) : View(context) {
             i++
             j++
         }
-        last_x = 0
+        lastX = 0
         if (seatsNo == 1) {
-            last_y = (transY * scale).toInt()
+            lastY = (transY * scale).toInt()
         } else if ((seatsNo - a) / 2 == 0) {
-            last_y = (transY * Math.floor(((seatsNo - a) / 2).toDouble()) * scale).toInt()
+            lastY = (transY * Math.floor(((seatsNo - a) / 2).toDouble()) * scale).toInt()
         } else {
-            last_y = (transY * Math.floor(((seatsNo - a + 1) / 2).toDouble()) * scale).toInt()
+            lastY = (transY * Math.floor(((seatsNo - a + 1) / 2).toDouble()) * scale).toInt()
         }
         if (point >= a) {
             setFocusGradation(canvas)
@@ -231,26 +242,24 @@ class DrawTableView(context: Context) : View(context) {
     /////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    fun drawParallelTable(canvas: Canvas) {
+    private fun drawParallelTable(canvas: Canvas) {
 
-        val cPaint: Paint
-        val sPaint: Paint
+        val cPaint: Paint = Paint()
+        val sPaint: Paint = Paint()
         val tableHeight = ((130 * Math.round(((seatsNo + 1) / 2).toFloat()) + 150) * scale).toInt()
 
         // 机
-        cPaint = Paint()
         cPaint.color = Color.parseColor("#000000")
         cPaint.strokeWidth = 10 * scale
         cPaint.isAntiAlias = true
         cPaint.style = Paint.Style.STROKE
-        val rectRight = width - 180 * scale
+        val rectRight = disp_width - 180 * scale
         canvas.drawRect(180 * scale, 100 * scale, rectRight, tableHeight.toFloat(), cPaint)
         cPaint.color = Color.parseColor("#90ffffff")
         cPaint.style = Paint.Style.FILL
         canvas.drawRect(180 * scale, 100 * scale, rectRight, tableHeight.toFloat(), cPaint)
 
         //椅子
-        sPaint = Paint()
         sPaint.color = Color.parseColor("#000000")
         sPaint.strokeWidth = 7 * scale
         sPaint.isAntiAlias = true
@@ -277,12 +286,12 @@ class DrawTableView(context: Context) : View(context) {
             i++
             j++
         }
-        last_x = 0
-        last_y = (transY * Math.floor((seatsNo / 2).toDouble()) * scale).toInt()
+        lastX = 0
+        lastY = (transY * Math.floor((seatsNo / 2).toDouble()) * scale).toInt()
         if (seatsNo == 1) {
-            last_y = (transY * scale).toInt()
-        } else if (y.get(0) - last_y != 190.0) {
-            last_y = (transY * Math.floor(((seatsNo + 1) / 2).toDouble()) * scale).toInt()
+            lastY = (transY * scale).toInt()
+        } else if (y.get(0) - lastY != 190.0) {
+            lastY = (transY * Math.floor(((seatsNo + 1) / 2).toDouble()) * scale).toInt()
         }
     }
 
@@ -291,53 +300,50 @@ class DrawTableView(context: Context) : View(context) {
     /////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    fun drawCircleTable(canvas: Canvas) {
-        val cPaint: Paint
-        val sPaint: Paint
-        val center_y: Float
-        val center_x: Float
+    private fun drawCircleTable(canvas: Canvas) {
+        val cPaint: Paint = Paint()
+        val sPaint: Paint = Paint()
+        val centerY: Float
+        val centerX: Float = (disp_width / 2).toFloat()
 
         // 円
-        cPaint = Paint()
         cPaint.color = Color.parseColor("#000000")
         cPaint.strokeWidth = 10 * scale
         cPaint.isAntiAlias = true
         cPaint.style = Paint.Style.STROKE
         // (x,y,r,paint) 中心座標(x,y), 半径r
-        center_x = (width / 2).toFloat()
-        canvas.drawCircle(center_x, 430 * scale, (center_x * 0.625).toFloat(), cPaint)
+        canvas.drawCircle(centerX, 430 * scale, (centerX * 0.625).toFloat(), cPaint)
         cPaint.color = Color.parseColor("#90ffffff")
         cPaint.style = Paint.Style.FILL
-        canvas.drawCircle(center_x, 430 * scale, (center_x * 0.625).toFloat(), cPaint)
+        canvas.drawCircle(centerX, 430 * scale, (centerX * 0.625).toFloat(), cPaint)
 
         //椅子
-        sPaint = Paint()
         sPaint.color = Color.parseColor("#000000")
         sPaint.isAntiAlias = true
         sPaint.style = Paint.Style.STROKE
         //回転軸(x,y)
-        canvas.translate(center_x, 430 * scale)
-        last_x = center_x.toInt()
-        last_y = (430 * scale).toInt()
+        canvas.translate(centerX, 430 * scale)
+        lastX = centerX.toInt()
+        lastY = (430 * scale).toInt()
         if (seatsNo < 16) {
             r = 50 * scale
-            center_y = (-(center_x * 0.625) - 80 * scale).toFloat()
+            centerY = (-(centerX * 0.625) - 80 * scale).toFloat()
             sPaint.strokeWidth = 7 * scale
         } else if (seatsNo < 21) {
             r = 40 * scale
-            center_y = (-(center_x * 0.625) - 60 * scale).toFloat()
+            centerY = (-(centerX * 0.625) - 60 * scale).toFloat()
             sPaint.strokeWidth = 5 * scale
         } else {
             r = 30 * scale
-            center_y = (-(center_x * 0.625) - 50 * scale).toFloat()
+            centerY = (-(centerX * 0.625) - 50 * scale).toFloat()
             sPaint.strokeWidth = 3 * scale
         }
 
 
         for (i in 0 until seatsNo) {
-            canvas.drawCircle(0f, center_y, r, sPaint)
-            x.add(-center_y * Math.cos(Math.toRadians((-270 - 360 * i / seatsNo.toFloat()).toDouble())) + center_x)
-            y.add(center_y * Math.sin(Math.toRadians((-270 - 360 * i / seatsNo.toFloat()).toDouble())) + 430 * scale)
+            canvas.drawCircle(0f, centerY, r, sPaint)
+            x.add(-centerY * Math.cos(Math.toRadians((-270 - 360 * i / seatsNo.toFloat()).toDouble())) + centerX)
+            y.add(centerY * Math.sin(Math.toRadians((-270 - 360 * i / seatsNo.toFloat()).toDouble())) + 430 * scale)
             //(度)ずつ回転し描画
             canvas.rotate(360 / seatsNo.toFloat())
         }
@@ -349,7 +355,7 @@ class DrawTableView(context: Context) : View(context) {
     ////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    fun drawCounterTable(canvas: Canvas) {
+    private fun drawCounterTable(canvas: Canvas) {
         //椅子
         val sPaint = Paint()
         sPaint.color = Color.parseColor("#000000")
@@ -358,8 +364,8 @@ class DrawTableView(context: Context) : View(context) {
         sPaint.style = Paint.Style.STROKE
         r = 50 * scale
         val transY = 130
-        last_x = 0
-        last_y = (transY * seatsNo * scale).toInt()
+        lastX = 0
+        lastY = (transY * seatsNo * scale).toInt()
 
         //間隔
         for (i in 0 until seatsNo) {
@@ -374,7 +380,7 @@ class DrawTableView(context: Context) : View(context) {
     ////////////////////メソッド////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun memberNo(position: Int) {
+    private fun memberNo(position: Int) {
         if (Normalmode!!) {
             seatsNo = arrayArrayNormal[position].size
         } else {
@@ -382,7 +388,7 @@ class DrawTableView(context: Context) : View(context) {
         }
     }
 
-    fun initialName(canvas: Canvas, i: Int, X: Float, Y: Float) {
+    private fun initialName(canvas: Canvas, i: Int, X: Float, Y: Float) {
         val name_initial: String
         if (Normalmode!!) {
             name_initial = arrayArrayNormal[position][i].name[0].toString()
@@ -397,7 +403,7 @@ class DrawTableView(context: Context) : View(context) {
         canvas.drawText(name_initial, textStartX, textMinY, textPaint)
     }
 
-    fun setFmBackground(canvas: Canvas, startNo: Int, endNo: Int) {
+    private fun setFmBackground(canvas: Canvas, startNo: Int, endNo: Int) {
         val sPaint = Paint()
         sPaint.isAntiAlias = true
         sPaint.style = Paint.Style.FILL
@@ -419,34 +425,34 @@ class DrawTableView(context: Context) : View(context) {
                 }
             }
 
-            val xP = x.get(i) - last_x
-            val yP = y.get(i) - last_y
+            val xP = x.get(i) - lastX
+            val yP = y.get(i) - lastY
             canvas.drawCircle(xP.toFloat(), yP.toFloat(), r, sPaint)
             initialName(canvas, i, xP.toFloat(), yP.toFloat())
         }
     }
 
-    fun setFocusGradation(canvas: Canvas) {
-        val xP = x.get(point) - last_x
-        val yP = y.get(point) - last_y
+    private fun setFocusGradation(canvas: Canvas) {
+        val xP = x.get(point) - lastX
+        val yP = y.get(point) - lastY
         val gradient = RadialGradient(xP.toFloat(), yP.toFloat(), 1.5.toFloat() * r, Color.parseColor("#ffaa00"),
                 Color.argb(0, 0, 0, 0), android.graphics.Shader.TileMode.CLAMP)
-        val GraPaint = Paint()
-        GraPaint.isDither = true
+        val graPaint = Paint()
+        graPaint.isDither = true
         ///端を滑らかにする。
-        GraPaint.shader = gradient
-        canvas.drawCircle(xP.toFloat(), yP.toFloat(), 1.5.toFloat() * r, GraPaint)
-        GraPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OVER)
-        GraPaint.reset()
-        GraPaint.isAntiAlias = true
-        GraPaint.style = Paint.Style.FILL
-        GraPaint.color = Color.WHITE
-        canvas.drawCircle(xP.toFloat(), yP.toFloat(), r, GraPaint)
+        graPaint.shader = gradient
+        canvas.drawCircle(xP.toFloat(), yP.toFloat(), 1.5.toFloat() * r, graPaint)
+        graPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OVER)
+        graPaint.reset()
+        graPaint.isAntiAlias = true
+        graPaint.style = Paint.Style.FILL
+        graPaint.color = Color.WHITE
+        canvas.drawCircle(xP.toFloat(), yP.toFloat(), r, graPaint)
     }
 
-    fun drawMemberName(canvas: Canvas, type: String?) {
-        val xP = x.get(point) - last_x
-        val yP = y.get(point) - last_y
+    private fun drawMemberName(canvas: Canvas, type: String?) {
+        val xP = x.get(point) - lastX
+        val yP = y.get(point) - lastY
         var textSize = (60 * scale).toInt()
         var textWidth: Float
         var textStartX: Float
@@ -555,19 +561,9 @@ class DrawTableView(context: Context) : View(context) {
     }
 
     companion object {
-
-        internal var canvasHeight: Float = 0.toFloat()
-        internal var r: Float = 0.toFloat()
-        internal var position = 0
-        internal var point = 0
-        internal var last_x = 0
-        internal var last_y = 0
-        internal var seatsNo: Int = 0
-        internal var a: Int = 0
-        internal var width: Int = 0
-        internal var tableType: String? = null
-        internal var x: ArrayList<Double>
-        internal var y: ArrayList<Double>
+        var point = 0
+        var position = 0
+        var tableType: String = "circle"
     }
 
 }

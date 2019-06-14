@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake.kumiwake
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -49,7 +50,8 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
         scrollView.post { scrollView.scrollTo(0, 0) }
     }
 
-    protected fun findViews() {
+    @SuppressLint("SetTextI18n")
+    private fun findViews() {
         if (KumiwakeSelectMode.sekigime) {
             confirmation_title_txt.setText(R.string.sekigime_confirm)
             between_arrows_txt.text = "SEKIGIME"
@@ -68,12 +70,12 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
         viewGroup.background = ContextCompat.getDrawable(this, R.drawable.quick_img)
     }
 
-    fun setViews() {
+    private fun setViews() {
         val custom_text = StringBuilder()
-        if (even_fm_ratio == true) {
+        if (even_fm_ratio) {
             custom_text.append("☆" + getText(R.string.even_out_male_female_ratio) + "\n")
         }
-        if (even_person_ratio == true) {
+        if (even_person_ratio) {
             custom_text.append("☆" + getText(R.string.even_out_person_ratio) + "\n")
         }
         custom_review_txt.text = custom_text.toString()
@@ -102,14 +104,15 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
         startActivity(intent)
     }
 
-    protected fun setAdapter() {
+    private fun setAdapter() {
         memberAdapter = MemberArrayAdapter(this, R.layout.mini_row_member, memberArray, true)
         groupAdapter = ArrayAdapter(this, R.layout.mini_row_group, R.id.groupName, groupArray)
         kumiwake_member_listView.adapter = memberAdapter
         kumiwake_group_listView.adapter = groupAdapter
     }
 
-    protected fun setRowHeight(listView: ListView, listAdp: ArrayAdapter<String>) {
+    companion object{
+    fun setRowHeight(listView: ListView, listAdp: ArrayAdapter<String>) {
             var totalHeight = 33
 
             for (j in 0 until listAdp.count) {
@@ -120,24 +123,20 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
 
             listView.layoutParams.height = totalHeight + listView.dividerHeight * (listAdp.count - 1)
             listView.requestLayout()
-        }
+        }}
 }
 
 internal class MemberArrayAdapter(context: Context, textViewResourceId: Int, private val items: ArrayList<String>, private val showBorder: Boolean?) : ArrayAdapter<String>(context, textViewResourceId, items) {
-    private val inflater: LayoutInflater
-
-    init {
-
-        inflater = context.getSystemService(
-                Context.LAYOUT_INFLATER_SERVICE
-        ) as LayoutInflater
-    }
+    private val inflater: LayoutInflater = context.getSystemService(
+            Context.LAYOUT_INFLATER_SERVICE
+    ) as LayoutInflater
 
     override fun isEnabled(position: Int): Boolean {
         return showBorder!!
     }
 
     // 1アイテム分のビューを取得
+    @SuppressLint("InflateParams")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val nameTextView: TextView
         val memberIcon: ImageView
@@ -153,10 +152,8 @@ internal class MemberArrayAdapter(context: Context, textViewResourceId: Int, pri
             memberIcon.setColorFilter(context.resources.getColor(R.color.woman))
         }
 
-        if (item != null) {
-            nameTextView = v.findViewById<View>(R.id.memberName) as TextView
-            nameTextView.text = item
-        }
+        nameTextView = v.findViewById<View>(R.id.memberName) as TextView
+        nameTextView.text = item
 
         return v
     }

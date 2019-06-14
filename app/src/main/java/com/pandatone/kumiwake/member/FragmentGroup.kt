@@ -73,13 +73,13 @@ class FragmentGroup : ListFragment() {
                 MemberMain.searchView.onActionViewCollapsed()
             FragmentMember().loadName()
 
-            val Items = arrayOf(Sort.name_getContext()!!.getString(R.string.information), Sort.name_getContext()!!.getString(R.string.edit), Sort.name_getContext()!!.getString(R.string.delete))
+            val Items = arrayOf(Sort.memberContext()!!.getString(R.string.information), Sort.memberContext()!!.getString(R.string.edit), Sort.memberContext()!!.getString(R.string.delete))
             builder.setTitle(groupname)
             builder.setItems(Items) { dialog, which ->
                 when (which) {
                     0 -> {
-                        GroupClick.GroupInfoDialog(view2, builder2)
-                        GroupClick.SetInfo(position)
+                        GroupClick.groupInfoDialog(view2, builder2)
+                        GroupClick.setInfo(position)
                         val dialog2 = builder2.create()
                         dialog2.show()
                         GroupClick.okBt.setOnClickListener { dialog2.dismiss() }
@@ -89,7 +89,7 @@ class FragmentGroup : ListFragment() {
                         i.putExtra("POSITION", position)
                         startActivity(i)
                     }
-                    2 -> DeleteSingleGroup(position, groupname)
+                    2 -> deleteSingleGroup(position, groupname)
                 }
             }
             val dialog = builder.create()
@@ -144,7 +144,7 @@ class FragmentGroup : ListFragment() {
         loadName()
     }
 
-    fun DeleteSingleGroup(position: Int, group: String) {
+    private fun deleteSingleGroup(position: Int, group: String) {
         val builder = android.support.v7.app.AlertDialog.Builder(activity!!)
         builder.setTitle(group)
         builder.setMessage(R.string.Do_delete)
@@ -176,12 +176,12 @@ class FragmentGroup : ListFragment() {
             dbAdapter.open()     // DBの読み込み(読み書きの方)
             for (i in 0 until ListCount) {
                 val checked = list.get(i)
-                if (checked == true) {
+                if (checked) {
                     // IDを取得する
                     listItem = nameList[i]
                     val listId = listItem.id
                     dbAdapter.selectDelete(listId.toString())     // DBから取得したIDが入っているデータを削除する
-                    FragmentMember().DeleteBelongInfoAll(listId)
+                    FragmentMember().deleteBelongInfoAll(listId)
                 }
             }
             dbAdapter.close()    // DBを閉じる
@@ -244,7 +244,7 @@ class FragmentGroup : ListFragment() {
             menu.getItem(2).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
             menu.getItem(3).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
             menu.getItem(4).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
-            parent.decision.setOnClickListener(decision_clicked)
+            MemberMain.decision.setOnClickListener(decision_clicked)
             val searchIcon = menu.findItem(R.id.search_view)
             val deleteIcon = menu.findItem(R.id.item_delete)
             val itemfilter = menu.findItem(R.id.item_filter)

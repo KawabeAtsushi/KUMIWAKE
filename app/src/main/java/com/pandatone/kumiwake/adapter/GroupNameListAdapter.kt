@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import java.util.*
  */
 class GroupNameListAdapter(private val context: Context, private val groupList: List<GroupListAdapter.Group>) : BaseAdapter() {
 
+    @SuppressLint("UseSparseArrays")
     private var gSelection = HashMap<Int, Boolean>()
 
     override fun getCount(): Int {
@@ -30,6 +32,7 @@ class GroupNameListAdapter(private val context: Context, private val groupList: 
     }
 
 
+    @SuppressLint("InflateParams", "SetTextI18n")
     override fun getView(position: Int, convertView: View, parent: ViewGroup): View {
         val nameTextView: TextView
         val numberOfMemberTextView: TextView
@@ -40,7 +43,7 @@ class GroupNameListAdapter(private val context: Context, private val groupList: 
             v = inflater.inflate(R.layout.row_group, null)
         }
         if (gSelection[position] != null) {
-            v!!.setBackgroundColor(Sort.name_getContext()!!.resources.getColor(R.color.checked_list))
+            v!!.setBackgroundColor(Sort.memberContext()!!.resources.getColor(R.color.checked_list))
         } else {
             v = inflater.inflate(R.layout.row_group, null)
         }
@@ -48,7 +51,7 @@ class GroupNameListAdapter(private val context: Context, private val groupList: 
         nameTextView = v!!.findViewById<View>(R.id.groupName) as TextView
         numberOfMemberTextView = v.findViewById<View>(R.id.theNumberOfMember) as TextView
         nameTextView.text = listItem.group
-        numberOfMemberTextView.text = "${listItem.belongNo}${Sort.name_getContext()!!.getText(R.string.person)}"
+        numberOfMemberTextView.text = "${listItem.belongNo}${Sort.memberContext()!!.getText(R.string.person)}"
 
         return v
     }

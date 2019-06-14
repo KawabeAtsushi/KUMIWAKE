@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake.adapter
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -21,6 +22,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
         get() = db.query(TABLE_NAME, null, null, null, null, null, null)
 
     val maxId: Int
+        @SuppressLint("Recycle")
         get() {
             open()
             val c = db.rawQuery("SELECT MAX($GP_ID) FROM $TABLE_NAME", null)
@@ -153,13 +155,12 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
 
     class Group(id: Int, group_name: String, belong_no: Int, group_name_read: String) : Serializable {
         var id: Int = 0
-            protected set
+            private set
         var group: String
-            protected set
-        var group_read: String
-            protected set
+            private set
+        private var group_read: String
         var belongNo: Int = 0
-            protected set
+            private set
 
         init {
             this.id = id
@@ -171,16 +172,16 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
     }
 
     companion object {
-        val DB_NAME = "kumiwake.db"
-        val DB_VERSION = 2
-        val TABLE_NAME = "group_info"
-        val GP_ID = "_id"
-        val GP_NAME = "gp_name"
-        val GP_NAME_READ = "gp_name_read"
-        val GP_BELONG = "gp_belong"
+        const val DB_NAME = "kumiwake.db"
+        const val DB_VERSION = 2
+        const val TABLE_NAME = "group_info"
+        const val GP_ID = "_id"
+        const val GP_NAME = "gp_name"
+        const val GP_NAME_READ = "gp_name_read"
+        const val GP_BELONG = "gp_belong"
         lateinit var db: SQLiteDatabase
 
-        val CREATE_TABLE = ("CREATE TABLE " + TABLE_NAME + " ("
+        const val CREATE_TABLE = ("CREATE TABLE " + TABLE_NAME + " ("
                 + GP_ID + " INTEGER PRIMARY KEY," + GP_NAME + " TEXT NOT NULL,"
                 + GP_NAME_READ + " TEXT," + GP_BELONG + " INTEGER" + ");")
     }

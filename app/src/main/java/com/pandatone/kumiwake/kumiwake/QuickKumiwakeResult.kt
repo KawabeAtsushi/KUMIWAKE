@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake.kumiwake
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
@@ -24,14 +25,14 @@ import java.util.*
  */
 class QuickKumiwakeResult : AppCompatActivity() {
 
-    internal var memberArray: ArrayList<String>
-    internal var manArray: ArrayList<String>
-    internal var womanArray: ArrayList<String>
-    internal var groupArray: ArrayList<String>
-    internal var resultArray: ArrayList<String>
-    internal var groupNo: Int = 0
-    internal var arrayArray: ArrayList<ArrayList<String>>
-    internal var viewGroup: RelativeLayout
+    private lateinit var memberArray: ArrayList<String>
+    private lateinit var manArray: ArrayList<String>
+    private lateinit var womanArray: ArrayList<String>
+    private lateinit var groupArray: ArrayList<String>
+    private lateinit var resultArray: ArrayList<String>
+    private var groupNo: Int = 0
+    private lateinit var arrayArray: ArrayList<ArrayList<String>>
+    private lateinit var viewGroup: RelativeLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +65,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
         } else {
             for (v in 0 until groupNo) {
                 resultArray = arrayArray[v]
-                Collections.shuffle(resultArray)
+                resultArray.shuffle()
             }
             val intent = Intent(this, SelectTableType::class.java)
             SekigimeResult.groupArray = groupArray
@@ -81,7 +82,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
         super.onSaveInstanceState(outState)
 
         for (i in 0 until groupNo) {
-            outState.putStringArrayList("ARRAY" + i.toString(), arrayArray[i])
+            outState.putStringArrayList("ARRAY$i", arrayArray[i])
         }
     }
 
@@ -90,21 +91,21 @@ class QuickKumiwakeResult : AppCompatActivity() {
 
         arrayArray = ArrayList(groupNo)
         for (g in 0 until groupNo) {
-            arrayArray.add(savedInstanceState.getStringArrayList("ARRAY" + g.toString()))
+            arrayArray.add(savedInstanceState.getStringArrayList("ARRAY$g"))
         }
     }
 
 
-    fun startMethod() {
+    private fun startMethod() {
         arrayArray = ArrayList(groupNo)
 
         for (g in 0 until groupNo) {
             arrayArray.add(ArrayList())
         }
 
-        if (even_fm_ratio == false) {
+        if (!even_fm_ratio) {
             kumiwakeAll()
-        } else if (even_person_ratio == false) {
+        } else if (!even_person_ratio) {
             kumiwakeFm(0)
         } else {
             kumiwakeFm(manArray.size % groupNo)
@@ -137,7 +138,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
     internal fun onClicked() {
         for (v in 0 until groupNo) {
             resultArray = arrayArray[v]
-            Collections.shuffle(resultArray)
+            resultArray.shuffle()
         }
         val intent = Intent(this, SelectTableType::class.java)
         SekigimeResult.groupArray = groupArray
@@ -154,7 +155,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
 
 
     fun kumiwakeAll() {
-        Collections.shuffle(memberArray)
+        memberArray.shuffle()
         var remainder: Int
 
         for (i in memberArray.indices) {
@@ -164,8 +165,8 @@ class QuickKumiwakeResult : AppCompatActivity() {
     }
 
     fun kumiwakeFm(firstPos: Int) {
-        Collections.shuffle(manArray)
-        Collections.shuffle(womanArray)
+        manArray.shuffle()
+        womanArray.shuffle()
         var manRemainder: Int
         var womanRemainder: Int
 
@@ -181,6 +182,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
     }
 
 
+    @SuppressLint("SetTextI18n", "InflateParams")
     fun addView(resultArray: ArrayList<String>, i: Int) {
         val groupName: TextView
         val arrayList: ListView
@@ -199,7 +201,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
         QuickKumiwakeConfirmation.setRowHeight(arrayList, adapter)
     }
 
-    fun setMargin(leftDp: Int, topDp: Int, rightDp: Int, bottomDp: Int): LinearLayout.LayoutParams {
+    private fun setMargin(leftDp: Int, topDp: Int, rightDp: Int, bottomDp: Int): LinearLayout.LayoutParams {
         val scale = resources.displayMetrics.density //画面のdensityを指定。
         val left = (leftDp * scale + 0.5f).toInt()
         val top = (topDp * scale + 0.5f).toInt()
@@ -211,7 +213,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
     }
 
 
-    fun setBackGround(v: View) {
+    private fun setBackGround(v: View) {
         val drawable = GradientDrawable()
         drawable.mutate()
         drawable.shape = GradientDrawable.RECTANGLE

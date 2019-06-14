@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,7 @@ import java.util.*
  */
 class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>, group_no: Int) : BaseAdapter() {
     private val inflater: LayoutInflater
+    private var groupNo: Int = 0
 
     init {
         listElements = nameList
@@ -46,6 +48,7 @@ class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,
         return groupNo < 1000
     }
 
+    @SuppressLint("InflateParams")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val nameTextView: TextView
         var v = convertView
@@ -67,12 +70,11 @@ class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,
 
 
     private fun setSexIcon(v: View, position: Int) {
-        val memberIcon: ImageView
-        memberIcon = v.findViewById<View>(R.id.memberIcon) as ImageView
+        val memberIcon: ImageView = v.findViewById<View>(R.id.memberIcon) as ImageView
         if (listElements[position].sex == "男") {
             memberIcon.setImageResource(R.drawable.member_img)
         } else {
-            memberIcon.setColorFilter(Sort.name_getContext()!!.resources.getColor(R.color.woman))
+            memberIcon.setColorFilter(Sort.memberContext()!!.resources.getColor(R.color.woman))
         }
     }
 
@@ -81,7 +83,7 @@ class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,
         val memberIcon: ImageView = v.findViewById<View>(R.id.memberIcon) as ImageView
         val leaderNo: TextView = v.findViewById<View>(R.id.leaderNo) as TextView
 
-        if (listElements[position].role != null && listElements[position].role.matches((".*" + Sort.name_getContext()!!.getText(R.string.leader) + ".*").toRegex())) {
+        if (listElements[position].role.matches((".*" + Sort.memberContext()!!.getText(R.string.leader) + ".*").toRegex())) {
             memberIcon.visibility = View.GONE
             starIcon.visibility = View.VISIBLE
             leaderNo.visibility = View.GONE
@@ -131,7 +133,6 @@ class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,
         var listElements: ArrayList<Name> = ArrayList()
         var leaderNoArray: ArrayList<Int>? = null
         var ldNo = 1
-        private var groupNo: Int = 0
 
         fun setRowHeight(listView: ListView, listAdp: MBListViewAdapter) {
             var totalHeight = 33

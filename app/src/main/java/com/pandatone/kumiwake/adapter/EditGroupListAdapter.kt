@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.text.InputFilter
@@ -19,8 +20,8 @@ import java.util.*
  * Created by atsushi_2 on 2016/03/20.
  */
 class EditGroupListAdapter(private val context: Context, private val groupList: List<GroupListAdapter.Group>) : BaseAdapter() {
-    internal var beforeNo: Int = 0
-    internal var afterNo: Int = 0
+    private var beforeNo: Int = 0
+    private var afterNo: Int = 0
 
     override fun getCount(): Int {
         return groupList.size
@@ -35,6 +36,7 @@ class EditGroupListAdapter(private val context: Context, private val groupList: 
     }
 
 
+    @SuppressLint("ClickableViewAccessibility", "SetTextI18n", "InflateParams")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
         val nameEditText: EditText
         val numberOfMemberEditText: EditText
@@ -46,52 +48,51 @@ class EditGroupListAdapter(private val context: Context, private val groupList: 
             v = inflater.inflate(R.layout.row_edit_group, null)
         }
 
-        if (listItem != null) {
-            nameEditText = v!!.findViewById<View>(R.id.editGroupName) as EditText
-            numberOfMemberEditText = v.findViewById<View>(R.id.editTheNumberOfMember) as EditText
-            leader = v.findViewById<View>(R.id.leader) as TextView
-            nameEditText.setText(listItem.group)
-            numberOfMemberEditText.setText(listItem.belongNo.toString())
-            leader.text = "${MainActivity.context!!.getText(R.string.leader)} : ${MainActivity.context!!.getText(R.string.nothing)}"
-            groupNameView[position] = nameEditText
-            memberNoView[position] = numberOfMemberEditText
-            numberOfMemberEditText.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
-                if (hasFocus) {
-                    if (numberOfMemberEditText.text.toString() != "" && numberOfMemberEditText.text.toString() != "-") {
-                        KumiwakeCustom.scrollView.setOnTouchListener { v, event -> false }
-                        beforeNo = Integer.parseInt(numberOfMemberEditText.text.toString())
-                    } else {
-                        KumiwakeCustom.scrollView.setOnTouchListener { v, event -> true }
-                    }
-                    numberOfMemberEditText.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(2))
+        nameEditText = v!!.findViewById<View>(R.id.editGroupName) as EditText
+        numberOfMemberEditText = v.findViewById<View>(R.id.editTheNumberOfMember) as EditText
+        leader = v.findViewById<View>(R.id.leader) as TextView
+        nameEditText.setText(listItem.group)
+        numberOfMemberEditText.setText(listItem.belongNo.toString())
+        leader.text = "${MainActivity.context!!.getText(R.string.leader)} : ${MainActivity.context!!.getText(R.string.nothing)}"
+        groupNameView[position] = nameEditText
+        memberNoView[position] = numberOfMemberEditText
+        numberOfMemberEditText.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                if (numberOfMemberEditText.text.toString() != "" && numberOfMemberEditText.text.toString() != "-") {
+                    KumiwakeCustom.scrollView.setOnTouchListener { _, _ -> false }
+                    beforeNo = Integer.parseInt(numberOfMemberEditText.text.toString())
                 } else {
+                    KumiwakeCustom.scrollView.setOnTouchListener { _, _ -> true }
+                }
+                numberOfMemberEditText.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(2))
+            } else {
 
-                    if (numberOfMemberEditText.text.toString() != "" && numberOfMemberEditText.text.toString() != "-") {
-                        KumiwakeCustom.scrollView.setOnTouchListener { v, event -> false }
+                if (numberOfMemberEditText.text.toString() != "" && numberOfMemberEditText.text.toString() != "-") {
+                    KumiwakeCustom.scrollView.setOnTouchListener { _, _ -> false }
 
-                        afterNo = Integer.parseInt(numberOfMemberEditText.text.toString())
+                    afterNo = Integer.parseInt(numberOfMemberEditText.text.toString())
 
-                        val addNo = beforeNo - afterNo
-                        KumiwakeCustom.changeBelongNo(position, addNo)
-                        if (afterNo < 0) {
-                            numberOfMemberEditText.setTextColor(Color.RED)
-                        } else {
-                            numberOfMemberEditText.setTextColor(Color.BLACK)
-                        }
+                    val addNo = beforeNo - afterNo
+                    KumiwakeCustom.changeBelongNo(position, addNo)
+                    if (afterNo < 0) {
+                        numberOfMemberEditText.setTextColor(Color.RED)
                     } else {
-                        KumiwakeCustom.scrollView.setOnTouchListener { v, event -> true }
-                        afterNo = 0
+                        numberOfMemberEditText.setTextColor(Color.BLACK)
                     }
+                } else {
+                    KumiwakeCustom.scrollView.setOnTouchListener { _, _ -> true }
+                    afterNo = 0
                 }
             }
-
         }
 
         return v
     }
 
     companion object {
+        @SuppressLint("UseSparseArrays")
         private val groupNameView = HashMap<Int, EditText>()
+        @SuppressLint("UseSparseArrays")
         private val memberNoView = HashMap<Int, EditText>()
 
         fun getGroupName(position: Int): String {
@@ -106,7 +107,7 @@ class EditGroupListAdapter(private val context: Context, private val groupList: 
         fun getMemberNo(position: Int): Int {
             var memberNo = 0
             val memberNoEditText = memberNoView[position]
-            if (memberNoEditText!!.text.toString().length > 0) {
+            if (memberNoEditText!!.text.toString().isNotEmpty()) {
                 memberNo = Integer.parseInt(memberNoEditText.text.toString())
             }
             return memberNo

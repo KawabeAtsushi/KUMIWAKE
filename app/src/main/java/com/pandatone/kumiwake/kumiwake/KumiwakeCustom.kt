@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake.kumiwake
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Point
@@ -54,24 +55,18 @@ abstract class KumiwakeCustom : AppCompatActivity() {
         origMemberArray = memberArray
     }
 
-    fun findViews() {
-//        scrollView = findViewById<View>(R.id.custom_scroll) as ScrollView
-//        memberList = findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.reviewListView) as ListView
-//        memberList.emptyView = findViewById<View>(R.id.add_group_listview).findViewById(R.id.emptyMemberList)
-//        groupList = findViewById<View>(R.id.kumiwake_group_listView) as ListView
-//        groupNo = findViewById<View>(R.id.group_no) as TextView
+    private fun findViews() {
 
-
-        even_age_ratio_check.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (even_age_ratio_check.isChecked == true) {
+        even_age_ratio_check.setOnCheckedChangeListener { _, _ ->
+            if (even_age_ratio_check.isChecked) {
                 even_grade_ratio_check.isEnabled = false
                 even_grade_ratio_check.isChecked = false
             } else {
                 even_grade_ratio_check.isEnabled = true
             }
         }
-        even_grade_ratio_check.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (even_grade_ratio_check.isChecked == true) {
+        even_grade_ratio_check.setOnCheckedChangeListener { _, _ ->
+            if (even_grade_ratio_check.isChecked) {
                 even_age_ratio_check.isEnabled = false
                 even_age_ratio_check.isChecked = false
             } else {
@@ -90,6 +85,7 @@ abstract class KumiwakeCustom : AppCompatActivity() {
         custom_spinner.adapter = adapter
     }
 
+    @SuppressLint("SetTextI18n")
     fun setViews() {
         member_add_btn.visibility = View.GONE
         mbAdapter?.let { MBListViewAdapter.setRowHeight(memberList, it) }
@@ -102,24 +98,23 @@ abstract class KumiwakeCustom : AppCompatActivity() {
         background_img.layoutParams.height = screenHeight
     }
 
+    @SuppressLint("SetTextI18n")
     fun setLeader() {
         for (i in memberArray.indices) {
-            if (memberArray[i].role != null) {
-                if (memberArray[i].role.matches((".*" + getText(R.string.leader) + ".*").toRegex())) {
+            if (memberArray[i].role.matches((".*" + getText(R.string.leader) + ".*").toRegex())) {
 
-                    val roleArray = memberArray[i].role.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
-                    val list = ArrayList(Arrays.asList<String>(*roleArray))
-                    val hs = HashSet<String>()
-                    hs.addAll(list)
-                    list.clear()
-                    list.addAll(hs)
-                    list.remove("")
-                    Collections.sort(list)
-                    val nowldNo = Integer.parseInt(list[0].substring(2))
-                    groupList.post {
-                        val leader = groupList.getChildAt(nowldNo - 1).findViewById<View>(R.id.leader) as TextView
-                        leader.text = getText(R.string.leader).toString() + ":" + memberArray[i].name
-                    }
+                val roleArray = memberArray[i].role.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                val list = ArrayList(Arrays.asList<String>(*roleArray))
+                val hs = HashSet<String>()
+                hs.addAll(list)
+                list.clear()
+                list.addAll(hs)
+                list.remove("")
+                list.sort()
+                val nowldNo = Integer.parseInt(list[0].substring(2))
+                groupList.post {
+                    val leader = groupList.getChildAt(nowldNo - 1).findViewById<View>(R.id.leader) as TextView
+                    leader.text = getText(R.string.leader).toString() + ":" + memberArray[i].name
                 }
             }
         }
@@ -149,8 +144,7 @@ abstract class KumiwakeCustom : AppCompatActivity() {
             startActivity(intent)
             overridePendingTransition(R.anim.in_right, R.anim.out_left)
         } else {
-            val error_mbNo = findViewById<View>(R.id.error_member_no_txt) as TextView
-            error_mbNo.visibility = View.VISIBLE
+            error_member_no_txt.visibility = View.VISIBLE
         }
     }
 
@@ -166,6 +160,7 @@ abstract class KumiwakeCustom : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     fun changeLeader(position: Int) {
         val newRole = StringBuilder()
         val roleItem = memberArray[position].role
@@ -202,7 +197,7 @@ abstract class KumiwakeCustom : AppCompatActivity() {
         mbAdapter?.notifyDataSetChanged()
     }
 
-    fun recreateGrouplist() {
+    private fun recreateGrouplist() {
         newGroupArray = ArrayList()
         for (i in 0 until groupList.count) {
             val groupName = EditGroupListAdapter.getGroupName(i)
@@ -215,7 +210,6 @@ abstract class KumiwakeCustom : AppCompatActivity() {
 
         lateinit var memberList: ListView
         lateinit var groupList: ListView
-        //lateinit var numberOfSelectedMember: TextView
         lateinit var groupNo: TextView
         lateinit var scrollView: ScrollView
 
@@ -233,20 +227,19 @@ abstract class KumiwakeCustom : AppCompatActivity() {
             list.addAll(hs)
             list.remove(MainActivity.context!!.getText(R.string.leader))
             list.remove("")
-            Collections.sort(list)
+            list.sort()
             return list
         }
 
         fun changeBelongNo(position: Int, addNo: Int) {
-            val et: EditText
+            val et: EditText = if (position == groupList.count - 1) {
+                groupList.getChildAt(0).findViewById<View>(R.id.editTheNumberOfMember) as EditText
+            } else {
+                groupList.getChildAt(position + 1).findViewById<View>(R.id.editTheNumberOfMember) as EditText
+            }
             var nowNo = 0
             var newNo = 0
-            if (position == groupList.count - 1) {
-                et = groupList.getChildAt(0).findViewById<View>(R.id.editTheNumberOfMember) as EditText
-            } else {
-                et = groupList.getChildAt(position + 1).findViewById<View>(R.id.editTheNumberOfMember) as EditText
-            }
-            if (et.text.toString().length > 0) {
+            if (et.text.toString().isNotEmpty()) {
                 nowNo = Integer.parseInt(et.text.toString())
             }
             newNo = nowNo + addNo

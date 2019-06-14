@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake.member
 
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
 import android.support.design.widget.TextInputLayout
@@ -23,6 +24,16 @@ import java.util.*
 class AddMember : AppCompatActivity() {
     private var beforeBelong: Array<String>? = null
     private var afterBelong: Array<String>? = null
+    private var nameEditText: AppCompatEditText? = null
+    private var readEditText: AppCompatEditText? = null
+    private var textInputLayout: TextInputLayout? = null
+    private var sexGroup: RadioGroup? = null
+    private var sexButton: RadioButton? = null
+    private var ageEditText: EditText? = null
+    private var gradeEditText: EditText? = null
+    private var belongSpinner: Button? = null
+    private var roleSpinner: Button? = null
+    private var dbAdapter: MemberListAdapter? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,10 +52,10 @@ class AddMember : AppCompatActivity() {
         }
     }
 
-    fun findViews() {
+    private fun findViews() {
         nameEditText = findViewById<View>(R.id.input_name) as AppCompatEditText
         readEditText = findViewById<View>(R.id.input_name_read) as AppCompatEditText
-        val inputFilter = InputFilter { source, start, end, dest, dstart, dend ->
+        val inputFilter = InputFilter { source, _, _, _, _, _ ->
             if (source.toString().matches("^[a-zA-Z0-9ぁ-ん]+$".toRegex())) {
                 source
             } else ""
@@ -59,20 +70,20 @@ class AddMember : AppCompatActivity() {
         roleSpinner = findViewById<View>(R.id.select_role_spinner) as Button
     }
 
-    fun setItem(position: Int) {
+    private fun setItem(position: Int) {
         val listItem = FragmentMember.nameList[position]
         val listId = listItem.id
         val name = listItem.name
-        val name_read = listItem.read
+        val read = listItem.read
         val sex = listItem.sex
         val age = listItem.age.toString()
         val grade = listItem.grade.toString()
-        val belong = MemberClick.ViewBelong(position)
+        val belong = MemberClick.viewBelong(position)
         val role = listItem.role
 
         nameEditText!!.setText(name)
-        readEditText!!.setText(name_read)
-        if (sex != null && sex == "女") {
+        readEditText!!.setText(read)
+        if (sex == "女") {
             sexGroup!!.check(R.id.womanBtn)
         } else {
             sexGroup!!.check(R.id.manBtn)
@@ -87,11 +98,12 @@ class AddMember : AppCompatActivity() {
     }
 
 
+    @SuppressLint("SetTextI18n")
     @OnClick(R.id.select_group_spinner)
     internal fun onSelectGroupSpinnerClicked(view: View) {
         // 選択中の候補を取得
         val buttonText = belongSpinner!!.text.toString()
-        val textArray = buttonText.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
+        val textArray = buttonText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         // 候補リスト
         val list = ArrayList<String>()
         for (j in 0 until FragmentGroup.ListCount) {
@@ -133,12 +145,12 @@ class AddMember : AppCompatActivity() {
             }
         })
         dialog.setPositiveButton(getText(R.string.decide), null)
-        dialog.setNeutralButton(getText(R.string.clear)) { dialog, value ->
+        dialog.setNeutralButton(getText(R.string.clear)) { _, _ ->
             belongSpinner!!.text = ""
             // 再表示
             onSelectGroupSpinnerClicked(view)
         }
-        dialog.setNegativeButton(getText(R.string.cancel)) { dialog, value ->
+        dialog.setNegativeButton(getText(R.string.cancel)) { _, _ ->
             // 選択前の状態に戻す
             belongSpinner!!.text = buttonText
         }
@@ -147,6 +159,7 @@ class AddMember : AppCompatActivity() {
         beforeBelong = textArray
     }
 
+    @SuppressLint("SetTextI18n")
     @OnClick(R.id.select_role_spinner)
     internal fun onSelectRoleSpinnerClicked(view: View) {
         // 選択中の候補を取得
@@ -173,7 +186,7 @@ class AddMember : AppCompatActivity() {
         // ダイアログを生成
         val dialog = AlertDialog.Builder(this)
         // 選択イベント
-        dialog.setMultiChoiceItems(likeArray, checkArray, DialogInterface.OnMultiChoiceClickListener { dia, value, isChecked ->
+        dialog.setMultiChoiceItems(likeArray, checkArray, DialogInterface.OnMultiChoiceClickListener { _, value, isChecked ->
             val text = roleSpinner!!.text.toString()
             // 選択された場合
             if (isChecked) {
@@ -191,12 +204,12 @@ class AddMember : AppCompatActivity() {
             }
         })
         dialog.setPositiveButton(getText(R.string.decide), null)
-        dialog.setNeutralButton(getText(R.string.clear)) { dialog, value ->
+        dialog.setNeutralButton(getText(R.string.clear)) { _, _ ->
             roleSpinner!!.text = ""
             // 再表示
             onSelectRoleSpinnerClicked(view)
         }
-        dialog.setNegativeButton(getText(R.string.cancel)) { dialog, value ->
+        dialog.setNegativeButton(getText(R.string.cancel)) { _, _ ->
             // 選択前の状態に戻す
             roleSpinner!!.text = buttonText
         }
@@ -211,28 +224,28 @@ class AddMember : AppCompatActivity() {
             textInputLayout!!.error = getText(R.string.error_empty_name)
         } else {
             saveItem()
-            afterBelong = belongSpinner!!.text.toString().split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
+            afterBelong = belongSpinner!!.text.toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             changeBelongNo()
             Toast.makeText(this, getText(R.string.member).toString() + " \"" + name + "\" " + getText(R.string.registered), Toast.LENGTH_SHORT).show()
             finish()
         }
     }
 
-    protected fun updateItem(listId: Int) {
+    private fun updateItem(listId: Int) {
         sexButton = findViewById<View>(sexGroup!!.checkedRadioButtonId) as RadioButton
         val name = nameEditText!!.text!!.toString()
-        val name_read = readEditText!!.text!!.toString()
+        val read = readEditText!!.text!!.toString()
         val sex = sexButton!!.text as String
         val age = getValue(ageEditText!!)
         val grade = getValue(gradeEditText!!)
         val belong = belongConvertToNo()
         val role = roleSpinner!!.text.toString()
 
-        dbAdapter!!.updateMember(listId, name, sex, age, grade, belong, role, name_read)
+        dbAdapter!!.updateMember(listId, name, sex, age, grade, belong, role, read)
         FragmentMember().loadName()
     }
 
-    fun update(listId: Int) {
+    private fun update(listId: Int) {
         val updateBt = findViewById<View>(R.id.member_registration_button) as Button
         updateBt.setText(R.string.update)
         updateBt.setOnClickListener {
@@ -242,7 +255,7 @@ class AddMember : AppCompatActivity() {
                 textInputLayout!!.error = getText(R.string.error_empty_name)
             } else {
                 updateItem(listId)
-                afterBelong = belongSpinner!!.text.toString().split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
+                afterBelong = belongSpinner!!.text.toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                 changeBelongNo()
                 Toast.makeText(applicationContext, getText(R.string.member).toString() + " \"" + name + "\" " + getText(R.string.updated), Toast.LENGTH_SHORT).show()
                 finish()
@@ -250,11 +263,11 @@ class AddMember : AppCompatActivity() {
         }
     }
 
-    protected fun saveItem() {
+    private fun saveItem() {
         sexButton = findViewById<View>(sexGroup!!.checkedRadioButtonId) as RadioButton
 
         val name = nameEditText!!.text!!.toString()
-        val name_read = readEditText!!.text!!.toString()
+        val read = readEditText!!.text!!.toString()
         val sex = sexButton!!.text as String
         val age = getValue(ageEditText!!)
         val grade = getValue(gradeEditText!!)
@@ -262,12 +275,12 @@ class AddMember : AppCompatActivity() {
         val role = roleSpinner!!.text.toString()
 
         dbAdapter!!.open()
-        dbAdapter!!.saveName(name, sex, age, grade, belong, role, name_read)
+        dbAdapter!!.saveName(name, sex, age, grade, belong, role, read)
         dbAdapter!!.close()
     }
 
-    fun changeBelongNo() {
-        var i: Int
+    private fun changeBelongNo() {
+        var i: Int = 0
         var j: Int
         var k: Int
         var id: Int
@@ -275,7 +288,7 @@ class AddMember : AppCompatActivity() {
         val beforeBelongNo: Int
         val afterBelongNo: Int
         var name: String
-        val name_read = "ￚ no data ￚ"
+        val read = "ￚ no data ￚ"
         var change: Boolean? = true
         val GPdbAdapter = GroupListAdapter(this)
 
@@ -291,7 +304,6 @@ class AddMember : AppCompatActivity() {
             afterBelongNo = 0
         }
 
-        i = 0
         while (i < beforeBelongNo) {
             j = 0
             while (j < afterBelongNo) {
@@ -311,7 +323,7 @@ class AddMember : AppCompatActivity() {
                         id = listItem.id
                         name = listItem.group
                         belongNo = listItem.belongNo - 1
-                        GPdbAdapter.updateGroup(id, name, name_read, belongNo)
+                        GPdbAdapter.updateGroup(id, name, read, belongNo)
                     }
                     k++
                 }
@@ -341,7 +353,7 @@ class AddMember : AppCompatActivity() {
                         id = listItem.id
                         name = listItem.group
                         belongNo = listItem.belongNo + 1
-                        GPdbAdapter.updateGroup(id, name, name_read, belongNo)
+                        GPdbAdapter.updateGroup(id, name, read, belongNo)
                     }
                     k++
                 }
@@ -351,53 +363,36 @@ class AddMember : AppCompatActivity() {
         }
     }
 
-    companion object {
-
-
-        private var nameEditText: AppCompatEditText? = null
-        private var readEditText: AppCompatEditText? = null
-        private var textInputLayout: TextInputLayout? = null
-        private var sexGroup: RadioGroup? = null
-        private var sexButton: RadioButton? = null
-        private var ageEditText: EditText? = null
-        private var gradeEditText: EditText? = null
-        private var belongSpinner: Button? = null
-        private var roleSpinner: Button? = null
-        private var dbAdapter: MemberListAdapter? = null
-
-        fun getValue(totext: EditText): Int {
-            val text = totext.text.toString()
-            var a = 0
-            if (text.length > 0) {
-                a = Integer.parseInt(text)
-            }
-            return a
-
+    fun getValue(totext: EditText): Int {
+        val text = totext.text.toString()
+        var a = 0
+        if (text.isNotEmpty()) {
+            a = Integer.parseInt(text)
         }
-
-        fun belongConvertToNo(): String {
-            dbAdapter!!.open()
-            val belongText = belongSpinner!!.text.toString()
-            val belongTextArray = belongText.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
-            val BelongNo = StringBuilder()
-
-            for (i in belongTextArray.indices) {
-                val belongGroup = belongTextArray[i]
-                for (j in 0 until FragmentGroup.ListCount) {
-                    val listItem = FragmentGroup.nameList[j]
-                    val groupName = listItem.group
-                    if (belongGroup == groupName) {
-                        val listName = listItem.id.toString()
-                        BelongNo.append("$listName,")
-                    }
-                }
-            }
-            dbAdapter!!.close()
-
-            return BelongNo.toString()
-        }
+        return a
     }
 
+    private fun belongConvertToNo(): String {
+        dbAdapter!!.open()
+        val belongText = belongSpinner!!.text.toString()
+        val belongTextArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        val BelongNo = StringBuilder()
+
+        for (i in belongTextArray.indices) {
+            val belongGroup = belongTextArray[i]
+            for (j in 0 until FragmentGroup.ListCount) {
+                val listItem = FragmentGroup.nameList[j]
+                val groupName = listItem.group
+                if (belongGroup == groupName) {
+                    val listName = listItem.id.toString()
+                    BelongNo.append("$listName,")
+                }
+            }
+        }
+        dbAdapter!!.close()
+
+        return BelongNo.toString()
+    }
 }
 
 

@@ -45,10 +45,9 @@ class KumiwakeSelectMode : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
 
         // いつものUPナビゲーションの処理
-        when (id) {
+        when (item.itemId) {
             android.R.id.home -> {
                 NavUtils.navigateUpFromSameTask(this)
                 return true

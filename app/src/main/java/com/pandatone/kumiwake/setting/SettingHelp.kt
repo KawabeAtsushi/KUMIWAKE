@@ -13,25 +13,22 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.ListView
 import butterknife.ButterKnife
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.customize.CustomDialog
+import kotlinx.android.synthetic.main.setting_help.*
 
 /**
  * Created by atsushi_2 on 2016/02/19.
  */
 class SettingHelp : AppCompatActivity() {
-    internal var customDialog: CustomDialog
-    internal var howToUseList: ListView
-    internal var backupList: ListView
-    internal var otherList: ListView
-    internal var howToUse_adapter: ArrayAdapter<String>
-    internal var backup_adapter: ArrayAdapter<String>
-    internal var other_adapter: ArrayAdapter<String>
-    internal var how_to_use_str: Array<String>
-    internal var backup_str: Array<String>
-    internal var other_str: Array<String>
+    private lateinit var customDialog: CustomDialog
+    private lateinit var howToUse_adapter: ArrayAdapter<String>
+    private lateinit var backup_adapter: ArrayAdapter<String>
+    private lateinit var other_adapter: ArrayAdapter<String>
+    private lateinit var how_to_use_str: Array<String>
+    private lateinit var backup_str: Array<String>
+    private lateinit var other_str: Array<String>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,21 +41,20 @@ class SettingHelp : AppCompatActivity() {
         supportActionBar!!.setDisplayShowTitleEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         ButterKnife.bind(this)
-        context = application
         setViews()
-        howToUseList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+        how_to_use_list.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             //行をクリックした時の処理
             when (position) {
                 0 -> {
                     val message = (getString(R.string.how_to_kumiwake) + "■" + getString(R.string.normal_mode) + "■\n"
                             + getString(R.string.description_of_normal_mode) + "\n\n■" + getString(R.string.quick_mode) + "■\n" + getString(R.string.description_of_quick_mode))
-                    ConfirmationDialog(how_to_use_str[0], message)
+                    confirmationDialog(how_to_use_str[0], message)
                 }
-                1 -> ConfirmationDialog(how_to_use_str[1], getText(R.string.how_to_member))
-                2 -> ConfirmationDialog(how_to_use_str[2], getText(R.string.how_to_sekigime))
+                1 -> confirmationDialog(how_to_use_str[1], getText(R.string.how_to_member))
+                2 -> confirmationDialog(how_to_use_str[2], getText(R.string.how_to_sekigime))
             }
         }
-        backupList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+        back_up_list.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             //行をクリックした時の処理
             when (position) {
                 0 -> onBackup()
@@ -66,11 +62,11 @@ class SettingHelp : AppCompatActivity() {
                 2 -> onDeleteBackup()
             }
         }
-        otherList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+        other_list.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             //行をクリックした時の処理
             when (position) {
-                0 -> showVersionName(context)
-                1 -> ConfirmationDialog(getString(R.string.advertise_delete), getString(R.string.wait_for_implementation))
+                0 -> showVersionName(applicationContext)
+                1 -> confirmationDialog(getString(R.string.advertise_delete), getString(R.string.wait_for_implementation))
                 2 -> launchMailer()
                 3 -> shareApp()
             }
@@ -90,30 +86,27 @@ class SettingHelp : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun setViews() {
+    private fun setViews() {
         how_to_use_str = arrayOf(getString(R.string.about_kumiwake), getString(R.string.about_member), getString(R.string.about_sekigime))
         backup_str = arrayOf(getString(R.string.back_up_db), getString(R.string.import_db), getString(R.string.delete_backup))
         other_str = arrayOf(getString(R.string.app_version), getString(R.string.advertise_delete), getString(R.string.contact_us), getString(R.string.share_app))
-        howToUseList = findViewById<View>(R.id.how_to_use_list) as ListView
-        backupList = findViewById<View>(R.id.back_up_list) as ListView
-        otherList = findViewById<View>(R.id.other_list) as ListView
         howToUse_adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, how_to_use_str)
         backup_adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, backup_str)
         other_adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, other_str)
 
-        howToUseList.adapter = howToUse_adapter
-        backupList.adapter = backup_adapter
-        otherList.adapter = other_adapter
+        how_to_use_list.adapter = howToUse_adapter
+        back_up_list.adapter = backup_adapter
+        other_list.adapter = other_adapter
     }
 
-    fun ConfirmationDialog(title: String, message: CharSequence) {
+    private fun confirmationDialog(title: String, message: CharSequence) {
         customDialog = CustomDialog()
         customDialog.setTitle(title)
         customDialog.setMessage(message)
         customDialog.show(fragmentManager, "Btn")
     }
 
-    fun DecisionDialog(title: String, message: CharSequence, code: Int) {
+    private fun DecisionDialog(title: String, message: CharSequence, code: Int) {
         customDialog = CustomDialog()
         customDialog.setTitle(title)
         customDialog.setMessage(message)
@@ -121,25 +114,25 @@ class SettingHelp : AppCompatActivity() {
         customDialog.show(fragmentManager, "Btn")
     }
 
-    fun onBackup() {
+    private fun onBackup() {
         val title = getString(R.string.back_up_db)
         val message = getString(R.string.back_up_attention) + getString(R.string.run_confirmation)
         DecisionDialog(title, message, 1)
     }
 
-    fun onImport() {
+    private fun onImport() {
         val title = getString(R.string.import_db)
         val message = getString(R.string.import_attention) + getString(R.string.run_confirmation)
         DecisionDialog(title, message, 2)
     }
 
-    fun onDeleteBackup() {
+    private fun onDeleteBackup() {
         val title = getString(R.string.delete_backup)
         val message = getString(R.string.delete_backup_attention)
         DecisionDialog(title, message, 3)
     }
 
-    fun showVersionName(context: Context) {
+    private fun showVersionName(context: Context) {
         val pm = context.packageManager
         var versionName = ""
         try {
@@ -149,10 +142,10 @@ class SettingHelp : AppCompatActivity() {
             e.printStackTrace()
         }
 
-        ConfirmationDialog(getString(R.string.app_version), versionName)
+        confirmationDialog(getString(R.string.app_version), versionName)
     }
 
-    fun launchMailer() {
+    private fun launchMailer() {
         val intent = Intent()
         intent.action = Intent.ACTION_SENDTO
         intent.data = Uri.parse("mailto:ganbalism@gmail.com")
@@ -162,7 +155,7 @@ class SettingHelp : AppCompatActivity() {
     }
 
 
-    fun shareApp() {
+    private fun shareApp() {
         val articleTitle = getString(R.string.article_title)
         val articleURL = "https://play.google.com/store/apps/details?id=com.pandatone.pandatone_ganbalism_atsushi_2.kumiwake"
         val sharedText = "$articleTitle\n$articleURL\n_(÷3」∠)_"
@@ -187,8 +180,9 @@ class SettingHelp : AppCompatActivity() {
 
     }
 
-    companion object {
-        var context: Context
-            internal set
+    companion object{
+        val context: Context?
+            get() = SettingHelp().applicationContext
     }
+
 }

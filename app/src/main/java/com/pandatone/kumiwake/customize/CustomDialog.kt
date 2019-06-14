@@ -68,7 +68,7 @@ class CustomDialog : DialogFragment() {
     fun setOnPositiveClickListener(code: Int) {
         mPositiveBtnListener = View.OnClickListener {
             when (code) {
-                1 -> DBBackup.DBBackup(activity)
+                1 -> DBBackup.dbBackup(activity)
                 2 -> DBBackup.DBImport(activity)
                 3 -> {
                     val mb_file = File(Environment.getExternalStorageDirectory().path + "/KUMIWAKE_Backup/mb.db")

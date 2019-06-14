@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake.kumiwake
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -45,7 +46,8 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
         scrollView.post { scrollView.scrollTo(0, 0) }
     }
 
-    protected fun findViews() {
+    @SuppressLint("SetTextI18n")
+    private fun findViews() {
 
         if (KumiwakeSelectMode.sekigime) {
             confirmation_title_txt.setText(R.string.sekigime_confirm)
@@ -58,7 +60,7 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
         group_no_txt.text = groupArray.size.toString() + " " + getText(R.string.group)
     }
 
-    fun countManNo(): Int {
+    private fun countManNo(): Int {
         var manNo = 0
         for (i in memberArray.indices) {
             if (memberArray[i].sex == getText(R.string.man)) {
@@ -68,17 +70,17 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
         return manNo
     }
 
-    fun setViews() {
+    private fun setViews() {
         val custom_text = StringBuilder()
         val array_str = resources.getStringArray(R.array.role)
 
-        if (even_fm_ratio == true) {
+        if (even_fm_ratio) {
             custom_text.append("☆" + getText(R.string.even_out_male_female_ratio) + "\n")
         }
-        if (even_age_ratio == true) {
+        if (even_age_ratio) {
             custom_text.append("☆" + getText(R.string.even_out_age_ratio) + "\n")
         }
-        if (even_grade_ratio == true) {
+        if (even_grade_ratio) {
             custom_text.append("☆" + getText(R.string.even_out_grade_ratio) + "\n")
         }
         if (even_role != array_str[0]) {
@@ -103,7 +105,7 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
         startActivity(intent)
     }
 
-    protected fun setAdapter() {
+    private fun setAdapter() {
         Collections.sort(memberArray, KumiwakeLeaderComparator())
         memberAdapter = MBListViewAdapter(this, memberArray, 0)
         groupAdapter = GPListViewAdapter(this, groupArray)
@@ -111,14 +113,5 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
         kumiwake_group_listView.adapter = groupAdapter
     }
 
-    companion object {
-//        internal var memberList: ListView : kumiwake_member_listView
-//        internal var groupList: ListView : kumiwake_group_listView
-//        internal var customReview: TextView : custom_review
-//        internal var memberNo: TextView : member_no
-//        internal var groupNo: TextView : group_no
-//        internal var title: TextView :
-//        internal var betweenArrows: TextView : between_arrows
-    }
 }
 

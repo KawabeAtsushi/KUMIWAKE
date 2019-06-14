@@ -14,8 +14,8 @@ import com.pandatone.kumiwake.customize.CustomDialogSekigime
  */
 class SelectTableType : AppCompatActivity() {
 
-    internal var inflater: LayoutInflater
-    internal var title = ""
+    private lateinit var inflater: LayoutInflater
+    private var title = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,31 +28,31 @@ class SelectTableType : AppCompatActivity() {
     internal fun onSquareClicked() {
         DrawTableView.tableType = "square"
         title = getString(R.string.square_table)
-        ConfirmationDialog(title, 1)
+        confirmationDialog(title, 1)
     }
 
     @OnClick(R.id.parallel_table)
     internal fun onParallelClicked() {
         DrawTableView.tableType = "parallel"
         title = getString(R.string.parallel_table)
-        ConfirmationDialog(title, 2)
+        confirmationDialog(title, 2)
     }
 
     @OnClick(R.id.circle_table)
     internal fun onCircleClicked() {
         DrawTableView.tableType = "circle"
         title = getString(R.string.circle_table)
-        ConfirmationDialog(title, 3)
+        confirmationDialog(title, 3)
     }
 
     @OnClick(R.id.counter_table)
     internal fun onCounterClicked() {
         DrawTableView.tableType = "counter"
         title = getString(R.string.counter_table)
-        ConfirmationDialog(title, 4)
+        confirmationDialog(title, 4)
     }
 
-    fun ConfirmationDialog(title: String, position: Int) {
+    private fun confirmationDialog(title: String, position: Int) {
         val customDialog = CustomDialogSekigime()
         customDialog.setTitle(title)
         customDialog.setPosition(position)

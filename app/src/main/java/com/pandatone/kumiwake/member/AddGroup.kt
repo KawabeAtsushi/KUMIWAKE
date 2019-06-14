@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake.member
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.TextInputLayout
@@ -23,12 +24,14 @@ import java.util.*
  */
 class AddGroup : AppCompatActivity() {
     private var textInputLayout: TextInputLayout? = null
-    internal var nextId = FragmentGroup.dbAdapter.maxId + 1
-    internal var adapter: MBListViewAdapter
+    private var nextId = FragmentGroup.dbAdapter.maxId + 1
+    internal lateinit var adapter: MBListViewAdapter
+    private lateinit var listView: ListView
+    internal var position: Int = 0
 
     private val clicked = View.OnClickListener { moveMemberMain() }
 
-    val groupId: Int
+    private val groupId: Int
         get() {
             val groupId: Int
             if (position == nextId) {
@@ -50,12 +53,11 @@ class AddGroup : AppCompatActivity() {
         if (position != nextId) {
             setItem(position)
         }
-        FragmentMember.DeleteBelongInfoAll(nextId)
+        FragmentMember().deleteBelongInfoAll(nextId)
     }
 
     protected fun findViews() {
         groupEditText = findViewById<View>(R.id.input_group) as AppCompatEditText
-        //readEditText = (AppCompatEditText) findViewById(R.id.input_group_read);
         textInputLayout = findViewById<View>(R.id.group_form_input_layout) as TextInputLayout
         listView = findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.reviewListView) as ListView
         numberOfSelectedMember = findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.numberOfSelectedMember) as TextView
@@ -64,18 +66,18 @@ class AddGroup : AppCompatActivity() {
         addMember.setOnClickListener(clicked)
     }
 
+    @SuppressLint("SetTextI18n")
     public override fun onStart() {
         super.onStart()
-        val nameByBelong: ArrayList<Name>
-        if (position == nextId) {
-            nameByBelong = FragmentMember.searchBelong(nextId.toString())
+        val nameByBelong: ArrayList<Name> = if (position == nextId) {
+            FragmentMember().searchBelong(nextId.toString())
         } else {
-            nameByBelong = FragmentMember.searchBelong(FragmentGroup.nameList[position].id.toString())
+            FragmentMember().searchBelong(FragmentGroup.nameList[position].id.toString())
         }
         adapter = MBListViewAdapter(this@AddGroup, nameByBelong, 0)
         listView.adapter = adapter
         numberOfSelectedMember.text = adapter.count.toString() + getString(R.string.person) + getString(R.string.selected)
-        FragmentMember.DuplicateBelong()
+        FragmentMember().duplicateBelong()
     }
 
 
@@ -93,24 +95,24 @@ class AddGroup : AppCompatActivity() {
     }
 
 
-    protected fun saveItem() {
+    private fun saveItem() {
         val name = groupEditText.text!!.toString()
         dbAdapter.open()
         dbAdapter.saveGroup(name, name, adapter.count)
         dbAdapter.close()
-        FragmentMember.loadName()
+        FragmentMember().loadName()
     }
 
-    protected fun updateItem(listId: Int) {
+    private fun updateItem(listId: Int) {
         val name = groupEditText.text!!.toString()
         dbAdapter.open()
         dbAdapter.updateGroup(listId, name, name, adapter.count)
         dbAdapter.close()
-        FragmentMember.loadName()
+        FragmentMember().loadName()
     }
 
 
-    fun setItem(position: Int) {
+    private fun setItem(position: Int) {
         val listItem = FragmentGroup.nameList[position]
         val listId = listItem.id
         val group = listItem.group
@@ -119,7 +121,7 @@ class AddGroup : AppCompatActivity() {
         update(listId)
     }
 
-    fun update(listId: Int) {
+    private fun update(listId: Int) {
         val updateBt = findViewById<View>(R.id.group_registration_button) as Button
         updateBt.setText(R.string.update)
         updateBt.setOnClickListener {
@@ -135,7 +137,7 @@ class AddGroup : AppCompatActivity() {
         }
     }
 
-    fun moveMemberMain() {
+    private fun moveMemberMain() {
         val intent = Intent(this, MemberMain::class.java)
         intent.putExtra("visible", true)
         intent.putExtra("delete_icon_visible", false)
@@ -146,12 +148,9 @@ class AddGroup : AppCompatActivity() {
 
     companion object {
 
-        internal var groupEditText: AppCompatEditText
-        //static AppCompatEditText readEditText;
-        internal var listView: ListView
-        internal var numberOfSelectedMember: TextView
-        internal var dbAdapter: GroupListAdapter
-        internal var position: Int = 0
+        internal lateinit var groupEditText: AppCompatEditText
+        internal lateinit var numberOfSelectedMember: TextView
+        internal lateinit var dbAdapter: GroupListAdapter
     }
 
 }

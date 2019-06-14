@@ -38,8 +38,8 @@ class QuickMode : AppCompatActivity(), TextWatcher {
         }
         setContentView(R.layout.quick_mode)
         ButterKnife.bind(this)
-        even_fm_ratio_check.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (even_fm_ratio_check.isChecked == true) {
+        even_fm_ratio_check.setOnCheckedChangeListener { _, _ ->
+            if (even_fm_ratio_check.isChecked) {
                 even_person_ratio_check.isEnabled = true
             } else {
                 even_person_ratio_check.isChecked = false

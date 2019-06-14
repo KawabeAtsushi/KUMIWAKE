@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake.sekigime
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
@@ -45,7 +46,8 @@ class SekigimeResult : AppCompatActivity() {
             convertAlternatelyFmArray()
         }
         val draw = DrawTableView(this)
-        val wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val wm = applicationContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+
         val disp = wm.defaultDisplay
         val size = Point()
         disp.getSize(size)
@@ -74,12 +76,12 @@ class SekigimeResult : AppCompatActivity() {
             val customDialog = CustomDialog()
             customDialog.setTitle(title)
             customDialog.setMessage(message)
-            customDialog.mPositiveBtnListener = View.OnClickListener {
+            CustomDialog.mPositiveBtnListener = View.OnClickListener {
                 for (i in 0 until groupNo) {
                     if (Normalmode) {
-                        Collections.shuffle(arrayArrayNormal[i])
+                        arrayArrayNormal[i].shuffle()
                     } else {
-                        Collections.shuffle(arrayArrayQuick[i])
+                        arrayArrayQuick[i].shuffle()
                     }
                 }
                 if (fmDeploy) {
@@ -110,7 +112,7 @@ class SekigimeResult : AppCompatActivity() {
         }
         adapter.addAll(list)
         group_spinner.adapter = adapter
-        val lp = Spinner.LayoutParams(buttonWidth, buttonHeight)
+        val lp = LinearLayout.LayoutParams(buttonWidth, buttonHeight)
         group_spinner.layoutParams = lp
         group_spinner.translationY = 15 * scale
         group_spinner.translationX = (centerX * 1.1).toFloat()
@@ -325,12 +327,12 @@ class SekigimeResult : AppCompatActivity() {
 
     companion object {
 
-        var arrayArrayNormal: ArrayList<ArrayList<Name>>
-        var arrayArrayNormalMan: ArrayList<ArrayList<Name>>
-        var arrayArrayNormalWoman: ArrayList<ArrayList<Name>>
-        var arrayArrayQuick: ArrayList<ArrayList<String>>
-        var arrayArrayQuickMan: ArrayList<ArrayList<String>>
-        var arrayArrayQuickWoman: ArrayList<ArrayList<String>>
+        lateinit var arrayArrayNormal: ArrayList<ArrayList<Name>>
+        lateinit var arrayArrayNormalMan: ArrayList<ArrayList<Name>>
+        lateinit var arrayArrayNormalWoman: ArrayList<ArrayList<Name>>
+        lateinit var arrayArrayQuick: ArrayList<ArrayList<String>>
+        lateinit var arrayArrayQuickMan: ArrayList<ArrayList<String>>
+        lateinit var arrayArrayQuickWoman: ArrayList<ArrayList<String>>
         var groupArray: ArrayList<String>? = null
         var Normalmode: Boolean = false
         var doubleDeploy: Boolean = false

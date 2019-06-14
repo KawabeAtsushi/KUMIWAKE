@@ -9,28 +9,28 @@ import com.pandatone.kumiwake.adapter.GroupListAdapter
 import java.io.*
 
 object DBBackup {
-    internal var sd_dir: String
-    internal var sd_stt: String
-    internal var dir_path: String
-    internal var mb_db_file: String
-    internal var gp_db_file: String
-    internal var b: Boolean = false
+    private lateinit var sd_dir: String
+    private lateinit var sd_stt: String
+    private lateinit var dir_path: String
+    private lateinit var mb_db_file: String
+    private lateinit var gp_db_file: String
+    private var b: Boolean = false
 
-    fun DBBackup(c: Context) {
+    fun dbBackup(c: Context) {
         getPath(c)
 
         val f = File(dir_path)
         b = f.exists()           //SDカードにkumiwakeディレクトリがあるか。
-        if (b == false) {          //ディレクトリが存在しないので作成。
+        if (!b) {          //ディレクトリが存在しないので作成。
             b = f.mkdirs()    //　sdcard/kumiwakeディレクトリを作ってみる。
-            if (b == false) {
-                Toast.makeText(c, SettingHelp.context.getString(R.string.failed_back_up), Toast.LENGTH_SHORT).show()
+            if (!b) {
+                Toast.makeText(c, SettingHelp.context?.getString(R.string.failed_back_up), Toast.LENGTH_SHORT).show()
                 return          //ディレクトリ作成失敗
             }
         }
 
-        filecopy(mb_db_file, "$dir_path/mb.db", c, true)
-        filecopy(gp_db_file, "$dir_path/gp.db", c, true)//DBのファイルをSDにコピー
+        fileCopy(mb_db_file, "$dir_path/mb.db", c, true)
+        fileCopy(gp_db_file, "$dir_path/gp.db", c, true)//DBのファイルをSDにコピー
     }
 
     fun DBImport(c: Context) {
@@ -38,18 +38,18 @@ object DBBackup {
 
         val f = File(dir_path)
         b = f.exists()           //SDカードにkumiwakeディレクトリがあるか。
-        if (b == false) {
-            Toast.makeText(c, SettingHelp.context.getString(R.string.not_exist_file), Toast.LENGTH_SHORT).show()
+        if (!b) {
+            Toast.makeText(c, SettingHelp.context?.getString(R.string.not_exist_file), Toast.LENGTH_SHORT).show()
             return
         }
 
-        filecopy("$dir_path/mb.db", mb_db_file, c, false)
-        filecopy("$dir_path/gp.db", gp_db_file, c, false)//DBのファイルをインポート
+        fileCopy("$dir_path/mb.db", mb_db_file, c, false)
+        fileCopy("$dir_path/gp.db", gp_db_file, c, false)//DBのファイルをインポート
     }
 
 
     //ファイルのコピー（チャネルを使用）
-    fun filecopy(file_src: String, file_dist: String, c: Context, backup: Boolean?) {
+    private fun fileCopy(file_src: String, file_dist: String, c: Context, backup: Boolean?) {
         var err: Int
         val fis: FileInputStream
         val fos: FileOutputStream
@@ -74,17 +74,17 @@ object DBBackup {
         }
 
         if (err == 0 && backup!!) {
-            Toast.makeText(c, SettingHelp.context.getString(R.string.back_up_completed), Toast.LENGTH_SHORT).show()
-        } else if (err == 0 && (!backup)!!) {
-            Toast.makeText(c, SettingHelp.context.getString(R.string.import_completed), Toast.LENGTH_SHORT).show()
+            Toast.makeText(c, SettingHelp.context?.getString(R.string.back_up_completed), Toast.LENGTH_SHORT).show()
+        } else if (err == 0 && (!backup!!)) {
+            Toast.makeText(c, SettingHelp.context?.getString(R.string.import_completed), Toast.LENGTH_SHORT).show()
         }
     }
 
-    fun getPath(c: Context) {
+    private fun getPath(c: Context) {
         sd_dir = Environment.getExternalStorageDirectory().path     //SDカードディレクトリ
         sd_stt = Environment.getExternalStorageState()           //SDカードの状態を取得
-        val dbAdapter = MemberListAdapter(SettingHelp.context)
-        val gpdbAdapter = GroupListAdapter(SettingHelp.context)
+        val dbAdapter = MemberListAdapter(SettingHelp.context!!)
+        val gpdbAdapter = GroupListAdapter(SettingHelp.context!!)
         dbAdapter.open()
         dbAdapter.allNames
         dbAdapter.close()
@@ -96,8 +96,8 @@ object DBBackup {
         dir_path = "$sd_dir/KUMIWAKE_Backup"
 
         b = sd_stt == Environment.MEDIA_MOUNTED     //SDカードの状態
-        if (b == false) {  //書込み状態でマウントされていない。
-            Toast.makeText(c, SettingHelp.context.getString(R.string.not_mounted), Toast.LENGTH_SHORT).show()
+        if (!b) {  //書込み状態でマウントされていない。
+            Toast.makeText(c, SettingHelp.context!!.getString(R.string.not_mounted), Toast.LENGTH_SHORT).show()
             return          //ディレクトリ作成失敗
         }
 

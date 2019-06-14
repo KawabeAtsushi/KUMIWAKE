@@ -69,7 +69,7 @@ class CustomDialogSekigime : DialogFragment() {
         mPosition = position
     }
 
-    fun setImage() {
+    private fun setImage() {
         val width: Int
         val height: Int
         var widthDp = 0
@@ -103,7 +103,7 @@ class CustomDialogSekigime : DialogFragment() {
         iv!!.layoutParams = layoutParams
     }
 
-    fun setOnPositiveClickListener() {
+    private fun setOnPositiveClickListener() {
         mPositiveBtnListener = View.OnClickListener {
             SekigimeResult.fmDeploy = fmDeploy!!.isChecked
             if (mPosition == 1) {

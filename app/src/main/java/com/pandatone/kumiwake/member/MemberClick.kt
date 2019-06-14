@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake.member
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.view.View
@@ -11,19 +12,21 @@ import com.pandatone.kumiwake.R
 /**
  * Created by atsushi_2 on 2016/04/17.
  */
+@SuppressLint("StaticFieldLeak")
 object MemberClick {
-    internal var name: TextView
-    internal var sex: TextView
-    internal var age: TextView
-    internal var grade: TextView
-    internal var belong: TextView
-    internal var role: TextView
-    internal var okBt: Button
-    protected val context: Context?
-        get() = MemberMain.context
+    internal lateinit var name: TextView
+    internal lateinit var sex: TextView
+    internal lateinit var age: TextView
+    internal lateinit var grade: TextView
+    internal lateinit var belong: TextView
+    internal lateinit var role: TextView
+    internal lateinit var okBt: Button
+
+    val context: Context?
+        get() = MemberMain().applicationContext
 
 
-    fun MemberInfoDialog(view: View, builder: AlertDialog.Builder) {
+    fun memberInfoDialog(view: View, builder: AlertDialog.Builder) {
 
         name = view.findViewById<View>(R.id.infoName) as TextView
         sex = view.findViewById<View>(R.id.infoSex) as TextView
@@ -38,14 +41,15 @@ object MemberClick {
 
     }
 
+    @SuppressLint("SetTextI18n")
     fun SetInfo(position: Int) {
         name.text = context!!.getText(R.string.member_name).toString() + " : " + FragmentMember.nameList[position].name + " (" + FragmentMember.nameList[position].read + ")"
         sex.text = context!!.getText(R.string.sex).toString() + " : " + FragmentMember.nameList[position].sex
         age.text = context!!.getText(R.string.age).toString() + " : " + FragmentMember.nameList[position].age.toString()
         grade.text = context!!.getText(R.string.grade).toString() + " : " + FragmentMember.nameList[position].grade.toString()
 
-        if (ViewBelong(position) !== "") {
-            belong.text = context!!.getText(R.string.belong).toString() + " : " + ViewBelong(position)
+        if (viewBelong(position) !== "") {
+            belong.text = context!!.getText(R.string.belong).toString() + " : " + viewBelong(position)
         } else {
             belong.text = context!!.getText(R.string.belong).toString() + " : " + context!!.getText(R.string.nothing)
         }
@@ -58,12 +62,12 @@ object MemberClick {
 
     }
 
-    fun ViewBelong(position: Int): String {
+    fun viewBelong(position: Int): String {
         val result: String
 
         FragmentMember.dbAdapter.open()
         val belongText = FragmentMember.nameList[position].belong
-        val belongArray = belongText.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
+        val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         val newBelong = StringBuilder()
 
         for (i in belongArray.indices) {

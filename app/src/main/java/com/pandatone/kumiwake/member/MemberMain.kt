@@ -61,11 +61,12 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         viewPager = findViewById<View>(R.id.view_pager) as ViewPager
         val adapter = CustomPagerAdapter(manager)
         viewPager.adapter = adapter
+        decision = findViewById<View>(R.id.decisionBt) as Button
     }
 
     private fun visibleViews() {
         if (intent.getBooleanExtra("visible", false)) {
-            decisionBt.visibility = View.VISIBLE
+            decision.visibility = View.VISIBLE
             FragmentGroup.adviceInFG.visibility = View.VISIBLE
             FragmentMember.fab.hide()
             FragmentGroup.fab.hide()
@@ -183,8 +184,8 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
     }
 
     companion object {
-
         internal lateinit var searchView: SearchView
+        internal lateinit var decision: Button
     }
 
 }

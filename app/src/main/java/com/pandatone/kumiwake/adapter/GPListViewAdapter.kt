@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +31,7 @@ class GPListViewAdapter(private val context: Context, nameList: ArrayList<GroupL
         return position.toLong()
     }
 
+    @SuppressLint("InflateParams", "SetTextI18n")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val nameTextView: TextView
         val memberNoTextView: TextView
@@ -45,7 +47,7 @@ class GPListViewAdapter(private val context: Context, nameList: ArrayList<GroupL
         memberNoTextView = v.findViewById<View>(R.id.memberNo) as TextView
         memberNoTextView.visibility = View.VISIBLE
         nameTextView.text = listElements[position].group
-        memberNoTextView.text = listElements[position].belongNo.toString() + Sort.name_getContext()!!.getText(R.string.person)
+        memberNoTextView.text = listElements[position].belongNo.toString() + Sort.memberContext()!!.getText(R.string.person)
 
         return v
     }

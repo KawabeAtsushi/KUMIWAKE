@@ -26,7 +26,7 @@ object GroupClick {
         get() = MemberMain().applicationContext
 
 
-    fun GroupInfoDialog(view: View, builder: AlertDialog.Builder) {
+    fun groupInfoDialog(view: View, builder: AlertDialog.Builder) {
 
         group = view.findViewById<View>(R.id.infoName) as TextView
         number = view.findViewById<View>(R.id.infoNoOfMb) as TextView
@@ -39,7 +39,7 @@ object GroupClick {
 
     }
 
-    fun SetInfo(position: Int) {
+    fun setInfo(position: Int) {
         val nameByBelong = FragmentMember().searchBelong(FragmentGroup.nameList[position].id.toString())
         val adapter = MBListViewAdapter(context, nameByBelong, 0)
 

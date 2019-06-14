@@ -1,10 +1,12 @@
 package com.pandatone.kumiwake.kumiwake
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.AppCompatEditText
 import android.text.TextUtils
 import android.transition.Slide
 import android.view.View
@@ -27,9 +29,12 @@ import java.util.*
  */
 class NormalMode : AppCompatActivity() {
     private lateinit var adapter: MBListViewAdapter
+    private lateinit var GpNoEditText: AppCompatEditText
+    private lateinit var errorGroup: TextView
 
     private val clicked = View.OnClickListener { moveMemberMain() }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -44,12 +49,14 @@ class NormalMode : AppCompatActivity() {
         add_group_listview.numberOfSelectedMember.text = "0${getString(R.string.person)}${getString(R.string.selected)}"
     }
 
-    fun findViews() {
+    private fun findViews() {
         listView = findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.reviewListView) as ListView
         listView.emptyView = findViewById<View>(R.id.add_group_listview).findViewById(R.id.emptyMemberList)
+        GpNoEditText = findViewById<View>(R.id.group_no_form) as AppCompatEditText
+        errorGroup = findViewById<View>(R.id.error_group_no_txt) as TextView
     }
 
-    fun moveMemberMain() {
+    private fun moveMemberMain() {
         val intent = Intent(this, MemberMain::class.java)
         intent.putExtra("visible", true)
         intent.putExtra("delete_icon_visible", false)
@@ -61,20 +68,20 @@ class NormalMode : AppCompatActivity() {
 
 
     @OnClick(R.id.normal_kumiwake_button)
-    internal fun onClicked() {
-        val group_no = `@+id/group_no_form`.text!!.toString()
+    fun onClicked() {
+        val group_no = GpNoEditText.text!!.toString()
 
         if (TextUtils.isEmpty(group_no)) {
-            error_group_no_txt.setText(R.string.error_empty_group_no)
+            errorGroup.setText(R.string.error_empty_group_no)
             scrollToTop()
         }
         if (group_no != "" && Integer.parseInt(group_no) > adapter.count) {
-            error_group_no_txt.setText(R.string.number_of_groups_is_much_too)
-            error_group_no_txt.text = ""
+            errorGroup.setText(R.string.number_of_groups_is_much_too)
+            errorGroup.text = ""
             scrollToTop()
         } else if (TextUtils.isEmpty(group_no)) {
-            error_group_no_txt.setText(R.string.error_empty_group_no)
-            error_group_no_txt.text = ""
+            errorGroup.setText(R.string.error_empty_group_no)
+            errorGroup.text = ""
             scrollToTop()
         } else {
             val groupArray = ArrayList<GroupListAdapter.Group>()
@@ -98,6 +105,7 @@ class NormalMode : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onActivityResult(requestCode: Int, resultCode: Int, i: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             memberArray = i!!.getSerializableExtra("memberArray") as ArrayList<Name>
@@ -109,11 +117,12 @@ class NormalMode : AppCompatActivity() {
         }
     }
 
-    fun scrollToTop() {
+    private fun scrollToTop() {
         normal_mode_scrollView.post { normal_mode_scrollView.scrollTo(0, 0) }
     }
 
     companion object {
+        @SuppressLint("StaticFieldLeak")
         internal lateinit var listView: ListView
         internal lateinit var memberArray: ArrayList<Name>
     }

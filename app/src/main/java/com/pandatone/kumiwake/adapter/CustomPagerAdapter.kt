@@ -29,8 +29,8 @@ class CustomPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     override fun getPageTitle(position: Int): CharSequence? {
         when (position) {
-            0 -> return MemberMain.context!!.getString(R.string.member)
-            1 -> return MemberMain.context!!.getString(R.string.group)
+            0 -> return MemberMain().applicationContext.getString(R.string.member)
+            1 -> return MemberMain().applicationContext.getString(R.string.group)
         }
         return null
     }

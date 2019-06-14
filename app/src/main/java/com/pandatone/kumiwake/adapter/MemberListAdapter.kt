@@ -180,13 +180,8 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
     }
 
     fun saveName(name: String, sex: String, age: Int, grade: Int, belong: String, role: String, read: String) {
-        var read = read
 
         db.beginTransaction()          // トランザクション開始
-
-        if (read.isEmpty()) {
-            read = "ￚ no data ￚ"
-        }
 
         try {
             val values = ContentValues()
@@ -196,7 +191,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
             values.put(MB_GRADE, grade)
             values.put(MB_BELONG, belong)
             values.put(MB_ROLE, role)
-            values.put(MB_NAME_READ, read)
+            if (read.isEmpty()) values.put(MB_NAME_READ, "ￚ no data ￚ") else values.put(MB_NAME_READ, read)
             db.insert(TABLE_NAME, null, values)
 
             db.setTransactionSuccessful()      // トランザクションへコミット
@@ -208,11 +203,6 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
     }
 
     fun updateMember(id: Int, name: String, sex: String, age: Int, grade: Int, belong: String, role: String, read: String) {
-        var read = read
-
-        if (read.isEmpty()) {
-            read = "ￚ no data ￚ"
-        }
 
         open()
         try {
@@ -223,7 +213,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
             values.put(MB_GRADE, grade)
             values.put(MB_BELONG, belong)
             values.put(MB_ROLE, role)
-            values.put(MB_NAME_READ, read)
+            if (read.isEmpty()) values.put(MB_NAME_READ, "ￚ no data ￚ") else values.put(MB_NAME_READ, read)
 
             db.update(TABLE_NAME, values, "$MB_ID=?", arrayOf(id.toString()))
         } catch (e: Exception) {
@@ -234,21 +224,21 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
     }
 
     companion object {
-        val DB_NAME = "kumiwake.db"
-        val DB_VERSION = 2
-        val TABLE_NAME = "member_info"
-        val MB_ID = "_id"
-        val MB_NAME = "mb_name"
-        val MB_NAME_READ = "mb_read"
-        val MB_SEX = "mb_sex"
-        val MB_AGE = "mb_age"
-        val MB_GRADE = "mb_grade"
-        val MB_BELONG = "mb_belong"
-        val MB_ROLE = "mb_role"
+        const val DB_NAME = "kumiwake.db"
+        const val DB_VERSION = 2
+        const val TABLE_NAME = "member_info"
+        const val MB_ID = "_id"
+        const val MB_NAME = "mb_name"
+        const val MB_NAME_READ = "mb_read"
+        const val MB_SEX = "mb_sex"
+        const val MB_AGE = "mb_age"
+        const val MB_GRADE = "mb_grade"
+        const val MB_BELONG = "mb_belong"
+        const val MB_ROLE = "mb_role"
         lateinit var db: SQLiteDatabase
 
 
-        val CREATE_TABLE = ("CREATE TABLE " + TABLE_NAME + " ("
+        const val CREATE_TABLE = ("CREATE TABLE " + TABLE_NAME + " ("
                 + MB_ID + " INTEGER PRIMARY KEY,"
                 + MB_NAME + " TEXT NOT NULL," + MB_SEX + " TEXT NOT NULL,"
                 + MB_AGE + " INTEGER," + MB_GRADE + " INTEGER," + MB_BELONG + " TEXT," + MB_ROLE + " TEXT,"

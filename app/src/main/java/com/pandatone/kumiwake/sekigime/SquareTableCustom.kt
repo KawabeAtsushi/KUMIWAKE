@@ -10,15 +10,12 @@ import android.widget.TextView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.pandatone.kumiwake.R
+import kotlinx.android.synthetic.main.square_custom.*
 
 /**
  * Created by atsushi_2 on 2016/07/15.
  */
 class SquareTableCustom : AppCompatActivity() {
-    internal var squareRadioGroup: RadioGroup
-    internal var doubleDeployButton: RadioButton
-    internal var seekBar: SeekBar
-    internal var noText: TextView
     internal var seatNo = 0
     internal var mingroupNo = 1000
     internal var doubleDeploy: Boolean = false
@@ -27,10 +24,6 @@ class SquareTableCustom : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.square_custom)
         ButterKnife.bind(this)
-        squareRadioGroup = findViewById<View>(R.id.squareGroup)
-        doubleDeployButton = findViewById<View>(R.id.doubleSquareType)
-        seekBar = findViewById<View>(R.id.square_seek_bar)
-        noText = findViewById<View>(R.id.seat_number)
 
         if (SekigimeResult.Normalmode) {
             val array = SekigimeResult.arrayArrayNormal
@@ -47,39 +40,39 @@ class SquareTableCustom : AppCompatActivity() {
                 }
             }
         }
-        seekBar.max = mingroupNo / 4
+        square_seek_bar.max = mingroupNo / 4
         if (mingroupNo < 4) {
-            seekBar.isEnabled = false
+            square_seek_bar.isEnabled = false
         }
-        doubleDeployButton.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (doubleDeployButton.isChecked == true) {
-                seekBar.max = mingroupNo / 4
+        doubleSquareType.setOnCheckedChangeListener { _, _ ->
+            if (doubleSquareType.isChecked) {
+                square_seek_bar.max = mingroupNo / 4
                 if (mingroupNo < 4) {
-                    seekBar.isEnabled = false
+                    square_seek_bar.isEnabled = false
                 }
             } else {
-                seekBar.max = mingroupNo / 3
-                seekBar.isEnabled = mingroupNo >= 3
+                square_seek_bar.max = mingroupNo / 3
+                square_seek_bar.isEnabled = mingroupNo >= 3
             }
         }
 
 
-        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+        square_seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onStartTrackingTouch(square_seek_bar: SeekBar) {}
 
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromTouch: Boolean) {
+            override fun onProgressChanged(square_seek_bar: SeekBar, progress: Int, fromTouch: Boolean) {
                 seatNo = progress
-                noText.text = seatNo.toString()
+                seat_number.text = seatNo.toString()
             }
 
-            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+            override fun onStopTrackingTouch(square_seek_bar: SeekBar) {}
         })
     }
 
     @OnClick(R.id.move_result)
     internal fun onClicked() {
         SekigimeResult.square_no = seatNo
-        doubleDeploy = doubleDeployButton.isChecked
+        doubleDeploy = doubleSquareType.isChecked
         SekigimeResult.doubleDeploy = doubleDeploy
         val intent = Intent(applicationContext, SekigimeResult::class.java)
         startActivity(intent)

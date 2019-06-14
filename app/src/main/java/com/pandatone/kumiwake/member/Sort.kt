@@ -96,7 +96,7 @@ object Sort {
 
     }
     
-    private fun memberContext(): Context? {
+    fun memberContext(): Context? {
         return MemberMain().applicationContext
     }
 }

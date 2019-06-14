@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -39,6 +40,7 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
         return getItem(position)!!.sex != "initial"
     }
 
+    @SuppressLint("InflateParams")
     override fun getView(position: Int, convertView: View, parent: ViewGroup): View {
         val nameTextView: TextView
         val listItem = getItem(position)
@@ -47,12 +49,12 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
 
         if (isEnabled(position)) {
 
-            if (v == null || v.tag !== "member") {
+            if (v.tag !== "member") {
                 v = inflater.inflate(R.layout.row_member, null)
             }
 
             if (mSelection[position] != null) {
-                v.setBackgroundColor(Sort.name_getContext()!!.resources.getColor(R.color.checked_list))
+                v.setBackgroundColor(Sort.memberContext()!!.resources.getColor(R.color.checked_list))
             } else {
                 v = inflater.inflate(R.layout.row_member, null)
             }
@@ -63,7 +65,7 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
                 nameTextView.text = listItem.name
             }
         } else {
-            if (v == null || v.tag !== "initial") {
+            if (v.tag !== "initial") {
                 v = inflater.inflate(R.layout.row_initial, null)
             }
             if (nowData != null) {
@@ -74,17 +76,16 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
         return v
     }
 
-    fun setSexIcon(v: View, position: Int) {
-        val memberIcon: ImageView
-        memberIcon = v.findViewById<View>(R.id.memberIcon) as ImageView
+    private fun setSexIcon(v: View, position: Int) {
+        val memberIcon: ImageView = v.findViewById<View>(R.id.memberIcon) as ImageView
         if (getItem(position)!!.sex == "男") {
             memberIcon.setImageResource(R.drawable.member_img)
         } else {
-            memberIcon.setColorFilter(Sort.name_getContext()!!.resources.getColor(R.color.woman))
+            memberIcon.setColorFilter(Sort.memberContext()!!.resources.getColor(R.color.woman))
         }
     }
 
-    fun addInitial(position: Int, v: View) {
+    private fun addInitial(position: Int, v: View) {
         val nowItem = getItem(position)
 
         when (nowSort) {
