@@ -1,11 +1,15 @@
 package com.pandatone.kumiwake.adapter
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
+import android.content.Context
+import android.content.res.Resources.getSystem
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
+import com.pandatone.kumiwake.MyApplication
 
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.kumiwake.MainActivity
 import com.pandatone.kumiwake.member.FragmentGroup
 import com.pandatone.kumiwake.member.FragmentMember
 import com.pandatone.kumiwake.member.MemberMain
@@ -29,8 +33,8 @@ class CustomPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     override fun getPageTitle(position: Int): CharSequence? {
         when (position) {
-            0 -> return R.string.member.toString()
-            1 -> return R.string.group.toString()
+            0 -> return MyApplication.context?.getString(R.string.member)
+            1 -> return MyApplication.context?.getString(R.string.group)
         }
         return null
     }

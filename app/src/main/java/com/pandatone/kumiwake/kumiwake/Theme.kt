@@ -16,7 +16,7 @@
 
 package com.pandatone.kumiwake.kumiwake
 
-import android.support.annotation.ColorRes
+import androidx.annotation.ColorRes
 
 import com.pandatone.kumiwake.R
 

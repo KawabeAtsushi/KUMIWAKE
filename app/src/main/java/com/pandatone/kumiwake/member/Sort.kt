@@ -1,11 +1,11 @@
 package com.pandatone.kumiwake.member
 
 import android.content.Context
+import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
 import com.pandatone.kumiwake.adapter.NameListAdapter
-import com.pandatone.kumiwake.kumiwake.MainActivity
 
 /**
  * Created by atsushi_2 on 2016/03/30.
@@ -17,11 +17,11 @@ object Sort {
     private lateinit var NS: String
     internal var initial = 2
 
-    fun memberSort(builder: android.support.v7.app.AlertDialog.Builder) {
+    fun memberSort(builder: androidx.appcompat.app.AlertDialog.Builder) {
 
         val dbAdapter = MemberListAdapter(getContext())
 
-        val Items = arrayOf(R.string.name_ascending.toString(), R.string.name_descending.toString(), R.string.registration_ascending.toString(), R.string.registration_descending.toString(), R.string.age_ascending.toString(), R.string.age_descending.toString(), R.string.grade_ascending.toString(), R.string.grade_descending.toString())
+        val Items = arrayOf(MyApplication.context?.getString(R.string.name_ascending), MyApplication.context?.getString(R.string.name_descending), MyApplication.context?.getString(R.string.registration_ascending), MyApplication.context?.getString(R.string.registration_descending), MyApplication.context?.getString(R.string.age_ascending), MyApplication.context?.getString(R.string.age_descending), MyApplication.context?.getString(R.string.grade_ascending), MyApplication.context?.getString(R.string.grade_descending))
         builder.setTitle(R.string.sorting)
         builder.setSingleChoiceItems(Items, initial) { _, which -> initial = which }
 
@@ -71,11 +71,11 @@ object Sort {
 
     }
 
-    fun groupSort(builder: android.support.v7.app.AlertDialog.Builder) {
+    fun groupSort(builder: androidx.appcompat.app.AlertDialog.Builder) {
 
         val gpdbAdapter = GroupListAdapter(getContext())
 
-        val Items = arrayOf(R.string.name_ascending.toString(), R.string.name_descending.toString(), R.string.registration_ascending.toString(), R.string.registration_descending.toString(), R.string.member_ascending.toString(), R.string.member_descending.toString())
+        val Items = arrayOf(MyApplication.context?.getString(R.string.name_ascending), MyApplication.context?.getString(R.string.name_descending), MyApplication.context?.getString(R.string.registration_ascending), MyApplication.context?.getString(R.string.registration_descending), MyApplication.context?.getString(R.string.member_ascending), MyApplication.context?.getString(R.string.member_descending))
         builder.setTitle(R.string.sorting)
         builder.setSingleChoiceItems(Items, initial) { _, which -> initial = which }
 
@@ -99,7 +99,7 @@ object Sort {
 
     }
 
-    fun getContext():Context{
+    fun getContext(): Context {
         return MemberMain().context
     }
 

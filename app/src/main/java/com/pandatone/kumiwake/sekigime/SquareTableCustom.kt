@@ -2,7 +2,7 @@ package com.pandatone.kumiwake.sekigime
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.widget.SeekBar
 import butterknife.ButterKnife
 import butterknife.OnClick

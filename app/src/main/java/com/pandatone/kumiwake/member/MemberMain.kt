@@ -5,11 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.content.res.ResourcesCompat
-import android.support.v4.view.ViewPager
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.SearchView
-import android.support.v7.widget.Toolbar
+import androidx.core.content.res.ResourcesCompat
+import androidx.viewpager.widget.ViewPager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ImageSpan
@@ -107,9 +107,9 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
 
         searchView = menu.findItem(R.id.search_view).actionView as SearchView
         searchView.setOnQueryTextListener(this)
-        val searchAutoComplete = searchView.findViewById<View>(android.support.v7.appcompat.R.id.search_src_text) as SearchView.SearchAutoComplete
+        val searchAutoComplete = searchView.findViewById<View>(androidx.appcompat.R.id.search_src_text) as SearchView.SearchAutoComplete
         // ActionBarの検索アイコン
-        val searchIcon = searchView.findViewById<View>(android.support.v7.appcompat.R.id.search_button) as ImageView
+        val searchIcon = searchView.findViewById<View>(androidx.appcompat.R.id.search_button) as ImageView
         searchIcon.setImageResource(android.R.drawable.ic_menu_search)
         val ssb = SpannableStringBuilder("　")
         // ヒントテキスト
@@ -125,7 +125,7 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         // ヒントテキストカラー
         searchAutoComplete.setHintTextColor(Color.parseColor("#40000000"))
         // Remove button icon
-        val removeIcon = searchView.findViewById<View>(android.support.v7.appcompat.R.id.search_close_btn) as ImageView
+        val removeIcon = searchView.findViewById<View>(androidx.appcompat.R.id.search_close_btn) as ImageView
         removeIcon.setImageResource(android.R.drawable.ic_menu_close_clear_cancel)
         removeIcon.setOnClickListener {
             if (searchAutoComplete.text.toString() != "") {
