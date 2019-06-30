@@ -4,8 +4,8 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.app.ListFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.fragment.app.ListFragment
 import android.text.TextUtils
 import android.view.*
 import android.widget.*
@@ -62,7 +62,7 @@ class FragmentMember : ListFragment() {
         listView.isFastScrollEnabled = true
         listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
-            val builder = android.support.v7.app.AlertDialog.Builder(activity!!)
+            val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
             val builder2 = AlertDialog.Builder(activity)
             val inflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val view2 = inflater.inflate(R.layout.member_info,
@@ -147,7 +147,7 @@ class FragmentMember : ListFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        val builder = android.support.v7.app.AlertDialog.Builder(activity!!)
+        val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
         // アクションアイテム選択時
         when (item!!.itemId) {
             android.R.id.home -> activity!!.finish()
@@ -218,7 +218,7 @@ class FragmentMember : ListFragment() {
     }
 
     private fun deleteSingleMember(position: Int, name: String) {
-        val builder = android.support.v7.app.AlertDialog.Builder(activity!!)
+        val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
         builder.setTitle(name)
         builder.setMessage(R.string.Do_delete)
         // OKの時の処理
@@ -238,7 +238,7 @@ class FragmentMember : ListFragment() {
 
     private fun deleteMember() {
         // アラートダイアログ表示
-        val builder = android.support.v7.app.AlertDialog.Builder(parent.applicationContext)
+        val builder = androidx.appcompat.app.AlertDialog.Builder(parent.applicationContext)
         builder.setTitle(checkedCount.toString() + " " + parent.getString(R.string.member) + parent.getString(R.string.delete))
         builder.setMessage(R.string.Do_delete)
         // OKの時の処理
@@ -262,7 +262,7 @@ class FragmentMember : ListFragment() {
         }
     }
 
-    fun filter(layout: View, filter_belong_spinner: Spinner, dialog2: android.support.v7.app.AlertDialog) {
+    fun filter(layout: View, filter_belong_spinner: Spinner, dialog2: androidx.appcompat.app.AlertDialog) {
         val maxage: Int
         val minage: Int
         val maxgrade: Int
@@ -391,7 +391,7 @@ class FragmentMember : ListFragment() {
         }
 
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-            val builder = android.support.v7.app.AlertDialog.Builder(activity!!)
+            val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
             // アクションアイテム選択時
             when (item.itemId) {
                 R.id.item_delete -> deleteMember()
@@ -473,7 +473,7 @@ class FragmentMember : ListFragment() {
 
         private fun deleteMember() {
             // アラートダイアログ表示
-            val builder = android.support.v7.app.AlertDialog.Builder(activity!!)
+            val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
             builder.setTitle(checkedCount.toString() + " " + getString(R.string.member) + getString(R.string.delete))
             builder.setMessage(R.string.Do_delete)
             // OKの時の処理

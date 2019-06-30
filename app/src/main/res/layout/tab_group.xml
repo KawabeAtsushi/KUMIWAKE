@@ -19,7 +19,7 @@
         android:text="@string/no_group"
         android:textSize="32sp"/>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/group_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

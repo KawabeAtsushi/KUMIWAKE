@@ -3,9 +3,9 @@ package com.pandatone.kumiwake.member
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.app.ListFragment
-import android.support.v7.app.AlertDialog
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.fragment.app.ListFragment
+import androidx.appcompat.app.AlertDialog
 import android.text.TextUtils
 import android.util.Log
 import android.view.*
@@ -13,6 +13,7 @@ import android.widget.AbsListView
 import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.TextView
+import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.GroupNameListAdapter
@@ -67,7 +68,7 @@ class FragmentGroup : ListFragment() {
 
         listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
-            val builder = android.support.v7.app.AlertDialog.Builder(activity!!)
+            val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
             val builder2 = android.app.AlertDialog.Builder(activity)
             val inflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val view2 = inflater.inflate(R.layout.group_info,
@@ -77,7 +78,7 @@ class FragmentGroup : ListFragment() {
                 MemberMain.searchView.onActionViewCollapsed()
             FragmentMember().loadName()
 
-            val items = arrayOf(R.string.information.toString(), R.string.edit.toString(), R.string.delete.toString())
+            val items = arrayOf(MyApplication.context?.getString(R.string.information), MyApplication.context?.getString(R.string.edit), MyApplication.context?.getString(R.string.delete))
             builder.setTitle(groupname)
             builder.setItems(items) { _, which ->
                 when (which) {
@@ -128,7 +129,7 @@ class FragmentGroup : ListFragment() {
             }
 
             R.id.item_sort -> {
-                val builder = android.support.v7.app.AlertDialog.Builder(activity!!)
+                val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
                 Sort.groupSort(builder)
                 val dialog = builder.create()
                 dialog.show()
@@ -149,7 +150,7 @@ class FragmentGroup : ListFragment() {
     }
 
     private fun deleteSingleGroup(position: Int, group: String) {
-        val builder = android.support.v7.app.AlertDialog.Builder(activity!!)
+        val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
         builder.setTitle(group)
         builder.setMessage(R.string.Do_delete)
         // OKの時の処理
@@ -268,7 +269,7 @@ class FragmentGroup : ListFragment() {
                 }
 
                 R.id.item_sort -> {
-                    val builder = android.support.v7.app.AlertDialog.Builder(activity!!)
+                    val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
                     Sort.groupSort(builder)
                     val dialog = builder.create()
                     dialog.show()

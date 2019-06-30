@@ -13,7 +13,7 @@
         android:scaleType = "centerCrop"/>
 
 
-    <android.support.v7.widget.AppCompatButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/normal_kumiwake_button"
         android:layout_width="match_parent"
         android:layout_height="@dimen/under_button_height"
