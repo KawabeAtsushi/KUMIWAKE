@@ -30,10 +30,10 @@ import com.pandatone.kumiwake.R
  * in an adapter backed view without recycling.
  */
 enum class Theme(@get:ColorRes
-                                     val primaryColor: Int,
+                 val primaryColor: Int,
                  @get:ColorRes
-                                     val windowBackgroundColor: Int, @get:ColorRes
-                                     val textPrimaryColor: Int) {
+                 val windowBackgroundColor: Int, @get:ColorRes
+                 val textPrimaryColor: Int) {
     blue(R.color.blue_title, R.color.blue_background, R.color.theme_blue_text),
     green(R.color.green_title, R.color.green_background_title, R.color.theme_green_text),
     red(R.color.red_title, R.color.red_background_title, R.color.theme_red_text),

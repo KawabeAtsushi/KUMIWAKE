@@ -16,9 +16,9 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MBListViewAdapter
 import com.pandatone.kumiwake.customize.CustomDialog
-import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.member.Name
 import com.pandatone.kumiwake.sekigime.SekigimeResult
 import com.pandatone.kumiwake.sekigime.SelectTableType
@@ -54,12 +54,16 @@ class NormalKumiwakeResult : AppCompatActivity() {
                 .addTestDevice("BB707E3F7B5413908B2DD12063887489").build()
         mAdView.loadAd(adRequest)
         val i = intent
-        memberArray = i.getSerializableExtra("NormalModeMemberArray") as ArrayList<Name>
-        groupArray = i.getSerializableExtra("NormalModeGroupArray") as ArrayList<GroupListAdapter.Group>
-        even_fm_ratio = i.getBooleanExtra("EvenFMRatio", false)
-        even_age_ratio = i.getBooleanExtra("EvenAgeRatio", false)
-        even_grade_ratio = i.getBooleanExtra("EvenGradeRatio", false)
-        even_role = i.getStringExtra("EvenRole")
+        if(i.getSerializableExtra(NormalMode.NORMAL_MEMBER_ARRAY) != null) {
+            memberArray = i.getSerializableExtra(NormalMode.NORMAL_MEMBER_ARRAY) as ArrayList<Name>
+        }
+        if(i.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) != null) {
+            groupArray = i.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) as ArrayList<GroupListAdapter.Group>
+        }
+        even_fm_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_FM_RATIO, false)
+        even_age_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_AGE_RATIO, false)
+        even_grade_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_GRADE_RATIO, false)
+        even_role = i.getStringExtra(KumiwakeCustom.EVEN_ROLE)
         groupCount = groupArray.size
         memberSize = memberArray.size
 
@@ -172,7 +176,7 @@ class NormalKumiwakeResult : AppCompatActivity() {
             customDialog.dismiss()
             Toast.makeText(applicationContext, getText(R.string.re_kumiwake_finished), Toast.LENGTH_SHORT).show()
         }
-        customDialog.show(fragmentManager, "Btn")
+        customDialog.show(supportFragmentManager, "Btn")
     }
 
     @OnClick(R.id.go_sekigime)
@@ -215,7 +219,7 @@ class NormalKumiwakeResult : AppCompatActivity() {
     fun setRole(array: ArrayList<Name>) {
         var addGroupNo: Int
         val initialGroupNo: Int = nowGroupNo
-        var nowGroupMemberCount = 0
+        var nowGroupMemberCount: Int
 
         if (array !== womanArray) {
             val r = Random()
@@ -479,7 +483,7 @@ class NormalKumiwakeResult : AppCompatActivity() {
         drawable.setColor(Color.argb(150, R, G, B))
 
         v.layoutParams = setMargin(10, 12, 10, 0)
-        v.setBackgroundDrawable(drawable)
+        v.background = drawable
     }
 
     companion object {
@@ -506,7 +510,7 @@ internal class KumiwakeLeaderComparator : Comparator<Name> {
 
     override fun compare(n1: Name, n2: Name): Int {
         var value = 0
-        val leader = ".*" + MainActivity.context!!.getText(R.string.leader) + ".*"
+        val leader = ".*" + R.string.leader.toString() + ".*"
 
         if (n1.role.matches(leader.toRegex()) && !n2.role.matches(leader.toRegex())) {
             value = -1

@@ -92,7 +92,7 @@ class SekigimeResult : AppCompatActivity() {
                 Toast.makeText(applicationContext, getText(R.string.re_sekigime_finished), Toast.LENGTH_SHORT).show()
                 customDialog.dismiss()
             }
-            customDialog.show(fragmentManager, "Btn")
+            customDialog.show(getSupportFragmentManager(), "Btn")
         }
         go_home.setOnClickListener {
             val intent = Intent(applicationContext, MainActivity::class.java)

@@ -3,6 +3,7 @@ package com.pandatone.kumiwake.kumiwake
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.NavUtils
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
@@ -33,9 +34,9 @@ class KumiwakeSelectMode : AppCompatActivity() {
         val normalmode: TextView = findViewById<TextView>(R.id.descriptionForNormalMode)
         val quickmode: TextView = findViewById<TextView>(R.id.descriptionForQuickMode)
         if (sekigime) {
-            toolbar.setBackgroundColor(resources.getColor(R.color.green_title))
+            toolbar.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.green_title))
             val layout = findViewById<View>(R.id.select_mode_layout) as LinearLayout
-            layout.setBackgroundColor(resources.getColor(R.color.green_background))
+            layout.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.green_background))
             normalmode.setText(R.string.description_of_normal_sekigime)
             quickmode.setText(R.string.description_of_quick_sekigime)
             supportActionBar!!.setTitle(R.string.select_mode)

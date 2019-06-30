@@ -2,6 +2,7 @@ package com.pandatone.kumiwake.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,7 +55,7 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
             }
 
             if (mSelection[position] != null) {
-                v.setBackgroundColor(Sort.memberContext()!!.resources.getColor(R.color.checked_list))
+                v.setBackgroundColor(ContextCompat.getColor(Sort.getContext(),R.color.checked_list))
             } else {
                 v = inflater.inflate(R.layout.row_member, null)
             }
@@ -81,7 +82,7 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
         if (getItem(position)!!.sex == "男") {
             memberIcon.setImageResource(R.drawable.member_img)
         } else {
-            memberIcon.setColorFilter(Sort.memberContext()!!.resources.getColor(R.color.woman))
+            memberIcon.setColorFilter(ContextCompat.getColor(Sort.getContext(),R.color.woman))
         }
     }
 
@@ -133,7 +134,7 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
         return result ?: false
     }
 
-    companion object{
+    companion object {
         internal var nowSort = "ID"
     }
 

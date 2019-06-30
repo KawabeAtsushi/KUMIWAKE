@@ -2,6 +2,7 @@ package com.pandatone.kumiwake.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,7 +53,6 @@ class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val nameTextView: TextView
         var v = convertView
-        val listItem = getItem(position)
 
 
         if (v == null) {
@@ -74,7 +74,7 @@ class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,
         if (listElements[position].sex == "男") {
             memberIcon.setImageResource(R.drawable.member_img)
         } else {
-            memberIcon.setColorFilter(Sort.memberContext()!!.resources.getColor(R.color.woman))
+            memberIcon.setColorFilter(ContextCompat.getColor(Sort.getContext(),R.color.woman))
         }
     }
 
@@ -83,7 +83,7 @@ class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,
         val memberIcon: ImageView = v.findViewById<View>(R.id.memberIcon) as ImageView
         val leaderNo: TextView = v.findViewById<View>(R.id.leaderNo) as TextView
 
-        if (listElements[position].role.matches((".*" + Sort.memberContext()!!.getText(R.string.leader) + ".*").toRegex())) {
+        if (listElements[position].role.matches((".*" + Sort.getContext().getText(R.string.leader) + ".*").toRegex())) {
             memberIcon.visibility = View.GONE
             starIcon.visibility = View.VISIBLE
             leaderNo.visibility = View.GONE

@@ -1,11 +1,11 @@
 package com.pandatone.kumiwake.customize
 
 import android.app.Dialog
-import android.app.DialogFragment
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.support.v4.app.DialogFragment
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -27,7 +27,7 @@ class CustomDialogSekigime : DialogFragment() {
     //onClickリスナ
     private val mOnClickLisner = View.OnClickListener { dismiss() }
 
-    override fun onCreateDialog(savedInstanceState: Bundle): Dialog {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = Dialog(activity)
         // タイトル非表示
         dialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)

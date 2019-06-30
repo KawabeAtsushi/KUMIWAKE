@@ -26,8 +26,8 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
     private lateinit var groupArray: ArrayList<String>
     private lateinit var memberAdapter: ArrayAdapter<String>
     private lateinit var groupAdapter: ArrayAdapter<String>
-    private  var even_fm_ratio: Boolean = false
-    private  var even_person_ratio: Boolean = false
+    private var even_fm_ratio: Boolean = false
+    private var even_person_ratio: Boolean = false
     private lateinit var viewGroup: RelativeLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,11 +35,11 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
         setContentView(R.layout.kumiwake_confirmation)
         ButterKnife.bind(this)
         val i = intent
-        manArray = i.getStringArrayListExtra("QuickModeManList")
-        womanArray = i.getStringArrayListExtra("QuickModeWomanList")
-        groupArray = i.getStringArrayListExtra("QuickModekumiwake_group_listView")
-        even_fm_ratio = i.getBooleanExtra("EvenFMRatio", false)
-        even_person_ratio = i.getBooleanExtra("EvenPersonRatio", false)
+        manArray = i.getStringArrayListExtra(QuickMode.MAN_LIST)
+        womanArray = i.getStringArrayListExtra(QuickMode.WOMAN_LIST)
+        groupArray = i.getStringArrayListExtra(QuickMode.GROUP_LIST)
+        even_fm_ratio = i.getBooleanExtra(QuickMode.EVEN_FM_RATIO, false)
+        even_person_ratio = i.getBooleanExtra(QuickMode.EVEN_PERSON_RATIO, false)
         memberArray = ArrayList()
         memberArray.addAll(manArray)
         memberArray.addAll(womanArray)
@@ -85,7 +85,7 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
             val memberIcon: ImageView
             memberIcon = item.findViewById<View>(R.id.memberIcon) as ImageView
             if (memberArray[i].matches((".*" + "♡" + ".*").toRegex())) {
-                memberIcon.setColorFilter(resources.getColor(R.color.woman))
+                memberIcon.setColorFilter(ContextCompat.getColor(applicationContext, R.color.woman))
             }
         }
         setRowHeight(kumiwake_member_listView, memberAdapter)
@@ -95,12 +95,12 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
     @OnClick(R.id.kumiwake_btn)
     internal fun onClicked() {
         val intent = Intent(this, QuickKumiwakeResult::class.java)
-        intent.putStringArrayListExtra("QuickModekumiwake_member_listView", memberArray)
-        intent.putStringArrayListExtra("QuickModeManList", manArray)
-        intent.putStringArrayListExtra("QuickModeWomanList", womanArray)
-        intent.putStringArrayListExtra("QuickModekumiwake_group_listView", groupArray)
-        intent.putExtra("EvenFMRatio", even_fm_ratio)
-        intent.putExtra("EvenPersonRatio", even_person_ratio)
+        intent.putStringArrayListExtra(QuickMode.MEMBER_LIST, memberArray)
+        intent.putStringArrayListExtra(QuickMode.MAN_LIST, manArray)
+        intent.putStringArrayListExtra(QuickMode.WOMAN_LIST, womanArray)
+        intent.putStringArrayListExtra(QuickMode.GROUP_LIST, groupArray)
+        intent.putExtra(QuickMode.EVEN_FM_RATIO, even_fm_ratio)
+        intent.putExtra(QuickMode.EVEN_PERSON_RATIO, even_person_ratio)
         startActivity(intent)
     }
 
@@ -111,8 +111,8 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
         kumiwake_group_listView.adapter = groupAdapter
     }
 
-    companion object{
-    fun setRowHeight(listView: ListView, listAdp: ArrayAdapter<String>) {
+    companion object {
+        fun setRowHeight(listView: ListView, listAdp: ArrayAdapter<String>) {
             var totalHeight = 33
 
             for (j in 0 until listAdp.count) {
@@ -123,7 +123,8 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
 
             listView.layoutParams.height = totalHeight + listView.dividerHeight * (listAdp.count - 1)
             listView.requestLayout()
-        }}
+        }
+    }
 }
 
 internal class MemberArrayAdapter(context: Context, textViewResourceId: Int, private val items: ArrayList<String>, private val showBorder: Boolean?) : ArrayAdapter<String>(context, textViewResourceId, items) {
@@ -149,7 +150,7 @@ internal class MemberArrayAdapter(context: Context, textViewResourceId: Int, pri
 
         memberIcon = v!!.findViewById<View>(R.id.memberIcon) as ImageView
         if (items[position].matches((".*" + "♡" + ".*").toRegex())) {
-            memberIcon.setColorFilter(context.resources.getColor(R.color.woman))
+            memberIcon.setColorFilter(ContextCompat.getColor(context, R.color.woman))
         }
 
         nameTextView = v.findViewById<View>(R.id.memberName) as TextView

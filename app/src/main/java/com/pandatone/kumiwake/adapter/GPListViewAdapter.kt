@@ -36,7 +36,6 @@ class GPListViewAdapter(private val context: Context, nameList: ArrayList<GroupL
         val nameTextView: TextView
         val memberNoTextView: TextView
         var v = convertView
-        val listItem = getItem(position)
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         if (v == null) {
@@ -47,7 +46,7 @@ class GPListViewAdapter(private val context: Context, nameList: ArrayList<GroupL
         memberNoTextView = v.findViewById<View>(R.id.memberNo) as TextView
         memberNoTextView.visibility = View.VISIBLE
         nameTextView.text = listElements[position].group
-        memberNoTextView.text = listElements[position].belongNo.toString() + Sort.memberContext()!!.getText(R.string.person)
+        memberNoTextView.text = listElements[position].belongNo.toString() + R.string.person.toString()
 
         return v
     }

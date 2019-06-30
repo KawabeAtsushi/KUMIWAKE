@@ -9,13 +9,12 @@
 
 
     <ListView
-            android:id="@id/android:list"
+            android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:drawSelectorOnTop="false" />
 
         <TextView
-            android:id="@id/android:empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -34,7 +33,8 @@
         app:backgroundTint="#00ff00"
         app:borderWidth="0dp"
         app:fabSize="normal"
-        tools:ignore="RtlHardcoded" />
+        tools:ignore="RtlHardcoded"
+        android:focusable="true" />
 
 
     </FrameLayout>

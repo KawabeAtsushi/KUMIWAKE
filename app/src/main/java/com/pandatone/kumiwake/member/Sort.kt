@@ -5,6 +5,7 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
 import com.pandatone.kumiwake.adapter.NameListAdapter
+import com.pandatone.kumiwake.kumiwake.MainActivity
 
 /**
  * Created by atsushi_2 on 2016/03/30.
@@ -13,18 +14,18 @@ object Sort {
 
     private const val ASC = "ASC"   //昇順 (1.2.3....)
     private const val DESC = "DESC" //降順 (3.2.1....)
-    private var dbAdapter = MemberListAdapter(memberContext()!!)
-    private var gpdbAdapter = GroupListAdapter(memberContext()!!)
     private lateinit var NS: String
     internal var initial = 2
 
     fun memberSort(builder: android.support.v7.app.AlertDialog.Builder) {
 
-        val Items = arrayOf(memberContext()!!.getString(R.string.name_ascending), memberContext()!!.getString(R.string.name_descending), memberContext()!!.getString(R.string.registration_ascending), memberContext()!!.getString(R.string.registration_descending), memberContext()!!.getString(R.string.age_ascending), memberContext()!!.getString(R.string.age_descending), memberContext()!!.getString(R.string.grade_ascending), memberContext()!!.getString(R.string.grade_descending))
-        builder.setTitle(R.string.sorting)
-        builder.setSingleChoiceItems(Items, initial) { dialog, which -> initial = which }
+        val dbAdapter = MemberListAdapter(getContext())
 
-        builder.setPositiveButton("OK") { dialog, which ->
+        val Items = arrayOf(R.string.name_ascending.toString(), R.string.name_descending.toString(), R.string.registration_ascending.toString(), R.string.registration_descending.toString(), R.string.age_ascending.toString(), R.string.age_descending.toString(), R.string.grade_ascending.toString(), R.string.grade_descending.toString())
+        builder.setTitle(R.string.sorting)
+        builder.setSingleChoiceItems(Items, initial) { _, which -> initial = which }
+
+        builder.setPositiveButton("OK") { _, _ ->
             when (initial) {
                 0 -> {
                     NS = "NAME"
@@ -63,7 +64,7 @@ object Sort {
             dbAdapter.notifyDataSetChanged()
         }
         // アラートダイアログのボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
-        builder.setNegativeButton(R.string.cancel) { dialog, which -> }
+        builder.setNegativeButton(R.string.cancel) { _, _ -> }
 
         // back keyを使用不可に設定
         builder.setCancelable(false)
@@ -72,11 +73,13 @@ object Sort {
 
     fun groupSort(builder: android.support.v7.app.AlertDialog.Builder) {
 
-        val Items = arrayOf(memberContext()!!.getString(R.string.name_ascending), memberContext()!!.getString(R.string.name_descending), memberContext()!!.getString(R.string.registration_ascending), memberContext()!!.getString(R.string.registration_descending), memberContext()!!.getString(R.string.member_ascending), memberContext()!!.getString(R.string.member_descending))
-        builder.setTitle(R.string.sorting)
-        builder.setSingleChoiceItems(Items, initial) { dialog, which -> initial = which }
+        val gpdbAdapter = GroupListAdapter(getContext())
 
-        builder.setPositiveButton("OK") { dialog, which ->
+        val Items = arrayOf(R.string.name_ascending.toString(), R.string.name_descending.toString(), R.string.registration_ascending.toString(), R.string.registration_descending.toString(), R.string.member_ascending.toString(), R.string.member_descending.toString())
+        builder.setTitle(R.string.sorting)
+        builder.setSingleChoiceItems(Items, initial) { _, which -> initial = which }
+
+        builder.setPositiveButton("OK") { _, _ ->
             when (initial) {
                 0 -> gpdbAdapter.sortGroups(GroupListAdapter.GP_NAME, ASC)
                 1 -> gpdbAdapter.sortGroups(GroupListAdapter.GP_NAME, DESC)
@@ -89,14 +92,15 @@ object Sort {
             gpdbAdapter.notifyDataSetChanged()
         }
         // アラートダイアログのボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
-        builder.setNegativeButton(R.string.cancel) { dialog, which -> }
+        builder.setNegativeButton(R.string.cancel) { _, _ -> }
 
         // back keyを使用不可に設定
         builder.setCancelable(false)
 
     }
-    
-    fun memberContext(): Context? {
-        return MemberMain().applicationContext
+
+    fun getContext():Context{
+        return MemberMain().context
     }
+
 }

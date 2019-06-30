@@ -53,7 +53,7 @@ class EditGroupListAdapter(private val context: Context, private val groupList: 
         leader = v.findViewById<View>(R.id.leader) as TextView
         nameEditText.setText(listItem.group)
         numberOfMemberEditText.setText(listItem.belongNo.toString())
-        leader.text = "${MainActivity.context!!.getText(R.string.leader)} : ${MainActivity.context!!.getText(R.string.nothing)}"
+        leader.text = "${R.string.leader.toString()} : ${R.string.nothing.toString()}"
         groupNameView[position] = nameEditText
         memberNoView[position] = numberOfMemberEditText
         numberOfMemberEditText.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
@@ -96,7 +96,7 @@ class EditGroupListAdapter(private val context: Context, private val groupList: 
         private val memberNoView = HashMap<Int, EditText>()
 
         fun getGroupName(position: Int): String {
-            var groupName = MainActivity.context!!.getText(R.string.nothing).toString()
+            var groupName = R.string.nothing.toString()
             val groupNameEditText = groupNameView[position]
             if (groupNameEditText!!.text != null) {
                 groupName = groupNameEditText.text.toString()

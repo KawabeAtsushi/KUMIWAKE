@@ -5,16 +5,12 @@ import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.AppCompatEditText
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.transition.Slide
-import android.view.View
 import android.view.Window
-import android.widget.ImageView
 import android.widget.SeekBar
-import android.widget.TextView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.pandatone.kumiwake.R
@@ -109,11 +105,11 @@ class QuickMode : AppCompatActivity(), TextWatcher {
                 groupList.add(getText(R.string.group).toString() + " " + i.toString())
             }
             val intent = Intent(this, QuickKumiwakeConfirmation::class.java)
-            intent.putStringArrayListExtra("QuickModeManList", manList)
-            intent.putStringArrayListExtra("QuickModeWomanList", womanList)
-            intent.putStringArrayListExtra("QuickModeGroupList", groupList)
-            intent.putExtra("EvenFMRatio", even_fm_ratio_check.isChecked)
-            intent.putExtra("EvenPersonRatio", even_person_ratio_check.isChecked)
+            intent.putStringArrayListExtra(MAN_LIST, manList)
+            intent.putStringArrayListExtra(WOMAN_LIST, womanList)
+            intent.putStringArrayListExtra(GROUP_LIST, groupList)
+            intent.putExtra(EVEN_FM_RATIO, even_fm_ratio_check.isChecked)
+            intent.putExtra(EVEN_PERSON_RATIO, even_person_ratio_check.isChecked)
             startActivity(intent)
             overridePendingTransition(R.anim.in_right, R.anim.out_left)
         }
@@ -131,5 +127,16 @@ class QuickMode : AppCompatActivity(), TextWatcher {
             }
         }
         return manList
+    }
+
+    companion object{
+
+        const val EVEN_FM_RATIO = "even_fm_ratio"
+        const val EVEN_PERSON_RATIO = "even_person_ratio"
+        const val MAN_LIST = "QuickModeManList"
+        const val WOMAN_LIST = "QuickModeWomanList"
+        const val GROUP_LIST = "QuickModeGroupList"
+        const val MEMBER_LIST = "QuickModeMemberList"
+
     }
 }

@@ -14,8 +14,8 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.EditGroupListAdapter
-import com.pandatone.kumiwake.adapter.MBListViewAdapter
 import com.pandatone.kumiwake.adapter.GroupListAdapter
+import com.pandatone.kumiwake.adapter.MBListViewAdapter
 import com.pandatone.kumiwake.member.Name
 import kotlinx.android.synthetic.main.kumiwake_custom.*
 import kotlinx.android.synthetic.main.part_review_listview.*
@@ -24,7 +24,7 @@ import java.util.*
 /**
  * Created by atsushi_2 on 2016/05/27.
  */
-abstract class KumiwakeCustom : AppCompatActivity() {
+class KumiwakeCustom : AppCompatActivity() {
     private var mbAdapter: MBListViewAdapter? = null
     private var gpAdapter: EditGroupListAdapter? = null
 
@@ -34,8 +34,12 @@ abstract class KumiwakeCustom : AppCompatActivity() {
         setContentView(R.layout.kumiwake_custom)
         ButterKnife.bind(this)
 
-        memberArray = intent.getSerializableExtra("NormalModeMemberArray") as ArrayList<Name>
-        groupArray = intent.getSerializableExtra("NormalModeGroupArray") as ArrayList<GroupListAdapter.Group>
+        if(intent.getSerializableExtra(NormalMode.NORMAL_MEMBER_ARRAY) != null) {
+            memberArray = intent.getSerializableExtra(NormalMode.NORMAL_MEMBER_ARRAY) as ArrayList<Name>
+        }
+        if(intent.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) != null) {
+            groupArray = intent.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) as ArrayList<GroupListAdapter.Group>
+        }
         mbAdapter = MBListViewAdapter(this, memberArray, groupArray.size)
         gpAdapter = EditGroupListAdapter(this, groupArray)
         findViews()
@@ -44,7 +48,7 @@ abstract class KumiwakeCustom : AppCompatActivity() {
         groupList.adapter = gpAdapter
         setLeader()
 
-        memberList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+        memberList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
             memberList.requestFocus()
             changeLeader(position)
@@ -135,12 +139,12 @@ abstract class KumiwakeCustom : AppCompatActivity() {
         if (allowToNext!!) {
             recreateGrouplist()
             val intent = Intent(this, NormalKumiwakeConfirmation::class.java)
-            intent.putExtra("NormalModeMemberArray", memberArray)
-            intent.putExtra("NormalModeGroupArray", newGroupArray)
-            intent.putExtra("EvenFMRatio", even_fm_ratio_check.isChecked)
-            intent.putExtra("EvenAgeRatio", even_age_ratio_check.isChecked)
-            intent.putExtra("EvenGradeRatio", even_grade_ratio_check.isChecked)
-            intent.putExtra("EvenRole", custom_spinner.selectedItem as String)
+            intent.putExtra(NormalMode.NORMAL_MEMBER_ARRAY, memberArray)
+            intent.putExtra(NormalMode.NORMAL_GROUP_ARRAY, newGroupArray)
+            intent.putExtra(EVEN_FM_RATIO, even_fm_ratio_check.isChecked)
+            intent.putExtra(EVEN_AGE_RATIO, even_age_ratio_check.isChecked)
+            intent.putExtra(KumiwakeCustom.EVEN_GRADE_RATIO, even_grade_ratio_check.isChecked)
+            intent.putExtra(KumiwakeCustom.EVEN_ROLE, custom_spinner.selectedItem as String)
             startActivity(intent)
             overridePendingTransition(R.anim.in_right, R.anim.out_left)
         } else {
@@ -208,6 +212,11 @@ abstract class KumiwakeCustom : AppCompatActivity() {
 
     companion object {
 
+        const val EVEN_FM_RATIO = "even_fm_ratio"
+        const val EVEN_AGE_RATIO = "even_age_ratio"
+        const val EVEN_GRADE_RATIO = "even_grade_ratio"
+        const val EVEN_ROLE = "even_role"
+
         lateinit var memberList: ListView
         lateinit var groupList: ListView
         lateinit var groupNo: TextView
@@ -225,7 +234,7 @@ abstract class KumiwakeCustom : AppCompatActivity() {
             hs.addAll(list)
             list.clear()
             list.addAll(hs)
-            list.remove(MainActivity.context!!.getText(R.string.leader))
+            list.remove(R.string.leader.toString())
             list.remove("")
             list.sort()
             return list
@@ -238,7 +247,8 @@ abstract class KumiwakeCustom : AppCompatActivity() {
                 groupList.getChildAt(position + 1).findViewById<View>(R.id.editTheNumberOfMember) as EditText
             }
             var nowNo = 0
-            var newNo = 0
+            val newNo: Int
+
             if (et.text.toString().isNotEmpty()) {
                 nowNo = Integer.parseInt(et.text.toString())
             }

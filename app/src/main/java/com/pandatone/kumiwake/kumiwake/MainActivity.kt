@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.transition.Explode
 import android.view.View
 import android.view.Window
@@ -49,25 +50,21 @@ class MainActivity : Activity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        val category: Category
+        val category: Category = when (v.id) {
+            R.id.category_item1 -> mCategories[0]
+            R.id.category_item2 -> mCategories[1]
+            R.id.category_item3 -> mCategories[2]
+            else -> mCategories[3]
+        }
         val res = resources
         val mPackageName = packageName
-        val icon: ImageView
         val title: TextView
-        when (v.id) {
-            R.id.category_item1 -> category = mCategories[0]
-            R.id.category_item2 -> category = mCategories[1]
-            R.id.category_item3 -> category = mCategories[2]
-            else -> category = mCategories[3]
-        }
-        icon = v.findViewById<View>(res.getIdentifier(
-                "category_icon" + category.id!!, "id", mPackageName)) as ImageView
         title = v.findViewById<View>(res.getIdentifier(
                 "category_title" + category.id, "id", mPackageName)) as TextView
-        startActivityWithTransition(category.id, icon, title)
+        startActivityWithTransition(category.id, title)
     }
 
-    fun setViews() {
+    private fun setViews() {
         var v: FrameLayout
         var icon: ImageView
         var title: TextView
@@ -98,17 +95,17 @@ class MainActivity : Activity(), View.OnClickListener {
 
             v.layoutParams.width = halfScreenWidth
             v.layoutParams.height = miniScreenHeight
-            v.setBackgroundColor(resources.getColor(category.theme.windowBackgroundColor))
+            v.setBackgroundColor(ContextCompat.getColor(applicationContext, category.theme.windowBackgroundColor))
             icon.setImageResource(res.getIdentifier(
                     "icon_" + category.id, "drawable", mPackageName))
             title.text = category.name
-            title.setTextColor(resources.getColor(category.theme.textPrimaryColor))
-            title.setBackgroundColor(resources.getColor(category.theme.primaryColor))
+            title.setTextColor(ContextCompat.getColor(applicationContext, category.theme.textPrimaryColor))
+            title.setBackgroundColor(ContextCompat.getColor(applicationContext, category.theme.primaryColor))
             v.setOnClickListener(this)
         }
     }
 
-    private fun startActivityWithTransition(id: String?, iv: ImageView, tv: TextView) {
+    private fun startActivityWithTransition(id: String?, tv: TextView) {
         val intent: Intent
 
         when (id) {
@@ -126,12 +123,6 @@ class MainActivity : Activity(), View.OnClickListener {
         } else {
             startActivity(intent)
         }
-    }
-
-    companion object {
-
-        val context: Context?
-            get() = MemberMain().applicationContext
     }
 
 }

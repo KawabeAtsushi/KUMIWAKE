@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.view.MenuItemCompat
+import android.support.v4.content.res.ResourcesCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
@@ -20,10 +20,22 @@ import android.widget.Button
 import android.widget.ImageView
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.CustomPagerAdapter
+import com.pandatone.kumiwake.adapter.GroupListAdapter
+import com.pandatone.kumiwake.adapter.MemberListAdapter
 import com.pandatone.kumiwake.kumiwake.NormalMode
-import kotlinx.android.synthetic.main.member_main.*
 import java.io.IOException
 import java.util.*
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Created by atsushi_2 on 2016/02/19.
@@ -37,7 +49,9 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
     internal var kumiwake_select: Boolean = false
     internal var groupId: Int = 0
     internal var delete_icon_visible: Boolean = false
+    internal var visible: Boolean = false
     internal var page: Int = 0
+    var context:Context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,11 +64,14 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         setViews()
         val i = intent
-        start_actionmode = i.getBooleanExtra("START_ACTIONMODE", false)
-        groupId = i.getIntExtra("GROUP_ID", -1)
-        delete_icon_visible = i.getBooleanExtra("delete_icon_visible", true)
-        kumiwake_select = i.getBooleanExtra("kumiwake_select", false)
-        memberArray = i.getSerializableExtra("memberArray") as ArrayList<Name>
+        start_actionmode = i.getBooleanExtra(START_ACTION_MODE, false)
+        groupId = i.getIntExtra(GROUP_ID, -1)
+        delete_icon_visible = i.getBooleanExtra(DELETE_ICON_VISIBLE, true)
+        kumiwake_select = i.getBooleanExtra(KUMIWAKE_SELECT, false)
+        if(i.getSerializableExtra(MEMBER_ARRAY) != null) {
+            memberArray = i.getSerializableExtra(MEMBER_ARRAY) as ArrayList<Name>
+        }
+        visible = i.getBooleanExtra(VISIBLE, false)
     }
 
     private fun setViews() {
@@ -65,7 +82,7 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
     }
 
     private fun visibleViews() {
-        if (intent.getBooleanExtra("visible", false)) {
+        if (visible) {
             decision.visibility = View.VISIBLE
             FragmentGroup.adviceInFG.visibility = View.VISIBLE
             FragmentMember.fab.hide()
@@ -80,7 +97,7 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         menuInflater.inflate(R.menu.member_main_menu, menu)
         val delete = menu.findItem(R.id.item_delete)
         delete.isVisible = false
-        viewPager.setOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+        viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageScrollStateChanged(state: Int) {
                 page = viewPager.currentItem
                 val itemfilter = menu.findItem(R.id.item_filter)
@@ -88,7 +105,7 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
             }
         })
 
-        searchView = MenuItemCompat.getActionView(menu.findItem(R.id.search_view)) as SearchView
+        searchView = menu.findItem(R.id.search_view).actionView as SearchView
         searchView.setOnQueryTextListener(this)
         val searchAutoComplete = searchView.findViewById<View>(android.support.v7.appcompat.R.id.search_src_text) as SearchView.SearchAutoComplete
         // ActionBarの検索アイコン
@@ -98,9 +115,9 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         // ヒントテキスト
         ssb.append(getText(R.string.search_view))
         // ヒントアイコン
-        val searchHintIcon = resources.getDrawable(android.R.drawable.ic_menu_search)
+        val searchHintIcon = ResourcesCompat.getDrawable(resources,android.R.drawable.ic_menu_search,null)
         val textSize = (searchAutoComplete.textSize * 1.25).toInt()
-        searchHintIcon.setBounds(0, 0, textSize, textSize)
+        searchHintIcon?.setBounds(0, 0, textSize, textSize)
         ssb.setSpan(ImageSpan(searchHintIcon), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         searchAutoComplete.hint = ssb
         // テキストカラー
@@ -137,23 +154,12 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         reload()
     }
 
-    internal fun moveMember() {
-        val intent = Intent(this, AddMember::class.java)
-        startActivity(intent)
-    }
-
-    internal fun moveGroup() {
-        val intent = Intent(this, AddGroup::class.java)
-        startActivity(intent)
-    }
-
     internal fun moveKumiwake() {
-        val hs = HashSet<Name>()
-        hs.addAll(memberArray)
+        val hs = HashSet(memberArray)
         memberArray.clear()
         memberArray.addAll(hs)
         val i = Intent(this, NormalMode::class.java)
-        i.putExtra("memberArray", memberArray)
+        i.putExtra(NormalMode.MEMBER_ARRAY, memberArray)
         setResult(Activity.RESULT_OK, i)
         finish()
     }
@@ -186,6 +192,14 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
     companion object {
         internal lateinit var searchView: SearchView
         internal lateinit var decision: Button
+
+        //intent key
+        const val START_ACTION_MODE = "start_action_mode"
+        const val GROUP_ID = "group_id"
+        const val DELETE_ICON_VISIBLE = "deleteIcon_visible"
+        const val KUMIWAKE_SELECT = "kumiwake_select"
+        const val MEMBER_ARRAY = "memberArray"
+        const val VISIBLE = "visible"
     }
 
 }

@@ -2,6 +2,7 @@ package com.pandatone.kumiwake.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,7 +44,7 @@ class GroupNameListAdapter(private val context: Context, private val groupList: 
             v = inflater.inflate(R.layout.row_group, null)
         }
         if (gSelection[position] != null) {
-            v!!.setBackgroundColor(Sort.memberContext()!!.resources.getColor(R.color.checked_list))
+            v!!.setBackgroundColor(ContextCompat.getColor(Sort.getContext(),R.color.checked_list))
         } else {
             v = inflater.inflate(R.layout.row_group, null)
         }
@@ -51,7 +52,7 @@ class GroupNameListAdapter(private val context: Context, private val groupList: 
         nameTextView = v!!.findViewById<View>(R.id.groupName) as TextView
         numberOfMemberTextView = v.findViewById<View>(R.id.theNumberOfMember) as TextView
         nameTextView.text = listItem.group
-        numberOfMemberTextView.text = "${listItem.belongNo}${Sort.memberContext()!!.getText(R.string.person)}"
+        numberOfMemberTextView.text = "${listItem.belongNo}${Sort.getContext().getText(R.string.person)}"
 
         return v
     }

@@ -44,13 +44,17 @@ class FragmentGroup : ListFragment() {
         val view = inflater.inflate(R.layout.tab_group, container, false)
         adviceInFG = view.findViewById<View>(R.id.advice_in_fg) as TextView
         fab = view.findViewById<View>(R.id.group_fab) as FloatingActionButton
-        fab.setOnClickListener { parent.moveGroup() }
+        fab.setOnClickListener { moveGroup() }
 
         // Fragmentとlayoutを紐付ける
         super.onCreateView(inflater, container, savedInstanceState)
         return view
     }
 
+    private fun moveGroup() {
+        val intent = Intent(activity, AddGroup::class.java)
+        startActivity(intent)
+    }
 
     // Viewの生成が完了した後に呼ばれる
     // UIパーツの設定などを行う
@@ -69,13 +73,13 @@ class FragmentGroup : ListFragment() {
             val view2 = inflater.inflate(R.layout.group_info,
                     activity!!.findViewById<View>(R.id.info_layout) as ViewGroup)
             val groupname = nameList[position].group
-            if (MemberMain.searchView.isActivated == true)
+            if (MemberMain.searchView.isActivated)
                 MemberMain.searchView.onActionViewCollapsed()
             FragmentMember().loadName()
 
-            val Items = arrayOf(Sort.memberContext()!!.getString(R.string.information), Sort.memberContext()!!.getString(R.string.edit), Sort.memberContext()!!.getString(R.string.delete))
+            val items = arrayOf(R.string.information.toString(), R.string.edit.toString(), R.string.delete.toString())
             builder.setTitle(groupname)
-            builder.setItems(Items) { dialog, which ->
+            builder.setItems(items) { _, which ->
                 when (which) {
                     0 -> {
                         GroupClick.groupInfoDialog(view2, builder2)
@@ -104,7 +108,7 @@ class FragmentGroup : ListFragment() {
             }
         }
 
-        listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, id ->
+        listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
             listView.setItemChecked(position, !listAdp.isPositionChecked(position))
             false
         }
@@ -117,7 +121,7 @@ class FragmentGroup : ListFragment() {
         when (item!!.itemId) {
             android.R.id.home -> activity!!.finish()
 
-            R.id.item_delete -> DeleteGroup()
+            R.id.item_delete -> deleteGroup()
 
             R.id.item_all_select -> for (i in 0 until ListCount) {
                 listView.setItemChecked(i, true)
@@ -149,7 +153,7 @@ class FragmentGroup : ListFragment() {
         builder.setTitle(group)
         builder.setMessage(R.string.Do_delete)
         // OKの時の処理
-        builder.setPositiveButton("OK") { dialog, which ->
+        builder.setPositiveButton("OK") { _, _ ->
             dbAdapter.open()
             listItem = nameList[position]
             val listId = listItem.id
@@ -158,19 +162,19 @@ class FragmentGroup : ListFragment() {
             loadName()
         }
 
-        builder.setNegativeButton(R.string.cancel) { dialog, which -> }
+        builder.setNegativeButton(R.string.cancel) { _, _ -> }
         val dialog = builder.create()
         dialog.show()
     }
 
-    fun DeleteGroup() {
-        Log.d("DeleteGroup is called.", "hooo")
+    fun deleteGroup() {
+        Log.d("deleteGroup is called.", "hooo")
         // アラートダイアログ表示
         val builder = AlertDialog.Builder(activity!!)
         builder.setTitle(checkedCount.toString() + " " + getString(R.string.group) + getString(R.string.delete))
         builder.setMessage(R.string.Do_delete)
         // OKの時の処理
-        builder.setPositiveButton("OK") { dialog, which ->
+        builder.setPositiveButton("OK") { _, _ ->
             val list = listView.checkedItemPositions
 
             dbAdapter.open()     // DBの読み込み(読み書きの方)
@@ -191,7 +195,7 @@ class FragmentGroup : ListFragment() {
             loadName()
         }
 
-        builder.setNegativeButton(R.string.cancel) { dialog, which -> }
+        builder.setNegativeButton(R.string.cancel) { _, _ -> }
         val dialog = builder.create()
         dialog.show()
 
@@ -257,7 +261,7 @@ class FragmentGroup : ListFragment() {
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             // アクションアイテム選択時
             when (item.itemId) {
-                R.id.item_delete -> DeleteGroup()
+                R.id.item_delete -> deleteGroup()
 
                 R.id.item_all_select -> for (i in 0 until ListCount) {
                     listView.setItemChecked(i, true)

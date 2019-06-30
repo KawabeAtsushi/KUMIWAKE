@@ -44,12 +44,12 @@ class QuickKumiwakeResult : AppCompatActivity() {
                 .addTestDevice("BB707E3F7B5413908B2DD12063887489").build()
         mAdView.loadAd(adRequest)
         val i = intent
-        memberArray = i.getStringArrayListExtra("QuickModeMemberList")
-        manArray = i.getStringArrayListExtra("QuickModeManList")
-        womanArray = i.getStringArrayListExtra("QuickModeWomanList")
-        groupArray = i.getStringArrayListExtra("QuickModeGroupList")
-        even_fm_ratio = i.getBooleanExtra("EvenFMRatio", false)
-        even_person_ratio = i.getBooleanExtra("EvenPersonRatio", false)
+        memberArray = i.getStringArrayListExtra(QuickMode.MEMBER_LIST)
+        manArray = i.getStringArrayListExtra(QuickMode.MAN_LIST)
+        womanArray = i.getStringArrayListExtra(QuickMode.WOMAN_LIST)
+        groupArray = i.getStringArrayListExtra(QuickMode.GROUP_LIST)
+        even_fm_ratio = i.getBooleanExtra(QuickMode.EVEN_FM_RATIO, false)
+        even_person_ratio = i.getBooleanExtra(QuickMode.EVEN_PERSON_RATIO, false)
         groupNo = groupArray.size
         viewGroup = findViewById<View>(R.id.result_view) as RelativeLayout
         viewGroup.background = ContextCompat.getDrawable(this, R.drawable.quick_img)
@@ -131,7 +131,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
             customDialog.dismiss()
             Toast.makeText(applicationContext, getText(R.string.re_kumiwake_finished), Toast.LENGTH_SHORT).show()
         }
-        customDialog.show(fragmentManager, "Btn")
+        customDialog.show(supportFragmentManager, "Btn")
     }
 
     @OnClick(R.id.go_sekigime)
@@ -229,7 +229,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
 
         drawable.setColor(Color.argb(150, R, G, B))
         v.layoutParams = setMargin(10, 12, 10, 0)
-        v.setBackgroundDrawable(drawable)
+        v.background = drawable
 
     }
 

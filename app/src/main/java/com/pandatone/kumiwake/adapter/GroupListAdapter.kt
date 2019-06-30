@@ -7,7 +7,9 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.ArrayAdapter
+import android.widget.BaseAdapter
 import com.pandatone.kumiwake.member.FragmentGroup
+import com.pandatone.kumiwake.member.MemberMain
 import java.io.IOException
 import java.io.Serializable
 

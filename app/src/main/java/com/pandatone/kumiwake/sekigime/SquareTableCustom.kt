@@ -3,10 +3,7 @@ package com.pandatone.kumiwake.sekigime
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.RadioButton
-import android.widget.RadioGroup
 import android.widget.SeekBar
-import android.widget.TextView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.pandatone.kumiwake.R

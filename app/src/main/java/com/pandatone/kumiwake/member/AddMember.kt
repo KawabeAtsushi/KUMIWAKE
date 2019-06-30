@@ -127,7 +127,7 @@ class AddMember : AppCompatActivity() {
         // ダイアログを生成
         val dialog = AlertDialog.Builder(this)
         // 選択イベント
-        dialog.setMultiChoiceItems(belongArray, checkArray, DialogInterface.OnMultiChoiceClickListener { dia, value, isChecked ->
+        dialog.setMultiChoiceItems(belongArray, checkArray, DialogInterface.OnMultiChoiceClickListener { _, value, isChecked ->
             val text = belongSpinner!!.text.toString()
             // 選択された場合
             if (isChecked) {

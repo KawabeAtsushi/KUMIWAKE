@@ -11,17 +11,17 @@ import android.text.TextUtils
 import android.transition.Slide
 import android.view.View
 import android.view.Window
-import android.widget.*
+import android.widget.ListView
+import android.widget.TextView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.adapter.MBListViewAdapter
 import com.pandatone.kumiwake.adapter.GroupListAdapter
+import com.pandatone.kumiwake.adapter.MBListViewAdapter
 import com.pandatone.kumiwake.member.MemberMain
 import com.pandatone.kumiwake.member.Name
 import kotlinx.android.synthetic.main.normal_mode.*
 import kotlinx.android.synthetic.main.part_review_listview.view.*
-import kotlinx.android.synthetic.main.quick_mode.*
 import java.util.*
 
 /**
@@ -58,11 +58,11 @@ class NormalMode : AppCompatActivity() {
 
     private fun moveMemberMain() {
         val intent = Intent(this, MemberMain::class.java)
-        intent.putExtra("visible", true)
-        intent.putExtra("delete_icon_visible", false)
-        intent.putExtra("START_ACTIONMODE", true)
-        intent.putExtra("kumiwake_select", true)
-        intent.putExtra("memberArray", memberArray)
+        intent.putExtra(MemberMain.VISIBLE, true)
+        intent.putExtra(MemberMain.DELETE_ICON_VISIBLE, false)
+        intent.putExtra(MemberMain.START_ACTION_MODE, true)
+        intent.putExtra(MemberMain.KUMIWAKE_SELECT, true)
+        intent.putExtra(MemberMain.MEMBER_ARRAY, memberArray)
         startActivityForResult(intent, 1000)
     }
 
@@ -98,8 +98,8 @@ class NormalMode : AppCompatActivity() {
             }
 
             val intent = Intent(this, KumiwakeCustom::class.java)
-            intent.putExtra("NormalModeMemberArray", memberArray)
-            intent.putExtra("NormalModeGroupArray", groupArray)
+            intent.putExtra(NORMAL_MEMBER_ARRAY, memberArray)
+            intent.putExtra(NORMAL_GROUP_ARRAY, groupArray)
             startActivity(intent)
             overridePendingTransition(R.anim.in_right, R.anim.out_left)
         }
@@ -108,7 +108,7 @@ class NormalMode : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onActivityResult(requestCode: Int, resultCode: Int, i: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
-            memberArray = i!!.getSerializableExtra("memberArray") as ArrayList<Name>
+            memberArray = i!!.getSerializableExtra(MEMBER_ARRAY) as ArrayList<Name>
             adapter = MBListViewAdapter(this, memberArray, 1000)
             listView.adapter = adapter
             MBListViewAdapter.setRowHeight(listView, adapter)
@@ -125,6 +125,10 @@ class NormalMode : AppCompatActivity() {
         @SuppressLint("StaticFieldLeak")
         internal lateinit var listView: ListView
         internal lateinit var memberArray: ArrayList<Name>
+        //intent keys
+        const val MEMBER_ARRAY = "memberArray"
+        const val NORMAL_MEMBER_ARRAY = "normal_memberArray"
+        const val NORMAL_GROUP_ARRAY = "normal_groupArray"
     }
 
 }

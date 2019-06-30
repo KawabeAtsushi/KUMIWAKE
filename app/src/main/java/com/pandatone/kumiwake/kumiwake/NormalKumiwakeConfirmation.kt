@@ -8,8 +8,8 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GPListViewAdapter
-import com.pandatone.kumiwake.adapter.MBListViewAdapter
 import com.pandatone.kumiwake.adapter.GroupListAdapter
+import com.pandatone.kumiwake.adapter.MBListViewAdapter
 import com.pandatone.kumiwake.member.Name
 import kotlinx.android.synthetic.main.kumiwake_confirmation.*
 import java.util.*
@@ -23,7 +23,6 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
     private lateinit var memberAdapter: MBListViewAdapter
     private lateinit var groupAdapter: GPListViewAdapter
     internal var even_fm_ratio: Boolean = false
-    internal var even_leader_ratio: Boolean = false
     internal var even_age_ratio: Boolean = false
     internal var even_grade_ratio: Boolean = false
     internal lateinit var even_role: String
@@ -33,13 +32,16 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
         setContentView(R.layout.kumiwake_confirmation)
         ButterKnife.bind(this)
         val i = intent
-        memberArray = i.getSerializableExtra("NormalModeMemberArray") as ArrayList<Name>
-        groupArray = i.getSerializableExtra("NormalModeGroupArray") as ArrayList<GroupListAdapter.Group>
-        even_fm_ratio = i.getBooleanExtra("EvenFMRatio", false)
-        even_leader_ratio = i.getBooleanExtra("EvenLeaderRatio", false)
-        even_age_ratio = i.getBooleanExtra("EvenAgeRatio", false)
-        even_grade_ratio = i.getBooleanExtra("EvenGradeRatio", false)
-        even_role = i.getStringExtra("EvenRole")
+        if(i.getSerializableExtra(NormalMode.NORMAL_MEMBER_ARRAY) != null) {
+            memberArray = i.getSerializableExtra(NormalMode.NORMAL_MEMBER_ARRAY) as ArrayList<Name>
+        }
+        if(i.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) != null) {
+            groupArray = i.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) as ArrayList<GroupListAdapter.Group>
+        }
+        even_fm_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_FM_RATIO, false)
+        even_age_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_AGE_RATIO, false)
+        even_grade_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_GRADE_RATIO, false)
+        even_role = i.getStringExtra(KumiwakeCustom.EVEN_ROLE)
         findViews()
         setAdapter()
         setViews()
@@ -95,13 +97,12 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
     @OnClick(R.id.kumiwake_btn)
     internal fun onClicked() {
         val intent = Intent(this, NormalKumiwakeResult::class.java)
-        intent.putExtra("NormalModeMemberArray", memberArray)
-        intent.putExtra("NormalModeGroupArray", groupArray)
-        intent.putExtra("EvenFMRatio", even_fm_ratio)
-        intent.putExtra("EvenLeaderRatio", even_leader_ratio)
-        intent.putExtra("EvenAgeRatio", even_age_ratio)
-        intent.putExtra("EvenGradeRatio", even_grade_ratio)
-        intent.putExtra("EvenRole", even_role)
+        intent.putExtra(NormalMode.NORMAL_MEMBER_ARRAY, memberArray)
+        intent.putExtra(NormalMode.NORMAL_GROUP_ARRAY, groupArray)
+        intent.putExtra(KumiwakeCustom.EVEN_FM_RATIO, even_fm_ratio)
+        intent.putExtra(KumiwakeCustom.EVEN_AGE_RATIO, even_age_ratio)
+        intent.putExtra(KumiwakeCustom.EVEN_GRADE_RATIO, even_grade_ratio)
+        intent.putExtra(KumiwakeCustom.EVEN_ROLE, even_role)
         startActivity(intent)
     }
 

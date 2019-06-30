@@ -56,6 +56,6 @@ class SelectTableType : AppCompatActivity() {
         val customDialog = CustomDialogSekigime()
         customDialog.setTitle(title)
         customDialog.setPosition(position)
-        customDialog.show(fragmentManager, "Btn")
+        customDialog.show(supportFragmentManager, "Btn")
     }
 }

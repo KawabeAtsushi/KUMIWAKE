@@ -42,7 +42,7 @@ class SettingHelp : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         ButterKnife.bind(this)
         setViews()
-        how_to_use_list.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+        how_to_use_list.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
             when (position) {
                 0 -> {
@@ -54,7 +54,7 @@ class SettingHelp : AppCompatActivity() {
                 2 -> confirmationDialog(how_to_use_str[2], getText(R.string.how_to_sekigime))
             }
         }
-        back_up_list.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+        back_up_list.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
             when (position) {
                 0 -> onBackup()
@@ -62,7 +62,7 @@ class SettingHelp : AppCompatActivity() {
                 2 -> onDeleteBackup()
             }
         }
-        other_list.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+        other_list.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
             when (position) {
                 0 -> showVersionName(applicationContext)
@@ -103,33 +103,33 @@ class SettingHelp : AppCompatActivity() {
         customDialog = CustomDialog()
         customDialog.setTitle(title)
         customDialog.setMessage(message)
-        customDialog.show(fragmentManager, "Btn")
+        customDialog.show(supportFragmentManager, "Btn")
     }
 
-    private fun DecisionDialog(title: String, message: CharSequence, code: Int) {
+    private fun decisionDialog(title: String, message: CharSequence, code: Int) {
         customDialog = CustomDialog()
         customDialog.setTitle(title)
         customDialog.setMessage(message)
         customDialog.setOnPositiveClickListener(code)
-        customDialog.show(fragmentManager, "Btn")
+        customDialog.show(supportFragmentManager, "Btn")
     }
 
     private fun onBackup() {
         val title = getString(R.string.back_up_db)
         val message = getString(R.string.back_up_attention) + getString(R.string.run_confirmation)
-        DecisionDialog(title, message, 1)
+        decisionDialog(title, message, 1)
     }
 
     private fun onImport() {
         val title = getString(R.string.import_db)
         val message = getString(R.string.import_attention) + getString(R.string.run_confirmation)
-        DecisionDialog(title, message, 2)
+        decisionDialog(title, message, 2)
     }
 
     private fun onDeleteBackup() {
         val title = getString(R.string.delete_backup)
         val message = getString(R.string.delete_backup_attention)
-        DecisionDialog(title, message, 3)
+        decisionDialog(title, message, 3)
     }
 
     private fun showVersionName(context: Context) {
@@ -180,7 +180,7 @@ class SettingHelp : AppCompatActivity() {
 
     }
 
-    companion object{
+    companion object {
         val context: Context?
             get() = SettingHelp().applicationContext
     }

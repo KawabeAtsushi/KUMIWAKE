@@ -3,6 +3,7 @@ package com.pandatone.kumiwake.sekigime
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
+import android.support.v4.content.ContextCompat
 import android.view.MotionEvent
 import android.view.View
 import com.pandatone.kumiwake.R
@@ -411,17 +412,17 @@ class DrawTableView(context: Context) : View(context) {
         for (i in startNo until endNo) {
             if (Normalmode!!) {
                 if (arrayArrayNormal[position][i].sex == "男") {
-                    sPaint.color = resources.getColor(R.color.thin_man)
+                    sPaint.color = ContextCompat.getColor(context, R.color.thin_man)
                 } else {
-                    sPaint.color = resources.getColor(R.color.thin_woman)
+                    sPaint.color = ContextCompat.getColor(context, R.color.thin_woman)
                 }
             } else {
                 if (arrayArrayQuick[position][i].matches((".*" + "♠" + ".*").toRegex())) {
-                    sPaint.color = resources.getColor(R.color.thin_man)
+                    sPaint.color = ContextCompat.getColor(context, R.color.thin_man)
                 } else if (arrayArrayQuick[position][i].matches((".*" + "♡" + ".*").toRegex())) {
-                    sPaint.color = resources.getColor(R.color.thin_woman)
+                    sPaint.color = ContextCompat.getColor(context, R.color.thin_woman)
                 } else {
-                    sPaint.color = resources.getColor(R.color.thin_white)
+                    sPaint.color = ContextCompat.getColor(context, R.color.thin_white)
                 }
             }
 
@@ -539,17 +540,17 @@ class DrawTableView(context: Context) : View(context) {
         balloonPaint.textSize = 35 * scale
         if (Normalmode!!) {
             if (arrayArrayNormal[position][point].sex == "男") {
-                balloonPaint.color = resources.getColor(R.color.man)
+                balloonPaint.color = ContextCompat.getColor(context, R.color.man)
             } else {
-                balloonPaint.color = resources.getColor(R.color.woman)
+                balloonPaint.color = ContextCompat.getColor(context, R.color.woman)
             }
         } else {
             if (arrayArrayQuick[position][point].matches((".*" + "♠" + ".*").toRegex())) {
-                balloonPaint.color = resources.getColor(R.color.man)
+                balloonPaint.color = ContextCompat.getColor(context, R.color.man)
             } else if (arrayArrayQuick[position][point].matches((".*" + "♡" + ".*").toRegex())) {
-                balloonPaint.color = resources.getColor(R.color.woman)
+                balloonPaint.color = ContextCompat.getColor(context, R.color.woman)
             } else {
-                balloonPaint.color = resources.getColor(R.color.green)
+                balloonPaint.color = ContextCompat.getColor(context, R.color.green)
             }
         }
 

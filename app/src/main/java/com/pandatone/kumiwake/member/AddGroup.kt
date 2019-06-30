@@ -139,10 +139,10 @@ class AddGroup : AppCompatActivity() {
 
     private fun moveMemberMain() {
         val intent = Intent(this, MemberMain::class.java)
-        intent.putExtra("visible", true)
-        intent.putExtra("delete_icon_visible", false)
-        intent.putExtra("START_ACTIONMODE", true)
-        intent.putExtra("GROUP_ID", groupId)
+        intent.putExtra(MemberMain.VISIBLE, true)
+        intent.putExtra(MemberMain.DELETE_ICON_VISIBLE, false)
+        intent.putExtra(MemberMain.START_ACTION_MODE, true)
+        intent.putExtra(MemberMain.GROUP_ID, groupId)
         startActivity(intent)
     }
 

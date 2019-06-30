@@ -1,11 +1,11 @@
 package com.pandatone.kumiwake.customize
 
 import android.app.Dialog
-import android.app.DialogFragment
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Environment
+import android.support.v4.app.DialogFragment
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -28,7 +28,7 @@ class CustomDialog : DialogFragment() {
     //onClickリスナ
     private val mOnClickLisner = View.OnClickListener { dismiss() }
 
-    override fun onCreateDialog(savedInstanceState: Bundle): Dialog {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = Dialog(activity)
         // タイトル非表示
         dialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
@@ -68,8 +68,8 @@ class CustomDialog : DialogFragment() {
     fun setOnPositiveClickListener(code: Int) {
         mPositiveBtnListener = View.OnClickListener {
             when (code) {
-                1 -> DBBackup.dbBackup(activity)
-                2 -> DBBackup.DBImport(activity)
+                1 -> activity?.let { it1 -> DBBackup.dbBackup(it1) }
+                2 -> activity?.let { it1 -> DBBackup.DBImport(it1) }
                 3 -> {
                     val mb_file = File(Environment.getExternalStorageDirectory().path + "/KUMIWAKE_Backup/mb.db")
                     val gp_file = File(Environment.getExternalStorageDirectory().path + "/KUMIWAKE_Backup/gp.db")
