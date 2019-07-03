@@ -20,8 +20,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:background="#3cee2f"
-        android:drawableRight="@drawable/ic_arrow_back"
-        android:paddingRight="10dp"
+        android:drawableEnd="@drawable/ic_arrow_back"
+        android:paddingEnd="10dp"
         android:text="@string/move_confirmation"
         android:textColor="@android:color/white"
         android:textSize="20sp" />
@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:background="@drawable/request_background"
                 android:text="@string/member"
                 android:textSize="20sp" />
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
             android:background="@drawable/request_background"
             android:text="@string/group"
             android:textSize="20sp" />
@@ -81,8 +81,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             android:layout_marginTop="3dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:orientation="vertical">
 
             <TextView
@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginTop="@dimen/form_marginTop"
                 android:textSize="15sp" />
 
@@ -105,7 +105,7 @@
                 android:id="@+id/error_member_no_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:layout_marginStart="@dimen/form_marginStart"
                 android:text="@string/require_correct_No"
                 android:textColor="@color/red"
                 android:textSize="@dimen/form_textSize"
@@ -124,7 +124,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/request_background"
                 android:text="@string/kumiwake_conditions"
@@ -135,7 +135,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/even_out_male_female_ratio"
                 android:textSize="@dimen/form_textSize"
                 />
@@ -145,7 +145,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/even_out_age_ratio"
                 android:textSize="@dimen/form_textSize"
                 />
@@ -155,7 +155,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/even_out_grade_ratio"
                 android:textSize="@dimen/form_textSize"
                 />
@@ -165,7 +165,7 @@
                 android:layout_height="fill_parent"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="20dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:orientation="horizontal" >
 
                 <Spinner
@@ -179,7 +179,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:text="@string/even_out"
                     android:textSize="@dimen/form_textSize" />
 

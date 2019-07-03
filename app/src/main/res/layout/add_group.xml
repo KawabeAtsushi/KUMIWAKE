@@ -29,7 +29,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:layout_marginStart="@dimen/form_marginStart"
                 android:text="@string/group_name"
                 android:textColor="@color/hint"
                 android:textSize="@dimen/form_textSize" />
@@ -37,7 +37,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:layout_marginStart="@dimen/form_marginStart"
                 android:text="@string/input_required"
                 android:textColor="#75ff0000"
                 android:textSize="@dimen/form_textSize" />
@@ -48,8 +48,8 @@
             android:id="@+id/group_form_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/form_between_margin"
-            android:layout_marginRight="10dp"
+            android:layout_marginStart="@dimen/form_between_margin"
+            android:layout_marginEnd="10dp"
             app:hintTextAppearance="@style/AppTheme.Design.TextAppearance.Design.Hint">
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -66,7 +66,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/form_marginLeft"
+            android:layout_marginStart="@dimen/form_marginStart"
             android:layout_marginTop="@dimen/form_marginTop"
             android:text="@string/belong_member"
             android:textColor="@color/hint"

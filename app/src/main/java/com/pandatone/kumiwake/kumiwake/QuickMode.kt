@@ -84,34 +84,37 @@ class QuickMode : AppCompatActivity(), TextWatcher {
         val group_no = group_no_form.text!!.toString()
         val member_no = member_no_form.text!!.toString()
 
+        error_member_no_txt.text = ""
+        error_group_no_txt.text = ""
+
         if (TextUtils.isEmpty(group_no)) {
             error_group_no_txt.setText(R.string.error_empty_group_no)
         }
-        if (TextUtils.isEmpty(member_no)) {
-            error_member_no_txt.setText(R.string.error_empty_member_no)
-        } else if (TextUtils.isEmpty(group_no)) {
-            error_group_no_txt.setText(R.string.error_empty_group_no)
-        } else if (Integer.parseInt(group_no) > memberNo) {
-            error_group_no_txt.setText(R.string.number_of_groups_is_much_too)
-            error_member_no_txt.text = ""
-        } else {
-            val womanList = ArrayList<String>()
-            val manList = CreateManList(manNo, womanNo)
-            val groupList = ArrayList<String>()
-            for (i in 1..womanNo) {
-                womanList.add(getText(R.string.member).toString() + "♡" + i.toString())
+        when {
+            TextUtils.isEmpty(member_no) -> error_member_no_txt.setText(R.string.error_empty_member_no)
+            TextUtils.isEmpty(group_no) -> error_group_no_txt.setText(R.string.error_empty_group_no)
+            Integer.parseInt(group_no) > memberNo -> {
+                error_group_no_txt.setText(R.string.number_of_groups_is_much_too)
             }
-            for (i in 1..Integer.parseInt(group_no)) {
-                groupList.add(getText(R.string.group).toString() + " " + i.toString())
+            else -> {
+                val womanList = ArrayList<String>()
+                val manList = CreateManList(manNo, womanNo)
+                val groupList = ArrayList<String>()
+                for (i in 1..womanNo) {
+                    womanList.add(getText(R.string.member).toString() + "♡" + i.toString())
+                }
+                for (i in 1..Integer.parseInt(group_no)) {
+                    groupList.add(getText(R.string.group).toString() + " " + i.toString())
+                }
+                val intent = Intent(this, QuickKumiwakeConfirmation::class.java)
+                intent.putStringArrayListExtra(MAN_LIST, manList)
+                intent.putStringArrayListExtra(WOMAN_LIST, womanList)
+                intent.putStringArrayListExtra(GROUP_LIST, groupList)
+                intent.putExtra(EVEN_FM_RATIO, even_fm_ratio_check.isChecked)
+                intent.putExtra(EVEN_PERSON_RATIO, even_person_ratio_check.isChecked)
+                startActivity(intent)
+                overridePendingTransition(R.anim.in_right, R.anim.out_left)
             }
-            val intent = Intent(this, QuickKumiwakeConfirmation::class.java)
-            intent.putStringArrayListExtra(MAN_LIST, manList)
-            intent.putStringArrayListExtra(WOMAN_LIST, womanList)
-            intent.putStringArrayListExtra(GROUP_LIST, groupList)
-            intent.putExtra(EVEN_FM_RATIO, even_fm_ratio_check.isChecked)
-            intent.putExtra(EVEN_PERSON_RATIO, even_person_ratio_check.isChecked)
-            startActivity(intent)
-            overridePendingTransition(R.anim.in_right, R.anim.out_left)
         }
     }
 

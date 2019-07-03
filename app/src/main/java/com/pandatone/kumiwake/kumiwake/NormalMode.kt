@@ -5,14 +5,14 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatEditText
 import android.text.TextUtils
 import android.transition.Slide
 import android.view.View
 import android.view.Window
 import android.widget.ListView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatEditText
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.pandatone.kumiwake.R
@@ -28,13 +28,13 @@ import java.util.*
  * Created by atsushi_2 on 2016/05/02.
  */
 class NormalMode : AppCompatActivity() {
-    private lateinit var adapter: MBListViewAdapter
-    private lateinit var GpNoEditText: AppCompatEditText
+    private var adapter: MBListViewAdapter? = null
+    private lateinit var gpNoEditText: AppCompatEditText
     private lateinit var errorGroup: TextView
+    private lateinit var errorMember: TextView
 
     private val clicked = View.OnClickListener { moveMemberMain() }
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -52,8 +52,9 @@ class NormalMode : AppCompatActivity() {
     private fun findViews() {
         listView = findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.reviewListView) as ListView
         listView.emptyView = findViewById<View>(R.id.add_group_listview).findViewById(R.id.emptyMemberList)
-        GpNoEditText = findViewById<View>(R.id.group_no_form) as AppCompatEditText
+        gpNoEditText = findViewById<View>(R.id.group_no_form) as AppCompatEditText
         errorGroup = findViewById<View>(R.id.error_group_no_txt) as TextView
+        errorMember = findViewById<View>(R.id.error_member_no_txt) as TextView
     }
 
     private fun moveMemberMain() {
@@ -67,21 +68,25 @@ class NormalMode : AppCompatActivity() {
     }
 
 
-    @OnClick(R.id.normal_kumiwake_button)
+    @OnClick(R.id.normal_kumiwake_btn)
     fun onClicked() {
-        val group_no = GpNoEditText.text!!.toString()
+        val group_no = gpNoEditText.text!!.toString()
+
+        errorGroup.text = ""
+        errorMember.text = ""
 
         if (TextUtils.isEmpty(group_no)) {
             errorGroup.setText(R.string.error_empty_group_no)
             scrollToTop()
         }
-        if (group_no != "" && Integer.parseInt(group_no) > adapter.count) {
+
+        if (adapter == null) {
+            errorMember.setText(R.string.error_empty_member_list)
+        } else if (group_no != "" && Integer.parseInt(group_no) > adapter?.count!!) {
             errorGroup.setText(R.string.number_of_groups_is_much_too)
-            errorGroup.text = ""
             scrollToTop()
         } else if (TextUtils.isEmpty(group_no)) {
             errorGroup.setText(R.string.error_empty_group_no)
-            errorGroup.text = ""
             scrollToTop()
         } else {
             val groupArray = ArrayList<GroupListAdapter.Group>()
@@ -105,13 +110,12 @@ class NormalMode : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onActivityResult(requestCode: Int, resultCode: Int, i: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             memberArray = i!!.getSerializableExtra(MEMBER_ARRAY) as ArrayList<Name>
             adapter = MBListViewAdapter(this, memberArray, 1000)
             listView.adapter = adapter
-            MBListViewAdapter.setRowHeight(listView, adapter)
+            MBListViewAdapter.setRowHeight(listView, adapter!!)
 
             add_group_listview.numberOfSelectedMember.text = "${memberArray.size}${getString(R.string.person)}${getString(R.string.selected)}"
         }

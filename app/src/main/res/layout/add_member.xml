@@ -45,7 +45,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:layout_marginStart="@dimen/form_marginStart"
                 android:text="@string/member_name"
                 android:textColor="@color/hint"
                 android:textSize="@dimen/form_textSize" />
@@ -55,8 +55,8 @@
                 android:id="@+id/member_form_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/form_between_margin"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="@dimen/form_between_margin"
+                android:layout_marginEnd="10dp"
                 app:hintTextAppearance="@style/AppTheme.Design.TextAppearance.Design.Hint">
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -82,7 +82,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:layout_marginStart="@dimen/form_marginStart"
                 android:text="@string/member_name_read"
                 android:textColor="@color/hint"
                 android:textSize="@dimen/form_textSize" />
@@ -93,8 +93,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/form_marginTop"
-                android:layout_marginLeft="@dimen/form_between_margin"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="@dimen/form_between_margin"
+                android:layout_marginEnd="10dp"
                 android:background="@android:drawable/editbox_background_normal"
                 android:ems="10"
                 android:inputType="textPersonName"
@@ -111,7 +111,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:layout_marginStart="@dimen/form_marginStart"
                 android:text="@string/sex"
                 android:textColor="@color/hint"
                 android:textSize="@dimen/form_textSize" />
@@ -122,7 +122,7 @@
                 android:layout_height="44dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="@dimen/radio_between_margin"
+                android:layout_marginStart="@dimen/radio_between_margin"
                 android:checkedButton="@+id/manBtn"
                 android:orientation="horizontal">
 
@@ -167,7 +167,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:layout_marginStart="@dimen/form_marginStart"
                 android:text="@string/age"
                 android:textColor="@color/hint"
                 android:textSize="@dimen/form_textSize" />
@@ -184,14 +184,14 @@
                 android:ems="2"
                 android:inputType="number"
                 android:padding="7dp"
-                android:layout_marginLeft="@dimen/form_between_margin"
+                android:layout_marginStart="@dimen/form_between_margin"
                 android:maxLength="3"
                 android:singleLine="true"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:layout_marginStart="@dimen/form_marginStart"
                 android:text="@string/age2"
                 android:textColor="@color/hint"
                 android:textSize="@dimen/form_textSize" />
@@ -207,7 +207,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:layout_marginStart="@dimen/form_marginStart"
                 android:text="@string/grade"
                 android:textColor="@color/hint"
                 android:textSize="@dimen/form_textSize" />
@@ -224,13 +224,13 @@
                 android:ems="2"
                 android:inputType="number"
                 android:padding="7dp"
-                android:layout_marginLeft="@dimen/form_between_margin"
+                android:layout_marginStart="@dimen/form_between_margin"
                 android:maxLength="2"
                 android:singleLine="true" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:layout_marginStart="@dimen/form_marginStart"
                 android:text="@string/grade2"
                 android:textColor="@color/hint"
                 android:textSize="@dimen/form_textSize" />
@@ -245,7 +245,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:layout_marginStart="@dimen/form_marginStart"
                 android:text="@string/group"
                 android:textColor="@color/hint"
                 android:textSize="@dimen/form_textSize" />
@@ -256,8 +256,8 @@
                 style="@android:style/Widget.Spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/form_between_margin"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="@dimen/form_between_margin"
+                android:layout_marginEnd="10dp"
                 android:ellipsize="end"
                 android:hint="@string/select_belong_group"
                 android:singleLine="true" />
@@ -272,7 +272,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:layout_marginStart="@dimen/form_marginStart"
                 android:text="@string/role"
                 android:textColor="@color/hint"
                 android:textSize="@dimen/form_textSize" />
@@ -288,8 +288,8 @@
                 style="@android:style/Widget.Spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/form_between_margin"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="@dimen/form_between_margin"
+                android:layout_marginEnd="10dp"
                 android:ellipsize="end"
                 android:hint="@string/select_role"
                 android:singleLine="true" />

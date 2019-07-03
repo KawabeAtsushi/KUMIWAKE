@@ -18,12 +18,13 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:background="#3cee2f"
-        android:drawableRight="@drawable/ic_arrow_back"
-        android:paddingRight="10dp"
+        android:drawableEnd="@drawable/ic_arrow_back"
+        android:paddingEnd="10dp"
         android:text="@string/move_custom"
         android:textColor="@android:color/white"
         android:textSize="20sp"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:stateListAnimator="@animator/expanding"/>
 
 
     <ScrollView
@@ -40,7 +41,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:layout_marginStart="@dimen/form_marginStart"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/request_background"
                 android:text="@string/require_group_no"
@@ -51,7 +52,7 @@
                 android:id="@+id/error_group_no_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:layout_marginStart="@dimen/form_marginStart"
                 android:text=""
                 android:textColor="@color/red"
                 android:textSize="@dimen/form_textSize" />
@@ -62,22 +63,6 @@
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/number_of_group"
-                    android:textColor="@color/hint"
-                    android:textSize="@dimen/form_textSize" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/two_em"
-                    android:textSize="@dimen/form_textSize" />
-
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/group_no_form"
                     android:layout_width="wrap_content"
@@ -87,6 +72,7 @@
                     android:ems="3"
                     android:inputType="number"
                     android:padding="10dp"
+                    android:layout_marginStart="20dp"
                     android:maxLength="3"
                     android:singleLine="true" />
 
@@ -94,7 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/form_marginLeft"
+                    android:layout_marginStart="@dimen/form_marginStart"
                     android:text="@string/group"
                     android:textColor="@color/hint"
                     android:textSize="@dimen/form_textSize" />
@@ -106,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:layout_marginStart="@dimen/form_marginStart"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/request_background"
                 android:text="@string/require_member_select"
@@ -117,7 +103,7 @@
                 android:id="@+id/error_member_no_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/form_marginLeft"
+                android:layout_marginStart="@dimen/form_marginStart"
                 android:text=""
                 android:textColor="@color/red"
                 android:textSize="@dimen/form_textSize" />
@@ -126,8 +112,8 @@
                 android:id="@+id/add_group_listview"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:layout_marginLeft="@dimen/form_between_margin"
-                android:layout_marginRight="@dimen/form_between_margin"/>
+                android:layout_marginStart="@dimen/form_between_margin"
+                android:layout_marginEnd="@dimen/form_between_margin"/>
 
         </LinearLayout>
     </ScrollView>
