@@ -52,7 +52,7 @@
         android:layout_gravity="bottom"
         android:paddingTop="@dimen/row_padding"
         android:paddingBottom="@dimen/row_padding"
-        android:paddingRight="@dimen/row_padding"
+        android:paddingEnd="@dimen/row_padding"
         android:text="@string/person"/>
         </LinearLayout>
 

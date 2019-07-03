@@ -72,8 +72,8 @@
     <string name="description_of_quick_mode">人数とグループ数を指定して組分けを行うモードです。\n詳細な設定が不要なので素早く組分けを行えます。</string>
     <string name="description_of_normal_sekigime">登録したメンバーを選択して席決めを行うモードです。\nグループごとの名前や人数の設定など、細かなカスタマイズができます。</string>
     <string name="description_of_quick_sekigime">人数とグループ数を指定して席決めを行うモードです。\n詳細な設定が不要なので素早く席決めを行えます。</string>
-    <string name="require_member_no">振り分けるメンバー数を\n入力してください。</string>
-    <string name="require_group_no">作成するグループ数を\n入力してください。</string>
+    <string name="require_member_no">メンバー数</string>
+    <string name="require_group_no">グループ数</string>
     <string name="do_kumiwake">組分けする！</string>
     <string name="move_confirmation">確認画面へ</string>
     <string name="number_of_groups_is_much_too">グループ数がメンバー数を超えています</string>
@@ -87,7 +87,7 @@
     <string name="content_check">内容確認</string>
     <string name="re_kumiwake">組分けなおす</string>
     <string name="kumiwake_result">組分け結果</string>
-    <string name="require_member_select">振り分けるメンバーを\n選択してください。</string>
+    <string name="require_member_select">メンバー登録</string>
     <string name="error_empty_member_list">メンバーを選択してください。</string>
     <string name="select_leader">タップして代表者を選択／解除</string>
     <string name="leader">代表者</string>

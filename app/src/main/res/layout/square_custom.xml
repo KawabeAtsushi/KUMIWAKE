@@ -32,8 +32,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:text="@string/square_custom_deployment_description"
                 android:textColor="@color/gray" />
 
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:checkedButton="@+id/doubleSquareType"
                 android:orientation="vertical">
@@ -75,8 +75,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:text="@string/square_custom_select_no_description"
                 android:textColor="@color/gray" />
 
@@ -98,8 +98,8 @@
                     android:id="@+id/seat_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/ratio_margin_size"
-                    android:layout_marginRight="@dimen/ratio_margin_size"
+                    android:layout_marginStart="@dimen/ratio_margin_size"
+                    android:layout_marginEnd="@dimen/ratio_margin_size"
                     android:text="0"
                     android:textColor="@color/man"
                     android:textSize="@dimen/ratio_text_size" />
@@ -111,8 +111,8 @@
                 android:id="@+id/square_seek_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="30dp"
                 android:max="0"
                 android:progress="0"
@@ -128,7 +128,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="50dp"
-                android:paddingRight="50dp"
+                android:paddingEnd="50dp"
                 android:background="@drawable/simple_orange_button"
                 android:text="@string/run"
                 android:textSize="30dp"

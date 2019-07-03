@@ -34,7 +34,7 @@
             android:gravity="end"
             android:paddingTop="@dimen/row_padding"
             android:paddingBottom="@dimen/row_padding"
-            android:paddingRight="@dimen/row_padding"
+            android:paddingEnd="@dimen/row_padding"
             android:textSize="25sp"
             android:singleLine="true"
             />

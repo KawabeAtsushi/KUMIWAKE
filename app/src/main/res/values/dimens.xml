@@ -1,11 +1,11 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_vertical_margin">10dp</dimen>
-    <dimen name="main_marginLeft">16dp</dimen>
-    <dimen name="main_marginRight">16dp</dimen>
+    <dimen name="main_marginStart">16dp</dimen>
+    <dimen name="main_marginEnd">16dp</dimen>
     <dimen name="main_marginBottom">25dp</dimen>
     <dimen name="form_marginTop">7dp</dimen>
-    <dimen name="form_marginLeft">4dp</dimen>
+    <dimen name="form_marginStart">4dp</dimen>
     <dimen name="form_between_margin">5dp</dimen>
     <dimen name="info_margin">7dp</dimen>
     <dimen name="radio_between_margin">7dp</dimen>

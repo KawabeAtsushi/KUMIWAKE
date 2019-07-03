@@ -32,7 +32,7 @@
             android:layout_height="@dimen/mini_icon_size"
             android:layout_gravity="right"
             android:padding="6dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:textSize="14dp"
             android:visibility="gone"
             android:text="0"
