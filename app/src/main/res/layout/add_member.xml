@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/add_member"
     android:layout_width="match_parent"
@@ -12,291 +11,135 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/request_background"
-            android:layout_gravity="center"
-            android:text="@string/add_member" />
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="#10ff0000"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="@string/main_info"
-            android:textColor="@color/red" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/form_marginTop"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/form_marginStart"
-                android:text="@string/member_name"
-                android:textColor="@color/hint"
-                android:textSize="@dimen/form_textSize" />
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/request_background"
+                android:text="@string/add_member"
+                android:textSize="20sp"/>
 
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/member_form_input_layout"
-                android:layout_width="match_parent"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/form_between_margin"
-                android:layout_marginEnd="10dp"
-                app:hintTextAppearance="@style/AppTheme.Design.TextAppearance.Design.Hint">
+                android:layout_marginStart="@dimen/form_marginStart"
+                android:layout_marginTop="@dimen/form_marginTop"
+                android:layout_marginEnd="@dimen/form_marginEnd"
+                android:hint="@string/member_name"
+                app:helperText="@string/input_required">
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:drawable/editbox_background_normal"
-                    android:ems="10"
-                    android:hint="@string/input_required"
+                    android:ems="20"
                     android:inputType="textPersonName"
-                    android:padding="7dp"
                     android:singleLine="true" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/form_marginTop"
-            android:orientation="horizontal">
-
-            <TextView
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/form_marginStart"
-                android:text="@string/member_name_read"
-                android:textColor="@color/hint"
-                android:textSize="@dimen/form_textSize" />
+                android:layout_marginTop="@dimen/form_marginTop"
+                android:layout_marginEnd="@dimen/form_marginEnd"
+                android:hint="@string/member_name_read">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_name_read"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="20"
+                    android:inputType="textPersonName"
+                    android:singleLine="true" />
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/input_name_read"
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/form_marginTop"
-                android:layout_marginStart="@dimen/form_between_margin"
-                android:layout_marginEnd="10dp"
-                android:background="@android:drawable/editbox_background_normal"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:padding="7dp"
-                android:singleLine="true" />
-            </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/form_marginTop"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/form_marginStart"
-                android:text="@string/sex"
-                android:textColor="@color/hint"
-                android:textSize="@dimen/form_textSize" />
-
-            <RadioGroup
-                android:id="@+id/sexGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="44dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="@dimen/radio_between_margin"
-                android:checkedButton="@+id/manBtn"
                 android:orientation="horizontal">
 
-                <RadioButton
-                    android:id="@+id/manBtn"
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/man_radio_button"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="@string/man"
-                    android:textColor="@drawable/radio_button_color" />
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/form_marginStart"
+                    android:layout_marginEnd="@dimen/form_marginEnd"
+                    android:hint="@string/age">
 
-                <RadioButton
-                    android:id="@+id/womanBtn"
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/woman_radio_button"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="@string/woman"
-                    android:textColor="@drawable/radio_button_color" />
-            </RadioGroup>
-        </LinearLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="4"
+                        android:inputType="number"
+                        android:maxLength="3"
+                        android:singleLine="true" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="#10000000"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="@string/sub_info"
-            android:textColor="#000000" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/form_marginTop"
-            android:orientation="horizontal">
+                <RadioGroup
+                    android:id="@+id/sexGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_gravity="fill"
+                    android:layout_marginStart="50dp"
+                    android:checkedButton="@+id/manBtn"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/form_marginStart"
-                android:text="@string/age"
-                android:textColor="@color/hint"
-                android:textSize="@dimen/form_textSize" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/two_em"
-                android:textSize="@dimen/form_textSize" />
-            <EditText
-                android:id="@+id/input_age"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:drawable/editbox_background_normal"
-                android:ems="2"
-                android:inputType="number"
-                android:padding="7dp"
-                android:layout_marginStart="@dimen/form_between_margin"
-                android:maxLength="3"
-                android:singleLine="true"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/form_marginStart"
-                android:text="@string/age2"
-                android:textColor="@color/hint"
-                android:textSize="@dimen/form_textSize" />
+                    <RadioButton
+                        android:id="@+id/manBtn"
+                        android:layout_width="60dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/man_radio_button"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="@string/man"
+                        android:textColor="@drawable/radio_button_color" />
 
-        </LinearLayout>
+                    <RadioButton
+                        android:id="@+id/womanBtn"
+                        android:layout_width="60dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/woman_radio_button"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="@string/woman"
+                        android:textColor="@drawable/radio_button_color" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/form_marginTop"
-            android:orientation="horizontal">
+                </RadioGroup>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/form_marginStart"
-                android:text="@string/grade"
-                android:textColor="@color/hint"
-                android:textSize="@dimen/form_textSize" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/two_em"
-                android:textSize="@dimen/form_textSize" />
-            <EditText
-                android:id="@+id/input_grade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:drawable/editbox_background_normal"
-                android:ems="2"
-                android:inputType="number"
-                android:padding="7dp"
-                android:layout_marginStart="@dimen/form_between_margin"
-                android:maxLength="2"
-                android:singleLine="true" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/form_marginStart"
-                android:text="@string/grade2"
-                android:textColor="@color/hint"
-                android:textSize="@dimen/form_textSize" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/form_marginTop"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/form_marginStart"
-                android:text="@string/group"
-                android:textColor="@color/hint"
-                android:textSize="@dimen/form_textSize" />
+            </LinearLayout>
 
             <!--spinner-->
             <Button
                 android:id="@+id/select_group_spinner"
                 style="@android:style/Widget.Spinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/form_between_margin"
-                android:layout_marginEnd="10dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="@dimen/form_marginTop"
+                android:layout_marginStart="@dimen/form_marginStart"
+                android:layout_marginEnd="@dimen/form_marginStart"
                 android:ellipsize="end"
                 android:hint="@string/select_belong_group"
                 android:singleLine="true" />
+
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/form_marginTop"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/form_marginStart"
-                android:text="@string/role"
-                android:textColor="@color/hint"
-                android:textSize="@dimen/form_textSize" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/two_em"
-                android:textSize="@dimen/form_textSize" />
-
-            <!--spinner-->
-            <Button
-                android:id="@+id/select_role_spinner"
-                style="@android:style/Widget.Spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/form_between_margin"
-                android:layout_marginEnd="10dp"
-                android:ellipsize="end"
-                android:hint="@string/select_role"
-                android:singleLine="true" />
-        </LinearLayout>
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
 
 
     <androidx.appcompat.widget.AppCompatButton

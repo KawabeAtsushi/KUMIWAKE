@@ -58,11 +58,11 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
             kumiwake_btn.setText(R.string.go_select_seats_type)
         }
         if (womanArray.size != 0) {
-            member_no_txt.text = (memberArray.size.toString() + " " + getText(R.string.person)
-                    + "(" + getText(R.string.man) + ":" + manArray.size.toString() + getText(R.string.person)
-                    + "," + getText(R.string.woman) + ":" + womanArray.size.toString() + getText(R.string.person) + ")")
+            member_no_txt.text = (memberArray.size.toString() + " " + getText(R.string.people)
+                    + "(" + getText(R.string.man) + ":" + manArray.size.toString() + getText(R.string.people)
+                    + "," + getText(R.string.woman) + ":" + womanArray.size.toString() + getText(R.string.people) + ")")
         } else {
-            member_no_txt.text = memberArray.size.toString() + " " + getText(R.string.person)
+            member_no_txt.text = memberArray.size.toString() + " " + getText(R.string.people)
         }
         group_no_txt.text = groupArray.size.toString() + " " + getText(R.string.group)
         viewGroup = findViewById<View>(R.id.confirmation_view) as RelativeLayout

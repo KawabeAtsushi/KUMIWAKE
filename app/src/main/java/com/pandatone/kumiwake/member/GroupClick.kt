@@ -2,11 +2,11 @@ package com.pandatone.kumiwake.member
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.Context
 import android.view.View
 import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
+import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MBListViewAdapter
@@ -22,8 +22,7 @@ object GroupClick {
     internal lateinit var belongList: ListView
     internal lateinit var okBt: Button
 
-    val context: Context
-        get() = MemberMain().applicationContext
+    val context = MyApplication.context
 
 
     fun groupInfoDialog(view: View, builder: AlertDialog.Builder) {
@@ -39,12 +38,13 @@ object GroupClick {
 
     }
 
+    @SuppressLint("SetTextI18n")
     fun setInfo(position: Int) {
         val nameByBelong = FragmentMember().searchBelong(FragmentGroup.nameList[position].id.toString())
-        val adapter = MBListViewAdapter(context, nameByBelong, 0)
+        val adapter = MBListViewAdapter(context!!, nameByBelong, 0)
 
         group.text = "${context.getText(R.string.group_name)} : ${FragmentGroup.nameList[position].group}"
-        number.text = "${context.getText(R.string.number_of_member)} : ${adapter.count}${context.getString(R.string.person)}"
+        number.text = "${context.getText(R.string.number_of_member)} : ${adapter.count}${context.getString(R.string.people)}"
         belongMb.text = "${context.getText(R.string.belong)}${context.getText(R.string.member)}"
         belongList.adapter = adapter
 

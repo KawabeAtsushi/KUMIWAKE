@@ -233,9 +233,9 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         const val MB_NAME_READ = "mb_read"
         const val MB_SEX = "mb_sex"
         const val MB_AGE = "mb_age"
-        const val MB_GRADE = "mb_grade"
+        const val MB_GRADE = "mb_grade"  //deprecated
         const val MB_BELONG = "mb_belong"
-        const val MB_ROLE = "mb_role"
+        const val MB_ROLE = "mb_role" //deprecated
         lateinit var db: SQLiteDatabase
 
 

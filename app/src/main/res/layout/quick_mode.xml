@@ -131,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/form_marginStart"
-                    android:text="@string/person"
+                    android:text="@string/people"
                     android:textColor="@color/hint"
                     android:textSize="@dimen/form_textSize" />
             </LinearLayout>

@@ -4,12 +4,13 @@
     <dimen name="main_marginStart">16dp</dimen>
     <dimen name="main_marginEnd">16dp</dimen>
     <dimen name="main_marginBottom">25dp</dimen>
-    <dimen name="form_marginTop">7dp</dimen>
-    <dimen name="form_marginStart">4dp</dimen>
+    <dimen name="form_marginTop">30dp</dimen>
+    <dimen name="form_marginStart">15dp</dimen>
+    <dimen name="form_marginEnd">15dp</dimen>
     <dimen name="form_between_margin">5dp</dimen>
     <dimen name="info_margin">7dp</dimen>
     <dimen name="radio_between_margin">7dp</dimen>
-    <dimen name="form_textSize">15dp</dimen>
+    <dimen name="form_textSize">15sp</dimen>
     <dimen name="row_padding">10dp</dimen>
     <dimen name="mini_row_padding">3dp</dimen>
     <dimen name="group_icon_size">58dp</dimen>

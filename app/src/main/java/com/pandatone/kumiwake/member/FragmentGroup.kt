@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake.member
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -17,6 +18,7 @@ import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.GroupNameListAdapter
+import com.pandatone.kumiwake.kumiwake.NormalMode
 import java.io.IOException
 import java.util.*
 
@@ -24,9 +26,9 @@ import java.util.*
  * Created by atsushi_2 on 2016/02/23.
  */
 class FragmentGroup : ListFragment() {
-    private var parent = MemberMain()
     private lateinit var listItem: GroupListAdapter.Group
     private var checkedCount = 0
+    var memberArray = MemberMain().memberArray
 
     // 必須*
     // Fragment生成時にシステムが呼び出す
@@ -35,7 +37,7 @@ class FragmentGroup : ListFragment() {
         dbAdapter = GroupListAdapter(requireContext())
         nameList = ArrayList()
         listAdp = GroupNameListAdapter(requireContext(), nameList)
-        listAdapter = listAdp;
+        listAdapter = listAdp
         loadName()
     }
 
@@ -57,6 +59,16 @@ class FragmentGroup : ListFragment() {
         startActivity(intent)
     }
 
+    internal fun moveKumiwake() {
+        val hs = HashSet(memberArray)
+        memberArray.clear()
+        memberArray.addAll(hs)
+        val i = Intent(activity, NormalMode::class.java)
+        i.putExtra(NormalMode.MEMBER_ARRAY, memberArray)
+        requireActivity().setResult(Activity.RESULT_OK, i)
+        requireActivity().finish()
+    }
+
     // Viewの生成が完了した後に呼ばれる
     // UIパーツの設定などを行う
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,8 +83,7 @@ class FragmentGroup : ListFragment() {
             val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
             val builder2 = android.app.AlertDialog.Builder(activity)
             val inflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val view2 = inflater.inflate(R.layout.group_info,
-                    activity!!.findViewById<View>(R.id.info_layout) as ViewGroup)
+            val view2 = inflater.inflate(R.layout.group_info, activity!!.findViewById<View>(R.id.info_layout) as ViewGroup?)
             val groupname = nameList[position].group
             if (MemberMain.searchView.isActivated)
                 MemberMain.searchView.onActionViewCollapsed()
@@ -91,7 +102,7 @@ class FragmentGroup : ListFragment() {
                     }
                     1 -> {
                         val i = Intent(activity, AddGroup::class.java)
-                        i.putExtra("POSITION", position)
+                        i.putExtra(AddGroup.POSITION, position)
                         startActivity(i)
                     }
                     2 -> deleteSingleGroup(position, groupname)
@@ -99,14 +110,6 @@ class FragmentGroup : ListFragment() {
             }
             val dialog = builder.create()
             dialog.show()
-        }
-
-        if (parent.start_actionmode) {
-            listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-                //行をクリックした時の処理
-                listView.startActionMode(Callback())
-                listView.setItemChecked(position, !listAdp.isPositionChecked(position))
-            }
         }
 
         listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
@@ -140,8 +143,16 @@ class FragmentGroup : ListFragment() {
         return false
     }
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
+    //Activity生成後に呼ばれる
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        if (MemberMain.startAction) {
+            listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+                //行をクリックした時の処理
+                listView.startActionMode(Callback())
+                listView.setItemChecked(position, !listAdp.isPositionChecked(position))
+            }
+        }
     }
 
     override fun onStart() {
@@ -212,20 +223,20 @@ class FragmentGroup : ListFragment() {
 
         internal val list = listView.checkedItemPositions
 
-        private val decision_clicked = View.OnClickListener {
+        private val decisionClicked = View.OnClickListener {
             dbAdapter.open()     // DBの読み込み(読み書きの方)
-            if (!parent.kumiwake_select) {
+            if (!MemberMain.kumiwake_select) {
                 for (i in 0 until ListCount) {
                     val checked = list.get(i)
-                    if (checked == true) {
+                    if (checked) {
                         listItem = nameList[i]
                         val myId = listItem.id
 
-                        val newId = parent.groupId
+                        val newId = MemberMain.groupId
                         FragmentMember().addGroupByGroup(newId, myId)
                     }
                 }
-                parent.finish()
+                requireActivity().finish()
             } else {
 
                 for (i in 0 until ListCount) {
@@ -236,7 +247,7 @@ class FragmentGroup : ListFragment() {
                         FragmentMember().createKumiwakeListByGroup(myId)
                     }
                 }
-                parent.moveKumiwake()
+                moveKumiwake()
             }
             listAdp.clearSelection()
             dbAdapter.close()
@@ -249,13 +260,13 @@ class FragmentGroup : ListFragment() {
             menu.getItem(2).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
             menu.getItem(3).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
             menu.getItem(4).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
-            MemberMain.decision.setOnClickListener(decision_clicked)
+            MemberMain.decision.setOnClickListener(decisionClicked)
             val searchIcon = menu.findItem(R.id.search_view)
             val deleteIcon = menu.findItem(R.id.item_delete)
             val itemfilter = menu.findItem(R.id.item_filter)
             itemfilter.isVisible = false
             searchIcon.isVisible = false
-            deleteIcon.isVisible = parent.delete_icon_visible
+            deleteIcon.isVisible = MemberMain.delete_icon_visible
             return true
         }
 

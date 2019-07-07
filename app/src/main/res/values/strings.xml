@@ -21,7 +21,7 @@
     <string name="delete_backup_attention">Backed-up file will not be deleted when you uninstall this app.\nIf you don\'t need current backed-up file anymore, delete it as following.\n\nOnce you delete backed-up file, it will be no longer restore the data.\n\nAre you sure you want to delete the current backed-up file?</string>
     <string name="deleted_backup_file">Backed-up file was deleted.</string>
     <string name="filtering">Filtering</string>
-    <string name="failed_back_up">You failed in the backup of data.</string>
+    <string name="failed_back_up">You failed in the backup of data.\nPlease confirm to be inserted a SD card.</string>
     <string name="grade2">""</string>
     <string name="grade">Grade</string>
     <string name="age">Age</string>
@@ -52,14 +52,14 @@
     <string name="member_descending">Number of members order(DESC)</string>
     <string name="leader">Leader</string>
     <string name="no_selected">No selected</string>
-    <string name="input_required">Required input</string>
+    <string name="input_required">*Required</string>
     <string name="kumiwake_result">Result</string>
     <string name="move_custom">move to custom</string>
     <string name="move_confirmation">move to confirmation</string>
     <string name="no_specified">No specified</string>
     <string name="normal_mode">Normal mode</string>
     <string name="nothing">Nothing</string>
-    <string name="person">person</string>
+    <string name="people">ppl</string>
     <string name="quick_mode">Quick mode</string>
     <string name="re_kumiwake_title">Re:KUMIWAKE</string>
     <string name="re_kumiwake">try again</string>
@@ -153,7 +153,7 @@
     <string name="how_to_member">☆It is the mode of register members for \"KUMIWAKE\" and \"SEKIGIME\"☆\n\nSwitch member list or group list by swiping.\n\nOn each screen, you click the \'+\' button which is displayed by the screen lower right, and you can add new member or new group.\n\nBy registering members to the group, you can select all members which belong the group at once when you do "KUMIWAKE" and so on.</string>
     <string name="how_to_sekigime">☆It is the mode of seat allocation☆\n\nWhen you do "SEKIGIME" from "SEKIGIME" button at home page, the members and the groups you selected are divided in each table at random.\nProcedure of selecting members and groups are the same as "KUMIWAKE".\n\nYou can also do "SEKIGIME" from "KUMIWAKE" result page.\nIn this case, the members are divided in each group created by "KUMIWAKE".</string>
     <string name="article_title">☆KUMIWAKE☆\nApplication of auto-grouping and seat positioning can be!\nVery useful for group activities!!\n↓↓Click here for download↓↓\n(Android only)</string>
-    <string name="back_up_attention">Data of members and groups are backed up.\n\nIf you proceed backup, current backed-up data are deleted and overwritten with the new data.\n</string>
+    <string name="back_up_attention">Data of members and groups are backed up.\n\nIf you proceed backup, current backed-up data is deleted and overwritten with the new data.*Data is written to the SD card.\n</string>
     <string name="import_attention">Data of members and groups are imported.\n\nIf you proceed import data, current member data and group data are deleted and overwritten with the new data.\n</string>
     <string name="description_of_normal_mode">This is a mode of grouping by selecting from registered members.\nYou can set the group name and the number of the belong members for each group.</string>
     <string name="description_of_normal_sekigime">This is a mode of seat allocation by selecting from registered members.\nYou can set the group name and the number of the belong members for each group.</string>

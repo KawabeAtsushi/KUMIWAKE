@@ -270,14 +270,6 @@
             android:text="@string/two_em"
             android:textSize="@dimen/form_textSize" />
 
-        <Spinner
-            android:id="@+id/filter_role_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:entries="@array/role"
-            style="@android:style/Widget.Spinner.DropDown"
-            />
     </LinearLayout>
 
 </LinearLayout>
