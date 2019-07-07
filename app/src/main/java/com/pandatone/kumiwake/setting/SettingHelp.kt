@@ -30,7 +30,6 @@ class SettingHelp : AppCompatActivity() {
     private lateinit var backup_str: Array<String>
     private lateinit var other_str: Array<String>
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.setting_help)
@@ -178,11 +177,6 @@ class SettingHelp : AppCompatActivity() {
         // Shareアプリ一覧のDialogの表示
         builder.startChooser()
 
-    }
-
-    companion object {
-        val context: Context?
-            get() = SettingHelp().applicationContext
     }
 
 }

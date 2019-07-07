@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake.member
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -7,16 +8,20 @@ import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.fragment.app.ListFragment
 import android.text.TextUtils
+import android.util.Log
 import android.view.*
 import android.widget.*
+import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
 import com.pandatone.kumiwake.adapter.NameListAdapter
+import com.pandatone.kumiwake.kumiwake.NormalMode
 import kotlinx.android.synthetic.main.filter_member.*
-import kotlinx.android.synthetic.main.tab_member.*
 import java.io.IOException
 import java.util.*
+
+
 
 /**
  * Created by atsushi_2 on 2016/02/23.
@@ -25,6 +30,7 @@ class FragmentMember : ListFragment() {
     private var groupId: String = "0"
     var listAdp: NameListAdapter? = null
     var parent = MemberMain()
+    var memberArray = parent.memberArray
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,10 +38,10 @@ class FragmentMember : ListFragment() {
         gpdbAdapter = GroupListAdapter(requireContext())
         nameList = ArrayList()
         listAdp = NameListAdapter(requireContext(), nameList)
-        groupId = parent.groupId.toString()
+        groupId = MemberMain.groupId.toString()
         NameListAdapter.nowSort = "ID"
         Sort.initial = 2
-        listAdapter = listAdp;
+        listAdapter = listAdp
         loadName()
     }
 
@@ -54,6 +60,16 @@ class FragmentMember : ListFragment() {
         startActivity(intent)
     }
 
+    internal fun moveKumiwake() {
+        Log.d("memberarray3",memberArray.size.toString())
+        val hs = HashSet(memberArray)
+        memberArray.clear()
+        memberArray.addAll(hs)
+        val i = Intent(activity, NormalMode::class.java)
+        i.putExtra(NormalMode.MEMBER_ARRAY, memberArray)
+        requireActivity().setResult(Activity.RESULT_OK, i)
+        requireActivity().finish()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         ListCount = listView.count
@@ -65,14 +81,13 @@ class FragmentMember : ListFragment() {
             val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
             val builder2 = AlertDialog.Builder(activity)
             val inflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val view2 = inflater.inflate(R.layout.member_info,
-                    activity!!.findViewById<View>(R.id.info_layout) as ViewGroup)
+            val view2 = inflater.inflate(R.layout.member_info, activity!!.findViewById<View>(R.id.info_layout) as ViewGroup?)
             val membername = nameList[position].name
             if (MemberMain.searchView.isActivated)
                 MemberMain.searchView.onActionViewCollapsed()
             FragmentGroup().loadName()
 
-            val items = arrayOf(R.string.information.toString(), R.string.edit.toString(), R.string.delete.toString())
+            val items = arrayOf(MyApplication.context!!.getText(R.string.information), MyApplication.context!!.getText(R.string.edit), MyApplication.context!!.getText(R.string.delete))
             builder.setTitle(membername)
             builder.setItems(items) { _, which ->
                 when (which) {
@@ -85,7 +100,7 @@ class FragmentMember : ListFragment() {
                     }
                     1 -> {
                         val i = Intent(activity, AddMember::class.java)
-                        i.putExtra("POSITION", position)
+                        i.putExtra(AddMember.POSITION, position)
                         startActivity(i)
                     }
                     2 -> deleteSingleMember(position, membername)
@@ -95,7 +110,20 @@ class FragmentMember : ListFragment() {
             dialog.show()
         }
 
-        if (parent.start_actionmode) {
+        // 行を長押しした時の処理
+        listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
+            listView.setItemChecked(position, !listAdp?.isPositionChecked(position)!!)
+            false
+        }
+
+        listView.isTextFilterEnabled = true
+    }
+
+    //Activity生成後に呼ばれる
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        if (MemberMain.startAction) {
             listView.startActionMode(CallbackMB())
             dbAdapter.open()
             var i = 1
@@ -116,14 +144,14 @@ class FragmentMember : ListFragment() {
             }
         }
 
-        if (parent.kumiwake_select) {
+        if (MemberMain.kumiwake_select) {
             listView.startActionMode(CallbackMB())
             dbAdapter.open()
-            for (j in parent.memberArray.indices) {
+            for (j in memberArray.indices) {
                 var i = 1
                 while (i < ListCount) {
                     listItem = nameList[i]
-                    if (listItem.id == parent.memberArray[j].id) {
+                    if (listItem.id == memberArray[j].id) {
                         listView.setItemChecked(i, !listAdp?.isPositionChecked(i)!!)
                     }
                     dbAdapter.close()
@@ -136,14 +164,6 @@ class FragmentMember : ListFragment() {
                 listView.setItemChecked(position, !listAdp?.isPositionChecked(position)!!)
             }
         }
-
-        // 行を長押しした時の処理
-        listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
-            listView.setItemChecked(position, !listAdp?.isPositionChecked(position)!!)
-            false
-        }
-
-        listView.isTextFilterEnabled = true
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -207,10 +227,6 @@ class FragmentMember : ListFragment() {
         return false
     }
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-    }
-
     override fun onStart() {
         super.onStart()
         loadName()
@@ -239,7 +255,7 @@ class FragmentMember : ListFragment() {
     private fun deleteMember() {
         // アラートダイアログ表示
         val builder = androidx.appcompat.app.AlertDialog.Builder(parent.applicationContext)
-        builder.setTitle(checkedCount.toString() + " " + parent.getString(R.string.member) + parent.getString(R.string.delete))
+        builder.setTitle(checkedCount.toString() + " " + MyApplication.context?.getString(R.string.member) + MyApplication.context?.getString(R.string.delete))
         builder.setMessage(R.string.Do_delete)
         // OKの時の処理
         builder.setPositiveButton("OK") { _, _ ->
@@ -265,13 +281,10 @@ class FragmentMember : ListFragment() {
     fun filter(layout: View, filter_belong_spinner: Spinner, dialog2: androidx.appcompat.app.AlertDialog) {
         val maxage: Int
         val minage: Int
-        val maxgrade: Int
-        val mingrade: Int
         var sex: String
         var groupName: String
         val belong: String = filter_belong_spinner.selectedItem as String
         var belongNo = ""
-        var role: String
         val sexButton = layout.findViewById<View>(sexGroup.checkedRadioButtonId) as RadioButton
         sex = sexButton.text as String
 
@@ -285,16 +298,7 @@ class FragmentMember : ListFragment() {
         } else {
             minage = 0
         }
-        if (max_grade.text.toString() != "") {
-            maxgrade = AddMember().getValue(max_grade)
-        } else {
-            maxgrade = 1000
-        }
-        if (min_age.text.toString() != "") {
-            mingrade = AddMember().getValue(min_grade)
-        } else {
-            mingrade = 0
-        }
+
 
         if (maxage < minage) {
             error_age_range.visibility = View.VISIBLE
@@ -302,12 +306,7 @@ class FragmentMember : ListFragment() {
         } else {
             error_age_range.visibility = View.GONE
         }
-        if (maxgrade < mingrade) {
-            error_grade_range.visibility = View.VISIBLE
-            error_grade_range.setText(R.string.range_error)
-        } else {
-            error_grade_range.visibility = View.GONE
-        }
+
         if (belong == getString(R.string.no_selected)) {
             belongNo = ""
         } else {
@@ -319,16 +318,13 @@ class FragmentMember : ListFragment() {
                 }
             }
         }
-        role = filter_role_spinner.selectedItem as String
-        if (role == getString(R.string.no_selected)) {
-            role = ""
-        }
+
         if (sex == getString(R.string.no_specified)) {
             sex = ""
         }
         try {
-            if (maxage >= minage && maxgrade >= mingrade) {
-                dbAdapter.filterName(sex, minage, maxage, mingrade, maxgrade, belongNo, role)
+            if (maxage >= minage) {
+                dbAdapter.filterName(sex, minage, maxage, 0, 0, belongNo, "")
                 dialog2.dismiss()
             } else {
 
@@ -346,15 +342,16 @@ class FragmentMember : ListFragment() {
 
         private val booleanArray = listView.checkedItemPositions
 
-        private val decision_clicked = View.OnClickListener {
-            if (!parent.kumiwake_select) {
+        private val decisionClicked = View.OnClickListener {
+
+            if (!MemberMain.kumiwake_select) {
                 dbAdapter.open()     // DBの読み込み(読み書きの方)
                 var i = 1
                 while (i < ListCount) {
                     val checked = booleanArray.get(i)
                     listItem = nameList[i]
                     val listId = listItem.id
-                    val newId = parent.groupId
+                    val newId = MemberMain.groupId
                     if (checked) {
                         val newBelong = StringBuilder()
                         newBelong.append(listItem.belong)
@@ -367,16 +364,19 @@ class FragmentMember : ListFragment() {
                 }
                 dbAdapter.close()    // DBを閉じる
                 loadName()
-                parent.finish()
+                requireActivity().finish()
             } else {
+                Log.d("memberarray1",memberArray.size.toString())
                 recreateKumiwakeList()
-                parent.moveKumiwake()
+                Log.d("memberarray2",memberArray.size.toString())
+                moveKumiwake()
             }
             listAdp?.clearSelection()
         }
 
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             // アクションモード初期化処理
+            Log.d("actionmode","called!!!")
             val inflater = activity!!.menuInflater
             inflater.inflate(R.menu.member_main_menu, menu)
             val searchIcon = menu.findItem(R.id.search_view)
@@ -384,9 +384,9 @@ class FragmentMember : ListFragment() {
             menu.getItem(2).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
             menu.getItem(3).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
             menu.getItem(4).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
-            MemberMain.decision.setOnClickListener(decision_clicked)
+            MemberMain.decision.setOnClickListener(decisionClicked)
             searchIcon.isVisible = false
-            deleteIcon.isVisible = parent.delete_icon_visible
+            deleteIcon.isVisible = MemberMain.delete_icon_visible
             return true
         }
 
@@ -503,14 +503,14 @@ class FragmentMember : ListFragment() {
         }
 
         private fun recreateKumiwakeList() {
-            parent.memberArray.clear()
+            memberArray.clear()
             dbAdapter.open()
             var i = 1
             while (i < ListCount) {
                 val checked = booleanArray.get(i)
                 listItem = nameList[i]
                 if (checked && listItem.sex != "initial") {
-                    parent.memberArray.add(listItem)
+                    memberArray.add(listItem)
                 }
                 i += 2
             }
@@ -567,7 +567,7 @@ class FragmentMember : ListFragment() {
             val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             val list = ArrayList(Arrays.asList<String>(*belongArray))
             if (list.contains(groupId.toString())) {
-                parent.memberArray.add(listItem)
+                memberArray.add(listItem)
             }
             i += 2
         }

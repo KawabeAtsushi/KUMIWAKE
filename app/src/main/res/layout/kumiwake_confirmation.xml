@@ -74,14 +74,14 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginEnd="15dp"
-                    android:layout_marginTop="@dimen/form_marginTop"
+                    android:layout_marginTop="10dp"
                     android:textSize="15sp" />
 
                 <ListView
                     android:id="@+id/kumiwake_member_listView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/form_marginTop"
+                    android:layout_margin="10dp"
                     android:listSelector="@android:color/transparent"/>
 
 
@@ -144,14 +144,14 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginEnd="15dp"
-                    android:layout_marginTop="@dimen/form_marginTop"
+                    android:layout_marginTop="10dp"
                     android:textSize="15sp" />
 
                 <ListView
                     android:id="@+id/kumiwake_group_listView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/form_marginTop"
+                    android:layout_margin="10dp"
                     android:listSelector="@android:color/transparent"
                     />
 

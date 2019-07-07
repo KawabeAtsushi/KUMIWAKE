@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/normal_mode"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -11,31 +11,10 @@
         android:background="@drawable/normal_img"
         android:scaleType = "centerCrop"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/normal_kumiwake_btn"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/under_button_height"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:background="#3cee2f"
-        android:drawableEnd="@drawable/ic_arrow_back"
-        android:paddingEnd="10dp"
-        android:text="@string/move_custom"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        android:stateListAnimator="@animator/expanding"/>
-
-
-    <ScrollView
-        android:id="@+id/normal_mode_scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/normal_kumiwake_btn">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/under_button_height"
             android:orientation="vertical">
 
             <TextView
@@ -116,6 +95,19 @@
                 android:layout_marginEnd="@dimen/form_between_margin"/>
 
         </LinearLayout>
-    </ScrollView>
 
-</RelativeLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/normal_kumiwake_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/under_button_height"
+        android:background="#3cee2f"
+        android:layout_gravity="center|bottom"
+        android:drawableEnd="@drawable/ic_arrow_back"
+        android:paddingEnd="10dp"
+        android:text="@string/move_custom"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:stateListAnimator="@animator/expanding"/>
+
+</FrameLayout>

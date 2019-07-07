@@ -27,6 +27,8 @@ import java.util.*
 class KumiwakeCustom : AppCompatActivity() {
     private var mbAdapter: MBListViewAdapter? = null
     private var gpAdapter: EditGroupListAdapter? = null
+    private lateinit var memberList: ListView
+    private lateinit var groupList: ListView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,32 +63,11 @@ class KumiwakeCustom : AppCompatActivity() {
 
     private fun findViews() {
 
-        even_age_ratio_check.setOnCheckedChangeListener { _, _ ->
-            if (even_age_ratio_check.isChecked) {
-                even_grade_ratio_check.isEnabled = false
-                even_grade_ratio_check.isChecked = false
-            } else {
-                even_grade_ratio_check.isEnabled = true
-            }
-        }
-        even_grade_ratio_check.setOnCheckedChangeListener { _, _ ->
-            if (even_grade_ratio_check.isChecked) {
-                even_age_ratio_check.isEnabled = false
-                even_age_ratio_check.isChecked = false
-            } else {
-                even_age_ratio_check.isEnabled = true
-            }
-        }
+        scrollView = findViewById<ScrollView>(R.id.custom_scroll)
+        memberList = findViewById(R.id.reviewListView)
+        memberList.emptyView = findViewById(R.id.emptyMemberList)
+        groupList = findViewById<ListView>(R.id.kumiwake_group_listView)
 
-        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item)
-        adapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item
-        )
-        val strs = resources.getStringArray(R.array.role)
-        val list = ArrayList(Arrays.asList(*strs)) // 新インスタンスを生成
-        list.removeAt(1)
-        adapter.addAll(list)
-        custom_spinner.adapter = adapter
     }
 
     @SuppressLint("SetTextI18n")
@@ -94,8 +75,8 @@ class KumiwakeCustom : AppCompatActivity() {
         member_add_btn.visibility = View.GONE
         mbAdapter?.let { MBListViewAdapter.setRowHeight(memberList, it) }
         gpAdapter?.let { EditGroupListAdapter.setRowHeight(groupList, it) }
-        numberOfSelectedMember.text = memberArray.size.toString() + getString(R.string.person)
-        groupNo.text = groupArray.size.toString() + " " + getText(R.string.group)
+        numberOfSelectedMember.text = memberArray.size.toString() + getString(R.string.people)
+        group_no_txt.text = groupArray.size.toString() + " " + getText(R.string.group)
         val size = Point()
         windowManager.defaultDisplay.getSize(size)
         val screenHeight = size.y
@@ -143,8 +124,6 @@ class KumiwakeCustom : AppCompatActivity() {
             intent.putExtra(NormalMode.NORMAL_GROUP_ARRAY, newGroupArray)
             intent.putExtra(EVEN_FM_RATIO, even_fm_ratio_check.isChecked)
             intent.putExtra(EVEN_AGE_RATIO, even_age_ratio_check.isChecked)
-            intent.putExtra(KumiwakeCustom.EVEN_GRADE_RATIO, even_grade_ratio_check.isChecked)
-            intent.putExtra(KumiwakeCustom.EVEN_ROLE, custom_spinner.selectedItem as String)
             startActivity(intent)
             overridePendingTransition(R.anim.in_right, R.anim.out_left)
         } else {
@@ -210,16 +189,46 @@ class KumiwakeCustom : AppCompatActivity() {
         }
     }
 
+    public fun deleteLeaderList(roleItem: String): MutableList<String> {
+        val roleArray = roleItem.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
+        val list = ArrayList(Arrays.asList<String>(*roleArray))
+        val hs = HashSet<String>()
+        hs.addAll(list)
+        list.clear()
+        list.addAll(hs)
+        list.remove(R.string.leader.toString())
+        list.remove("")
+        list.sort()
+        return list
+    }
+
+    public fun changeBelongNo(position: Int, addNo: Int) {
+        val et: EditText = if (position == groupList.count - 1) {
+            groupList.getChildAt(0).findViewById<View>(R.id.editTheNumberOfMember) as EditText
+        } else {
+            groupList.getChildAt(position + 1).findViewById<View>(R.id.editTheNumberOfMember) as EditText
+        }
+        var nowNo = 0
+        val newNo: Int
+
+        if (et.text.toString().isNotEmpty()) {
+            nowNo = Integer.parseInt(et.text.toString())
+        }
+        newNo = nowNo + addNo
+        et.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(3))
+        et.setText(newNo.toString())
+        if (newNo < 0) {
+            et.setTextColor(Color.RED)
+        } else {
+            et.setTextColor(Color.BLACK)
+        }
+    }
+
     companion object {
 
         const val EVEN_FM_RATIO = "even_fm_ratio"
         const val EVEN_AGE_RATIO = "even_age_ratio"
-        const val EVEN_GRADE_RATIO = "even_grade_ratio"
-        const val EVEN_ROLE = "even_role"
 
-        lateinit var memberList: ListView
-        lateinit var groupList: ListView
-        lateinit var groupNo: TextView
         lateinit var scrollView: ScrollView
 
         lateinit var memberArray: ArrayList<Name>
@@ -227,40 +236,6 @@ class KumiwakeCustom : AppCompatActivity() {
         lateinit var groupArray: ArrayList<GroupListAdapter.Group>
         lateinit var newGroupArray: ArrayList<GroupListAdapter.Group>
 
-        fun deleteLeaderList(roleItem: String): MutableList<String> {
-            val roleArray = roleItem.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
-            val list = ArrayList(Arrays.asList<String>(*roleArray))
-            val hs = HashSet<String>()
-            hs.addAll(list)
-            list.clear()
-            list.addAll(hs)
-            list.remove(R.string.leader.toString())
-            list.remove("")
-            list.sort()
-            return list
-        }
-
-        fun changeBelongNo(position: Int, addNo: Int) {
-            val et: EditText = if (position == groupList.count - 1) {
-                groupList.getChildAt(0).findViewById<View>(R.id.editTheNumberOfMember) as EditText
-            } else {
-                groupList.getChildAt(position + 1).findViewById<View>(R.id.editTheNumberOfMember) as EditText
-            }
-            var nowNo = 0
-            val newNo: Int
-
-            if (et.text.toString().isNotEmpty()) {
-                nowNo = Integer.parseInt(et.text.toString())
-            }
-            newNo = nowNo + addNo
-            et.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(3))
-            et.setText(newNo.toString())
-            if (newNo < 0) {
-                et.setTextColor(Color.RED)
-            } else {
-                et.setTextColor(Color.BLACK)
-            }
-        }
     }
 
 }

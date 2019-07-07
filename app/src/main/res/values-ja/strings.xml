@@ -25,7 +25,7 @@
     <string name="sub_info">－　その他の情報　－</string>
     <string name="registered">を登録しました</string>
     <string name="sex">性別</string>
-    <string name="input_required">入力必須</string>
+    <string name="input_required">*入力必須</string>
     <string name="select_belong_group">グループを選択</string>
     <string name="decide">決 定</string>
     <string name="clear">クリア</string>
@@ -55,7 +55,7 @@
     <string name="member_descending">メンバー数順（降順）</string>
     <string name="belong_member">所属メンバー</string>
     <string name="adviceToDecideInGroupFL">※指定したグループに所属するメンバーが追加されます</string>
-    <string name="person">人</string>
+    <string name="people">人</string>
     <string name="information">登録情報</string>
     <string name="edit">編集</string>
     <string name="nothing">なし</string>
@@ -100,13 +100,13 @@
     <string name="back_up">バックアップ</string>
     <string name="back_up_db">データのバックアップ</string>
     <string name="import_db">データのインポート</string>
-    <string name="back_up_attention">メンバーデータとグループデータのバックアップを行います。\n\nバックアップを行うと現在保存されているバックアップデータは破棄され、新しいデータに上書きされます。\n</string>
+    <string name="back_up_attention">メンバーデータとグループデータのバックアップを行います。\n\nバックアップを行うと現在保存されているバックアップデータは破棄され、新しいデータに上書きされます。（データはSDカードに書き込まれます。）\n</string>
     <string name="import_attention">バックアップデータのインポートを行います。\n\nデータのインポートを行うと現在のメンバーデータとグループデータは破棄され、新しいデータに上書きされます。\n</string>
     <string name="run_confirmation">\n実行します。よろしいですか？</string>
     <string name="back_up_completed">バックアップが完了しました。</string>
     <string name="import_completed">インポートが完了しました。</string>
     <string name="not_mounted">SDカードが挿入されていません。</string>
-    <string name="failed_back_up">データのバックアップに失敗しました。</string>
+    <string name="failed_back_up">データのバックアップに失敗しました。\nSDカードが挿入されているか確認してください。</string>
     <string name="not_exist_file">バックアップファイルが存在しません。</string>
     <string name="delete_backup">バックアップファイルの削除</string>
     <string name="deleted_backup_file">バックアップファイルを削除しました。</string>

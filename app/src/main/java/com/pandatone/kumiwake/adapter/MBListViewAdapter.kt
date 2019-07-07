@@ -2,6 +2,7 @@ package com.pandatone.kumiwake.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
+import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.kumiwake.KumiwakeCustom
 import com.pandatone.kumiwake.member.Name
@@ -71,10 +73,11 @@ class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,
 
     private fun setSexIcon(v: View, position: Int) {
         val memberIcon: ImageView = v.findViewById<View>(R.id.memberIcon) as ImageView
-        if (listElements[position].sex == "男") {
+
+        if (listElements[position].sex == context.getText(R.string.man)) {
             memberIcon.setImageResource(R.drawable.member_img)
         } else {
-            memberIcon.setColorFilter(ContextCompat.getColor(Sort.getContext(),R.color.woman))
+            memberIcon.setColorFilter(ContextCompat.getColor(MyApplication.context!!,R.color.woman))
         }
     }
 
@@ -83,7 +86,7 @@ class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,
         val memberIcon: ImageView = v.findViewById<View>(R.id.memberIcon) as ImageView
         val leaderNo: TextView = v.findViewById<View>(R.id.leaderNo) as TextView
 
-        if (listElements[position].role.matches((".*" + Sort.getContext().getText(R.string.leader) + ".*").toRegex())) {
+        if (listElements[position].role.matches((".*" + MyApplication.context?.getText(R.string.leader) + ".*").toRegex())) {
             memberIcon.visibility = View.GONE
             starIcon.visibility = View.VISIBLE
             leaderNo.visibility = View.GONE
@@ -99,7 +102,7 @@ class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,
                 ldNo++
             } else if (groupNo != 1000 && ldNo == groupNo + 1
                     && !listElements[position].role.matches((".*" + "LD" + ".*").toRegex())) {
-                val list = KumiwakeCustom.deleteLeaderList(listElements[position].role)
+                val list = KumiwakeCustom().deleteLeaderList(listElements[position].role)
                 val newRole = StringBuilder()
                 for (j in list.indices) {
                     newRole.append(list[j])
@@ -135,7 +138,7 @@ class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,
         var ldNo = 1
 
         fun setRowHeight(listView: ListView, listAdp: MBListViewAdapter) {
-            var totalHeight = 33
+            var totalHeight = 40
 
             for (j in 0 until listAdp.count) {
                 val item = listAdp.getView(j, null, listView)

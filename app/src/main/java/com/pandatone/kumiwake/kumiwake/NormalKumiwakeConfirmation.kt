@@ -24,8 +24,6 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
     private lateinit var groupAdapter: GPListViewAdapter
     internal var even_fm_ratio: Boolean = false
     internal var even_age_ratio: Boolean = false
-    internal var even_grade_ratio: Boolean = false
-    internal lateinit var even_role: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +38,6 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
         }
         even_fm_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_FM_RATIO, false)
         even_age_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_AGE_RATIO, false)
-        even_grade_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_GRADE_RATIO, false)
-        even_role = i.getStringExtra(KumiwakeCustom.EVEN_ROLE)
         findViews()
         setAdapter()
         setViews()
@@ -56,9 +52,9 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
             between_arrows_txt.text = "SEKIGIME"
             kumiwake_btn.setText(R.string.go_select_seats_type)
         }
-        member_no_txt.text = (memberArray.size.toString() + " " + getText(R.string.person)
-                + "(" + getText(R.string.man) + ":" + countManNo().toString() + getText(R.string.person)
-                + "," + getText(R.string.woman) + ":" + (memberArray.size - countManNo()).toString() + getText(R.string.person) + ")")
+        member_no_txt.text = (memberArray.size.toString() + " " + getText(R.string.people)
+                + "(" + getText(R.string.man) + ":" + countManNo().toString() + getText(R.string.people)
+                + "," + getText(R.string.woman) + ":" + (memberArray.size - countManNo()).toString() + getText(R.string.people) + ")")
         group_no_txt.text = groupArray.size.toString() + " " + getText(R.string.group)
     }
 
@@ -74,7 +70,6 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
 
     private fun setViews() {
         val custom_text = StringBuilder()
-        val array_str = resources.getStringArray(R.array.role)
 
         if (even_fm_ratio) {
             custom_text.append("☆" + getText(R.string.even_out_male_female_ratio) + "\n")
@@ -82,12 +77,7 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
         if (even_age_ratio) {
             custom_text.append("☆" + getText(R.string.even_out_age_ratio) + "\n")
         }
-        if (even_grade_ratio) {
-            custom_text.append("☆" + getText(R.string.even_out_grade_ratio) + "\n")
-        }
-        if (even_role != array_str[0]) {
-            custom_text.append("☆" + even_role + getText(R.string.even_out) + "\n")
-        }
+
         custom_review_txt.text = custom_text.toString()
 
         MBListViewAdapter.setRowHeight(kumiwake_member_listView, memberAdapter)
@@ -101,8 +91,6 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
         intent.putExtra(NormalMode.NORMAL_GROUP_ARRAY, groupArray)
         intent.putExtra(KumiwakeCustom.EVEN_FM_RATIO, even_fm_ratio)
         intent.putExtra(KumiwakeCustom.EVEN_AGE_RATIO, even_age_ratio)
-        intent.putExtra(KumiwakeCustom.EVEN_GRADE_RATIO, even_grade_ratio)
-        intent.putExtra(KumiwakeCustom.EVEN_ROLE, even_role)
         startActivity(intent)
     }
 

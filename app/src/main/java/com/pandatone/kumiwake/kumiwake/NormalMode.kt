@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.transition.Slide
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.ListView
@@ -35,6 +36,7 @@ class NormalMode : AppCompatActivity() {
 
     private val clicked = View.OnClickListener { moveMemberMain() }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -46,7 +48,7 @@ class NormalMode : AppCompatActivity() {
         findViews()
         memberArray = ArrayList()
         add_group_listview.member_add_btn.setOnClickListener(clicked)
-        add_group_listview.numberOfSelectedMember.text = "0${getString(R.string.person)}${getString(R.string.selected)}"
+        add_group_listview.numberOfSelectedMember.text = "0${getString(R.string.people)}${getString(R.string.selected)}"
     }
 
     private fun findViews() {
@@ -77,17 +79,14 @@ class NormalMode : AppCompatActivity() {
 
         if (TextUtils.isEmpty(group_no)) {
             errorGroup.setText(R.string.error_empty_group_no)
-            scrollToTop()
         }
 
         if (adapter == null) {
             errorMember.setText(R.string.error_empty_member_list)
         } else if (group_no != "" && Integer.parseInt(group_no) > adapter?.count!!) {
             errorGroup.setText(R.string.number_of_groups_is_much_too)
-            scrollToTop()
         } else if (TextUtils.isEmpty(group_no)) {
             errorGroup.setText(R.string.error_empty_group_no)
-            scrollToTop()
         } else {
             val groupArray = ArrayList<GroupListAdapter.Group>()
             val groupNo = Integer.parseInt(group_no)
@@ -111,18 +110,18 @@ class NormalMode : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, i: Intent?) {
+        Log.d("resultcode",requestCode.toString())
+        Log.d("resultcode_OK",Activity.RESULT_OK.toString())
+        Log.d("resultcode_CANCEL",Activity.RESULT_CANCELED.toString())
         if (resultCode == Activity.RESULT_OK) {
             memberArray = i!!.getSerializableExtra(MEMBER_ARRAY) as ArrayList<Name>
+            Log.d("memberarray4", memberArray.size.toString())
             adapter = MBListViewAdapter(this, memberArray, 1000)
             listView.adapter = adapter
             MBListViewAdapter.setRowHeight(listView, adapter!!)
 
-            add_group_listview.numberOfSelectedMember.text = "${memberArray.size}${getString(R.string.person)}${getString(R.string.selected)}"
+            add_group_listview.numberOfSelectedMember.text = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
         }
-    }
-
-    private fun scrollToTop() {
-        normal_mode_scrollView.post { normal_mode_scrollView.scrollTo(0, 0) }
     }
 
     companion object {

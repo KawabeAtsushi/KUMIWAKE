@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.member.Sort
 import java.util.*
 
 /**
@@ -34,7 +34,7 @@ class GroupNameListAdapter(private val context: Context, private val groupList: 
 
 
     @SuppressLint("InflateParams", "SetTextI18n")
-    override fun getView(position: Int, convertView: View, parent: ViewGroup): View {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
         val nameTextView: TextView
         val numberOfMemberTextView: TextView
         var v: View? = convertView
@@ -44,7 +44,7 @@ class GroupNameListAdapter(private val context: Context, private val groupList: 
             v = inflater.inflate(R.layout.row_group, null)
         }
         if (gSelection[position] != null) {
-            v!!.setBackgroundColor(ContextCompat.getColor(Sort.getContext(),R.color.checked_list))
+            v!!.setBackgroundColor(ContextCompat.getColor(MyApplication.context!!,R.color.checked_list))
         } else {
             v = inflater.inflate(R.layout.row_group, null)
         }
@@ -52,7 +52,7 @@ class GroupNameListAdapter(private val context: Context, private val groupList: 
         nameTextView = v!!.findViewById<View>(R.id.groupName) as TextView
         numberOfMemberTextView = v.findViewById<View>(R.id.theNumberOfMember) as TextView
         nameTextView.text = listItem.group
-        numberOfMemberTextView.text = "${listItem.belongNo}${Sort.getContext().getText(R.string.person)}"
+        numberOfMemberTextView.text = "${listItem.belongNo}${MyApplication.context?.getText(R.string.people)}"
 
         return v
     }

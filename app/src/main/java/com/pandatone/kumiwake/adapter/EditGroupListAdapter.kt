@@ -11,6 +11,7 @@ import android.widget.BaseAdapter
 import android.widget.EditText
 import android.widget.ListView
 import android.widget.TextView
+import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.kumiwake.KumiwakeCustom
 import com.pandatone.kumiwake.kumiwake.MainActivity
@@ -53,7 +54,7 @@ class EditGroupListAdapter(private val context: Context, private val groupList: 
         leader = v.findViewById<View>(R.id.leader) as TextView
         nameEditText.setText(listItem.group)
         numberOfMemberEditText.setText(listItem.belongNo.toString())
-        leader.text = "${R.string.leader.toString()} : ${R.string.nothing.toString()}"
+        leader.text = "${context.getString(R.string.leader)} : ${context.getString(R.string.nothing)}"
         groupNameView[position] = nameEditText
         memberNoView[position] = numberOfMemberEditText
         numberOfMemberEditText.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
@@ -73,7 +74,7 @@ class EditGroupListAdapter(private val context: Context, private val groupList: 
                     afterNo = Integer.parseInt(numberOfMemberEditText.text.toString())
 
                     val addNo = beforeNo - afterNo
-                    KumiwakeCustom.changeBelongNo(position, addNo)
+                    KumiwakeCustom().changeBelongNo(position, addNo)
                     if (afterNo < 0) {
                         numberOfMemberEditText.setTextColor(Color.RED)
                     } else {

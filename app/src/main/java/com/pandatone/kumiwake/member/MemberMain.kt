@@ -13,28 +13,19 @@ import androidx.appcompat.widget.Toolbar
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ImageSpan
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.CustomPagerAdapter
-import com.pandatone.kumiwake.adapter.GroupListAdapter
-import com.pandatone.kumiwake.adapter.MemberListAdapter
 import com.pandatone.kumiwake.kumiwake.NormalMode
 import java.io.IOException
 import java.util.*
-
-
-
-
-
-
-
-
-
-
+import kotlin.collections.ArrayList
 
 
 /**
@@ -42,13 +33,9 @@ import java.util.*
  */
 class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
 
-    lateinit var memberArray: ArrayList<Name>
+    var memberArray: ArrayList<Name> = ArrayList()
     internal var manager = supportFragmentManager
     internal lateinit var viewPager: ViewPager
-    internal var start_actionmode: Boolean = false
-    internal var kumiwake_select: Boolean = false
-    internal var groupId: Int = 0
-    internal var delete_icon_visible: Boolean = false
     internal var visible: Boolean = false
     internal var page: Int = 0
     var context:Context = this
@@ -64,13 +51,15 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         setViews()
         val i = intent
-        start_actionmode = i.getBooleanExtra(START_ACTION_MODE, false)
+        startAction = i.getBooleanExtra(START_ACTION_MODE, false)
         groupId = i.getIntExtra(GROUP_ID, -1)
         delete_icon_visible = i.getBooleanExtra(DELETE_ICON_VISIBLE, true)
         kumiwake_select = i.getBooleanExtra(KUMIWAKE_SELECT, false)
+
         if(i.getSerializableExtra(MEMBER_ARRAY) != null) {
             memberArray = i.getSerializableExtra(MEMBER_ARRAY) as ArrayList<Name>
         }
+
         visible = i.getBooleanExtra(VISIBLE, false)
     }
 
@@ -154,17 +143,6 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         reload()
     }
 
-    internal fun moveKumiwake() {
-        val hs = HashSet(memberArray)
-        memberArray.clear()
-        memberArray.addAll(hs)
-        val i = Intent(this, NormalMode::class.java)
-        i.putExtra(NormalMode.MEMBER_ARRAY, memberArray)
-        setResult(Activity.RESULT_OK, i)
-        finish()
-    }
-
-
     override fun onQueryTextSubmit(query: String): Boolean {
         return false
     }
@@ -190,8 +168,8 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
     }
 
     companion object {
-        internal lateinit var searchView: SearchView
-        internal lateinit var decision: Button
+        lateinit var searchView: SearchView
+        lateinit var decision: Button
 
         //intent key
         const val START_ACTION_MODE = "start_action_mode"
@@ -200,6 +178,11 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         const val KUMIWAKE_SELECT = "kumiwake_select"
         const val MEMBER_ARRAY = "memberArray"
         const val VISIBLE = "visible"
+
+        var startAction: Boolean = false
+        var kumiwake_select: Boolean = false
+        var groupId: Int = 0
+        var delete_icon_visible: Boolean = false
     }
 
 }

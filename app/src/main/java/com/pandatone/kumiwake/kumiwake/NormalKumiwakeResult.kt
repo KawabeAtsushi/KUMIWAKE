@@ -35,7 +35,6 @@ class NormalKumiwakeResult : AppCompatActivity() {
     private lateinit var resultArray: ArrayList<Name>
     private lateinit var groupArray: ArrayList<GroupListAdapter.Group>
     private lateinit var arrayArray: ArrayList<ArrayList<Name>>
-    private lateinit var even_role: String         //均等にするRole
     internal var groupCount: Int = 0
     internal var memberSize: Int = 0
     internal var memberSum = 0
@@ -62,8 +61,6 @@ class NormalKumiwakeResult : AppCompatActivity() {
         }
         even_fm_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_FM_RATIO, false)
         even_age_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_AGE_RATIO, false)
-        even_grade_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_GRADE_RATIO, false)
-        even_role = i.getStringExtra(KumiwakeCustom.EVEN_ROLE)
         groupCount = groupArray.size
         memberSize = memberArray.size
 
@@ -120,26 +117,15 @@ class NormalKumiwakeResult : AppCompatActivity() {
             CreateFmArray()    //男女それぞれの配列を作成
         }
 
-        if (!even_fm_ratio && !even_age_ratio && !even_grade_ratio) {
+        if (!even_fm_ratio && !even_age_ratio) {
             kumiwakeAll()
-        } else if (even_fm_ratio && !even_age_ratio && !even_grade_ratio) {
+        } else if (even_fm_ratio && !even_age_ratio) {
             EvenKumiwakeSetter(manArray, womanArray, "")
             EvenCreateGroup(manArray)
             EvenCreateGroup(womanArray)
-        } else if (!even_fm_ratio && even_age_ratio && !even_grade_ratio) {
+        } else if (!even_fm_ratio && even_age_ratio) {
             EvenKumiwakeSetter(memberArray, null, "age")
             EvenCreateGroup(memberArray)
-        } else if (!even_fm_ratio && !even_age_ratio && even_grade_ratio) {
-            EvenKumiwakeSetter(memberArray, null, "grade")
-            EvenCreateGroup(memberArray)
-        } else if (even_fm_ratio && even_age_ratio && !even_grade_ratio) {
-            EvenKumiwakeSetter(manArray, womanArray, "age")
-            EvenCreateGroup(manArray)
-            EvenCreateGroup(womanArray)
-        } else if (even_fm_ratio && !even_age_ratio && even_grade_ratio) {
-            EvenKumiwakeSetter(manArray, womanArray, "grade")
-            EvenCreateGroup(manArray)
-            EvenCreateGroup(womanArray)
         }
     }
 
@@ -201,7 +187,6 @@ class NormalKumiwakeResult : AppCompatActivity() {
 
     fun kumiwakeAll() {
         setLeader(memberArray)
-        setRole(memberArray)
 
         for (i in 0 until groupCount) {
             val belongNo = groupArray[i].belongNo - arrayArray[i].size  //グループの規定人数－グループの現在数
@@ -215,44 +200,6 @@ class NormalKumiwakeResult : AppCompatActivity() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //　　　　　　　　　　　　　　　　　　　　　　　　各種処理メソッド                                                           ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    fun setRole(array: ArrayList<Name>) {
-        var addGroupNo: Int
-        val initialGroupNo: Int = nowGroupNo
-        var nowGroupMemberCount: Int
-
-        if (array !== womanArray) {
-            val r = Random()
-            nowGroupNo = r.nextInt(groupCount)  //r.nextInt(n) は0～n-1の値をnowGroupNoに代入
-        }
-
-        for (i in array.indices) {
-            if (array[i].role.matches(".*$even_role.*".toRegex()) && !array[i].role.matches((".*" + getText(R.string.leader) + ".*").toRegex())) {
-                addGroupNo = nowGroupNo % groupCount
-                nowGroupMemberCount = arrayArray[addGroupNo].size
-
-                //一週目かつリーダーが指定役職かつメンバー数が規定人数以下
-                while ((nowGroupNo - initialGroupNo < groupCount
-                                && nowGroupMemberCount != 0
-                                && arrayArray[addGroupNo][nowGroupMemberCount - 1].role.matches(".*$even_role.*".toRegex())) || groupArray[addGroupNo].belongNo == nowGroupMemberCount) {
-                    nowGroupNo++
-                    addGroupNo = nowGroupNo % groupCount
-                    nowGroupMemberCount = arrayArray[addGroupNo].size
-                }
-
-                nowGroupMemberCount = arrayArray[addGroupNo].size
-
-                while (groupArray[addGroupNo].belongNo == nowGroupMemberCount) {
-                    nowGroupNo++
-                    addGroupNo = nowGroupNo % groupCount
-                    nowGroupMemberCount = arrayArray[addGroupNo].size
-                }
-
-                arrayArray[addGroupNo].add(array[i])
-                nowGroupNo++
-            }
-        }
-    }
 
     fun setLeader(array: ArrayList<Name>) {
         for (i in array.indices) {
@@ -286,21 +233,17 @@ class NormalKumiwakeResult : AppCompatActivity() {
 
     fun EvenKumiwakeSetter(array1: ArrayList<Name>, array2: ArrayList<Name>?, sortCode: String) {
 
-        if (sortCode != "") {
+        if (sortCode == "age") {
             array1.shuffle()
-            Collections.sort(array1, KumiwakeNumberComparator(sortCode))
+            Collections.sort(array1, KumiwakeNumberComparator())
         }
-        if (sortCode != "" && array2 != null) {
+        if (sortCode == "age" && array2 != null) {
             array2.shuffle()
-            Collections.sort(array2, KumiwakeNumberComparator(sortCode))
+            Collections.sort(array2, KumiwakeNumberComparator())
         }
         setLeader(array1)
         if (array2 != null) {
             setLeader(array2)
-        }
-        setRole(array1)
-        if (array2 != null) {
-            setRole(array2)
         }
     }
 
@@ -312,7 +255,7 @@ class NormalKumiwakeResult : AppCompatActivity() {
                 while (array[memberSum].role.matches((".*" + getText(R.string.leader) + ".*").toRegex())) {
                     memberSum++
                 }
-                while (memberSum != array.size && array[memberSum].role.matches(".*$even_role.*".toRegex())) {
+                while (memberSum != array.size && array[memberSum].role.matches(".*$.*".toRegex())) {
                     memberSum++
                 }
                 if (memberSum < array.size) {
@@ -374,7 +317,7 @@ class NormalKumiwakeResult : AppCompatActivity() {
 
         while (memberSum < array.size) {
 
-            while (memberSum < array.size && (array[memberSum].role.matches((".*" + getText(R.string.leader) + ".*").toRegex()) || array[memberSum].role.matches(".*$even_role.*".toRegex()))) {
+            while (memberSum < array.size && (array[memberSum].role.matches((".*" + getText(R.string.leader) + ".*").toRegex()) || array[memberSum].role.matches(".*$.*".toRegex()))) {
                 memberSum++
             }
 
@@ -489,7 +432,6 @@ class NormalKumiwakeResult : AppCompatActivity() {
     companion object {
         internal var even_fm_ratio: Boolean = false
         internal var even_age_ratio: Boolean = false
-        internal var even_grade_ratio: Boolean = false
     }
 }
 
@@ -543,7 +485,7 @@ internal class KumiwakeLeaderComparator : Comparator<Name> {
             value = n2_sex.compareTo(n1_sex)
         }
 
-        if (NormalKumiwakeResult.even_age_ratio && !NormalKumiwakeResult.even_grade_ratio) {
+        if (NormalKumiwakeResult.even_age_ratio) {
             if (value == 0) {
                 val n1_age = n1.age
                 val n2_age = n2.age
@@ -557,24 +499,15 @@ internal class KumiwakeLeaderComparator : Comparator<Name> {
             }
         }
 
-        if (!NormalKumiwakeResult.even_age_ratio && NormalKumiwakeResult.even_grade_ratio) {
-            if (value == 0) {
-                val n1_grade = n1.grade
-                val n2_grade = n2.grade
-                value = if (n1_grade < n2_grade) -1 else 1
-            }
-        }
-
         return value
     }
 }
 
-internal class KumiwakeNumberComparator(var sortCode: String) : Comparator<Name> {
+internal class KumiwakeNumberComparator() : Comparator<Name> {
 
     override fun compare(n1: Name, n2: Name): Int {
         var value = 0
 
-        if (sortCode == "age") {
             val n1_age = n1.age
             val n2_age = n2.age
             value = when {
@@ -582,14 +515,6 @@ internal class KumiwakeNumberComparator(var sortCode: String) : Comparator<Name>
                 n1_age > n2_age -> 1
                 else -> 0
             }
-        }
-
-
-        if (sortCode == "grade") {
-            val n1_grade = n1.grade
-            val n2_grade = n2.grade
-            value = if (n1_grade < n2_grade) -1 else 1
-        }
 
         return value
     }

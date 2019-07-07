@@ -30,9 +30,7 @@ class AddMember : AppCompatActivity() {
     private var sexGroup: RadioGroup? = null
     private var sexButton: RadioButton? = null
     private var ageEditText: EditText? = null
-    private var gradeEditText: EditText? = null
     private var belongSpinner: Button? = null
-    private var roleSpinner: Button? = null
     private var dbAdapter: MemberListAdapter? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,9 +42,8 @@ class AddMember : AppCompatActivity() {
         afterBelong = null
         findViews()
         ageEditText!!.setText("")
-        gradeEditText!!.setText("")
         val i = intent
-        val position = i.getIntExtra("POSITION", -1)
+        val position = i.getIntExtra(POSITION, -1)
         if (position != -1) {
             setItem(position)
         }
@@ -65,9 +62,7 @@ class AddMember : AppCompatActivity() {
         textInputLayout = findViewById<View>(R.id.member_form_input_layout) as TextInputLayout
         sexGroup = findViewById<View>(R.id.sexGroup) as RadioGroup
         ageEditText = findViewById<View>(R.id.input_age) as EditText
-        gradeEditText = findViewById<View>(R.id.input_grade) as EditText
         belongSpinner = findViewById<View>(R.id.select_group_spinner) as Button
-        roleSpinner = findViewById<View>(R.id.select_role_spinner) as Button
     }
 
     private fun setItem(position: Int) {
@@ -89,9 +84,7 @@ class AddMember : AppCompatActivity() {
             sexGroup!!.check(R.id.manBtn)
         }
         ageEditText!!.setText(age)
-        gradeEditText!!.setText(grade)
         belongSpinner!!.text = belong
-        roleSpinner!!.text = role
 
         update(listId)
 
@@ -159,63 +152,6 @@ class AddMember : AppCompatActivity() {
         beforeBelong = textArray
     }
 
-    @SuppressLint("SetTextI18n")
-    @OnClick(R.id.select_role_spinner)
-    internal fun onSelectRoleSpinnerClicked(view: View) {
-        // 選択中の候補を取得
-        val buttonText = roleSpinner!!.text.toString()
-        val textArray = buttonText.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
-
-        // 候補リスト
-        val strs = resources.getStringArray(R.array.role)
-        val list = ArrayList(Arrays.asList(*strs)) // 新インスタンスを生成
-        list.removeAt(0)
-        val likeArray = list.toTypedArray<String>()
-
-        // 選択リスト
-        val checkArray = BooleanArray(likeArray.size)
-        for (i in likeArray.indices) {
-            checkArray[i] = false
-            for (data in textArray) {
-                if (likeArray[i] == data) {
-                    checkArray[i] = true
-                    break
-                }
-            }
-        }
-        // ダイアログを生成
-        val dialog = AlertDialog.Builder(this)
-        // 選択イベント
-        dialog.setMultiChoiceItems(likeArray, checkArray, DialogInterface.OnMultiChoiceClickListener { _, value, isChecked ->
-            val text = roleSpinner!!.text.toString()
-            // 選択された場合
-            if (isChecked) {
-                // ボタンの表示に追加
-                roleSpinner!!.text = text + (if ("" == text) "" else ",") + likeArray[value]
-            } else {
-                // ボタンの表示から削除
-                if (text.indexOf(likeArray[value] + ",") >= 0) {
-                    roleSpinner!!.text = text.replace(likeArray[value] + ",", "")
-                } else if (text.indexOf("," + likeArray[value]) >= 0) {
-                    roleSpinner!!.text = text.replace("," + likeArray[value], "")
-                } else {
-                    roleSpinner!!.text = text.replace(likeArray[value], "")
-                }
-            }
-        })
-        dialog.setPositiveButton(getText(R.string.decide), null)
-        dialog.setNeutralButton(getText(R.string.clear)) { _, _ ->
-            roleSpinner!!.text = ""
-            // 再表示
-            onSelectRoleSpinnerClicked(view)
-        }
-        dialog.setNegativeButton(getText(R.string.cancel)) { _, _ ->
-            // 選択前の状態に戻す
-            roleSpinner!!.text = buttonText
-        }
-        dialog.show()
-    }
-
     @OnClick(R.id.member_registration_button)
     internal fun onRegistrationMemberClicked() {
         val name = nameEditText!!.text!!.toString()
@@ -237,11 +173,9 @@ class AddMember : AppCompatActivity() {
         val read = readEditText!!.text!!.toString()
         val sex = sexButton!!.text as String
         val age = getValue(ageEditText!!)
-        val grade = getValue(gradeEditText!!)
         val belong = belongConvertToNo()
-        val role = roleSpinner!!.text.toString()
 
-        dbAdapter!!.updateMember(listId, name, sex, age, grade, belong, role, read)
+        dbAdapter!!.updateMember(listId, name, sex, age, 0, belong, "", read)
         FragmentMember().loadName()
     }
 
@@ -270,12 +204,10 @@ class AddMember : AppCompatActivity() {
         val read = readEditText!!.text!!.toString()
         val sex = sexButton!!.text as String
         val age = getValue(ageEditText!!)
-        val grade = getValue(gradeEditText!!)
         val belong = belongConvertToNo()
-        val role = roleSpinner!!.text.toString()
 
         dbAdapter!!.open()
-        dbAdapter!!.saveName(name, sex, age, grade, belong, role, read)
+        dbAdapter!!.saveName(name, sex, age, 0, belong, "", read)
         dbAdapter!!.close()
     }
 
@@ -392,6 +324,10 @@ class AddMember : AppCompatActivity() {
         dbAdapter!!.close()
 
         return BelongNo.toString()
+    }
+
+    companion object{
+        const val POSITION = "position"
     }
 }
 

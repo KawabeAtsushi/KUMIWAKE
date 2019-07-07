@@ -3,6 +3,7 @@ package com.pandatone.kumiwake.setting
 import android.content.Context
 import android.os.Environment
 import android.widget.Toast
+import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
@@ -24,7 +25,7 @@ object DBBackup {
         if (!b) {          //ディレクトリが存在しないので作成。
             b = f.mkdirs()    //　sdcard/kumiwakeディレクトリを作ってみる。
             if (!b) {
-                Toast.makeText(c, SettingHelp.context?.getString(R.string.failed_back_up), Toast.LENGTH_SHORT).show()
+                Toast.makeText(c, MyApplication.context?.getString(R.string.failed_back_up), Toast.LENGTH_SHORT).show()
                 return          //ディレクトリ作成失敗
             }
         }
@@ -39,7 +40,7 @@ object DBBackup {
         val f = File(dir_path)
         b = f.exists()           //SDカードにkumiwakeディレクトリがあるか。
         if (!b) {
-            Toast.makeText(c, SettingHelp.context?.getString(R.string.not_exist_file), Toast.LENGTH_SHORT).show()
+            Toast.makeText(c, MyApplication.context?.getString(R.string.not_exist_file), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -74,17 +75,17 @@ object DBBackup {
         }
 
         if (err == 0 && backup!!) {
-            Toast.makeText(c, SettingHelp.context?.getString(R.string.back_up_completed), Toast.LENGTH_SHORT).show()
+            Toast.makeText(c, MyApplication.context?.getString(R.string.back_up_completed), Toast.LENGTH_SHORT).show()
         } else if (err == 0 && (!backup!!)) {
-            Toast.makeText(c, SettingHelp.context?.getString(R.string.import_completed), Toast.LENGTH_SHORT).show()
+            Toast.makeText(c, MyApplication.context?.getString(R.string.import_completed), Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun getPath(c: Context) {
         sd_dir = Environment.getExternalStorageDirectory().path     //SDカードディレクトリ
         sd_stt = Environment.getExternalStorageState()           //SDカードの状態を取得
-        val dbAdapter = MemberListAdapter(SettingHelp.context!!)
-        val gpdbAdapter = GroupListAdapter(SettingHelp.context!!)
+        val dbAdapter = MemberListAdapter(MyApplication.context!!)
+        val gpdbAdapter = GroupListAdapter(MyApplication.context!!)
         dbAdapter.open()
         dbAdapter.allNames
         dbAdapter.close()
@@ -97,7 +98,7 @@ object DBBackup {
 
         b = sd_stt == Environment.MEDIA_MOUNTED     //SDカードの状態
         if (!b) {  //書込み状態でマウントされていない。
-            Toast.makeText(c, SettingHelp.context!!.getString(R.string.not_mounted), Toast.LENGTH_SHORT).show()
+            Toast.makeText(c, MyApplication.context!!.getString(R.string.not_mounted), Toast.LENGTH_SHORT).show()
             return          //ディレクトリ作成失敗
         }
 

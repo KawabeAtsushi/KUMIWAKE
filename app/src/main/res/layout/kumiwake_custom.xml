@@ -9,8 +9,8 @@
         android:id="@+id/background_img"
         android:layout_width="match_parent"
         android:layout_height="500dp"
-        android:src="@drawable/normal_img"
-        android:scaleType = "centerCrop"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/normal_img" />
 
 
     <androidx.appcompat.widget.AppCompatButton
@@ -42,8 +42,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/request_background"
                 android:text="@string/member"
                 android:textSize="20sp" />
@@ -52,79 +52,79 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/info_margin"
-                android:text="@string/select_leader"/>
+                android:text="@string/select_leader" />
 
 
-            <include layout="@layout/part_review_listview"
+            <include
                 android:id="@+id/add_group_listview"
-                android:layout_height="wrap_content"
+                layout="@layout/part_review_listview"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/form_between_margin" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginStart="15dp"
-            android:background="@drawable/request_background"
-            android:text="@string/group"
-            android:textSize="20sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/request_background"
+                android:text="@string/group"
+                android:textSize="20sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/info_margin"
-                android:text="@string/select_group_info"/>
+                android:text="@string/select_group_info" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/group_no_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="15dp"
-                android:layout_marginTop="@dimen/form_marginTop"
-                android:textSize="15sp" />
-
-            <ListView
-                android:id="@+id/kumiwake_group_listView"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/form_marginTop"
-                />
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/group_no_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="@dimen/form_marginTop"
+                    android:layout_marginEnd="15dp"
+                    android:textSize="15sp" />
+
+                <ListView
+                    android:id="@+id/kumiwake_group_listView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/form_marginTop" />
+
+                <TextView
+                    android:id="@+id/error_member_no_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/form_marginStart"
+                    android:text="@string/require_correct_No"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/form_textSize"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/back_to_initial_mbNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:text="@string/back_to_initial_mbNo" />
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/error_member_no_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/form_marginStart"
-                android:text="@string/require_correct_No"
-                android:textColor="@color/red"
-                android:textSize="@dimen/form_textSize"
-                android:visibility="gone"/>
-
-            <Button
-                android:id="@+id/back_to_initial_mbNo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="@string/back_to_initial_mbNo"/>
-
-        </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/request_background"
                 android:text="@string/kumiwake_conditions"
@@ -134,56 +134,19 @@
                 android:id="@+id/even_fm_ratio_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
                 android:text="@string/even_out_male_female_ratio"
-                android:textSize="@dimen/form_textSize"
-                />
+                android:textSize="@dimen/form_textSize" />
 
             <CheckBox
                 android:id="@+id/even_age_ratio_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
                 android:text="@string/even_out_age_ratio"
-                android:textSize="@dimen/form_textSize"
-                />
-
-            <CheckBox
-                android:id="@+id/even_grade_ratio_check"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="10dp"
-                android:text="@string/even_out_grade_ratio"
-                android:textSize="@dimen/form_textSize"
-                />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginStart="5dp"
-                android:orientation="horizontal" >
-
-                <Spinner
-                    android:id="@+id/custom_spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:prompt="@string/select_role"
-                    style="@android:style/Widget.Spinner.DropDown"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/even_out"
-                    android:textSize="@dimen/form_textSize" />
-
-            </LinearLayout>
+                android:textSize="@dimen/form_textSize" />
 
 
         </LinearLayout>

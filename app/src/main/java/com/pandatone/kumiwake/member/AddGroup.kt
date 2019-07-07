@@ -49,7 +49,7 @@ class AddGroup : AppCompatActivity() {
         dbAdapter = GroupListAdapter(this)
         findViews()
         val i = intent
-        position = i.getIntExtra("POSITION", nextId)
+        position = i.getIntExtra(POSITION, nextId)
         if (position != nextId) {
             setItem(position)
         }
@@ -76,7 +76,7 @@ class AddGroup : AppCompatActivity() {
         }
         adapter = MBListViewAdapter(this@AddGroup, nameByBelong, 0)
         listView.adapter = adapter
-        numberOfSelectedMember.text = adapter.count.toString() + getString(R.string.person) + getString(R.string.selected)
+        numberOfSelectedMember.text = adapter.count.toString() + getString(R.string.people) + getString(R.string.selected)
         FragmentMember().duplicateBelong()
     }
 
@@ -89,7 +89,7 @@ class AddGroup : AppCompatActivity() {
             textInputLayout!!.error = getText(R.string.error_empty_group)
         } else {
             saveItem()
-            Toast.makeText(this, getText(R.string.group).toString() + " \"" + group + "\" " + getText(R.string.registered), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.group) + " \"" + group + "\" " + getString(R.string.registered), Toast.LENGTH_SHORT).show()
             finish()
         }
     }
@@ -151,6 +151,7 @@ class AddGroup : AppCompatActivity() {
         internal lateinit var groupEditText: AppCompatEditText
         internal lateinit var numberOfSelectedMember: TextView
         internal lateinit var dbAdapter: GroupListAdapter
+        const val POSITION = "position"
     }
 
 }

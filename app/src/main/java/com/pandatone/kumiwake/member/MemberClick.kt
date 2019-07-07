@@ -6,6 +6,7 @@ import android.content.Context
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import com.pandatone.kumiwake.MyApplication
 
 import com.pandatone.kumiwake.R
 
@@ -22,8 +23,7 @@ object MemberClick {
     internal lateinit var role: TextView
     internal lateinit var okBt: Button
 
-    val context: Context?
-        get() = MemberMain().applicationContext
+    val context = MyApplication.context
 
 
     fun memberInfoDialog(view: View, builder: AlertDialog.Builder) {
@@ -44,20 +44,20 @@ object MemberClick {
     @SuppressLint("SetTextI18n")
     fun SetInfo(position: Int) {
         name.text = context!!.getText(R.string.member_name).toString() + " : " + FragmentMember.nameList[position].name + " (" + FragmentMember.nameList[position].read + ")"
-        sex.text = context!!.getText(R.string.sex).toString() + " : " + FragmentMember.nameList[position].sex
-        age.text = context!!.getText(R.string.age).toString() + " : " + FragmentMember.nameList[position].age.toString()
-        grade.text = context!!.getText(R.string.grade).toString() + " : " + FragmentMember.nameList[position].grade.toString()
+        sex.text = context.getText(R.string.sex).toString() + " : " + FragmentMember.nameList[position].sex
+        age.text = context.getText(R.string.age).toString() + " : " + FragmentMember.nameList[position].age.toString()
+        grade.text = context.getText(R.string.grade).toString() + " : " + FragmentMember.nameList[position].grade.toString()
 
         if (viewBelong(position) !== "") {
-            belong.text = context!!.getText(R.string.belong).toString() + " : " + viewBelong(position)
+            belong.text = context.getText(R.string.belong).toString() + " : " + viewBelong(position)
         } else {
-            belong.text = context!!.getText(R.string.belong).toString() + " : " + context!!.getText(R.string.nothing)
+            belong.text = context.getText(R.string.belong).toString() + " : " + context.getText(R.string.nothing)
         }
 
         if (FragmentMember.nameList[position].role != "") {
-            role.text = context!!.getText(R.string.role).toString() + " : " + FragmentMember.nameList[position].role
+            role.text = context.getText(R.string.role).toString() + " : " + FragmentMember.nameList[position].role
         } else {
-            role.text = context!!.getText(R.string.role).toString() + " : " + context!!.getText(R.string.nothing)
+            role.text = context.getText(R.string.role).toString() + " : " + context.getText(R.string.nothing)
         }
 
     }
