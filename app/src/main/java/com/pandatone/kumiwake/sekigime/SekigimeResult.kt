@@ -17,7 +17,7 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.customize.CustomDialog
 import com.pandatone.kumiwake.kumiwake.MainActivity
 import com.pandatone.kumiwake.member.Name
-import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by atsushi_2 on 2016/07/16.
@@ -70,6 +70,7 @@ class SekigimeResult : AppCompatActivity() {
         go_home.translationX = centerX
         re_sekigime.background = ContextCompat.getDrawable(this, R.drawable.simple_orange_button)
         go_home.background = ContextCompat.getDrawable(this, R.drawable.simple_green_button)
+        group_spinner.background = ContextCompat.getDrawable(this, R.drawable.spinner_button)
         re_sekigime.setOnClickListener {
             val message = getString(R.string.re_sekigime_description) + getString(R.string.run_confirmation)
             val title = getString(R.string.re_sekigime_title)
@@ -92,7 +93,7 @@ class SekigimeResult : AppCompatActivity() {
                 Toast.makeText(applicationContext, getText(R.string.re_sekigime_finished), Toast.LENGTH_SHORT).show()
                 customDialog.dismiss()
             }
-            customDialog.show(getSupportFragmentManager(), "Btn")
+            customDialog.show(supportFragmentManager, "Btn")
         }
         go_home.setOnClickListener {
             val intent = Intent(applicationContext, MainActivity::class.java)
@@ -327,12 +328,12 @@ class SekigimeResult : AppCompatActivity() {
 
     companion object {
 
-        lateinit var arrayArrayNormal: ArrayList<ArrayList<Name>>
-        lateinit var arrayArrayNormalMan: ArrayList<ArrayList<Name>>
-        lateinit var arrayArrayNormalWoman: ArrayList<ArrayList<Name>>
-        lateinit var arrayArrayQuick: ArrayList<ArrayList<String>>
-        lateinit var arrayArrayQuickMan: ArrayList<ArrayList<String>>
-        lateinit var arrayArrayQuickWoman: ArrayList<ArrayList<String>>
+        var arrayArrayNormal: ArrayList<ArrayList<Name>> = ArrayList()
+        var arrayArrayNormalMan: ArrayList<ArrayList<Name>>  = ArrayList()
+        var arrayArrayNormalWoman: ArrayList<ArrayList<Name>>  = ArrayList()
+        var arrayArrayQuick: ArrayList<ArrayList<String>>  = ArrayList()
+        var arrayArrayQuickMan: ArrayList<ArrayList<String>>  = ArrayList()
+        var arrayArrayQuickWoman: ArrayList<ArrayList<String>>  = ArrayList()
         var groupArray: ArrayList<String>? = null
         var Normalmode: Boolean = false
         var doubleDeploy: Boolean = false

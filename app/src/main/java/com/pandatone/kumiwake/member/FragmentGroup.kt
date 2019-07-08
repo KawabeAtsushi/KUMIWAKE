@@ -180,7 +180,7 @@ class FragmentGroup : ListFragment() {
     }
 
     fun deleteGroup() {
-        Log.d("deleteGroup is called.", "hooo")
+
         // アラートダイアログ表示
         val builder = AlertDialog.Builder(activity!!)
         builder.setTitle(checkedCount.toString() + " " + getString(R.string.group) + getString(R.string.delete))

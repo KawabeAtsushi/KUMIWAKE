@@ -62,6 +62,3 @@ object GroupClick {
         GPdbAdapter.updateGroup(id, name, name_read, belongNo)
     }
 }
-
-
-

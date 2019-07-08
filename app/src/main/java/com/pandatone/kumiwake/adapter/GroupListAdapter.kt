@@ -6,6 +6,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
 import com.pandatone.kumiwake.member.FragmentGroup
@@ -77,6 +78,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
         close()
     }
 
+    //Listの情報取得
     fun getCursor(c: Cursor) {
         val nameList = FragmentGroup.nameList
         val listAdp = FragmentGroup.listAdp
@@ -88,8 +90,8 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
                 listItem = Group(
                         c.getInt(0),
                         c.getString(1),
-                        c.getInt(2),
-                        c.getString(3)
+                        c.getString(2),
+                        c.getInt(3)
                 )
                 nameList.add(listItem)          // 取得した要素をnameListに追加
 
@@ -122,6 +124,8 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
 
     fun saveGroup(name: String, name_read: String, belongNo: Int) {
 
+        Log.d("belongNo",belongNo.toString())
+
         db.beginTransaction()          // トランザクション開始
 
         try {
@@ -141,6 +145,9 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
     }
 
     fun updateGroup(groupId: Int, name: String, name_read: String, belongNo: Int) {
+
+        Log.d("belongNo",belongNo.toString())
+
         open()
         val values = ContentValues()
         values.put(GP_NAME, name)
@@ -155,20 +162,21 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
         close()
     }
 
-    class Group(id: Int, group_name: String, belong_no: Int, group_name_read: String) : Serializable {
-        var id: Int = 0
+    class Group(id: Int, group_name: String, group_name_read: String, belong_no: Int) : Serializable {
+        var id: Int
             private set
         var group: String
             private set
-        private var group_read: String
-        var belongNo: Int = 0
+        var group_read: String
+            private set
+        var belongNo: Int
             private set
 
         init {
             this.id = id
             this.group = group_name
-            this.belongNo = belong_no
             this.group_read = group_name_read
+            this.belongNo = belong_no
         }
 
     }

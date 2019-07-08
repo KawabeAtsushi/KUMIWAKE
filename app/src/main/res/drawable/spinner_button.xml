@@ -8,17 +8,12 @@
         <shape android:shape="rectangle">
 
             <!-- 角の丸み -->
-            <corners android:radius="8dp" />
+            <corners android:radius="15dp" />
 
             <solid
-                android:color="#90ffa600"/>
-
-            <stroke
-                android:width="2dp"
-                android:color="@color/gray" />
+                android:color="#FFFFFF"/>
 
         </shape>
-
     </item>
 
     <!-- ボタンが押された状態 -->
@@ -27,14 +22,10 @@
         <shape android:shape="rectangle">
 
             <!-- 角の丸み -->
-            <corners android:radius="8dp" />
+            <corners android:radius="15dp" />
 
             <solid
-                android:color="#b0ffa600"/>
-
-            <stroke
-                android:width="2dp"
-                android:color="@color/gray" />
+                android:color="#eeeeee"/>
 
         </shape>
     </item>

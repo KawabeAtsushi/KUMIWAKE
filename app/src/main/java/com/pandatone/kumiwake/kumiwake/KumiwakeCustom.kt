@@ -185,11 +185,11 @@ class KumiwakeCustom : AppCompatActivity() {
         for (i in 0 until groupList.count) {
             val groupName = EditGroupListAdapter.getGroupName(i)
             val memberNo = EditGroupListAdapter.getMemberNo(i)
-            newGroupArray.add(GroupListAdapter.Group(i, groupName, memberNo, null.toString()))
+            newGroupArray.add(GroupListAdapter.Group(i, groupName, "",memberNo))
         }
     }
 
-    public fun deleteLeaderList(roleItem: String): MutableList<String> {
+    fun deleteLeaderList(roleItem: String): MutableList<String> {
         val roleArray = roleItem.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
         val list = ArrayList(Arrays.asList<String>(*roleArray))
         val hs = HashSet<String>()
@@ -202,7 +202,7 @@ class KumiwakeCustom : AppCompatActivity() {
         return list
     }
 
-    public fun changeBelongNo(position: Int, addNo: Int) {
+    fun changeBelongNo(position: Int, addNo: Int) {
         val et: EditText = if (position == groupList.count - 1) {
             groupList.getChildAt(0).findViewById<View>(R.id.editTheNumberOfMember) as EditText
         } else {

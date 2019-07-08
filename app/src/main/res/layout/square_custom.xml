@@ -38,7 +38,6 @@
                 android:textColor="@color/gray" />
 
             <RadioGroup
-                android:id="@+id/squareGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -56,7 +55,6 @@
                     android:textSize="25dp" />
 
                 <RadioButton
-                    android:id="@+id/singleSquareType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"

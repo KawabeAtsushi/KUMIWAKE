@@ -59,8 +59,7 @@ class MainActivity : Activity(), View.OnClickListener {
         val res = resources
         val mPackageName = packageName
         val title: TextView
-        title = v.findViewById<View>(res.getIdentifier(
-                "category_title" + category.id, "id", mPackageName)) as TextView
+        title = v.findViewById<View>(res.getIdentifier("category_title" + category.id, "id", mPackageName)) as TextView
         startActivityWithTransition(category.id, title)
     }
 
@@ -86,18 +85,14 @@ class MainActivity : Activity(), View.OnClickListener {
 
         for (i in 0..3) {
             val category = mCategories[i]
-            v = findViewById<View>(res.getIdentifier(
-                    "category_item" + category.id!!, "id", mPackageName)) as FrameLayout
-            icon = v.findViewById<View>(res.getIdentifier(
-                    "category_icon" + category.id, "id", mPackageName)) as ImageView
-            title = v.findViewById<View>(res.getIdentifier(
-                    "category_title" + category.id, "id", mPackageName)) as TextView
+            v = findViewById<View>(res.getIdentifier("category_item" + category.id!!, "id", mPackageName)) as FrameLayout
+            icon = v.findViewById<View>(res.getIdentifier("category_icon" + category.id, "id", mPackageName)) as ImageView
+            title = v.findViewById<View>(res.getIdentifier("category_title" + category.id, "id", mPackageName)) as TextView
 
             v.layoutParams.width = halfScreenWidth
             v.layoutParams.height = miniScreenHeight
             v.setBackgroundColor(ContextCompat.getColor(applicationContext, category.theme.windowBackgroundColor))
-            icon.setImageResource(res.getIdentifier(
-                    "icon_" + category.id, "drawable", mPackageName))
+            icon.setImageResource(res.getIdentifier("icon_" + category.id, "drawable", mPackageName))
             title.text = category.name
             title.setTextColor(ContextCompat.getColor(applicationContext, category.theme.textPrimaryColor))
             title.setBackgroundColor(ContextCompat.getColor(applicationContext, category.theme.primaryColor))

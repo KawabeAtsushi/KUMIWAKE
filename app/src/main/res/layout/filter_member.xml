@@ -42,13 +42,11 @@
                 android:text="@string/no_specified" />
 
             <RadioButton
-                android:id="@+id/manRadio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/man" />
 
             <RadioButton
-                android:id="@+id/womanRadio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/woman" />
@@ -154,7 +152,6 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/min_grade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/form_between_margin"
@@ -195,7 +192,6 @@
             android:textSize="@dimen/form_textSize" />
 
         <EditText
-            android:id="@+id/max_grade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/form_between_margin"
@@ -217,7 +213,6 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/error_grade_range"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/form_marginStart"
