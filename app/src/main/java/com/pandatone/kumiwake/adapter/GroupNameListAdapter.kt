@@ -2,6 +2,7 @@ package com.pandatone.kumiwake.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View

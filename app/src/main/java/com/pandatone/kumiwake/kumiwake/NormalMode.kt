@@ -94,11 +94,11 @@ class NormalMode : AppCompatActivity() {
             val remainder = memberArray.size % groupNo
 
             for (i in 0 until remainder) {
-                groupArray.add(GroupListAdapter.Group(i, getText(R.string.group).toString() + " " + (i + 1).toString(), eachMemberNo + 1, null.toString()))
+                groupArray.add(GroupListAdapter.Group(i, getText(R.string.group).toString() + " " + (i + 1).toString(),"",eachMemberNo + 1))
             }
 
             for (i in remainder until groupNo) {
-                groupArray.add(GroupListAdapter.Group(i, getText(R.string.group).toString() + " " + (i + 1).toString(), eachMemberNo, null.toString()))
+                groupArray.add(GroupListAdapter.Group(i, getText(R.string.group).toString() + " " + (i + 1).toString(), "",eachMemberNo))
             }
 
             val intent = Intent(this, KumiwakeCustom::class.java)
@@ -110,12 +110,9 @@ class NormalMode : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, i: Intent?) {
-        Log.d("resultcode",requestCode.toString())
-        Log.d("resultcode_OK",Activity.RESULT_OK.toString())
-        Log.d("resultcode_CANCEL",Activity.RESULT_CANCELED.toString())
+
         if (resultCode == Activity.RESULT_OK) {
             memberArray = i!!.getSerializableExtra(MEMBER_ARRAY) as ArrayList<Name>
-            Log.d("memberarray4", memberArray.size.toString())
             adapter = MBListViewAdapter(this, memberArray, 1000)
             listView.adapter = adapter
             MBListViewAdapter.setRowHeight(listView, adapter!!)

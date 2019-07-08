@@ -61,7 +61,7 @@ class FragmentMember : ListFragment() {
     }
 
     internal fun moveKumiwake() {
-        Log.d("memberarray3",memberArray.size.toString())
+
         val hs = HashSet(memberArray)
         memberArray.clear()
         memberArray.addAll(hs)
@@ -366,9 +366,7 @@ class FragmentMember : ListFragment() {
                 loadName()
                 requireActivity().finish()
             } else {
-                Log.d("memberarray1",memberArray.size.toString())
                 recreateKumiwakeList()
-                Log.d("memberarray2",memberArray.size.toString())
                 moveKumiwake()
             }
             listAdp?.clearSelection()
@@ -376,7 +374,7 @@ class FragmentMember : ListFragment() {
 
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             // アクションモード初期化処理
-            Log.d("actionmode","called!!!")
+
             val inflater = activity!!.menuInflater
             inflater.inflate(R.menu.member_main_menu, menu)
             val searchIcon = menu.findItem(R.id.search_view)

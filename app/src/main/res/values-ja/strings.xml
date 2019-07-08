@@ -21,8 +21,6 @@
     <string name="registration">登録する</string>
     <string name="man">男</string>
     <string name="woman">女</string>
-    <string name="main_info">＊　基本情報　＊</string>
-    <string name="sub_info">－　その他の情報　－</string>
     <string name="registered">を登録しました</string>
     <string name="sex">性別</string>
     <string name="input_required">*入力必須</string>
@@ -35,7 +33,6 @@
     <string name="grade">学年</string>
     <string name="grade2">年生</string>
     <string name="role">役職</string>
-    <string name="select_role">役職を選択</string>
     <string name="no_member">メンバーが\nいません</string>
     <string name="no_group">グループが\nありません</string>
     <string name="create">作成する</string>
@@ -64,7 +61,6 @@
     <string name="update">更新する</string>
     <string name="updated">を更新しました</string>
     <string name="number_of_member">メンバー数</string>
-    <string name="number_of_group">グループ数</string>
     <string name="normal_mode">標準モード</string>
     <string name="quick_mode">クイックモード</string>
     <string name="select_mode">モード選択</string>
@@ -77,14 +73,11 @@
     <string name="do_kumiwake">組分けする！</string>
     <string name="move_confirmation">確認画面へ</string>
     <string name="number_of_groups_is_much_too">グループ数がメンバー数を超えています</string>
-    <string name="even_out">を均等にする</string>
     <string name="even_out_male_female_ratio">男女比を均等にする</string>
     <string name="even_out_person_ratio">人数を均等にする</string>
     <string name="even_out_age_ratio">年齢を均等にする</string>
-    <string name="even_out_grade_ratio">学年を均等にする</string>
     <string name="kumiwake_confirm">以下の内容で組分けします。</string>
     <string name="sekigime_confirm">以下の内容で席決めします。</string>
-    <string name="content_check">内容確認</string>
     <string name="re_kumiwake">組分けなおす</string>
     <string name="kumiwake_result">組分け結果</string>
     <string name="require_member_select">メンバー登録</string>
@@ -93,7 +86,6 @@
     <string name="leader">代表者</string>
     <string name="kumiwake_conditions">組分け条件設定</string>
     <string name="select_group_info">グループ名とメンバー数を設定できます。</string>
-    <string name="error">エラー</string>
     <string name="move_custom">カスタム画面へ</string>
     <string name="require_correct_No">適切な人数を入力してください</string>
     <string name="back_to_initial_mbNo">初期人数に戻す</string>

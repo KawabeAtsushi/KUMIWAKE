@@ -503,7 +503,7 @@ internal class KumiwakeLeaderComparator : Comparator<Name> {
     }
 }
 
-internal class KumiwakeNumberComparator() : Comparator<Name> {
+internal class KumiwakeNumberComparator : Comparator<Name> {
 
     override fun compare(n1: Name, n2: Name): Int {
         var value = 0

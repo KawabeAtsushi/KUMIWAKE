@@ -100,7 +100,8 @@
                 android:layout_height="30dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/arrows"
-                android:backgroundTint="@color/orange"/>
+                android:backgroundTint="@color/orange"
+                android:stateListAnimator="@animator/translate"/>
 
             <TextView
                 android:id="@+id/between_arrows_txt"
@@ -116,7 +117,8 @@
                 android:layout_height="30dp"
                 android:layout_marginStart="10dp"
                 android:background="@drawable/arrows"
-                android:backgroundTint="@color/orange"/>
+                android:backgroundTint="@color/orange"
+                android:stateListAnimator="@animator/translate"/>
 
             </LinearLayout>
 

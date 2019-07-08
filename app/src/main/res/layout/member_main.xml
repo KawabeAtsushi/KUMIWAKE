@@ -15,7 +15,6 @@
         tools:targetApi="lollipop" />
 
     <FrameLayout
-        android:id="@+id/member_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -26,7 +25,6 @@
             android:layout_height="match_parent">
 
             <androidx.viewpager.widget.PagerTitleStrip
-                android:id="@+id/pager_title_strip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
