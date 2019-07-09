@@ -4,12 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/pattern"
-        android:scaleType = "centerCrop"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -106,7 +100,6 @@
         android:text="@string/move_custom"
         android:textColor="@android:color/white"
         android:textSize="20sp"
-        android:textAlignment="center"
-        android:stateListAnimator="@animator/expanding"/>
+        android:textAlignment="center"/>
 
 </FrameLayout>

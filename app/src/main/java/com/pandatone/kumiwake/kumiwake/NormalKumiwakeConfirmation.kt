@@ -3,9 +3,12 @@ package com.pandatone.kumiwake.kumiwake
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GPListViewAdapter
 import com.pandatone.kumiwake.adapter.GroupListAdapter
@@ -42,6 +45,10 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
         setAdapter()
         setViews()
         scrollView.post { scrollView.scrollTo(0, 0) }
+
+        val animation = AnimationUtils.loadAnimation(this, R.anim.arrow_move)
+        arrow1.startAnimation(animation)
+        arrow2.startAnimation(animation)
     }
 
     @SuppressLint("SetTextI18n")
@@ -49,8 +56,9 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
 
         if (KumiwakeSelectMode.sekigime) {
             confirmation_title_txt.setText(R.string.sekigime_confirm)
-            between_arrows_txt.text = "SEKIGIME"
+            between_arrows_txt.text = MyApplication.context?.getText(R.string.sekigime)
             kumiwake_btn.setText(R.string.go_select_seats_type)
+            kumiwake_btn.setTextColor(ContextCompat.getColor(MyApplication.context!!,android.R.color.white))
         }
         member_no_txt.text = (memberArray.size.toString() + " " + getText(R.string.people)
                 + "(" + getText(R.string.man) + ":" + countManNo().toString() + getText(R.string.people)

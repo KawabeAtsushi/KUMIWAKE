@@ -8,9 +8,13 @@ import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
 
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.kumiwake.KumiwakeSelectMode
+import com.pandatone.kumiwake.kumiwake.MainActivity
+import kotlinx.android.synthetic.main.sekigime_description.*
+
 
 /**
  * Created by atsushi_2 on 2016/07/15.
@@ -33,6 +37,8 @@ class SekigimeDescription : AppCompatActivity() {
             val intent = Intent(applicationContext, KumiwakeSelectMode::class.java)
             startActivity(intent)
         }
+
+        MainActivity().colorChanger(sekigime_description_layout,R.color.red_background,R.color.red)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

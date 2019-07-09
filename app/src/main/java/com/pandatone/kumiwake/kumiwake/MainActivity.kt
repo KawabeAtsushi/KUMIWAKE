@@ -1,5 +1,8 @@
 package com.pandatone.kumiwake.kumiwake
 
+import android.animation.Animator
+import android.animation.AnimatorInflater
+import android.animation.ArgbEvaluator
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Context
@@ -22,6 +25,11 @@ import com.pandatone.kumiwake.member.MemberMain
 import com.pandatone.kumiwake.sekigime.SekigimeDescription
 import com.pandatone.kumiwake.setting.SettingHelp
 import java.util.*
+import android.view.animation.LinearInterpolator
+import android.animation.ValueAnimator
+import android.view.animation.Animation
+import android.widget.LinearLayout
+import com.pandatone.kumiwake.MyApplication
 
 
 class MainActivity : Activity(), View.OnClickListener {
@@ -118,6 +126,18 @@ class MainActivity : Activity(), View.OnClickListener {
         } else {
             startActivity(intent)
         }
+    }
+
+    fun colorChanger(layout: LinearLayout,color1_id:Int,color2_id:Int){
+        val color1 = ContextCompat.getColor(MyApplication.context!!,color1_id)
+        val color2 = ContextCompat.getColor(MyApplication.context!!,color2_id)
+        val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), color1, color2)
+        colorAnimation.addUpdateListener { animator -> layout.setBackgroundColor(animator.animatedValue as Int) }
+        colorAnimation.duration = 10000
+        colorAnimation.interpolator = LinearInterpolator()
+        colorAnimation.repeatMode = ValueAnimator.REVERSE
+        colorAnimation.repeatCount = ValueAnimator.INFINITE
+        colorAnimation.start()
     }
 
 }

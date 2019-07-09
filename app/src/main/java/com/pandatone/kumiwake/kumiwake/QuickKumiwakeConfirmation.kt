@@ -9,12 +9,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.*
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import kotlinx.android.synthetic.main.kumiwake_confirmation.*
 import java.util.*
+
 
 /**
  * Created by atsushi_2 on 2016/05/08.
@@ -48,14 +51,20 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
         setViews()
         val scrollView = findViewById<View>(R.id.scrollView) as ScrollView
         scrollView.post { scrollView.scrollTo(0, 0) }
+
+        val animation = AnimationUtils.loadAnimation(this, R.anim.arrow_move)
+        arrow1.startAnimation(animation)
+        arrow2.startAnimation(animation)
+
     }
 
     @SuppressLint("SetTextI18n")
     private fun findViews() {
         if (KumiwakeSelectMode.sekigime) {
             confirmation_title_txt.setText(R.string.sekigime_confirm)
-            between_arrows_txt.text = "SEKIGIME"
+            between_arrows_txt.text = MyApplication.context?.getText(R.string.sekigime)
             kumiwake_btn.setText(R.string.go_select_seats_type)
+            kumiwake_btn.setTextColor(ContextCompat.getColor(MyApplication.context!!,android.R.color.white))
         }
         if (womanArray.size != 0) {
             member_no_txt.text = (memberArray.size.toString() + " " + getText(R.string.people)

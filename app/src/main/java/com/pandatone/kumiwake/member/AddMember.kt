@@ -2,6 +2,7 @@ package com.pandatone.kumiwake.member
 
 import android.annotation.SuppressLint
 import android.content.DialogInterface
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import com.google.android.material.textfield.TextInputLayout
 import androidx.appcompat.app.AlertDialog
@@ -16,6 +17,7 @@ import butterknife.OnClick
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
+import kotlinx.android.synthetic.main.add_member.*
 import java.util.*
 
 /**
@@ -47,6 +49,10 @@ class AddMember : AppCompatActivity() {
         if (position != -1) {
             setItem(position)
         }
+        val animDrawable = addmember_layout.background as AnimationDrawable
+        animDrawable.setEnterFadeDuration(5000)
+        animDrawable.setExitFadeDuration(5000)
+        animDrawable.start()
     }
 
     private fun findViews() {
@@ -72,9 +78,7 @@ class AddMember : AppCompatActivity() {
         val read = listItem.read
         val sex = listItem.sex
         val age = listItem.age.toString()
-        val grade = listItem.grade.toString()
         val belong = MemberClick.viewBelong(position)
-        val role = listItem.role
 
         nameEditText!!.setText(name)
         readEditText!!.setText(read)
