@@ -5,10 +5,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.google.android.gms.ads.AdRequest

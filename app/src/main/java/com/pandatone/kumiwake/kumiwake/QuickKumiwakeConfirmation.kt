@@ -4,13 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.pandatone.kumiwake.MyApplication
@@ -64,7 +64,7 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
             confirmation_title_txt.setText(R.string.sekigime_confirm)
             between_arrows_txt.text = MyApplication.context?.getText(R.string.sekigime)
             kumiwake_btn.setText(R.string.go_select_seats_type)
-            kumiwake_btn.setTextColor(ContextCompat.getColor(MyApplication.context!!,android.R.color.white))
+            kumiwake_btn.setTextColor(ContextCompat.getColor(MyApplication.context!!, android.R.color.white))
         }
         if (womanArray.size != 0) {
             member_no_txt.text = (memberArray.size.toString() + " " + getText(R.string.people)

@@ -13,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.pandatone.kumiwake.member.FragmentMember
-import com.pandatone.kumiwake.member.MemberMain
 import com.pandatone.kumiwake.member.Name
 import java.io.IOException
 

@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
-    
+
     <ImageView
         android:layout_width="@dimen/group_icon_size"
         android:layout_height="@dimen/group_icon_size"
         android:padding="@dimen/row_padding"
         android:src="@drawable/user_group"
-        android:tint="@color/gray"
-        />
+        android:tint="@color/gray" />
 
     <TextView
         android:id="@+id/groupName"
@@ -24,7 +22,7 @@
         android:text="TextView"
         android:textSize="25sp"
         android:ellipsize="end"
-        android:singleLine="true"/>
+        android:singleLine="true" />
 
 
     <TextView

@@ -33,10 +33,10 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
         setContentView(R.layout.kumiwake_confirmation)
         ButterKnife.bind(this)
         val i = intent
-        if(i.getSerializableExtra(NormalMode.NORMAL_MEMBER_ARRAY) != null) {
+        if (i.getSerializableExtra(NormalMode.NORMAL_MEMBER_ARRAY) != null) {
             memberArray = i.getSerializableExtra(NormalMode.NORMAL_MEMBER_ARRAY) as ArrayList<Name>
         }
-        if(i.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) != null) {
+        if (i.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) != null) {
             groupArray = i.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) as ArrayList<GroupListAdapter.Group>
         }
         even_fm_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_FM_RATIO, false)
@@ -58,7 +58,7 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
             confirmation_title_txt.setText(R.string.sekigime_confirm)
             between_arrows_txt.text = MyApplication.context?.getText(R.string.sekigime)
             kumiwake_btn.setText(R.string.go_select_seats_type)
-            kumiwake_btn.setTextColor(ContextCompat.getColor(MyApplication.context!!,android.R.color.white))
+            kumiwake_btn.setTextColor(ContextCompat.getColor(MyApplication.context!!, android.R.color.white))
         }
         member_no_txt.text = (memberArray.size.toString() + " " + getText(R.string.people)
                 + "(" + getText(R.string.man) + ":" + countManNo().toString() + getText(R.string.people)

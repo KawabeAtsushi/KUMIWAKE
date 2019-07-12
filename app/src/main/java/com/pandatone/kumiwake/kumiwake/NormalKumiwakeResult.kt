@@ -7,9 +7,9 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.Handler
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.google.android.gms.ads.AdRequest
@@ -53,10 +53,10 @@ class NormalKumiwakeResult : AppCompatActivity() {
                 .addTestDevice("BB707E3F7B5413908B2DD12063887489").build()
         mAdView.loadAd(adRequest)
         val i = intent
-        if(i.getSerializableExtra(NormalMode.NORMAL_MEMBER_ARRAY) != null) {
+        if (i.getSerializableExtra(NormalMode.NORMAL_MEMBER_ARRAY) != null) {
             memberArray = i.getSerializableExtra(NormalMode.NORMAL_MEMBER_ARRAY) as ArrayList<Name>
         }
-        if(i.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) != null) {
+        if (i.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) != null) {
             groupArray = i.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) as ArrayList<GroupListAdapter.Group>
         }
         even_fm_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_FM_RATIO, false)
@@ -508,13 +508,13 @@ internal class KumiwakeNumberComparator : Comparator<Name> {
     override fun compare(n1: Name, n2: Name): Int {
         var value = 0
 
-            val n1_age = n1.age
-            val n2_age = n2.age
-            value = when {
-                n1_age < n2_age -> -1
-                n1_age > n2_age -> 1
-                else -> 0
-            }
+        val n1_age = n1.age
+        val n2_age = n2.age
+        value = when {
+            n1_age < n2_age -> -1
+            n1_age > n2_age -> 1
+            else -> 0
+        }
 
         return value
     }

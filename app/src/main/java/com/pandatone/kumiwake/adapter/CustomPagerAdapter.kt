@@ -1,18 +1,13 @@
 package com.pandatone.kumiwake.adapter
 
-import android.content.Context
-import android.content.res.Resources.getSystem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.pandatone.kumiwake.MyApplication
-
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.kumiwake.MainActivity
 import com.pandatone.kumiwake.member.FragmentGroup
 import com.pandatone.kumiwake.member.FragmentMember
-import com.pandatone.kumiwake.member.MemberMain
 
 /**
  * Created by atsushi_2 on 2016/02/23.

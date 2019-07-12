@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.transition.Slide
-import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.ListView
@@ -94,11 +93,11 @@ class NormalMode : AppCompatActivity() {
             val remainder = memberArray.size % groupNo
 
             for (i in 0 until remainder) {
-                groupArray.add(GroupListAdapter.Group(i, getText(R.string.group).toString() + " " + (i + 1).toString(),"",eachMemberNo + 1))
+                groupArray.add(GroupListAdapter.Group(i, getText(R.string.group).toString() + " " + (i + 1).toString(), "", eachMemberNo + 1))
             }
 
             for (i in remainder until groupNo) {
-                groupArray.add(GroupListAdapter.Group(i, getText(R.string.group).toString() + " " + (i + 1).toString(), "",eachMemberNo))
+                groupArray.add(GroupListAdapter.Group(i, getText(R.string.group).toString() + " " + (i + 1).toString(), "", eachMemberNo))
             }
 
             val intent = Intent(this, KumiwakeCustom::class.java)

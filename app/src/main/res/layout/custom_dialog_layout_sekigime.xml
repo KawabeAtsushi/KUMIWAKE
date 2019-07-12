@@ -20,17 +20,17 @@
         android:paddingBottom="20dp">
 
 
-    <!-- タイトル -->
+        <!-- タイトル -->
 
-    <TextView
-        android:id="@+id/dialog_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/dialog_title2"
-        android:padding="10dp"
-        android:text="Title"
-        android:textColor="@android:color/white"
-        android:textSize="18sp" />
+        <TextView
+            android:id="@+id/dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dialog_title2"
+            android:padding="10dp"
+            android:text="Title"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -38,6 +38,7 @@
             android:layout_margin="7dp"
             android:text="@string/seats_type_confirmation"
             android:textSize="17dp" />
+
         <TextView
             android:id="@+id/be_custom"
             android:layout_width="wrap_content"
@@ -47,15 +48,15 @@
             android:text="@string/be_custom"
             android:textColor="@color/red"
             android:textSize="15dp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
-                <ImageView
-                    android:id="@+id/table_img"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/circle_table"
-                    android:scaleType="centerCrop"/>
+        <ImageView
+            android:id="@+id/table_img"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:src="@drawable/circle_table"
+            android:scaleType="centerCrop" />
 
 
         <CheckBox
@@ -65,32 +66,31 @@
             android:layout_margin="10dp"
             android:layout_marginStart="10dp"
             android:text="@string/fm_placed_alternately"
-            android:textSize="@dimen/form_textSize"
-            />
+            android:textSize="@dimen/form_textSize" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-        <!-- OK ボタン -->
-        <Button
-            android:id="@+id/positive_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:background="@drawable/dialog_positive_bt2"
-            android:text="@string/run"
-            android:textColor="@android:color/white" />
+            <!-- OK ボタン -->
+            <Button
+                android:id="@+id/positive_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/dialog_positive_bt2"
+                android:text="@string/run"
+                android:textColor="@android:color/white" />
 
-        <Button
-            android:id="@+id/negative_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/dialog_negative_bt"
-            android:text="@string/cancel"
-            android:textColor="@android:color/white" />
+            <Button
+                android:id="@+id/negative_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/dialog_negative_bt"
+                android:text="@string/cancel"
+                android:textColor="@android:color/white" />
         </LinearLayout>
 
     </LinearLayout>

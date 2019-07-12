@@ -11,10 +11,8 @@ import android.widget.BaseAdapter
 import android.widget.EditText
 import android.widget.ListView
 import android.widget.TextView
-import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.kumiwake.KumiwakeCustom
-import com.pandatone.kumiwake.kumiwake.MainActivity
 import java.util.*
 
 /**

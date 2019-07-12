@@ -4,16 +4,16 @@ import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
-import com.google.android.material.textfield.TextInputLayout
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatEditText
 import android.text.InputFilter
 import android.text.TextUtils
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatEditText
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
@@ -330,7 +330,7 @@ class AddMember : AppCompatActivity() {
         return BelongNo.toString()
     }
 
-    companion object{
+    companion object {
         const val POSITION = "position"
     }
 }

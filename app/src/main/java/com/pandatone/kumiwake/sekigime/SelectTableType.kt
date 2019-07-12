@@ -2,8 +2,8 @@ package com.pandatone.kumiwake.sekigime
 
 import android.content.Context
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
+import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.pandatone.kumiwake.R

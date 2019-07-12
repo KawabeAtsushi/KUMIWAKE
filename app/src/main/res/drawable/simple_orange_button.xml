@@ -10,8 +10,7 @@
             <!-- 角の丸み -->
             <corners android:radius="7dp" />
 
-            <solid
-                android:color="#90ffc02e"/>
+            <solid android:color="#90ffc02e" />
 
         </shape>
     </item>
@@ -24,8 +23,7 @@
             <!-- 角の丸み -->
             <corners android:radius="7dp" />
 
-            <solid
-                android:color="@color/orange"/>
+            <solid android:color="@color/orange" />
 
         </shape>
     </item>

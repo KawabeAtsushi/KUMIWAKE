@@ -130,7 +130,7 @@
                 android:background="@drawable/simple_orange_button"
                 android:text="@string/run"
                 android:textSize="30dp"
-                android:textColor="#90000000"/>
+                android:textColor="#90000000" />
 
         </LinearLayout>
     </ScrollView>

@@ -3,9 +3,9 @@ package com.pandatone.kumiwake.sekigime
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
-import androidx.core.content.ContextCompat
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.pandatone.kumiwake.R
 import java.util.*
 

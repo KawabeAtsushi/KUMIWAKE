@@ -5,11 +5,11 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Point
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.text.InputFilter
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.pandatone.kumiwake.R
@@ -36,10 +36,10 @@ class KumiwakeCustom : AppCompatActivity() {
         setContentView(R.layout.kumiwake_custom)
         ButterKnife.bind(this)
 
-        if(intent.getSerializableExtra(NormalMode.NORMAL_MEMBER_ARRAY) != null) {
+        if (intent.getSerializableExtra(NormalMode.NORMAL_MEMBER_ARRAY) != null) {
             memberArray = intent.getSerializableExtra(NormalMode.NORMAL_MEMBER_ARRAY) as ArrayList<Name>
         }
-        if(intent.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) != null) {
+        if (intent.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) != null) {
             groupArray = intent.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) as ArrayList<GroupListAdapter.Group>
         }
         mbAdapter = MBListViewAdapter(this, memberArray, groupArray.size)
@@ -185,7 +185,7 @@ class KumiwakeCustom : AppCompatActivity() {
         for (i in 0 until groupList.count) {
             val groupName = EditGroupListAdapter.getGroupName(i)
             val memberNo = EditGroupListAdapter.getMemberNo(i)
-            newGroupArray.add(GroupListAdapter.Group(i, groupName, "",memberNo))
+            newGroupArray.add(GroupListAdapter.Group(i, groupName, "", memberNo))
         }
     }
 

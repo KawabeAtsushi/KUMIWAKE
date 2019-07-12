@@ -2,13 +2,12 @@ package com.pandatone.kumiwake.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
-import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import java.util.*
@@ -45,7 +44,7 @@ class GroupNameListAdapter(private val context: Context, private val groupList: 
             v = inflater.inflate(R.layout.row_group, null)
         }
         if (gSelection[position] != null) {
-            v!!.setBackgroundColor(ContextCompat.getColor(MyApplication.context!!,R.color.checked_list))
+            v!!.setBackgroundColor(ContextCompat.getColor(MyApplication.context!!, R.color.checked_list))
         } else {
             v = inflater.inflate(R.layout.row_group, null)
         }

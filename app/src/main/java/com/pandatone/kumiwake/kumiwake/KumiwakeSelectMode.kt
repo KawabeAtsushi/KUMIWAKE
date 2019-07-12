@@ -1,19 +1,22 @@
 package com.pandatone.kumiwake.kumiwake
 
 import android.content.Intent
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
-import androidx.core.app.NavUtils
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.app.NavUtils
+import androidx.core.content.ContextCompat
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.sekigime.SekigimeResult
+import kotlinx.android.synthetic.main.add_member.*
+import kotlinx.android.synthetic.main.kumiwake_select_mode.*
 
 /**
  * Created by atsushi_2 on 2016/02/19.
@@ -31,17 +34,22 @@ class KumiwakeSelectMode : AppCompatActivity() {
         supportActionBar!!.setDisplayShowTitleEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        val normalmode: TextView = findViewById<TextView>(R.id.descriptionForNormalMode)
-        val quickmode: TextView = findViewById<TextView>(R.id.descriptionForQuickMode)
+        val layout = findViewById<View>(R.id.select_mode_layout) as LinearLayout
+
         if (sekigime) {
             toolbar.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.green_title))
-            val layout = findViewById<View>(R.id.select_mode_layout) as LinearLayout
-            layout.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.green_background))
-            normalmode.setText(R.string.description_of_normal_sekigime)
-            quickmode.setText(R.string.description_of_quick_sekigime)
+            layout.background = getDrawable(R.drawable.gradient_anim_sekigime)
+            descriptionForNormalMode.setText(R.string.description_of_normal_sekigime)
+            descriptionForQuickMode.setText(R.string.description_of_quick_sekigime)
             supportActionBar!!.setTitle(R.string.select_mode)
-            supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+        }else{
+            layout.background = getDrawable(R.drawable.gradient_anim_kumiwake)
         }
+        val animDrawable = layout.background as AnimationDrawable
+        animDrawable.setEnterFadeDuration(resources.getInteger(R.integer.anim_duration))
+        animDrawable.setExitFadeDuration(resources.getInteger(R.integer.anim_duration))
+        animDrawable.start()
+
         ButterKnife.bind(this)
     }
 

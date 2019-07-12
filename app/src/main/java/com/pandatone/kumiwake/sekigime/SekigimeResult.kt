@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
@@ -17,7 +17,6 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.customize.CustomDialog
 import com.pandatone.kumiwake.kumiwake.MainActivity
 import com.pandatone.kumiwake.member.Name
-import kotlin.collections.ArrayList
 
 /**
  * Created by atsushi_2 on 2016/07/16.
@@ -329,11 +328,11 @@ class SekigimeResult : AppCompatActivity() {
     companion object {
 
         var arrayArrayNormal: ArrayList<ArrayList<Name>> = ArrayList()
-        var arrayArrayNormalMan: ArrayList<ArrayList<Name>>  = ArrayList()
-        var arrayArrayNormalWoman: ArrayList<ArrayList<Name>>  = ArrayList()
-        var arrayArrayQuick: ArrayList<ArrayList<String>>  = ArrayList()
-        var arrayArrayQuickMan: ArrayList<ArrayList<String>>  = ArrayList()
-        var arrayArrayQuickWoman: ArrayList<ArrayList<String>>  = ArrayList()
+        var arrayArrayNormalMan: ArrayList<ArrayList<Name>> = ArrayList()
+        var arrayArrayNormalWoman: ArrayList<ArrayList<Name>> = ArrayList()
+        var arrayArrayQuick: ArrayList<ArrayList<String>> = ArrayList()
+        var arrayArrayQuickMan: ArrayList<ArrayList<String>> = ArrayList()
+        var arrayArrayQuickWoman: ArrayList<ArrayList<String>> = ArrayList()
         var groupArray: ArrayList<String>? = null
         var Normalmode: Boolean = false
         var doubleDeploy: Boolean = false

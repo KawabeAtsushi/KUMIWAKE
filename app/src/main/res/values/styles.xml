@@ -2,9 +2,9 @@
 
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar" >
-    <!-- アクションモード -->
-    <item name="windowActionModeOverlay">true</item>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- アクションモード -->
+        <item name="windowActionModeOverlay">true</item>
     </style>
 
     <!-- hintのスタイル -->

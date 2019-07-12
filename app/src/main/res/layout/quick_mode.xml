@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:src="@drawable/quick_img"
-        android:scaleType = "centerCrop"
+        android:scaleType="centerCrop"
         android:contentDescription="TODO" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -168,7 +168,7 @@
                     android:layout_marginStart="@dimen/form_marginStart"
                     android:text=":"
                     android:textColor="@color/hint"
-                    android:textSize="@dimen/ratio_text_size"/>
+                    android:textSize="@dimen/ratio_text_size" />
 
                 <TextView
                     android:id="@+id/woman_number_txt"
@@ -216,7 +216,7 @@
                 android:layout_marginBottom="30dp"
                 android:text="@string/even_out_person_ratio"
                 android:textSize="@dimen/form_textSize"
-                android:enabled="false"/>
+                android:enabled="false" />
 
 
         </LinearLayout>

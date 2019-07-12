@@ -1,31 +1,25 @@
 package com.pandatone.kumiwake.member
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import androidx.core.content.res.ResourcesCompat
-import androidx.viewpager.widget.ViewPager
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ImageSpan
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
-import com.pandatone.kumiwake.MyApplication
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.res.ResourcesCompat
+import androidx.viewpager.widget.ViewPager
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.CustomPagerAdapter
-import com.pandatone.kumiwake.kumiwake.NormalMode
 import java.io.IOException
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 /**
@@ -38,7 +32,7 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
     internal lateinit var viewPager: ViewPager
     internal var visible: Boolean = false
     internal var page: Int = 0
-    var context:Context = this
+    var context: Context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +50,7 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         delete_icon_visible = i.getBooleanExtra(DELETE_ICON_VISIBLE, true)
         kumiwake_select = i.getBooleanExtra(KUMIWAKE_SELECT, false)
 
-        if(i.getSerializableExtra(MEMBER_ARRAY) != null) {
+        if (i.getSerializableExtra(MEMBER_ARRAY) != null) {
             memberArray = i.getSerializableExtra(MEMBER_ARRAY) as ArrayList<Name>
         }
 
@@ -104,7 +98,7 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         // ヒントテキスト
         ssb.append(getText(R.string.search_view))
         // ヒントアイコン
-        val searchHintIcon = ResourcesCompat.getDrawable(resources,android.R.drawable.ic_menu_search,null)
+        val searchHintIcon = ResourcesCompat.getDrawable(resources, android.R.drawable.ic_menu_search, null)
         val textSize = (searchAutoComplete.textSize * 1.25).toInt()
         searchHintIcon?.setBounds(0, 0, textSize, textSize)
         ssb.setSpan(ImageSpan(searchHintIcon), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)

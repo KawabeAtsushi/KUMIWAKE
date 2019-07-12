@@ -3,7 +3,6 @@ package com.pandatone.kumiwake.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.SparseBooleanArray
-import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +10,10 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.Name
-import com.pandatone.kumiwake.member.Sort
 
 class NameListAdapter(private val context: Context, private val nameList: List<Name>) : BaseAdapter() {
     internal var params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(0, 1)
@@ -45,33 +44,33 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
         var v: View? = convertView
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-            if (isEnabled(position)) {
+        if (isEnabled(position)) {
 
-                if (v == null || v.tag != "member") {
-                    v = inflater.inflate(R.layout.row_member, null)
-                }
-
-                if (mSelection.get(position)) {
-                    v?.setBackgroundColor(ContextCompat.getColor(MyApplication.context!!, R.color.checked_list))
-                }else{
-                    v = inflater.inflate(R.layout.row_member, null)
-                }
-
-                setSexIcon(v!!, position)
-
-                if (listItem != null) {
-                    nameTextView = v.findViewById<View>(R.id.memberName) as TextView
-                    nameTextView.text = listItem.name
-                }
-            } else {
-                if (v == null || v.tag != "initial") {
-                    v = inflater.inflate(R.layout.row_initial, null)
-                }
-                if (nowData != null) {
-                        addInitial(position, v)
-                }
+            if (v == null || v.tag != "member") {
+                v = inflater.inflate(R.layout.row_member, null)
             }
-            return v
+
+            if (mSelection.get(position)) {
+                v?.setBackgroundColor(ContextCompat.getColor(MyApplication.context!!, R.color.checked_list))
+            } else {
+                v = inflater.inflate(R.layout.row_member, null)
+            }
+
+            setSexIcon(v!!, position)
+
+            if (listItem != null) {
+                nameTextView = v.findViewById<View>(R.id.memberName) as TextView
+                nameTextView.text = listItem.name
+            }
+        } else {
+            if (v == null || v.tag != "initial") {
+                v = inflater.inflate(R.layout.row_initial, null)
+            }
+            if (nowData != null) {
+                addInitial(position, v)
+            }
+        }
+        return v
     }
 
     private fun setSexIcon(v: View, position: Int) {
@@ -79,7 +78,7 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
         if (getItem(position)!!.sex == context.getText(R.string.man)) {
             memberIcon.setImageResource(R.drawable.member_img)
         } else {
-            memberIcon.setColorFilter(ContextCompat.getColor(MyApplication.context!!,R.color.woman))
+            memberIcon.setColorFilter(ContextCompat.getColor(MyApplication.context!!, R.color.woman))
         }
     }
 
@@ -111,7 +110,7 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
     }
 
     fun setNewSelection(position: Int, value: Boolean) {
-        mSelection.append(position,value)
+        mSelection.append(position, value)
         notifyDataSetChanged()
     }
 

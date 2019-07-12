@@ -5,6 +5,5 @@
         android:repeatMode="restart"
         android:repeatCount="-1"
         android:duration="1000"
-        android:toYDelta="50%"
-        />
+        android:toYDelta="50%" />
 </set>

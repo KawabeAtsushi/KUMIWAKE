@@ -66,7 +66,7 @@
                 android:layout_marginBottom="@dimen/size_toolbar"
                 android:src="@drawable/icon_2"
                 android:transitionName="explodeIv"
-                tools:targetApi="lollipop"/>
+                tools:targetApi="lollipop" />
 
             <TextView
                 android:id="@+id/category_title2"
@@ -96,7 +96,7 @@
                 android:layout_marginBottom="@dimen/size_toolbar"
                 android:src="@drawable/icon_3"
                 android:transitionName="explodeIv"
-                tools:targetApi="lollipop"/>
+                tools:targetApi="lollipop" />
 
             <TextView
                 android:id="@+id/category_title3"
@@ -126,7 +126,7 @@
                 android:layout_marginBottom="@dimen/size_toolbar"
                 android:src="@drawable/icon_1"
                 android:transitionName="explodeIv"
-                tools:targetApi="lollipop"/>
+                tools:targetApi="lollipop" />
 
             <TextView
                 android:id="@+id/category_title4"
