@@ -4,13 +4,13 @@ import android.content.Intent
 import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.transition.Slide
 import android.view.Window
 import android.widget.SeekBar
+import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.pandatone.kumiwake.R
@@ -132,7 +132,7 @@ class QuickMode : AppCompatActivity(), TextWatcher {
         return manList
     }
 
-    companion object{
+    companion object {
 
         const val EVEN_FM_RATIO = "even_fm_ratio"
         const val EVEN_PERSON_RATIO = "even_person_ratio"

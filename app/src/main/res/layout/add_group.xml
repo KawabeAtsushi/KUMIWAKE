@@ -4,73 +4,89 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:parentActivityName=".MemberMain">
+    android:parentActivityName=".MemberMain"
+    android:background="@color/thin_orange">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/under_button_height"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/under_button_height"
-            android:orientation="vertical">
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/request_background"
+            android:text="@string/add_group"
+            android:textSize="20sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/request_background"
-                android:text="@string/add_group"
-                android:textSize="20sp" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/group_form_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/form_marginStart"
+            android:layout_marginTop="@dimen/form_marginTop"
+            android:layout_marginEnd="@dimen/form_marginEnd"
+            android:hint="@string/group_name"
+            app:helperText="@string/input_required">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/group_form_input_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/form_marginStart"
-                android:layout_marginTop="@dimen/form_marginTop"
-                android:layout_marginEnd="@dimen/form_marginEnd"
-                android:hint="@string/group_name"
-                app:helperText="@string/input_required">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_group"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="20"
-                    android:inputType="textPersonName"
-                    android:singleLine="true" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/form_marginStart"
-                android:layout_marginTop="@dimen/form_marginTop"
-                android:text="@string/belong_member"
-                android:textColor="#424242"
-                android:textSize="20sp" />
-
-            <include
-                android:id="@+id/add_group_listview"
-                layout="@layout/part_review_listview"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/form_between_margin"/>
+                android:ems="20"
+                android:inputType="textPersonName"
+                android:singleLine="true" />
 
-        </LinearLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/group_registration_button"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/under_button_height"
-        android:layout_gravity="center|bottom"
-        android:background="#3cee2f"
-        android:padding="16dp"
-        android:text="@string/create"
-        android:textColor="@android:color/white"
-        android:textSize="20sp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/form_marginStart"
+            android:layout_marginTop="@dimen/form_marginTop"
+            android:text="@string/belong_member"
+            android:textColor="#424242"
+            android:textSize="20sp" />
+
+        <include
+            android:id="@+id/add_group_listview"
+            layout="@layout/part_review_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/form_between_margin" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/form_marginEnd"
+        android:orientation="horizontal"
+        android:layout_gravity="end|bottom">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/group_cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:textColor="@color/orange"
+            android:text="@string/cancel"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/group_registration_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+            android:backgroundTint="@color/orange"
+            android:text="@string/registration"/>
+
+    </LinearLayout>
 
 </FrameLayout>

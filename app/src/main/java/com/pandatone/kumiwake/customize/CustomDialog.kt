@@ -5,16 +5,14 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Environment
-import androidx.fragment.app.DialogFragment
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
-
+import androidx.fragment.app.DialogFragment
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.setting.DBBackup
-
 import java.io.File
 
 /**

@@ -21,6 +21,6 @@
         android:textSize="20sp"
         android:textColor="@color/gray"
         android:ellipsize="end"
-        android:singleLine="true"/>
+        android:singleLine="true" />
 
 </LinearLayout>

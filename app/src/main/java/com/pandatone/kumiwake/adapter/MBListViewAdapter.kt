@@ -2,8 +2,6 @@ package com.pandatone.kumiwake.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
-import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +9,11 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.kumiwake.KumiwakeCustom
 import com.pandatone.kumiwake.member.Name
-import com.pandatone.kumiwake.member.Sort
 import java.util.*
 
 /**
@@ -77,7 +75,7 @@ class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,
         if (listElements[position].sex == context.getText(R.string.man)) {
             memberIcon.setImageResource(R.drawable.member_img)
         } else {
-            memberIcon.setColorFilter(ContextCompat.getColor(MyApplication.context!!,R.color.woman))
+            memberIcon.setColorFilter(ContextCompat.getColor(MyApplication.context!!, R.color.woman))
         }
     }
 

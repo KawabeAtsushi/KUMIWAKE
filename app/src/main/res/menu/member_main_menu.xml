@@ -8,33 +8,28 @@
         android:icon="@android:drawable/ic_menu_search"
         android:title="@string/search_view"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="always">
-    </item>
+        app:showAsAction="always"></item>
 
 
     <item
         android:id="@+id/item_delete"
         android:icon="@android:drawable/ic_menu_delete"
-        android:title="@string/delete">
-    </item>
+        android:title="@string/delete"></item>
 
     <item
         android:id="@+id/item_all_select"
         android:title="@string/all_select"
         android:showAsAction="never"
-        tools:ignore="AppCompatResource">
-    </item>
+        tools:ignore="AppCompatResource"></item>
 
     <item
         android:id="@+id/item_sort"
         android:title="@string/sorting"
-        app:showAsAction="never">
-    </item>
+        app:showAsAction="never"></item>
 
     <item
         android:id="@+id/item_filter"
         android:title="@string/filtering"
-        app:showAsAction="never">
-    </item>
+        app:showAsAction="never"></item>
 
 </menu>

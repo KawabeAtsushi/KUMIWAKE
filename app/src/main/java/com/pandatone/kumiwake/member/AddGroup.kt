@@ -3,17 +3,17 @@ package com.pandatone.kumiwake.member
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.textfield.TextInputLayout
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatEditText
 import android.text.TextUtils
 import android.view.View
 import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatEditText
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MBListViewAdapter
@@ -81,7 +81,7 @@ class AddGroup : AppCompatActivity() {
     }
 
 
-    @OnClick(R.id.group_registration_button)
+    @OnClick(R.id.group_registration_btn)
     internal fun onRegistrationGroupClicked() {
         val group = groupEditText.text!!.toString()
         if (TextUtils.isEmpty(group)) {
@@ -94,6 +94,10 @@ class AddGroup : AppCompatActivity() {
         }
     }
 
+    @OnClick(R.id.group_cancel_btn)
+    internal fun cancel() {
+        finish()
+    }
 
     private fun saveItem() {
         val name = groupEditText.text!!.toString()
@@ -122,7 +126,7 @@ class AddGroup : AppCompatActivity() {
     }
 
     private fun update(listId: Int) {
-        val updateBt = findViewById<View>(R.id.group_registration_button) as Button
+        val updateBt = findViewById<View>(R.id.group_registration_btn) as Button
         updateBt.setText(R.string.update)
         updateBt.setOnClickListener {
             val group = groupEditText.text!!.toString()

@@ -5,12 +5,11 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import androidx.fragment.app.ListFragment
 import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.fragment.app.ListFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
@@ -20,7 +19,6 @@ import com.pandatone.kumiwake.kumiwake.NormalMode
 import kotlinx.android.synthetic.main.filter_member.*
 import java.io.IOException
 import java.util.*
-
 
 
 /**
@@ -324,7 +322,7 @@ class FragmentMember : ListFragment() {
         }
         try {
             if (maxage >= minage) {
-                dbAdapter.filterName(sex, minage, maxage, 0, 0, belongNo, "")
+                dbAdapter.filterName(sex, minage, maxage, belongNo)
                 dialog2.dismiss()
             } else {
 

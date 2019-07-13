@@ -1,25 +1,28 @@
 package com.pandatone.kumiwake.kumiwake
 
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
 import android.app.Activity
 import android.app.ActivityOptions
-import android.content.Context
 import android.content.Intent
 import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import android.transition.Explode
 import android.view.View
 import android.view.Window
+import android.view.animation.LinearInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.MemberMain
-import com.pandatone.kumiwake.sekigime.SekigimeDescription
 import com.pandatone.kumiwake.setting.SettingHelp
 import java.util.*
 
@@ -105,11 +108,14 @@ class MainActivity : Activity(), View.OnClickListener {
 
         when (id) {
             "1" -> {
-                intent = Intent(this, KumiwakeSelectMode::class.java)
                 KumiwakeSelectMode.sekigime = false
+                intent = Intent(this, KumiwakeSelectMode::class.java)
             }
             "2" -> intent = Intent(this, MemberMain::class.java)
-            "3" -> intent = Intent(this, SekigimeDescription::class.java)
+            "3" -> {
+                KumiwakeSelectMode.sekigime = true
+                intent = Intent(this, KumiwakeSelectMode::class.java)
+            }
             else -> intent = Intent(this, SettingHelp::class.java)
         }
 
@@ -118,6 +124,18 @@ class MainActivity : Activity(), View.OnClickListener {
         } else {
             startActivity(intent)
         }
+    }
+
+    fun colorChanger(layout: LinearLayout, color1_id: Int, color2_id: Int) {
+        val color1 = ContextCompat.getColor(MyApplication.context!!, color1_id)
+        val color2 = ContextCompat.getColor(MyApplication.context!!, color2_id)
+        val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), color1, color2)
+        colorAnimation.addUpdateListener { animator -> layout.setBackgroundColor(animator.animatedValue as Int) }
+        colorAnimation.duration = 10000
+        colorAnimation.interpolator = LinearInterpolator()
+        colorAnimation.repeatMode = ValueAnimator.REVERSE
+        colorAnimation.repeatCount = ValueAnimator.INFINITE
+        colorAnimation.start()
     }
 
 }

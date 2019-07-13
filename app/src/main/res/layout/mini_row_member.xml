@@ -14,8 +14,8 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
+
         <ImageView
             android:id="@+id/starIcon"
             android:layout_width="@dimen/mini_icon_size"
@@ -49,8 +49,7 @@
         android:textSize="18sp"
         android:textColor="@color/gray"
         android:ellipsize="end"
-        android:singleLine="true"/>
-
+        android:singleLine="true" />
 
 
 </LinearLayout>

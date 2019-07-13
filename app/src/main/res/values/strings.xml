@@ -21,8 +21,6 @@
     <string name="deleted_backup_file">Backed-up file was deleted.</string>
     <string name="filtering">Filtering</string>
     <string name="failed_back_up">You failed in the backup of data.\nPlease confirm to be inserted a SD card.</string>
-    <string name="grade2">""</string>
-    <string name="grade">Grade</string>
     <string name="age">Age</string>
     <string name="age2">""</string>
     <string name="all_select">Select all</string>
@@ -68,7 +66,6 @@
     <string name="registration">register</string>
     <string name="registration_ascending">Registration order(ASC)</string>
     <string name="registration_descending">Registration order(DESC)</string>
-    <string name="role">Role</string>
     <string name="clear">clear</string>
     <string name="back_to_initial_mbNo">restore to previous number</string>
     <string name="age_ascending">Age order(ASC)</string>
@@ -87,8 +84,6 @@
     <string name="go_home">back to home</string>
     <string name="go_sekigime">do sekigime with these groups</string>
     <string name="fm_placed_alternately">Man and Woman placed alternately</string>
-    <string name="grade_ascending">Grade order(ASC)</string>
-    <string name="grade_descending">Grade order(DESC)</string>
     <string name="group">Group</string>
     <string name="counter_table">Counter table</string>
     <string name="circle_table">Circle table</string>

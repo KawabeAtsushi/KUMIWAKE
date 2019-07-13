@@ -2,98 +2,94 @@
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/normal_img">
 
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/pattern"
-        android:scaleType = "centerCrop"/>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/under_button_height"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/form_marginStart"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/request_background"
+            android:text="@string/require_group_no"
+            android:textColor="@color/gray"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/error_group_no_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/form_marginStart"
+            android:text=""
+            android:textColor="@color/red"
+            android:textSize="@dimen/form_textSize" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/under_button_height"
-            android:orientation="vertical">
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/group_no_form"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/form_marginStart"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/request_background"
-                android:text="@string/require_group_no"
-                android:textColor="@color/gray"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/error_group_no_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/form_marginStart"
-                android:text=""
-                android:textColor="@color/red"
-                android:textSize="@dimen/form_textSize" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/group_no_form"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:background="@android:drawable/editbox_background_normal"
-                    android:ems="3"
-                    android:inputType="number"
-                    android:padding="10dp"
-                    android:layout_marginStart="20dp"
-                    android:maxLength="3"
-                    android:singleLine="true" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/form_marginStart"
-                    android:text="@string/group"
-                    android:textColor="@color/hint"
-                    android:textSize="@dimen/form_textSize" />
-
-            </LinearLayout>
-
+                android:layout_gravity="center_vertical"
+                android:background="@android:drawable/editbox_background_normal"
+                android:ems="3"
+                android:inputType="number"
+                android:padding="10dp"
+                android:layout_marginStart="20dp"
+                android:maxLength="3"
+                android:singleLine="true" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/form_marginStart"
-                android:layout_marginTop="25dp"
-                android:background="@drawable/request_background"
-                android:text="@string/require_member_select"
-                android:textColor="@color/gray"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/error_member_no_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/form_marginStart"
-                android:text=""
-                android:textColor="@color/red"
+                android:text="@string/group"
+                android:textColor="@color/hint"
                 android:textSize="@dimen/form_textSize" />
 
-            <include layout="@layout/part_review_listview"
-                android:id="@+id/add_group_listview"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_marginStart="@dimen/form_between_margin"
-                android:layout_marginEnd="@dimen/form_between_margin"/>
-
         </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/form_marginStart"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/request_background"
+            android:text="@string/require_member_select"
+            android:textColor="@color/gray"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/error_member_no_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/form_marginStart"
+            android:text=""
+            android:textColor="@color/red"
+            android:textSize="@dimen/form_textSize" />
+
+        <include
+            layout="@layout/part_review_listview"
+            android:id="@+id/add_group_listview"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginStart="@dimen/form_between_margin"
+            android:layout_marginEnd="@dimen/form_between_margin" />
+
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/normal_kumiwake_btn"
@@ -106,7 +102,6 @@
         android:text="@string/move_custom"
         android:textColor="@android:color/white"
         android:textSize="20sp"
-        android:textAlignment="center"
-        android:stateListAnimator="@animator/expanding"/>
+        android:textAlignment="center" />
 
 </FrameLayout>

@@ -25,45 +25,42 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/info_margin"
-        android:text="@string/how_to_use"
-        android:textColor="@color/green" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/info_margin"
+                android:text="@string/how_to_use"
+                android:textColor="@color/green" />
 
-    <ListView
-        android:id="@+id/how_to_use_list"
-        android:layout_width="match_parent"
-        android:layout_height="200dp">
-    </ListView>
+            <ListView
+                android:id="@+id/how_to_use_list"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"></ListView>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/info_margin"
-        android:text="@string/back_up"
-        android:textColor="@color/green" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/info_margin"
+                android:text="@string/back_up"
+                android:textColor="@color/green" />
 
-    <ListView
-        android:id="@+id/back_up_list"
-        android:layout_width="match_parent"
-        android:layout_height="200dp">
-    </ListView>
+            <ListView
+                android:id="@+id/back_up_list"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"></ListView>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/info_margin"
-        android:text="@string/other"
-        android:textColor="@color/green" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/info_margin"
+                android:text="@string/other"
+                android:textColor="@color/green" />
 
-    <ListView
-        android:id="@+id/other_list"
-        android:layout_width="match_parent"
-        android:layout_height="270dp">
-    </ListView>
+            <ListView
+                android:id="@+id/other_list"
+                android:layout_width="match_parent"
+                android:layout_height="270dp"></ListView>
 
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
-        </ScrollView>
-    </LinearLayout>

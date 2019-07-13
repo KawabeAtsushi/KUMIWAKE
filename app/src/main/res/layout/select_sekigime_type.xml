@@ -3,15 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/sekigime_img"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="7dp"
         android:text="@string/select_seats_type"
-        android:textSize="18sp"/>
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,32 +18,32 @@
         android:layout_weight="8"
         android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/square_table"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:layout_margin="10dp"
-        android:src="@drawable/square_table"
-        android:background="@drawable/thin_orange_button"
-        android:scaleType="centerCrop"
-        android:padding="20dp"
-        android:text="@string/square_table"
-        android:contentDescription="@string/square_table" />
+        <ImageButton
+            android:id="@+id/square_table"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:src="@drawable/square_table"
+            android:background="@drawable/thin_orange_button"
+            android:scaleType="centerCrop"
+            android:padding="20dp"
+            android:text="@string/square_table"
+            android:contentDescription="@string/square_table" />
 
 
-    <ImageButton
-        android:id="@+id/parallel_table"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:layout_margin="10dp"
-        android:src="@drawable/parallel_table"
-        android:background="@drawable/thin_orange_button"
-        android:scaleType="centerCrop"
-        android:padding="20dp"
-        android:text="@string/parallel_table"
-        android:contentDescription="@string/parallel_table" />
+        <ImageButton
+            android:id="@+id/parallel_table"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:src="@drawable/parallel_table"
+            android:background="@drawable/thin_orange_button"
+            android:scaleType="centerCrop"
+            android:padding="20dp"
+            android:text="@string/parallel_table"
+            android:contentDescription="@string/parallel_table" />
     </LinearLayout>
 
     <LinearLayout
@@ -52,31 +51,32 @@
         android:layout_height="match_parent"
         android:layout_weight="8"
         android:orientation="horizontal">
-    <ImageButton
-        android:id="@+id/circle_table"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:layout_margin="10dp"
-        android:src="@drawable/circle_table"
-        android:background="@drawable/thin_orange_button"
-        android:scaleType="centerCrop"
-        android:padding="20dp"
-        android:text="@string/circle_table"
-        android:contentDescription="@string/circle_table" />
+
+        <ImageButton
+            android:id="@+id/circle_table"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:src="@drawable/circle_table"
+            android:background="@drawable/thin_orange_button"
+            android:scaleType="centerCrop"
+            android:padding="20dp"
+            android:text="@string/circle_table"
+            android:contentDescription="@string/circle_table" />
 
 
-    <ImageButton
-        android:id="@+id/counter_table"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:layout_margin="10dp"
-        android:src="@drawable/counter_table"
-        android:background="@drawable/thin_orange_button"
-        android:scaleType="centerCrop"
-        android:padding="35dp"
-        android:text="@string/counter_table"
-        android:contentDescription="@string/counter_table" />
+        <ImageButton
+            android:id="@+id/counter_table"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:src="@drawable/counter_table"
+            android:background="@drawable/thin_orange_button"
+            android:scaleType="centerCrop"
+            android:padding="35dp"
+            android:text="@string/counter_table"
+            android:contentDescription="@string/counter_table" />
     </LinearLayout>
 </LinearLayout>

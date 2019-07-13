@@ -8,9 +8,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import android.widget.ArrayAdapter
-import android.widget.BaseAdapter
 import com.pandatone.kumiwake.member.FragmentGroup
-import com.pandatone.kumiwake.member.MemberMain
 import java.io.IOException
 import java.io.Serializable
 
@@ -124,7 +122,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
 
     fun saveGroup(name: String, name_read: String, belongNo: Int) {
 
-        Log.d("belongNo",belongNo.toString())
+        Log.d("belongNo", belongNo.toString())
 
         db.beginTransaction()          // トランザクション開始
 
@@ -146,7 +144,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
 
     fun updateGroup(groupId: Int, name: String, name_read: String, belongNo: Int) {
 
-        Log.d("belongNo",belongNo.toString())
+        Log.d("belongNo", belongNo.toString())
 
         open()
         val values = ContentValues()

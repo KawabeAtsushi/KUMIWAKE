@@ -3,16 +3,16 @@ package com.pandatone.kumiwake.member
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
-import com.google.android.material.textfield.TextInputLayout
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatEditText
 import android.text.InputFilter
 import android.text.TextUtils
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatEditText
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
@@ -72,9 +72,7 @@ class AddMember : AppCompatActivity() {
         val read = listItem.read
         val sex = listItem.sex
         val age = listItem.age.toString()
-        val grade = listItem.grade.toString()
         val belong = MemberClick.viewBelong(position)
-        val role = listItem.role
 
         nameEditText!!.setText(name)
         readEditText!!.setText(read)
@@ -152,7 +150,7 @@ class AddMember : AppCompatActivity() {
         beforeBelong = textArray
     }
 
-    @OnClick(R.id.member_registration_button)
+    @OnClick(R.id.member_registration_btn)
     internal fun onRegistrationMemberClicked() {
         val name = nameEditText!!.text!!.toString()
         if (TextUtils.isEmpty(name)) {
@@ -167,6 +165,11 @@ class AddMember : AppCompatActivity() {
         }
     }
 
+    @OnClick(R.id.member_cancel_btn)
+    internal fun cancel() {
+        finish()
+    }
+
     private fun updateItem(listId: Int) {
         sexButton = findViewById<View>(sexGroup!!.checkedRadioButtonId) as RadioButton
         val name = nameEditText!!.text!!.toString()
@@ -175,12 +178,12 @@ class AddMember : AppCompatActivity() {
         val age = getValue(ageEditText!!)
         val belong = belongConvertToNo()
 
-        dbAdapter!!.updateMember(listId, name, sex, age, 0, belong, "", read)
+        dbAdapter!!.updateMember(listId, name, sex, age,  belong, read)
         FragmentMember().loadName()
     }
 
     private fun update(listId: Int) {
-        val updateBt = findViewById<View>(R.id.member_registration_button) as Button
+        val updateBt = findViewById<View>(R.id.member_registration_btn) as Button
         updateBt.setText(R.string.update)
         updateBt.setOnClickListener {
             val name = nameEditText!!.text!!.toString()
@@ -207,7 +210,7 @@ class AddMember : AppCompatActivity() {
         val belong = belongConvertToNo()
 
         dbAdapter!!.open()
-        dbAdapter!!.saveName(name, sex, age, 0, belong, "", read)
+        dbAdapter!!.saveName(name, sex, age, belong, read)
         dbAdapter!!.close()
     }
 
@@ -326,7 +329,7 @@ class AddMember : AppCompatActivity() {
         return BelongNo.toString()
     }
 
-    companion object{
+    companion object {
         const val POSITION = "position"
     }
 }
