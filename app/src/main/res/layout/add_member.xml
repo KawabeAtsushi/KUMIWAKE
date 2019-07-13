@@ -5,8 +5,7 @@
     android:id="@+id/addmember_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:parentActivityName=".MemberMain"
-    android:background="@drawable/gradient_anim">
+    android:parentActivityName=".MemberMain">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -139,19 +138,32 @@
                 android:hint="@string/select_belong_group"
                 android:singleLine="true" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/form_marginEnd"
+                android:orientation="horizontal"
+                android:layout_gravity="end|bottom">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/member_cancel_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:text="@string/cancel"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/member_registration_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+                    android:text="@string/registration"/>
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
-
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/member_registration_button"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/under_button_height"
-        android:layout_gravity="center|bottom"
-        android:background="#ff4747"
-        android:padding="16dp"
-        android:text="@string/registration"
-        android:textColor="@android:color/white"
-        android:textSize="20sp" />
 
 </FrameLayout>

@@ -322,7 +322,7 @@ class FragmentMember : ListFragment() {
         }
         try {
             if (maxage >= minage) {
-                dbAdapter.filterName(sex, minage, maxage, 0, 0, belongNo, "")
+                dbAdapter.filterName(sex, minage, maxage, belongNo)
                 dialog2.dismiss()
             } else {
 

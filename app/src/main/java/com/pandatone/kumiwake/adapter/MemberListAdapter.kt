@@ -106,14 +106,12 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
     }
 
     @Throws(IOException::class)
-    fun filterName(sex: String, minage: Int, maxage: Int, mingrade: Int, maxgrade: Int, belongNo: String, role: String) {
+    fun filterName(sex: String, minage: Int, maxage: Int, belongNo: String) {
 
         open()
         val query = "SELECT * FROM " + TABLE_NAME +
                 " WHERE " + MB_SEX + " like '%" + sex + "%' AND (" + MB_AGE + " BETWEEN " + minage + " AND " + maxage +
-                ") AND (" + MB_GRADE + " BETWEEN " + mingrade + " AND " + maxgrade +
-                ") AND (" + MB_BELONG + " like '%," + belongNo + "%' OR " + MB_BELONG + " like '" + belongNo + "%')" +
-                " AND " + MB_ROLE + " like '%" + role + "%';"
+                ") AND (" + MB_BELONG + " like '%," + belongNo + "%' OR " + MB_BELONG + " like '" + belongNo + "%';"
         val c = db.rawQuery(query, null)
         getCursor(c)
         close()
@@ -179,7 +177,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
 
     }
 
-    fun saveName(name: String, sex: String, age: Int, grade: Int, belong: String, role: String, read: String) {
+    fun saveName(name: String, sex: String, age: Int,  belong: String, read: String) {
 
         db.beginTransaction()          // トランザクション開始
 
@@ -188,9 +186,9 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
             values.put(MB_NAME, name)
             values.put(MB_SEX, sex)
             values.put(MB_AGE, age)
-            values.put(MB_GRADE, grade)
+            values.put(MB_GRADE, 0) //grade column is being deprecated
             values.put(MB_BELONG, belong)
-            values.put(MB_ROLE, role)
+            values.put(MB_ROLE, "") //role column is being deprecated
             if (read.isEmpty()) values.put(MB_NAME_READ, "ￚ no data ￚ") else values.put(MB_NAME_READ, read)
             db.insert(TABLE_NAME, null, values)
 
@@ -202,7 +200,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         }
     }
 
-    fun updateMember(id: Int, name: String, sex: String, age: Int, grade: Int, belong: String, role: String, read: String) {
+    fun updateMember(id: Int, name: String, sex: String, age: Int, belong: String, read: String) {
 
         open()
         try {
@@ -210,9 +208,9 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
             values.put(MB_NAME, name)
             values.put(MB_SEX, sex)
             values.put(MB_AGE, age)
-            values.put(MB_GRADE, grade)
+            values.put(MB_GRADE, 0)  //grade column is being deprecated
             values.put(MB_BELONG, belong)
-            values.put(MB_ROLE, role)
+            values.put(MB_ROLE, "")   //role column is being deprecated
             if (read.isEmpty()) values.put(MB_NAME_READ, "ￚ no data ￚ") else values.put(MB_NAME_READ, read)
 
             db.update(TABLE_NAME, values, "$MB_ID=?", arrayOf(id.toString()))

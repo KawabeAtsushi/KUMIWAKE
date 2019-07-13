@@ -51,6 +51,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
         even_fm_ratio = i.getBooleanExtra(QuickMode.EVEN_FM_RATIO, false)
         even_person_ratio = i.getBooleanExtra(QuickMode.EVEN_PERSON_RATIO, false)
         groupNo = groupArray.size
+        
         viewGroup = findViewById<View>(R.id.result_view) as RelativeLayout
         viewGroup.background = ContextCompat.getDrawable(this, R.drawable.quick_img)
 
@@ -103,12 +104,12 @@ class QuickKumiwakeResult : AppCompatActivity() {
             arrayArray.add(ArrayList())
         }
 
-        if (!even_fm_ratio) {
-            kumiwakeAll()
-        } else if (!even_person_ratio) {
+        if (even_fm_ratio&&even_person_ratio) {
+            kumiwakeFm(manArray.size % groupNo)
+        } else if (even_fm_ratio) {
             kumiwakeFm(0)
         } else {
-            kumiwakeFm(manArray.size % groupNo)
+            kumiwakeAll()
         }
     }
 
@@ -156,32 +157,38 @@ class QuickKumiwakeResult : AppCompatActivity() {
 
     fun kumiwakeAll() {
         memberArray.shuffle()
-        var remainder: Int
+        var targetGroupNo: Int
 
         for (i in memberArray.indices) {
-            remainder = i % groupNo
-            arrayArray[remainder].add(memberArray[i])
+            //メンバーを追加するグループを回す(0-groupNo)
+            targetGroupNo = i % groupNo
+            arrayArray[targetGroupNo].add(memberArray[i])
         }
     }
 
     fun kumiwakeFm(firstPos: Int) {
         manArray.shuffle()
         womanArray.shuffle()
-        var manRemainder: Int
-        var womanRemainder: Int
+        var manTargetGroupNo: Int
+        var womanTargetGroupNo: Int
 
         for (i in manArray.indices) {
-            manRemainder = i % groupNo
-            arrayArray[manRemainder].add(manArray[i])
+            //メンバーを追加するグループを回す(0-groupNo)
+            manTargetGroupNo = i % groupNo
+            arrayArray[manTargetGroupNo].add(manArray[i])
         }
 
         for (i in womanArray.indices) {
-            womanRemainder = (i + firstPos) % groupNo
-            arrayArray[womanRemainder].add(womanArray[i])
+            //メンバーを追加するグループを回す(0-groupNo)
+            womanTargetGroupNo = (i + firstPos) % groupNo
+            arrayArray[womanTargetGroupNo].add(womanArray[i])
         }
     }
 
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////  View  ///////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    
     @SuppressLint("SetTextI18n", "InflateParams")
     fun addView(resultArray: ArrayList<String>, i: Int) {
         val groupName: TextView
@@ -232,7 +239,10 @@ class QuickKumiwakeResult : AppCompatActivity() {
         v.background = drawable
 
     }
-
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    
     companion object {
         internal var even_fm_ratio: Boolean = false
         internal var even_person_ratio: Boolean = false

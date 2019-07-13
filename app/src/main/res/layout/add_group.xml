@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:parentActivityName=".MemberMain">
+    android:parentActivityName=".MemberMain"
+    android:background="@color/thin_orange">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,16 +62,31 @@
 
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/group_registration_button"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/under_button_height"
-        android:layout_gravity="center|bottom"
-        android:background="#3cee2f"
-        android:padding="16dp"
-        android:text="@string/create"
-        android:textColor="@android:color/white"
-        android:textSize="20sp" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/form_marginEnd"
+        android:orientation="horizontal"
+        android:layout_gravity="end|bottom">
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/group_cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:textColor="@color/orange"
+            android:text="@string/cancel"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/group_registration_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+            android:backgroundTint="@color/orange"
+            android:text="@string/registration"/>
+
+    </LinearLayout>
 
 </FrameLayout>

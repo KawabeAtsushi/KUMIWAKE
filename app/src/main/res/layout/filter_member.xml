@@ -144,73 +144,6 @@
         android:textColor="@color/red"
         android:textSize="12dp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/form_marginTop"
-        android:orientation="horizontal">
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/form_between_margin"
-            android:background="@android:drawable/editbox_background_normal"
-            android:ems="2"
-            android:inputType="number"
-            android:maxLength="3"
-            android:padding="7dp"
-            android:singleLine="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/form_marginStart"
-            android:text="@string/grade2"
-            android:textColor="@color/hint"
-            android:textSize="@dimen/form_textSize" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" ≦ "
-            android:textSize="@dimen/form_textSize" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/form_marginStart"
-            android:text="@string/grade"
-            android:textColor="@color/hint"
-            android:textSize="@dimen/form_textSize" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" ≦ "
-            android:textSize="@dimen/form_textSize" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/form_between_margin"
-            android:background="@android:drawable/editbox_background_normal"
-            android:ems="2"
-            android:inputType="number"
-            android:maxLength="3"
-            android:padding="7dp"
-            android:singleLine="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/form_marginStart"
-            android:text="@string/grade2"
-            android:textColor="@color/hint"
-            android:textSize="@dimen/form_textSize" />
-
-    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -243,28 +176,6 @@
             style="@android:style/Widget.Spinner.DropDown" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/form_marginTop"
-        android:layout_marginStart="10dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/form_marginStart"
-            android:text="@string/role"
-            android:textColor="@color/hint"
-            android:textSize="@dimen/form_textSize" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/two_em"
-            android:textSize="@dimen/form_textSize" />
-
-    </LinearLayout>
 
 </LinearLayout>
 

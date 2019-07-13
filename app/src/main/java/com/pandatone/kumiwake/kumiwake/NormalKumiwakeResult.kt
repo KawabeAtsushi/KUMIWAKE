@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -63,6 +64,8 @@ class NormalKumiwakeResult : AppCompatActivity() {
         even_age_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_AGE_RATIO, false)
         groupCount = groupArray.size
         memberSize = memberArray.size
+
+        Log.d("memberSize",memberSize.toString())
 
         startMethod()
 

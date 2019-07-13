@@ -28,19 +28,7 @@
         android:layout_margin="@dimen/info_margin" />
 
     <TextView
-        android:id="@+id/infoGrade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/info_margin" />
-
-    <TextView
         android:id="@+id/infoBelong"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/info_margin" />
-
-    <TextView
-        android:id="@+id/infoRole"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/info_margin" />

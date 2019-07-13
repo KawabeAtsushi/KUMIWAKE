@@ -21,7 +21,13 @@ object Sort {
 
         val dbAdapter = MemberListAdapter(getContext())
 
-        val Items = arrayOf(MyApplication.context?.getString(R.string.name_ascending), MyApplication.context?.getString(R.string.name_descending), MyApplication.context?.getString(R.string.registration_ascending), MyApplication.context?.getString(R.string.registration_descending), MyApplication.context?.getString(R.string.age_ascending), MyApplication.context?.getString(R.string.age_descending), MyApplication.context?.getString(R.string.grade_ascending), MyApplication.context?.getString(R.string.grade_descending))
+        val Items = arrayOf(MyApplication.context?.getString(R.string.name_ascending),
+                MyApplication.context?.getString(R.string.name_descending),
+                MyApplication.context?.getString(R.string.registration_ascending),
+                MyApplication.context?.getString(R.string.registration_descending),
+                MyApplication.context?.getString(R.string.age_ascending),
+                MyApplication.context?.getString(R.string.age_descending))
+
         builder.setTitle(R.string.sorting)
         builder.setSingleChoiceItems(Items, initial) { _, which -> initial = which }
 
@@ -50,14 +56,6 @@ object Sort {
                 5 -> {
                     NS = "AGE"
                     dbAdapter.sortNames(MemberListAdapter.MB_AGE, DESC)
-                }
-                6 -> {
-                    NS = "GRADE"
-                    dbAdapter.sortNames(MemberListAdapter.MB_GRADE, ASC)
-                }
-                7 -> {
-                    NS = "GRADE"
-                    dbAdapter.sortNames(MemberListAdapter.MB_GRADE, DESC)
                 }
             }
             NameListAdapter.nowSort = NS

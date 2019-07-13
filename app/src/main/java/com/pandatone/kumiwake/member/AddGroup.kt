@@ -81,7 +81,7 @@ class AddGroup : AppCompatActivity() {
     }
 
 
-    @OnClick(R.id.group_registration_button)
+    @OnClick(R.id.group_registration_btn)
     internal fun onRegistrationGroupClicked() {
         val group = groupEditText.text!!.toString()
         if (TextUtils.isEmpty(group)) {
@@ -94,6 +94,10 @@ class AddGroup : AppCompatActivity() {
         }
     }
 
+    @OnClick(R.id.group_cancel_btn)
+    internal fun cancel() {
+        finish()
+    }
 
     private fun saveItem() {
         val name = groupEditText.text!!.toString()
@@ -122,7 +126,7 @@ class AddGroup : AppCompatActivity() {
     }
 
     private fun update(listId: Int) {
-        val updateBt = findViewById<View>(R.id.group_registration_button) as Button
+        val updateBt = findViewById<View>(R.id.group_registration_btn) as Button
         updateBt.setText(R.string.update)
         updateBt.setOnClickListener {
             val group = groupEditText.text!!.toString()

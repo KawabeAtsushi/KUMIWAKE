@@ -30,9 +30,6 @@
     <string name="cancel">キャンセル</string>
     <string name="age">年齢</string>
     <string name="age2">歳</string>
-    <string name="grade">学年</string>
-    <string name="grade2">年生</string>
-    <string name="role">役職</string>
     <string name="no_member">メンバーが\nいません</string>
     <string name="no_group">グループが\nありません</string>
     <string name="create">作成する</string>
@@ -46,8 +43,6 @@
     <string name="name_descending">名前順（降順）</string>
     <string name="age_ascending">年齢順（昇順）</string>
     <string name="age_descending">年齢順（降順）</string>
-    <string name="grade_ascending">学年順（昇順）</string>
-    <string name="grade_descending">学年順（降順）</string>
     <string name="member_ascending">メンバー数順（昇順）</string>
     <string name="member_descending">メンバー数順（降順）</string>
     <string name="belong_member">所属メンバー</string>
