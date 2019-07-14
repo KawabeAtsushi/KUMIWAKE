@@ -16,7 +16,7 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.Name
 
 class NameListAdapter(private val context: Context, private val nameList: List<Name>) : BaseAdapter() {
-    internal var params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(0, 1)
+    private var params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(0, 1)
     private var nowData: String? = "ￚ no data ￚ"
     private var preData = "ￚ no data ￚ"
     private var mSelection = SparseBooleanArray()

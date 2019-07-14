@@ -28,11 +28,11 @@ import java.io.IOException
 class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     var memberArray: ArrayList<Name> = ArrayList()
-    internal var manager = supportFragmentManager
-    internal lateinit var viewPager: ViewPager
-    internal var visible: Boolean = false
-    internal var page: Int = 0
-    var context: Context = this
+    private val manager = supportFragmentManager
+    private lateinit var viewPager: ViewPager
+    private var visibility: Boolean = false
+    private var page: Int = 0
+    val context: Context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +54,7 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
             memberArray = i.getSerializableExtra(MEMBER_ARRAY) as ArrayList<Name>
         }
 
-        visible = i.getBooleanExtra(VISIBLE, false)
+        visibility = i.getBooleanExtra(VISIBLE, false)
     }
 
     private fun setViews() {
@@ -65,7 +65,7 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
     }
 
     private fun visibleViews() {
-        if (visible) {
+        if (visibility) {
             decision.visibility = View.VISIBLE
             FragmentGroup.adviceInFG.visibility = View.VISIBLE
             FragmentMember.fab.hide()
@@ -171,7 +171,7 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         const val DELETE_ICON_VISIBLE = "deleteIcon_visible"
         const val KUMIWAKE_SELECT = "kumiwake_select"
         const val MEMBER_ARRAY = "memberArray"
-        const val VISIBLE = "visible"
+        const val VISIBLE = "visibility"
 
         var startAction: Boolean = false
         var kumiwake_select: Boolean = false

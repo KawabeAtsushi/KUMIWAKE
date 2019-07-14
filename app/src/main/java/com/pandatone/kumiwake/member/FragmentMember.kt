@@ -26,8 +26,7 @@ import java.util.*
  */
 class FragmentMember : ListFragment() {
     private var groupId: String = "0"
-    var listAdp: NameListAdapter? = null
-    var parent = MemberMain()
+    val parent = MemberMain()
     var memberArray = parent.memberArray
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -377,9 +376,6 @@ class FragmentMember : ListFragment() {
             inflater.inflate(R.menu.member_main_menu, menu)
             val searchIcon = menu.findItem(R.id.search_view)
             val deleteIcon = menu.findItem(R.id.item_delete)
-            menu.getItem(2).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
-            menu.getItem(3).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
-            menu.getItem(4).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
             MemberMain.decision.setOnClickListener(decisionClicked)
             searchIcon.isVisible = false
             deleteIcon.isVisible = MemberMain.delete_icon_visible
@@ -661,6 +657,7 @@ class FragmentMember : ListFragment() {
     companion object {
         internal lateinit var dbAdapter: MemberListAdapter
         internal lateinit var gpdbAdapter: GroupListAdapter
+        var listAdp: NameListAdapter? = null
         var nameList: ArrayList<Name> = ArrayList()
         internal lateinit var listItem: Name
         internal lateinit var fab: FloatingActionButton

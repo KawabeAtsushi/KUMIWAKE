@@ -11,7 +11,7 @@
         android:layout_height="@dimen/under_button_height"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:background="@color/red"
+        android:background="@drawable/next_red_button"
         android:clickable="true"
         android:contextClickable="false"
         android:enabled="true"
@@ -25,13 +25,13 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="10dp"
         android:layout_above="@id/kumiwake_btn">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:paddingBottom="10dp"
             android:orientation="vertical">
 
             <TextView
@@ -151,7 +151,7 @@
                     android:textSize="15sp" />
 
                 <ListView
-                    android:id="@+id/kumiwake_group_listView"
+                    android:id="@+id/groupListView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"

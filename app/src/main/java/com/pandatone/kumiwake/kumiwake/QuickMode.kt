@@ -34,14 +34,7 @@ class QuickMode : AppCompatActivity(), TextWatcher {
         }
         setContentView(R.layout.quick_mode)
         ButterKnife.bind(this)
-        even_fm_ratio_check.setOnCheckedChangeListener { _, _ ->
-            if (even_fm_ratio_check.isChecked) {
-                even_person_ratio_check.isEnabled = true
-            } else {
-                even_person_ratio_check.isChecked = false
-                even_person_ratio_check.isEnabled = false
-            }
-        }
+
         sex_seekbar.isEnabled = false
         val size = Point()
         windowManager.defaultDisplay.getSize(size)
@@ -111,7 +104,6 @@ class QuickMode : AppCompatActivity(), TextWatcher {
                 intent.putStringArrayListExtra(WOMAN_LIST, womanList)
                 intent.putStringArrayListExtra(GROUP_LIST, groupList)
                 intent.putExtra(EVEN_FM_RATIO, even_fm_ratio_check.isChecked)
-                intent.putExtra(EVEN_PERSON_RATIO, even_person_ratio_check.isChecked)
                 startActivity(intent)
                 overridePendingTransition(R.anim.in_right, R.anim.out_left)
             }
@@ -135,7 +127,6 @@ class QuickMode : AppCompatActivity(), TextWatcher {
     companion object {
 
         const val EVEN_FM_RATIO = "even_fm_ratio"
-        const val EVEN_PERSON_RATIO = "even_person_ratio"
         const val MAN_LIST = "QuickModeManList"
         const val WOMAN_LIST = "QuickModeWomanList"
         const val GROUP_LIST = "QuickModeGroupList"

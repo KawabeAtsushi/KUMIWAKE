@@ -7,18 +7,16 @@ import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.EditText
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.kumiwake.KumiwakeCustom
+import kotlinx.android.synthetic.main.kumiwake_custom.*
 import java.util.*
 
 /**
  * Created by atsushi_2 on 2016/03/20.
  */
-class EditGroupListAdapter(private val context: Context, private val groupList: List<GroupListAdapter.Group>) : BaseAdapter() {
+class EditGroupListAdapter(private val context: Context, private val groupList: List<GroupListAdapter.Group>, private val scrollView: ScrollView) : BaseAdapter() {
     private var beforeNo: Int = 0
     private var afterNo: Int = 0
 
@@ -58,16 +56,16 @@ class EditGroupListAdapter(private val context: Context, private val groupList: 
         numberOfMemberEditText.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 if (numberOfMemberEditText.text.toString() != "" && numberOfMemberEditText.text.toString() != "-") {
-                    KumiwakeCustom.scrollView.setOnTouchListener { _, _ -> false }
+                    scrollView.setOnTouchListener { _, _ -> false }
                     beforeNo = Integer.parseInt(numberOfMemberEditText.text.toString())
                 } else {
-                    KumiwakeCustom.scrollView.setOnTouchListener { _, _ -> true }
+                    scrollView.setOnTouchListener { _, _ -> true }
                 }
                 numberOfMemberEditText.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(2))
             } else {
 
                 if (numberOfMemberEditText.text.toString() != "" && numberOfMemberEditText.text.toString() != "-") {
-                    KumiwakeCustom.scrollView.setOnTouchListener { _, _ -> false }
+                    scrollView.setOnTouchListener { _, _ -> false }
 
                     afterNo = Integer.parseInt(numberOfMemberEditText.text.toString())
 
@@ -79,7 +77,7 @@ class EditGroupListAdapter(private val context: Context, private val groupList: 
                         numberOfMemberEditText.setTextColor(Color.BLACK)
                     }
                 } else {
-                    KumiwakeCustom.scrollView.setOnTouchListener { _, _ -> true }
+                    scrollView.setOnTouchListener { _, _ -> true }
                     afterNo = 0
                 }
             }

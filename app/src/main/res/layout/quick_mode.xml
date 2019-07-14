@@ -18,10 +18,9 @@
         android:layout_height="@dimen/under_button_height"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:background="#3cee2f"
+        android:background="@drawable/next_green_button"
         android:clickable="true"
-        android:drawableEnd="@drawable/ic_arrow_back"
-        android:paddingEnd="10dp"
+        android:drawableEnd="@drawable/ic_arrow_black"
         android:text="@string/move_confirmation"
         android:textColor="@android:color/white"
         android:textSize="20sp" />
@@ -203,21 +202,10 @@
                 android:id="@+id/even_fm_ratio_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/form_marginTop"
                 android:layout_marginStart="10dp"
                 android:text="@string/even_out_male_female_ratio"
                 android:textSize="@dimen/form_textSize" />
-
-            <CheckBox
-                android:id="@+id/even_person_ratio_check"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="30dp"
-                android:text="@string/even_out_person_ratio"
-                android:textSize="@dimen/form_textSize"
-                android:enabled="false" />
-
 
         </LinearLayout>
     </ScrollView>

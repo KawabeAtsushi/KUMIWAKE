@@ -3,6 +3,7 @@ package com.pandatone.kumiwake.kumiwake
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,7 +31,6 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
     private lateinit var memberAdapter: ArrayAdapter<String>
     private lateinit var groupAdapter: ArrayAdapter<String>
     private var even_fm_ratio: Boolean = false
-    private var even_person_ratio: Boolean = false
     private lateinit var viewGroup: RelativeLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +42,6 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
         womanArray = i.getStringArrayListExtra(QuickMode.WOMAN_LIST)
         groupArray = i.getStringArrayListExtra(QuickMode.GROUP_LIST)
         even_fm_ratio = i.getBooleanExtra(QuickMode.EVEN_FM_RATIO, false)
-        even_person_ratio = i.getBooleanExtra(QuickMode.EVEN_PERSON_RATIO, false)
         memberArray = ArrayList()
         memberArray.addAll(manArray)
         memberArray.addAll(womanArray)
@@ -61,10 +60,13 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun findViews() {
         if (KumiwakeSelectMode.sekigime) {
+            val button = findViewById<Button>(R.id.kumiwake_btn)
             confirmation_title_txt.setText(R.string.sekigime_confirm)
             between_arrows_txt.text = MyApplication.context?.getText(R.string.sekigime)
-            kumiwake_btn.setText(R.string.go_select_seats_type)
-            kumiwake_btn.setTextColor(ContextCompat.getColor(MyApplication.context!!, android.R.color.white))
+            button.setText(R.string.go_select_seats_type)
+            button.typeface = Typeface.DEFAULT
+            button.setTextColor(ContextCompat.getColor(MyApplication.context!!, android.R.color.white))
+            button.textSize = 20F
         }
         if (womanArray.size != 0) {
             member_no_txt.text = (memberArray.size.toString() + " " + getText(R.string.people)
@@ -82,11 +84,9 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
     private fun setViews() {
         val custom_text = StringBuilder()
         if (even_fm_ratio) {
-            custom_text.append("☆" + getText(R.string.even_out_male_female_ratio) + "\n")
+            custom_text.append("☆" + getText(R.string.even_out_male_female_ratio))
         }
-        if (even_person_ratio) {
-            custom_text.append("☆" + getText(R.string.even_out_person_ratio) + "\n")
-        }
+
         custom_review_txt.text = custom_text.toString()
 
         for (i in 0 until memberAdapter.count) {
@@ -98,7 +98,7 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
             }
         }
         setRowHeight(kumiwake_member_listView, memberAdapter)
-        setRowHeight(kumiwake_group_listView, groupAdapter)
+        setRowHeight(groupListView, groupAdapter)
     }
 
     @OnClick(R.id.kumiwake_btn)
@@ -109,7 +109,6 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
         intent.putStringArrayListExtra(QuickMode.WOMAN_LIST, womanArray)
         intent.putStringArrayListExtra(QuickMode.GROUP_LIST, groupArray)
         intent.putExtra(QuickMode.EVEN_FM_RATIO, even_fm_ratio)
-        intent.putExtra(QuickMode.EVEN_PERSON_RATIO, even_person_ratio)
         startActivity(intent)
     }
 
@@ -117,7 +116,7 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
         memberAdapter = MemberArrayAdapter(this, R.layout.mini_row_member, memberArray, true)
         groupAdapter = ArrayAdapter(this, R.layout.mini_row_group, R.id.groupName, groupArray)
         kumiwake_member_listView.adapter = memberAdapter
-        kumiwake_group_listView.adapter = groupAdapter
+        groupListView.adapter = groupAdapter
     }
 
     companion object {

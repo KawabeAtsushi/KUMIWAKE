@@ -42,7 +42,7 @@
     <string name="man">Man</string>
     <string name="member_ascending">Number of members order(ASC)</string>
     <string name="member">Member</string>
-    <string name="member_main">List of members</string>
+    <string name="member_main">Member List</string>
     <string name="member_name">Name</string>
     <string name="name_ascending">Alphabetical order(ASC)</string>
     <string name="name_descending">Alphabetical order(DESC)</string>
@@ -147,6 +147,5 @@
     <string name="description_of_quick_mode">This is a mode of grouping by designating the number of members and groups.\nYou need not do annoying setting and you can do quick grouping.</string>
     <string name="description_of_quick_sekigime">This is a mode of grouping by designating the number of members and groups.\nYou need not do annoying setting and you can do quick seat allocation.</string>
     <string name="wait_for_implementation">\nPlease wait for implementation.\n</string>
-    <string name="two_em">　　</string>
     <string name="member_name_read">Read</string>
 </resources>

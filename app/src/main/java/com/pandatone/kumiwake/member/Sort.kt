@@ -21,7 +21,7 @@ object Sort {
 
         val dbAdapter = MemberListAdapter(getContext())
 
-        val Items = arrayOf(MyApplication.context?.getString(R.string.name_ascending),
+        val items = arrayOf(MyApplication.context?.getString(R.string.name_ascending),
                 MyApplication.context?.getString(R.string.name_descending),
                 MyApplication.context?.getString(R.string.registration_ascending),
                 MyApplication.context?.getString(R.string.registration_descending),
@@ -29,7 +29,7 @@ object Sort {
                 MyApplication.context?.getString(R.string.age_descending))
 
         builder.setTitle(R.string.sorting)
-        builder.setSingleChoiceItems(Items, initial) { _, which -> initial = which }
+        builder.setSingleChoiceItems(items, initial) { _, which -> initial = which }
 
         builder.setPositiveButton("OK") { _, _ ->
             when (initial) {
@@ -73,9 +73,9 @@ object Sort {
 
         val gpdbAdapter = GroupListAdapter(getContext())
 
-        val Items = arrayOf(MyApplication.context?.getString(R.string.name_ascending), MyApplication.context?.getString(R.string.name_descending), MyApplication.context?.getString(R.string.registration_ascending), MyApplication.context?.getString(R.string.registration_descending), MyApplication.context?.getString(R.string.member_ascending), MyApplication.context?.getString(R.string.member_descending))
+        val items = arrayOf(MyApplication.context?.getString(R.string.name_ascending), MyApplication.context?.getString(R.string.name_descending), MyApplication.context?.getString(R.string.registration_ascending), MyApplication.context?.getString(R.string.registration_descending), MyApplication.context?.getString(R.string.member_ascending), MyApplication.context?.getString(R.string.member_descending))
         builder.setTitle(R.string.sorting)
-        builder.setSingleChoiceItems(Items, initial) { _, which -> initial = which }
+        builder.setSingleChoiceItems(items, initial) { _, which -> initial = which }
 
         builder.setPositiveButton("OK") { _, _ ->
             when (initial) {
@@ -97,7 +97,7 @@ object Sort {
 
     }
 
-    fun getContext(): Context {
+    private fun getContext(): Context {
         return MemberMain().context
     }
 

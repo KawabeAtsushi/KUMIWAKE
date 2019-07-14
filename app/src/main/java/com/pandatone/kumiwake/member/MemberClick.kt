@@ -13,11 +13,11 @@ import com.pandatone.kumiwake.R
  */
 @SuppressLint("StaticFieldLeak")
 object MemberClick {
-    internal lateinit var name: TextView
-    internal lateinit var sex: TextView
-    internal lateinit var age: TextView
-    internal lateinit var belong: TextView
-    internal lateinit var okBt: Button
+    private lateinit var name: TextView
+    private lateinit var sex: TextView
+    private lateinit var age: TextView
+    private lateinit var belong: TextView
+    lateinit var okBt: Button
 
     val context = MyApplication.context
 

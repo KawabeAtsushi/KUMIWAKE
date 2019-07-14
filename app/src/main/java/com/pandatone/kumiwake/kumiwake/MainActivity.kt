@@ -28,7 +28,7 @@ import java.util.*
 
 
 class MainActivity : Activity(), View.OnClickListener {
-    lateinit var mCategories: List<Category>
+    private lateinit var mCategories: List<Category>
     private var kumiwake: Category? = null
     private var member: Category? = null
     private var sekigime: Category? = null

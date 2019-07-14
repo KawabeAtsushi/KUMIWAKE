@@ -121,7 +121,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
 
     fun getCursor(c: Cursor) {
         val nameList = FragmentMember.nameList
-        val listAdp = FragmentMember().listAdp
+        val listAdp = FragmentMember.listAdp
         var listItem: Name
 
         nameList.clear()
