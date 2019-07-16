@@ -97,7 +97,7 @@
     <string name="delete_backup">バックアップファイルの削除</string>
     <string name="deleted_backup_file">バックアップファイルを削除しました。</string>
     <string name="delete_backup_attention">バックアップファイルはアプリのアンインストール時には削除されません。\nもしバックアップファイルが不要な場合は以下より削除してください。\n\n一度ファイルを削除してしまうと復元することはできません。\n\n削除しますか？</string>
-    <string name="no_specified">指定なし</string>
+    <string name="all">全て</string>
     <string name="no_selected">選択なし</string>
     <string name="range_error">指定範囲が不適切です</string>
     <string name="square_table">角テーブル(囲み)</string>

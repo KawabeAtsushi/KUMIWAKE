@@ -59,6 +59,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
                         + " TEXT DEFAULT 'ￚ no data ￚ'")
 
             }
+
         }
     }
 
@@ -110,8 +111,8 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
 
         open()
         val query = "SELECT * FROM " + TABLE_NAME +
-                " WHERE " + MB_SEX + " like '%" + sex + "%' AND (" + MB_AGE + " BETWEEN " + minage + " AND " + maxage +
-                ") AND (" + MB_BELONG + " like '%," + belongNo + "%' OR " + MB_BELONG + " like '" + belongNo + "%';"
+                " WHERE " + MB_SEX + " like '" + sex + "%' AND (" + MB_AGE + " BETWEEN " + minage + " AND " + maxage +
+                ") AND (" + MB_BELONG + " like '%," + belongNo + "%' OR " + MB_BELONG + " like '" + belongNo + "%');" //BelongIdのマッチング式OR (e.g)1,2,3,4,
         val c = db.rawQuery(query, null)
         getCursor(c)
         close()
@@ -121,27 +122,31 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
 
     fun getCursor(c: Cursor) {
         val nameList = FragmentMember.nameList
-        val listAdp = FragmentMember.listAdp
         var listItem: Name
 
         nameList.clear()
 
         if (c.moveToFirst()) {
             do {
+                val read = c.getString(7)
                 //頭文字帯用要素の追加
-                if (c.getString(7) != "ￚ no data ￚ" && !c.getString(7).isEmpty()) {
-                    listItem = Name(
+                listItem = if (read != "ￚ no data ￚ" && read.isNotEmpty()) {
+                    Name(
                             0, null.toString(),
                             "initial",
                             c.getInt(3),
-                            c.getInt(4), null.toString(), null.toString(),
-                            c.getString(7).toUpperCase().get(0).toString())
+                            c.getInt(4),
+                            null.toString(),
+                            null.toString(),
+                            read.toUpperCase()[0].toString())
                 } else {
-                    listItem = Name(
+                    Name(
                             0, null.toString(),
                             "initial",
                             c.getInt(3),
-                            c.getInt(4), null.toString(), null.toString(),
+                            c.getInt(4),
+                            null.toString(),
+                            null.toString(),
                             "ￚ no data ￚ")
                 }
 
@@ -162,7 +167,8 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
             } while (c.moveToNext())
         }
         c.close()
-        listAdp?.notifyDataSetChanged()
+
+        FragmentMember.listAdp!!.notifyDataSetChanged()
     }
 
     fun addBelong(position: String, newBelong: String) {
@@ -214,6 +220,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
             if (read.isEmpty()) values.put(MB_NAME_READ, "ￚ no data ￚ") else values.put(MB_NAME_READ, read)
 
             db.update(TABLE_NAME, values, "$MB_ID=?", arrayOf(id.toString()))
+
         } catch (e: Exception) {
             e.printStackTrace()
         }

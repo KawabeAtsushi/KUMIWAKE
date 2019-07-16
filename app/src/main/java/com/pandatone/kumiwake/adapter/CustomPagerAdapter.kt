@@ -9,6 +9,8 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.FragmentGroup
 import com.pandatone.kumiwake.member.FragmentMember
 
+
+
 /**
  * Created by atsushi_2 on 2016/02/23.
  */
@@ -20,6 +22,12 @@ class CustomPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
             1 -> return FragmentGroup()
         }
         return null
+    }
+
+    override fun getItemPosition(`object`: Any): Int {
+        // Causes adapter to reload all Fragments when
+        // notifyDataSetChanged is called
+        return POSITION_NONE
     }
 
     override fun getCount(): Int {

@@ -10,13 +10,13 @@ import android.view.*
 import android.widget.*
 import androidx.fragment.app.ListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textfield.TextInputEditText
 import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
 import com.pandatone.kumiwake.adapter.NameListAdapter
 import com.pandatone.kumiwake.kumiwake.NormalMode
-import kotlinx.android.synthetic.main.filter_member.*
 import java.io.IOException
 import java.util.*
 
@@ -37,7 +37,7 @@ class FragmentMember : ListFragment() {
         listAdp = NameListAdapter(requireContext(), nameList)
         groupId = MemberMain.groupId.toString()
         NameListAdapter.nowSort = "ID"
-        Sort.initial = 2
+        Sort.initial = 0
         listAdapter = listAdp
         loadName()
     }
@@ -180,44 +180,14 @@ class FragmentMember : ListFragment() {
             }
 
             R.id.item_sort -> {
-                Sort.memberSort(builder)
+                Sort.memberSort(builder,requireActivity())
                 val dialog = builder.create()
                 dialog.show()
                 ListCount = listView.count
             }
 
             R.id.item_filter -> {
-                val inflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                val layout = inflater.inflate(R.layout.filter_member,
-                        activity!!.findViewById<View>(R.id.filter_member) as ViewGroup)
-                val filter_belong_spinner = layout.findViewById<View>(R.id.filter_belong_spinner) as Spinner
-                val adapter = ArrayAdapter<String>(activity!!, android.R.layout.simple_spinner_item)
-                val list = ArrayList<String>() // 新インスタンスを生成
-                list.add(getString(R.string.no_selected))
-                for (j in 0 until FragmentGroup.ListCount) {
-                    val listItem = FragmentGroup.nameList[j]
-                    val groupName = listItem.group
-                    list.add(groupName)
-                }
-                adapter.addAll(list)
-                adapter.setDropDownViewResource(
-                        android.R.layout.simple_spinner_dropdown_item
-                )
-                filter_belong_spinner.adapter = adapter
-                builder.setTitle(getText(R.string.filtering))
-                builder.setView(layout)
-                builder.setPositiveButton("OK", null)
-                builder.setNegativeButton(R.string.cancel) { _, _ -> }
-                // back keyを使用不可に設定
-                builder.setCancelable(false)
-                val dialog2 = builder.create()
-                dialog2.show()
-
-                val okButton = dialog2.getButton(AlertDialog.BUTTON_POSITIVE)
-                okButton.setOnClickListener {
-                    filter(layout, filter_belong_spinner, dialog2)
-                    ListCount = listView.count
-                }
+                filtering(builder)
             }
         }
 
@@ -275,61 +245,105 @@ class FragmentMember : ListFragment() {
         }
     }
 
-    fun filter(layout: View, filter_belong_spinner: Spinner, dialog2: androidx.appcompat.app.AlertDialog) {
-        val maxage: Int
-        val minage: Int
-        var sex: String
+    private fun filter(layout: View, spinner: Spinner, clear: Boolean) {
+
         var groupName: String
-        val belong: String = filter_belong_spinner.selectedItem as String
-        var belongNo = ""
+        val belong: String = spinner.selectedItem as String
+        var belongId = ""
+        val sexGroup = layout.findViewById<View>(R.id.sexGroup) as RadioGroup
         val sexButton = layout.findViewById<View>(sexGroup.checkedRadioButtonId) as RadioButton
-        sex = sexButton.text as String
+        val error_age_range = layout.findViewById<View>(R.id.error_age_range) as TextView
+        var sex = sexButton.text as String
+        val max_age = layout.findViewById<View>(R.id.max_age) as TextInputEditText
+        val min_age = layout.findViewById<View>(R.id.min_age) as TextInputEditText
 
-        if (max_age.text.toString() != "") {
-            maxage = AddMember().getValue(max_age)
-        } else {
-            maxage = 1000
+        if(clear){
+            spinner.setSelection(0)
+            sexGroup.check(R.id.noSelect)
+            max_age.setText("")
+            min_age.setText("")
         }
-        if (min_age.text.toString() != "") {
-            minage = AddMember().getValue(min_age)
+
+        val maxAge: Int = if (max_age.text.toString() != "") {
+            AddMember().getValue(max_age)
         } else {
-            minage = 0
+            1000
+        }
+        val minAge: Int = if (min_age.text.toString() != "") {
+            AddMember().getValue(min_age)
+        } else {
+            0
         }
 
 
-        if (maxage < minage) {
+        if (maxAge < minAge) {
             error_age_range.visibility = View.VISIBLE
             error_age_range.setText(R.string.range_error)
         } else {
             error_age_range.visibility = View.GONE
-        }
 
-        if (belong == getString(R.string.no_selected)) {
-            belongNo = ""
-        } else {
-            for (j in 0 until FragmentGroup.ListCount) {
-                val listItem = FragmentGroup.nameList[j]
-                groupName = listItem.group
-                if (belong == groupName) {
-                    belongNo = listItem.id.toString() + ","
+            if(sex==getString(R.string.all)){
+                sex = ""
+            }
+
+            if (belong == getString(R.string.no_selected)) {
+                belongId = ""
+            } else {
+                for (j in 0 until FragmentGroup.ListCount) {
+                    val listItem = FragmentGroup.nameList[j]
+                    groupName = listItem.group
+                    if (belong == groupName) {
+                        belongId = listItem.id.toString() + ","
+                    }
                 }
             }
+
+            dbAdapter.filterName(sex, minAge, maxAge, belongId)
         }
 
-        if (sex == getString(R.string.no_specified)) {
-            sex = ""
-        }
-        try {
-            if (maxage >= minage) {
-                dbAdapter.filterName(sex, minage, maxage, belongNo)
-                dialog2.dismiss()
-            } else {
+    }
 
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
+    fun filtering(builder: androidx.appcompat.app.AlertDialog.Builder){
+        val inflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater.inflate(R.layout.filter_member, activity!!.findViewById<View>(R.id.filter_member) as? ViewGroup)
+        val belongSpinner = layout.findViewById<View>(R.id.filter_belong_spinner) as Spinner
+        val adapter = ArrayAdapter<String>(activity!!, android.R.layout.simple_spinner_item)
+        val list = ArrayList<String>() // 新インスタンスを生成
+        list.add(getString(R.string.no_selected))
+
+        for (j in 0 until FragmentGroup.ListCount) {
+            val listItem = FragmentGroup.nameList[j]
+            val groupName = listItem.group
+            list.add(groupName)
+        }
+        adapter.addAll(list)
+        adapter.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item)
+        belongSpinner.adapter = adapter
+        builder.setTitle(getText(R.string.filtering))
+        builder.setView(layout)
+        builder.setPositiveButton("OK", null)
+        builder.setNegativeButton(R.string.cancel) { _, _ -> }
+        builder.setNeutralButton(R.string.clear,null)
+        // back keyを使用不可に設定
+        builder.setCancelable(false)
+        val dialog2 = builder.create()
+        dialog2.show()
+
+        val okButton = dialog2.getButton(AlertDialog.BUTTON_POSITIVE)
+        okButton.setOnClickListener {
+            filter(layout, belongSpinner,false)
+            dialog2.dismiss()
+            ListCount = listView.count
         }
 
+        val cancelBtn = dialog2.getButton(AlertDialog.BUTTON_NEUTRAL)
+        cancelBtn.setOnClickListener {
+            filter(layout, belongSpinner,true)
+            dbAdapter.sortNames(MemberListAdapter.MB_ID, "ASC")
+            NameListAdapter.nowSort = "ID"
+            dbAdapter.notifyDataSetChanged()
+        }
     }
     //////////////////////////////////////////////////////////////////////////////////////
     /////////////////////-------- ActionMode時の処理 ----------///////////////////////////
@@ -397,42 +411,14 @@ class FragmentMember : ListFragment() {
                 }
 
                 R.id.item_sort -> {
-                    Sort.memberSort(builder)
+                    Sort.memberSort(builder,requireActivity())
                     val dialog = builder.create()
                     dialog.show()
                     ListCount = listView.count
                 }
 
                 R.id.item_filter -> {
-                    val inflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                    val layout = inflater.inflate(R.layout.filter_member,
-                            activity!!.findViewById<View>(R.id.filter_member) as ViewGroup)
-                    val adapter = ArrayAdapter<String>(activity!!, android.R.layout.simple_spinner_item)
-                    val list = ArrayList<String>() // 新インスタンスを生成
-                    list.add(getString(R.string.no_selected))
-                    for (j in 0 until FragmentGroup.ListCount) {
-                        val listItem = FragmentGroup.nameList[j]
-                        val groupName = listItem.group
-                        list.add(groupName)
-                    }
-                    adapter.addAll(list)
-                    adapter.setDropDownViewResource(
-                            android.R.layout.simple_spinner_dropdown_item)
-                    filter_belong_spinner.adapter = adapter
-                    builder.setTitle(getText(R.string.filtering))
-                    builder.setView(layout)
-                    builder.setPositiveButton("OK", null)
-                    builder.setNegativeButton(R.string.cancel) { _, _ -> }
-                    // back keyを使用不可に設定
-                    builder.setCancelable(false)
-                    val dialog2 = builder.create()
-                    dialog2.show()
-
-                    val okButton = dialog2.getButton(AlertDialog.BUTTON_POSITIVE)
-                    okButton.setOnClickListener {
-                        filter(layout, filter_belong_spinner, dialog2)
-                        ListCount = listView.count
-                    }
+                    filtering(builder)
                 }
             }
             return false

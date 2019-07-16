@@ -29,10 +29,11 @@
         android:id="@+id/theNumberOfMember"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
+        android:layout_gravity="end"
         android:paddingTop="@dimen/row_padding"
         android:paddingEnd="@dimen/row_padding"
         android:paddingBottom="@dimen/row_padding"
+        android:background="@drawable/radius_background"
         android:singleLine="true"
         android:textSize="20sp" />
 

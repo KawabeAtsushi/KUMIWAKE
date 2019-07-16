@@ -3,8 +3,10 @@ package com.pandatone.kumiwake.member
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputFilter
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -12,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
@@ -47,11 +50,25 @@ class AddMember : AppCompatActivity() {
         if (position != -1) {
             setItem(position)
         }
+
+        nameEditText?.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(s: Editable) {}
+
+            override fun beforeTextChanged(s: CharSequence, start: Int,
+                                           count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int,
+                                       before: Int, count: Int) {
+                readEditText?.setText(s)
+            }
+        })
     }
 
     private fun findViews() {
-        nameEditText = findViewById<View>(R.id.input_name) as AppCompatEditText
-        readEditText = findViewById<View>(R.id.input_name_read) as AppCompatEditText
+        nameEditText = findViewById<View>(R.id.input_name) as TextInputEditText
+        readEditText = findViewById<View>(R.id.input_name_read) as TextInputEditText
         val inputFilter = InputFilter { source, _, _, _, _, _ ->
             if (source.toString().matches("^[a-zA-Z0-9ぁ-ん]+$".toRegex())) {
                 source
@@ -225,7 +242,7 @@ class AddMember : AppCompatActivity() {
         var name: String
         val read = "ￚ no data ￚ"
         var change: Boolean? = true
-        val GPdbAdapter = GroupListAdapter(this)
+        val groupListAdapter = GroupListAdapter(this)
 
         if (beforeBelong != null) {
             beforeBelongNo = beforeBelong!!.size
@@ -249,7 +266,7 @@ class AddMember : AppCompatActivity() {
                 j++
             }
             if (change!!) {
-                GPdbAdapter.open()
+                groupListAdapter.open()
                 k = 0
                 while (k < FragmentGroup.ListCount) {
                     val listItem = FragmentGroup.nameList[k]
@@ -258,11 +275,11 @@ class AddMember : AppCompatActivity() {
                         id = listItem.id
                         name = listItem.group
                         belongNo = listItem.belongNo - 1
-                        GPdbAdapter.updateGroup(id, name, read, belongNo)
+                        groupListAdapter.updateGroup(id, name, read, belongNo)
                     }
                     k++
                 }
-                GPdbAdapter.close()
+                groupListAdapter.close()
             }
             i++
         }
@@ -279,7 +296,7 @@ class AddMember : AppCompatActivity() {
                 j++
             }
             if (change!!) {
-                GPdbAdapter.open()
+                groupListAdapter.open()
                 k = 0
                 while (k < FragmentGroup.ListCount) {
                     val listItem = FragmentGroup.nameList[k]
@@ -288,11 +305,11 @@ class AddMember : AppCompatActivity() {
                         id = listItem.id
                         name = listItem.group
                         belongNo = listItem.belongNo + 1
-                        GPdbAdapter.updateGroup(id, name, read, belongNo)
+                        groupListAdapter.updateGroup(id, name, read, belongNo)
                     }
                     k++
                 }
-                GPdbAdapter.close()
+                groupListAdapter.close()
             }
             i++
         }

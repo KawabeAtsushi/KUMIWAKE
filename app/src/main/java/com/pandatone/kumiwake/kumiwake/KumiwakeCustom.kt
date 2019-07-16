@@ -195,7 +195,6 @@ class KumiwakeCustom : AppCompatActivity() {
             override fun onGlobalLayout() {
                 activityRootView.getWindowVisibleDisplayFrame(r)
                 val heightDiff = activityRootView.rootView.height - r.height()
-                Log.d("screen_height",screenHeight.toString())
                 if (heightDiff > screenHeight*0.2) {
                     view.visibility = View.GONE
                 } else {

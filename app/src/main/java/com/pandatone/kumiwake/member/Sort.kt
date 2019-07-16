@@ -1,8 +1,11 @@
 package com.pandatone.kumiwake.member
 
+import android.app.Activity
+import android.app.Application
 import android.content.Context
 import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.adapter.CustomPagerAdapter
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
 import com.pandatone.kumiwake.adapter.NameListAdapter
@@ -15,16 +18,17 @@ object Sort {
     private const val ASC = "ASC"   //昇順 (1.2.3....)
     private const val DESC = "DESC" //降順 (3.2.1....)
     private lateinit var NS: String
-    internal var initial = 2
+    internal var initial = 0
 
-    fun memberSort(builder: androidx.appcompat.app.AlertDialog.Builder) {
+    fun memberSort(builder: androidx.appcompat.app.AlertDialog.Builder,activity: Activity) {
 
-        val dbAdapter = MemberListAdapter(getContext())
+        val dbAdapter = MemberListAdapter(activity)
 
-        val items = arrayOf(MyApplication.context?.getString(R.string.name_ascending),
-                MyApplication.context?.getString(R.string.name_descending),
+        val items = arrayOf(
                 MyApplication.context?.getString(R.string.registration_ascending),
                 MyApplication.context?.getString(R.string.registration_descending),
+                MyApplication.context?.getString(R.string.name_ascending),
+                MyApplication.context?.getString(R.string.name_descending),
                 MyApplication.context?.getString(R.string.age_ascending),
                 MyApplication.context?.getString(R.string.age_descending))
 
@@ -34,20 +38,20 @@ object Sort {
         builder.setPositiveButton("OK") { _, _ ->
             when (initial) {
                 0 -> {
-                    NS = "NAME"
-                    dbAdapter.sortNames(MemberListAdapter.MB_NAME_READ, ASC)
-                }
-                1 -> {
-                    NS = "NAME"
-                    dbAdapter.sortNames(MemberListAdapter.MB_NAME_READ, DESC)
-                }
-                2 -> {
                     NS = "ID"
                     dbAdapter.sortNames(MemberListAdapter.MB_ID, ASC)
                 }
-                3 -> {
+                1 -> {
                     NS = "ID"
                     dbAdapter.sortNames(MemberListAdapter.MB_ID, DESC)
+                }
+                2 -> {
+                    NS = "NAME"
+                    dbAdapter.sortNames(MemberListAdapter.MB_NAME_READ, ASC)
+                }
+                3 -> {
+                    NS = "NAME"
+                    dbAdapter.sortNames(MemberListAdapter.MB_NAME_READ, DESC)
                 }
                 4 -> {
                     NS = "AGE"
@@ -59,6 +63,7 @@ object Sort {
                 }
             }
             NameListAdapter.nowSort = NS
+
             dbAdapter.notifyDataSetChanged()
         }
         // アラートダイアログのボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
@@ -73,16 +78,22 @@ object Sort {
 
         val gpdbAdapter = GroupListAdapter(getContext())
 
-        val items = arrayOf(MyApplication.context?.getString(R.string.name_ascending), MyApplication.context?.getString(R.string.name_descending), MyApplication.context?.getString(R.string.registration_ascending), MyApplication.context?.getString(R.string.registration_descending), MyApplication.context?.getString(R.string.member_ascending), MyApplication.context?.getString(R.string.member_descending))
+        val items = arrayOf(
+                MyApplication.context?.getString(R.string.registration_ascending),
+                MyApplication.context?.getString(R.string.registration_descending),
+                MyApplication.context?.getString(R.string.name_ascending),
+                MyApplication.context?.getString(R.string.name_descending),
+                MyApplication.context?.getString(R.string.member_ascending),
+                MyApplication.context?.getString(R.string.member_descending))
         builder.setTitle(R.string.sorting)
         builder.setSingleChoiceItems(items, initial) { _, which -> initial = which }
 
         builder.setPositiveButton("OK") { _, _ ->
             when (initial) {
-                0 -> gpdbAdapter.sortGroups(GroupListAdapter.GP_NAME, ASC)
-                1 -> gpdbAdapter.sortGroups(GroupListAdapter.GP_NAME, DESC)
-                2 -> gpdbAdapter.sortGroups(GroupListAdapter.GP_ID, ASC)
-                3 -> gpdbAdapter.sortGroups(GroupListAdapter.GP_ID, DESC)
+                0 -> gpdbAdapter.sortGroups(GroupListAdapter.GP_ID, ASC)
+                1 -> gpdbAdapter.sortGroups(GroupListAdapter.GP_ID, DESC)
+                2 -> gpdbAdapter.sortGroups(GroupListAdapter.GP_NAME, ASC)
+                3 -> gpdbAdapter.sortGroups(GroupListAdapter.GP_NAME, DESC)
                 4 -> gpdbAdapter.sortGroups(GroupListAdapter.GP_BELONG, ASC)
                 5 -> gpdbAdapter.sortGroups(GroupListAdapter.GP_BELONG, DESC)
             }

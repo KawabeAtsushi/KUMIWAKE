@@ -2,6 +2,7 @@ package com.pandatone.kumiwake.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
@@ -15,9 +16,10 @@ import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.Name
 
+
 class NameListAdapter(private val context: Context, private val nameList: List<Name>) : BaseAdapter() {
     private var params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(0, 1)
-    private var nowData: String? = "ￚ no data ￚ"
+    private var nowData = "ￚ no data ￚ"
     private var preData = "ￚ no data ￚ"
     private var mSelection = SparseBooleanArray()
 
@@ -46,7 +48,7 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
 
         if (isEnabled(position)) {
 
-            if (v == null || v.tag != "member") {
+            if (v == null) {
                 v = inflater.inflate(R.layout.row_member, null)
             }
 
@@ -62,13 +64,11 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
                 nameTextView = v.findViewById<View>(R.id.memberName) as TextView
                 nameTextView.text = listItem.name
             }
+
         } else {
-            if (v == null || v.tag != "initial") {
-                v = inflater.inflate(R.layout.row_initial, null)
-            }
-            if (nowData != null) {
-                addInitial(position, v)
-            }
+            //イニシャルRow
+            v = inflater.inflate(R.layout.row_initial, null)
+            addInitial(position, v)
         }
         return v
     }
@@ -99,6 +99,8 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
             }
         }
 
+        //イニシャルRowとメンバーRowが交互に登録されているので表示するRowを選ぶ
+        //一行目の場合と、前のイニシャルRowと異なる場合に表示
         if ((nowData != preData || position == 0) && nowSort != "ID") {
             val initialText = v?.findViewById<View>(R.id.initial) as TextView
             initialText.text = nowData

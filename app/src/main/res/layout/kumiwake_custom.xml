@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/custom_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,6 +29,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/form_marginEnd"
             android:orientation="vertical">
 
             <TextView
@@ -102,12 +104,16 @@
                     android:textSize="@dimen/form_textSize"
                     android:visibility="gone" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/back_to_initial_mbNo"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:text="@string/back_to_initial_mbNo" />
+                    android:text="@string/back_to_initial_mbNo"
+                    android:textColor="#616161"
+                    android:backgroundTint = "#f5f5f5"/>
 
             </LinearLayout>
 

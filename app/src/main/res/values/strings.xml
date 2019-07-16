@@ -53,7 +53,7 @@
     <string name="kumiwake_result">Result</string>
     <string name="move_custom">move to custom</string>
     <string name="move_confirmation">move to confirmation</string>
-    <string name="no_specified">No specified</string>
+    <string name="all">All</string>
     <string name="normal_mode">Normal mode</string>
     <string name="nothing">Nothing</string>
     <string name="people">ppl</string>
@@ -67,7 +67,7 @@
     <string name="registration_ascending">Registration order(ASC)</string>
     <string name="registration_descending">Registration order(DESC)</string>
     <string name="clear">clear</string>
-    <string name="back_to_initial_mbNo">restore to previous number</string>
+    <string name="back_to_initial_mbNo">previous number</string>
     <string name="age_ascending">Age order(ASC)</string>
     <string name="age_descending">Age order(DESC)</string>
     <string name="belong">Belong</string>
