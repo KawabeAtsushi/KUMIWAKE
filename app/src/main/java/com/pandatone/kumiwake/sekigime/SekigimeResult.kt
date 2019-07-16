@@ -139,7 +139,7 @@ class SekigimeResult : AppCompatActivity() {
         setContentView(reLayout)
     }
 
-    fun convertAlternatelyFmArray() {
+    private fun convertAlternatelyFmArray() {
         var manArrayNo: Float
         var womanArrayNo: Float
         var bigger: Float
@@ -285,7 +285,7 @@ class SekigimeResult : AppCompatActivity() {
         }
     }
 
-    fun createFmArrayForNormal() {
+    private fun createFmArrayForNormal() {
         var item: Name
         arrayArrayNormalMan = ArrayList(groupNo)
         arrayArrayNormalWoman = ArrayList(groupNo)
@@ -305,7 +305,7 @@ class SekigimeResult : AppCompatActivity() {
         }
     }
 
-    fun createFmArrayForQuick() {
+    private fun createFmArrayForQuick() {
         var item: String
         arrayArrayQuickMan = ArrayList(groupNo)
         arrayArrayQuickWoman = ArrayList(groupNo)

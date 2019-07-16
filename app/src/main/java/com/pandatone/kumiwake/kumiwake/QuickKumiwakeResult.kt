@@ -31,6 +31,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
     private lateinit var groupArray: ArrayList<String>
     private lateinit var resultArray: ArrayList<String>
     private var groupNo: Int = 0
+    private var even_fm_ratio: Boolean = false
     private lateinit var arrayArray: ArrayList<ArrayList<String>>
     private lateinit var viewGroup: RelativeLayout
 
@@ -49,7 +50,6 @@ class QuickKumiwakeResult : AppCompatActivity() {
         womanArray = i.getStringArrayListExtra(QuickMode.WOMAN_LIST)
         groupArray = i.getStringArrayListExtra(QuickMode.GROUP_LIST)
         even_fm_ratio = i.getBooleanExtra(QuickMode.EVEN_FM_RATIO, false)
-        even_person_ratio = i.getBooleanExtra(QuickMode.EVEN_PERSON_RATIO, false)
         groupNo = groupArray.size
         
         viewGroup = findViewById<View>(R.id.result_view) as RelativeLayout
@@ -104,10 +104,8 @@ class QuickKumiwakeResult : AppCompatActivity() {
             arrayArray.add(ArrayList())
         }
 
-        if (even_fm_ratio&&even_person_ratio) {
+        if (even_fm_ratio) {
             kumiwakeFm(manArray.size % groupNo)
-        } else if (even_fm_ratio) {
-            kumiwakeFm(0)
         } else {
             kumiwakeAll()
         }
@@ -238,14 +236,6 @@ class QuickKumiwakeResult : AppCompatActivity() {
         v.layoutParams = setMargin(10, 12, 10, 0)
         v.background = drawable
 
-    }
-    
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    
-    companion object {
-        internal var even_fm_ratio: Boolean = false
-        internal var even_person_ratio: Boolean = false
     }
 }
 

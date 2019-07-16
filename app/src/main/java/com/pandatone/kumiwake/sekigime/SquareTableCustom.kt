@@ -13,9 +13,9 @@ import kotlinx.android.synthetic.main.square_custom.*
  * Created by atsushi_2 on 2016/07/15.
  */
 class SquareTableCustom : AppCompatActivity() {
-    internal var seatNo = 0
-    internal var mingroupNo = 1000
-    internal var doubleDeploy: Boolean = false
+    private var seatNo = 0
+    private var mingroupNo = 1000
+    private var doubleDeploy: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

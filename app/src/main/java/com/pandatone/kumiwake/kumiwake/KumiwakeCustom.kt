@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Point
 import android.os.Bundle
 import android.text.InputFilter
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
@@ -20,6 +21,13 @@ import com.pandatone.kumiwake.member.Name
 import kotlinx.android.synthetic.main.kumiwake_custom.*
 import kotlinx.android.synthetic.main.part_review_listview.*
 import java.util.*
+import android.view.MotionEvent
+import android.view.ViewTreeObserver
+import androidx.appcompat.widget.AppCompatButton
+import android.graphics.Rect
+
+
+
 
 /**
  * Created by atsushi_2 on 2016/05/27.
@@ -27,8 +35,11 @@ import java.util.*
 class KumiwakeCustom : AppCompatActivity() {
     private var mbAdapter: MBListViewAdapter? = null
     private var gpAdapter: EditGroupListAdapter? = null
-    private lateinit var memberList: ListView
-    private lateinit var groupList: ListView
+    private lateinit var memberArray: ArrayList<Name>
+    private lateinit var groupArray: ArrayList<GroupListAdapter.Group>
+    private lateinit var newGroupArray: ArrayList<GroupListAdapter.Group>
+    private var nextSet = 0
+    private var screenHeight = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,13 +53,14 @@ class KumiwakeCustom : AppCompatActivity() {
         if (intent.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) != null) {
             groupArray = intent.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) as ArrayList<GroupListAdapter.Group>
         }
-        mbAdapter = MBListViewAdapter(this, memberArray, groupArray.size)
-        gpAdapter = EditGroupListAdapter(this, groupArray)
+        mbAdapter = MBListViewAdapter(this, memberArray, true)
+        gpAdapter = EditGroupListAdapter(this, groupArray, custom_scroll)
         findViews()
         setViews()
         memberList.adapter = mbAdapter
         groupList.adapter = gpAdapter
-        setLeader()
+
+        setKeyboardListener()
 
         memberList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
@@ -56,18 +68,17 @@ class KumiwakeCustom : AppCompatActivity() {
             changeLeader(position)
         }
 
-        scrollView.post { scrollView.fullScroll(ScrollView.FOCUS_UP) }
+        custom_scroll.post { custom_scroll.fullScroll(ScrollView.FOCUS_UP) }
 
-        origMemberArray = memberArray
+        leaderNoList = arrayOfNulls(groupArray.size) //n番目にグループnのリーダーのidを格納
     }
 
+
+
     private fun findViews() {
-
-        scrollView = findViewById<ScrollView>(R.id.custom_scroll)
-        memberList = findViewById(R.id.reviewListView)
+        memberList = findViewById(R.id.memberListView)
+        groupList = findViewById(R.id.groupListView)
         memberList.emptyView = findViewById(R.id.emptyMemberList)
-        groupList = findViewById<ListView>(R.id.kumiwake_group_listView)
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -79,30 +90,7 @@ class KumiwakeCustom : AppCompatActivity() {
         group_no_txt.text = groupArray.size.toString() + " " + getText(R.string.group)
         val size = Point()
         windowManager.defaultDisplay.getSize(size)
-        val screenHeight = size.y
-        background_img.layoutParams.height = screenHeight
-    }
-
-    @SuppressLint("SetTextI18n")
-    fun setLeader() {
-        for (i in memberArray.indices) {
-            if (memberArray[i].role.matches((".*" + getText(R.string.leader) + ".*").toRegex())) {
-
-                val roleArray = memberArray[i].role.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                val list = ArrayList(Arrays.asList<String>(*roleArray))
-                val hs = HashSet<String>()
-                hs.addAll(list)
-                list.clear()
-                list.addAll(hs)
-                list.remove("")
-                list.sort()
-                val nowldNo = Integer.parseInt(list[0].substring(2))
-                groupList.post {
-                    val leader = groupList.getChildAt(nowldNo - 1).findViewById<View>(R.id.leader) as TextView
-                    leader.text = getText(R.string.leader).toString() + ":" + memberArray[i].name
-                }
-            }
-        }
+        screenHeight = size.y
     }
 
     @OnClick(R.id.normal_kumiwake_button)
@@ -145,38 +133,25 @@ class KumiwakeCustom : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun changeLeader(position: Int) {
-        val newRole = StringBuilder()
-        val roleItem = memberArray[position].role
-        if (roleItem.matches((".*" + getText(R.string.leader) + ".*").toRegex())) {
-            val list = deleteLeaderList(roleItem)
-            val nowldNo = Integer.parseInt(list[0].substring(2))
-            MBListViewAdapter.leaderNoArray?.removeAt(MBListViewAdapter.leaderNoArray!!.indexOf(nowldNo))
-            list.remove(list[0])
-            val leader = groupList.getChildAt(nowldNo - 1).findViewById<View>(R.id.leader) as TextView
+        val id = memberArray[position].id
+        val name = memberArray[position].name
+
+        //リーダー解除
+        if (leaderNoList.contains(id)) {
+
+            nextSet = leaderNoList.indexOf(id)
+            leaderNoList[nextSet] = null
+            val leader = groupList.getChildAt(nextSet).findViewById<View>(R.id.leader) as TextView
             leader.text = getText(R.string.leader).toString() + ":" + getText(R.string.nothing)
 
-            for (j in list.indices) {
-                newRole.append(list[j])
-                if (j != list.size - 1) {
-                    newRole.append(",")
-                }
-            }
-        } else {
-            MBListViewAdapter.ldNo = 1
-            while (MBListViewAdapter.leaderNoArray?.contains(MBListViewAdapter.ldNo)!!) {
-                MBListViewAdapter.ldNo++
-            }
-            if (MBListViewAdapter.ldNo != groupArray.size + 1) {
-                newRole.append(roleItem)
-                newRole.append("," + getText(R.string.leader))
-                val leader = groupList.getChildAt(MBListViewAdapter.ldNo - 1).findViewById<View>(R.id.leader) as TextView
-                leader.text = getText(R.string.leader).toString() + ":" + memberArray[position].name
-            }
+        } else if (nextSet != -1) {//最大数登録したら終わり(indexが-1返される)
+            //リーダー登録
+            leaderNoList[nextSet] = id
+            val leader = groupList.getChildAt(nextSet).findViewById<View>(R.id.leader) as TextView
+            leader.text = getText(R.string.leader).toString() + ":" + name
+            nextSet = leaderNoList.indexOfFirst { it == null }
         }
-        memberArray[position] = Name(memberArray[position].id, memberArray[position].name,
-                memberArray[position].sex, memberArray[position].age,
-                memberArray[position].grade, memberArray[position].belong, newRole.toString(),
-                memberArray[position].read)
+
         mbAdapter?.notifyDataSetChanged()
     }
 
@@ -187,19 +162,6 @@ class KumiwakeCustom : AppCompatActivity() {
             val memberNo = EditGroupListAdapter.getMemberNo(i)
             newGroupArray.add(GroupListAdapter.Group(i, groupName, "", memberNo))
         }
-    }
-
-    fun deleteLeaderList(roleItem: String): MutableList<String> {
-        val roleArray = roleItem.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
-        val list = ArrayList(Arrays.asList<String>(*roleArray))
-        val hs = HashSet<String>()
-        hs.addAll(list)
-        list.clear()
-        list.addAll(hs)
-        list.remove(R.string.leader.toString())
-        list.remove("")
-        list.sort()
-        return list
     }
 
     fun changeBelongNo(position: Int, addNo: Int) {
@@ -224,17 +186,32 @@ class KumiwakeCustom : AppCompatActivity() {
         }
     }
 
+    private fun setKeyboardListener() {
+        val activityRootView = findViewById<View>(R.id.custom_root_layout)
+        val view = findViewById<View>(R.id.normal_kumiwake_button)
+        activityRootView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            private val r = Rect()
+
+            override fun onGlobalLayout() {
+                activityRootView.getWindowVisibleDisplayFrame(r)
+                val heightDiff = activityRootView.rootView.height - r.height()
+                if (heightDiff > screenHeight*0.2) {
+                    view.visibility = View.GONE
+                } else {
+                    view.visibility = View.VISIBLE
+                }
+            }
+        })
+    }
+
     companion object {
 
         const val EVEN_FM_RATIO = "even_fm_ratio"
         const val EVEN_AGE_RATIO = "even_age_ratio"
 
-        lateinit var scrollView: ScrollView
-
-        lateinit var memberArray: ArrayList<Name>
-        lateinit var origMemberArray: ArrayList<Name>
-        lateinit var groupArray: ArrayList<GroupListAdapter.Group>
-        lateinit var newGroupArray: ArrayList<GroupListAdapter.Group>
+        internal var leaderNoList: Array<Int?> = emptyArray()
+        internal lateinit var memberList: ListView
+        internal lateinit var groupList: ListView
 
     }
 

@@ -25,9 +25,9 @@ import java.util.*
 class AddGroup : AppCompatActivity() {
     private var textInputLayout: TextInputLayout? = null
     private var nextId = FragmentGroup.dbAdapter.maxId + 1
-    internal lateinit var adapter: MBListViewAdapter
+    private lateinit var adapter: MBListViewAdapter
     private lateinit var listView: ListView
-    internal var position: Int = 0
+    private var position: Int = 0
 
     private val clicked = View.OnClickListener { moveMemberMain() }
 
@@ -59,7 +59,7 @@ class AddGroup : AppCompatActivity() {
     protected fun findViews() {
         groupEditText = findViewById<View>(R.id.input_group) as AppCompatEditText
         textInputLayout = findViewById<View>(R.id.group_form_input_layout) as TextInputLayout
-        listView = findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.reviewListView) as ListView
+        listView = findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.memberListView) as ListView
         numberOfSelectedMember = findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.numberOfSelectedMember) as TextView
         listView.emptyView = findViewById<View>(R.id.add_group_listview).findViewById(R.id.emptyMemberList)
         val addMember = findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.member_add_btn) as Button
@@ -74,7 +74,7 @@ class AddGroup : AppCompatActivity() {
         } else {
             FragmentMember().searchBelong(FragmentGroup.nameList[position].id.toString())
         }
-        adapter = MBListViewAdapter(this@AddGroup, nameByBelong, 0)
+        adapter = MBListViewAdapter(this@AddGroup, nameByBelong, true)
         listView.adapter = adapter
         numberOfSelectedMember.text = adapter.count.toString() + getString(R.string.people) + getString(R.string.selected)
         FragmentMember().duplicateBelong()

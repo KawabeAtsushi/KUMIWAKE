@@ -33,14 +33,14 @@ class NormalKumiwakeResult : AppCompatActivity() {
     private lateinit var memberArray: ArrayList<Name>
     private lateinit var manArray: ArrayList<Name>
     private lateinit var womanArray: ArrayList<Name>
-    private lateinit var resultArray: ArrayList<Name>
+    private lateinit var leaderArray: ArrayList<Name>
     private lateinit var groupArray: ArrayList<GroupListAdapter.Group>
     private lateinit var arrayArray: ArrayList<ArrayList<Name>>
-    internal var groupCount: Int = 0
-    internal var memberSize: Int = 0
-    internal var memberSum = 0
-    internal var v = 0
-    internal var nowGroupNo = 0
+    private var groupCount: Int = 0
+    private var memberSize: Int = 0
+    private var even_fm_ratio: Boolean = false
+    private var v = 0
+    private var nowGroupNo = 0
     private var timer: Timer? = null
     private lateinit var timerTask: TimerTask
 
@@ -60,12 +60,16 @@ class NormalKumiwakeResult : AppCompatActivity() {
         if (i.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) != null) {
             groupArray = i.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) as ArrayList<GroupListAdapter.Group>
         }
+        if (i.getSerializableExtra(NormalKumiwakeConfirmation.LEADER_ARRAY) != null) {
+            leaderArray = i.getSerializableExtra(NormalKumiwakeConfirmation.LEADER_ARRAY) as ArrayList<Name>
+        }
+
         even_fm_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_FM_RATIO, false)
         even_age_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_AGE_RATIO, false)
         groupCount = groupArray.size
         memberSize = memberArray.size
 
-        Log.d("memberSize",memberSize.toString())
+        Log.d("memberSize", memberSize.toString())
 
         startMethod()
 
@@ -112,32 +116,35 @@ class NormalKumiwakeResult : AppCompatActivity() {
         memberArray.shuffle()
 
         arrayArray = ArrayList(groupCount)
+
         for (g in 0 until groupCount) {
             arrayArray.add(ArrayList())
         }
 
         if (even_fm_ratio) {
-            CreateFmArray()    //男女それぞれの配列を作成
+            createFmArray()    //男女それぞれの配列を作成
         }
 
-        if (!even_fm_ratio && !even_age_ratio) {
+        if (even_fm_ratio && even_age_ratio) {
+            evenKumiwakeSetter(manArray, womanArray, "age")
+            evenCreateGroup(manArray)
+            evenCreateGroup(womanArray)
+        } else if (even_fm_ratio) {
+            evenKumiwakeSetter(manArray, womanArray, "")
+            evenCreateGroup(manArray)
+            evenCreateGroup(womanArray)
+        } else if (even_age_ratio) {
+            evenKumiwakeSetter(memberArray, null, "age")
+            evenCreateGroup(memberArray)
+        } else {
             kumiwakeAll()
-        } else if (even_fm_ratio && !even_age_ratio) {
-            EvenKumiwakeSetter(manArray, womanArray, "")
-            EvenCreateGroup(manArray)
-            EvenCreateGroup(womanArray)
-        } else if (!even_fm_ratio && even_age_ratio) {
-            EvenKumiwakeSetter(memberArray, null, "age")
-            EvenCreateGroup(memberArray)
         }
     }
 
 
     fun addGroupView() {
         if (v < groupCount) {
-            resultArray = arrayArray[v]
-            Collections.sort(resultArray, KumiwakeLeaderComparator())
-            addView(resultArray, v)
+            addView(arrayArray[v], v)
             v++
         }
         if (v == groupCount) {
@@ -147,7 +154,6 @@ class NormalKumiwakeResult : AppCompatActivity() {
 
     @OnClick(R.id.re_kumiwake)
     internal fun onReKumiwake() {
-        memberSum = 0
         v = 0
         nowGroupNo = 0
         timerTask = MyTimerTask(this)
@@ -188,15 +194,15 @@ class NormalKumiwakeResult : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun kumiwakeAll() {
-        setLeader(memberArray)
+    private fun kumiwakeAll() {
+        setLeader(leaderArray)
+
+        var sum = 0
 
         for (i in 0 until groupCount) {
-            val belongNo = groupArray[i].belongNo - arrayArray[i].size  //グループの規定人数－グループの現在数
-            resultArray = kumiwakeCreateGroup(memberArray, belongNo)
-            for (j in resultArray.indices) {
-                arrayArray[i].add(resultArray[j])
-            }
+            val addNo = groupArray[i].belongNo - arrayArray[i].size  //グループの規定人数－グループの現在数
+            arrayArray[i].addAll(kumiwakeCreateGroup(memberArray, addNo, sum))
+            sum += addNo
         }
     }
 
@@ -204,20 +210,17 @@ class NormalKumiwakeResult : AppCompatActivity() {
     //　　　　　　　　　　　　　　　　　　　　　　　　各種処理メソッド                                                           ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun setLeader(array: ArrayList<Name>) {
+    private fun setLeader(array: ArrayList<Name>) {
+        var id = 0
+        val leaderNoList = KumiwakeCustom.leaderNoList
+
         for (i in array.indices) {
-            if (array[i].role.matches((".*" + getText(R.string.leader) + ".*").toRegex())) {
-                val roleArray = array[i].role.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                val list = ArrayList(Arrays.asList<String>(*roleArray))
-                list.remove("")
-                list.sort()
-                val LDNo = Integer.parseInt(list[0].substring(2))
-                arrayArray[LDNo - 1].add(array[i])
-            }
+            id = array[i].id
+            arrayArray[leaderNoList.indexOf(id)].add(array[i])
         }
     }
 
-    fun CreateFmArray() {
+    private fun createFmArray() {
         manArray = ArrayList()
         womanArray = ArrayList()
 
@@ -234,43 +237,32 @@ class NormalKumiwakeResult : AppCompatActivity() {
         }
     }
 
-    fun EvenKumiwakeSetter(array1: ArrayList<Name>, array2: ArrayList<Name>?, sortCode: String) {
+    private fun evenKumiwakeSetter(array1: ArrayList<Name>, array2: ArrayList<Name>?, sortCode: String) {
 
         if (sortCode == "age") {
             array1.shuffle()
-            Collections.sort(array1, KumiwakeNumberComparator())
+            Collections.sort(array1, KumiwakeAgeComparator())
         }
         if (sortCode == "age" && array2 != null) {
             array2.shuffle()
-            Collections.sort(array2, KumiwakeNumberComparator())
+            Collections.sort(array2, KumiwakeAgeComparator())
         }
-        setLeader(array1)
-        if (array2 != null) {
-            setLeader(array2)
-        }
+
+        setLeader(leaderArray)
     }
 
-    private fun kumiwakeCreateGroup(array: ArrayList<Name>, belongNo: Int): ArrayList<Name> {
+    private fun kumiwakeCreateGroup(array: ArrayList<Name>, addNo: Int, sum: Int): ArrayList<Name> {
         val result = ArrayList<Name>()
 
-        for (j in 0 until belongNo) {
-            if (memberSum < array.size) {
-                while (array[memberSum].role.matches((".*" + getText(R.string.leader) + ".*").toRegex())) {
-                    memberSum++
-                }
-                while (memberSum != array.size && array[memberSum].role.matches(".*$.*".toRegex())) {
-                    memberSum++
-                }
-                if (memberSum < array.size) {
-                    result.add(array[memberSum])
-                    memberSum++
-                }
-            }
+        for (i in 0 until addNo) {
+            result.add(array[sum + i])
         }
+
+        Collections.sort(result, KumiwakeViewComparator())
         return result
     }
 
-    private fun EvenCreateGroup(array: ArrayList<Name>) {
+    private fun evenCreateGroup(array: ArrayList<Name>) {
         val groupCapacity = IntArray(groupCount)
         var addGroupNo = 0
         var nowGroupMemberCount: Int
@@ -314,15 +306,11 @@ class NormalKumiwakeResult : AppCompatActivity() {
         }
 
         val fullNo = BooleanArray(groupCount)  //要素数が許容格納数に達しているグループはtrue
-        memberSum = 0
+        var memberSum = 0
         nowGroupNo = 0
         nowGroupMemberCount = arrayArray[0].size
 
         while (memberSum < array.size) {
-
-            while (memberSum < array.size && (array[memberSum].role.matches((".*" + getText(R.string.leader) + ".*").toRegex()) || array[memberSum].role.matches(".*$.*".toRegex()))) {
-                memberSum++
-            }
 
             if (array === manArray) {
 
@@ -395,7 +383,7 @@ class NormalKumiwakeResult : AppCompatActivity() {
         groupName = v.findViewById<View>(R.id.result_group) as TextView
         groupName.text = groupArray[i].group
         arrayList = v.findViewById<View>(R.id.result_member_listView) as ListView
-        val adapter = MBListViewAdapter(this, resultArray, 2000)
+        val adapter = MBListViewAdapter(this, resultArray, false)
         arrayList.adapter = adapter
         setBackGround(v)
         MBListViewAdapter.setRowHeight(arrayList, adapter)
@@ -432,8 +420,7 @@ class NormalKumiwakeResult : AppCompatActivity() {
         v.background = drawable
     }
 
-    companion object {
-        internal var even_fm_ratio: Boolean = false
+    companion object{
         internal var even_age_ratio: Boolean = false
     }
 }
@@ -451,42 +438,15 @@ internal class MyTimerTask(private val context: Context) : TimerTask() {
 
 }
 
-internal class KumiwakeLeaderComparator : Comparator<Name> {
+internal class KumiwakeViewComparator : Comparator<Name> {
 
     override fun compare(n1: Name, n2: Name): Int {
         var value = 0
-        val leader = ".*" + R.string.leader.toString() + ".*"
 
-        if (n1.role.matches(leader.toRegex()) && !n2.role.matches(leader.toRegex())) {
-            value = -1
-        } else if (n2.role.matches(leader.toRegex()) && !n1.role.matches(leader.toRegex())) {
-            value = 1
-        }
+        val n1_sex = n1.sex
+        val n2_sex = n2.sex
 
-        if (n1.role.matches(leader.toRegex()) && n2.role.matches(leader.toRegex())) {
-            val roleArray1 = n1.role.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            val roleArray2 = n2.role.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            val list1 = ArrayList(Arrays.asList<String>(*roleArray1))
-            val list2 = ArrayList(Arrays.asList<String>(*roleArray2))
-            list1.remove("")
-            list2.remove("")
-            list1.sort()
-            list2.sort()
-            val LDNo1 = Integer.parseInt(list1[0].substring(2))
-            val LDNo2 = Integer.parseInt(list2[0].substring(2))
-            if (LDNo1 < LDNo2) {
-                value = -1
-            } else {
-                value = 1
-            }
-        }
-
-        if (value == 0) {
-            val n1_sex = n1.sex
-            val n2_sex = n2.sex
-
-            value = n2_sex.compareTo(n1_sex)
-        }
+        value = n2_sex.compareTo(n1_sex)
 
         if (NormalKumiwakeResult.even_age_ratio) {
             if (value == 0) {
@@ -506,7 +466,7 @@ internal class KumiwakeLeaderComparator : Comparator<Name> {
     }
 }
 
-internal class KumiwakeNumberComparator : Comparator<Name> {
+internal class KumiwakeAgeComparator : Comparator<Name> {
 
     override fun compare(n1: Name, n2: Name): Int {
         var value = 0
@@ -518,6 +478,19 @@ internal class KumiwakeNumberComparator : Comparator<Name> {
             n1_age > n2_age -> 1
             else -> 0
         }
+
+        return value
+    }
+}
+
+internal class KumiwakeLeaderComparator : Comparator<Name> {
+
+    override fun compare(n1: Name, n2: Name): Int {
+        var value = 0
+
+        val n1_ld = n1.role
+        val n2_ld = n2.role
+        value = n1_ld.compareTo(n2_ld)
 
         return value
     }

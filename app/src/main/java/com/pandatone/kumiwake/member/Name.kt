@@ -21,7 +21,7 @@ class Name(id: Int, name: String, sex: String, age: Int, grade: Int, belong: Str
     var belong: String
         private set
     var role: String
-        private set
+        set
 
     init {
         this.id = id

@@ -16,11 +16,11 @@ import com.pandatone.kumiwake.adapter.MBListViewAdapter
  */
 @SuppressLint("StaticFieldLeak")
 object GroupClick {
-    internal lateinit var group: TextView
-    internal lateinit var number: TextView
-    internal lateinit var belongMb: TextView
-    internal lateinit var belongList: ListView
-    internal lateinit var okBt: Button
+    private lateinit var group: TextView
+    private lateinit var number: TextView
+    private lateinit var belongMb: TextView
+    private lateinit var belongList: ListView
+    lateinit var okBt: Button
 
     val context = MyApplication.context
 
@@ -41,7 +41,7 @@ object GroupClick {
     @SuppressLint("SetTextI18n")
     fun setInfo(position: Int) {
         val nameByBelong = FragmentMember().searchBelong(FragmentGroup.nameList[position].id.toString())
-        val adapter = MBListViewAdapter(context!!, nameByBelong, 0)
+        val adapter = MBListViewAdapter(context!!, nameByBelong, true)
 
         group.text = "${context.getText(R.string.group_name)} : ${FragmentGroup.nameList[position].group}"
         number.text = "${context.getText(R.string.number_of_member)} : ${adapter.count}${context.getString(R.string.people)}"

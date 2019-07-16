@@ -1,30 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/custom_root_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/background_img"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/normal_img" />
-
+    android:layout_height="match_parent"
+    android:background="@drawable/normal_img">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/normal_kumiwake_button"
         android:layout_width="match_parent"
         android:layout_height="@dimen/under_button_height"
+        android:background="@drawable/next_green_button"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:background="#3cee2f"
-        android:drawableEnd="@drawable/ic_arrow_back"
-        android:paddingEnd="10dp"
+        android:drawableEnd="@drawable/ic_arrow_black"
         android:text="@string/move_confirmation"
         android:textColor="@android:color/white"
-        android:textSize="20sp" />
-
+        android:textSize="20sp"
+        android:textAlignment="center"/>
 
     <ScrollView
         android:id="@+id/custom_scroll"
@@ -35,7 +29,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@id/normal_kumiwake_button"
+            android:layout_marginBottom="@dimen/form_marginEnd"
             android:orientation="vertical">
 
             <TextView
@@ -90,15 +84,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:layout_marginTop="@dimen/form_marginTop"
+                    android:layout_marginTop="@dimen/form_between_margin"
                     android:layout_marginEnd="15dp"
                     android:textSize="15sp" />
 
                 <ListView
-                    android:id="@+id/kumiwake_group_listView"
+                    android:id="@+id/groupListView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/form_marginTop" />
+                    android:layout_marginTop="@dimen/form_between_margin" />
 
                 <TextView
                     android:id="@+id/error_member_no_txt"
@@ -110,12 +104,16 @@
                     android:textSize="@dimen/form_textSize"
                     android:visibility="gone" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/back_to_initial_mbNo"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:text="@string/back_to_initial_mbNo" />
+                    android:layout_gravity="end"
+                    android:text="@string/back_to_initial_mbNo"
+                    android:textColor="#616161"
+                    android:backgroundTint = "#f5f5f5"/>
 
             </LinearLayout>
 
@@ -149,6 +147,7 @@
 
 
         </LinearLayout>
+
     </ScrollView>
 
 </RelativeLayout>

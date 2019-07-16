@@ -51,7 +51,7 @@ class NormalMode : AppCompatActivity() {
     }
 
     private fun findViews() {
-        listView = findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.reviewListView) as ListView
+        listView = findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.memberListView) as ListView
         listView.emptyView = findViewById<View>(R.id.add_group_listview).findViewById(R.id.emptyMemberList)
         gpNoEditText = findViewById<View>(R.id.group_no_form) as AppCompatEditText
         errorGroup = findViewById<View>(R.id.error_group_no_txt) as TextView
@@ -112,7 +112,7 @@ class NormalMode : AppCompatActivity() {
 
         if (resultCode == Activity.RESULT_OK) {
             memberArray = i!!.getSerializableExtra(MEMBER_ARRAY) as ArrayList<Name>
-            adapter = MBListViewAdapter(this, memberArray, 1000)
+            adapter = MBListViewAdapter(this, memberArray, false)
             listView.adapter = adapter
             MBListViewAdapter.setRowHeight(listView, adapter!!)
 

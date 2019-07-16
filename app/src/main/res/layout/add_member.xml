@@ -1,169 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/addmember_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:parentActivityName=".MemberMain">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/request_background"
+            android:text="@string/add_member"
+            android:textSize="20sp" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/member_form_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/form_marginStart"
+            android:layout_marginTop="@dimen/form_marginTop"
+            android:layout_marginEnd="@dimen/form_marginEnd"
+            android:hint="@string/member_name"
+            app:helperText="@string/input_required">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="20"
+                android:inputType="textPersonName"
+                android:singleLine="true" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/form_marginStart"
+            android:layout_marginTop="@dimen/form_marginTop"
+            android:layout_marginEnd="@dimen/form_marginEnd"
+            android:hint="@string/member_name_read">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_name_read"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="20"
+                android:inputType="textPersonName"
+                android:singleLine="true" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/request_background"
-                android:text="@string/add_member"
-                android:textSize="20sp" />
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/member_form_input_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/form_marginStart"
-                android:layout_marginTop="@dimen/form_marginTop"
-                android:layout_marginEnd="@dimen/form_marginEnd"
-                android:hint="@string/member_name"
-                app:helperText="@string/input_required">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="20"
-                    android:inputType="textPersonName"
-                    android:singleLine="true" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
+            android:layout_marginTop="@dimen/form_marginTop"
+            android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/form_marginStart"
-                android:layout_marginTop="@dimen/form_marginTop"
                 android:layout_marginEnd="@dimen/form_marginEnd"
-                android:hint="@string/member_name_read">
+                android:hint="@string/age">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_name_read"
-                    android:layout_width="match_parent"
+                    android:id="@+id/input_age"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ems="20"
-                    android:inputType="textPersonName"
+                    android:ems="4"
+                    android:inputType="number"
+                    android:maxLength="3"
                     android:singleLine="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/form_marginTop"
+            <RadioGroup
+                android:id="@+id/sexGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_gravity="fill"
+                android:layout_marginStart="50dp"
+                android:checkedButton="@+id/manBtn"
                 android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/form_marginStart"
-                    android:layout_marginEnd="@dimen/form_marginEnd"
-                    android:hint="@string/age">
+                <RadioButton
+                    android:id="@+id/manBtn"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/man_radio_button"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/man"
+                    android:textColor="@drawable/radio_button_color" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/input_age"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="4"
-                        android:inputType="number"
-                        android:maxLength="3"
-                        android:singleLine="true" />
+                <RadioButton
+                    android:id="@+id/womanBtn"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/woman_radio_button"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/woman"
+                    android:textColor="@drawable/radio_button_color" />
 
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <RadioGroup
-                    android:id="@+id/sexGroup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_gravity="fill"
-                    android:layout_marginStart="50dp"
-                    android:checkedButton="@+id/manBtn"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/manBtn"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/man_radio_button"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="@string/man"
-                        android:textColor="@drawable/radio_button_color" />
-
-                    <RadioButton
-                        android:id="@+id/womanBtn"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/woman_radio_button"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="@string/woman"
-                        android:textColor="@drawable/radio_button_color" />
-
-                </RadioGroup>
-
-            </LinearLayout>
-
-            <!--spinner-->
-            <Button
-                android:id="@+id/select_group_spinner"
-                style="@android:style/Widget.Spinner"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="@dimen/form_marginTop"
-                android:layout_marginStart="@dimen/form_marginStart"
-                android:layout_marginEnd="@dimen/form_marginStart"
-                android:ellipsize="end"
-                android:hint="@string/select_belong_group"
-                android:singleLine="true" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/form_marginEnd"
-                android:orientation="horizontal"
-                android:layout_gravity="end|bottom">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/member_cancel_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:text="@string/cancel"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/member_registration_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-                    android:text="@string/registration"/>
-
-            </LinearLayout>
+            </RadioGroup>
 
         </LinearLayout>
-    </ScrollView>
 
-</FrameLayout>
+        <!--spinner-->
+        <Button
+            android:id="@+id/select_group_spinner"
+            style="@android:style/Widget.Spinner"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="@dimen/form_marginStart"
+            android:layout_marginTop="@dimen/form_marginTop"
+            android:layout_marginEnd="@dimen/form_marginStart"
+            android:ellipsize="end"
+            android:hint="@string/select_belong_group"
+            android:singleLine="true" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="@dimen/form_marginEnd"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/member_cancel_btn"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/member_registration_btn"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/registration"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
