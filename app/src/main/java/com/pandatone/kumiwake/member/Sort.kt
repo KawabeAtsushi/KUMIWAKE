@@ -74,9 +74,9 @@ object Sort {
 
     }
 
-    fun groupSort(builder: androidx.appcompat.app.AlertDialog.Builder) {
+    fun groupSort(builder: androidx.appcompat.app.AlertDialog.Builder,activity: Activity) {
 
-        val gpdbAdapter = GroupListAdapter(getContext())
+        val gpdbAdapter = GroupListAdapter(activity)
 
         val items = arrayOf(
                 MyApplication.context?.getString(R.string.registration_ascending),
@@ -106,10 +106,6 @@ object Sort {
         // back keyを使用不可に設定
         builder.setCancelable(false)
 
-    }
-
-    private fun getContext(): Context {
-        return MemberMain().context
     }
 
 }

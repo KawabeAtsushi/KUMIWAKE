@@ -69,8 +69,6 @@ class NormalKumiwakeResult : AppCompatActivity() {
         groupCount = groupArray.size
         memberSize = memberArray.size
 
-        Log.d("memberSize", memberSize.toString())
-
         startMethod()
 
         if (!KumiwakeSelectMode.sekigime) {

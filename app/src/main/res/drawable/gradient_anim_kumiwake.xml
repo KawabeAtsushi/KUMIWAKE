@@ -4,15 +4,15 @@
     <!-- duration：表示間隔[msec]-->
     <item
         android:drawable="@drawable/gradient_thick_red"
-        android:duration="4000" />
+        android:duration="@integer/anim_duration_long" />
     <item
-        android:drawable="@drawable/gradient_thin_red"
-        android:duration="@integer/anim_duration" />
+        android:drawable="@drawable/gradient_middle"
+        android:duration="@integer/anim_duration_short" />
     <item
         android:drawable="@drawable/gradient_thick_green"
-        android:duration="@integer/anim_duration" />
+        android:duration="@integer/anim_duration_long" />
     <item
-        android:drawable="@drawable/gradient_thin_red"
-        android:duration="@integer/anim_duration" />
+        android:drawable="@drawable/gradient_middle"
+        android:duration="@integer/anim_duration_short" />
 
 </animation-list>

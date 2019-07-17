@@ -46,8 +46,8 @@ class KumiwakeSelectMode : AppCompatActivity() {
             layout.background = getDrawable(R.drawable.gradient_anim_kumiwake)
         }
         val animDrawable = layout.background as AnimationDrawable
-        animDrawable.setEnterFadeDuration(resources.getInteger(R.integer.anim_duration))
-        animDrawable.setExitFadeDuration(resources.getInteger(R.integer.anim_duration))
+        animDrawable.setEnterFadeDuration(resources.getInteger(R.integer.anim_duration_short))
+        animDrawable.setExitFadeDuration(resources.getInteger(R.integer.anim_duration_short))
         animDrawable.start()
 
         ButterKnife.bind(this)
