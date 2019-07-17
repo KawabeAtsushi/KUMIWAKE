@@ -72,7 +72,6 @@ class FragmentGroup : ListFragment() {
     // Viewの生成が完了した後に呼ばれる
     // UIパーツの設定などを行う
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        ListCount = listView.count
         listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE_MODAL
         listView.setMultiChoiceModeListener(Callback())
         listView.isFastScrollEnabled = true
@@ -136,9 +135,9 @@ class FragmentGroup : ListFragment() {
                 Sort.groupSort(builder, activity!!)
                 val dialog = builder.create()
                 dialog.show()
-                ListCount = listView.count
             }
         }
+        ListCount = listView.count
 
         return false
     }
@@ -171,12 +170,13 @@ class FragmentGroup : ListFragment() {
             val listId = listItem.id
             dbAdapter.selectDelete(listId.toString())
             dbAdapter.close()    // DBを閉じる
-            loadName()
         }
 
         builder.setNegativeButton(R.string.cancel) { _, _ -> }
         val dialog = builder.create()
         dialog.show()
+
+        loadName()
     }
 
     fun deleteGroup() {
@@ -285,9 +285,9 @@ class FragmentGroup : ListFragment() {
                     Sort.groupSort(builder,activity!!)
                     val dialog = builder.create()
                     dialog.show()
-                    ListCount = listView.count
                 }
             }
+            ListCount = listView.count
             return false
         }
 
@@ -323,13 +323,7 @@ class FragmentGroup : ListFragment() {
         val c = dbAdapter.allNames
         dbAdapter.getCursor(c)
         dbAdapter.close()
-    }
-
-    //表示ビューを選択しなおす
-    fun actionCheckRefresh(){
-        for (i in 0 until ListCount) {
-            listView.setItemChecked(i, true)
-        }
+        dbAdapter.notifyDataSetChanged()
     }
 
     companion object {

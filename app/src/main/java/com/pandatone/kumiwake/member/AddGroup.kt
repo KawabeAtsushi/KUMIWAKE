@@ -56,7 +56,7 @@ class AddGroup : AppCompatActivity() {
         FragmentMember().deleteBelongInfoAll(nextId)
     }
 
-    protected fun findViews() {
+    private fun findViews() {
         groupEditText = findViewById<View>(R.id.input_group) as AppCompatEditText
         textInputLayout = findViewById<View>(R.id.group_form_input_layout) as TextInputLayout
         listView = findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.memberListView) as ListView

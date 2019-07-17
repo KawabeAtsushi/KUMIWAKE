@@ -1,18 +1,24 @@
 package com.pandatone.kumiwake.setting
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NavUtils
 import androidx.core.app.ShareCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.PermissionChecker
 import butterknife.ButterKnife
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.customize.CustomDialog
@@ -55,11 +61,7 @@ class SettingHelp : AppCompatActivity() {
         }
         back_up_list.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
-            when (position) {
-                0 -> onBackup()
-                1 -> onImport()
-                2 -> onDeleteBackup()
-            }
+            checkPermission(this,position)
         }
         other_list.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
@@ -177,6 +179,70 @@ class SettingHelp : AppCompatActivity() {
         // Shareアプリ一覧のDialogの表示
         builder.startChooser()
 
+    }
+
+    /////////////////////////パーミッション/////////////////////////////////////////////////
+
+    private val REQUEST_PERMISSION = 1000
+    private var position = 0
+
+    // ストレージ許可の確認
+    private fun checkPermission(c: Context,pos:Int) {
+        position = pos
+
+        if (ContextCompat.checkSelfPermission(c,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            // 既に許可している
+            when (position) {
+                0 -> onBackup()
+                1 -> onImport()
+                2 -> onDeleteBackup()
+            }
+        } else {
+            // 拒否していた場合
+            requestPermission()
+        }
+    }
+
+    // 許可を求める
+    private fun requestPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    REQUEST_PERMISSION)
+
+        } else {
+            val toast = Toast.makeText(this,
+                    getText(R.string.please_permit), Toast.LENGTH_SHORT)
+            toast.show()
+
+            ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    REQUEST_PERMISSION)
+
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>,
+                                            grantResults: IntArray) {
+        if (requestCode == REQUEST_PERMISSION) {
+            // 使用が許可された
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                when (position) {
+                    0 -> onBackup()
+                    1 -> onImport()
+                    2 -> onDeleteBackup()
+                }
+
+            } else {
+                // それでも拒否された時の対応
+                val toast = Toast.makeText(this,
+                        getText(R.string.please_permit), Toast.LENGTH_SHORT)
+                toast.show()
+            }
+        }
     }
 
 }

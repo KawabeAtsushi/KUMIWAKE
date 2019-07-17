@@ -83,8 +83,8 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageScrollStateChanged(state: Int) {
                 page = viewPager.currentItem
-                val itemfilter = menu.findItem(R.id.item_filter)
-                itemfilter.isVisible = page != 1
+                val itemFilter = menu.findItem(R.id.item_filter)
+                itemFilter.isVisible = page != 1
             }
         })
 
@@ -132,11 +132,6 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         return false
     }
 
-    public override fun onRestart() {
-        super.onRestart()
-        reload()
-    }
-
     override fun onQueryTextSubmit(query: String): Boolean {
         return false
     }
@@ -153,12 +148,6 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         }
 
         return false
-    }
-
-    fun reload() {
-        val i = Intent(this, MemberMain::class.java)
-        finish()
-        startActivity(i)
     }
 
     companion object {

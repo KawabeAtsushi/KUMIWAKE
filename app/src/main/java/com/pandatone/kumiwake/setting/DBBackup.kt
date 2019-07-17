@@ -1,13 +1,28 @@
 package com.pandatone.kumiwake.setting
 
+import android.Manifest
 import android.content.Context
+import android.os.Build
 import android.os.Environment
+import android.util.Log
 import android.widget.Toast
+import androidx.core.content.PermissionChecker.checkPermission
 import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
 import java.io.*
+import android.content.pm.PackageManager
+import androidx.annotation.NonNull
+import android.Manifest.permission
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import androidx.core.app.ActivityCompat
+import com.pandatone.kumiwake.kumiwake.MainActivity
+import androidx.core.content.ContextCompat
+
+
+
+
 
 object DBBackup {
     private lateinit var sd_dir: String
@@ -21,6 +36,7 @@ object DBBackup {
         getPath(c)
 
         val f = File(dir_path)
+
         b = f.exists()           //SDカードにkumiwakeディレクトリがあるか。
         if (!b) {          //ディレクトリが存在しないので作成。
             b = f.mkdirs()    //　sdcard/kumiwakeディレクトリを作ってみる。
@@ -34,7 +50,7 @@ object DBBackup {
         fileCopy(gp_db_file, "$dir_path/gp.db", c, true)//DBのファイルをSDにコピー
     }
 
-    fun DBImport(c: Context) {
+    fun dbImport(c: Context) {
         getPath(c)
 
         val f = File(dir_path)
@@ -82,6 +98,7 @@ object DBBackup {
     }
 
     private fun getPath(c: Context) {
+
         sd_dir = Environment.getExternalStorageDirectory().path     //SDカードディレクトリ
         sd_stt = Environment.getExternalStorageState()           //SDカードの状態を取得
         val dbAdapter = MemberListAdapter(MyApplication.context!!)
