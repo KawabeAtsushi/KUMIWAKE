@@ -152,4 +152,5 @@
                                     ↓↓ダウンロードはこちら↓↓</string>
     <string name="wait_for_implementation">\n実装をお待ちください。(時期未定)\n</string>
     <string name="member_name_read">読み</string>
+    <string name="please_permit">ストレージの使用を許可してください。</string>
 </resources>

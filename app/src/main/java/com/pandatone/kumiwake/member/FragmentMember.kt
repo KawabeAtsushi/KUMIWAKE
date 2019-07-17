@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.ListFragment
@@ -82,6 +83,7 @@ class FragmentMember : ListFragment() {
             if (MemberMain.searchView.isActivated)
                 MemberMain.searchView.onActionViewCollapsed()
             FragmentGroup().loadName()
+            listCount = listView.count
 
             val items = arrayOf(MyApplication.context!!.getText(R.string.information), MyApplication.context!!.getText(R.string.edit), MyApplication.context!!.getText(R.string.delete))
             builder.setTitle(memberName)
@@ -123,7 +125,7 @@ class FragmentMember : ListFragment() {
             listView.startActionMode(CallbackMB())
             dbAdapter.open()
             var i = 1
-            while (i < listView.count) {
+            while (i < listCount) {
                 listItem = nameList[i]
                 val belongText = listItem.belong
                 val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -145,7 +147,7 @@ class FragmentMember : ListFragment() {
             dbAdapter.open()
             for (j in memberArray.indices) {
                 var i = 1
-                while (i < listView.count) {
+                while (i < listCount) {
                     listItem = nameList[i]
                     if (listItem.id == memberArray[j].id) {
                         listView.setItemChecked(i, !listAdp?.isPositionChecked(i)!!)
@@ -164,15 +166,15 @@ class FragmentMember : ListFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
+        listCount = listView.count
+
         // アクションアイテム選択時
         when (item!!.itemId) {
             android.R.id.home -> activity!!.finish()
 
-            R.id.item_delete -> deleteMember()
-
             R.id.item_all_select -> {
                 var i = 1
-                while (i < listView.count) {
+                while (i < listCount) {
                     listView.setItemChecked(i, true)
                     i += 2
                 }
@@ -209,38 +211,14 @@ class FragmentMember : ListFragment() {
             val listId = listItem.id
             dbAdapter.selectDelete(listId.toString())
             dbAdapter.close()    // DBを閉じる
-            parent.reload()
+            loadName()
+            dbAdapter.notifyDataSetChanged()
+            listCount = listView.count
         }
 
         builder.setNegativeButton(R.string.cancel) { _, _ -> }
         val dialog = builder.create()
         dialog.show()
-    }
-
-    private fun deleteMember() {
-        // アラートダイアログ表示
-        val builder = androidx.appcompat.app.AlertDialog.Builder(parent.applicationContext)
-        builder.setTitle(checkedCount.toString() + " " + MyApplication.context?.getString(R.string.member) + MyApplication.context?.getString(R.string.delete))
-        builder.setMessage(R.string.Do_delete)
-        // OKの時の処理
-        builder.setPositiveButton("OK") { _, _ ->
-            dbAdapter.open()     // DBの読み込み(読み書きの方)
-            var i = 1
-            while (i < listView.count) {
-                val booleanArray = listView.checkedItemPositions
-                val checked = booleanArray.get(i)
-                if (checked) {
-                    // IDを取得する
-                    listItem = nameList[i]
-                    val listId = listItem.id
-                    dbAdapter.selectDelete(listId.toString())     // DBから取得したIDが入っているデータを削除する
-                }
-                i += 2
-            }
-            dbAdapter.close()    // DBを閉じる
-            listAdp?.clearSelection()
-            parent.reload()
-        }
     }
 
     private fun filter(layout: View, spinner: Spinner, clear: Boolean) {
@@ -355,7 +333,7 @@ class FragmentMember : ListFragment() {
             if (!MemberMain.kumiwake_select) {
                 dbAdapter.open()     // DBの読み込み(読み書きの方)
                 var i = 1
-                while (i < listView.count) {
+                while (i < listCount) {
                     val checked = booleanArray.get(i)
                     listItem = nameList[i]
                     val listId = listItem.id
@@ -395,13 +373,15 @@ class FragmentMember : ListFragment() {
 
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
+            listCount = listView.count
+
             // アクションアイテム選択時
             when (item.itemId) {
                 R.id.item_delete -> deleteMember()
 
                 R.id.item_all_select -> {
                     var i = 1
-                    while (i < listView.count) {
+                    while (i < listCount) {
                         listView.setItemChecked(i, true)
                         i += 2
                     }
@@ -418,6 +398,7 @@ class FragmentMember : ListFragment() {
 
                 }
             }
+
             return false
         }
 
@@ -455,7 +436,7 @@ class FragmentMember : ListFragment() {
             builder.setPositiveButton("OK") { _, _ ->
                 dbAdapter.open()     // DBの読み込み(読み書きの方)
                 var i = 1
-                while (i < listView.count) {
+                while (i < listCount) {
                     val checked = booleanArray.get(i)
                     if (checked) {
                         // IDを取得する
@@ -467,7 +448,7 @@ class FragmentMember : ListFragment() {
                 }
                 dbAdapter.close()    // DBを閉じる
                 listAdp?.clearSelection()
-                parent.reload()
+
             }
 
             builder.setNegativeButton(R.string.cancel) { _, _ -> }
@@ -475,13 +456,15 @@ class FragmentMember : ListFragment() {
             dialog.show()
 
             listView.isTextFilterEnabled = true
+            loadName()
+            dbAdapter.notifyDataSetChanged()
         }
 
         private fun recreateKumiwakeList() {
             memberArray.clear()
             dbAdapter.open()
             var i = 1
-            while (i < listView.count) {
+            while (i < listCount) {
                 val checked = booleanArray.get(i)
                 listItem = nameList[i]
                 if (checked && listItem.sex != "initial") {
@@ -506,7 +489,7 @@ class FragmentMember : ListFragment() {
     fun addGroupByGroup(newId: Int, myId: Int) {
         dbAdapter.open()
         var i = 1
-        while (i < listView.count) {
+        while (i < listCount) {
             listItem = nameList[i]
             val listId = listItem.id
             val belongText = listItem.belong
@@ -536,7 +519,7 @@ class FragmentMember : ListFragment() {
     fun createKumiwakeListByGroup(groupId: Int) {
         dbAdapter.open()
         var i = 1
-        while (i < listView.count) {
+        while (i < listCount) {
             listItem = nameList[i]
             val belongText = listItem.belong
             val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -552,7 +535,7 @@ class FragmentMember : ListFragment() {
     fun duplicateBelong() {
         dbAdapter.open()
         var i = 1
-        while (i < listView.count) {
+        while (i < listCount) {
             listItem = nameList[i]
             val listId = listItem.id
             val belongText = listItem.belong
@@ -579,7 +562,7 @@ class FragmentMember : ListFragment() {
 
     fun deleteBelongInfoAll(groupId: Int) {
         dbAdapter.open()
-        for (i in 1 until listView.count) {
+        for (i in 1 until listCount) {
             listItem = nameList[i]
             val listId = listItem.id
             deleteBelongInfo(groupId, listId)
@@ -614,7 +597,7 @@ class FragmentMember : ListFragment() {
         val memberArrayByBelong = ArrayList<Name>()
         dbAdapter.open()
         var i = 1
-        while (i < listView.count) {
+        while (i < listCount) {
             listItem = nameList[i]
             val listName = listItem.name
             val listSex = listItem.sex
@@ -645,6 +628,7 @@ class FragmentMember : ListFragment() {
         internal lateinit var listItem: Name
         internal lateinit var fab: FloatingActionButton
         internal var checkedCount = 0
+        private var listCount = 0
     }
 
 }
