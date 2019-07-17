@@ -112,7 +112,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         open()
         val query = "SELECT * FROM " + TABLE_NAME +
                 " WHERE " + MB_SEX + " like '" + sex + "%' AND (" + MB_AGE + " BETWEEN " + minage + " AND " + maxage +
-                ") AND (" + MB_BELONG + " like '%," + belongNo + "%' OR " + MB_BELONG + " like '" + belongNo + "%');" //BelongIdのマッチング式OR (e.g)1,2,3,4,
+                ") AND (" + MB_BELONG + " like '%" + belongNo + ",%' OR " + MB_BELONG + " like '%" + belongNo + "');" //BelongIdのマッチング式OR (e.g),1,2,3,4
         val c = db.rawQuery(query, null)
         getCursor(c)
         close()

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.*
 import android.widget.AbsListView
 import android.widget.AdapterView
@@ -83,13 +84,13 @@ class FragmentGroup : ListFragment() {
             val builder2 = android.app.AlertDialog.Builder(activity)
             val inflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val view2 = inflater.inflate(R.layout.group_info, activity!!.findViewById<View>(R.id.info_layout) as ViewGroup?)
-            val groupname = nameList[position].group
+            val groupName = nameList[position].group
             if (MemberMain.searchView.isActivated)
                 MemberMain.searchView.onActionViewCollapsed()
             FragmentMember().loadName()
 
             val items = arrayOf(MyApplication.context?.getString(R.string.information), MyApplication.context?.getString(R.string.edit), MyApplication.context?.getString(R.string.delete))
-            builder.setTitle(groupname)
+            builder.setTitle(groupName)
             builder.setItems(items) { _, which ->
                 when (which) {
                     0 -> {
@@ -104,7 +105,7 @@ class FragmentGroup : ListFragment() {
                         i.putExtra(AddGroup.POSITION, position)
                         startActivity(i)
                     }
-                    2 -> deleteSingleGroup(position, groupname)
+                    2 -> deleteSingleGroup(position, groupName)
                 }
             }
             val dialog = builder.create()
@@ -132,7 +133,7 @@ class FragmentGroup : ListFragment() {
 
             R.id.item_sort -> {
                 val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
-                Sort.groupSort(builder)
+                Sort.groupSort(builder, activity!!)
                 val dialog = builder.create()
                 dialog.show()
                 ListCount = listView.count
@@ -256,14 +257,14 @@ class FragmentGroup : ListFragment() {
             // アクションモード初期化処理
             val inflater = activity!!.menuInflater
             inflater.inflate(R.menu.member_main_menu, menu)
-            menu.getItem(2).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
-            menu.getItem(3).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
-            menu.getItem(4).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
+            menu.getItem(2).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
+            menu.getItem(3).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
+            menu.getItem(4).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
             MemberMain.decision.setOnClickListener(decisionClicked)
             val searchIcon = menu.findItem(R.id.search_view)
             val deleteIcon = menu.findItem(R.id.item_delete)
-            val itemfilter = menu.findItem(R.id.item_filter)
-            itemfilter.isVisible = false
+            val itemFilter = menu.findItem(R.id.item_filter)
+            itemFilter.isVisible = false
             searchIcon.isVisible = false
             deleteIcon.isVisible = MemberMain.delete_icon_visible
             return true
@@ -275,12 +276,13 @@ class FragmentGroup : ListFragment() {
                 R.id.item_delete -> deleteGroup()
 
                 R.id.item_all_select -> for (i in 0 until ListCount) {
-                    listView.setItemChecked(i, true)
+                    Log.d("position",i.toString())
+                    listView.setItemChecked(i, false)
                 }
 
                 R.id.item_sort -> {
                     val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
-                    Sort.groupSort(builder)
+                    Sort.groupSort(builder,activity!!)
                     val dialog = builder.create()
                     dialog.show()
                     ListCount = listView.count
@@ -321,6 +323,13 @@ class FragmentGroup : ListFragment() {
         val c = dbAdapter.allNames
         dbAdapter.getCursor(c)
         dbAdapter.close()
+    }
+
+    //表示ビューを選択しなおす
+    fun actionCheckRefresh(){
+        for (i in 0 until ListCount) {
+            listView.setItemChecked(i, true)
+        }
     }
 
     companion object {

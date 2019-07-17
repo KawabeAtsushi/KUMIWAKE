@@ -122,8 +122,6 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
 
     fun saveGroup(name: String, name_read: String, belongNo: Int) {
 
-        Log.d("belongNo", belongNo.toString())
-
         db.beginTransaction()          // トランザクション開始
 
         try {
@@ -143,8 +141,6 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
     }
 
     fun updateGroup(groupId: Int, name: String, name_read: String, belongNo: Int) {
-
-        Log.d("belongNo", belongNo.toString())
 
         open()
         val values = ContentValues()
