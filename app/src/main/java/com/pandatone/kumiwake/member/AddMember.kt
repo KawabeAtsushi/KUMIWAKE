@@ -266,7 +266,6 @@ class AddMember : AppCompatActivity() {
                 j++
             }
             if (change!!) {
-                groupListAdapter.open()
                 k = 0
                 while (k < FragmentGroup.ListCount) {
                     val listItem = FragmentGroup.nameList[k]
@@ -279,7 +278,6 @@ class AddMember : AppCompatActivity() {
                     }
                     k++
                 }
-                groupListAdapter.close()
             }
             i++
         }

@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import com.pandatone.kumiwake.member.FragmentGroup
 import com.pandatone.kumiwake.member.FragmentMember
 import com.pandatone.kumiwake.member.Name
 import java.io.IOException
@@ -84,6 +85,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         }
 
         close()
+        refresh()
     }
 
     fun sortNames(sortBy: String, sortType: String) {
@@ -93,6 +95,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         val c = db.rawQuery(query, null)
         getCursor(c)
         close()
+        refresh()
     }
 
     @Throws(IOException::class)
@@ -104,6 +107,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         val c = db.rawQuery(query, null)
         getCursor(c)
         close()
+        refresh()
     }
 
     @Throws(IOException::class)
@@ -118,6 +122,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         close()
 
         NameListAdapter.nowSort = "ID"
+        refresh()
     }
 
     fun getCursor(c: Cursor) {
@@ -167,8 +172,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
             } while (c.moveToNext())
         }
         c.close()
-
-        FragmentMember.listAdp!!.notifyDataSetChanged()
+        refresh()
     }
 
     fun addBelong(position: String, newBelong: String) {
@@ -180,7 +184,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
+        refresh()
     }
 
     fun saveName(name: String, sex: String, age: Int,  belong: String, read: String) {
@@ -204,6 +208,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         } finally {
             db.endTransaction()                // トランザクションの終了
         }
+        refresh()
     }
 
     fun updateMember(id: Int, name: String, sex: String, age: Int, belong: String, read: String) {
@@ -226,6 +231,13 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         }
 
         close()
+        refresh()
+    }
+
+    private fun refresh(){
+        notifyDataSetChanged()
+        val listAdp = FragmentMember.listAdp
+        listAdp.notifyDataSetChanged()
     }
 
     companion object {

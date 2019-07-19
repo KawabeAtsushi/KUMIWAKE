@@ -74,12 +74,13 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
         }
 
         close()
+
+        refresh()
     }
 
     //Listの情報取得
     fun getCursor(c: Cursor) {
         val nameList = FragmentGroup.nameList
-        val listAdp = FragmentGroup.listAdp
         var listItem: Group
 
         nameList.clear()
@@ -96,7 +97,6 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
             } while (c.moveToNext())
         }
         c.close()
-        listAdp.notifyDataSetChanged()
     }
 
     @Throws(IOException::class)
@@ -109,6 +109,8 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
         val c = db.rawQuery(query, null)
         getCursor(c)
         close()
+
+        refresh()
     }
 
     fun sortGroups(sortBy: String, sortType: String) {
@@ -118,6 +120,8 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
         val c = db.rawQuery(query, null)
         getCursor(c)
         close()
+
+        refresh()
     }
 
     fun saveGroup(name: String, name_read: String, belongNo: Int) {
@@ -138,6 +142,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
             db.endTransaction()                // トランザクションの終了
         }
 
+        refresh()
     }
 
     fun updateGroup(groupId: Int, name: String, name_read: String, belongNo: Int) {
@@ -152,8 +157,9 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
         close()
+
+        refresh()
     }
 
     class Group(id: Int, group_name: String, group_name_read: String, belong_no: Int) : Serializable {
@@ -173,6 +179,12 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
             this.belongNo = belong_no
         }
 
+    }
+
+    private fun refresh(){
+        notifyDataSetChanged()
+        val listAdp = FragmentGroup.listAdp
+        listAdp.notifyDataSetChanged()
     }
 
     companion object {
