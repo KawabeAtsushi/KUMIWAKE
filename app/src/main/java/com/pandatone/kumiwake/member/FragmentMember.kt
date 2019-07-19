@@ -110,7 +110,7 @@ class FragmentMember : ListFragment() {
 
         // 行を長押しした時の処理
         listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
-            listView.setItemChecked(position, !listAdp?.isPositionChecked(position)!!)
+            listView.setItemChecked(position, !listAdp.isPositionChecked(position))
             false
         }
 
@@ -131,14 +131,14 @@ class FragmentMember : ListFragment() {
                 val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                 val list = ArrayList(Arrays.asList<String>(*belongArray))
                 if (list.contains(groupId)) {
-                    listView.setItemChecked(i, !listAdp?.isPositionChecked(i)!!)
+                    listView.setItemChecked(i, !listAdp.isPositionChecked(i))
                 }
                 dbAdapter.close()
                 i += 2
             }
             listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                 //行をクリックした時の処理
-                listView.setItemChecked(position, !listAdp?.isPositionChecked(position)!!)
+                listView.setItemChecked(position, !listAdp.isPositionChecked(position))
             }
         }
 
@@ -150,7 +150,7 @@ class FragmentMember : ListFragment() {
                 while (i < listCount) {
                     listItem = nameList[i]
                     if (listItem.id == memberArray[j].id) {
-                        listView.setItemChecked(i, !listAdp?.isPositionChecked(i)!!)
+                        listView.setItemChecked(i, !listAdp.isPositionChecked(i))
                     }
                     dbAdapter.close()
                     i += 2
@@ -159,8 +159,8 @@ class FragmentMember : ListFragment() {
 
             listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                 //行をクリックした時の処理
-                listView.setItemChecked(position, !listAdp?.isPositionChecked(position)!!)
-            }
+                listView.setItemChecked(position, !listAdp.isPositionChecked(position))
+        }
         }
     }
 
@@ -197,7 +197,6 @@ class FragmentMember : ListFragment() {
     override fun onStart() {
         super.onStart()
         loadName()
-        dbAdapter.notifyDataSetChanged()
     }
 
     private fun deleteSingleMember(position: Int, name: String) {
@@ -212,7 +211,6 @@ class FragmentMember : ListFragment() {
             dbAdapter.selectDelete(listId.toString())
             dbAdapter.close()    // DBを閉じる
             loadName()
-            dbAdapter.notifyDataSetChanged()
             listCount = listView.count
         }
 
@@ -317,7 +315,6 @@ class FragmentMember : ListFragment() {
             filter(layout, belongSpinner,true)
             dbAdapter.sortNames(MemberListAdapter.MB_ID, "ASC")
             NameListAdapter.nowSort = "ID"
-            dbAdapter.notifyDataSetChanged()
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////
@@ -349,13 +346,12 @@ class FragmentMember : ListFragment() {
                     i += 2
                 }
                 dbAdapter.close()    // DBを閉じる
-                loadName()
                 requireActivity().finish()
             } else {
                 recreateKumiwakeList()
                 moveKumiwake()
             }
-            listAdp?.clearSelection()
+            listAdp.clearSelection()
         }
 
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
@@ -404,7 +400,7 @@ class FragmentMember : ListFragment() {
 
         override fun onDestroyActionMode(mode: ActionMode) {
             // 決定ボタン押下時
-            listAdp?.clearSelection()
+            listAdp.clearSelection()
         }
 
         override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
@@ -419,9 +415,9 @@ class FragmentMember : ListFragment() {
             checkedCount = listView.checkedItemCount
 
             if (checked) {
-                listAdp?.setNewSelection(position, checked)
+                listAdp.setNewSelection(position, checked)
             } else {
-                listAdp?.removeSelection(position)
+                listAdp.removeSelection(position)
             }
 
             mode.title = checkedCount.toString() + getString(R.string.selected)
@@ -447,8 +443,9 @@ class FragmentMember : ListFragment() {
                     i += 2
                 }
                 dbAdapter.close()    // DBを閉じる
-                listAdp?.clearSelection()
-
+                listAdp.clearSelection()
+                loadName()
+                listCount = listView.count
             }
 
             builder.setNegativeButton(R.string.cancel) { _, _ -> }
@@ -456,8 +453,6 @@ class FragmentMember : ListFragment() {
             dialog.show()
 
             listView.isTextFilterEnabled = true
-            loadName()
-            dbAdapter.notifyDataSetChanged()
         }
 
         private fun recreateKumiwakeList() {
@@ -513,7 +508,6 @@ class FragmentMember : ListFragment() {
             i += 2
         }
         dbAdapter.close()
-        loadName()
     }
 
     fun createKumiwakeListByGroup(groupId: Int) {
@@ -557,7 +551,6 @@ class FragmentMember : ListFragment() {
             i += 2
         }
         dbAdapter.close()
-        loadName()
     }
 
     fun deleteBelongInfoAll(groupId: Int) {
@@ -568,7 +561,6 @@ class FragmentMember : ListFragment() {
             deleteBelongInfo(groupId, listId)
         }
         dbAdapter.close()
-        loadName()
     }
 
     fun deleteBelongInfo(groupId: Int, listId: Int) {
@@ -609,7 +601,6 @@ class FragmentMember : ListFragment() {
             i += 2
         }
         dbAdapter.close()
-        loadName()
         return memberArrayByBelong
     }
 
@@ -618,12 +609,13 @@ class FragmentMember : ListFragment() {
         val c = dbAdapter.allNames
         dbAdapter.getCursor(c)
         dbAdapter.close()
+        dbAdapter.notifyDataSetChanged()
     }
 
     companion object {
         internal lateinit var dbAdapter: MemberListAdapter
         internal lateinit var gpdbAdapter: GroupListAdapter
-        var listAdp: NameListAdapter? = null
+        lateinit var listAdp: NameListAdapter
         var nameList: ArrayList<Name> = ArrayList()
         internal lateinit var listItem: Name
         internal lateinit var fab: FloatingActionButton
