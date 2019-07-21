@@ -29,17 +29,13 @@ class AddGroup : AppCompatActivity() {
     private lateinit var listView: ListView
     private var position: Int = 0
 
-    private val clicked = View.OnClickListener { moveMemberMain() }
-
     private val groupId: Int
         get() {
-            val groupId: Int
-            if (position == nextId) {
-                groupId = nextId
+            return if (position == nextId) {
+                nextId
             } else {
-                groupId = FragmentGroup.nameList[position].id
+                FragmentGroup.groupList[position].id
             }
-            return groupId
         }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +59,7 @@ class AddGroup : AppCompatActivity() {
         numberOfSelectedMember = findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.numberOfSelectedMember) as TextView
         listView.emptyView = findViewById<View>(R.id.add_group_listview).findViewById(R.id.emptyMemberList)
         val addMember = findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.member_add_btn) as Button
-        addMember.setOnClickListener(clicked)
+        addMember.setOnClickListener { moveMemberMain() }
     }
 
     @SuppressLint("SetTextI18n")
@@ -72,7 +68,7 @@ class AddGroup : AppCompatActivity() {
         val nameByBelong: ArrayList<Name> = if (position == nextId) {
             FragmentMember().searchBelong(nextId.toString())
         } else {
-            FragmentMember().searchBelong(FragmentGroup.nameList[position].id.toString())
+            FragmentMember().searchBelong(FragmentGroup.groupList[position].id.toString())
         }
         adapter = MBListViewAdapter(this@AddGroup, nameByBelong, true)
         listView.adapter = adapter
@@ -105,6 +101,7 @@ class AddGroup : AppCompatActivity() {
         dbAdapter.saveGroup(name, name, adapter.count)
         dbAdapter.close()
         FragmentMember().loadName()
+        dbAdapter.notifyDataSetChanged()
     }
 
     private fun updateItem(listId: Int) {
@@ -117,7 +114,7 @@ class AddGroup : AppCompatActivity() {
 
 
     private fun setItem(position: Int) {
-        val listItem = FragmentGroup.nameList[position]
+        val listItem = FragmentGroup.groupList[position]
         val listId = listItem.id
         val group = listItem.group
         groupEditText.setText(group)
@@ -143,9 +140,9 @@ class AddGroup : AppCompatActivity() {
 
     private fun moveMemberMain() {
         val intent = Intent(this, MemberMain::class.java)
-        intent.putExtra(MemberMain.VISIBLE, true)
         intent.putExtra(MemberMain.DELETE_ICON_VISIBLE, false)
-        intent.putExtra(MemberMain.START_ACTION_MODE, true)
+        intent.putExtra(MemberMain.ACTION_MODE, true)
+        intent.putExtra(MemberMain.NORMAL_SELECT, false)
         intent.putExtra(MemberMain.GROUP_ID, groupId)
         startActivity(intent)
     }

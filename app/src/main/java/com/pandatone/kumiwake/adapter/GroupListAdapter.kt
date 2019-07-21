@@ -6,7 +6,6 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 import android.widget.ArrayAdapter
 import com.pandatone.kumiwake.member.FragmentGroup
 import java.io.IOException
@@ -80,7 +79,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
 
     //Listの情報取得
     fun getCursor(c: Cursor) {
-        val nameList = FragmentGroup.nameList
+        val nameList = FragmentGroup.groupList
         var listItem: Group
 
         nameList.clear()
@@ -183,8 +182,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
 
     private fun refresh(){
         notifyDataSetChanged()
-        val listAdp = FragmentGroup.listAdp
-        listAdp.notifyDataSetChanged()
+        FragmentGroup.listAdp.notifyDataSetChanged()
     }
 
     companion object {

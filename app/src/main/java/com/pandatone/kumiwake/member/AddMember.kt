@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
-import android.text.InputFilter
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
@@ -51,9 +50,16 @@ class AddMember : AppCompatActivity() {
             setItem(position)
         }
 
+        var yomigana: String = ""
+
         nameEditText?.addTextChangedListener(object : TextWatcher {
 
-            override fun afterTextChanged(s: Editable) {}
+            override fun afterTextChanged(s: Editable) {
+                if (s.matches("^[a-zA-Z0-9ぁ-ん]+$".toRegex()) || s.toString() == "") {
+                    yomigana = s.toString()
+                }
+                readEditText?.setText(yomigana)
+            }
 
             override fun beforeTextChanged(s: CharSequence, start: Int,
                                            count: Int, after: Int) {
@@ -61,7 +67,6 @@ class AddMember : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence, start: Int,
                                        before: Int, count: Int) {
-                readEditText?.setText(s)
             }
         })
     }
@@ -69,13 +74,6 @@ class AddMember : AppCompatActivity() {
     private fun findViews() {
         nameEditText = findViewById<View>(R.id.input_name) as TextInputEditText
         readEditText = findViewById<View>(R.id.input_name_read) as TextInputEditText
-        val inputFilter = InputFilter { source, _, _, _, _, _ ->
-            if (source.toString().matches("^[a-zA-Z0-9ぁ-ん]+$".toRegex())) {
-                source
-            } else ""
-        }
-        val filters = arrayOf(inputFilter)
-        readEditText!!.filters = filters
         textInputLayout = findViewById<View>(R.id.member_form_input_layout) as TextInputLayout
         sexGroup = findViewById<View>(R.id.sexGroup) as RadioGroup
         ageEditText = findViewById<View>(R.id.input_age) as EditText
@@ -93,7 +91,7 @@ class AddMember : AppCompatActivity() {
 
         nameEditText!!.setText(name)
         readEditText!!.setText(read)
-        if (sex == "女") {
+        if (sex == getString(R.string.woman)) {
             sexGroup!!.check(R.id.womanBtn)
         } else {
             sexGroup!!.check(R.id.manBtn)
@@ -115,7 +113,7 @@ class AddMember : AppCompatActivity() {
         // 候補リスト
         val list = ArrayList<String>()
         for (j in 0 until FragmentGroup.ListCount) {
-            val listItem = FragmentGroup.nameList[j]
+            val listItem = FragmentGroup.groupList[j]
             val groupName = listItem.group
 
             list.add(groupName)
@@ -195,7 +193,7 @@ class AddMember : AppCompatActivity() {
         val age = getValue(ageEditText!!)
         val belong = belongConvertToNo()
 
-        dbAdapter!!.updateMember(listId, name, sex, age,  belong, read)
+        dbAdapter!!.updateMember(listId, name, sex, age, belong, read)
         FragmentMember().loadName()
     }
 
@@ -268,7 +266,7 @@ class AddMember : AppCompatActivity() {
             if (change!!) {
                 k = 0
                 while (k < FragmentGroup.ListCount) {
-                    val listItem = FragmentGroup.nameList[k]
+                    val listItem = FragmentGroup.groupList[k]
                     val groupName = listItem.group
                     if (beforeBelong!![i] == groupName) {
                         id = listItem.id
@@ -297,7 +295,7 @@ class AddMember : AppCompatActivity() {
                 groupListAdapter.open()
                 k = 0
                 while (k < FragmentGroup.ListCount) {
-                    val listItem = FragmentGroup.nameList[k]
+                    val listItem = FragmentGroup.groupList[k]
                     val groupName = listItem.group
                     if (afterBelong!![i] == groupName) {
                         id = listItem.id
@@ -326,22 +324,22 @@ class AddMember : AppCompatActivity() {
         dbAdapter!!.open()
         val belongText = belongSpinner!!.text.toString()
         val belongTextArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        val BelongNo = StringBuilder()
+        val belongNo = StringBuilder()
 
         for (i in belongTextArray.indices) {
             val belongGroup = belongTextArray[i]
             for (j in 0 until FragmentGroup.ListCount) {
-                val listItem = FragmentGroup.nameList[j]
+                val listItem = FragmentGroup.groupList[j]
                 val groupName = listItem.group
                 if (belongGroup == groupName) {
-                    val listName = listItem.id.toString()
-                    BelongNo.append("$listName,")
+                    val listId = listItem.id.toString()
+                    belongNo.append("$listId,")
                 }
             }
         }
         dbAdapter!!.close()
 
-        return BelongNo.toString()
+        return belongNo.toString()
     }
 
     companion object {

@@ -40,10 +40,10 @@ object GroupClick {
 
     @SuppressLint("SetTextI18n")
     fun setInfo(position: Int) {
-        val nameByBelong = FragmentMember().searchBelong(FragmentGroup.nameList[position].id.toString())
+        val nameByBelong = FragmentMember().searchBelong(FragmentGroup.groupList[position].id.toString())
         val adapter = MBListViewAdapter(context!!, nameByBelong, true)
 
-        group.text = "${context.getText(R.string.group_name)} : ${FragmentGroup.nameList[position].group}"
+        group.text = "${context.getText(R.string.group_name)} : ${FragmentGroup.groupList[position].group}"
         number.text = "${context.getText(R.string.number_of_member)} : ${adapter.count}${context.getString(R.string.people)}"
         belongMb.text = "${context.getText(R.string.belong)}${context.getText(R.string.member)}"
         belongList.adapter = adapter
@@ -54,7 +54,7 @@ object GroupClick {
         val name: String
         val name_read = "ￚ no data ￚ"
         val GPdbAdapter = GroupListAdapter(context)
-        val listItem = FragmentGroup.nameList[position]
+        val listItem = FragmentGroup.groupList[position]
 
         id = listItem.id
         name = listItem.group

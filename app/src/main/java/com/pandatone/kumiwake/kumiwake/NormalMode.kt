@@ -60,10 +60,9 @@ class NormalMode : AppCompatActivity() {
 
     private fun moveMemberMain() {
         val intent = Intent(this, MemberMain::class.java)
-        intent.putExtra(MemberMain.VISIBLE, true)
         intent.putExtra(MemberMain.DELETE_ICON_VISIBLE, false)
-        intent.putExtra(MemberMain.START_ACTION_MODE, true)
-        intent.putExtra(MemberMain.KUMIWAKE_SELECT, true)
+        intent.putExtra(MemberMain.ACTION_MODE, true)
+        intent.putExtra(MemberMain.NORMAL_SELECT, true)
         intent.putExtra(MemberMain.MEMBER_ARRAY, memberArray)
         startActivityForResult(intent, 1000)
     }

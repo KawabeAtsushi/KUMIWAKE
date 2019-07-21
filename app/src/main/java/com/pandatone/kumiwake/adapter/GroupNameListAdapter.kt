@@ -2,6 +2,8 @@ package com.pandatone.kumiwake.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
+import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +20,7 @@ import java.util.*
 class GroupNameListAdapter(private val context: Context, private val groupList: List<GroupListAdapter.Group>) : BaseAdapter() {
 
     @SuppressLint("UseSparseArrays")
-    private var gSelection = HashMap<Int, Boolean>()
+    private var gSelection = SparseBooleanArray()
 
     override fun getCount(): Int {
         return groupList.size
@@ -35,6 +37,7 @@ class GroupNameListAdapter(private val context: Context, private val groupList: 
 
     @SuppressLint("InflateParams", "SetTextI18n")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
+        Log.d("Group_getView",position.toString())
         val nameTextView: TextView
         val numberOfMemberTextView: TextView
         var v: View? = convertView
@@ -43,13 +46,12 @@ class GroupNameListAdapter(private val context: Context, private val groupList: 
         if (v == null) {
             v = inflater.inflate(R.layout.row_group, null)
         }
-        if (gSelection[position] != null) {
+
+        if (gSelection.get(position)) {
             v!!.setBackgroundColor(ContextCompat.getColor(MyApplication.context!!, R.color.checked_list))
-        } else {
-            v = inflater.inflate(R.layout.row_group, null)
         }
 
-        nameTextView = v!!.findViewById<View>(R.id.groupName) as TextView
+        nameTextView = v?.findViewById<View>(R.id.groupName) as TextView
         numberOfMemberTextView = v.findViewById<View>(R.id.theNumberOfMember) as TextView
         nameTextView.text = listItem.group
         numberOfMemberTextView.text = "${listItem.belongNo}${MyApplication.context?.getText(R.string.people)}"
@@ -58,23 +60,22 @@ class GroupNameListAdapter(private val context: Context, private val groupList: 
     }
 
     fun setNewSelection(position: Int, value: Boolean) {
-        gSelection[position] = value
+        gSelection.append(position, value)
         notifyDataSetChanged()
     }
 
     fun removeSelection(position: Int) {
-        gSelection.remove(position)
+        gSelection.delete(position)
         notifyDataSetChanged()
     }
 
     fun clearSelection() {
-        gSelection = HashMap()
+        gSelection.clear()
         notifyDataSetChanged()
     }
 
     fun isPositionChecked(position: Int): Boolean {
-        val result = gSelection[position]
-        return result ?: false
+        return gSelection.get(position)
     }
 
 }

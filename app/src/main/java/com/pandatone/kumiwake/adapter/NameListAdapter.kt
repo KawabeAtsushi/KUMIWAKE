@@ -2,6 +2,7 @@ package com.pandatone.kumiwake.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
@@ -40,10 +41,13 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
 
     @SuppressLint("InflateParams")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
+        Log.d("Member_getView",position.toString())
         val nameTextView: TextView
         val listItem = getItem(position)
         val v: View?
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+
+        Log.d("sex",listItem?.sex)
 
         if (isEnabled(position)) {
 

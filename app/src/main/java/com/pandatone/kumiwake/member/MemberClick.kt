@@ -60,7 +60,7 @@ object MemberClick {
         for (i in belongArray.indices) {
             val belongGroup = belongArray[i]
             for (j in 0 until FragmentGroup.ListCount) {
-                val listItem = FragmentGroup.nameList[j]
+                val listItem = FragmentGroup.groupList[j]
                 val groupId = listItem.id.toString()
                 if (belongGroup == groupId) {
                     val listName = listItem.group
@@ -69,10 +69,10 @@ object MemberClick {
             }
         }
         FragmentMember.dbAdapter.close()
-        if (newBelong.toString() == "") {
-            result = ""
+        result = if (newBelong.toString() == "") {
+            ""
         } else {
-            result = newBelong.substring(0, newBelong.length - 1)
+            newBelong.substring(0, newBelong.length - 1)
         }
 
         return result
