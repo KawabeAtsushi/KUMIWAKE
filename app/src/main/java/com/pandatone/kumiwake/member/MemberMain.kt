@@ -1,7 +1,6 @@
 package com.pandatone.kumiwake.member
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
@@ -29,8 +28,6 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     var memberArray: ArrayList<Name> = ArrayList()
     private val manager = supportFragmentManager
-    private lateinit var viewPager: ViewPager
-    private var visibility: Boolean = false
     private var page: Int = 0
     val context: Context = this
 
@@ -43,18 +40,17 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         supportActionBar!!.setTitle(R.string.member_main)
         supportActionBar!!.setDisplayShowTitleEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        setViews()
+
         val i = intent
-        startAction = i.getBooleanExtra(START_ACTION_MODE, false)
+        startAction = i.getBooleanExtra(ACTION_MODE, false)
         groupId = i.getIntExtra(GROUP_ID, -1)
         delete_icon_visible = i.getBooleanExtra(DELETE_ICON_VISIBLE, true)
-        kumiwake_select = i.getBooleanExtra(KUMIWAKE_SELECT, false)
-
+        kumiwake_select = i.getBooleanExtra(NORMAL_SELECT, false)
         if (i.getSerializableExtra(MEMBER_ARRAY) != null) {
             memberArray = i.getSerializableExtra(MEMBER_ARRAY) as ArrayList<Name>
         }
 
-        visibility = i.getBooleanExtra(VISIBLE, false)
+        setViews()
     }
 
     private fun setViews() {
@@ -62,10 +58,27 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         val adapter = CustomPagerAdapter(manager)
         viewPager.adapter = adapter
         decision = findViewById<View>(R.id.decisionBt) as Button
+
+        if (startAction) {
+            viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+                //スクロール中（page切り替え中）に呼ばれる
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                    //position:遷移中pageのindex
+                    //positionOffset:遷移前→遷移後のoffset割合を0~1で返す
+                    //positionOffsetPixels:positionOffsetをpixelで返す
+                    if (position == 0) {
+                        decision.visibility = View.VISIBLE
+                    } else {
+                        decision.visibility = View.GONE
+                    }
+                    decision.translationY = 1000 * positionOffset * (1 - 2 * position) //0to1->up,1to0->down
+                }
+            })
+        }
     }
 
     private fun visibleViews() {
-        if (visibility) {
+        if (startAction) {
             decision.visibility = View.VISIBLE
             FragmentGroup.adviceInFG.visibility = View.VISIBLE
             FragmentMember.fab.hide()
@@ -141,7 +154,7 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
             if (page == 0) {
                 FragmentMember().selectName(newText)
             } else {
-                FragmentGroup.selectGroup(newText)
+                FragmentGroup().selectGroup(newText)
             }
         } catch (e: IOException) {
             e.printStackTrace()
@@ -153,14 +166,14 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
     companion object {
         lateinit var searchView: SearchView
         lateinit var decision: Button
+        lateinit var viewPager: ViewPager
 
         //intent key
-        const val START_ACTION_MODE = "start_action_mode"
+        const val ACTION_MODE = "action_mode"
         const val GROUP_ID = "group_id"
         const val DELETE_ICON_VISIBLE = "deleteIcon_visible"
-        const val KUMIWAKE_SELECT = "kumiwake_select"
+        const val NORMAL_SELECT = "normal_select"
         const val MEMBER_ARRAY = "memberArray"
-        const val VISIBLE = "visibility"
 
         var startAction: Boolean = false
         var kumiwake_select: Boolean = false

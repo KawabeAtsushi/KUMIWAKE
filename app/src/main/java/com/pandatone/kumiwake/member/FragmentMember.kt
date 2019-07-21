@@ -26,17 +26,14 @@ import java.util.*
  * Created by atsushi_2 on 2016/02/23.
  */
 class FragmentMember : ListFragment() {
-    private var groupId: String = "0"
     val parent = MemberMain()
     var memberArray = parent.memberArray
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dbAdapter = MemberListAdapter(requireContext())
-        gpdbAdapter = GroupListAdapter(requireContext())
         nameList = ArrayList()
         listAdp = NameListAdapter(requireContext(), nameList)
-        groupId = MemberMain.groupId.toString()
         NameListAdapter.nowSort = "ID"
         Sort.initial = 0
         listAdapter = listAdp
@@ -58,22 +55,12 @@ class FragmentMember : ListFragment() {
         startActivity(intent)
     }
 
-    internal fun moveKumiwake() {
-
-        val hs = HashSet(memberArray)
-        memberArray.clear()
-        memberArray.addAll(hs)
-        val i = Intent(activity, NormalMode::class.java)
-        i.putExtra(NormalMode.MEMBER_ARRAY, memberArray)
-        requireActivity().setResult(Activity.RESULT_OK, i)
-        requireActivity().finish()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE_MODAL
-        listView.setMultiChoiceModeListener(CallbackMB())
-        listView.isFastScrollEnabled = true
-        listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+        lv = listView
+        lv.choiceMode = ListView.CHOICE_MODE_MULTIPLE_MODAL
+        lv.setMultiChoiceModeListener(CallbackMB())
+        lv.isFastScrollEnabled = true
+        lv.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
             val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
             val builder2 = AlertDialog.Builder(activity)
@@ -83,7 +70,7 @@ class FragmentMember : ListFragment() {
             if (MemberMain.searchView.isActivated)
                 MemberMain.searchView.onActionViewCollapsed()
             FragmentGroup().loadName()
-            listCount = listView.count
+            listCount = lv.count
 
             val items = arrayOf(MyApplication.context!!.getText(R.string.information), MyApplication.context!!.getText(R.string.edit), MyApplication.context!!.getText(R.string.delete))
             builder.setTitle(memberName)
@@ -109,12 +96,12 @@ class FragmentMember : ListFragment() {
         }
 
         // 行を長押しした時の処理
-        listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
-            listView.setItemChecked(position, !listAdp.isPositionChecked(position))
+        lv.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
+            lv.setItemChecked(position, !listAdp.isPositionChecked(position))
             false
         }
 
-        listView.isTextFilterEnabled = true
+        lv.isTextFilterEnabled = true
     }
 
     //Activity生成後に呼ばれる
@@ -122,51 +109,38 @@ class FragmentMember : ListFragment() {
         super.onActivityCreated(savedInstanceState)
 
         if (MemberMain.startAction) {
-            listView.startActionMode(CallbackMB())
-            dbAdapter.open()
-            var i = 1
-            while (i < listCount) {
-                listItem = nameList[i]
-                val belongText = listItem.belong
-                val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                val list = ArrayList(Arrays.asList<String>(*belongArray))
-                if (list.contains(groupId)) {
-                    listView.setItemChecked(i, !listAdp.isPositionChecked(i))
-                }
-                dbAdapter.close()
-                i += 2
-            }
-            listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-                //行をクリックした時の処理
-                listView.setItemChecked(position, !listAdp.isPositionChecked(position))
-            }
-        }
+            lv.startActionMode(CallbackMB())
 
-        if (MemberMain.kumiwake_select) {
-            listView.startActionMode(CallbackMB())
-            dbAdapter.open()
-            for (j in memberArray.indices) {
-                var i = 1
-                while (i < listCount) {
-                    listItem = nameList[i]
-                    if (listItem.id == memberArray[j].id) {
-                        listView.setItemChecked(i, !listAdp.isPositionChecked(i))
+            if (MemberMain.kumiwake_select) {
+
+                for (j in memberArray.indices) {
+                    var i = 1
+                    while (i < listCount) {
+                        listItem = nameList[i]
+                        if (listItem.id == memberArray[j].id) {
+                            lv.setItemChecked(i, !listAdp.isPositionChecked(i))
+                        }
+                        i += 2
                     }
-                    dbAdapter.close()
-                    i += 2
                 }
+            } else {
+                checkByGroup(MemberMain.groupId)
             }
 
-            listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+            lv.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                 //行をクリックした時の処理
-                listView.setItemChecked(position, !listAdp.isPositionChecked(position))
-        }
+                lv.setItemChecked(position, !listAdp.isPositionChecked(position))
+            }
         }
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////-------- Menuの処理 ----------///////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
-        listCount = listView.count
+        listCount = lv.count
 
         // アクションアイテム選択時
         when (item!!.itemId) {
@@ -175,13 +149,13 @@ class FragmentMember : ListFragment() {
             R.id.item_all_select -> {
                 var i = 1
                 while (i < listCount) {
-                    listView.setItemChecked(i, true)
+                    lv.setItemChecked(i, true)
                     i += 2
                 }
             }
 
             R.id.item_sort -> {
-                Sort.memberSort(builder,requireActivity())
+                Sort.memberSort(builder, requireActivity())
                 val dialog = builder.create()
                 dialog.show()
             }
@@ -211,7 +185,7 @@ class FragmentMember : ListFragment() {
             dbAdapter.selectDelete(listId.toString())
             dbAdapter.close()    // DBを閉じる
             loadName()
-            listCount = listView.count
+            listCount = lv.count
         }
 
         builder.setNegativeButton(R.string.cancel) { _, _ -> }
@@ -231,7 +205,7 @@ class FragmentMember : ListFragment() {
         val max_age = layout.findViewById<View>(R.id.max_age) as TextInputEditText
         val min_age = layout.findViewById<View>(R.id.min_age) as TextInputEditText
 
-        if(clear){
+        if (clear) {
             spinner.setSelection(0)
             sexGroup.check(R.id.noSelect)
             max_age.setText("")
@@ -256,7 +230,7 @@ class FragmentMember : ListFragment() {
         } else {
             error_age_range.visibility = View.GONE
 
-            if(sex==getString(R.string.all)){
+            if (sex == getString(R.string.all)) {
                 sex = ""
             }
 
@@ -264,10 +238,10 @@ class FragmentMember : ListFragment() {
                 belongId = ""
             } else {
                 for (j in 0 until FragmentGroup.ListCount) {
-                    val listItem = FragmentGroup.nameList[j]
+                    val listItem = FragmentGroup.groupList[j]
                     groupName = listItem.group
                     if (belong == groupName) {
-                        belongId = "," + listItem.id.toString()
+                        belongId = listItem.id.toString()
                     }
                 }
             }
@@ -277,7 +251,7 @@ class FragmentMember : ListFragment() {
 
     }
 
-    fun filtering(builder: androidx.appcompat.app.AlertDialog.Builder){
+    fun filtering(builder: androidx.appcompat.app.AlertDialog.Builder) {
         val inflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val layout = inflater.inflate(R.layout.filter_member, activity!!.findViewById<View>(R.id.filter_member) as? ViewGroup)
         val belongSpinner = layout.findViewById<View>(R.id.filter_belong_spinner) as Spinner
@@ -286,7 +260,7 @@ class FragmentMember : ListFragment() {
         list.add(getString(R.string.no_selected))
 
         for (j in 0 until FragmentGroup.ListCount) {
-            val listItem = FragmentGroup.nameList[j]
+            val listItem = FragmentGroup.groupList[j]
             val groupName = listItem.group
             list.add(groupName)
         }
@@ -298,7 +272,7 @@ class FragmentMember : ListFragment() {
         builder.setView(layout)
         builder.setPositiveButton("OK", null)
         builder.setNegativeButton(R.string.cancel) { _, _ -> }
-        builder.setNeutralButton(R.string.clear,null)
+        builder.setNeutralButton(R.string.clear, null)
         // back keyを使用不可に設定
         builder.setCancelable(false)
         val dialog2 = builder.create()
@@ -306,28 +280,31 @@ class FragmentMember : ListFragment() {
 
         val okButton = dialog2.getButton(AlertDialog.BUTTON_POSITIVE)
         okButton.setOnClickListener {
-            filter(layout, belongSpinner,false)
+            filter(layout, belongSpinner, false)
             dialog2.dismiss()
         }
 
         val cancelBtn = dialog2.getButton(AlertDialog.BUTTON_NEUTRAL)
         cancelBtn.setOnClickListener {
-            filter(layout, belongSpinner,true)
+            filter(layout, belongSpinner, true)
             dbAdapter.sortNames(MemberListAdapter.MB_ID, "ASC")
             NameListAdapter.nowSort = "ID"
         }
     }
+
     //////////////////////////////////////////////////////////////////////////////////////
     /////////////////////-------- ActionMode時の処理 ----------///////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////
 
     internal inner class CallbackMB : AbsListView.MultiChoiceModeListener {
 
-        private val booleanArray = listView.checkedItemPositions
+        private val booleanArray = lv.checkedItemPositions
 
         private val decisionClicked = View.OnClickListener {
+            listCount = lv.count
 
-            if (!MemberMain.kumiwake_select) {
+            if (!MemberMain.kumiwake_select) {//AddGroupのメンバー選択
+
                 dbAdapter.open()     // DBの読み込み(読み書きの方)
                 var i = 1
                 while (i < listCount) {
@@ -346,11 +323,29 @@ class FragmentMember : ListFragment() {
                     i += 2
                 }
                 dbAdapter.close()    // DBを閉じる
-                requireActivity().finish()
+                loadName()
+
             } else {
-                recreateKumiwakeList()
-                moveKumiwake()
+                //normalModeのメンバー選択
+                memberArray.clear()
+                dbAdapter.open()
+                var i = 1
+                while (i < lv.count) {
+                    val checked = booleanArray.get(i)
+                    listItem = nameList[i]
+                    if (checked && listItem.sex != "initial") {
+                        memberArray.add(listItem)
+                    }
+                    i += 2
+                }
+                dbAdapter.close()
+
+                val intent = Intent(activity, NormalMode::class.java)
+                intent.putExtra(NormalMode.MEMBER_ARRAY, memberArray)
+                requireActivity().setResult(Activity.RESULT_OK, intent)
             }
+
+            requireActivity().finish()
             listAdp.clearSelection()
         }
 
@@ -364,12 +359,13 @@ class FragmentMember : ListFragment() {
             MemberMain.decision.setOnClickListener(decisionClicked)
             searchIcon.isVisible = false
             deleteIcon.isVisible = MemberMain.delete_icon_visible
+            listCount = lv.count
             return true
         }
 
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
-            listCount = listView.count
+            listCount = lv.count
 
             // アクションアイテム選択時
             when (item.itemId) {
@@ -378,23 +374,21 @@ class FragmentMember : ListFragment() {
                 R.id.item_all_select -> {
                     var i = 1
                     while (i < listCount) {
-                        listView.setItemChecked(i, true)
+                        lv.setItemChecked(i, true)
                         i += 2
                     }
                 }
 
                 R.id.item_sort -> {
-                    Sort.memberSort(builder,requireActivity())
+                    Sort.memberSort(builder, requireActivity())
                     val dialog = builder.create()
                     dialog.show()
                 }
 
                 R.id.item_filter -> {
                     filtering(builder)
-
                 }
             }
-
             return false
         }
 
@@ -412,7 +406,7 @@ class FragmentMember : ListFragment() {
                                                position: Int, id: Long, checked: Boolean) {
             // アクションモード時のアイテムの選択状態変更時
 
-            checkedCount = listView.checkedItemCount
+            checkedCount = lv.checkedItemCount
 
             if (checked) {
                 listAdp.setNewSelection(position, checked)
@@ -445,29 +439,14 @@ class FragmentMember : ListFragment() {
                 dbAdapter.close()    // DBを閉じる
                 listAdp.clearSelection()
                 loadName()
-                listCount = listView.count
+                listCount = lv.count
             }
 
             builder.setNegativeButton(R.string.cancel) { _, _ -> }
             val dialog = builder.create()
             dialog.show()
 
-            listView.isTextFilterEnabled = true
-        }
-
-        private fun recreateKumiwakeList() {
-            memberArray.clear()
-            dbAdapter.open()
-            var i = 1
-            while (i < listCount) {
-                val checked = booleanArray.get(i)
-                listItem = nameList[i]
-                if (checked && listItem.sex != "initial") {
-                    memberArray.add(listItem)
-                }
-                i += 2
-            }
-            dbAdapter.close()
+            lv.isTextFilterEnabled = true
         }
     }
 
@@ -478,52 +457,6 @@ class FragmentMember : ListFragment() {
         } else {
             dbAdapter.picName(newText)
         }
-    }
-
-
-    fun addGroupByGroup(newId: Int, myId: Int) {
-        dbAdapter.open()
-        var i = 1
-        while (i < listCount) {
-            listItem = nameList[i]
-            val listId = listItem.id
-            val belongText = listItem.belong
-            val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            val list = ArrayList(Arrays.asList<String>(*belongArray))
-            val hs = HashSet<String>()
-            hs.addAll(list)
-            list.clear()
-            list.addAll(hs)
-            if (list.contains(myId.toString())) {
-                val newBelong = StringBuilder()
-                for (j in list.indices) {
-                    newBelong.append(list[j])
-                    if (j != list.size - 1) {
-                        newBelong.append(",")
-                    }
-                }
-                newBelong.append(",$newId")
-                dbAdapter.addBelong(listId.toString(), newBelong.toString())
-            }
-            i += 2
-        }
-        dbAdapter.close()
-    }
-
-    fun createKumiwakeListByGroup(groupId: Int) {
-        dbAdapter.open()
-        var i = 1
-        while (i < listCount) {
-            listItem = nameList[i]
-            val belongText = listItem.belong
-            val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            val list = ArrayList(Arrays.asList<String>(*belongArray))
-            if (list.contains(groupId.toString())) {
-                memberArray.add(listItem)
-            }
-            i += 2
-        }
-        dbAdapter.close()
     }
 
     fun duplicateBelong() {
@@ -604,6 +537,20 @@ class FragmentMember : ListFragment() {
         return memberArrayByBelong
     }
 
+    fun checkByGroup(groupId: Int) {
+        var i = 1
+        while (i < listCount) {
+            listItem = nameList[i]
+            val belongText = listItem.belong
+            val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val list = ArrayList(Arrays.asList<String>(*belongArray))
+            if (list.contains(groupId.toString())) {
+                lv.setItemChecked(i, true)
+            }
+            i += 2
+        }
+    }
+
     fun loadName() {
         dbAdapter.open()
         val c = dbAdapter.allNames
@@ -614,8 +561,8 @@ class FragmentMember : ListFragment() {
 
     companion object {
         internal lateinit var dbAdapter: MemberListAdapter
-        internal lateinit var gpdbAdapter: GroupListAdapter
         lateinit var listAdp: NameListAdapter
+        private lateinit var lv: ListView
         var nameList: ArrayList<Name> = ArrayList()
         internal lateinit var listItem: Name
         internal lateinit var fab: FloatingActionButton

@@ -1,6 +1,5 @@
 package com.pandatone.kumiwake.member
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -18,7 +17,6 @@ import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.GroupNameListAdapter
-import com.pandatone.kumiwake.kumiwake.NormalMode
 import java.io.IOException
 import java.util.*
 
@@ -28,17 +26,17 @@ import java.util.*
 class FragmentGroup : ListFragment() {
     private lateinit var listItem: GroupListAdapter.Group
     private var checkedCount = 0
-    var memberArray = MemberMain().memberArray
 
     // 必須*
     // Fragment生成時にシステムが呼び出す
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dbAdapter = GroupListAdapter(requireContext())
-        nameList = ArrayList()
-        listAdp = GroupNameListAdapter(requireContext(), nameList)
+        groupList = ArrayList()
+        listAdp = GroupNameListAdapter(requireContext(), groupList)
         listAdapter = listAdp
         loadName()
+        listAdp.notifyDataSetChanged()
     }
 
     // 必須*
@@ -59,16 +57,6 @@ class FragmentGroup : ListFragment() {
         startActivity(intent)
     }
 
-    internal fun moveKumiwake() {
-        val hs = HashSet(memberArray)
-        memberArray.clear()
-        memberArray.addAll(hs)
-        val i = Intent(activity, NormalMode::class.java)
-        i.putExtra(NormalMode.MEMBER_ARRAY, memberArray)
-        requireActivity().setResult(Activity.RESULT_OK, i)
-        requireActivity().finish()
-    }
-
     // Viewの生成が完了した後に呼ばれる
     // UIパーツの設定などを行う
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -83,7 +71,7 @@ class FragmentGroup : ListFragment() {
             val builder2 = android.app.AlertDialog.Builder(activity)
             val inflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val view2 = inflater.inflate(R.layout.group_info, activity!!.findViewById<View>(R.id.info_layout) as ViewGroup?)
-            val groupName = nameList[position].group
+            val groupName = groupList[position].group
             if (MemberMain.searchView.isActivated)
                 MemberMain.searchView.onActionViewCollapsed()
             FragmentMember().loadName()
@@ -148,8 +136,8 @@ class FragmentGroup : ListFragment() {
         if (MemberMain.startAction) {
             listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                 //行をクリックした時の処理
-                listView.startActionMode(Callback())
-                listView.setItemChecked(position, !listAdp.isPositionChecked(position))
+                FragmentMember().checkByGroup(groupList[position].id)
+                MemberMain.viewPager.setCurrentItem(0,true)
             }
         }
     }
@@ -157,6 +145,7 @@ class FragmentGroup : ListFragment() {
     override fun onStart() {
         super.onStart()
         loadName()
+        listAdp.notifyDataSetChanged()
     }
 
     private fun deleteSingleGroup(position: Int, group: String) {
@@ -166,7 +155,7 @@ class FragmentGroup : ListFragment() {
         // OKの時の処理
         builder.setPositiveButton("OK") { _, _ ->
             dbAdapter.open()
-            listItem = nameList[position]
+            listItem = groupList[position]
             val listId = listItem.id
             dbAdapter.selectDelete(listId.toString())
             dbAdapter.close()    // DBを閉じる
@@ -194,7 +183,7 @@ class FragmentGroup : ListFragment() {
                 val checked = list.get(i)
                 if (checked) {
                     // IDを取得する
-                    listItem = nameList[i]
+                    listItem = groupList[i]
                     val listId = listItem.id
                     dbAdapter.selectDelete(listId.toString())     // DBから取得したIDが入っているデータを削除する
                     FragmentMember().deleteBelongInfoAll(listId)
@@ -202,8 +191,6 @@ class FragmentGroup : ListFragment() {
             }
             dbAdapter.close()    // DBを閉じる
             listAdp.clearSelection()
-            listView.choiceMode = ListView.CHOICE_MODE_NONE
-            listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE_MODAL
             loadName()
         }
 
@@ -221,38 +208,6 @@ class FragmentGroup : ListFragment() {
 
     private inner class Callback : AbsListView.MultiChoiceModeListener {
 
-        internal val list = listView.checkedItemPositions
-
-        private val decisionClicked = View.OnClickListener {
-            dbAdapter.open()     // DBの読み込み(読み書きの方)
-            if (!MemberMain.kumiwake_select) {
-                for (i in 0 until ListCount) {
-                    val checked = list.get(i)
-                    if (checked) {
-                        listItem = nameList[i]
-                        val myId = listItem.id
-
-                        val newId = MemberMain.groupId
-                        FragmentMember().addGroupByGroup(newId, myId)
-                    }
-                }
-                requireActivity().finish()
-            } else {
-
-                for (i in 0 until ListCount) {
-                    val checked = list.get(i)
-                    if (checked) {
-                        listItem = nameList[i]
-                        val myId = listItem.id
-                        FragmentMember().createKumiwakeListByGroup(myId)
-                    }
-                }
-                moveKumiwake()
-            }
-            listAdp.clearSelection()
-            dbAdapter.close()
-        }
-
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             // アクションモード初期化処理
             val inflater = activity!!.menuInflater
@@ -260,7 +215,6 @@ class FragmentGroup : ListFragment() {
             menu.getItem(2).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
             menu.getItem(3).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
             menu.getItem(4).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
-            MemberMain.decision.setOnClickListener(decisionClicked)
             val searchIcon = menu.findItem(R.id.search_view)
             val deleteIcon = menu.findItem(R.id.item_delete)
             val itemFilter = menu.findItem(R.id.item_filter)
@@ -317,8 +271,17 @@ class FragmentGroup : ListFragment() {
 
     }
 
+    @Throws(IOException::class)
+    fun selectGroup(newText: String) {
+        if (TextUtils.isEmpty(newText)) {
+            dbAdapter.picGroup(null.toString(), null.toString())
+        } else {
+            dbAdapter.picGroup(newText, newText)
+        }
+
+    }
+
     fun loadName() {
-        nameList.clear()
         dbAdapter.open()
         val c = dbAdapter.allNames
         dbAdapter.getCursor(c)
@@ -329,20 +292,10 @@ class FragmentGroup : ListFragment() {
     companion object {
         internal lateinit var listAdp: GroupNameListAdapter
         internal lateinit var dbAdapter: GroupListAdapter
-        internal lateinit var nameList: MutableList<GroupListAdapter.Group>
+        internal lateinit var groupList: MutableList<GroupListAdapter.Group>
         internal lateinit var fab: FloatingActionButton
         internal lateinit var adviceInFG: TextView
         internal var ListCount: Int = 0
-
-        @Throws(IOException::class)
-        fun selectGroup(newText: String) {
-            if (TextUtils.isEmpty(newText)) {
-                dbAdapter.picGroup(null.toString(), null.toString())
-            } else {
-                dbAdapter.picGroup(newText, newText)
-            }
-
-        }
     }
 
 }

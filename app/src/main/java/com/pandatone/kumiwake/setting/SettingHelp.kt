@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -18,11 +17,12 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NavUtils
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.PermissionChecker
 import butterknife.ButterKnife
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.customize.CustomDialog
 import kotlinx.android.synthetic.main.setting_help.*
+
+
 
 /**
  * Created by atsushi_2 on 2016/02/19.
@@ -61,7 +61,7 @@ class SettingHelp : AppCompatActivity() {
         }
         back_up_list.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
-            checkPermission(this,position)
+            checkPermission(this, position)
         }
         other_list.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
@@ -104,7 +104,9 @@ class SettingHelp : AppCompatActivity() {
         customDialog = CustomDialog()
         customDialog.setTitle(title)
         customDialog.setMessage(message)
-        customDialog.show(supportFragmentManager, "Btn")
+        val ft = supportFragmentManager.beginTransaction()
+        ft.add(customDialog, null)
+        ft.commitAllowingStateLoss()
     }
 
     private fun decisionDialog(title: String, message: CharSequence, code: Int) {
@@ -112,7 +114,9 @@ class SettingHelp : AppCompatActivity() {
         customDialog.setTitle(title)
         customDialog.setMessage(message)
         customDialog.setOnPositiveClickListener(code)
-        customDialog.show(supportFragmentManager, "Btn")
+        val ft = supportFragmentManager.beginTransaction()
+        ft.add(customDialog, null)
+        ft.commitAllowingStateLoss()
     }
 
     private fun onBackup() {
@@ -187,7 +191,7 @@ class SettingHelp : AppCompatActivity() {
     private var position = 0
 
     // ストレージ許可の確認
-    private fun checkPermission(c: Context,pos:Int) {
+    private fun checkPermission(c: Context, pos: Int) {
         position = pos
 
         if (ContextCompat.checkSelfPermission(c,
