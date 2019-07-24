@@ -67,7 +67,7 @@ class SekigimeResult : AppCompatActivity() {
         llp2.setMargins(llp2.leftMargin, (10 * scale).toInt(), llp2.rightMargin, (90 * scale).toInt())
         go_home.layoutParams = llp2
         go_home.translationX = centerX
-        re_sekigime.background = ContextCompat.getDrawable(this, R.drawable.simple_orange_button)
+        re_sekigime.background = ContextCompat.getDrawable(this, R.drawable.sekigime_orange_button)
         go_home.background = ContextCompat.getDrawable(this, R.drawable.simple_green_button)
         group_spinner.background = ContextCompat.getDrawable(this, R.drawable.spinner_button)
         re_sekigime.setOnClickListener {

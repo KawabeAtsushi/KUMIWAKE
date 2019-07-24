@@ -34,6 +34,7 @@
     <string name="sekigime">Seat Allocation</string>
     <string name="select_mode">Select mode</string>
     <string name="share_app">Share App</string>
+    <string name="share_result">Share Result</string>
     <string name="sex">Gender</string>
     <string name="sorting">Sorting</string>
     <string name="setting_help">Setting/Help</string>
@@ -50,7 +51,7 @@
     <string name="leader">Leader</string>
     <string name="no_selected">No selected</string>
     <string name="input_required">*Required</string>
-    <string name="kumiwake_result">Result</string>
+    <string name="kumiwake_result">KUMIWAKE Result</string>
     <string name="move_custom">move to custom</string>
     <string name="move_confirmation">move to confirmation</string>
     <string name="all">All</string>
@@ -127,7 +128,7 @@
     <string name="error_empty_member_list">Please select members.</string>
     <string name="belong_member">Members of belong</string>
     <string name="group_name">Group name</string>
-    <string name="adviceToDecideInGroupFL">*The members that belonging selected groups are added.</string>
+    <string name="adviceToDecideInGroupFL">*The members that belonging selected groups are selected.</string>
     <string name="range_error">Specified range is incorrect.</string>
     <string name="require_group_no">Number of groups</string>
     <string name="require_member_no">Number of members</string>

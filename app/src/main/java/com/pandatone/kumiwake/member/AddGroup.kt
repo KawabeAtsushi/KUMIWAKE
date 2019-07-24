@@ -24,17 +24,17 @@ import java.util.*
  */
 class AddGroup : AppCompatActivity() {
     private var textInputLayout: TextInputLayout? = null
-    private var nextId = FragmentGroup.dbAdapter.maxId + 1
+    private var nextId = FragmentGroup.dbAdapter.maxId + 1 //FragmentGroupなしだとX
     private lateinit var adapter: MBListViewAdapter
     private lateinit var listView: ListView
-    private var position: Int = 0
+    private var editId: Int = 0
 
     private val groupId: Int
         get() {
-            return if (position == nextId) {
+            return if (editId == nextId) {
                 nextId
             } else {
-                FragmentGroup.groupList[position].id
+                editId
             }
         }
 
@@ -45,11 +45,10 @@ class AddGroup : AppCompatActivity() {
         dbAdapter = GroupListAdapter(this)
         findViews()
         val i = intent
-        position = i.getIntExtra(POSITION, nextId)
-        if (position != nextId) {
-            setItem(position)
+        editId = i.getIntExtra(GROUP_ID, nextId)
+        if (editId != nextId) {
+            setItem(editId)
         }
-        FragmentMember().deleteBelongInfoAll(nextId)
     }
 
     private fun findViews() {
@@ -65,10 +64,10 @@ class AddGroup : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     public override fun onStart() {
         super.onStart()
-        val nameByBelong: ArrayList<Name> = if (position == nextId) {
+        val nameByBelong: ArrayList<Name> = if (editId == nextId) {
             FragmentMember().searchBelong(nextId.toString())
         } else {
-            FragmentMember().searchBelong(FragmentGroup.groupList[position].id.toString())
+            FragmentMember().searchBelong(editId.toString())
         }
         adapter = MBListViewAdapter(this@AddGroup, nameByBelong, true)
         listView.adapter = adapter
@@ -92,6 +91,8 @@ class AddGroup : AppCompatActivity() {
 
     @OnClick(R.id.group_cancel_btn)
     internal fun cancel() {
+        if (editId == nextId)
+            FragmentMember().deleteBelongInfoAll(nextId)
         finish()
     }
 
@@ -100,8 +101,6 @@ class AddGroup : AppCompatActivity() {
         dbAdapter.open()
         dbAdapter.saveGroup(name, name, adapter.count)
         dbAdapter.close()
-        FragmentMember().loadName()
-        dbAdapter.notifyDataSetChanged()
     }
 
     private fun updateItem(listId: Int) {
@@ -109,17 +108,17 @@ class AddGroup : AppCompatActivity() {
         dbAdapter.open()
         dbAdapter.updateGroup(listId, name, name, adapter.count)
         dbAdapter.close()
-        FragmentMember().loadName()
     }
 
 
-    private fun setItem(position: Int) {
-        val listItem = FragmentGroup.groupList[position]
-        val listId = listItem.id
-        val group = listItem.group
-        groupEditText.setText(group)
-
-        update(listId)
+    private fun setItem(id: Int) {
+        for (group in FragmentGroup.groupList) {
+            if (group.id == id) {
+                groupEditText.setText(group.group)
+                break
+            }
+        }
+        update(id)
     }
 
     private fun update(listId: Int) {
@@ -152,7 +151,7 @@ class AddGroup : AppCompatActivity() {
         internal lateinit var groupEditText: AppCompatEditText
         internal lateinit var numberOfSelectedMember: TextView
         internal lateinit var dbAdapter: GroupListAdapter
-        const val POSITION = "position"
+        const val GROUP_ID = "group_id"
     }
 
 }

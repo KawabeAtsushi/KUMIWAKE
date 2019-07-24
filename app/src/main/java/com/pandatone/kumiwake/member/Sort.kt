@@ -1,11 +1,8 @@
 package com.pandatone.kumiwake.member
 
 import android.app.Activity
-import android.app.Application
-import android.content.Context
 import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.adapter.CustomPagerAdapter
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
 import com.pandatone.kumiwake.adapter.NameListAdapter
@@ -18,6 +15,7 @@ object Sort {
     private const val ASC = "ASC"   //昇順 (1.2.3....)
     private const val DESC = "DESC" //降順 (3.2.1....)
     private lateinit var NS: String
+    private lateinit var ST: String
     internal var initial = 0
 
     fun memberSort(builder: androidx.appcompat.app.AlertDialog.Builder,activity: Activity) {
@@ -38,40 +36,40 @@ object Sort {
         builder.setPositiveButton("OK") { _, _ ->
             when (initial) {
                 0 -> {
-                    NS = "ID"
-                    dbAdapter.sortNames(MemberListAdapter.MB_ID, ASC)
+                    NS = MemberListAdapter.MB_ID
+                    ST = ASC
                 }
                 1 -> {
-                    NS = "ID"
-                    dbAdapter.sortNames(MemberListAdapter.MB_ID, DESC)
+                    NS = MemberListAdapter.MB_ID
+                    ST = DESC
                 }
                 2 -> {
-                    NS = "NAME"
-                    dbAdapter.sortNames(MemberListAdapter.MB_NAME_READ, ASC)
+                    NS = MemberListAdapter.MB_READ
+                    ST = ASC
                 }
                 3 -> {
-                    NS = "NAME"
-                    dbAdapter.sortNames(MemberListAdapter.MB_NAME_READ, DESC)
+                    NS = MemberListAdapter.MB_READ
+                    ST = DESC
                 }
                 4 -> {
-                    NS = "AGE"
-                    dbAdapter.sortNames(MemberListAdapter.MB_AGE, ASC)
+                    NS = MemberListAdapter.MB_AGE
+                    ST = ASC
                 }
                 5 -> {
-                    NS = "AGE"
-                    dbAdapter.sortNames(MemberListAdapter.MB_AGE, DESC)
+                    NS = MemberListAdapter.MB_AGE
+                    ST = DESC
                 }
             }
+            dbAdapter.sortNames(NS, ST)
             NameListAdapter.nowSort = NS
-
-            dbAdapter.notifyDataSetChanged()
+            NameListAdapter.sortType = ST
+            FragmentMember.listAdp.notifyDataSetChanged() //loadName()を呼ばない！
         }
         // アラートダイアログのボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
         builder.setNegativeButton(R.string.cancel) { _, _ -> }
 
         // back keyを使用不可に設定
         builder.setCancelable(false)
-
     }
 
     fun groupSort(builder: androidx.appcompat.app.AlertDialog.Builder,activity: Activity) {
@@ -98,7 +96,7 @@ object Sort {
                 5 -> gpdbAdapter.sortGroups(GroupListAdapter.GP_BELONG, DESC)
             }
 
-            gpdbAdapter.notifyDataSetChanged()
+            FragmentGroup.listAdp.notifyDataSetChanged()
         }
         // アラートダイアログのボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
         builder.setNegativeButton(R.string.cancel) { _, _ -> }

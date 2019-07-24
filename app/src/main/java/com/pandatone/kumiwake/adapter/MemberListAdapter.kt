@@ -13,17 +13,18 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import com.pandatone.kumiwake.member.FragmentGroup
 import com.pandatone.kumiwake.member.FragmentMember
 import com.pandatone.kumiwake.member.Name
 import java.io.IOException
+import java.util.ArrayList
+
 
 class MemberListAdapter(private val context: Context) : BaseAdapter() {
 
 
     private var dbHelper: DatabaseHelper
 
-    val allNames: Cursor
+    val getDB: Cursor
         get() = db.query(TABLE_NAME, null, null, null, null, null, null)
 
     init {
@@ -57,7 +58,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
             if (oldVersion == 1 && newVersion == 2) {
 
-                db.execSQL("ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + MB_NAME_READ
+                db.execSQL("ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + MB_READ
                         + " TEXT DEFAULT 'ￚ no data ￚ'")
 
             }
@@ -79,24 +80,27 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
     //レコードの選択削除
     fun selectDelete(position: String) {
         open()
+        db.beginTransaction()                      // トランザクション開始
         try {
             db.delete(TABLE_NAME, "$MB_ID=?", arrayOf(position))
+            db.setTransactionSuccessful()          // トランザクションへコミット
         } catch (e: Exception) {
             e.printStackTrace()
+        } finally {
+            db.endTransaction()                    // トランザクションの終了
         }
-
         close()
-        refresh()
     }
 
     fun sortNames(sortBy: String, sortType: String) {
+
         open()
         val query = "SELECT * FROM " +
                 TABLE_NAME + " ORDER BY " + sortBy + " " + sortType + ";"
         val c = db.rawQuery(query, null)
-        getCursor(c)
+        getCursor(c,FragmentMember.nameList)
         close()
-        refresh()
+
     }
 
     @Throws(IOException::class)
@@ -104,11 +108,11 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         open()
         val query = ("SELECT * FROM " + TABLE_NAME +
                 " WHERE " + MB_NAME + " like '%" + name + "%' OR "
-                + MB_NAME_READ + " like '%" + name + "%';")
+                + MB_READ + " like '%" + name + "%';")
         val c = db.rawQuery(query, null)
-        getCursor(c)
+        getCursor(c,FragmentMember.nameList)
         close()
-        refresh()
+
     }
 
     @Throws(IOException::class)
@@ -117,18 +121,13 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         open()
         val query = "SELECT * FROM " + TABLE_NAME +
                 " WHERE " + MB_SEX + " like '" + sex + "%' AND (" + MB_AGE + " BETWEEN " + minage + " AND " + maxage +
-                ") AND (" + MB_BELONG + " like '" + belongNo + ",%' OR "+
-                MB_BELONG + " like '%," + belongNo + ",%' OR " + MB_BELONG + " like '%," + belongNo + "');" //BelongIdのマッチング式OR (e.g),1,2,3,4
+                ") AND (" + MB_BELONG + " like '" + belongNo + "%' OR " + MB_BELONG + " like '%," + belongNo + "%');" //BelongIdのマッチング式OR (e.g),1,2,3,4
         val c = db.rawQuery(query, null)
-        getCursor(c)
+        getCursor(c,FragmentMember.nameList)
         close()
-
-        NameListAdapter.nowSort = "ID"
-        refresh()
     }
 
-    fun getCursor(c: Cursor) {
-        val nameList = FragmentMember.nameList
+    fun getCursor(c: Cursor, nameList: ArrayList<Name>) {
         var listItem: Name
 
         nameList.clear()
@@ -159,6 +158,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
 
                 nameList.add(listItem)          // 取得した要素をnameListに追加
 
+                //member rowを追加
                 listItem = Name(
                         c.getInt(0),
                         c.getString(1),
@@ -174,23 +174,21 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
             } while (c.moveToNext())
         }
         c.close()
-        refresh()
     }
 
-    fun addBelong(position: String, newBelong: String) {
-
+    fun addBelong(id: String, newBelong: String) {
         try {
             val values = ContentValues()
             values.put(MB_BELONG, newBelong)
-            db.update(TABLE_NAME, values, "$MB_ID=?", arrayOf(position))
+            db.update(TABLE_NAME, values, "$MB_ID=?", arrayOf(id))
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        refresh()
+
     }
 
     fun saveName(name: String, sex: String, age: Int,  belong: String, read: String) {
-
+        open()
         db.beginTransaction()          // トランザクション開始
 
         try {
@@ -201,7 +199,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
             values.put(MB_GRADE, 0) //grade column is being deprecated
             values.put(MB_BELONG, belong)
             values.put(MB_ROLE, "") //role column is being deprecated
-            if (read.isEmpty()) values.put(MB_NAME_READ, "ￚ no data ￚ") else values.put(MB_NAME_READ, read)
+            if (read.isEmpty()) values.put(MB_READ, "ￚ no data ￚ") else values.put(MB_READ, read)
             db.insert(TABLE_NAME, null, values)
 
             db.setTransactionSuccessful()      // トランザクションへコミット
@@ -210,7 +208,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         } finally {
             db.endTransaction()                // トランザクションの終了
         }
-        refresh()
+        close()
     }
 
     fun updateMember(id: Int, name: String, sex: String, age: Int, belong: String, read: String) {
@@ -224,7 +222,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
             values.put(MB_GRADE, 0)  //grade column is being deprecated
             values.put(MB_BELONG, belong)
             values.put(MB_ROLE, "")   //role column is being deprecated
-            if (read.isEmpty()) values.put(MB_NAME_READ, "ￚ no data ￚ") else values.put(MB_NAME_READ, read)
+            if (read.isEmpty()) values.put(MB_READ, "ￚ no data ￚ") else values.put(MB_READ, read)
 
             db.update(TABLE_NAME, values, "$MB_ID=?", arrayOf(id.toString()))
 
@@ -233,12 +231,6 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         }
 
         close()
-        refresh()
-    }
-
-    private fun refresh(){
-        notifyDataSetChanged()
-        FragmentMember.listAdp.notifyDataSetChanged()
     }
 
     companion object {
@@ -247,7 +239,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         const val TABLE_NAME = "member_info"
         const val MB_ID = "_id"
         const val MB_NAME = "mb_name"
-        const val MB_NAME_READ = "mb_read"
+        const val MB_READ = "mb_read"
         const val MB_SEX = "mb_sex"
         const val MB_AGE = "mb_age"
         const val MB_GRADE = "mb_grade"  //deprecated
@@ -260,7 +252,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
                 + MB_ID + " INTEGER PRIMARY KEY,"
                 + MB_NAME + " TEXT NOT NULL," + MB_SEX + " TEXT NOT NULL,"
                 + MB_AGE + " INTEGER," + MB_GRADE + " INTEGER," + MB_BELONG + " TEXT," + MB_ROLE + " TEXT,"
-                + MB_NAME_READ + " TEXT"
+                + MB_READ + " TEXT"
                 + ");")
     }
 

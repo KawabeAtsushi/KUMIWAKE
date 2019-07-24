@@ -37,17 +37,15 @@ class GroupNameListAdapter(private val context: Context, private val groupList: 
 
     @SuppressLint("InflateParams", "SetTextI18n")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
-        Log.d("Group_getView",position.toString())
         val nameTextView: TextView
         val numberOfMemberTextView: TextView
-        var v: View? = convertView
+        val v: View?
         val listItem = groupList[position]
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        if (v == null) {
-            v = inflater.inflate(R.layout.row_group, null)
-        }
 
-        if (gSelection.get(position)) {
+        v = inflater.inflate(R.layout.row_group, null)
+
+        if (gSelection.get(listItem.id)) {
             v!!.setBackgroundColor(ContextCompat.getColor(MyApplication.context!!, R.color.checked_list))
         }
 
@@ -59,13 +57,13 @@ class GroupNameListAdapter(private val context: Context, private val groupList: 
         return v
     }
 
-    fun setNewSelection(position: Int, value: Boolean) {
-        gSelection.append(position, value)
+    fun setNewSelection(id: Int, value: Boolean) {
+        gSelection.append(id, value)
         notifyDataSetChanged()
     }
 
-    fun removeSelection(position: Int) {
-        gSelection.delete(position)
+    fun removeSelection(id: Int) {
+        gSelection.delete(id)
         notifyDataSetChanged()
     }
 
@@ -74,8 +72,8 @@ class GroupNameListAdapter(private val context: Context, private val groupList: 
         notifyDataSetChanged()
     }
 
-    fun isPositionChecked(position: Int): Boolean {
-        return gSelection.get(position)
+    fun isPositionChecked(id: Int): Boolean {
+        return gSelection.get(id)
     }
 
 }

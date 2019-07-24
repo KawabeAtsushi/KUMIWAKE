@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
     <ImageView
+        android:id="@+id/group_icon"
         android:layout_width="@dimen/group_icon_size"
         android:layout_height="@dimen/group_icon_size"
         android:padding="@dimen/row_padding"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
         android:src="@drawable/user_group"
         android:tint="@color/gray" />
 
     <TextView
         android:id="@+id/groupName"
-        android:layout_width="230dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:paddingTop="@dimen/row_padding"
         android:paddingBottom="@dimen/row_padding"
         android:paddingStart="@dimen/row_padding"
         android:paddingEnd="@dimen/row_padding"
-        android:layout_gravity="center_vertical"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/group_icon"
         android:textSize="25sp"
         android:ellipsize="end"
         android:singleLine="true" />
@@ -29,7 +34,9 @@
         android:id="@+id/theNumberOfMember"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|center"
+        android:layout_marginEnd="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
         android:background="@drawable/radius_background"
         android:paddingStart="@dimen/row_padding"
         android:paddingTop="5dp"
@@ -38,4 +45,4 @@
         android:singleLine="true"
         android:textSize="20sp" />
 
-</LinearLayout>
+</RelativeLayout>

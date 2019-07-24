@@ -2,6 +2,7 @@ package com.pandatone.kumiwake.member
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -59,7 +60,7 @@ object MemberClick {
 
         for (i in belongArray.indices) {
             val belongGroup = belongArray[i]
-            for (j in 0 until FragmentGroup.ListCount) {
+            for (j in 0 until FragmentGroup.listAdp.count) {
                 val listItem = FragmentGroup.groupList[j]
                 val groupId = listItem.id.toString()
                 if (belongGroup == groupId) {

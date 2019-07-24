@@ -4,13 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ShareCompat
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.google.android.gms.ads.AdRequest
@@ -24,6 +25,7 @@ import com.pandatone.kumiwake.member.Name
 import com.pandatone.kumiwake.sekigime.SekigimeResult
 import com.pandatone.kumiwake.sekigime.SelectTableType
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by atsushi_2 on 2016/05/10.
@@ -31,8 +33,8 @@ import java.util.*
 class NormalKumiwakeResult : AppCompatActivity() {
 
     private lateinit var memberArray: ArrayList<Name>
-    private lateinit var manArray: ArrayList<Name>
-    private lateinit var womanArray: ArrayList<Name>
+    private var manArray: ArrayList<Name> = ArrayList()
+    private var womanArray: ArrayList<Name> = ArrayList()
     private lateinit var leaderArray: ArrayList<Name>
     private lateinit var groupArray: ArrayList<GroupListAdapter.Group>
     private lateinit var arrayArray: ArrayList<ArrayList<Name>>
@@ -172,6 +174,11 @@ class NormalKumiwakeResult : AppCompatActivity() {
         customDialog.show(supportFragmentManager, "Btn")
     }
 
+    @OnClick(R.id.share_result)
+    internal fun shareResult() {
+        share()
+    }
+
     @OnClick(R.id.go_sekigime)
     internal fun onClicked() {
         val groupNameArray = ArrayList<String>(groupCount)
@@ -219,8 +226,6 @@ class NormalKumiwakeResult : AppCompatActivity() {
     }
 
     private fun createFmArray() {
-        manArray = ArrayList()
-        womanArray = ArrayList()
 
         for (i in memberArray.indices) {
             if (memberArray[i].sex == getText(R.string.man)) {
@@ -418,7 +423,57 @@ class NormalKumiwakeResult : AppCompatActivity() {
         v.background = drawable
     }
 
-    companion object{
+    private fun share() {
+        var setLeader = false
+        val articleTitle = "～" + getString(R.string.kumiwake_result) + "～"
+        val descriptionLeader = "\n☆:" + getString(R.string.leader) + "\n"
+        var sharedText = ""
+        val resultTxt = StringBuilder()
+
+        for ((i, array) in arrayArray.withIndex()) {
+            resultTxt.append("\n")
+            resultTxt.append("《${groupArray[i].group}》\n")
+
+            for (member in array) {
+                when {
+                    leaderArray.contains(member) -> {
+                        setLeader = true
+                        resultTxt.append("☆")
+                    }
+                    member.sex == getString(R.string.man) -> resultTxt.append("♠")
+                    else -> resultTxt.append("♡")
+                }
+                resultTxt.append("${member.name}\n")
+            }
+        }
+
+        sharedText = if(setLeader) {
+            "$articleTitle\n$descriptionLeader$resultTxt"
+        }else{
+            "$articleTitle\n$resultTxt"
+        }
+
+        // builderの生成
+        val builder = ShareCompat.IntentBuilder.from(this)
+
+        // アプリ一覧が表示されるDialogのタイトルの設定
+        builder.setChooserTitle(R.string.choose_app)
+
+        // シェアするタイトル
+        builder.setSubject(articleTitle)
+
+        // シェアするテキスト
+        builder.setText(sharedText)
+
+        // シェアするタイプ（他にもいっぱいあるよ）
+        builder.setType("text/plain")
+
+        // Shareアプリ一覧のDialogの表示
+        builder.startChooser()
+
+    }
+
+    companion object {
         internal var even_age_ratio: Boolean = false
     }
 }
