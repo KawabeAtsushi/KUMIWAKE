@@ -23,7 +23,6 @@ import com.pandatone.kumiwake.customize.CustomDialog
 import kotlinx.android.synthetic.main.setting_help.*
 
 
-
 /**
  * Created by atsushi_2 on 2016/02/19.
  */
@@ -75,10 +74,9 @@ class SettingHelp : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
 
         // いつものUPナビゲーションの処理
-        when (id) {
+        when (item.itemId) {
             android.R.id.home -> {
                 NavUtils.navigateUpFromSameTask(this)
                 return true

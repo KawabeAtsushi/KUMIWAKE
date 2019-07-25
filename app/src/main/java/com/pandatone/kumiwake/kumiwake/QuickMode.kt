@@ -80,18 +80,16 @@ class QuickMode : AppCompatActivity(), TextWatcher {
         error_member_no_txt.text = ""
         error_group_no_txt.text = ""
 
-        if (TextUtils.isEmpty(group_no)) {
-            error_group_no_txt.setText(R.string.error_empty_group_no)
-        }
         when {
             TextUtils.isEmpty(member_no) -> error_member_no_txt.setText(R.string.error_empty_member_no)
             TextUtils.isEmpty(group_no) -> error_group_no_txt.setText(R.string.error_empty_group_no)
+            group_no == "0" -> error_group_no_txt.setText(R.string.require_correct_No)
             Integer.parseInt(group_no) > memberNo -> {
                 error_group_no_txt.setText(R.string.number_of_groups_is_much_too)
             }
             else -> {
                 val womanList = ArrayList<String>()
-                val manList = CreateManList(manNo, womanNo)
+                val manList = createManList(manNo, womanNo)
                 val groupList = ArrayList<String>()
                 for (i in 1..womanNo) {
                     womanList.add(getText(R.string.member).toString() + "♡" + i.toString())
@@ -110,7 +108,7 @@ class QuickMode : AppCompatActivity(), TextWatcher {
         }
     }
 
-    fun CreateManList(manNo: Int, womanNo: Int): ArrayList<String> {
+    private fun createManList(manNo: Int, womanNo: Int): ArrayList<String> {
         val manList = ArrayList<String>()
         if (womanNo == 0) {
             for (i in 1..manNo) {

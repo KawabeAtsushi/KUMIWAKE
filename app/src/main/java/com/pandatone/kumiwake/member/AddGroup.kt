@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.widget.Button
 import android.widget.ListView
@@ -18,8 +18,6 @@ import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MBListViewAdapter
-import android.view.KeyEvent.KEYCODE_BACK
-import android.view.KeyEvent
 
 
 /**

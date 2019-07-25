@@ -2,7 +2,6 @@ package com.pandatone.kumiwake.member
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -37,7 +36,7 @@ object MemberClick {
     }
 
     @SuppressLint("SetTextI18n")
-    fun SetInfo(position: Int) {
+    fun setInfo(position: Int) {
         name.text = context!!.getText(R.string.member_name).toString() + " : " + FragmentMember.nameList[position].name + " (" + FragmentMember.nameList[position].read + ")"
         sex.text = context.getText(R.string.sex).toString() + " : " + FragmentMember.nameList[position].sex
         age.text = context.getText(R.string.age).toString() + " : " + FragmentMember.nameList[position].age.toString()

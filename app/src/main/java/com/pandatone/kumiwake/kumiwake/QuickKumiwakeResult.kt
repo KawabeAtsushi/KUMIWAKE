@@ -3,7 +3,6 @@ package com.pandatone.kumiwake.kumiwake
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
@@ -160,7 +159,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
     }
 
 
-    fun kumiwakeAll() {
+    private fun kumiwakeAll() {
         memberArray.shuffle()
         var targetGroupNo: Int
 
@@ -283,18 +282,18 @@ class QuickKumiwakeResult : AppCompatActivity() {
 
 internal class KumiwakeComparator : Comparator<String> {
     override fun compare(s1: String, s2: String): Int {
-        val s1_name = s1.replace("[0-9]".toRegex(), "") //文字列から文字のみ抜き出し
-        val s2_name = s2.replace("[0-9]".toRegex(), "")
+        val s1Name = s1.replace("[0-9]".toRegex(), "") //文字列から文字のみ抜き出し
+        val s2Name = s2.replace("[0-9]".toRegex(), "")
 
-        var value = s1_name.compareTo(s2_name)
+        var value = s1Name.compareTo(s2Name)
 
         if (value == 0) {
-            val s1_no = Integer.parseInt(s1.replace("[^0-9]".toRegex(), ""))   //文字列から数値のみ抜き出し
-            val s2_no = Integer.parseInt(s2.replace("[^0-9]".toRegex(), ""))
-            if (s1_no < s2_no) {
-                value = -1
+            val s1No = Integer.parseInt(s1.replace("[^0-9]".toRegex(), ""))   //文字列から数値のみ抜き出し
+            val s2No = Integer.parseInt(s2.replace("[^0-9]".toRegex(), ""))
+            value = if (s1No < s2No) {
+                -1
             } else {
-                value = 1
+                1
             }
         }
 

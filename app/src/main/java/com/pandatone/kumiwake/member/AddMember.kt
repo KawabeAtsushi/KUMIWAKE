@@ -50,7 +50,7 @@ class AddMember : AppCompatActivity() {
             setItem(position)
         }
 
-        var yomigana: String = ""
+        var yomigana = ""
 
         nameEditText?.addTextChangedListener(object : TextWatcher {
 
@@ -118,7 +118,7 @@ class AddMember : AppCompatActivity() {
 
             list.add(groupName)
         }
-        val belongArray = list.toTypedArray<String>()
+        val belongArray = list.toTypedArray()
         // 選択リスト
         val checkArray = BooleanArray(belongArray.size)
         for (i in belongArray.indices) {
@@ -133,7 +133,7 @@ class AddMember : AppCompatActivity() {
         // ダイアログを生成
         val dialog = AlertDialog.Builder(this)
         // 選択イベント
-        dialog.setMultiChoiceItems(belongArray, checkArray, DialogInterface.OnMultiChoiceClickListener { _, value, isChecked ->
+        dialog.setMultiChoiceItems(belongArray, checkArray) { _, value, isChecked ->
             val text = belongSpinner!!.text.toString()
             // 選択された場合
             if (isChecked) {
@@ -141,15 +141,13 @@ class AddMember : AppCompatActivity() {
                 belongSpinner!!.text = text + (if ("" == text) "" else ",") + belongArray[value]
             } else {
                 // ボタンの表示から削除
-                if (text.indexOf(belongArray[value] + ",") >= 0) {
-                    belongSpinner!!.text = text.replace(belongArray[value] + ",", "")
-                } else if (text.indexOf("," + belongArray[value]) >= 0) {
-                    belongSpinner!!.text = text.replace("," + belongArray[value], "")
-                } else {
-                    belongSpinner!!.text = text.replace(belongArray[value], "")
+                when {
+                    text.indexOf(belongArray[value] + ",") >= 0 -> belongSpinner!!.text = text.replace(belongArray[value] + ",", "")
+                    text.indexOf("," + belongArray[value]) >= 0 -> belongSpinner!!.text = text.replace("," + belongArray[value], "")
+                    else -> belongSpinner!!.text = text.replace(belongArray[value], "")
                 }
             }
-        })
+        }
         dialog.setPositiveButton(getText(R.string.decide), null)
         dialog.setNeutralButton(getText(R.string.clear)) { _, _ ->
             belongSpinner!!.text = ""
@@ -228,28 +226,25 @@ class AddMember : AppCompatActivity() {
     }
 
     private fun changeBelongNo() {
-        var i: Int = 0
+        var i = 0
         var j: Int
         var k: Int
         var id: Int
         var belongNo: Int
-        val beforeBelongNo: Int
-        val afterBelongNo: Int
         var name: String
         val read = "ￚ no data ￚ"
         var change: Boolean? = true
         val groupListAdapter = GroupListAdapter(this)
 
-        if (beforeBelong != null) {
-            beforeBelongNo = beforeBelong!!.size
+        val beforeBelongNo: Int = if (beforeBelong != null) {
+            beforeBelong!!.size
         } else {
-            beforeBelongNo = 0
+            0
         }
-
-        if (afterBelong != null) {
-            afterBelongNo = afterBelong!!.size
+        val afterBelongNo: Int = if (afterBelong != null) {
+            afterBelong!!.size
         } else {
-            afterBelongNo = 0
+            0
         }
 
         while (i < beforeBelongNo) {

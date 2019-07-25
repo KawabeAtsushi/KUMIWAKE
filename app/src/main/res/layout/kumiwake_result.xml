@@ -29,7 +29,7 @@
                 android:id="@+id/result_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"></LinearLayout>
+                android:orientation="vertical" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -91,5 +91,5 @@
         android:layout_centerInParent="true"
         android:layout_marginBottom="10dp"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-2315101868638564/8665451539"></com.google.android.gms.ads.AdView>
+        ads:adUnitId="ca-app-pub-2315101868638564/8665451539" />
 </RelativeLayout>

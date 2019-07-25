@@ -62,8 +62,7 @@
     <string name="description_of_quick_mode">人数とグループ数を指定して組分けを行うモードです。\n詳細な設定が不要なので素早く組分けを行えます。</string>
     <string name="description_of_normal_sekigime">登録したメンバーを選択して席決めを行うモードです。\nグループごとの名前や人数の設定などのカスタマイズが行えます。</string>
     <string name="description_of_quick_sekigime">人数とグループ数を指定して席決めを行うモードです。\n詳細な設定が不要なので素早く席決めを行えます。</string>
-    <string name="require_member_no">メンバー数</string>
-    <string name="require_group_no">グループ数</string>
+    <string name="number_of_groups">グループ数</string>
     <string name="do_kumiwake">組分けする！</string>
     <string name="move_confirmation">確認画面へ</string>
     <string name="number_of_groups_is_much_too">グループ数がメンバー数を超えています</string>
@@ -109,9 +108,6 @@
     <string name="seats_type_confirmation">この座席タイプでよろしいですか？</string>
     <string name="be_custom">＊カスタムあり</string>
     <string name="run">実行する</string>
-    <string name="sekigime_procedure">『席決め』の手順" "</string>
-    <string name="sekigime_procedure1">"メンバーの選択\nグループの作成"</string>
-    <string name="sekigime_procedure2">座席の設定</string>
     <string name="start">開始</string>
     <string name="single_square_type">片側</string>
     <string name="double_square_type">両側</string>

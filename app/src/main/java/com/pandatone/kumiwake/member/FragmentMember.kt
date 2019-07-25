@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.ListFragment
@@ -75,7 +74,7 @@ class FragmentMember : ListFragment() {
                 when (which) {
                     0 -> {
                         MemberClick.memberInfoDialog(view2, builder2)
-                        MemberClick.SetInfo(position)
+                        MemberClick.setInfo(position)
                         val dialog2 = builder2.create()
                         dialog2.show()
                         MemberClick.okBt.setOnClickListener { dialog2.dismiss() }
@@ -180,6 +179,7 @@ class FragmentMember : ListFragment() {
             dbAdapter.selectDelete(listId.toString())
             dbAdapter.close()    // DBを閉じる
             loadName()
+            FragmentGroup().loadName()
         }
 
         builder.setNegativeButton(R.string.cancel) { _, _ -> }
@@ -442,6 +442,7 @@ class FragmentMember : ListFragment() {
                 dbAdapter.close()    // DBを閉じる
                 listAdp.clearSelection()
                 loadName()
+                FragmentGroup().loadName()
                 mode.finish()
             }
 

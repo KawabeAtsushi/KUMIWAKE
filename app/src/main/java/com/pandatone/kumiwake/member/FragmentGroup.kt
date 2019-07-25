@@ -61,7 +61,7 @@ class FragmentGroup : ListFragment() {
 
         listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
-            val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
+            val builder = AlertDialog.Builder(activity!!)
             val builder2 = android.app.AlertDialog.Builder(activity)
             val inflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val view2 = inflater.inflate(R.layout.group_info, activity!!.findViewById<View>(R.id.info_layout) as ViewGroup?)
@@ -111,7 +111,7 @@ class FragmentGroup : ListFragment() {
             }
 
             R.id.item_sort -> {
-                val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
+                val builder = AlertDialog.Builder(activity!!)
                 Sort.groupSort(builder, activity!!)
                 val dialog = builder.create()
                 dialog.show()
@@ -140,7 +140,7 @@ class FragmentGroup : ListFragment() {
     }
 
     private fun deleteSingleGroup(position: Int, group: String) {
-        val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
+        val builder = AlertDialog.Builder(activity!!)
         builder.setTitle(group)
         builder.setMessage(R.string.Do_delete)
         // OKの時の処理
@@ -232,7 +232,7 @@ class FragmentGroup : ListFragment() {
                     listView.clearChoices()
                     listAdp.clearSelection()
                     mode.title = "0" + getString(R.string.selected)
-                    val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
+                    val builder = AlertDialog.Builder(activity!!)
                     Sort.groupSort(builder, activity!!)
                     val dialog = builder.create()
                     dialog.show()

@@ -2,7 +2,6 @@ package com.pandatone.kumiwake.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,13 +14,12 @@ import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.kumiwake.KumiwakeCustom
 import com.pandatone.kumiwake.member.Name
-import com.pandatone.kumiwake.sekigime.SekigimeResult.Companion.groupNo
 import java.util.*
 
 /**
  * Created by atsushi_2 on 2016/04/16.
  */
-class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,showLeaderNo: Boolean) : BaseAdapter() {
+class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>, showLeaderNo: Boolean) : BaseAdapter() {
     private val inflater: LayoutInflater
     private var listElements: ArrayList<Name> = ArrayList()
     private val showLdNo = showLeaderNo
@@ -93,7 +91,7 @@ class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,
 
             if (showLdNo) {
                 leaderNo.visibility = View.VISIBLE
-                leaderNo.text = (leaderNoList.indexOf(id)+1).toString()
+                leaderNo.text = (leaderNoList.indexOf(id) + 1).toString()
             }
 
         } else {

@@ -10,7 +10,6 @@ import com.pandatone.kumiwake.member.FragmentGroup
 import com.pandatone.kumiwake.member.FragmentMember
 
 
-
 /**
  * Created by atsushi_2 on 2016/02/23.
  */

@@ -2,7 +2,6 @@ package com.pandatone.kumiwake.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
-import java.util.*
 
 /**
  * Created by atsushi_2 on 2016/03/20.

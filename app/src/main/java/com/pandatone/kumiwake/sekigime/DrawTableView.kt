@@ -3,7 +3,6 @@ package com.pandatone.kumiwake.sekigime
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -51,8 +50,8 @@ class DrawTableView(context: Context) : View(context) {
     override fun onDraw(canvas: Canvas) {
         arrayArrayQuick = SekigimeResult.arrayArrayQuick
         arrayArrayNormal = SekigimeResult.arrayArrayNormal
-        x = ArrayList<Double>()
-        y = ArrayList<Double>()
+        x = ArrayList()
+        y = ArrayList()
         memberNo(position)
         canvasHeight = height.toFloat()
         when (tableType) {
@@ -94,10 +93,10 @@ class DrawTableView(context: Context) : View(context) {
             var y: Double?
 
             for (i in xArray.indices) {
-                x = xArray.get(i)
+                x = xArray[i]
                 if (Math.abs(xCoordinate - x) <= r) {
                     for (j in yArray.indices) {
-                        y = yArray.get(j)
+                        y = yArray[j]
                         if (Math.abs(yCoordinate - y) <= r && j == i) {
                             point = j
                             reDraw()
@@ -116,8 +115,8 @@ class DrawTableView(context: Context) : View(context) {
     /////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun drawSquareTable(canvas: Canvas) {
-        val cPaint: Paint = Paint()
-        val sPaint: Paint = Paint()
+        val cPaint = Paint()
+        val sPaint = Paint()
         val tableHeight: Int = if (doubleDeploy!!) {
             if ((seatsNo - square_no * 2) % 2 == 0) {
                 130 * (seatsNo - square_no * 2) / 2 + 235
@@ -197,7 +196,7 @@ class DrawTableView(context: Context) : View(context) {
         }
         setFmBackground(canvas, 0, square_no)
         if (doubleDeploy!!) {
-            if (square_no <= point && point < a) {
+            if (point in square_no until a) {
                 setFocusGradation(canvas)
             }
             setFmBackground(canvas, square_no, a)
@@ -222,12 +221,10 @@ class DrawTableView(context: Context) : View(context) {
             j++
         }
         lastX = 0
-        if (seatsNo == 1) {
-            lastY = (transY * scale).toInt()
-        } else if ((seatsNo - a) / 2 == 0) {
-            lastY = (transY * Math.floor(((seatsNo - a) / 2).toDouble()) * scale).toInt()
-        } else {
-            lastY = (transY * Math.floor(((seatsNo - a + 1) / 2).toDouble()) * scale).toInt()
+        lastY = when {
+            seatsNo == 1 -> (transY * scale).toInt()
+            (seatsNo - a) / 2 == 0 -> (transY * Math.floor(((seatsNo - a) / 2).toDouble()) * scale).toInt()
+            else -> (transY * Math.floor(((seatsNo - a + 1) / 2).toDouble()) * scale).toInt()
         }
         if (point >= a) {
             setFocusGradation(canvas)
@@ -290,7 +287,7 @@ class DrawTableView(context: Context) : View(context) {
         lastY = (transY * Math.floor((seatsNo / 2).toDouble()) * scale).toInt()
         if (seatsNo == 1) {
             lastY = (transY * scale).toInt()
-        } else if (y.get(0) - lastY != 190.0) {
+        } else if (y[0] - lastY != 190.0) {
             lastY = (transY * Math.floor(((seatsNo + 1) / 2).toDouble()) * scale).toInt()
         }
     }
@@ -393,18 +390,17 @@ class DrawTableView(context: Context) : View(context) {
     }
 
     private fun initialName(canvas: Canvas, i: Int, X: Float, Y: Float) {
-        val name_initial: String
-        if (Normalmode!!) {
-            name_initial = arrayArrayNormal[position][i].name[0].toString()
+        val nameInitial: String = if (Normalmode!!) {
+            arrayArrayNormal[position][i].name[0].toString()
         } else {
-            name_initial = arrayArrayQuick[position][i].replace("[^0-9]".toRegex(), "")   //文字列から数値のみ抜き出し
+            arrayArrayQuick[position][i].replace("[^0-9]".toRegex(), "")   //文字列から数値のみ抜き出し
         }
         val textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         textPaint.textSize = r
-        val textWidth = textPaint.measureText(name_initial)
+        val textWidth = textPaint.measureText(nameInitial)
         val textStartX = X - textWidth / 2
         val textMinY = Y + 18 * scale
-        canvas.drawText(name_initial, textStartX, textMinY, textPaint)
+        canvas.drawText(nameInitial, textStartX, textMinY, textPaint)
     }
 
     private fun setFmBackground(canvas: Canvas, startNo: Int, endNo: Int) {
@@ -420,12 +416,10 @@ class DrawTableView(context: Context) : View(context) {
                     sPaint.color = ContextCompat.getColor(context, R.color.thin_woman)
                 }
             } else {
-                if (arrayArrayQuick[position][i].matches((".*" + "♠" + ".*").toRegex())) {
-                    sPaint.color = ContextCompat.getColor(context, R.color.thin_man)
-                } else if (arrayArrayQuick[position][i].matches((".*" + "♡" + ".*").toRegex())) {
-                    sPaint.color = ContextCompat.getColor(context, R.color.thin_woman)
-                } else {
-                    sPaint.color = ContextCompat.getColor(context, R.color.thin_white)
+                when {
+                    arrayArrayQuick[position][i].matches((".*" + "♠" + ".*").toRegex()) -> sPaint.color = ContextCompat.getColor(context, R.color.thin_man)
+                    arrayArrayQuick[position][i].matches((".*" + "♡" + ".*").toRegex()) -> sPaint.color = ContextCompat.getColor(context, R.color.thin_woman)
+                    else -> sPaint.color = ContextCompat.getColor(context, R.color.thin_white)
                 }
             }
 
@@ -455,8 +449,8 @@ class DrawTableView(context: Context) : View(context) {
     }
 
     private fun drawMemberName(canvas: Canvas, type: String?) {
-        val xP = x.get(point) - lastX
-        val yP = y.get(point) - lastY
+        val xP = x[point] - lastX
+        val yP = y[point] - lastY
         var textSize = (60 * scale).toInt()
         var textWidth: Float
         var textStartX: Float
@@ -489,13 +483,13 @@ class DrawTableView(context: Context) : View(context) {
 
         when (type) {
             "square" -> {
-                textY = (yP + 22 * scale).toDouble().toFloat()
+                textY = (yP + 22 * scale).toFloat()
                 textStartX = 200 * scale
                 when {
                     point < square_no -> textY = yP.toFloat() + 150 * scale
                     point < a -> textY = yP.toFloat() - 110 * scale
-                    point < (seatsNo + a) / 2 -> textStartX = (xP + 140 * scale).toDouble().toFloat()
-                    else -> textStartX = (xP - (90 * scale).toDouble() - textWidth.toDouble() - r.toDouble()).toDouble().toFloat()
+                    point < (seatsNo + a) / 2 -> textStartX = (xP + 140 * scale).toFloat()
+                    else -> textStartX = (xP - (90 * scale).toDouble() - textWidth.toDouble() - r.toDouble()).toFloat()
                 }
                 balloonStartX = textStartX - r
                 balloonEndX = textStartX + textWidth + r
@@ -504,11 +498,11 @@ class DrawTableView(context: Context) : View(context) {
             }
             "parallel" -> {
                 textStartX = if (point < seatsNo / 2) {
-                    (xP + 140 * scale).toDouble().toFloat()
+                    (xP + 140 * scale).toFloat()
                 } else {
-                    (xP - (90 * scale).toDouble() - textWidth.toDouble() - r.toDouble()).toDouble().toFloat()
+                    (xP - (90 * scale).toDouble() - textWidth.toDouble() - r.toDouble()).toFloat()
                 }
-                textY = (yP + 22 * scale).toDouble().toFloat()
+                textY = (yP + 22 * scale).toFloat()
                 balloonStartX = textStartX - r
                 balloonEndX = textStartX + textWidth + r
                 balloonStartY = textY - r - 15 * scale
@@ -525,8 +519,8 @@ class DrawTableView(context: Context) : View(context) {
                 balloonEndY = textY + 20 * scale
             }
             else -> {
-                textStartX = (xP + 150 * scale).toDouble().toFloat()
-                textY = (yP + 22 * scale).toDouble().toFloat()
+                textStartX = (xP + 150 * scale).toFloat()
+                textY = (yP + 22 * scale).toFloat()
                 balloonStartX = textStartX - r
                 balloonEndX = textStartX + textWidth + r
                 balloonStartY = textY - r - 15 * scale
@@ -544,12 +538,10 @@ class DrawTableView(context: Context) : View(context) {
                 balloonPaint.color = ContextCompat.getColor(context, R.color.woman)
             }
         } else {
-            if (arrayArrayQuick[position][point].matches((".*" + "♠" + ".*").toRegex())) {
-                balloonPaint.color = ContextCompat.getColor(context, R.color.man)
-            } else if (arrayArrayQuick[position][point].matches((".*" + "♡" + ".*").toRegex())) {
-                balloonPaint.color = ContextCompat.getColor(context, R.color.woman)
-            } else {
-                balloonPaint.color = ContextCompat.getColor(context, R.color.green)
+            when {
+                arrayArrayQuick[position][point].matches((".*" + "♠" + ".*").toRegex()) -> balloonPaint.color = ContextCompat.getColor(context, R.color.man)
+                arrayArrayQuick[position][point].matches((".*" + "♡" + ".*").toRegex()) -> balloonPaint.color = ContextCompat.getColor(context, R.color.woman)
+                else -> balloonPaint.color = ContextCompat.getColor(context, R.color.green)
             }
         }
 

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.NavUtils
@@ -15,7 +14,6 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.sekigime.SekigimeResult
-import kotlinx.android.synthetic.main.add_member.*
 import kotlinx.android.synthetic.main.kumiwake_select_mode.*
 
 /**
@@ -42,7 +40,7 @@ class KumiwakeSelectMode : AppCompatActivity() {
             descriptionForNormalMode.setText(R.string.description_of_normal_sekigime)
             descriptionForQuickMode.setText(R.string.description_of_quick_sekigime)
             supportActionBar!!.setTitle(R.string.select_mode)
-        }else{
+        } else {
             layout.background = getDrawable(R.drawable.gradient_anim_kumiwake)
         }
         val animDrawable = layout.background as AnimationDrawable

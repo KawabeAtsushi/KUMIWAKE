@@ -4,10 +4,11 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Point
+import android.graphics.Rect
 import android.os.Bundle
 import android.text.InputFilter
-import android.util.Log
 import android.view.View
+import android.view.ViewTreeObserver
 import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -21,12 +22,6 @@ import com.pandatone.kumiwake.member.Name
 import kotlinx.android.synthetic.main.kumiwake_custom.*
 import kotlinx.android.synthetic.main.part_review_listview.*
 import java.util.*
-import android.view.MotionEvent
-import android.view.ViewTreeObserver
-import androidx.appcompat.widget.AppCompatButton
-import android.graphics.Rect
-
-
 
 
 /**
@@ -72,7 +67,6 @@ class KumiwakeCustom : AppCompatActivity() {
 
         leaderNoList = arrayOfNulls(groupArray.size) //n番目にグループnのリーダーのidを格納
     }
-
 
 
     private fun findViews() {
@@ -195,7 +189,7 @@ class KumiwakeCustom : AppCompatActivity() {
             override fun onGlobalLayout() {
                 activityRootView.getWindowVisibleDisplayFrame(r)
                 val heightDiff = activityRootView.rootView.height - r.height()
-                if (heightDiff > screenHeight*0.2) {
+                if (heightDiff > screenHeight * 0.2) {
                     view.visibility = View.GONE
                 } else {
                     view.visibility = View.VISIBLE

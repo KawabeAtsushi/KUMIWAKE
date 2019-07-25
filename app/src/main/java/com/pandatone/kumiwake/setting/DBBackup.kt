@@ -1,27 +1,13 @@
 package com.pandatone.kumiwake.setting
 
-import android.Manifest
 import android.content.Context
-import android.os.Build
 import android.os.Environment
-import android.util.Log
 import android.widget.Toast
-import androidx.core.content.PermissionChecker.checkPermission
 import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
 import java.io.*
-import android.content.pm.PackageManager
-import androidx.annotation.NonNull
-import android.Manifest.permission
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-import androidx.core.app.ActivityCompat
-import com.pandatone.kumiwake.kumiwake.MainActivity
-import androidx.core.content.ContextCompat
-
-
-
 
 
 object DBBackup {
