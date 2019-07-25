@@ -31,7 +31,7 @@ class Category : Parcelable {
         this.theme = theme
     }
 
-    protected constructor(`in`: Parcel) {
+    private constructor(`in`: Parcel) {
         name = `in`.readString()
         id = `in`.readString()
         theme = Theme.values()[`in`.readInt()]

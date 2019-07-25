@@ -77,7 +77,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
     }
 
     //Listの情報取得
-    fun getCursor(c: Cursor,groupList: ArrayList<Group>) {
+    fun getCursor(c: Cursor, groupList: ArrayList<Group>) {
         var listItem: Group
 
         groupList.clear()
@@ -104,7 +104,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
                 " WHERE " + GP_NAME + " like '%" + group + "%' OR "
                 + GP_READ + " like '%" + group_read + "%';")
         val c = db.rawQuery(query, null)
-        getCursor(c,FragmentGroup.groupList)
+        getCursor(c, FragmentGroup.groupList)
         close()
     }
 
@@ -113,7 +113,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
         val query = "SELECT * FROM " +
                 TABLE_NAME + " ORDER BY " + sortBy + " " + sortType + ";"
         val c = db.rawQuery(query, null)
-        getCursor(c,FragmentGroup.groupList)
+        getCursor(c, FragmentGroup.groupList)
         close()
     }
 
@@ -156,22 +156,20 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
             private set
         var group: String
             private set
-        var group_read: String
-            private set
+        private var groupRead: String
         var belongNo: Int
             private set
 
         init {
             this.id = id
             this.group = group_name
-            this.group_read = group_name_read
+            this.groupRead = group_name_read
             this.belongNo = belong_no
         }
 
     }
 
     companion object {
-        const val DB_NAME = "kumiwake.db"
         const val DB_VERSION = 2
         const val TABLE_NAME = "group_info"
         const val GP_ID = "_id"

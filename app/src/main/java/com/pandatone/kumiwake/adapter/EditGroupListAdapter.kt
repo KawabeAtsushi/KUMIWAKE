@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.*
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.kumiwake.KumiwakeCustom
-import kotlinx.android.synthetic.main.kumiwake_custom.*
 import java.util.*
 
 /**

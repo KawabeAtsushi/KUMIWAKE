@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.Handler
@@ -447,9 +446,9 @@ class NormalKumiwakeResult : AppCompatActivity() {
             }
         }
 
-        sharedText = if(setLeader) {
+        sharedText = if (setLeader) {
             "$articleTitle\n$descriptionLeader$resultTxt"
-        }else{
+        } else {
             "$articleTitle\n$resultTxt"
         }
 
@@ -503,14 +502,12 @@ internal class KumiwakeViewComparator : Comparator<Name> {
 
         if (NormalKumiwakeResult.even_age_ratio) {
             if (value == 0) {
-                val n1_age = n1.age
-                val n2_age = n2.age
-                if (n1_age < n2_age) {
-                    value = -1
-                } else if (n1_age > n2_age) {
-                    value = 1
-                } else {
-                    value = 0
+                val n1Age = n1.age
+                val n2Age = n2.age
+                value = when {
+                    n1Age < n2Age -> -1
+                    n1Age > n2Age -> 1
+                    else -> 0
                 }
             }
         }
@@ -524,11 +521,11 @@ internal class KumiwakeAgeComparator : Comparator<Name> {
     override fun compare(n1: Name, n2: Name): Int {
         var value = 0
 
-        val n1_age = n1.age
-        val n2_age = n2.age
+        val n1Age = n1.age
+        val n2Age = n2.age
         value = when {
-            n1_age < n2_age -> -1
-            n1_age > n2_age -> 1
+            n1Age < n2Age -> -1
+            n1Age > n2Age -> 1
             else -> 0
         }
 

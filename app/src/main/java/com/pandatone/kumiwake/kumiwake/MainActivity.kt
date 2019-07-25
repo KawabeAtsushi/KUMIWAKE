@@ -1,7 +1,5 @@
 package com.pandatone.kumiwake.kumiwake
 
-import android.animation.ArgbEvaluator
-import android.animation.ValueAnimator
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Intent
@@ -11,16 +9,13 @@ import android.os.Bundle
 import android.transition.Explode
 import android.view.View
 import android.view.Window
-import android.view.animation.LinearInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
-import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.MemberMain
 import com.pandatone.kumiwake.setting.SettingHelp
@@ -80,10 +75,10 @@ class MainActivity : Activity(), View.OnClickListener {
 
         val res = resources
         val mPackageName = packageName
-        kumiwake = Category(getString(R.string.kumiwake), "1", Theme.red)
-        member = Category(getString(R.string.member), "2", Theme.blue)
-        sekigime = Category(getString(R.string.sekigime), "3", Theme.green)
-        setting = Category(getString(R.string.setting_help), "4", Theme.yellow)
+        kumiwake = Category(getString(R.string.kumiwake), "1", Theme.Red)
+        member = Category(getString(R.string.member), "2", Theme.Blue)
+        sekigime = Category(getString(R.string.sekigime), "3", Theme.Green)
+        setting = Category(getString(R.string.setting_help), "4", Theme.Yellow)
         mCategories = Arrays.asList<Category>(kumiwake, member, sekigime, setting)
 
         for (i in 0..3) {
@@ -124,18 +119,6 @@ class MainActivity : Activity(), View.OnClickListener {
         } else {
             startActivity(intent)
         }
-    }
-
-    fun colorChanger(layout: LinearLayout, color1_id: Int, color2_id: Int) {
-        val color1 = ContextCompat.getColor(MyApplication.context!!, color1_id)
-        val color2 = ContextCompat.getColor(MyApplication.context!!, color2_id)
-        val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), color1, color2)
-        colorAnimation.addUpdateListener { animator -> layout.setBackgroundColor(animator.animatedValue as Int) }
-        colorAnimation.duration = 10000
-        colorAnimation.interpolator = LinearInterpolator()
-        colorAnimation.repeatMode = ValueAnimator.REVERSE
-        colorAnimation.repeatCount = ValueAnimator.INFINITE
-        colorAnimation.start()
     }
 
 }

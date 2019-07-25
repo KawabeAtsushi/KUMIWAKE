@@ -75,16 +75,14 @@ class NormalMode : AppCompatActivity() {
         errorGroup.text = ""
         errorMember.text = ""
 
-        if (TextUtils.isEmpty(group_no)) {
-            errorGroup.setText(R.string.error_empty_group_no)
-        }
-
         if (adapter == null) {
             errorMember.setText(R.string.error_empty_member_list)
         } else if (group_no != "" && Integer.parseInt(group_no) > adapter?.count!!) {
             errorGroup.setText(R.string.number_of_groups_is_much_too)
         } else if (TextUtils.isEmpty(group_no)) {
             errorGroup.setText(R.string.error_empty_group_no)
+        } else if (group_no == "0") {
+            errorGroup.setText(R.string.require_correct_No)
         } else {
             val groupArray = ArrayList<GroupListAdapter.Group>()
             val groupNo = Integer.parseInt(group_no)

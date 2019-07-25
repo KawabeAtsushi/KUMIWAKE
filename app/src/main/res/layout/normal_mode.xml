@@ -17,7 +17,7 @@
             android:layout_marginStart="@dimen/form_marginStart"
             android:layout_marginTop="20dp"
             android:background="@drawable/request_background"
-            android:text="@string/require_group_no"
+            android:text="@string/number_of_groups"
             android:textColor="@color/gray"
             android:textSize="20sp" />
 

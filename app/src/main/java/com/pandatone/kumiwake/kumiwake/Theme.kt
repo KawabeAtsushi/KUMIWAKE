@@ -34,8 +34,8 @@ enum class Theme(@get:ColorRes
                  @get:ColorRes
                  val windowBackgroundColor: Int, @get:ColorRes
                  val textPrimaryColor: Int) {
-    blue(R.color.blue_title, R.color.blue_background, R.color.theme_blue_text),
-    green(R.color.green_title, R.color.green_background_title, R.color.theme_green_text),
-    red(R.color.red_title, R.color.red_background_title, R.color.theme_red_text),
-    yellow(R.color.yellow_title, R.color.yellow_background_title, R.color.theme_yellow_text)
+    Blue(R.color.blue_title, R.color.blue_background, R.color.theme_blue_text),
+    Green(R.color.green_title, R.color.green_background_title, R.color.theme_green_text),
+    Red(R.color.red_title, R.color.red_background_title, R.color.theme_red_text),
+    Yellow(R.color.yellow_title, R.color.yellow_background_title, R.color.theme_yellow_text)
 }

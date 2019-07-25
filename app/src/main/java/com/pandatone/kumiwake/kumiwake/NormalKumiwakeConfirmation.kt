@@ -99,7 +99,7 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
             if (leaderNoList.contains(id)) {
                 memberArray[i].role = leaderNoList.indexOf(id).toString()
                 leaderArray.add(memberArray[i])
-            }else{
+            } else {
                 newMemberArray.add(memberArray[i]) //リーダーを除いたmemberArray
             }
         }
@@ -146,7 +146,7 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
         groupListView.adapter = groupAdapter
     }
 
-    companion object{
+    companion object {
         const val LEADER_ARRAY = "leader_array"
     }
 

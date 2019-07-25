@@ -18,7 +18,7 @@ object Sort {
     private lateinit var ST: String
     internal var initial = 0
 
-    fun memberSort(builder: androidx.appcompat.app.AlertDialog.Builder,activity: Activity) {
+    fun memberSort(builder: androidx.appcompat.app.AlertDialog.Builder, activity: Activity) {
 
         val dbAdapter = MemberListAdapter(activity)
 
@@ -72,7 +72,7 @@ object Sort {
         builder.setCancelable(false)
     }
 
-    fun groupSort(builder: androidx.appcompat.app.AlertDialog.Builder,activity: Activity) {
+    fun groupSort(builder: androidx.appcompat.app.AlertDialog.Builder, activity: Activity) {
 
         val gpdbAdapter = GroupListAdapter(activity)
 
