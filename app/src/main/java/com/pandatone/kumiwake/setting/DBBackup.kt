@@ -104,10 +104,10 @@ object DBBackup {
         val dbAdapter = MemberListAdapter(MyApplication.context!!)
         val gpdbAdapter = GroupListAdapter(MyApplication.context!!)
         dbAdapter.open()
-        dbAdapter.allNames
+        dbAdapter.getDB
         dbAdapter.close()
         gpdbAdapter.open()
-        gpdbAdapter.allNames
+        gpdbAdapter.getDB
         gpdbAdapter.close()
         mb_db_file = MemberListAdapter.db.path
         gp_db_file = GroupListAdapter.db.path   //DBのディレクトリとファイル名

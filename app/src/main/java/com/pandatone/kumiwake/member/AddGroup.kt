@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ListView
@@ -17,24 +18,27 @@ import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MBListViewAdapter
-import java.util.*
+import android.view.KeyEvent.KEYCODE_BACK
+import android.view.KeyEvent
+
 
 /**
  * Created by atsushi_2 on 2016/02/24.
  */
 class AddGroup : AppCompatActivity() {
     private var textInputLayout: TextInputLayout? = null
-    private var nextId = FragmentGroup.dbAdapter.maxId + 1
+    private var nextId = FragmentGroup.dbAdapter.maxId + 1 //FragmentGroupなしだとX
     private lateinit var adapter: MBListViewAdapter
     private lateinit var listView: ListView
-    private var position: Int = 0
+    private var editId: Int = 0
+    private var firstMembers: ArrayList<Name> = ArrayList()
 
     private val groupId: Int
         get() {
-            return if (position == nextId) {
+            return if (editId == nextId) {
                 nextId
             } else {
-                FragmentGroup.groupList[position].id
+                editId
             }
         }
 
@@ -45,11 +49,17 @@ class AddGroup : AppCompatActivity() {
         dbAdapter = GroupListAdapter(this)
         findViews()
         val i = intent
-        position = i.getIntExtra(POSITION, nextId)
-        if (position != nextId) {
-            setItem(position)
+        editId = i.getIntExtra(GROUP_ID, nextId)
+        if (editId != nextId) {
+            setItem(editId)
         }
-        FragmentMember().deleteBelongInfoAll(nextId)
+
+        val nameByBelong: ArrayList<Name> = if (editId == nextId) {
+            FragmentMember().searchBelong(nextId.toString())
+        } else {
+            FragmentMember().searchBelong(editId.toString())
+        }
+        firstMembers = nameByBelong
     }
 
     private fun findViews() {
@@ -65,12 +75,13 @@ class AddGroup : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     public override fun onStart() {
         super.onStart()
-        val nameByBelong: ArrayList<Name> = if (position == nextId) {
+        val nameByBelong: ArrayList<Name> = if (editId == nextId) {
             FragmentMember().searchBelong(nextId.toString())
         } else {
-            FragmentMember().searchBelong(FragmentGroup.groupList[position].id.toString())
+            FragmentMember().searchBelong(editId.toString())
         }
-        adapter = MBListViewAdapter(this@AddGroup, nameByBelong, true)
+
+        adapter = MBListViewAdapter(this@AddGroup, nameByBelong, false)
         listView.adapter = adapter
         numberOfSelectedMember.text = adapter.count.toString() + getString(R.string.people) + getString(R.string.selected)
         FragmentMember().duplicateBelong()
@@ -86,13 +97,30 @@ class AddGroup : AppCompatActivity() {
         } else {
             saveItem()
             Toast.makeText(this, getString(R.string.group) + " \"" + group + "\" " + getString(R.string.registered), Toast.LENGTH_SHORT).show()
+            MemberMain.startAction = false
             finish()
         }
     }
 
     @OnClick(R.id.group_cancel_btn)
     internal fun cancel() {
+        FragmentMember().deleteBelongInfoAll(editId)
+        if (editId != nextId)
+            restoreBelong()
+        MemberMain.startAction = false
         finish()
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            FragmentMember().deleteBelongInfoAll(editId)
+            if (editId != nextId)
+                restoreBelong()
+            MemberMain.startAction = false
+            finish()
+            return true
+        }
+        return false
     }
 
     private fun saveItem() {
@@ -100,8 +128,6 @@ class AddGroup : AppCompatActivity() {
         dbAdapter.open()
         dbAdapter.saveGroup(name, name, adapter.count)
         dbAdapter.close()
-        FragmentMember().loadName()
-        dbAdapter.notifyDataSetChanged()
     }
 
     private fun updateItem(listId: Int) {
@@ -109,17 +135,17 @@ class AddGroup : AppCompatActivity() {
         dbAdapter.open()
         dbAdapter.updateGroup(listId, name, name, adapter.count)
         dbAdapter.close()
-        FragmentMember().loadName()
     }
 
 
-    private fun setItem(position: Int) {
-        val listItem = FragmentGroup.groupList[position]
-        val listId = listItem.id
-        val group = listItem.group
-        groupEditText.setText(group)
-
-        update(listId)
+    private fun setItem(id: Int) {
+        for (group in FragmentGroup.groupList) {
+            if (group.id == id) {
+                groupEditText.setText(group.group)
+                break
+            }
+        }
+        update(id)
     }
 
     private fun update(listId: Int) {
@@ -147,12 +173,35 @@ class AddGroup : AppCompatActivity() {
         startActivity(intent)
     }
 
-    companion object {
+    private fun restoreBelong() {
+        val firstMemberIds: ArrayList<Int> = ArrayList()
 
+        for (member in firstMembers) {
+            firstMemberIds.add(member.id)
+        }
+
+        FragmentMember.dbAdapter.open()     // DBの読み込み(読み書きの方)
+        var i = 1
+        while (i < FragmentMember.listAdp.count) {
+            FragmentMember.listItem = FragmentMember.nameList[i]
+            val listId = FragmentMember.listItem.id
+
+            if (firstMemberIds.contains(listId)) {
+                val newBelong = StringBuilder()
+                newBelong.append(FragmentMember.listItem.belong)
+                newBelong.append("$editId,")
+                FragmentMember.dbAdapter.addBelong(listId.toString(), newBelong.toString())
+            }
+            i += 2
+        }
+        FragmentMember.dbAdapter.close()    // DBを閉じる
+    }
+
+    companion object {
         internal lateinit var groupEditText: AppCompatEditText
         internal lateinit var numberOfSelectedMember: TextView
         internal lateinit var dbAdapter: GroupListAdapter
-        const val POSITION = "position"
+        const val GROUP_ID = "group_id"
     }
 
 }

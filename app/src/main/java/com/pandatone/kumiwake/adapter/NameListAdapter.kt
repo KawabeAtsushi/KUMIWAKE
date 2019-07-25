@@ -41,28 +41,23 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
 
     @SuppressLint("InflateParams")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
-        Log.d("Member_getView",position.toString())
         val nameTextView: TextView
         val listItem = getItem(position)
         val v: View?
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-        Log.d("sex",listItem?.sex)
-
         if (isEnabled(position)) {
 
             v = inflater.inflate(R.layout.row_member, null)
 
-            if (mSelection.get(position)) {
+            if (mSelection.get(listItem!!.id)) {
                 v?.setBackgroundColor(ContextCompat.getColor(MyApplication.context!!, R.color.checked_list))
             }
 
             setSexIcon(v!!, position)
 
-            if (listItem != null) {
-                nameTextView = v.findViewById<View>(R.id.memberName) as TextView
-                nameTextView.text = listItem.name
-            }
+            nameTextView = v.findViewById<View>(R.id.memberName) as TextView
+            nameTextView.text = listItem.name
 
         } else {
             //イニシャルRow
@@ -85,22 +80,22 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
         val nowItem = getItem(position)
 
         when (nowSort) {
-            "NAME" -> nowData = nowItem!!.read
-            "AGE" -> nowData = nowItem!!.age.toString()
+            MemberListAdapter.MB_READ -> nowData = nowItem!!.read
+            MemberListAdapter.MB_AGE -> nowData = nowItem!!.age.toString()
         }
 
         if (position != 0) {
             val preItem = getItem(position - 2)
 
             when (nowSort) {
-                "NAME" -> preData = preItem!!.read
-                "AGE" -> preData = preItem!!.age.toString()
+                MemberListAdapter.MB_READ -> preData = preItem!!.read
+                MemberListAdapter.MB_AGE -> preData = preItem!!.age.toString()
             }
         }
 
         //イニシャルRowとメンバーRowが交互に登録されているので表示するRowを選ぶ
         //一行目の場合と、前のイニシャルRowと異なる場合に表示
-        if ((nowData != preData || position == 0) && nowSort != "ID") {
+        if ((nowData != preData || position == 0) && nowSort != MemberListAdapter.MB_ID) {
             val initialText = v?.findViewById<View>(R.id.initial) as TextView
             initialText.text = nowData
         } else {
@@ -110,13 +105,13 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
         }
     }
 
-    fun setNewSelection(position: Int, value: Boolean) {
-        mSelection.append(position, value)
+    fun setNewSelection(id: Int, value: Boolean) {
+        mSelection.append(id, value)
         notifyDataSetChanged()
     }
 
-    fun removeSelection(position: Int) {
-        mSelection.delete(position)
+    fun removeSelection(id: Int) {
+        mSelection.delete(id)
         notifyDataSetChanged()
     }
 
@@ -126,12 +121,13 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
     }
 
 
-    fun isPositionChecked(position: Int): Boolean {
-        return mSelection.get(position)
+    fun isPositionChecked(id: Int): Boolean {
+        return mSelection.get(id)
     }
 
     companion object {
-        internal var nowSort = "ID"
+        internal var nowSort = MemberListAdapter.MB_ID
+        internal var sortType = "ASC"
     }
 
 }

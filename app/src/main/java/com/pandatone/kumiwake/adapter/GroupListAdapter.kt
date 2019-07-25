@@ -18,7 +18,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
 
     private var dbHelper: DatabaseHelper
 
-    val allNames: Cursor
+    val getDB: Cursor
         get() = db.query(TABLE_NAME, null, null, null, null, null, null)
 
     val maxId: Int
@@ -45,10 +45,8 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
 
         override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
             if (oldVersion == 1 && newVersion == 2) {
-
-                db.execSQL("ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + GP_NAME_READ
+                db.execSQL("ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + GP_READ
                         + " TEXT DEFAULT 'no data'")
-
             }
         }
     }
@@ -66,23 +64,23 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
     //レコードの選択削除
     fun selectDelete(position: String) {
         open()
+        db.beginTransaction()                      // トランザクション開始
         try {
             db.delete(TABLE_NAME, "$GP_ID=?", arrayOf(position))
+            db.setTransactionSuccessful()          // トランザクションへコミット
         } catch (e: Exception) {
             e.printStackTrace()
+        } finally {
+            db.endTransaction()                    // トランザクションの終了
         }
-
         close()
-
-        refresh()
     }
 
     //Listの情報取得
-    fun getCursor(c: Cursor) {
-        val nameList = FragmentGroup.groupList
+    fun getCursor(c: Cursor,groupList: ArrayList<Group>) {
         var listItem: Group
 
-        nameList.clear()
+        groupList.clear()
         if (c.moveToFirst()) {
             do {
                 listItem = Group(
@@ -91,7 +89,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
                         c.getString(2),
                         c.getInt(3)
                 )
-                nameList.add(listItem)          // 取得した要素をnameListに追加
+                groupList.add(listItem)          // 取得した要素をgroupListに追加
 
             } while (c.moveToNext())
         }
@@ -104,12 +102,10 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
         open()
         val query = ("SELECT * FROM " + TABLE_NAME +
                 " WHERE " + GP_NAME + " like '%" + group + "%' OR "
-                + GP_NAME_READ + " like '%" + group_read + "%';")
+                + GP_READ + " like '%" + group_read + "%';")
         val c = db.rawQuery(query, null)
-        getCursor(c)
+        getCursor(c,FragmentGroup.groupList)
         close()
-
-        refresh()
     }
 
     fun sortGroups(sortBy: String, sortType: String) {
@@ -117,10 +113,8 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
         val query = "SELECT * FROM " +
                 TABLE_NAME + " ORDER BY " + sortBy + " " + sortType + ";"
         val c = db.rawQuery(query, null)
-        getCursor(c)
+        getCursor(c,FragmentGroup.groupList)
         close()
-
-        refresh()
     }
 
     fun saveGroup(name: String, name_read: String, belongNo: Int) {
@@ -130,7 +124,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
         try {
             val values = ContentValues()
             values.put(GP_NAME, name)
-            values.put(GP_NAME_READ, name_read)
+            values.put(GP_READ, name_read)
             values.put(GP_BELONG, belongNo)
             db.insert(TABLE_NAME, null, values)
 
@@ -140,8 +134,6 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
         } finally {
             db.endTransaction()                // トランザクションの終了
         }
-
-        refresh()
     }
 
     fun updateGroup(groupId: Int, name: String, name_read: String, belongNo: Int) {
@@ -149,7 +141,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
         open()
         val values = ContentValues()
         values.put(GP_NAME, name)
-        values.put(GP_NAME_READ, name_read)
+        values.put(GP_READ, name_read)
         values.put(GP_BELONG, belongNo)
         try {
             db.update(TABLE_NAME, values, "$GP_ID=?", arrayOf(groupId.toString()))
@@ -157,8 +149,6 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
             e.printStackTrace()
         }
         close()
-
-        refresh()
     }
 
     class Group(id: Int, group_name: String, group_name_read: String, belong_no: Int) : Serializable {
@@ -180,23 +170,18 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
 
     }
 
-    private fun refresh(){
-        notifyDataSetChanged()
-        FragmentGroup.listAdp.notifyDataSetChanged()
-    }
-
     companion object {
         const val DB_NAME = "kumiwake.db"
         const val DB_VERSION = 2
         const val TABLE_NAME = "group_info"
         const val GP_ID = "_id"
         const val GP_NAME = "gp_name"
-        const val GP_NAME_READ = "gp_name_read"
+        const val GP_READ = "gp_name_read"
         const val GP_BELONG = "gp_belong"
         lateinit var db: SQLiteDatabase
 
         const val CREATE_TABLE = ("CREATE TABLE " + TABLE_NAME + " ("
                 + GP_ID + " INTEGER PRIMARY KEY," + GP_NAME + " TEXT NOT NULL,"
-                + GP_NAME_READ + " TEXT," + GP_BELONG + " INTEGER" + ");")
+                + GP_READ + " TEXT," + GP_BELONG + " INTEGER" + ");")
     }
 }

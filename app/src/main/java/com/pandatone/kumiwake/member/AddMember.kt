@@ -112,7 +112,7 @@ class AddMember : AppCompatActivity() {
         val textArray = buttonText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         // 候補リスト
         val list = ArrayList<String>()
-        for (j in 0 until FragmentGroup.ListCount) {
+        for (j in 0 until FragmentGroup.listAdp.count) {
             val listItem = FragmentGroup.groupList[j]
             val groupName = listItem.group
 
@@ -224,9 +224,7 @@ class AddMember : AppCompatActivity() {
         val age = getValue(ageEditText!!)
         val belong = belongConvertToNo()
 
-        dbAdapter!!.open()
         dbAdapter!!.saveName(name, sex, age, belong, read)
-        dbAdapter!!.close()
     }
 
     private fun changeBelongNo() {
@@ -265,7 +263,7 @@ class AddMember : AppCompatActivity() {
             }
             if (change!!) {
                 k = 0
-                while (k < FragmentGroup.ListCount) {
+                while (k < FragmentGroup.listAdp.count) {
                     val listItem = FragmentGroup.groupList[k]
                     val groupName = listItem.group
                     if (beforeBelong!![i] == groupName) {
@@ -294,7 +292,7 @@ class AddMember : AppCompatActivity() {
             if (change!!) {
                 groupListAdapter.open()
                 k = 0
-                while (k < FragmentGroup.ListCount) {
+                while (k < FragmentGroup.listAdp.count) {
                     val listItem = FragmentGroup.groupList[k]
                     val groupName = listItem.group
                     if (afterBelong!![i] == groupName) {
@@ -311,8 +309,8 @@ class AddMember : AppCompatActivity() {
         }
     }
 
-    fun getValue(totext: EditText): Int {
-        val text = totext.text.toString()
+    fun getValue(toText: EditText): Int {
+        val text = toText.text.toString()
         var a = 0
         if (text.isNotEmpty()) {
             a = Integer.parseInt(text)
@@ -321,14 +319,13 @@ class AddMember : AppCompatActivity() {
     }
 
     private fun belongConvertToNo(): String {
-        dbAdapter!!.open()
         val belongText = belongSpinner!!.text.toString()
         val belongTextArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         val belongNo = StringBuilder()
 
         for (i in belongTextArray.indices) {
             val belongGroup = belongTextArray[i]
-            for (j in 0 until FragmentGroup.ListCount) {
+            for (j in 0 until FragmentGroup.listAdp.count) {
                 val listItem = FragmentGroup.groupList[j]
                 val groupName = listItem.group
                 if (belongGroup == groupName) {
@@ -337,8 +334,6 @@ class AddMember : AppCompatActivity() {
                 }
             }
         }
-        dbAdapter!!.close()
-
         return belongNo.toString()
     }
 

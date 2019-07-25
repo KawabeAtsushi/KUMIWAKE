@@ -75,6 +75,7 @@ class CustomDialog : DialogFragment() {
 
                     if (!dir.exists()) {
                         Toast.makeText(activity, getString(R.string.not_exist_file), Toast.LENGTH_SHORT).show()
+                        dismiss()
                         return@OnClickListener
                     }
                     mb_file.delete()

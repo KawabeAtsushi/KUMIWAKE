@@ -26,7 +26,6 @@ import java.io.IOException
  */
 class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
 
-    var memberArray: ArrayList<Name> = ArrayList()
     private val manager = supportFragmentManager
     private var page: Int = 0
     val context: Context = this
@@ -179,6 +178,8 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         var kumiwake_select: Boolean = false
         var groupId: Int = 0
         var delete_icon_visible: Boolean = false
+
+        var memberArray: ArrayList<Name> = ArrayList()
     }
 
 }

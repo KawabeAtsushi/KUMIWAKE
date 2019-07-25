@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import android.widget.AbsListView
 import android.widget.AdapterView
@@ -18,7 +17,6 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.GroupNameListAdapter
 import java.io.IOException
-import java.util.*
 
 /**
  * Created by atsushi_2 on 2016/02/23.
@@ -34,9 +32,6 @@ class FragmentGroup : ListFragment() {
         dbAdapter = GroupListAdapter(requireContext())
         groupList = ArrayList()
         listAdp = GroupNameListAdapter(requireContext(), groupList)
-        listAdapter = listAdp
-        loadName()
-        listAdp.notifyDataSetChanged()
     }
 
     // 必須*
@@ -45,14 +40,14 @@ class FragmentGroup : ListFragment() {
         val view = inflater.inflate(R.layout.tab_group, container, false)
         adviceInFG = view.findViewById<View>(R.id.advice_in_fg) as TextView
         fab = view.findViewById<View>(R.id.group_fab) as FloatingActionButton
-        fab.setOnClickListener { moveGroup() }
+        fab.setOnClickListener { moveAddGroup() }
 
         // Fragmentとlayoutを紐付ける
         super.onCreateView(inflater, container, savedInstanceState)
         return view
     }
 
-    private fun moveGroup() {
+    private fun moveAddGroup() {
         val intent = Intent(activity, AddGroup::class.java)
         startActivity(intent)
     }
@@ -63,7 +58,6 @@ class FragmentGroup : ListFragment() {
         listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE_MODAL
         listView.setMultiChoiceModeListener(Callback())
         listView.isFastScrollEnabled = true
-        ListCount = listView.count
 
         listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
@@ -89,7 +83,7 @@ class FragmentGroup : ListFragment() {
                     }
                     1 -> {
                         val i = Intent(activity, AddGroup::class.java)
-                        i.putExtra(AddGroup.POSITION, position)
+                        i.putExtra(AddGroup.GROUP_ID, groupList[position].id)
                         startActivity(i)
                     }
                     2 -> deleteSingleGroup(position, groupName)
@@ -100,7 +94,7 @@ class FragmentGroup : ListFragment() {
         }
 
         listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
-            listView.setItemChecked(position, !listAdp.isPositionChecked(position))
+            listView.setItemChecked(position, !listAdp.isPositionChecked(groupList[position].id))
             false
         }
 
@@ -112,9 +106,7 @@ class FragmentGroup : ListFragment() {
         when (item!!.itemId) {
             android.R.id.home -> activity!!.finish()
 
-            R.id.item_delete -> deleteGroup()
-
-            R.id.item_all_select -> for (i in 0 until ListCount) {
+            R.id.item_all_select -> for (i in 0 until listAdp.count) {
                 listView.setItemChecked(i, true)
             }
 
@@ -125,7 +117,6 @@ class FragmentGroup : ListFragment() {
                 dialog.show()
             }
         }
-        ListCount = listView.count
 
         return false
     }
@@ -136,8 +127,8 @@ class FragmentGroup : ListFragment() {
         if (MemberMain.startAction) {
             listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                 //行をクリックした時の処理
+                MemberMain.viewPager.setCurrentItem(0, true)
                 FragmentMember().checkByGroup(groupList[position].id)
-                MemberMain.viewPager.setCurrentItem(0,true)
             }
         }
     }
@@ -145,7 +136,7 @@ class FragmentGroup : ListFragment() {
     override fun onStart() {
         super.onStart()
         loadName()
-        listAdp.notifyDataSetChanged()
+        FragmentMember().loadName()
     }
 
     private fun deleteSingleGroup(position: Int, group: String) {
@@ -168,7 +159,7 @@ class FragmentGroup : ListFragment() {
         loadName()
     }
 
-    fun deleteGroup() {
+    fun deleteGroup(mode: ActionMode) {
 
         // アラートダイアログ表示
         val builder = AlertDialog.Builder(activity!!)
@@ -179,19 +170,21 @@ class FragmentGroup : ListFragment() {
             val list = listView.checkedItemPositions
 
             dbAdapter.open()     // DBの読み込み(読み書きの方)
-            for (i in 0 until ListCount) {
+            for (i in 0 until listAdp.count) {
                 val checked = list.get(i)
                 if (checked) {
                     // IDを取得する
                     listItem = groupList[i]
                     val listId = listItem.id
-                    dbAdapter.selectDelete(listId.toString())     // DBから取得したIDが入っているデータを削除する
                     FragmentMember().deleteBelongInfoAll(listId)
+                    dbAdapter.selectDelete(listId.toString())     // DBから取得したIDが入っているデータを削除する
                 }
             }
             dbAdapter.close()    // DBを閉じる
             listAdp.clearSelection()
+            FragmentMember().loadName()
             loadName()
+            mode.finish()
         }
 
         builder.setNegativeButton(R.string.cancel) { _, _ -> }
@@ -227,21 +220,24 @@ class FragmentGroup : ListFragment() {
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             // アクションアイテム選択時
             when (item.itemId) {
-                R.id.item_delete -> deleteGroup()
+                R.id.item_delete -> {
+                    deleteGroup(mode)
+                }
 
-                R.id.item_all_select -> for (i in 0 until ListCount) {
-                    Log.d("position",i.toString())
+                R.id.item_all_select -> for (i in 0 until listAdp.count) {
                     listView.setItemChecked(i, false)
                 }
 
                 R.id.item_sort -> {
+                    listView.clearChoices()
+                    listAdp.clearSelection()
+                    mode.title = "0" + getString(R.string.selected)
                     val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
-                    Sort.groupSort(builder,activity!!)
+                    Sort.groupSort(builder, activity!!)
                     val dialog = builder.create()
                     dialog.show()
                 }
             }
-            ListCount = listView.count
             return false
         }
 
@@ -260,11 +256,12 @@ class FragmentGroup : ListFragment() {
             // アクションモード時のアイテムの選択状態変更時
 
             checkedCount = listView.checkedItemCount
+            listView.checkedItemPosition
 
             if (checked) {
-                listAdp.setNewSelection(position, checked)
+                listAdp.setNewSelection(groupList[position].id, checked)
             } else {
-                listAdp.removeSelection(position)
+                listAdp.removeSelection(groupList[position].id)
             }
             mode.title = checkedCount.toString() + getString(R.string.selected)
         }
@@ -283,19 +280,19 @@ class FragmentGroup : ListFragment() {
 
     fun loadName() {
         dbAdapter.open()
-        val c = dbAdapter.allNames
-        dbAdapter.getCursor(c)
+        val c = dbAdapter.getDB
+        dbAdapter.getCursor(c, groupList)
         dbAdapter.close()
-        dbAdapter.notifyDataSetChanged()
+        listAdapter = listAdp
+        listAdp.notifyDataSetChanged()
     }
 
     companion object {
         internal lateinit var listAdp: GroupNameListAdapter
         internal lateinit var dbAdapter: GroupListAdapter
-        internal lateinit var groupList: MutableList<GroupListAdapter.Group>
+        internal var groupList: ArrayList<GroupListAdapter.Group> = ArrayList()
         internal lateinit var fab: FloatingActionButton
         internal lateinit var adviceInFG: TextView
-        internal var ListCount: Int = 0
     }
 
 }

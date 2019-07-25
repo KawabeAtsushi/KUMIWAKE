@@ -3,11 +3,13 @@ package com.pandatone.kumiwake.kumiwake
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -51,7 +53,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
         groupArray = i.getStringArrayListExtra(QuickMode.GROUP_LIST)
         even_fm_ratio = i.getBooleanExtra(QuickMode.EVEN_FM_RATIO, false)
         groupNo = groupArray.size
-        
+
         viewGroup = findViewById<View>(R.id.result_view) as RelativeLayout
         viewGroup.background = ContextCompat.getDrawable(this, R.drawable.quick_img)
 
@@ -133,6 +135,11 @@ class QuickKumiwakeResult : AppCompatActivity() {
         customDialog.show(supportFragmentManager, "Btn")
     }
 
+    @OnClick(R.id.share_result)
+    internal fun shareResult() {
+        share()
+    }
+
     @OnClick(R.id.go_sekigime)
     internal fun onClicked() {
         for (v in 0 until groupNo) {
@@ -164,7 +171,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
         }
     }
 
-    fun kumiwakeFm(firstPos: Int) {
+    private fun kumiwakeFm(firstPos: Int) {
         manArray.shuffle()
         womanArray.shuffle()
         var manTargetGroupNo: Int
@@ -186,7 +193,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////  View  ///////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    
+
     @SuppressLint("SetTextI18n", "InflateParams")
     fun addView(resultArray: ArrayList<String>, i: Int) {
         val groupName: TextView
@@ -235,6 +242,40 @@ class QuickKumiwakeResult : AppCompatActivity() {
         drawable.setColor(Color.argb(150, R, G, B))
         v.layoutParams = setMargin(10, 12, 10, 0)
         v.background = drawable
+
+    }
+
+    private fun share() {
+        val articleTitle = "～" + getString(R.string.kumiwake_result) + "～"
+        val resultTxt = StringBuilder()
+        for ((i, array) in arrayArray.withIndex()) {
+            resultTxt.append("\n")
+            resultTxt.append("《${groupArray[i]}》\n")
+
+            for (member in array) {
+                resultTxt.append("$member\n")
+            }
+        }
+
+        val sharedText = "$articleTitle\n$resultTxt"
+
+        // builderの生成　ShareCompat.IntentBuilder.from(Context context);
+        val builder = ShareCompat.IntentBuilder.from(this)
+
+        // アプリ一覧が表示されるDialogのタイトルの設定
+        builder.setChooserTitle(R.string.choose_app)
+
+        // シェアするタイトル
+        builder.setSubject(articleTitle)
+
+        // シェアするテキスト
+        builder.setText(sharedText)
+
+        // シェアするタイプ（他にもいっぱいあるよ）
+        builder.setType("text/plain")
+
+        // Shareアプリ一覧のDialogの表示
+        builder.startChooser()
 
     }
 }

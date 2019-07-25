@@ -5,6 +5,7 @@
     android:id="@+id/addmember_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#0576ff03"
     android:parentActivityName=".MemberMain">
 
     <LinearLayout
