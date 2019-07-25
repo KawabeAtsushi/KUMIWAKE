@@ -137,7 +137,6 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
     }
 
     fun updateGroup(groupId: Int, name: String, name_read: String, belongNo: Int) {
-
         open()
         val values = ContentValues()
         values.put(GP_NAME, name)
@@ -145,6 +144,18 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
         values.put(GP_BELONG, belongNo)
         try {
             db.update(TABLE_NAME, values, "$GP_ID=?", arrayOf(groupId.toString()))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        close()
+    }
+
+    fun updateBelongNo(id: String, newBelongNo: Int) {
+        open()
+        try {
+            val values = ContentValues()
+            values.put(GP_BELONG, newBelongNo)
+            db.update(TABLE_NAME, values, "$GP_ID=?", arrayOf(id))
         } catch (e: Exception) {
             e.printStackTrace()
         }

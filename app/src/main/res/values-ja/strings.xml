@@ -144,8 +144,7 @@
     <string name="how_to_member">☆「組分け」「席決め」に用いるメンバーを登録するモードです☆\n\n左右にスワイプすることでメンバー一覧・グループ一覧を切り替えます。\n\n
                                     それぞれの画面を表示した状態で画面右下に表示される「＋」のボタンを押すとメンバー・グループの追加ができます。\n\n
                                     グループにメンバーを登録しておくことで、「組分け」などでメンバーを選択する際にグループに所属するメンバーをまとめて選択できます。</string>
-    <string name="article_title">自動でグループ分け・席決めができるアプリ『KUMIWAKE』が登場！！\n飲み会、サークル、その他グループ活動にご活用ください☆\n
-                                    ↓↓ダウンロードはこちら↓↓</string>
+    <string name="article_title">自動でグループ分け・席決めができるアプリ『KUMIWAKE』が登場！！\n飲み会、配車、その他グループ活動にご活用ください☆\n\n                                    ↓↓ダウンロードはこちら↓↓\n                                    （Android限定）</string>
     <string name="wait_for_implementation">\n実装をお待ちください。(時期未定)\n</string>
     <string name="member_name_read">読み</string>
     <string name="please_permit">ストレージの使用を許可してください。</string>

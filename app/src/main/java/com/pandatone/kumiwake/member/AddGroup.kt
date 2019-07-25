@@ -79,7 +79,7 @@ class AddGroup : AppCompatActivity() {
             FragmentMember().searchBelong(editId.toString())
         }
 
-        adapter = MBListViewAdapter(this@AddGroup, nameByBelong, false)
+        adapter = MBListViewAdapter(this@AddGroup, nameByBelong, false, showLeaderNo = false)
         listView.adapter = adapter
         numberOfSelectedMember.text = adapter.count.toString() + getString(R.string.people) + getString(R.string.selected)
         FragmentMember().duplicateBelong()

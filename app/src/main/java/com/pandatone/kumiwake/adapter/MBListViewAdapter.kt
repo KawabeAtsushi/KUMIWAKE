@@ -19,7 +19,7 @@ import java.util.*
 /**
  * Created by atsushi_2 on 2016/04/16.
  */
-class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>, showLeaderNo: Boolean) : BaseAdapter() {
+class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>, private val showStar: Boolean, showLeaderNo: Boolean) : BaseAdapter() {
     private val inflater: LayoutInflater
     private var listElements: ArrayList<Name> = ArrayList()
     private val showLdNo = showLeaderNo
@@ -84,7 +84,7 @@ class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,
         val leaderNoList = KumiwakeCustom.leaderNoList
         val id = listElements[position].id
 
-        if (leaderNoList.contains(id)) {
+        if (showStar && leaderNoList.contains(id)) {
             memberIcon.visibility = View.GONE
             starIcon.visibility = View.VISIBLE
             leaderNo.visibility = View.GONE

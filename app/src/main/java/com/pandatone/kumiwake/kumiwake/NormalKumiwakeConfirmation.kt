@@ -140,7 +140,7 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
         memberArray.clear()
         memberArray.addAll(leaderArray)
         memberArray.addAll(newMemberArray)
-        memberAdapter = MBListViewAdapter(this, memberArray, true)
+        memberAdapter = MBListViewAdapter(this, memberArray, true, showLeaderNo = true)
         groupAdapter = GPListViewAdapter(this, groupArray)
         kumiwake_member_listView.adapter = memberAdapter
         groupListView.adapter = groupAdapter

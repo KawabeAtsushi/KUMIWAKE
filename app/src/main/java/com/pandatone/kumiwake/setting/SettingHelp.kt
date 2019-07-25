@@ -161,7 +161,7 @@ class SettingHelp : AppCompatActivity() {
     private fun shareApp() {
         val articleTitle = getString(R.string.article_title)
         val articleURL = "https://play.google.com/store/apps/details?id=com.pandatone.pandatone_ganbalism_atsushi_2.kumiwake"
-        val sharedText = "$articleTitle\n$articleURL\n_(÷3」∠)_"
+        val sharedText = "$articleTitle\n$articleURL"
 
         // builderの生成　ShareCompat.IntentBuilder.from(Context context);
         val builder = ShareCompat.IntentBuilder.from(this)

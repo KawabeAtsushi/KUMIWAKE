@@ -48,7 +48,7 @@ class KumiwakeCustom : AppCompatActivity() {
         if (intent.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) != null) {
             groupArray = intent.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) as ArrayList<GroupListAdapter.Group>
         }
-        mbAdapter = MBListViewAdapter(this, memberArray, true)
+        mbAdapter = MBListViewAdapter(this, memberArray, true, showLeaderNo = true)
         gpAdapter = EditGroupListAdapter(this, groupArray, custom_scroll)
         findViews()
         setViews()
