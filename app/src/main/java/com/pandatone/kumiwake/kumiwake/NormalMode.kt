@@ -109,7 +109,7 @@ class NormalMode : AppCompatActivity() {
 
         if (resultCode == Activity.RESULT_OK) {
             memberArray = i!!.getSerializableExtra(MEMBER_ARRAY) as ArrayList<Name>
-            adapter = MBListViewAdapter(this, memberArray, false)
+            adapter = MBListViewAdapter(this, memberArray, false, showLeaderNo = false)
             listView.adapter = adapter
             MBListViewAdapter.setRowHeight(listView, adapter!!)
 

@@ -385,7 +385,7 @@ class NormalKumiwakeResult : AppCompatActivity() {
         groupName = v.findViewById<View>(R.id.result_group) as TextView
         groupName.text = groupArray[i].group
         arrayList = v.findViewById<View>(R.id.result_member_listView) as ListView
-        val adapter = MBListViewAdapter(this, resultArray, false)
+        val adapter = MBListViewAdapter(this, resultArray, true, showLeaderNo = false)
         arrayList.adapter = adapter
         setBackGround(v)
         MBListViewAdapter.setRowHeight(arrayList, adapter)

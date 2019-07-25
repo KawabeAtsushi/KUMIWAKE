@@ -183,7 +183,6 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     fun saveName(name: String, sex: String, age: Int, belong: String, read: String) {

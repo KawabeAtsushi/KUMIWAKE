@@ -231,8 +231,6 @@ class AddMember : AppCompatActivity() {
         var k: Int
         var id: Int
         var belongNo: Int
-        var name: String
-        val read = "ￚ no data ￚ"
         var change: Boolean? = true
         val groupListAdapter = GroupListAdapter(this)
 
@@ -263,9 +261,8 @@ class AddMember : AppCompatActivity() {
                     val groupName = listItem.group
                     if (beforeBelong!![i] == groupName) {
                         id = listItem.id
-                        name = listItem.group
                         belongNo = listItem.belongNo - 1
-                        groupListAdapter.updateGroup(id, name, read, belongNo)
+                        groupListAdapter.updateBelongNo(id.toString(),belongNo)
                     }
                     k++
                 }
@@ -292,9 +289,8 @@ class AddMember : AppCompatActivity() {
                     val groupName = listItem.group
                     if (afterBelong!![i] == groupName) {
                         id = listItem.id
-                        name = listItem.group
                         belongNo = listItem.belongNo + 1
-                        groupListAdapter.updateGroup(id, name, read, belongNo)
+                        groupListAdapter.updateBelongNo(id.toString(),belongNo)
                     }
                     k++
                 }

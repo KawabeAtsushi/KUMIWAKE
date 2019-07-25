@@ -179,6 +179,7 @@ class FragmentMember : ListFragment() {
             dbAdapter.selectDelete(listId.toString())
             dbAdapter.close()    // DBを閉じる
             loadName()
+            updateBelongNo()
             FragmentGroup().loadName()
         }
 
@@ -442,6 +443,7 @@ class FragmentMember : ListFragment() {
                 dbAdapter.close()    // DBを閉じる
                 listAdp.clearSelection()
                 loadName()
+                updateBelongNo()
                 FragmentGroup().loadName()
                 mode.finish()
             }
@@ -545,6 +547,23 @@ class FragmentMember : ListFragment() {
                 lv.setItemChecked(i, true)
             }
             i += 2
+        }
+    }
+
+    fun updateBelongNo() {
+        val groupCount = FragmentGroup.listAdp.count
+        val memberCount = listAdp.count
+        for (group in FragmentGroup.groupList) {
+            val groupId = group.id.toString()
+            var belongNo = 0
+            for (member in nameList) {
+                val belongArray = member.belong.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                val list = ArrayList(Arrays.asList<String>(*belongArray))
+                if (list.contains(groupId)) {
+                    belongNo++
+                }
+            }
+            FragmentGroup.dbAdapter.updateBelongNo(groupId,belongNo)
         }
     }
 
