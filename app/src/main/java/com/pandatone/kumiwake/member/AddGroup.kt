@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ListView
@@ -17,7 +18,9 @@ import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MBListViewAdapter
-import java.util.*
+import android.view.KeyEvent.KEYCODE_BACK
+import android.view.KeyEvent
+
 
 /**
  * Created by atsushi_2 on 2016/02/24.
@@ -28,6 +31,7 @@ class AddGroup : AppCompatActivity() {
     private lateinit var adapter: MBListViewAdapter
     private lateinit var listView: ListView
     private var editId: Int = 0
+    private var firstMembers: ArrayList<Name> = ArrayList()
 
     private val groupId: Int
         get() {
@@ -49,6 +53,13 @@ class AddGroup : AppCompatActivity() {
         if (editId != nextId) {
             setItem(editId)
         }
+
+        val nameByBelong: ArrayList<Name> = if (editId == nextId) {
+            FragmentMember().searchBelong(nextId.toString())
+        } else {
+            FragmentMember().searchBelong(editId.toString())
+        }
+        firstMembers = nameByBelong
     }
 
     private fun findViews() {
@@ -69,7 +80,8 @@ class AddGroup : AppCompatActivity() {
         } else {
             FragmentMember().searchBelong(editId.toString())
         }
-        adapter = MBListViewAdapter(this@AddGroup, nameByBelong, true)
+
+        adapter = MBListViewAdapter(this@AddGroup, nameByBelong, false)
         listView.adapter = adapter
         numberOfSelectedMember.text = adapter.count.toString() + getString(R.string.people) + getString(R.string.selected)
         FragmentMember().duplicateBelong()
@@ -85,15 +97,30 @@ class AddGroup : AppCompatActivity() {
         } else {
             saveItem()
             Toast.makeText(this, getString(R.string.group) + " \"" + group + "\" " + getString(R.string.registered), Toast.LENGTH_SHORT).show()
+            MemberMain.startAction = false
             finish()
         }
     }
 
     @OnClick(R.id.group_cancel_btn)
     internal fun cancel() {
-        if (editId == nextId)
-            FragmentMember().deleteBelongInfoAll(nextId)
+        FragmentMember().deleteBelongInfoAll(editId)
+        if (editId != nextId)
+            restoreBelong()
+        MemberMain.startAction = false
         finish()
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            FragmentMember().deleteBelongInfoAll(editId)
+            if (editId != nextId)
+                restoreBelong()
+            MemberMain.startAction = false
+            finish()
+            return true
+        }
+        return false
     }
 
     private fun saveItem() {
@@ -146,8 +173,31 @@ class AddGroup : AppCompatActivity() {
         startActivity(intent)
     }
 
-    companion object {
+    private fun restoreBelong() {
+        val firstMemberIds: ArrayList<Int> = ArrayList()
 
+        for (member in firstMembers) {
+            firstMemberIds.add(member.id)
+        }
+
+        FragmentMember.dbAdapter.open()     // DBの読み込み(読み書きの方)
+        var i = 1
+        while (i < FragmentMember.listAdp.count) {
+            FragmentMember.listItem = FragmentMember.nameList[i]
+            val listId = FragmentMember.listItem.id
+
+            if (firstMemberIds.contains(listId)) {
+                val newBelong = StringBuilder()
+                newBelong.append(FragmentMember.listItem.belong)
+                newBelong.append("$editId,")
+                FragmentMember.dbAdapter.addBelong(listId.toString(), newBelong.toString())
+            }
+            i += 2
+        }
+        FragmentMember.dbAdapter.close()    // DBを閉じる
+    }
+
+    companion object {
         internal lateinit var groupEditText: AppCompatEditText
         internal lateinit var numberOfSelectedMember: TextView
         internal lateinit var dbAdapter: GroupListAdapter

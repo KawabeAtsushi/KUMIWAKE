@@ -25,8 +25,7 @@ import java.util.*
  * Created by atsushi_2 on 2016/02/23.
  */
 class FragmentMember : ListFragment() {
-    val parent = MemberMain()
-    var memberArray = parent.memberArray
+    var memberArray = MemberMain.memberArray
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,19 +35,20 @@ class FragmentMember : ListFragment() {
         NameListAdapter.nowSort = MemberListAdapter.MB_ID
         NameListAdapter.sortType = "ASC"
         Sort.initial = 0
+        loadName()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.tab_member, container, false)
         fab = view.findViewById<View>(R.id.member_fab) as FloatingActionButton
-        fab.setOnClickListener { moveMember() }
+        fab.setOnClickListener { moveAddMember() }
 
         // Fragmentとlayoutを紐付ける
         super.onCreateView(inflater, container, savedInstanceState)
         return view
     }
 
-    private fun moveMember() {
+    private fun moveAddMember() {
         val intent = Intent(activity, AddMember::class.java)
         startActivity(intent)
     }
@@ -101,9 +101,13 @@ class FragmentMember : ListFragment() {
         lv.isTextFilterEnabled = true
     }
 
-    //Activity生成後に呼ばれる
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onStart() {
+        super.onStart()
+        loadName()
+        FragmentGroup().loadName()
+        NameListAdapter.nowSort = MemberListAdapter.MB_ID
+        NameListAdapter.sortType = "ASC"
+        dbAdapter.sortNames(NameListAdapter.nowSort, NameListAdapter.sortType)
 
         if (MemberMain.startAction) {
             lv.startActionMode(CallbackMB())
@@ -162,15 +166,6 @@ class FragmentMember : ListFragment() {
         }
 
         return false
-    }
-
-    override fun onStart() {
-        super.onStart()
-        loadName()
-        FragmentGroup().loadName()
-        NameListAdapter.nowSort = MemberListAdapter.MB_ID
-        NameListAdapter.sortType = "ASC"
-        dbAdapter.sortNames(NameListAdapter.nowSort, NameListAdapter.sortType)
     }
 
     private fun deleteSingleMember(position: Int, name: String) {
@@ -298,10 +293,9 @@ class FragmentMember : ListFragment() {
 
     internal inner class CallbackMB : AbsListView.MultiChoiceModeListener {
 
-        private val booleanArray = lv.checkedItemPositions
-
         private val decisionClicked = View.OnClickListener {
 
+            val booleanArray = lv.checkedItemPositions
             if (!MemberMain.kumiwake_select) {//AddGroupのメンバー選択
 
                 dbAdapter.open()     // DBの読み込み(読み書きの方)
@@ -432,6 +426,7 @@ class FragmentMember : ListFragment() {
             builder.setMessage(R.string.Do_delete)
             // OKの時の処理
             builder.setPositiveButton("OK") { _, _ ->
+                val booleanArray = lv.checkedItemPositions
                 dbAdapter.open()     // DBの読み込み(読み書きの方)
                 var i = 1
                 while (i < listAdp.count) {
@@ -527,12 +522,10 @@ class FragmentMember : ListFragment() {
         var i = 1
         while (i < listAdp.count) {
             listItem = nameList[i]
-            val listName = listItem.name
-            val listSex = listItem.sex
             val belongText = listItem.belong
             val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             if (Arrays.asList<String>(*belongArray).contains(belongId)) {
-                memberArrayByBelong.add(Name(0, listName, listSex, 0, 0, null.toString(), null.toString(), null.toString()))
+                memberArrayByBelong.add(Name(listItem.id, listItem.name, listItem.sex, 0, 0, null.toString(), null.toString(), null.toString()))
             }
             i += 2
         }

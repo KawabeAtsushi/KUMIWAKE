@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import android.widget.AbsListView
 import android.widget.AdapterView
@@ -41,14 +40,14 @@ class FragmentGroup : ListFragment() {
         val view = inflater.inflate(R.layout.tab_group, container, false)
         adviceInFG = view.findViewById<View>(R.id.advice_in_fg) as TextView
         fab = view.findViewById<View>(R.id.group_fab) as FloatingActionButton
-        fab.setOnClickListener { moveGroup() }
+        fab.setOnClickListener { moveAddGroup() }
 
         // Fragmentとlayoutを紐付ける
         super.onCreateView(inflater, container, savedInstanceState)
         return view
     }
 
-    private fun moveGroup() {
+    private fun moveAddGroup() {
         val intent = Intent(activity, AddGroup::class.java)
         startActivity(intent)
     }
