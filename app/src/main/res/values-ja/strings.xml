@@ -149,4 +149,5 @@
     <string name="member_name_read">読み</string>
     <string name="please_permit">ストレージの使用を許可してください。</string>
     <string name="share_result">結果をシェア</string>
+    <string name="privacy_policy">プライバシーポリシー</string>
 </resources>

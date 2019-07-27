@@ -21,6 +21,7 @@ import butterknife.ButterKnife
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.customize.CustomDialog
 import kotlinx.android.synthetic.main.setting_help.*
+import java.net.URL
 
 
 /**
@@ -69,6 +70,7 @@ class SettingHelp : AppCompatActivity() {
                 1 -> confirmationDialog(getString(R.string.advertise_delete), getString(R.string.wait_for_implementation))
                 2 -> launchMailer()
                 3 -> shareApp()
+                4 -> toPrivacyPolicy()
             }
         }
     }
@@ -88,7 +90,7 @@ class SettingHelp : AppCompatActivity() {
     private fun setViews() {
         how_to_use_str = arrayOf(getString(R.string.about_kumiwake), getString(R.string.about_member), getString(R.string.about_sekigime))
         backup_str = arrayOf(getString(R.string.back_up_db), getString(R.string.import_db), getString(R.string.delete_backup))
-        other_str = arrayOf(getString(R.string.app_version), getString(R.string.advertise_delete), getString(R.string.contact_us), getString(R.string.share_app))
+        other_str = arrayOf(getString(R.string.app_version), getString(R.string.advertise_delete), getString(R.string.contact_us), getString(R.string.share_app), getString(R.string.privacy_policy))
         howToUse_adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, how_to_use_str)
         backup_adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, backup_str)
         other_adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, other_str)
@@ -160,7 +162,7 @@ class SettingHelp : AppCompatActivity() {
 
     private fun shareApp() {
         val articleTitle = getString(R.string.article_title)
-        val articleURL = "https://play.google.com/store/apps/details?id=com.pandatone.pandatone_ganbalism_atsushi_2.kumiwake"
+        val articleURL = "https://play.google.com/store/apps/details?id=com.pandatone.kumiwake"
         val sharedText = "$articleTitle\n$articleURL"
 
         // builderの生成　ShareCompat.IntentBuilder.from(Context context);
@@ -181,6 +183,12 @@ class SettingHelp : AppCompatActivity() {
         // Shareアプリ一覧のDialogの表示
         builder.startChooser()
 
+    }
+
+    private fun toPrivacyPolicy(){
+        val uri = Uri.parse("https://gist.githubusercontent.com/KawabeAtsushi/39f3ea332b05a6b053b263784a77cd51/raw/7666e22b85561c34a95863f9482ed900482d2c8d/privacy%2520policy")
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
     }
 
     /////////////////////////パーミッション/////////////////////////////////////////////////
