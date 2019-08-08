@@ -46,28 +46,24 @@ class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,
         return showLdNo
     }
 
-    @SuppressLint("InflateParams")
+    @SuppressLint("InflateParams", "ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val nameTextView: TextView
-        var v = convertView
 
+        val v = inflater.inflate(R.layout.mini_row_member, null)
 
-        if (v == null) {
-            v = inflater.inflate(R.layout.mini_row_member, null)
-        }
+        val memberIcon: ImageView = v.findViewById<View>(R.id.memberIcon) as ImageView
+        val starIcon: ImageView = v.findViewById<View>(R.id.starIcon) as ImageView
+        val leaderNo: TextView = v.findViewById<View>(R.id.leaderNo) as TextView
+        val nameTextView = v.findViewById<View>(R.id.memberName) as TextView
 
-        setStarIcon(v!!, position)
-
-        setSexIcon(v, position)
-        nameTextView = v.findViewById<View>(R.id.memberName) as TextView
+        setStarIcon(memberIcon, starIcon, leaderNo, position)
+        setSexIcon(memberIcon, position)
         nameTextView.text = listElements[position].name
 
         return v
     }
 
-
-    private fun setSexIcon(v: View, position: Int) {
-        val memberIcon: ImageView = v.findViewById<View>(R.id.memberIcon) as ImageView
+    private fun setSexIcon(memberIcon: ImageView, position: Int) {
 
         if (listElements[position].sex == context.getText(R.string.man)) {
             memberIcon.setImageResource(R.drawable.member_img)
@@ -76,11 +72,7 @@ class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,
         }
     }
 
-    private fun setStarIcon(v: View, position: Int) {
-        val starIcon: ImageView = v.findViewById<View>(R.id.starIcon) as ImageView
-        val memberIcon: ImageView = v.findViewById<View>(R.id.memberIcon) as ImageView
-        val leaderNo: TextView = v.findViewById<View>(R.id.leaderNo) as TextView
-
+    private fun setStarIcon(memberIcon: ImageView, starIcon: ImageView, leaderNo: TextView, position: Int) {
         val leaderNoList = KumiwakeCustom.leaderNoList
         val id = listElements[position].id
 
@@ -98,7 +90,6 @@ class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,
             memberIcon.visibility = View.VISIBLE
             starIcon.visibility = View.GONE
             leaderNo.visibility = View.GONE
-            setSexIcon(v, position)
         }
     }
 
@@ -120,5 +111,7 @@ class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>,
     }
 
 }
+
+class ViewHolder(var memberIcon: ImageView, var starIcon: ImageView, var leaderNo: TextView, var nameTextView: TextView)
 
 

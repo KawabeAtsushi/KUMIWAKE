@@ -38,7 +38,7 @@
                     android:text="@string/normal_mode"
                     android:textColor="@color/light_red"
                     android:textSize="22sp"
-                    android:background="@drawable/white_text_background" />
+                    android:background="@drawable/request_background" />
 
 
             </LinearLayout>
@@ -80,7 +80,7 @@
                     android:text="@string/quick_mode"
                     android:textColor="@color/green"
                     android:textSize="22sp"
-                    android:background="@drawable/white_text_background" />
+                    android:background="@drawable/request_background" />
 
 
             </LinearLayout>

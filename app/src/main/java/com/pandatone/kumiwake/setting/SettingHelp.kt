@@ -21,7 +21,6 @@ import butterknife.ButterKnife
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.customize.CustomDialog
 import kotlinx.android.synthetic.main.setting_help.*
-import java.net.URL
 
 
 /**
@@ -185,7 +184,7 @@ class SettingHelp : AppCompatActivity() {
 
     }
 
-    private fun toPrivacyPolicy(){
+    private fun toPrivacyPolicy() {
         val uri = Uri.parse("https://gist.githubusercontent.com/KawabeAtsushi/39f3ea332b05a6b053b263784a77cd51/raw/7666e22b85561c34a95863f9482ed900482d2c8d/privacy%2520policy")
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
@@ -209,28 +208,10 @@ class SettingHelp : AppCompatActivity() {
                 2 -> onDeleteBackup()
             }
         } else {
-            // 拒否していた場合
-            requestPermission()
-        }
-    }
-
-    // 許可を求める
-    private fun requestPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            // 拒否していた場合,許可を求める
             ActivityCompat.requestPermissions(this,
                     arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
                     REQUEST_PERMISSION)
-
-        } else {
-            val toast = Toast.makeText(this,
-                    getText(R.string.please_permit), Toast.LENGTH_SHORT)
-            toast.show()
-
-            ActivityCompat.requestPermissions(this,
-                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    REQUEST_PERMISSION)
-
         }
     }
 

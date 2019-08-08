@@ -167,6 +167,8 @@ class FragmentMember : ListFragment() {
         return false
     }
 
+
+
     private fun deleteSingleMember(position: Int, name: String) {
         val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
         builder.setTitle(name)
@@ -341,6 +343,7 @@ class FragmentMember : ListFragment() {
 
             requireActivity().finish()
             listAdp.clearSelection()
+            MemberMain.startAction = false
         }
 
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
@@ -364,7 +367,7 @@ class FragmentMember : ListFragment() {
             // アクションアイテム選択時
             when (item.itemId) {
                 R.id.item_delete -> {
-                    deleteMember(mode)
+                    deleteMultiMember(mode)
                 }
 
                 R.id.item_all_select -> {
@@ -420,7 +423,7 @@ class FragmentMember : ListFragment() {
             mode.title = checkedCount.toString() + getString(R.string.selected)
         }
 
-        private fun deleteMember(mode: ActionMode) {
+        private fun deleteMultiMember(mode: ActionMode) {
             // アラートダイアログ表示
             val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
             builder.setTitle(checkedCount.toString() + " " + getString(R.string.member) + getString(R.string.delete))

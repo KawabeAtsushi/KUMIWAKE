@@ -78,6 +78,7 @@ class KumiwakeCustom : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     fun setViews() {
         member_add_btn.visibility = View.GONE
+        member_register_and_add_btn.visibility = View.GONE
         mbAdapter?.let { MBListViewAdapter.setRowHeight(memberList, it) }
         gpAdapter?.let { EditGroupListAdapter.setRowHeight(groupList, it) }
         numberOfSelectedMember.text = memberArray.size.toString() + getString(R.string.people)

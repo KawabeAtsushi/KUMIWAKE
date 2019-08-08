@@ -15,6 +15,7 @@ import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.Name
 
+//FragmentMember用リストadapter
 
 class NameListAdapter(private val context: Context, private val nameList: List<Name>) : BaseAdapter() {
     private var params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(0, 1)

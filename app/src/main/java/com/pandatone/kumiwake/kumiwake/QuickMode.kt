@@ -36,10 +36,6 @@ class QuickMode : AppCompatActivity(), TextWatcher {
         ButterKnife.bind(this)
 
         sex_seekbar.isEnabled = false
-        val size = Point()
-        windowManager.defaultDisplay.getSize(size)
-        val screenHeight = size.y
-        background_img.layoutParams.height = screenHeight
         member_no_form.addTextChangedListener(this)
     }
 

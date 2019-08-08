@@ -18,6 +18,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MBListViewAdapter
+import kotlinx.android.synthetic.main.part_review_listview.*
 
 
 /**
@@ -64,9 +65,9 @@ class AddGroup : AppCompatActivity() {
         groupEditText = findViewById<View>(R.id.input_group) as AppCompatEditText
         textInputLayout = findViewById<View>(R.id.group_form_input_layout) as TextInputLayout
         listView = findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.memberListView) as ListView
-        numberOfSelectedMember = findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.numberOfSelectedMember) as TextView
         listView.emptyView = findViewById<View>(R.id.add_group_listview).findViewById(R.id.emptyMemberList)
         val addMember = findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.member_add_btn) as Button
+        member_register_and_add_btn.visibility = View.GONE
         addMember.setOnClickListener { moveMemberMain() }
     }
 
@@ -197,7 +198,6 @@ class AddGroup : AppCompatActivity() {
 
     companion object {
         internal lateinit var groupEditText: AppCompatEditText
-        internal lateinit var numberOfSelectedMember: TextView
         internal lateinit var dbAdapter: GroupListAdapter
         const val GROUP_ID = "group_id"
     }

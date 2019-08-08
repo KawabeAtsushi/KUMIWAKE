@@ -2,15 +2,8 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/background_img"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:src="@drawable/quick_img"
-        android:scaleType="centerCrop"
-        android:contentDescription="TODO" />
+    android:layout_height="match_parent"
+    android:background="@drawable/quick_img">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/quick_kumiwake_btn"
@@ -19,7 +12,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:background="@drawable/next_green_button"
-        android:clickable="true"
         android:drawableEnd="@drawable/ic_arrow_black"
         android:text="@string/move_confirmation"
         android:textColor="@android:color/white"
@@ -198,12 +190,22 @@
                 android:progressDrawable="@drawable/seekbar_progress"
                 android:thumb="@drawable/seekbar_control" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="@dimen/form_marginTop"
+                android:background="@drawable/request_background"
+                android:text="@string/kumiwake_conditions"
+                android:textSize="20sp" />
+
             <CheckBox
                 android:id="@+id/even_fm_ratio_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/form_marginTop"
+                android:layout_marginTop="20dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginBottom="35dp"
                 android:text="@string/even_out_male_female_ratio"
                 android:textSize="@dimen/form_textSize" />
 

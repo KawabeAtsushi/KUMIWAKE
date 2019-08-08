@@ -18,6 +18,7 @@ import butterknife.OnClick
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MBListViewAdapter
+import com.pandatone.kumiwake.member.AddMember
 import com.pandatone.kumiwake.member.MemberMain
 import com.pandatone.kumiwake.member.Name
 import kotlinx.android.synthetic.main.normal_mode.*
@@ -33,7 +34,8 @@ class NormalMode : AppCompatActivity() {
     private lateinit var errorGroup: TextView
     private lateinit var errorMember: TextView
 
-    private val clicked = View.OnClickListener { moveMemberMain() }
+    private val clickAdd = View.OnClickListener { moveMemberMain() }
+    private val clickResister = View.OnClickListener { moveAddMember() }
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +48,8 @@ class NormalMode : AppCompatActivity() {
         ButterKnife.bind(this)
         findViews()
         memberArray = ArrayList()
-        add_group_listview.member_add_btn.setOnClickListener(clicked)
+        add_group_listview.member_add_btn.setOnClickListener(clickAdd)
+        add_group_listview.member_register_and_add_btn.setOnClickListener(clickResister)
         add_group_listview.numberOfSelectedMember.text = "0${getString(R.string.people)}${getString(R.string.selected)}"
     }
 
@@ -67,6 +70,11 @@ class NormalMode : AppCompatActivity() {
         startActivityForResult(intent, 1000)
     }
 
+    private fun moveAddMember() {
+        val intent = Intent(this, AddMember::class.java)
+        intent.putExtra(AddMember.FROM_NORMAL_MODE, true)
+        startActivityForResult(intent, 100)
+    }
 
     @OnClick(R.id.normal_kumiwake_btn)
     fun onClicked() {
@@ -109,12 +117,15 @@ class NormalMode : AppCompatActivity() {
 
         if (resultCode == Activity.RESULT_OK) {
             memberArray = i!!.getSerializableExtra(MEMBER_ARRAY) as ArrayList<Name>
-            adapter = MBListViewAdapter(this, memberArray, false, showLeaderNo = false)
-            listView.adapter = adapter
-            MBListViewAdapter.setRowHeight(listView, adapter!!)
-
-            add_group_listview.numberOfSelectedMember.text = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
+        } else if (resultCode == ADD_MEMBER_OK) {
+            val newMember = i!!.getSerializableExtra(NEW_MEMBER) as Name
+            memberArray.add(newMember)
         }
+
+        adapter = MBListViewAdapter(this, memberArray, false, showLeaderNo = false)
+        listView.adapter = adapter
+        MBListViewAdapter.setRowHeight(listView, adapter!!)
+        add_group_listview.numberOfSelectedMember.text = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
     }
 
     companion object {
@@ -125,6 +136,9 @@ class NormalMode : AppCompatActivity() {
         const val MEMBER_ARRAY = "memberArray"
         const val NORMAL_MEMBER_ARRAY = "normal_memberArray"
         const val NORMAL_GROUP_ARRAY = "normal_groupArray"
+        const val NEW_MEMBER = "newMember"
+
+        const val ADD_MEMBER_OK = 1110
     }
 
 }
