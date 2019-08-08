@@ -97,6 +97,8 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
                 page = viewPager.currentItem
                 val itemFilter = menu.findItem(R.id.item_filter)
                 itemFilter.isVisible = page != 1
+                val allSelect = menu.findItem(R.id.item_all_select)
+                allSelect.isVisible = !(startAction && page == 1)
             }
         })
 

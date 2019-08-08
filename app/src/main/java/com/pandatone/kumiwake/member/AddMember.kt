@@ -1,7 +1,9 @@
 package com.pandatone.kumiwake.member
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -18,6 +20,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
+import com.pandatone.kumiwake.kumiwake.NormalMode
 import java.util.*
 
 /**
@@ -34,6 +37,7 @@ class AddMember : AppCompatActivity() {
     private var ageEditText: EditText? = null
     private var belongSpinner: Button? = null
     private var dbAdapter: MemberListAdapter? = null
+    private var fromNormalMode = false
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +50,7 @@ class AddMember : AppCompatActivity() {
         ageEditText!!.setText("")
         val i = intent
         val position = i.getIntExtra(POSITION, -1)
+        fromNormalMode = i.getBooleanExtra(FROM_NORMAL_MODE, false)
         if (position != -1) {
             setItem(position)
         }
@@ -173,7 +178,13 @@ class AddMember : AppCompatActivity() {
             saveItem()
             afterBelong = belongSpinner!!.text.toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             changeBelongNo()
-            Toast.makeText(this, getText(R.string.member).toString() + " \"" + name + "\" " + getText(R.string.registered), Toast.LENGTH_SHORT).show()
+            if(fromNormalMode){
+                val intent = Intent(this, NormalMode::class.java)
+                intent.putExtra(NormalMode.NEW_MEMBER, MemberListAdapter(this).newMember)
+                setResult(NormalMode.ADD_MEMBER_OK, intent)
+            }else {
+                Toast.makeText(this, getText(R.string.member).toString() + " \"" + name + "\" " + getText(R.string.registered), Toast.LENGTH_SHORT).show()
+            }
             finish()
         }
     }
@@ -330,6 +341,7 @@ class AddMember : AppCompatActivity() {
 
     companion object {
         const val POSITION = "position"
+        const val FROM_NORMAL_MODE = "fromNormalMode"
     }
 }
 

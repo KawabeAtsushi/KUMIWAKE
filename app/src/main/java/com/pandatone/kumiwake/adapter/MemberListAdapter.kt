@@ -4,6 +4,7 @@ package com.pandatone.kumiwake.adapter
  * Created by atsushi_2 on 2016/03/02.
  */
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -29,6 +30,26 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
     init {
         dbHelper = DatabaseHelper(this.context)
     }
+
+    val newMember: Name
+        @SuppressLint("Recycle")
+        get() {
+            open()
+            val c = db.rawQuery("SELECT * FROM $TABLE_NAME" +
+                    " WHERE $MB_ID=(SELECT MAX($MB_ID) FROM $TABLE_NAME);", null)
+            c.moveToFirst()
+            val listItem = Name(
+                    c.getInt(0),
+                    c.getString(1),
+                    c.getString(2),
+                    c.getInt(3),
+                    c.getInt(4),
+                    c.getString(5),
+                    c.getString(6),
+                    c.getString(7))
+            close()
+            return listItem
+        }
 
     override fun getCount(): Int {
         return 0
@@ -111,7 +132,6 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         val c = db.rawQuery(query, null)
         getCursor(c, FragmentMember.nameList)
         close()
-
     }
 
     @Throws(IOException::class)

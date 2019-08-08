@@ -106,7 +106,7 @@
                     android:button="@null"
                     android:gravity="center"
                     android:text="@string/man"
-                    android:textColor="@drawable/radio_button_color" />
+                    android:textColor="@drawable/radio_button_txt_color" />
 
                 <RadioButton
                     android:id="@+id/womanBtn"
@@ -116,7 +116,7 @@
                     android:button="@null"
                     android:gravity="center"
                     android:text="@string/woman"
-                    android:textColor="@drawable/radio_button_color" />
+                    android:textColor="@drawable/radio_button_txt_color" />
 
             </RadioGroup>
 

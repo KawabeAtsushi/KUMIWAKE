@@ -28,7 +28,7 @@ class KumiwakeSelectMode : AppCompatActivity() {
         val toolbar = findViewById<View>(R.id.tool_bar_1) as Toolbar
         setSupportActionBar(toolbar)
 
-        supportActionBar!!.setTitle(R.string.kumiwake)
+        supportActionBar!!.setTitle(R.string.select_mode)
         supportActionBar!!.setDisplayShowTitleEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
@@ -39,7 +39,6 @@ class KumiwakeSelectMode : AppCompatActivity() {
             layout.background = getDrawable(R.drawable.gradient_anim_sekigime)
             descriptionForNormalMode.setText(R.string.description_of_normal_sekigime)
             descriptionForQuickMode.setText(R.string.description_of_quick_sekigime)
-            supportActionBar!!.setTitle(R.string.select_mode)
         } else {
             layout.background = getDrawable(R.drawable.gradient_anim_kumiwake)
         }

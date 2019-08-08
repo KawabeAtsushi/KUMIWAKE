@@ -81,6 +81,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
         var listItem: Group
 
         groupList.clear()
+
         if (c.moveToFirst()) {
             do {
                 listItem = Group(

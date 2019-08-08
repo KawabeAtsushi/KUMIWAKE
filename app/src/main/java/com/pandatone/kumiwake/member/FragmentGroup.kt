@@ -9,6 +9,7 @@ import android.widget.AbsListView
 import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.TextView
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.ListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -17,6 +18,8 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.GroupNameListAdapter
 import java.io.IOException
+
+
 
 /**
  * Created by atsushi_2 on 2016/02/23.
@@ -55,8 +58,6 @@ class FragmentGroup : ListFragment() {
     // Viewの生成が完了した後に呼ばれる
     // UIパーツの設定などを行う
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE_MODAL
-        listView.setMultiChoiceModeListener(Callback())
         listView.isFastScrollEnabled = true
 
         listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
@@ -93,9 +94,13 @@ class FragmentGroup : ListFragment() {
             dialog.show()
         }
 
-        listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
-            listView.setItemChecked(position, !listAdp.isPositionChecked(groupList[position].id))
-            false
+        if (!MemberMain.startAction) {
+            listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE_MODAL
+            listView.setMultiChoiceModeListener(Callback())
+            listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
+                listView.setItemChecked(position, !listAdp.isPositionChecked(groupList[position].id))
+                false
+            }
         }
 
         listView.isTextFilterEnabled = true
@@ -148,50 +153,16 @@ class FragmentGroup : ListFragment() {
             dbAdapter.open()
             listItem = groupList[position]
             val listId = listItem.id
+            FragmentMember().deleteBelongInfoAll(listId)
             dbAdapter.selectDelete(listId.toString())
             dbAdapter.close()    // DBを閉じる
-        }
-
-        builder.setNegativeButton(R.string.cancel) { _, _ -> }
-        val dialog = builder.create()
-        dialog.show()
-
-        loadName()
-    }
-
-    fun deleteGroup(mode: ActionMode) {
-
-        // アラートダイアログ表示
-        val builder = AlertDialog.Builder(activity!!)
-        builder.setTitle(checkedCount.toString() + " " + getString(R.string.group) + getString(R.string.delete))
-        builder.setMessage(R.string.Do_delete)
-        // OKの時の処理
-        builder.setPositiveButton("OK") { _, _ ->
-            val list = listView.checkedItemPositions
-
-            dbAdapter.open()     // DBの読み込み(読み書きの方)
-            for (i in 0 until listAdp.count) {
-                val checked = list.get(i)
-                if (checked) {
-                    // IDを取得する
-                    listItem = groupList[i]
-                    val listId = listItem.id
-                    FragmentMember().deleteBelongInfoAll(listId)
-                    dbAdapter.selectDelete(listId.toString())     // DBから取得したIDが入っているデータを削除する
-                }
-            }
-            dbAdapter.close()    // DBを閉じる
-            listAdp.clearSelection()
             FragmentMember().loadName()
             loadName()
-            mode.finish()
         }
 
         builder.setNegativeButton(R.string.cancel) { _, _ -> }
         val dialog = builder.create()
         dialog.show()
-
-        listView.isTextFilterEnabled = true
     }
 
     //////////////////////////////////////////////////////////////////////////////////////
@@ -211,9 +182,12 @@ class FragmentGroup : ListFragment() {
             val searchIcon = menu.findItem(R.id.search_view)
             val deleteIcon = menu.findItem(R.id.item_delete)
             val itemFilter = menu.findItem(R.id.item_filter)
+            val allSelect = menu.findItem(R.id.item_all_select)
             itemFilter.isVisible = false
             searchIcon.isVisible = false
             deleteIcon.isVisible = MemberMain.delete_icon_visible
+            allSelect.isVisible = !MemberMain.startAction
+
             return true
         }
 
@@ -221,11 +195,11 @@ class FragmentGroup : ListFragment() {
             // アクションアイテム選択時
             when (item.itemId) {
                 R.id.item_delete -> {
-                    deleteGroup(mode)
+                    deleteMultiGroup(mode)
                 }
 
                 R.id.item_all_select -> for (i in 0 until listAdp.count) {
-                    listView.setItemChecked(i, false)
+                    listView.setItemChecked(i, true)
                 }
 
                 R.id.item_sort -> {
@@ -266,6 +240,41 @@ class FragmentGroup : ListFragment() {
             mode.title = checkedCount.toString() + getString(R.string.selected)
         }
 
+    }
+
+    fun deleteMultiGroup(mode: ActionMode) {
+
+        // アラートダイアログ表示
+        val builder = AlertDialog.Builder(activity!!)
+        builder.setTitle(checkedCount.toString() + " " + getString(R.string.group) + getString(R.string.delete))
+        builder.setMessage(R.string.Do_delete)
+        // OKの時の処理
+        builder.setPositiveButton("OK") { _, _ ->
+            val list = listView.checkedItemPositions
+
+            dbAdapter.open()     // DBの読み込み(読み書きの方)
+            for (i in 0 until listAdp.count) {
+                val checked = list.get(i)
+                if (checked) {
+                    // IDを取得する
+                    listItem = groupList[i]
+                    val listId = listItem.id
+                    FragmentMember().deleteBelongInfoAll(listId)
+                    dbAdapter.selectDelete(listId.toString())     // DBから取得したIDが入っているデータを削除する
+                }
+            }
+            dbAdapter.close()    // DBを閉じる
+            listAdp.clearSelection()
+            FragmentMember().loadName()
+            loadName()
+            mode.finish()
+        }
+
+        builder.setNegativeButton(R.string.cancel) { _, _ -> }
+        val dialog = builder.create()
+        dialog.show()
+
+        listView.isTextFilterEnabled = true
     }
 
     @Throws(IOException::class)
