@@ -14,7 +14,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.customize.CustomDialog
+import com.pandatone.kumiwake.setting.CustomDialog
 import com.pandatone.kumiwake.kumiwake.MainActivity
 import com.pandatone.kumiwake.member.Name
 
@@ -107,8 +107,8 @@ class SekigimeResult : AppCompatActivity() {
                 android.R.layout.simple_spinner_dropdown_item
         )
         val list = ArrayList<String>() // 新インスタンスを生成
-        for (j in groupArray!!.indices) {
-            list.add(groupArray!![j])
+        for (group in groupArray!!) {
+            list.add(group)
         }
         adapter.addAll(list)
         group_spinner.adapter = adapter

@@ -113,11 +113,11 @@ class FragmentMember : ListFragment() {
 
             if (MemberMain.kumiwake_select) {
 
-                for (j in memberArray.indices) {
+                for (member in memberArray) {
                     var i = 1
                     while (i < listAdp.count) {
-                        listItem = nameList[i]
-                        if (listItem.id == memberArray[j].id) {
+                        val listItem: Name = nameList[i]
+                        if (listItem.id == member.id) {
                             lv.setItemChecked(i, !listAdp.isPositionChecked(listItem.id))
                         }
                         i += 2
@@ -176,7 +176,7 @@ class FragmentMember : ListFragment() {
         // OKの時の処理
         builder.setPositiveButton("OK") { _, _ ->
             dbAdapter.open()
-            listItem = nameList[position]
+            val listItem: Name = nameList[position]
             val listId = listItem.id
             dbAdapter.selectDelete(listId.toString())
             dbAdapter.close()    // DBを閉じる
@@ -233,10 +233,8 @@ class FragmentMember : ListFragment() {
             if (belong == getString(R.string.no_selected)) {
                 belongId = ""
             } else {
-                for (j in 0 until FragmentGroup.listAdp.count) {
-                    val listItem = FragmentGroup.groupList[j]
-                    groupName = listItem.group
-                    if (belong == groupName) {
+                for (listItem in FragmentGroup.groupList) {
+                    if (belong == listItem.group) {
                         belongId = listItem.id.toString() + ","
                     }
                 }
@@ -255,11 +253,10 @@ class FragmentMember : ListFragment() {
         val list = ArrayList<String>() // 新インスタンスを生成
         list.add(getString(R.string.no_selected))
 
-        for (j in 0 until FragmentGroup.listAdp.count) {
-            val listItem = FragmentGroup.groupList[j]
-            val groupName = listItem.group
-            list.add(groupName)
+        for (listItem in FragmentGroup.groupList) {
+            list.add(listItem.group)
         }
+
         adapter.addAll(list)
         adapter.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item)
@@ -305,7 +302,7 @@ class FragmentMember : ListFragment() {
                 var i = 1
                 while (i < listAdp.count) {
                     val checked = booleanArray.get(i)
-                    listItem = nameList[i]
+                    val listItem: Name = nameList[i]
                     val listId = listItem.id
                     val newId = MemberMain.groupId
                     if (checked) {
@@ -314,7 +311,7 @@ class FragmentMember : ListFragment() {
                         newBelong.append("$newId,")
                         dbAdapter.addBelong(listId.toString(), newBelong.toString())
                     } else {
-                        deleteBelongInfo(newId, listId)
+                        deleteBelongInfo(listItem,newId, listId)
                     }
                     i += 2
                 }
@@ -328,7 +325,7 @@ class FragmentMember : ListFragment() {
                 var i = 1
                 while (i < listAdp.count) {
                     val checked = booleanArray.get(i)
-                    listItem = nameList[i]
+                    val listItem: Name = nameList[i]
                     if (checked && listItem.sex != "initial") {
                         memberArray.add(listItem)
                     }
@@ -355,7 +352,7 @@ class FragmentMember : ListFragment() {
             val deleteIcon = menu.findItem(R.id.item_delete)
             MemberMain.decision.setOnClickListener(decisionClicked)
             searchIcon.isVisible = false
-            deleteIcon.isVisible = MemberMain.delete_icon_visible
+            deleteIcon.isVisible = !MemberMain.startAction
             checkedCount = lv.checkedItemCount
             mode.title = checkedCount.toString() + getString(R.string.selected)
             return true
@@ -437,7 +434,7 @@ class FragmentMember : ListFragment() {
                     val checked = booleanArray.get(i)
                     if (checked) {
                         // IDを取得する
-                        listItem = nameList[i]
+                        val listItem: Name = nameList[i]
                         val listId = listItem.id
                         dbAdapter.selectDelete(listId.toString())     // DBから取得したIDが入っているデータを削除する
                     }
@@ -473,7 +470,7 @@ class FragmentMember : ListFragment() {
         dbAdapter.open()
         var i = 1
         while (i < listAdp.count) {
-            listItem = nameList[i]
+            val listItem: Name = nameList[i]
             val listId = listItem.id
             val belongText = listItem.belong
             val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -484,8 +481,8 @@ class FragmentMember : ListFragment() {
             list.addAll(hs)
             val newBelong = StringBuilder()
 
-            for (j in list.indices) {
-                newBelong.append("${list[j]},")
+            for (item in list) {
+                newBelong.append("$item,")
             }
             dbAdapter.addBelong(listId.toString(), newBelong.toString())
             i += 2
@@ -495,15 +492,13 @@ class FragmentMember : ListFragment() {
 
     fun deleteBelongInfoAll(groupId: Int) {
         dbAdapter.open()
-        for (i in 1 until listAdp.count) {
-            listItem = nameList[i]
-            val listId = listItem.id
-            deleteBelongInfo(groupId, listId)
+        for (member in nameList) {
+            deleteBelongInfo(member,groupId, member.id)
         }
         dbAdapter.close()
     }
 
-    fun deleteBelongInfo(groupId: Int, listId: Int) {
+    fun deleteBelongInfo(listItem:Name,groupId: Int, listId: Int) {
         val belongText = listItem.belong
         val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         val list = ArrayList(Arrays.asList<String>(*belongArray))
@@ -515,8 +510,8 @@ class FragmentMember : ListFragment() {
             list.remove(groupId.toString())
             val newBelong = StringBuilder()
 
-            for (j in list.indices) {
-                newBelong.append("${list[j]},")
+            for (item in list) {
+                newBelong.append("$item,")
             }
             dbAdapter.addBelong(listId.toString(), newBelong.toString())
         }
@@ -527,7 +522,7 @@ class FragmentMember : ListFragment() {
         dbAdapter.open()
         var i = 1
         while (i < listAdp.count) {
-            listItem = nameList[i]
+            val listItem: Name = nameList[i]
             val belongText = listItem.belong
             val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             if (Arrays.asList<String>(*belongArray).contains(belongId)) {
@@ -542,7 +537,7 @@ class FragmentMember : ListFragment() {
     fun checkByGroup(groupId: Int) {
         var i = 1
         while (i < listAdp.count) {
-            listItem = nameList[i]
+            val listItem: Name = nameList[i]
             val belongText = listItem.belong
             val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             val list = ArrayList(Arrays.asList<String>(*belongArray))
@@ -573,7 +568,7 @@ class FragmentMember : ListFragment() {
     fun loadName() {
         dbAdapter.open()
         val c = dbAdapter.getDB
-        dbAdapter.getCursor(c, nameList)
+        dbAdapter.getCursor(c, nameList,true)
         dbAdapter.close()
         listAdapter = listAdp
         listAdp.notifyDataSetChanged()
@@ -584,15 +579,8 @@ class FragmentMember : ListFragment() {
         lateinit var listAdp: NameListAdapter
         lateinit var lv: ListView
         var nameList: ArrayList<Name> = ArrayList()
-        internal lateinit var listItem: Name
         internal lateinit var fab: FloatingActionButton
         internal var checkedCount = 0
     }
 
 }
-
-
-
-
-
-

@@ -19,7 +19,7 @@ import com.google.android.gms.ads.MobileAds
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MBListViewAdapter
-import com.pandatone.kumiwake.customize.CustomDialog
+import com.pandatone.kumiwake.setting.CustomDialog
 import com.pandatone.kumiwake.member.Name
 import com.pandatone.kumiwake.sekigime.SekigimeResult
 import com.pandatone.kumiwake.sekigime.SelectTableType
@@ -215,26 +215,21 @@ class NormalKumiwakeResult : AppCompatActivity() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun setLeader(array: ArrayList<Name>) {
-        var id = 0
-        val leaderNoList = KumiwakeCustom.leaderNoList
+       val leaderNoList = KumiwakeCustom.leaderNoList
 
-        for (i in array.indices) {
-            id = array[i].id
-            arrayArray[leaderNoList.indexOf(id)].add(array[i])
+        for (leader in array) {
+            val id = leader.id
+            arrayArray[leaderNoList.indexOf(id)].add(leader)
         }
     }
 
     private fun createFmArray() {
 
-        for (i in memberArray.indices) {
-            if (memberArray[i].sex == getText(R.string.man)) {
-                manArray.add(memberArray[i])
-            }
-        }
-
-        for (j in memberArray.indices) {
-            if (memberArray[j].sex == getText(R.string.woman)) {
-                womanArray.add(memberArray[j])
+        for (member in memberArray) {
+            if (member.sex == getText(R.string.man)) {
+                manArray.add(member)
+            }else{
+                womanArray.add(member)
             }
         }
     }

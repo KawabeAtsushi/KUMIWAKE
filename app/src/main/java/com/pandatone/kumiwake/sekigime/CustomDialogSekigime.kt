@@ -1,4 +1,4 @@
-package com.pandatone.kumiwake.customize
+package com.pandatone.kumiwake.sekigime
 
 import android.app.Dialog
 import android.content.Intent
@@ -11,8 +11,6 @@ import android.view.WindowManager
 import android.widget.*
 import androidx.fragment.app.DialogFragment
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.sekigime.SekigimeResult
-import com.pandatone.kumiwake.sekigime.SquareTableCustom
 
 /**
  * Created by atsushi_2 on 2016/11/11.

@@ -1,4 +1,4 @@
-package com.pandatone.kumiwake.customize
+package com.pandatone.kumiwake.setting
 
 import android.app.Dialog
 import android.graphics.Color
@@ -12,7 +12,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.setting.DBBackup
 import java.io.File
 
 /**
@@ -83,6 +82,7 @@ class CustomDialog : DialogFragment() {
                     dir.delete()
                     Toast.makeText(activity, getString(R.string.deleted_backup_file), Toast.LENGTH_SHORT).show()
                 }
+                4 -> activity?.let { it1 -> RefreshData.refresh(it1) }
             }
             dismiss()
         }

@@ -82,10 +82,10 @@
     <string name="move_custom">カスタム画面へ</string>
     <string name="require_correct_No">適切な人数を入力してください</string>
     <string name="back_to_initial_mbNo">初期人数に戻す</string>
-    <string name="back_up">バックアップ</string>
+    <string name="data">データ</string>
     <string name="back_up_db">データのバックアップ</string>
     <string name="import_db">データのインポート</string>
-    <string name="back_up_attention">メンバーデータとグループデータのバックアップを行います。\n\nバックアップを行うと現在保存されているバックアップデータは破棄され、新しいデータに上書きされます。（データはSDカードに書き込まれます。）\n</string>
+    <string name="back_up_attention">"メンバーデータとグループデータのバックアップを行います。\n\nバックアップを行うと現在保存されているバックアップデータは破棄され、新しいデータに上書きされます。（データはSDカードに書き込まれます。）\n "</string>
     <string name="import_attention">バックアップデータのインポートを行います。\n\nデータのインポートを行うと現在のメンバーデータとグループデータは破棄され、新しいデータに上書きされます。\n</string>
     <string name="run_confirmation">\n実行します。よろしいですか？</string>
     <string name="back_up_completed">バックアップが完了しました。</string>
@@ -150,4 +150,7 @@
     <string name="please_permit">ストレージの使用を許可してください。</string>
     <string name="share_result">結果をシェア</string>
     <string name="privacy_policy">プライバシーポリシー</string>
+    <string name="refresh_data">データのリフレッシュ</string>
+    <string name="refresh_completed">データのリフレッシュが完了しました。</string>
+    <string name="refresh_attention">データに不具合がみられる場合に、データベースをリフレッシュすることで改善することがあります。\n</string>
 </resources>

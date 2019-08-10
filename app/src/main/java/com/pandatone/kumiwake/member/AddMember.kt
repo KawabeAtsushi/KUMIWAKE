@@ -117,11 +117,8 @@ class AddMember : AppCompatActivity() {
         val textArray = buttonText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         // 候補リスト
         val list = ArrayList<String>()
-        for (j in 0 until FragmentGroup.listAdp.count) {
-            val listItem = FragmentGroup.groupList[j]
-            val groupName = listItem.group
-
-            list.add(groupName)
+        for (listItem in FragmentGroup.groupList) {
+            list.add(listItem.group)
         }
         val belongArray = list.toTypedArray()
         // 選択リスト
@@ -325,12 +322,9 @@ class AddMember : AppCompatActivity() {
         val belongTextArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         val belongNo = StringBuilder()
 
-        for (i in belongTextArray.indices) {
-            val belongGroup = belongTextArray[i]
-            for (j in 0 until FragmentGroup.listAdp.count) {
-                val listItem = FragmentGroup.groupList[j]
-                val groupName = listItem.group
-                if (belongGroup == groupName) {
+        for (belongGroup in belongTextArray) {
+            for (listItem in FragmentGroup.groupList) {
+                if (belongGroup == listItem.group) {
                     val listId = listItem.id.toString()
                     belongNo.append("$listId,")
                 }

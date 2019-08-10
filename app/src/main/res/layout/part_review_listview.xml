@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <TextView
@@ -39,31 +38,31 @@
         android:layout_margin="5dp"
         android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/member_add_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_margin="@dimen/form_between_margin"
-        android:background="@drawable/simple_orange_button"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp"
-        android:text="@string/select_member"
-        android:textColor="#000000"
-        android:clickable="true"
-        android:focusable="true" />
+        <Button
+            android:id="@+id/member_add_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_margin="@dimen/form_between_margin"
+            android:background="@drawable/simple_orange_button"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:text="@string/select_member"
+            android:textColor="#000000"
+            android:clickable="true"
+            android:focusable="true" />
 
-    <Button
-        android:id="@+id/member_register_and_add_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/form_between_margin"
-        android:background="@drawable/plus_green_button"
-        android:text="+"
-        android:textSize="30dp"
-        android:textColor="#FFFFFF"
-        android:clickable="true"
-        android:focusable="true" />
+        <Button
+            android:id="@+id/member_register_and_add_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/form_between_margin"
+            android:background="@drawable/plus_green_button"
+            android:text="+"
+            android:textSize="30dp"
+            android:textColor="#FFFFFF"
+            android:clickable="true"
+            android:focusable="true" />
 
     </LinearLayout>
 
