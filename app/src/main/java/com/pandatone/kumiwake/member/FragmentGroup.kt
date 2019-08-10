@@ -185,7 +185,7 @@ class FragmentGroup : ListFragment() {
             val allSelect = menu.findItem(R.id.item_all_select)
             itemFilter.isVisible = false
             searchIcon.isVisible = false
-            deleteIcon.isVisible = MemberMain.delete_icon_visible
+            deleteIcon.isVisible = !MemberMain.startAction
             allSelect.isVisible = !MemberMain.startAction
 
             return true

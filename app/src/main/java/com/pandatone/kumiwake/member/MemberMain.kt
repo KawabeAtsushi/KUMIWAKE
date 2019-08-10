@@ -43,7 +43,6 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         val i = intent
         startAction = i.getBooleanExtra(ACTION_MODE, false)
         groupId = i.getIntExtra(GROUP_ID, -1)
-        delete_icon_visible = i.getBooleanExtra(DELETE_ICON_VISIBLE, true)
         kumiwake_select = i.getBooleanExtra(NORMAL_SELECT, false)
         if (i.getSerializableExtra(MEMBER_ARRAY) != null) {
             memberArray = i.getSerializableExtra(MEMBER_ARRAY) as ArrayList<Name>
@@ -135,6 +134,7 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         }
 
         visibleViews()
+
         return true
     }
 
@@ -172,14 +172,12 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         //intent key
         const val ACTION_MODE = "action_mode"
         const val GROUP_ID = "group_id"
-        const val DELETE_ICON_VISIBLE = "deleteIcon_visible"
         const val NORMAL_SELECT = "normal_select"
         const val MEMBER_ARRAY = "memberArray"
 
         var startAction: Boolean = false
         var kumiwake_select: Boolean = false
         var groupId: Int = 0
-        var delete_icon_visible: Boolean = false
 
         var memberArray: ArrayList<Name> = ArrayList()
     }

@@ -27,7 +27,7 @@
             android:src="@drawable/square_table"
             android:background="@drawable/translucent_orange_btn"
             android:scaleType="centerCrop"
-            android:padding="20dp"
+            android:padding="40dp"
             android:text="@string/square_table"
             android:contentDescription="@string/square_table" />
 
@@ -41,7 +41,7 @@
             android:src="@drawable/parallel_table"
             android:background="@drawable/translucent_orange_btn"
             android:scaleType="centerCrop"
-            android:padding="20dp"
+            android:padding="40dp"
             android:text="@string/parallel_table"
             android:contentDescription="@string/parallel_table" />
     </LinearLayout>
@@ -61,7 +61,7 @@
             android:src="@drawable/circle_table"
             android:background="@drawable/translucent_orange_btn"
             android:scaleType="centerCrop"
-            android:padding="20dp"
+            android:padding="40dp"
             android:text="@string/circle_table"
             android:contentDescription="@string/circle_table" />
 

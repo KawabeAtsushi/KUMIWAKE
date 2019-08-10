@@ -148,6 +148,6 @@
     <string name="please_permit">Please permit the use of storage.</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="refresh_data">Refresh data</string>
-    <string name = "refresh_completed">Refresh was completed.</string>
+    <string name="refresh_completed">Refresh was completed.</string>
     <string name="refresh_attention">If there is a problem with the data, it may be improved by refreshing the database.\n</string>
 </resources>

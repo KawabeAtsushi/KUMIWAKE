@@ -28,7 +28,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
             open()
             val c = db.rawQuery("SELECT MAX($GP_ID) FROM $TABLE_NAME", null)
             c.moveToFirst()
-            val idMax = c.getInt(c.getColumnIndex(GP_ID))
+            val idMax = c.getInt(0)
             close()
             return idMax
         }

@@ -352,7 +352,7 @@ class FragmentMember : ListFragment() {
             val deleteIcon = menu.findItem(R.id.item_delete)
             MemberMain.decision.setOnClickListener(decisionClicked)
             searchIcon.isVisible = false
-            deleteIcon.isVisible = MemberMain.delete_icon_visible
+            deleteIcon.isVisible = !MemberMain.startAction
             checkedCount = lv.checkedItemCount
             mode.title = checkedCount.toString() + getString(R.string.selected)
             return true
