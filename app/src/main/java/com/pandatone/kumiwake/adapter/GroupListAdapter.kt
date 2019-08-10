@@ -6,6 +6,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import android.widget.ArrayAdapter
 import com.pandatone.kumiwake.member.FragmentGroup
 import java.io.IOException
@@ -27,7 +28,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
             open()
             val c = db.rawQuery("SELECT MAX($GP_ID) FROM $TABLE_NAME", null)
             c.moveToFirst()
-            val idMax = c.getInt(0)
+            val idMax = c.getInt(c.getColumnIndex(GP_ID))
             close()
             return idMax
         }
@@ -85,10 +86,10 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
         if (c.moveToFirst()) {
             do {
                 listItem = Group(
-                        c.getInt(0),
-                        c.getString(1),
-                        c.getString(2),
-                        c.getInt(3)
+                        c.getInt(c.getColumnIndex(GP_ID)),
+                        c.getString(c.getColumnIndex(GP_NAME)),
+                        c.getString(c.getColumnIndex(GP_READ)),
+                        c.getInt(c.getColumnIndex(GP_BELONG))
                 )
                 groupList.add(listItem)          // 取得した要素をgroupListに追加
 
@@ -119,7 +120,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
     }
 
     fun saveGroup(name: String, name_read: String, belongNo: Int) {
-
+        open()
         db.beginTransaction()          // トランザクション開始
 
         try {
@@ -135,6 +136,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
         } finally {
             db.endTransaction()                // トランザクションの終了
         }
+        close()
     }
 
     fun updateGroup(groupId: Int, name: String, name_read: String, belongNo: Int) {

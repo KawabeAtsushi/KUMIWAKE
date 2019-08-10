@@ -10,6 +10,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -39,14 +40,14 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
                     " WHERE $MB_ID=(SELECT MAX($MB_ID) FROM $TABLE_NAME);", null)
             c.moveToFirst()
             val listItem = Name(
-                    c.getInt(0),
-                    c.getString(1),
-                    c.getString(2),
-                    c.getInt(3),
-                    c.getInt(4),
-                    c.getString(5),
-                    c.getString(6),
-                    c.getString(7))
+                    c.getInt(c.getColumnIndex(MB_ID)),
+                    c.getString(c.getColumnIndex(MB_NAME)),
+                    c.getString(c.getColumnIndex(MB_SEX)),
+                    c.getInt(c.getColumnIndex(MB_AGE)),
+                    c.getInt(c.getColumnIndex(MB_GRADE)),
+                    c.getString(c.getColumnIndex(MB_BELONG)),
+                    c.getString(c.getColumnIndex(MB_ROLE)),
+                    c.getString(c.getColumnIndex(MB_READ)))
             close()
             return listItem
         }
@@ -118,7 +119,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         val query = "SELECT * FROM " +
                 TABLE_NAME + " ORDER BY " + sortBy + " " + sortType + ";"
         val c = db.rawQuery(query, null)
-        getCursor(c, FragmentMember.nameList)
+        getCursor(c, FragmentMember.nameList,true)
         close()
 
     }
@@ -130,7 +131,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
                 " WHERE " + MB_NAME + " like '%" + name + "%' OR "
                 + MB_READ + " like '%" + name + "%';")
         val c = db.rawQuery(query, null)
-        getCursor(c, FragmentMember.nameList)
+        getCursor(c, FragmentMember.nameList,true)
         close()
     }
 
@@ -142,51 +143,54 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
                 " WHERE " + MB_SEX + " like '" + sex + "%' AND (" + MB_AGE + " BETWEEN " + minage + " AND " + maxage +
                 ") AND (" + MB_BELONG + " like '" + belongNo + "%' OR " + MB_BELONG + " like '%," + belongNo + "%');" //BelongIdのマッチング式OR (e.g),1,2,3,4
         val c = db.rawQuery(query, null)
-        getCursor(c, FragmentMember.nameList)
+        getCursor(c, FragmentMember.nameList,true)
         close()
     }
 
-    fun getCursor(c: Cursor, nameList: ArrayList<Name>) {
+    fun getCursor(c: Cursor, nameList: ArrayList<Name>, addInit: Boolean) {
         var listItem: Name
 
         nameList.clear()
 
         if (c.moveToFirst()) {
             do {
-                val read = c.getString(7)
-                //頭文字帯用要素の追加
-                listItem = if (read != "ￚ no data ￚ" && read.isNotEmpty()) {
-                    Name(
-                            0, null.toString(),
-                            "initial",
-                            c.getInt(3),
-                            c.getInt(4),
-                            null.toString(),
-                            null.toString(),
-                            read.toUpperCase()[0].toString())
-                } else {
-                    Name(
-                            0, null.toString(),
-                            "initial",
-                            c.getInt(3),
-                            c.getInt(4),
-                            null.toString(),
-                            null.toString(),
-                            "ￚ no data ￚ")
+                if(addInit) {
+                    val read = c.getString(c.getColumnIndex(MB_READ))
+                    //頭文字帯用要素の追加
+                    listItem = if (read != "ￚ no data ￚ" && read.isNotEmpty()) {
+                        Name(
+                                0,
+                                null.toString(),
+                                "initial",
+                                c.getInt(c.getColumnIndex(MB_AGE)),
+                                c.getInt(c.getColumnIndex(MB_GRADE)),
+                                null.toString(),
+                                null.toString(),
+                                read.toUpperCase()[0].toString())
+                    } else {
+                        Name(
+                                0,
+                                null.toString(),
+                                "initial",
+                                c.getInt(c.getColumnIndex(MB_AGE)),
+                                c.getInt(c.getColumnIndex(MB_GRADE)),
+                                null.toString(),
+                                null.toString(),
+                                "ￚ no data ￚ")
+                    }
+                    nameList.add(listItem)          // 取得した要素をnameListに追加
                 }
-
-                nameList.add(listItem)          // 取得した要素をnameListに追加
 
                 //member rowを追加
                 listItem = Name(
-                        c.getInt(0),
-                        c.getString(1),
-                        c.getString(2),
-                        c.getInt(3),
-                        c.getInt(4),
-                        c.getString(5),
-                        c.getString(6),
-                        c.getString(7))
+                        c.getInt(c.getColumnIndex(MB_ID)),
+                        c.getString(c.getColumnIndex(MB_NAME)),
+                        c.getString(c.getColumnIndex(MB_SEX)),
+                        c.getInt(c.getColumnIndex(MB_AGE)),
+                        c.getInt(c.getColumnIndex(MB_GRADE)),
+                        c.getString(c.getColumnIndex(MB_BELONG)),
+                        c.getString(c.getColumnIndex(MB_ROLE)),
+                        c.getString(c.getColumnIndex(MB_READ)))
 
                 nameList.add(listItem)          // 取得した要素をnameListに追加
 

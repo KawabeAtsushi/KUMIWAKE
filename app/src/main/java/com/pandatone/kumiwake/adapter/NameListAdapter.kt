@@ -84,8 +84,7 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
             MemberListAdapter.MB_AGE -> nowData = nowItem!!.age.toString()
         }
 
-        if (position != 0) {
-            val preItem = getItem(position - 2)
+        if (position >= 2) { val preItem = getItem(position - 2)
 
             when (nowSort) {
                 MemberListAdapter.MB_READ -> preData = preItem!!.read

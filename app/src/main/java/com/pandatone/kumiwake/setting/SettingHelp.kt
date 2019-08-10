@@ -19,7 +19,6 @@ import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import butterknife.ButterKnife
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.customize.CustomDialog
 import kotlinx.android.synthetic.main.setting_help.*
 
 
@@ -60,7 +59,11 @@ class SettingHelp : AppCompatActivity() {
         }
         back_up_list.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
-            checkPermission(this, position)
+            if (position != 3) {
+                checkPermission(this, position)
+            } else {
+                onRefreshData()
+            }
         }
         other_list.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
@@ -88,7 +91,7 @@ class SettingHelp : AppCompatActivity() {
 
     private fun setViews() {
         how_to_use_str = arrayOf(getString(R.string.about_kumiwake), getString(R.string.about_member), getString(R.string.about_sekigime))
-        backup_str = arrayOf(getString(R.string.back_up_db), getString(R.string.import_db), getString(R.string.delete_backup))
+        backup_str = arrayOf(getString(R.string.back_up_db), getString(R.string.import_db), getString(R.string.delete_backup), getString(R.string.refresh_data))
         other_str = arrayOf(getString(R.string.app_version), getString(R.string.advertise_delete), getString(R.string.contact_us), getString(R.string.share_app), getString(R.string.privacy_policy))
         howToUse_adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, how_to_use_str)
         backup_adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, backup_str)
@@ -134,6 +137,12 @@ class SettingHelp : AppCompatActivity() {
         val title = getString(R.string.delete_backup)
         val message = getString(R.string.delete_backup_attention)
         decisionDialog(title, message, 3)
+    }
+
+    private fun onRefreshData() {
+        val title = getString(R.string.refresh_data)
+        val message = getString(R.string.refresh_attention) + getString(R.string.run_confirmation)
+        decisionDialog(title, message, 4)
     }
 
     private fun showVersionName(context: Context) {

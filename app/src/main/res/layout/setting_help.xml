@@ -41,13 +41,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/info_margin"
-                android:text="@string/back_up"
+                android:text="@string/data"
                 android:textColor="@color/green" />
 
             <ListView
                 android:id="@+id/back_up_list"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="270dp" />
 
             <TextView
                 android:layout_width="wrap_content"

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Button
@@ -124,9 +125,7 @@ class AddGroup : AppCompatActivity() {
 
     private fun saveItem() {
         val name = groupEditText.text!!.toString()
-        dbAdapter.open()
         dbAdapter.saveGroup(name, name, adapter.count)
-        dbAdapter.close()
     }
 
     private fun updateItem(listId: Int) {
@@ -182,12 +181,12 @@ class AddGroup : AppCompatActivity() {
         FragmentMember.dbAdapter.open()     // DBの読み込み(読み書きの方)
         var i = 1
         while (i < FragmentMember.listAdp.count) {
-            FragmentMember.listItem = FragmentMember.nameList[i]
-            val listId = FragmentMember.listItem.id
+            val listItem:Name = FragmentMember.nameList[i]
+            val listId = listItem.id
 
             if (firstMemberIds.contains(listId)) {
                 val newBelong = StringBuilder()
-                newBelong.append(FragmentMember.listItem.belong)
+                newBelong.append(listItem.belong)
                 newBelong.append("$editId,")
                 FragmentMember.dbAdapter.addBelong(listId.toString(), newBelong.toString())
             }

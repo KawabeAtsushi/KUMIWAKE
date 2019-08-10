@@ -57,10 +57,8 @@ object MemberClick {
         val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         val newBelong = StringBuilder()
 
-        for (i in belongArray.indices) {
-            val belongGroup = belongArray[i]
-            for (j in 0 until FragmentGroup.listAdp.count) {
-                val listItem = FragmentGroup.groupList[j]
+        for (belongGroup in belongArray) {
+            for (listItem in FragmentGroup.groupList) {
                 val groupId = listItem.id.toString()
                 if (belongGroup == groupId) {
                     val listName = listItem.group

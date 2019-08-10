@@ -9,12 +9,12 @@
     <string name="Do_delete">Are you sure to delete?</string>
     <string name="about_kumiwake">About KUMIWAKE</string>
     <string name="select_member">select member</string>
-    <string name="about_sekigime">About Seat allocation</string>
+    <string name="about_sekigime">About seat allocation</string>
     <string name="about_member">About member</string>
     <string name="advertise_delete">Delete advertisement</string>
     <string name="app_version">App version</string>
     <string name="back_up_db">Backup data</string>
-    <string name="cancel">cancel</string>
+    <string name="cancel">Cancel</string>
     <string name="choose_app">Choose App</string>
     <string name="delete_backup">Delete backed-up file</string>
     <string name="delete_backup_attention">Backed-up file will not be deleted when you uninstall this app.\nIf you don\'t need current backed-up file anymore, delete it as following.\n\nOnce you delete backed-up file, it will be no longer restore the data.\n\nAre you sure you want to delete the current backed-up file?</string>
@@ -24,7 +24,7 @@
     <string name="age">Age</string>
     <string name="age2">""</string>
     <string name="all_select">Select all</string>
-    <string name="back_up">Backup</string>
+    <string name="data">Data</string>
     <string name="back_up_completed">Backup was completed.</string>
     <string name="contact_us">Contact us</string>
     <string name="how_to_use">How to use</string>
@@ -147,4 +147,7 @@
     <string name="member_name_read">Read</string>
     <string name="please_permit">Please permit the use of storage.</string>
     <string name="privacy_policy">Privacy policy</string>
+    <string name="refresh_data">Refresh data</string>
+    <string name = "refresh_completed">Refresh was completed.</string>
+    <string name="refresh_attention">If there is a problem with the data, it may be improved by refreshing the database.\n</string>
 </resources>

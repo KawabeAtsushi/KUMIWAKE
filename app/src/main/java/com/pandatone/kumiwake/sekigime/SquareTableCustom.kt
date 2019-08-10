@@ -24,16 +24,18 @@ class SquareTableCustom : AppCompatActivity() {
 
         if (SekigimeResult.Normalmode) {
             val array = SekigimeResult.arrayArrayNormal
-            for (i in array.indices) {
-                if (array[i].size < mingroupNo) {
-                    mingroupNo = array[i].size
+            for (item in array) {
+                val size = item.size
+                if (size < mingroupNo) {
+                    mingroupNo = size
                 }
             }
         } else {
             val array = SekigimeResult.arrayArrayQuick
-            for (i in array.indices) {
-                if (array[i].size < mingroupNo) {
-                    mingroupNo = array[i].size
+            for (item in array) {
+                val size = item.size
+                if (size < mingroupNo) {
+                    mingroupNo = size
                 }
             }
         }

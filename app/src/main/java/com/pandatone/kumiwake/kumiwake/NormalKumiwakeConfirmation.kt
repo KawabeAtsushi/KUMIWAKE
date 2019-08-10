@@ -78,8 +78,8 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
 
     private fun countManNo(): Int {
         var manNo = 0
-        for (i in memberArray.indices) {
-            if (memberArray[i].sex == getText(R.string.man)) {
+        for (member in memberArray) {
+            if (member.sex == getText(R.string.man)) {
                 manNo++
             }
         }
@@ -93,14 +93,14 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
         var id = 0
         val leaderNoList = KumiwakeCustom.leaderNoList
 
-        for (i in memberArray.indices) {
-            id = memberArray[i].id
+        for (member in memberArray) {
+            id = member.id
 
             if (leaderNoList.contains(id)) {
-                memberArray[i].role = leaderNoList.indexOf(id).toString()
-                leaderArray.add(memberArray[i])
+                member.role = leaderNoList.indexOf(id).toString()
+                leaderArray.add(member)
             } else {
-                newMemberArray.add(memberArray[i]) //リーダーを除いたmemberArray
+                newMemberArray.add(member) //リーダーを除いたmemberArray
             }
         }
 
