@@ -10,7 +10,7 @@
             <!-- 角の丸み -->
             <corners android:radius="30dp" />
 
-            <solid android:color="#34ff34" />
+            <solid android:color="@color/light_green" />
 
         </shape>
     </item>

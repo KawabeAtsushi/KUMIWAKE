@@ -162,10 +162,14 @@
 
     <Spinner
         android:id="@+id/filter_belong_spinner"
-        style="@android:style/Widget.Spinner.DropDown"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:paddingStart="20dp"
+        android:paddingEnd="30dp"
+        android:background="@drawable/spinner_button"
+        android:ellipsize="end"
+        android:singleLine="true" />
 
 
 </LinearLayout>

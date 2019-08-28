@@ -20,28 +20,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/normal_mode"
-                    android:textColor="@color/light_red"
-                    android:textSize="22sp"
-                    android:background="@drawable/request_background" />
-
-
-            </LinearLayout>
 
             <TextView
                 android:id="@+id/descriptionForNormalMode"
@@ -54,7 +36,7 @@
             <TextView
                 android:id="@+id/normal_mode_button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_marginBottom="@dimen/main_marginBottom"
                 android:layout_marginStart="@dimen/main_marginStart"
                 android:layout_marginEnd="@dimen/main_marginEnd"
@@ -66,24 +48,6 @@
                 android:text="@string/normal_mode"
                 android:textColor="#ffffff"
                 android:textSize="25sp" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/quick_mode"
-                    android:textColor="@color/green"
-                    android:textSize="22sp"
-                    android:background="@drawable/request_background" />
-
-
-            </LinearLayout>
 
             <TextView
                 android:id="@+id/descriptionForQuickMode"
@@ -109,6 +73,6 @@
                 android:textColor="#ffffff"
                 android:textSize="25sp" />
 
-        </LinearLayout>
+        </FrameLayout>
     </ScrollView>
 </LinearLayout>

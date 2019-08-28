@@ -40,14 +40,14 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
                     " WHERE $MB_ID=(SELECT MAX($MB_ID) FROM $TABLE_NAME);", null)
             c.moveToFirst()
             val listItem = Name(
-                    c.getInt(c.getColumnIndex(MB_ID)),
-                    c.getString(c.getColumnIndex(MB_NAME)),
-                    c.getString(c.getColumnIndex(MB_SEX)),
-                    c.getInt(c.getColumnIndex(MB_AGE)),
-                    c.getInt(c.getColumnIndex(MB_GRADE)),
-                    c.getString(c.getColumnIndex(MB_BELONG)),
-                    c.getString(c.getColumnIndex(MB_ROLE)),
-                    c.getString(c.getColumnIndex(MB_READ)))
+                    c.getInt(0),
+                    c.getString(1),
+                    c.getString(2),
+                    c.getInt(3),
+                    c.getInt(4),
+                    c.getString(5),
+                    c.getString(6),
+                    c.getString(7))
             close()
             return listItem
         }
@@ -155,15 +155,15 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         if (c.moveToFirst()) {
             do {
                 if(addInit) {
-                    val read = c.getString(c.getColumnIndex(MB_READ))
+                    val read = c.getString(7)
                     //頭文字帯用要素の追加
                     listItem = if (read != "ￚ no data ￚ" && read.isNotEmpty()) {
                         Name(
                                 0,
                                 null.toString(),
                                 "initial",
-                                c.getInt(c.getColumnIndex(MB_AGE)),
-                                c.getInt(c.getColumnIndex(MB_GRADE)),
+                                c.getInt(3),
+                                c.getInt(4),
                                 null.toString(),
                                 null.toString(),
                                 read.toUpperCase()[0].toString())
@@ -172,8 +172,8 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
                                 0,
                                 null.toString(),
                                 "initial",
-                                c.getInt(c.getColumnIndex(MB_AGE)),
-                                c.getInt(c.getColumnIndex(MB_GRADE)),
+                                c.getInt(3),
+                                c.getInt(4),
                                 null.toString(),
                                 null.toString(),
                                 "ￚ no data ￚ")
@@ -183,14 +183,14 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
 
                 //member rowを追加
                 listItem = Name(
-                        c.getInt(c.getColumnIndex(MB_ID)),
-                        c.getString(c.getColumnIndex(MB_NAME)),
-                        c.getString(c.getColumnIndex(MB_SEX)),
-                        c.getInt(c.getColumnIndex(MB_AGE)),
-                        c.getInt(c.getColumnIndex(MB_GRADE)),
-                        c.getString(c.getColumnIndex(MB_BELONG)),
-                        c.getString(c.getColumnIndex(MB_ROLE)),
-                        c.getString(c.getColumnIndex(MB_READ)))
+                        c.getInt(0),
+                        c.getString(1),
+                        c.getString(2),
+                        c.getInt(3),
+                        c.getInt(4),
+                        c.getString(5),
+                        c.getString(6),
+                        c.getString(7))
 
                 nameList.add(listItem)          // 取得した要素をnameListに追加
 
@@ -274,8 +274,19 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
                 + MB_ID + " INTEGER PRIMARY KEY,"
                 + MB_NAME + " TEXT NOT NULL," + MB_SEX + " TEXT NOT NULL,"
                 + MB_AGE + " INTEGER," + MB_GRADE + " INTEGER," + MB_BELONG + " TEXT," + MB_ROLE + " TEXT,"
-                + MB_READ + " TEXT"
-                + ");")
+                + MB_READ + " TEXT" + ");")
     }
+
+    /*
+    getColumnIndexがillegalStateException吐くので一旦は番号指定(Groupは今のところ大丈夫なのでそのまま)
+    Log.d("MB_ID",c.getColumnIndex(MB_ID).toString()) -> 0
+    Log.d("MB_NAME",c.getColumnIndex(MB_NAME).toString()) -> 1
+    Log.d("MB_SEX",c.getColumnIndex(MB_SEX).toString()) -> 2
+    Log.d("MB_AGE",c.getColumnIndex(MB_AGE).toString()) -> 3
+    Log.d("MB_GRADE",c.getColumnIndex(MB_GRADE).toString()) -> 4
+    Log.d("MB_BELONG",c.getColumnIndex(MB_BELONG).toString()) -> 5
+    Log.d("MB_ROLE",c.getColumnIndex(MB_ROLE).toString()) -> 6
+    Log.d("MB_READ",c.getColumnIndex(MB_READ).toString()) -> 7
+     */
 
 }

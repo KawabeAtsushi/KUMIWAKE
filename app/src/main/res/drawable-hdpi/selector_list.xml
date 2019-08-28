@@ -15,5 +15,5 @@
   -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_selected="true" android:drawable="@color/touch_effect" />
+    <item android:state_selected="true" android:drawable="@color/white_gray" />
 </selector>
