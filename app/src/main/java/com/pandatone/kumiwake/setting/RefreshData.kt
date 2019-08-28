@@ -20,8 +20,6 @@ object RefreshData {
     private val nameList: ArrayList<Name> = ArrayList()
     val groupList: ArrayList<GroupListAdapter.Group> = ArrayList()
 
-    val belongArray = Array(10) { arrayOfNulls<String>(10) }
-
     fun refresh(context: Context) {
 
         mbDbAdapter = MemberListAdapter(context)
@@ -91,11 +89,6 @@ object RefreshData {
     }
 
     private fun saveAllGroup() {
-
-//        for(member in nameList){
-//            if(member.sex == "initial")
-//                nameList.remove(member)
-//        }
 
         for (group in groupList) {
             gpDbAdapter.saveGroup(group.group, group.group, 0)

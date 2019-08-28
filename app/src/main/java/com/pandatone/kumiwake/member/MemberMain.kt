@@ -114,7 +114,7 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         val searchHintIcon = ResourcesCompat.getDrawable(resources, android.R.drawable.ic_menu_search, null)
         val textSize = (searchAutoComplete.textSize * 1.25).toInt()
         searchHintIcon?.setBounds(0, 0, textSize, textSize)
-        ssb.setSpan(ImageSpan(searchHintIcon), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        ssb.setSpan(searchHintIcon?.let { ImageSpan(it) }, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         searchAutoComplete.hint = ssb
         // テキストカラー
         searchAutoComplete.setTextColor(Color.WHITE)

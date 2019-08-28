@@ -2,113 +2,100 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/select_mode_layout"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tool_bar_1"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:minHeight="@dimen/size_toolbar"
+        android:layout_height="wrap_content"
         android:background="@color/red_title"
+        android:minHeight="@dimen/size_toolbar"
         android:transitionName="explodeTv"
         tools:targetApi="lollipop" />
 
-    <ScrollView
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/descriptionForNormalMode"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="15dp"
+            android:background="@drawable/top_normal_text_background"
+            android:paddingTop="50dp"
+            android:paddingBottom="20dp"
+            android:text="@string/description_of_normal_mode"
+            android:textSize="18sp" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
+        <TextView
+            android:id="@+id/normal_mode_button"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center"
+            android:background="@drawable/top_normal_button"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:text="@string/normal_mode"
+            android:textColor="#ffffff"
+            android:textSize="25sp" />
+    </FrameLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/normal_mode"
-                    android:textColor="@color/light_red"
-                    android:textSize="22sp"
-                    android:background="@drawable/request_background" />
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
 
-            </LinearLayout>
+        <TextView
+            android:id="@+id/descriptionForQuickMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/top_quick_text_background"
+            android:paddingTop="50dp"
+            android:paddingBottom="20dp"
+            android:text="@string/description_of_quick_mode"
+            android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/descriptionForNormalMode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:layout_marginBottom="20dp"
-                android:text="@string/description_of_normal_mode" />
+        <TextView
+            android:id="@+id/quick_mode_button"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center"
+            android:background="@drawable/top_quick_button"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:text="@string/quick_mode"
+            android:textColor="#ffffff"
+            android:textSize="25sp" />
 
-            <TextView
-                android:id="@+id/normal_mode_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/main_marginBottom"
-                android:layout_marginStart="@dimen/main_marginStart"
-                android:layout_marginEnd="@dimen/main_marginEnd"
-                android:background="@drawable/simple_red_button"
-                android:clickable="true"
-                android:gravity="center"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:text="@string/normal_mode"
-                android:textColor="#ffffff"
-                android:textSize="25sp" />
+    </FrameLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal">
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/quick_mode"
-                    android:textColor="@color/green"
-                    android:textSize="22sp"
-                    android:background="@drawable/request_background" />
-
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/descriptionForQuickMode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:layout_marginBottom="20dp"
-                android:text="@string/description_of_quick_mode" />
-
-            <TextView
-                android:id="@+id/quick_mode_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/main_marginBottom"
-                android:layout_marginStart="@dimen/main_marginStart"
-                android:layout_marginEnd="@dimen/main_marginEnd"
-                android:background="@drawable/simple_green_button"
-                android:clickable="true"
-                android:gravity="center"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:text="@string/quick_mode"
-                android:textColor="#ffffff"
-                android:textSize="25sp" />
-
-        </LinearLayout>
-    </ScrollView>
 </LinearLayout>

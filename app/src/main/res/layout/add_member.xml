@@ -5,7 +5,7 @@
     android:id="@+id/addmember_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0576ff03"
+    android:background="#1000ff00"
     android:parentActivityName=".MemberMain">
 
     <LinearLayout
@@ -125,39 +125,58 @@
         <!--spinner-->
         <Button
             android:id="@+id/select_group_spinner"
-            style="@android:style/Widget.Spinner"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginStart="@dimen/form_marginStart"
             android:layout_marginTop="@dimen/form_marginTop"
             android:layout_marginEnd="@dimen/form_marginStart"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:background="@drawable/spinner_button"
             android:ellipsize="end"
             android:hint="@string/select_belong_group"
+            android:textColor="@color/gray"
             android:singleLine="true" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
+            android:layout_gravity="bottom"
             android:layout_margin="@dimen/form_marginEnd"
             android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/member_registration_continue_btn"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:backgroundTint="@color/orange"
+                android:text="@string/continue_register"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
+
+            <Space
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/member_cancel_btn"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:text="@string/cancel"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/member_registration_btn"
+                android:id="@+id/member_registration_finish_btn"
                 style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:text="@string/registration"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
-
         </LinearLayout>
 
     </LinearLayout>

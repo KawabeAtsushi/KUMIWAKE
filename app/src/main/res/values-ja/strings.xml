@@ -153,4 +153,5 @@
     <string name="refresh_data">データのリフレッシュ</string>
     <string name="refresh_completed">データのリフレッシュが完了しました。</string>
     <string name="refresh_attention">データに不具合がみられる場合に、データベースをリフレッシュすることで改善することがあります。\n</string>
+    <string name="continue_register">続けて登録</string>
 </resources>

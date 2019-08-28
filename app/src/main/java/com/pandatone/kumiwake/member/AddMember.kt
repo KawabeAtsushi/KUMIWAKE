@@ -21,6 +21,7 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
 import com.pandatone.kumiwake.kumiwake.NormalMode
+import kotlinx.android.synthetic.main.add_member.*
 import java.util.*
 
 /**
@@ -53,6 +54,7 @@ class AddMember : AppCompatActivity() {
         fromNormalMode = i.getBooleanExtra(FROM_NORMAL_MODE, false)
         if (position != -1) {
             setItem(position)
+            member_registration_continue_btn.visibility = View.GONE
         }
 
         var yomigana = ""
@@ -165,8 +167,22 @@ class AddMember : AppCompatActivity() {
         beforeBelong = textArray
     }
 
-    @OnClick(R.id.member_registration_btn)
+    @OnClick(R.id.member_registration_finish_btn)
     internal fun onRegistrationMemberClicked() {
+        register(true)
+    }
+
+    @OnClick(R.id.member_registration_continue_btn)
+    internal fun onRegistrationContinueMemberClicked() {
+        register(false)
+    }
+
+    @OnClick(R.id.member_cancel_btn)
+    internal fun cancel() {
+        finish()
+    }
+
+    private fun register(finish: Boolean) {
         val name = nameEditText!!.text!!.toString()
         if (TextUtils.isEmpty(name)) {
             textInputLayout!!.isErrorEnabled = true
@@ -175,20 +191,20 @@ class AddMember : AppCompatActivity() {
             saveItem()
             afterBelong = belongSpinner!!.text.toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             changeBelongNo()
-            if(fromNormalMode){
-                val intent = Intent(this, NormalMode::class.java)
-                intent.putExtra(NormalMode.NEW_MEMBER, MemberListAdapter(this).newMember)
-                setResult(NormalMode.ADD_MEMBER_OK, intent)
-            }else {
-                Toast.makeText(this, getText(R.string.member).toString() + " \"" + name + "\" " + getText(R.string.registered), Toast.LENGTH_SHORT).show()
+            if (fromNormalMode) {
+                NormalMode.memberArray.add(MemberListAdapter(this).newMember)
             }
-            finish()
-        }
-    }
 
-    @OnClick(R.id.member_cancel_btn)
-    internal fun cancel() {
-        finish()
+            Toast.makeText(this, getText(R.string.member).toString() + " \"" + name + "\" " + getText(R.string.registered), Toast.LENGTH_SHORT).show()
+
+            if (finish) {
+                finish()
+            } else {
+                val intent = intent
+                finish()
+                startActivity(intent)
+            }
+        }
     }
 
     private fun updateItem(listId: Int) {
@@ -204,7 +220,7 @@ class AddMember : AppCompatActivity() {
     }
 
     private fun update(listId: Int) {
-        val updateBt = findViewById<View>(R.id.member_registration_btn) as Button
+        val updateBt = findViewById<View>(R.id.member_registration_finish_btn) as Button
         updateBt.setText(R.string.update)
         updateBt.setOnClickListener {
             val name = nameEditText!!.text!!.toString()
@@ -270,7 +286,7 @@ class AddMember : AppCompatActivity() {
                     if (beforeBelong!![i] == groupName) {
                         id = listItem.id
                         belongNo = listItem.belongNo - 1
-                        groupListAdapter.updateBelongNo(id.toString(),belongNo)
+                        groupListAdapter.updateBelongNo(id.toString(), belongNo)
                     }
                     k++
                 }
@@ -298,7 +314,7 @@ class AddMember : AppCompatActivity() {
                     if (afterBelong!![i] == groupName) {
                         id = listItem.id
                         belongNo = listItem.belongNo + 1
-                        groupListAdapter.updateBelongNo(id.toString(),belongNo)
+                        groupListAdapter.updateBelongNo(id.toString(), belongNo)
                     }
                     k++
                 }

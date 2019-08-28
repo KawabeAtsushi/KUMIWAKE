@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion '28.0.3'
 
     compileOptions {
@@ -15,18 +15,25 @@ android {
     defaultConfig {
         applicationId "com.pandatone.kumiwake"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 11
-        versionName "2.1.1" // major update +1.0.0 / add functions +0.1.0 / debug + 0.0.1
+        versionName "2.2.0" // major update +1.0.0 / add functions +0.1.0 / debug + 0.0.1
     }
     buildTypes {
 
         buildTypes {
+            debug{
+                minifyEnabled false //リリースの時だけtrue
+                shrinkResources false //リリースの時だけtrue
+                debuggable true
+            }
+
             release {
                 minifyEnabled true //リリースの時だけtrue
                 shrinkResources true //リリースの時だけtrue
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             }
+
         }
     }
 }
