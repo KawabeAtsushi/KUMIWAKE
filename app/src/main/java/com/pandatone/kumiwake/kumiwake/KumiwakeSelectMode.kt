@@ -62,13 +62,13 @@ class KumiwakeSelectMode : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    @OnClick(R.id.normal_mode_button)
+    @OnClick(R.id.descriptionForNormalMode)
     internal fun onNormalModeClicked() {
         SekigimeResult.Normalmode = true
         startActivity(Intent(this, NormalMode::class.java))
     }
 
-    @OnClick(R.id.quick_mode_button)
+    @OnClick(R.id.descriptionForQuickMode)
     internal fun onQuickModeClicked() {
         SekigimeResult.Normalmode = false
         startActivity(Intent(this, QuickMode::class.java))

@@ -72,7 +72,7 @@ class NormalMode : AppCompatActivity() {
     private fun moveAddMember() {
         val intent = Intent(this, AddMember::class.java)
         intent.putExtra(AddMember.FROM_NORMAL_MODE, true)
-        startActivityForResult(intent, 100)
+        startActivityForResult(intent, 100) //これで呼ぶとActivityが終わった時にonActivityResultが呼ばれる。
     }
 
     @OnClick(R.id.normal_kumiwake_btn)
@@ -116,9 +116,6 @@ class NormalMode : AppCompatActivity() {
 
         if (resultCode == Activity.RESULT_OK) {
             memberArray = i!!.getSerializableExtra(MEMBER_ARRAY) as ArrayList<Name>
-        } else if (resultCode == ADD_MEMBER_OK) {
-            val newMember = i!!.getSerializableExtra(NEW_MEMBER) as Name
-            memberArray.add(newMember)
         }
 
         adapter = MBListViewAdapter(this, memberArray, false, showLeaderNo = false)
@@ -135,9 +132,6 @@ class NormalMode : AppCompatActivity() {
         const val MEMBER_ARRAY = "memberArray"
         const val NORMAL_MEMBER_ARRAY = "normal_memberArray"
         const val NORMAL_GROUP_ARRAY = "normal_groupArray"
-        const val NEW_MEMBER = "newMember"
-
-        const val ADD_MEMBER_OK = 1110
     }
 
 }
