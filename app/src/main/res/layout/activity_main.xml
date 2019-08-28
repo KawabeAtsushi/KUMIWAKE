@@ -124,7 +124,7 @@
                 android:layout_height="match_parent"
                 android:padding="25dp"
                 android:layout_marginBottom="@dimen/size_toolbar"
-                android:src="@drawable/icon_1"
+                android:src="@drawable/icon_4"
                 android:transitionName="explodeIv"
                 tools:targetApi="lollipop" />
 

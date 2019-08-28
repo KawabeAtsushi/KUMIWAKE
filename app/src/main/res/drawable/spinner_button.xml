@@ -3,30 +3,9 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- ボタンが押されていない状態 -->
-    <item android:state_pressed="false">
-        <!-- shape:rectangle(=四角形) -->
-        <shape android:shape="rectangle">
-
-            <!-- 角の丸み -->
-            <corners android:radius="15dp" />
-
-            <solid android:color="#FFFFFF" />
-
-        </shape>
-    </item>
+    <item android:drawable="@drawable/spinner_unpressed" android:state_pressed="false" />
 
     <!-- ボタンが押された状態 -->
-    <item android:state_pressed="true">
-        <!-- shape:rectangle(=四角形) -->
-        <shape android:shape="rectangle">
-
-            <!-- 角の丸み -->
-            <corners android:radius="15dp" />
-
-            <solid android:color="#eeeeee" />
-
-        </shape>
-    </item>
+    <item android:drawable="@drawable/spinner_pressed" android:state_pressed="true" />
 
 </selector>
-

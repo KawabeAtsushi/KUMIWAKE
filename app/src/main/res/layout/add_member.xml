@@ -5,7 +5,7 @@
     android:id="@+id/addmember_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0576ff03"
+    android:background="#1000ff00"
     android:parentActivityName=".MemberMain">
 
     <LinearLayout
@@ -125,12 +125,12 @@
         <!--spinner-->
         <Button
             android:id="@+id/select_group_spinner"
-            style="@android:style/Widget.Spinner"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginStart="@dimen/form_marginStart"
             android:layout_marginTop="@dimen/form_marginTop"
             android:layout_marginEnd="@dimen/form_marginStart"
+            android:background="@drawable/spinner_button"
             android:ellipsize="end"
             android:hint="@string/select_belong_group"
             android:singleLine="true" />
