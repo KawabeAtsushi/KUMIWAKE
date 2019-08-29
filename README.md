@@ -40,6 +40,16 @@ E-mail:ganbalism@gmail.com
 
 *This app support English and Japanese.*
 
+## バージョン履歴
+■ver.2.0.0（major update）<br>
+・結果シェア機能の実装
+
+■ver.2.1.0<br>
+・KUMIWAKEのメンバー選択画面でメンバーの追加が可能に。
+
+■ver.2.2.0<br>
+・メンバーの追加が連続で行えるようになりました。
+
 ## ToDo
 ### MVVMアーキテクチャ対応
 [師匠の記事](https://qiita.com/rmakiyama/items/779cf6407f70b40e4ee7)
