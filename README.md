@@ -2,11 +2,14 @@
 
 Created By PANDATONE.
 
+Store (GooglePlay):</br>
+https://play.google.com/store/apps/details?id=com.pandatone.kumiwake
+
 Privacy Policy:
 https://gist.githubusercontent.com/KawabeAtsushi/39f3ea332b05a6b053b263784a77cd51/raw/7666e22b85561c34a95863f9482ed900482d2c8d/privacy%2520policy
 
 ## Easy grouping in favorite conditions!
-## This app also determined seats allocation!
+## You can also determined seats allocation!
 
 Determine group every time when the circle with sesh, allot the seats are uncomfortable...
 
@@ -41,6 +44,9 @@ E-mail:ganbalism@gmail.com
 *This app support English and Japanese.*
 
 ## バージョン履歴
+■ver.1.0.0（major update）<br>
+・KUMIWAKEリリース！
+
 ■ver.2.0.0（major update）<br>
 ・結果シェア機能の実装
 
