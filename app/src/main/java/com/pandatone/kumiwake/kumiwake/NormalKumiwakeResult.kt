@@ -32,11 +32,11 @@ import kotlin.collections.ArrayList
 class NormalKumiwakeResult : AppCompatActivity() {
 
     private lateinit var memberArray: ArrayList<Name>
-    private var manArray: ArrayList<Name> = ArrayList()
-    private var womanArray: ArrayList<Name> = ArrayList()
     private lateinit var leaderArray: ArrayList<Name>
     private lateinit var groupArray: ArrayList<GroupListAdapter.Group>
     private lateinit var arrayArray: ArrayList<ArrayList<Name>>
+    private lateinit var manArray: ArrayList<Name>
+    private lateinit var womanArray: ArrayList<Name>
     private var groupCount: Int = 0
     private var memberSize: Int = 0
     private var even_fm_ratio: Boolean = false
@@ -115,6 +115,8 @@ class NormalKumiwakeResult : AppCompatActivity() {
         memberArray.shuffle()
 
         arrayArray = ArrayList(groupCount)
+        manArray = ArrayList()
+        womanArray = ArrayList()
 
         for (g in 0 until groupCount) {
             arrayArray.add(ArrayList())
@@ -215,7 +217,7 @@ class NormalKumiwakeResult : AppCompatActivity() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun setLeader(array: ArrayList<Name>) {
-       val leaderNoList = KumiwakeCustom.leaderNoList
+        val leaderNoList = KumiwakeCustom.leaderNoList
 
         for (leader in array) {
             val id = leader.id
@@ -228,7 +230,7 @@ class NormalKumiwakeResult : AppCompatActivity() {
         for (member in memberArray) {
             if (member.sex == getText(R.string.man)) {
                 manArray.add(member)
-            }else{
+            } else {
                 womanArray.add(member)
             }
         }

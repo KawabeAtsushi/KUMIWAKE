@@ -8,9 +8,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="7dp"
+        android:layout_margin="10dp"
+        android:gravity="center"
         android:text="@string/select_seats_type"
-        android:textSize="18sp" />
+        android:textSize="20sp"
+        android:textStyle="bold"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,8 +28,8 @@
             android:layout_margin="10dp"
             android:src="@drawable/square_table"
             android:background="@drawable/translucent_orange_btn"
-            android:scaleType="centerCrop"
-            android:padding="40dp"
+            android:scaleType="fitCenter"
+            android:padding="10dp"
             android:text="@string/square_table"
             android:contentDescription="@string/square_table" />
 
@@ -40,8 +42,8 @@
             android:layout_margin="10dp"
             android:src="@drawable/parallel_table"
             android:background="@drawable/translucent_orange_btn"
-            android:scaleType="centerCrop"
-            android:padding="40dp"
+            android:scaleType="fitCenter"
+            android:padding="10dp"
             android:text="@string/parallel_table"
             android:contentDescription="@string/parallel_table" />
     </LinearLayout>
@@ -60,8 +62,8 @@
             android:layout_margin="10dp"
             android:src="@drawable/circle_table"
             android:background="@drawable/translucent_orange_btn"
-            android:scaleType="centerCrop"
-            android:padding="40dp"
+            android:scaleType="fitCenter"
+            android:padding="5dp"
             android:text="@string/circle_table"
             android:contentDescription="@string/circle_table" />
 
@@ -74,7 +76,7 @@
             android:layout_margin="10dp"
             android:src="@drawable/counter_table"
             android:background="@drawable/translucent_orange_btn"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             android:padding="35dp"
             android:text="@string/counter_table"
             android:contentDescription="@string/counter_table" />

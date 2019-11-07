@@ -20,7 +20,7 @@
     <dimen name="ratio_margin_size">8dp</dimen>
     <dimen name="under_button_height">63dp</dimen>
     <integer name="anim_duration_short">1000</integer>
-    <integer name="anim_duration_long">2000</integer>
+    <integer name="anim_duration_long">3000</integer>
 
     <dimen name="spacing_double">16dp</dimen>
     <dimen name="size_toolbar">48dp</dimen>
