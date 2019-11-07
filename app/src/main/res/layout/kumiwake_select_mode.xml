@@ -29,7 +29,7 @@
 
         <TextView
             android:id="@+id/descriptionForNormalMode"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:background="@drawable/top_normal_text_background"
@@ -40,7 +40,7 @@
 
         <TextView
             android:id="@+id/normal_mode_button"
-            android:layout_width="250dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top|center"
             android:background="@drawable/top_normal_button"
@@ -67,7 +67,7 @@
 
         <TextView
             android:id="@+id/descriptionForQuickMode"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:background="@drawable/top_quick_text_background"
@@ -78,7 +78,7 @@
 
         <TextView
             android:id="@+id/quick_mode_button"
-            android:layout_width="250dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top|center"
             android:background="@drawable/top_quick_button"
