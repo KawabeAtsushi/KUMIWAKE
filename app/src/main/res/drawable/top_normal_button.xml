@@ -8,11 +8,11 @@
         android:topLeftRadius="15dp"
         android:topRightRadius="15dp" />
 
-    <solid android:color="#ff7777" />
+    <solid android:color="@color/pastel_red" />
 
     <stroke
         android:width="3dp"
-        android:color="#50000000" />
+        android:color="@color/pastel_red" />
 
 </shape>
 

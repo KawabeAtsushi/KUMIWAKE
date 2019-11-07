@@ -36,14 +36,16 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/re_kumiwake"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:background="@drawable/simple_red_button"
@@ -53,6 +55,7 @@
                     android:id="@+id/share_result"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:background="@drawable/simple_blue_button"

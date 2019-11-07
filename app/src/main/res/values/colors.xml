@@ -43,4 +43,6 @@
     <color name="yellow_background_title">#ffff8d</color>
     <color name="theme_yellow_text">@color/text_dark</color>
 
+    <color name="pastel_red">#ff7777</color>
+
 </resources>

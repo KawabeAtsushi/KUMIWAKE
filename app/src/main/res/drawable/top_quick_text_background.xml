@@ -6,7 +6,7 @@
 
         <shape android:shape="rectangle">
             <solid android:color="#E1FFE1" />
-            <stroke android:width="3dp" android:color="#50000000" />
+            <stroke android:width="3dp" android:color="@color/light_green" />
             <corners android:radius="20dp" />
             <padding android:bottom="10dp" android:left="20dp" android:right="20dp" android:top="10dp" />
         </shape>
@@ -17,7 +17,7 @@
 
         <shape android:shape="rectangle">
             <solid android:color="#BEFFBE" />
-            <stroke android:width="3dp" android:color="#50000000" />
+            <stroke android:width="3dp" android:color="@color/light_green" />
             <corners android:radius="20dp" />
             <padding android:bottom="10dp" android:left="20dp" android:right="20dp" android:top="10dp" />
         </shape>
