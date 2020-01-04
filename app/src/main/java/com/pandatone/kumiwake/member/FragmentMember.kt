@@ -138,11 +138,11 @@ class FragmentMember : ListFragment() {
     /////////////////////-------- Menuの処理 ----------///////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
 
         // アクションアイテム選択時
-        when (item!!.itemId) {
+        when (item.itemId) {
             android.R.id.home -> activity!!.finish()
 
             R.id.item_all_select -> {

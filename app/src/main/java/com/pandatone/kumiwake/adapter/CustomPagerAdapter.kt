@@ -15,12 +15,12 @@ import com.pandatone.kumiwake.member.FragmentMember
  */
 class CustomPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
-    override fun getItem(position: Int): Fragment? {
+    override fun getItem(position: Int): Fragment {
         when (position) {
             0 -> return FragmentMember()
             1 -> return FragmentGroup()
         }
-        return null
+        throw IllegalStateException("position $position is invalid for this viewpager")
     }
 
     override fun getItemPosition(`object`: Any): Int {

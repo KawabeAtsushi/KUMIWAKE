@@ -8,16 +8,16 @@ android {
     buildToolsVersion '28.0.3'
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility "1.8"
+        targetCompatibility "1.8"
     }
 
     defaultConfig {
         applicationId "com.pandatone.kumiwake"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 12
-        versionName "2.2.1" // major update +1.0.0 / add functions +0.1.0 / debug + 0.0.1
+        versionCode 13
+        versionName "2.2.2" // major update +1.0.0 / add functions +0.1.0 / debug + 0.0.1
     }
     buildTypes {
 
@@ -42,11 +42,11 @@ dependencies {
     api fileTree(include: ['*.jar'], dir: 'src/main/libs')
     testImplementation 'junit:junit:4.12'
     //noinspection GradleCompatible
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'com.jakewharton:butterknife:10.1.0'
-    kapt 'com.jakewharton:butterknife-compiler:10.1.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.jakewharton:butterknife:10.2.0'
+    kapt 'com.jakewharton:butterknife-compiler:10.2.0'
     implementation 'com.google.android.material:material:1.0.0'
-    implementation 'com.google.firebase:firebase-ads:18.1.1'
+    implementation 'com.google.firebase:firebase-ads:18.3.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 

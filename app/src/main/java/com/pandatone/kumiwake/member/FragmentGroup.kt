@@ -106,9 +106,9 @@ class FragmentGroup : ListFragment() {
         listView.isTextFilterEnabled = true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // アクションアイテム選択時
-        when (item!!.itemId) {
+        when (item.itemId) {
             android.R.id.home -> activity!!.finish()
 
             R.id.item_all_select -> for (i in 0 until listAdp.count) {
