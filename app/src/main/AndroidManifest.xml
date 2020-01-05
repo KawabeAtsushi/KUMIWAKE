@@ -12,11 +12,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-
+        android:theme="@style/Theme.AppCompat">
         <activity
-            android:name=".kumiwake.MainActivity"
-            android:label="@string/app_name">
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -24,64 +23,59 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
 
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
         <activity
             android:name=".kumiwake.KumiwakeSelectMode"
             android:label="@string/select_mode">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".kumiwake.MainActivity" />
+                android:value=".MainActivity" />
         </activity>
-
         <activity
             android:name=".kumiwake.QuickMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".kumiwake.NormalMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".kumiwake.KumiwakeCustom"
             android:screenOrientation="portrait" />
-
         <activity android:name=".kumiwake.QuickKumiwakeConfirmation" />
-
         <activity android:name=".kumiwake.NormalKumiwakeConfirmation" />
-
         <activity android:name=".kumiwake.QuickKumiwakeResult" />
-
         <activity android:name=".kumiwake.NormalKumiwakeResult" />
-
         <activity
             android:name=".member.MemberMain"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".sekigime.SelectTableType"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".sekigime.SquareTableCustom"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".sekigime.SekigimeResult"
             android:screenOrientation="portrait" />
-
         <activity android:name=".setting.SettingHelp">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".kumiwake.MainActivity" />
+                android:value=".MainActivity" />
         </activity>
-
         <activity
             android:name=".member.AddMember"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".member.AddGroup"
             android:screenOrientation="portrait"
@@ -98,7 +92,6 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-2315101868638564~1560987130" />
-
     </application>
 
 </manifest>

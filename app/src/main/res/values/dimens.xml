@@ -25,4 +25,6 @@
     <dimen name="spacing_double">16dp</dimen>
     <dimen name="size_toolbar">48dp</dimen>
     <dimen name="category_item_text_size">14sp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
 </resources>

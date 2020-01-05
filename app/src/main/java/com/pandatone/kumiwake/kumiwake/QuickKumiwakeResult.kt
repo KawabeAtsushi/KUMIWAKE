@@ -15,6 +15,7 @@ import butterknife.OnClick
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.pandatone.kumiwake.MainActivity
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.setting.CustomDialog
 import com.pandatone.kumiwake.sekigime.SekigimeResult

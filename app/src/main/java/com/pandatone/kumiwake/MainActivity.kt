@@ -1,4 +1,4 @@
-package com.pandatone.kumiwake.kumiwake
+package com.pandatone.kumiwake
 
 import android.app.Activity
 import android.app.ActivityOptions
@@ -16,7 +16,9 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
-import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.kumiwake.Category
+import com.pandatone.kumiwake.kumiwake.KumiwakeSelectMode
+import com.pandatone.kumiwake.kumiwake.Theme
 import com.pandatone.kumiwake.member.MemberMain
 import com.pandatone.kumiwake.setting.SettingHelp
 import java.util.*
