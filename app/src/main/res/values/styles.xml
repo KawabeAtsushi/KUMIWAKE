@@ -2,7 +2,7 @@
 
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight">
         <!-- アクションモード -->
         <item name="windowActionModeOverlay">true</item>
     </style>
@@ -13,5 +13,8 @@
         <item name="android:textSize">@dimen/category_item_text_size</item>
     </style>
 
-</resources>
+    <style name="BottomNavigationTheme">
+        <item name="android:backgroundTint">@color/green</item>
+    </style>
 
+</resources>

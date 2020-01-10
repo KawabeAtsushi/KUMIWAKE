@@ -5,22 +5,18 @@
     <!-- ボタンが押されていない状態 -->
     <item android:state_pressed="false">
 
-        <shape android:shape="rectangle">
+        <shape android:shape="oval">
             <solid android:color="#FCE2E2" />
             <stroke android:width="3dp" android:color="@color/pastel_red" />
-            <corners android:radius="20dp" />
-            <padding android:bottom="10dp" android:left="20dp" android:right="20dp" android:top="10dp" />
         </shape>
     </item>
 
     <!-- ボタンが押されている状態 -->
     <item android:state_pressed="true">
 
-        <shape android:shape="rectangle">
+        <shape android:shape="oval">
             <solid android:color="#FFC8C8" />
             <stroke android:width="3dp" android:color="@color/pastel_red" />
-            <corners android:radius="20dp" />
-            <padding android:bottom="10dp" android:left="20dp" android:right="20dp" android:top="10dp" />
         </shape>
     </item>
 
