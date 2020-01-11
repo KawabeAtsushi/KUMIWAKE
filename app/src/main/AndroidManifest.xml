@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Main2Activity"
-            android:label="@string/title_activity_main2">
+            android:label="@string/title_activity_main2"
+            android:theme="@style/Theme.AppCompat.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

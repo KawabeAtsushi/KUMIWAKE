@@ -17,7 +17,7 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.pandatone.kumiwake.MainActivity
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.setting.CustomDialog
+import com.pandatone.kumiwake.ui.CustomDialog
 import com.pandatone.kumiwake.sekigime.SekigimeResult
 import com.pandatone.kumiwake.sekigime.SelectTableType
 import java.util.*

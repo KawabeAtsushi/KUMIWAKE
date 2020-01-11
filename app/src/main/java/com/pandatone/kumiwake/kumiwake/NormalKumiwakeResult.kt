@@ -20,7 +20,7 @@ import com.pandatone.kumiwake.MainActivity
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MBListViewAdapter
-import com.pandatone.kumiwake.setting.CustomDialog
+import com.pandatone.kumiwake.ui.CustomDialog
 import com.pandatone.kumiwake.member.Name
 import com.pandatone.kumiwake.sekigime.SekigimeResult
 import com.pandatone.kumiwake.sekigime.SelectTableType

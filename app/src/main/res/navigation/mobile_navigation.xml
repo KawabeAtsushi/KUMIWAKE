@@ -19,13 +19,13 @@
 
     <fragment
         android:id="@+id/navigation_members"
-        android:name="com.pandatone.kumiwake.ui.settings.NotificationsFragment"
+        android:name="com.pandatone.kumiwake.ui.settings.SettingsFragment"
         android:label="@string/member"
         tools:layout="@layout/fragment_members" />
 
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.pandatone.kumiwake.ui.settings.NotificationsFragment"
+        android:name="com.pandatone.kumiwake.ui.settings.SettingsFragment"
         android:label="@string/setting_help"
         tools:layout="@layout/fragment_members" />
 </navigation>

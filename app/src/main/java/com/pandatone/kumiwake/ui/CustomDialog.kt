@@ -1,4 +1,4 @@
-package com.pandatone.kumiwake.setting
+package com.pandatone.kumiwake.ui
 
 import android.app.Dialog
 import android.graphics.Color
@@ -12,6 +12,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.setting.DBBackup
+import com.pandatone.kumiwake.setting.RefreshData
 import java.io.File
 
 /**
@@ -26,9 +28,9 @@ class CustomDialog : DialogFragment() {
     private val mOnClickLisner = View.OnClickListener { dismiss() }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = Dialog(activity)
+        val dialog = activity?.let { Dialog(it) }
         // タイトル非表示
-        dialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
+        dialog?.window!!.requestFeature(Window.FEATURE_NO_TITLE)
         // フルスクリーン
         dialog.window!!.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)

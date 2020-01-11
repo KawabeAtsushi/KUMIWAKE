@@ -2,7 +2,10 @@
 
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.DayNight">
+    <style name="AppTheme" parent="Base.Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <!-- アクションモード -->
         <item name="windowActionModeOverlay">true</item>
     </style>

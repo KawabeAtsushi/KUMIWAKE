@@ -19,6 +19,7 @@ import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import butterknife.ButterKnife
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.ui.DialogWarehouse
 import kotlinx.android.synthetic.main.setting_help.*
 
 
@@ -26,7 +27,7 @@ import kotlinx.android.synthetic.main.setting_help.*
  * Created by atsushi_2 on 2016/02/19.
  */
 class SettingHelp : AppCompatActivity() {
-    private lateinit var customDialog: CustomDialog
+    private var dialog:DialogWarehouse = DialogWarehouse(supportFragmentManager)
     private lateinit var howToUse_adapter: ArrayAdapter<String>
     private lateinit var backup_adapter: ArrayAdapter<String>
     private lateinit var other_adapter: ArrayAdapter<String>
@@ -51,10 +52,10 @@ class SettingHelp : AppCompatActivity() {
                 0 -> {
                     val message = (getString(R.string.how_to_kumiwake) + "■" + getString(R.string.normal_mode) + "■\n"
                             + getString(R.string.description_of_normal_mode) + "\n\n■" + getString(R.string.quick_mode) + "■\n" + getString(R.string.description_of_quick_mode))
-                    confirmationDialog(how_to_use_str[0], message)
+                    dialog.confirmationDialog(how_to_use_str[0], message)
                 }
-                1 -> confirmationDialog(how_to_use_str[1], getText(R.string.how_to_member))
-                2 -> confirmationDialog(how_to_use_str[2], getText(R.string.how_to_sekigime))
+                1 -> dialog.confirmationDialog(how_to_use_str[1], getText(R.string.how_to_member))
+                2 -> dialog.confirmationDialog(how_to_use_str[2], getText(R.string.how_to_sekigime))
             }
         }
         back_up_list.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
@@ -69,7 +70,7 @@ class SettingHelp : AppCompatActivity() {
             //行をクリックした時の処理
             when (position) {
                 0 -> showVersionName(applicationContext)
-                1 -> confirmationDialog(getString(R.string.advertise_delete), getString(R.string.wait_for_implementation))
+                1 -> dialog.confirmationDialog(getString(R.string.advertise_delete), getString(R.string.wait_for_implementation))
                 2 -> launchMailer()
                 3 -> shareApp()
                 4 -> toPrivacyPolicy()
@@ -102,47 +103,28 @@ class SettingHelp : AppCompatActivity() {
         other_list.adapter = other_adapter
     }
 
-    private fun confirmationDialog(title: String, message: CharSequence) {
-        customDialog = CustomDialog()
-        customDialog.setTitle(title)
-        customDialog.setMessage(message)
-        val ft = supportFragmentManager.beginTransaction()
-        ft.add(customDialog, null)
-        ft.commitAllowingStateLoss()
-    }
-
-    private fun decisionDialog(title: String, message: CharSequence, code: Int) {
-        customDialog = CustomDialog()
-        customDialog.setTitle(title)
-        customDialog.setMessage(message)
-        customDialog.setOnPositiveClickListener(code)
-        val ft = supportFragmentManager.beginTransaction()
-        ft.add(customDialog, null)
-        ft.commitAllowingStateLoss()
-    }
-
     private fun onBackup() {
         val title = getString(R.string.back_up_db)
         val message = getString(R.string.back_up_attention) + getString(R.string.run_confirmation)
-        decisionDialog(title, message, 1)
+        dialog.decisionDialog(title, message, 1)
     }
 
     private fun onImport() {
         val title = getString(R.string.import_db)
         val message = getString(R.string.import_attention) + getString(R.string.run_confirmation)
-        decisionDialog(title, message, 2)
+        dialog.decisionDialog(title, message, 2)
     }
 
     private fun onDeleteBackup() {
         val title = getString(R.string.delete_backup)
         val message = getString(R.string.delete_backup_attention)
-        decisionDialog(title, message, 3)
+        dialog.decisionDialog(title, message, 3)
     }
 
     private fun onRefreshData() {
         val title = getString(R.string.refresh_data)
         val message = getString(R.string.refresh_attention) + getString(R.string.run_confirmation)
-        decisionDialog(title, message, 4)
+        dialog.decisionDialog(title, message, 4)
     }
 
     private fun showVersionName(context: Context) {
@@ -155,7 +137,7 @@ class SettingHelp : AppCompatActivity() {
             e.printStackTrace()
         }
 
-        confirmationDialog(getString(R.string.app_version), versionName)
+        dialog.confirmationDialog(getString(R.string.app_version), versionName)
     }
 
     private fun launchMailer() {
