@@ -19,9 +19,8 @@
 
     <fragment
         android:id="@+id/navigation_members"
-        android:name="com.pandatone.kumiwake.ui.settings.SettingsFragment"
-        android:label="@string/member"
-        tools:layout="@layout/fragment_members" />
+        android:name="com.pandatone.kumiwake.ui.members.MembersFragment"
+        android:label="@string/member" />
 
     <fragment
         android:id="@+id/navigation_settings"

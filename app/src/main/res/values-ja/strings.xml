@@ -12,8 +12,8 @@
     <string name="member_name">名前</string>
     <string name="group_name">グループ名</string>
     <string name="select_member">メンバー選択</string>
-    <string name="add_group">グループ新規作成</string>
-    <string name="add_member">メンバー新規作成</string>
+    <string name="add_group_title">グループ新規作成</string>
+    <string name="add_member_title">メンバー新規作成</string>
     <string name="error_empty_name">メンバー名を入力してください</string>
     <string name="error_empty_group">グループ名を入力してください</string>
     <string name="error_empty_member_no">メンバー数を入力してください</string>
@@ -154,4 +154,8 @@
     <string name="refresh_completed">データのリフレッシュが完了しました。</string>
     <string name="refresh_attention">データに不具合がみられる場合に、データベースをリフレッシュすることで改善することがあります。\n</string>
     <string name="continue_register">続けて登録</string>
+    <string name="add_group">グループ追加</string>
+    <string name="add_member">メンバー追加</string>
+    <string name="member_list">メンバー/グループ\n一覧</string>
+    <string name="hint">ヒント</string>
 </resources>

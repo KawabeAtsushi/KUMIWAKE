@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
             android:background="@drawable/request_background"
-            android:text="@string/add_member"
+            android:text="@string/add_member_title"
             android:textSize="20sp" />
 
 

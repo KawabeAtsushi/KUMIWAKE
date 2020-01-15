@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.*
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.pandatone.kumiwake.Main2Activity
@@ -50,11 +49,11 @@ class KumiwakeFragment : Fragment() {
 
         val normalHelp: ImageButton = root.findViewById(R.id.hintForNormalMode)
         normalHelp.setOnClickListener {
-            dialog.confirmationDialog("Hint : " + getString(R.string.normal_mode), getString(R.string.description_of_normal_mode))
+            dialog.confirmationDialog(getString(R.string.hint) + " : " + getString(R.string.normal_mode), getString(R.string.description_of_normal_mode))
         }
         val quickHelp: ImageButton = root.findViewById(R.id.hintForQuickMode)
         quickHelp.setOnClickListener {
-            dialog.confirmationDialog("Hint : " + getString(R.string.quick_mode), getString(R.string.description_of_quick_mode))
+            dialog.confirmationDialog(getString(R.string.hint) + " : " + getString(R.string.quick_mode), getString(R.string.description_of_quick_mode))
         }
 
         return root
@@ -67,7 +66,7 @@ class KumiwakeFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_help -> dialog.confirmationDialog("Hint : " + getString(R.string.kumiwake), getString(R.string.how_to_kumiwake))
+            R.id.menu_help -> dialog.confirmationDialog(getString(R.string.hint) + " : " + getString(R.string.kumiwake), getString(R.string.how_to_kumiwake))
         }
         return true
     }

@@ -9,16 +9,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.ui.DialogWarehouse
-import kotlinx.android.synthetic.main.setting_help.*
 
 class SettingsFragment : Fragment() {
 
@@ -33,6 +34,9 @@ class SettingsFragment : Fragment() {
         get() {
             return DialogWarehouse(requireFragmentManager())
         }
+    private lateinit var howToUseList: ListView
+    private lateinit var backupList: ListView
+    private lateinit var otherList: ListView
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -42,7 +46,7 @@ class SettingsFragment : Fragment() {
         settingsViewModel =
                 ViewModelProviders.of(this).get(MembersViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_settings, container, false)
-        val howToUseList:ListView=root.findViewById(R.id.how_to_use_list)
+        howToUseList = root.findViewById(R.id.how_to_use_list)
         howToUseList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
             when (position) {
@@ -55,7 +59,7 @@ class SettingsFragment : Fragment() {
                 2 -> dialog.confirmationDialog(how_to_use_str[2], getText(R.string.how_to_sekigime))
             }
         }
-        val backupList:ListView=root.findViewById(R.id.back_up_list)
+        backupList = root.findViewById(R.id.back_up_list)
         backupList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
             if (position != 3) {
@@ -64,7 +68,7 @@ class SettingsFragment : Fragment() {
                 onRefreshData()
             }
         }
-        val otherList:ListView=root.findViewById(R.id.other_list)
+        otherList = root.findViewById(R.id.other_list)
         otherList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
             when (position) {
@@ -75,6 +79,8 @@ class SettingsFragment : Fragment() {
                 4 -> toPrivacyPolicy()
             }
         }
+
+        setViews()
 
         return root
     }
@@ -89,9 +95,9 @@ class SettingsFragment : Fragment() {
         backup_adapter = ArrayAdapter(context, android.R.layout.simple_expandable_list_item_1, backup_str)
         other_adapter = ArrayAdapter(context, android.R.layout.simple_expandable_list_item_1, other_str)
 
-        how_to_use_list.adapter = howToUse_adapter
-        back_up_list.adapter = backup_adapter
-        other_list.adapter = other_adapter
+        howToUseList.adapter = howToUse_adapter
+        backupList.adapter = backup_adapter
+        otherList.adapter = other_adapter
     }
 
     private fun onBackup() {

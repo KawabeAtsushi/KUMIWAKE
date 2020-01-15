@@ -89,8 +89,8 @@
     <string name="counter_table">Counter table</string>
     <string name="circle_table">Circle table</string>
     <string name="be_custom">*Need customize</string>
-    <string name="add_group">Create a new group</string>
-    <string name="add_member">Create a new member</string>
+    <string name="add_group_title">Create a new group</string>
+    <string name="add_member_title">Create a new member</string>
     <string name="kumiwake_confirm">Execute KUMIWAKE(grouping) as the following contents.</string>
     <string name="no_group">NO GROUP</string>
     <string name="no_member">NO MEMBER</string>
@@ -152,5 +152,8 @@
     <string name="refresh_attention">If there is a problem with the data, it may be improved by refreshing the database.\n</string>
     <string name="continue_register">Continue to register</string>
     <string name="title_activity_main2" translatable="false">Main2Activity</string>
-    <string name="help" translatable="false">Help</string>
+    <string name="add_group">Add group</string>
+    <string name="add_member">Add member</string>
+    <string name="member_list">Members/Groups\nlist</string>
+    <string name="hint">Hint</string>
 </resources>

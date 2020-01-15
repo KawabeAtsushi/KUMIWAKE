@@ -2,18 +2,20 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/red_background">
 
     <ImageView
         android:id="@+id/category_icon1"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:contentDescription="@string/kumiwake"
         android:src="@drawable/icon_1"
         app:layout_constraintBottom_toTopOf="@id/normal_mode_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <!--    後に記述したViewが前面に来る-->
 
@@ -27,15 +29,19 @@
         android:background="@drawable/top_normal_button"
         android:clickable="true"
         android:focusable="true"
-        android:gravity="center"
+        android:gravity="start"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingStart="@dimen/main_button_start_padding"
+        android:paddingEnd="5dp"
         android:text="@string/normal_mode"
         android:textColor="#ffffff"
         android:textSize="30sp"
+        android:textAllCaps="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/category_icon1" />
+        app:layout_constraintTop_toBottomOf="@id/category_icon1"
+        app:layout_constraintBottom_toTopOf="@+id/quick_mode_button"/>
 
     <ImageView
         android:id="@+id/NormalModeIcon"
@@ -54,7 +60,7 @@
         android:id="@+id/hintForNormalMode"
         android:layout_width="@dimen/hint_icon_size"
         android:layout_height="@dimen/hint_icon_size"
-        android:contentDescription="@string/help"
+        android:contentDescription="@string/hint"
         android:src="@drawable/ic_help_outline_black_24dp"
         android:backgroundTint="#0000"
         app:layout_constraintEnd_toEndOf="@+id/normal_mode_button"
@@ -69,12 +75,15 @@
         android:background="@drawable/top_quick_button"
         android:clickable="true"
         android:focusable="true"
-        android:gravity="center"
+        android:gravity="start"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingStart="@dimen/main_button_start_padding"
+        android:paddingEnd="5dp"
         android:text="@string/quick_mode"
         android:textColor="#ffffff"
         android:textSize="30sp"
+        android:textAllCaps="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -97,7 +106,7 @@
         android:id="@+id/hintForQuickMode"
         android:layout_width="@dimen/hint_icon_size"
         android:layout_height="@dimen/hint_icon_size"
-        android:contentDescription="@string/help"
+        android:contentDescription="@string/hint"
         android:src="@drawable/ic_help_outline_black_24dp"
         android:backgroundTint="#0000"
         app:layout_constraintEnd_toEndOf="@+id/quick_mode_button"

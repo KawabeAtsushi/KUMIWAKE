@@ -17,6 +17,10 @@ import com.pandatone.kumiwake.ui.DialogWarehouse
 class SekigimeFragment : Fragment() {
 
     private lateinit var sekigimeViewModel: SekigimeViewModel
+    private val dialog: DialogWarehouse
+        get() {
+            return DialogWarehouse(requireFragmentManager())
+        }
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -42,15 +46,13 @@ class SekigimeFragment : Fragment() {
             startActivity(Intent(activity, QuickMode::class.java))
         }
 
-        val dialog = DialogWarehouse(requireFragmentManager())
-
         val normalHelp: ImageButton = root.findViewById(R.id.hintForNormalMode)
         normalHelp.setOnClickListener {
-            dialog.confirmationDialog("Hint : " + getString(R.string.normal_mode), getString(R.string.description_of_normal_mode))
+            dialog.confirmationDialog(getString(R.string.hint) + " : " + getString(R.string.normal_mode), getString(R.string.description_of_normal_mode))
         }
         val quickHelp: ImageButton = root.findViewById(R.id.hintForQuickMode)
         quickHelp.setOnClickListener {
-            dialog.confirmationDialog("Hint : " + getString(R.string.quick_mode), getString(R.string.description_of_quick_mode))
+            dialog.confirmationDialog(getString(R.string.hint) + " : " + getString(R.string.quick_mode), getString(R.string.description_of_quick_mode))
         }
 
         return root
@@ -62,9 +64,8 @@ class SekigimeFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val dialog = DialogWarehouse(requireFragmentManager())
         when (item.itemId) {
-            R.id.menu_help -> dialog.confirmationDialog("Hint : " + getString(R.string.sekigime), getString(R.string.how_to_sekigime))
+            R.id.menu_help -> dialog.confirmationDialog(getString(R.string.hint) + " : " + getString(R.string.sekigime), getString(R.string.how_to_sekigime))
         }
         return true
     }

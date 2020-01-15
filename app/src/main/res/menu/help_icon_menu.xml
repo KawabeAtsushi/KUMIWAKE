@@ -7,7 +7,7 @@
         android:id="@+id/menu_help"
         android:icon="@drawable/ic_help_outline_black_24dp"
         app:showAsAction="always"
-        android:title="@string/help">
+        android:title="@string/hint">
     </item>
 
 </menu>

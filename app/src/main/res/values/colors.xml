@@ -19,6 +19,15 @@
     <color name="thin_white">#50FFFFFF</color>
     <color name="white_gray">#9ccc</color>
 
+    <color name="red_pressed">#ff4334</color>
+    <color name="red_unpressed">#ff7777</color>
+    <color name="green_pressed">#00F74B</color>
+    <color name="green_unpressed">#78ff84</color>
+    <color name="blue_pressed">#0091EA</color>
+    <color name="blue_unpressed">#40C4FF</color>
+    <color name="orange_pressed">#FFA000</color>
+    <color name="orange_unpressed">#ffc02e</color>
+
 
     <color name="text_light">@android:color/white</color>
     <color name="text_dark">#616161</color>
@@ -42,7 +51,5 @@
     <color name="yellow_title">#ffeb3b</color>
     <color name="yellow_background_title">#ffff8d</color>
     <color name="theme_yellow_text">@color/text_dark</color>
-
-    <color name="pastel_red">#ff7777</color>
 
 </resources>

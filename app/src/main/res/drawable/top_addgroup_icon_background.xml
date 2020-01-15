@@ -6,8 +6,8 @@
     <item android:state_pressed="false">
 
         <shape android:shape="oval">
-            <solid android:color="#FCE2E2" />
-            <stroke android:width="3dp" android:color="@color/red_unpressed" />
+            <solid android:color="#FFF3E0" />
+            <stroke android:width="3dp" android:color="@color/orange_unpressed" />
         </shape>
     </item>
 
@@ -15,8 +15,8 @@
     <item android:state_pressed="true">
 
         <shape android:shape="oval">
-            <solid android:color="#FFC8C8" />
-            <stroke android:width="3dp" android:color="@color/red_unpressed" />
+            <solid android:color="#FFF3E0" />
+            <stroke android:width="3dp" android:color="@color/orange_pressed" />
         </shape>
     </item>
 

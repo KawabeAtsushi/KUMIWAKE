@@ -52,7 +52,7 @@ object DBBackup {
 
 
     //ファイルのコピー（チャネルを使用）
-    private fun fileCopy(file_src: String, file_dist: String, c: Context, backup: Boolean?) {
+    private fun fileCopy(file_src: String, file_dist: String, c: Context, backup: Boolean) {
         var err: Int
         val fis: FileInputStream
         val fos: FileOutputStream
@@ -76,9 +76,9 @@ object DBBackup {
             err = 2
         }
 
-        if (err == 0 && backup!!) {
+        if (err == 0 && backup) {
             Toast.makeText(c, MyApplication.context?.getString(R.string.back_up_completed), Toast.LENGTH_SHORT).show()
-        } else if (err == 0 && (!backup!!)) {
+        } else if (err == 0 && !backup) {
             Toast.makeText(c, MyApplication.context?.getString(R.string.import_completed), Toast.LENGTH_SHORT).show()
         }
     }
