@@ -22,6 +22,14 @@ import java.util.*
  */
 class QuickMode : AppCompatActivity(), TextWatcher {
 
+    enum class QuickModeEnum(val str:String){
+        EVEN_FM_RATIO("even_fm_ratio"),
+        MAN_LIST("QuickModeManList"),
+        WOMAN_LIST("QuickModeWomanList"),
+        GROUP_LIST("QuickModeGroupList"),
+        MEMBER_LIST("QuickModeMemberList")
+    }
+
     private var memberNo: Int = 0
     private var manNo: Int = 0
     private var womanNo: Int = 0
@@ -94,10 +102,10 @@ class QuickMode : AppCompatActivity(), TextWatcher {
                     groupList.add(getText(R.string.group).toString() + " " + i.toString())
                 }
                 val intent = Intent(this, QuickKumiwakeConfirmation::class.java)
-                intent.putStringArrayListExtra(MAN_LIST, manList)
-                intent.putStringArrayListExtra(WOMAN_LIST, womanList)
-                intent.putStringArrayListExtra(GROUP_LIST, groupList)
-                intent.putExtra(EVEN_FM_RATIO, even_fm_ratio_check.isChecked)
+                intent.putStringArrayListExtra(QuickModeEnum.EVEN_FM_RATIO.str, manList)
+                intent.putStringArrayListExtra(QuickModeEnum.WOMAN_LIST.str, womanList)
+                intent.putStringArrayListExtra(QuickModeEnum.GROUP_LIST.str, groupList)
+                intent.putExtra(QuickModeEnum.EVEN_FM_RATIO.str, even_fm_ratio_check.isChecked)
                 startActivity(intent)
                 overridePendingTransition(R.anim.in_right, R.anim.out_left)
             }
@@ -116,15 +124,5 @@ class QuickMode : AppCompatActivity(), TextWatcher {
             }
         }
         return manList
-    }
-
-    companion object {
-
-        const val EVEN_FM_RATIO = "even_fm_ratio"
-        const val MAN_LIST = "QuickModeManList"
-        const val WOMAN_LIST = "QuickModeWomanList"
-        const val GROUP_LIST = "QuickModeGroupList"
-        const val MEMBER_LIST = "QuickModeMemberList"
-
     }
 }

@@ -33,7 +33,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
     private lateinit var groupArray: ArrayList<String>
     private lateinit var resultArray: ArrayList<String>
     private var groupNo: Int = 0
-    private var even_fm_ratio: Boolean = false
+    private var evenFmRatio: Boolean = false
     private lateinit var arrayArray: ArrayList<ArrayList<String>>
     private lateinit var viewGroup: RelativeLayout
 
@@ -46,12 +46,13 @@ class QuickKumiwakeResult : AppCompatActivity() {
         val adRequest = AdRequest.Builder()
                 .addTestDevice("BB707E3F7B5413908B2DD12063887489").build()
         mAdView.loadAd(adRequest)
-        val i = intent
-        memberArray = i.getStringArrayListExtra(QuickMode.MEMBER_LIST)
-        manArray = i.getStringArrayListExtra(QuickMode.MAN_LIST)
-        womanArray = i.getStringArrayListExtra(QuickMode.WOMAN_LIST)
-        groupArray = i.getStringArrayListExtra(QuickMode.GROUP_LIST)
-        even_fm_ratio = i.getBooleanExtra(QuickMode.EVEN_FM_RATIO, false)
+        val i = intent.also {
+            memberArray = it.getStringArrayListExtra(QuickMode.QuickModeEnum.MEMBER_LIST.str)
+            manArray = it.getStringArrayListExtra(QuickMode.QuickModeEnum.MAN_LIST.str)
+            womanArray = it.getStringArrayListExtra(QuickMode.QuickModeEnum.WOMAN_LIST.str)
+            groupArray = it.getStringArrayListExtra(QuickMode.QuickModeEnum.GROUP_LIST.str)
+            evenFmRatio = it.getBooleanExtra(QuickMode.QuickModeEnum.EVEN_FM_RATIO.str, false)
+        }
         groupNo = groupArray.size
 
         viewGroup = findViewById<View>(R.id.result_view) as RelativeLayout
@@ -94,7 +95,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
 
         arrayArray = ArrayList(groupNo)
         for (g in 0 until groupNo) {
-            arrayArray.add(savedInstanceState.getStringArrayList("ARRAY$g"))
+            savedInstanceState.getStringArrayList("ARRAY$g")?.let { arrayArray.add(it) }
         }
     }
 
@@ -106,7 +107,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
             arrayArray.add(ArrayList())
         }
 
-        if (even_fm_ratio) {
+        if (evenFmRatio) {
             kumiwakeFm(manArray.size % groupNo)
         } else {
             kumiwakeAll()
