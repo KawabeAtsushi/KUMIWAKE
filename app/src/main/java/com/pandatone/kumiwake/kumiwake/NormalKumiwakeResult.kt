@@ -40,7 +40,7 @@ class NormalKumiwakeResult : AppCompatActivity() {
     private lateinit var womanArray: ArrayList<Name>
     private var groupCount: Int = 0
     private var memberSize: Int = 0
-    private var even_fm_ratio: Boolean = false
+    private var evenFmRatio: Boolean = false
     private var v = 0
     private var nowGroupNo = 0
     private var timer: Timer? = null
@@ -66,7 +66,7 @@ class NormalKumiwakeResult : AppCompatActivity() {
             leaderArray = i.getSerializableExtra(NormalKumiwakeConfirmation.LEADER_ARRAY) as ArrayList<Name>
         }
 
-        even_fm_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_FM_RATIO, false)
+        evenFmRatio = i.getBooleanExtra(KumiwakeCustom.EVEN_FM_RATIO, false)
         even_age_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_AGE_RATIO, false)
         groupCount = groupArray.size
         memberSize = memberArray.size
@@ -123,15 +123,15 @@ class NormalKumiwakeResult : AppCompatActivity() {
             arrayArray.add(ArrayList())
         }
 
-        if (even_fm_ratio) {
+        if (evenFmRatio) {
             createFmArray()    //男女それぞれの配列を作成
         }
 
-        if (even_fm_ratio && even_age_ratio) {
+        if (evenFmRatio && even_age_ratio) {
             evenKumiwakeSetter(manArray, womanArray, "age")
             evenCreateGroup(manArray)
             evenCreateGroup(womanArray)
-        } else if (even_fm_ratio) {
+        } else if (evenFmRatio) {
             evenKumiwakeSetter(manArray, womanArray, "")
             evenCreateGroup(manArray)
             evenCreateGroup(womanArray)

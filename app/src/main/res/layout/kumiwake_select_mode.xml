@@ -35,7 +35,7 @@
             android:background="@drawable/top_normal_text_background"
             android:paddingTop="50dp"
             android:paddingBottom="20dp"
-            android:text="@string/description_of_normal_mode"
+            android:text="@string/description_of_normal_kumiwake"
             android:textSize="18sp" />
 
         <TextView
@@ -73,7 +73,7 @@
             android:background="@drawable/top_quick_text_background"
             android:paddingTop="50dp"
             android:paddingBottom="20dp"
-            android:text="@string/description_of_quick_mode"
+            android:text="@string/description_of_quick_kumiwake"
             android:textSize="18sp" />
 
         <TextView

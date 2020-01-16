@@ -11,7 +11,7 @@
         android:layout_height="150dp"
         android:layout_marginTop="30dp"
         android:contentDescription="@string/kumiwake"
-        android:src="@drawable/icon_1"
+        android:src="@drawable/kumiwake_icon"
         app:layout_constraintBottom_toTopOf="@id/normal_mode_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

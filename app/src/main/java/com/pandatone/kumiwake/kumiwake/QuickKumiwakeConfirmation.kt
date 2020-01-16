@@ -30,18 +30,19 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
     private lateinit var groupArray: ArrayList<String>
     private lateinit var memberAdapter: ArrayAdapter<String>
     private lateinit var groupAdapter: ArrayAdapter<String>
-    private var even_fm_ratio: Boolean = false
+    private var evenFmRatio: Boolean = false
     private lateinit var viewGroup: RelativeLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kumiwake_confirmation)
         ButterKnife.bind(this)
-        val i = intent
-        manArray = i.getStringArrayListExtra(QuickMode.MAN_LIST)
-        womanArray = i.getStringArrayListExtra(QuickMode.WOMAN_LIST)
-        groupArray = i.getStringArrayListExtra(QuickMode.GROUP_LIST)
-        even_fm_ratio = i.getBooleanExtra(QuickMode.EVEN_FM_RATIO, false)
+        intent.also {
+            manArray = it.getStringArrayListExtra(QuickMode.QuickModeEnum.MAN_LIST.str)
+            womanArray = it.getStringArrayListExtra(QuickMode.QuickModeEnum.WOMAN_LIST.str)
+            groupArray = it.getStringArrayListExtra(QuickMode.QuickModeEnum.GROUP_LIST.str)
+            evenFmRatio = it.getBooleanExtra(QuickMode.QuickModeEnum.EVEN_FM_RATIO.str, false)
+        }
         memberArray = ArrayList()
         memberArray.addAll(manArray)
         memberArray.addAll(womanArray)
@@ -82,12 +83,12 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
     }
 
     private fun setViews() {
-        val custom_text = StringBuilder()
-        if (even_fm_ratio) {
-            custom_text.append("☆" + getText(R.string.even_out_male_female_ratio))
+        val customText = StringBuilder()
+        if (evenFmRatio) {
+            customText.append("☆" + getText(R.string.even_out_male_female_ratio))
         }
 
-        custom_review_txt.text = custom_text.toString()
+        custom_review_txt.text = customText.toString()
 
         for (i in 0 until memberAdapter.count) {
             val item = memberAdapter.getView(i, null, kumiwake_member_listView)
@@ -103,13 +104,14 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
 
     @OnClick(R.id.kumiwake_btn)
     internal fun onClicked() {
-        val intent = Intent(this, QuickKumiwakeResult::class.java)
-        intent.putStringArrayListExtra(QuickMode.MEMBER_LIST, memberArray)
-        intent.putStringArrayListExtra(QuickMode.MAN_LIST, manArray)
-        intent.putStringArrayListExtra(QuickMode.WOMAN_LIST, womanArray)
-        intent.putStringArrayListExtra(QuickMode.GROUP_LIST, groupArray)
-        intent.putExtra(QuickMode.EVEN_FM_RATIO, even_fm_ratio)
-        startActivity(intent)
+        Intent(this, QuickKumiwakeResult::class.java).also {
+            it.putStringArrayListExtra(QuickMode.QuickModeEnum.MEMBER_LIST.str, memberArray)
+            it.putStringArrayListExtra(QuickMode.QuickModeEnum.MAN_LIST.str, manArray)
+            it.putStringArrayListExtra(QuickMode.QuickModeEnum.WOMAN_LIST.str, womanArray)
+            it.putStringArrayListExtra(QuickMode.QuickModeEnum.GROUP_LIST.str, groupArray)
+            it.putExtra(QuickMode.QuickModeEnum.EVEN_FM_RATIO.str, evenFmRatio)
+            startActivity(it)
+        }
     }
 
     private fun setAdapter() {

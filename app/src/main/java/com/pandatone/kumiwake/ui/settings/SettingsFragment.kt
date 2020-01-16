@@ -20,6 +20,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.ui.DialogWarehouse
+import android.app.Activity.RESULT_OK
+import com.pandatone.kumiwake.MyApplication
+import java.io.UnsupportedEncodingException
+import java.net.URLDecoder
+
 
 class SettingsFragment : Fragment() {
 
@@ -52,7 +57,7 @@ class SettingsFragment : Fragment() {
             when (position) {
                 0 -> {
                     val message = (getString(R.string.how_to_kumiwake) + "■" + getString(R.string.normal_mode) + "■\n"
-                            + getString(R.string.description_of_normal_mode) + "\n\n■" + getString(R.string.quick_mode) + "■\n" + getString(R.string.description_of_quick_mode))
+                            + getString(R.string.description_of_normal_kumiwake) + "\n\n■" + getString(R.string.quick_mode) + "■\n" + getString(R.string.description_of_quick_kumiwake))
                     dialog.confirmationDialog(how_to_use_str[0], message)
                 }
                 1 -> dialog.confirmationDialog(how_to_use_str[1], getText(R.string.how_to_member))
@@ -173,14 +178,38 @@ class SettingsFragment : Fragment() {
     }
 
     private fun toPrivacyPolicy() {
-        val uri = Uri.parse("https://gist.githubusercontent.com/KawabeAtsushi/39f3ea332b05a6b053b263784a77cd51/raw/7666e22b85561c34a95863f9482ed900482d2c8d/privacy%2520policy")
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        startActivity(intent)
+//        val uri = Uri.parse("https://gist.githubusercontent.com/KawabeAtsushi/39f3ea332b05a6b053b263784a77cd51/raw/7666e22b85561c34a95863f9482ed900482d2c8d/privacy%2520policy")
+//        val intent = Intent(Intent.ACTION_VIEW, uri)
+//        startActivity(intent)
+        onClick()
+    }
+
+    // 識別用のコード
+    private val CHOSE_FILE_CODE = 12345
+    public var decodedfilePath:String = ""
+
+    fun onClick() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "vnd.android.cursor.dir/lysesoft.andexplorer.directory"
+        startActivityForResult(Intent.createChooser(intent, "FileManager"), CHOSE_FILE_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        try {
+            if (requestCode == CHOSE_FILE_CODE && resultCode == RESULT_OK) {
+                val filePath = data!!.dataString!!.replace("file://", "")
+                decodedfilePath = URLDecoder.decode(filePath, "utf-8")
+                Toast.makeText(activity, decodedfilePath, Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: UnsupportedEncodingException) {
+            // いい感じに例外処理
+        }
+
     }
 
     /////////////////////////パーミッション/////////////////////////////////////////////////
 
-    private val REQUEST_PERMISSION = 1000
+    private val PERMISSION = 1000
     private var position = 0
 
     // ストレージ許可の確認
@@ -199,14 +228,14 @@ class SettingsFragment : Fragment() {
             // 拒否していた場合,許可を求める
             ActivityCompat.requestPermissions(activity!!,
                     arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    REQUEST_PERMISSION)
+                    PERMISSION)
         }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<String>,
                                             grantResults: IntArray) {
-        if (requestCode == REQUEST_PERMISSION) {
+        if (requestCode == PERMISSION) {
             // 使用が許可された
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 when (position) {

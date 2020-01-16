@@ -25,7 +25,7 @@ class CustomDialog : DialogFragment() {
     private var mMessage: CharSequence = ""
 
     //onClickリスナ
-    private val mOnClickLisner = View.OnClickListener { dismiss() }
+    private val mOnClickListener = View.OnClickListener { dismiss() }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = activity?.let { Dialog(it) }
@@ -43,13 +43,13 @@ class CustomDialog : DialogFragment() {
         // OK ボタンのリスナ
         if (mPositiveBtnListener == null) {
             dialog.findViewById<View>(R.id.negative_button).visibility = View.GONE
-            dialog.findViewById<View>(R.id.positive_button).setOnClickListener(mOnClickLisner)
+            dialog.findViewById<View>(R.id.positive_button).setOnClickListener(mOnClickListener)
         } else {
             dialog.findViewById<View>(R.id.positive_button).setOnClickListener(mPositiveBtnListener)
         }
 
         // いいえボタンのリスナ
-        dialog.findViewById<View>(R.id.negative_button).setOnClickListener(mOnClickLisner)
+        dialog.findViewById<View>(R.id.negative_button).setOnClickListener(mOnClickListener)
         return dialog
     }
 
@@ -70,8 +70,8 @@ class CustomDialog : DialogFragment() {
                 1 -> activity?.let { it1 -> DBBackup.dbBackup(it1) }
                 2 -> activity?.let { it1 -> DBBackup.dbImport(it1) }
                 3 -> {
-                    val mb_file = File(Environment.getExternalStorageDirectory().path + "/KUMIWAKE_Backup/mb.db")
-                    val gp_file = File(Environment.getExternalStorageDirectory().path + "/KUMIWAKE_Backup/gp.db")
+                    val mbFile = File(Environment.getExternalStorageDirectory().path + "/KUMIWAKE_Backup/mb.db")
+                    val gpFile = File(Environment.getExternalStorageDirectory().path + "/KUMIWAKE_Backup/gp.db")
                     val dir = File(Environment.getExternalStorageDirectory().path + "/KUMIWAKE_Backup")
 
                     if (!dir.exists()) {
@@ -79,8 +79,8 @@ class CustomDialog : DialogFragment() {
                         dismiss()
                         return@OnClickListener
                     }
-                    mb_file.delete()
-                    gp_file.delete()
+                    mbFile.delete()
+                    gpFile.delete()
                     dir.delete()
                     Toast.makeText(activity, getString(R.string.deleted_backup_file), Toast.LENGTH_SHORT).show()
                 }

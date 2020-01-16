@@ -51,7 +51,7 @@ class SettingHelp : AppCompatActivity() {
             when (position) {
                 0 -> {
                     val message = (getString(R.string.how_to_kumiwake) + "■" + getString(R.string.normal_mode) + "■\n"
-                            + getString(R.string.description_of_normal_mode) + "\n\n■" + getString(R.string.quick_mode) + "■\n" + getString(R.string.description_of_quick_mode))
+                            + getString(R.string.description_of_normal_kumiwake) + "\n\n■" + getString(R.string.quick_mode) + "■\n" + getString(R.string.description_of_quick_kumiwake))
                     dialog.confirmationDialog(how_to_use_str[0], message)
                 }
                 1 -> dialog.confirmationDialog(how_to_use_str[1], getText(R.string.how_to_member))
