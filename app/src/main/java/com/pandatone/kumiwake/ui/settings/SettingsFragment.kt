@@ -188,9 +188,10 @@ class SettingsFragment : Fragment() {
     private val CHOSE_FILE_CODE = 12345
     public var decodedfilePath:String = ""
 
-    fun onClick() {
+    private fun onClick() {
         val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "vnd.android.cursor.dir/lysesoft.andexplorer.directory"
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.type = "file/*"
         startActivityForResult(Intent.createChooser(intent, "FileManager"), CHOSE_FILE_CODE)
     }
 
