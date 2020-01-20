@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.pandatone.kumiwake.kumiwake
+package com.pandatone.kumiwake
 
 import android.os.Parcel
 import android.os.Parcelable

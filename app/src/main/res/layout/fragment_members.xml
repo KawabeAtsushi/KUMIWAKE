@@ -49,7 +49,7 @@
         android:background="@drawable/top_member_icon_background"
         android:contentDescription="@string/member"
         android:padding="12dp"
-        android:src="@drawable/ic_group_black_24dp"
+        android:src="@drawable/ic_members_24dp"
         app:layout_constraintBottom_toBottomOf="@+id/member_list_button"
         app:layout_constraintEnd_toStartOf="@+id/member_list_button"
         app:layout_constraintStart_toStartOf="@+id/member_list_button"

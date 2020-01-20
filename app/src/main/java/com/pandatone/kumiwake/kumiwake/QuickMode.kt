@@ -102,7 +102,7 @@ class QuickMode : AppCompatActivity(), TextWatcher {
                     groupList.add(getText(R.string.group).toString() + " " + i.toString())
                 }
                 val intent = Intent(this, QuickKumiwakeConfirmation::class.java)
-                intent.putStringArrayListExtra(QuickModeEnum.EVEN_FM_RATIO.str, manList)
+                intent.putStringArrayListExtra(QuickModeEnum.MAN_LIST.str, manList)
                 intent.putStringArrayListExtra(QuickModeEnum.WOMAN_LIST.str, womanList)
                 intent.putStringArrayListExtra(QuickModeEnum.GROUP_LIST.str, groupList)
                 intent.putExtra(QuickModeEnum.EVEN_FM_RATIO.str, even_fm_ratio_check.isChecked)

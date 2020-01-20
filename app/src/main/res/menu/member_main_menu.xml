@@ -5,11 +5,10 @@
 
     <item
         android:id="@+id/search_view"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@drawable/ic_search_black_24dp"
         android:title="@string/search_view"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always" />
-
 
     <item
         android:id="@+id/item_delete"

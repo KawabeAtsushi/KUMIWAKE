@@ -104,14 +104,11 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         searchView = menu.findItem(R.id.search_view).actionView as SearchView
         searchView.setOnQueryTextListener(this)
         val searchAutoComplete = searchView.findViewById<View>(androidx.appcompat.R.id.search_src_text) as SearchView.SearchAutoComplete
-        // ActionBarの検索アイコン
-        val searchIcon = searchView.findViewById<View>(androidx.appcompat.R.id.search_button) as ImageView
-        searchIcon.setImageResource(android.R.drawable.ic_menu_search)
         val ssb = SpannableStringBuilder("　")
         // ヒントテキスト
         ssb.append(getText(R.string.search_view))
         // ヒントアイコン
-        val searchHintIcon = ResourcesCompat.getDrawable(resources, android.R.drawable.ic_menu_search, null)
+        val searchHintIcon = ResourcesCompat.getDrawable(resources, R.drawable.ic_search_black_24dp, null)
         val textSize = (searchAutoComplete.textSize * 1.25).toInt()
         searchHintIcon?.setBounds(0, 0, textSize, textSize)
         ssb.setSpan(searchHintIcon?.let { ImageSpan(it) }, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -122,7 +119,7 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         searchAutoComplete.setHintTextColor(Color.parseColor("#40000000"))
         // Remove button icon
         val removeIcon = searchView.findViewById<View>(androidx.appcompat.R.id.search_close_btn) as ImageView
-        removeIcon.setImageResource(android.R.drawable.ic_menu_close_clear_cancel)
+        removeIcon.setImageResource(R.drawable.ic_close_black_24dp)
         removeIcon.setOnClickListener {
             if (searchAutoComplete.text.toString() != "") {
                 searchAutoComplete.setText("")

@@ -58,6 +58,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.google.firebase:firebase-ads:18.3.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.aurelhubert:ahbottomnavigation:2.3.4'
 }
 
 apply plugin: 'com.google.gms.google-services'
