@@ -59,6 +59,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-ads:18.3.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.aurelhubert:ahbottomnavigation:2.3.4'
+    implementation 'com.airbnb.android:lottie:3.3.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
