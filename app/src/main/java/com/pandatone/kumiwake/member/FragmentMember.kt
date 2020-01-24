@@ -347,7 +347,7 @@ class FragmentMember : ListFragment() {
             // アクションモード初期化処理
 
             val inflater = activity!!.menuInflater
-            inflater.inflate(R.menu.member_main_menu, menu)
+            inflater.inflate(R.menu.member_menu, menu)
             val searchIcon = menu.findItem(R.id.search_view)
             val deleteIcon = menu.findItem(R.id.item_delete)
             MemberMain.decision.setOnClickListener(decisionClicked)

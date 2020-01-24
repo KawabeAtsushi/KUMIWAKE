@@ -9,7 +9,6 @@ import android.widget.AbsListView
 import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.TextView
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.ListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -175,7 +174,7 @@ class FragmentGroup : ListFragment() {
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             // アクションモード初期化処理
             val inflater = activity!!.menuInflater
-            inflater.inflate(R.menu.member_main_menu, menu)
+            inflater.inflate(R.menu.member_menu, menu)
             menu.getItem(2).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
             menu.getItem(3).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
             menu.getItem(4).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)

@@ -3,19 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="?attr/actionBarSize"
     android:background="@color/red_background">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/black_bubbles"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+<!--    <com.airbnb.lottie.LottieAnimationView-->
+<!--        android:id="@+id/lottie_music"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:lottie_autoPlay="true"-->
+<!--        app:lottie_loop="true"-->
+<!--        app:lottie_rawRes="@raw/music"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        />-->
 
     <ImageView
         android:id="@+id/category_icon1"
@@ -73,7 +75,7 @@
         android:layout_width="@dimen/hint_icon_size"
         android:layout_height="@dimen/hint_icon_size"
         android:contentDescription="@string/hint"
-        android:src="@drawable/ic_help_outline_black_24dp"
+        android:src="@drawable/ic_help_outline_dark_24dp"
         android:backgroundTint="#0000"
         app:layout_constraintEnd_toEndOf="@+id/normal_mode_button"
         app:layout_constraintTop_toBottomOf="@+id/normal_mode_button" />
@@ -119,7 +121,7 @@
         android:layout_width="@dimen/hint_icon_size"
         android:layout_height="@dimen/hint_icon_size"
         android:contentDescription="@string/hint"
-        android:src="@drawable/ic_help_outline_black_24dp"
+        android:src="@drawable/ic_help_outline_dark_24dp"
         android:backgroundTint="#0000"
         app:layout_constraintEnd_toEndOf="@+id/quick_mode_button"
         app:layout_constraintTop_toBottomOf="@+id/quick_mode_button" />

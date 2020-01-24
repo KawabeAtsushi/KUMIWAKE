@@ -88,7 +88,7 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.member_main_menu, menu)
+        menuInflater.inflate(R.menu.member_menu, menu)
         val delete = menu.findItem(R.id.item_delete)
         delete.isVisible = false
         viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {

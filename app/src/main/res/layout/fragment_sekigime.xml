@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="?attr/actionBarSize"
     android:background="@color/green_background">
 
     <ImageView
@@ -16,8 +17,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
-
-    <!--    後に記述したViewが前面に来る-->
 
     <!--    後に記述したViewが前面に来る-->
 
@@ -63,7 +62,7 @@
         android:layout_width="@dimen/hint_icon_size"
         android:layout_height="@dimen/hint_icon_size"
         android:contentDescription="@string/hint"
-        android:src="@drawable/ic_help_outline_black_24dp"
+        android:src="@drawable/ic_help_outline_dark_24dp"
         android:backgroundTint="#0000"
         app:layout_constraintEnd_toEndOf="@+id/normal_mode_button"
         app:layout_constraintTop_toBottomOf="@+id/normal_mode_button" />
@@ -109,7 +108,7 @@
         android:layout_width="@dimen/hint_icon_size"
         android:layout_height="@dimen/hint_icon_size"
         android:contentDescription="@string/hint"
-        android:src="@drawable/ic_help_outline_black_24dp"
+        android:src="@drawable/ic_help_outline_dark_24dp"
         android:backgroundTint="#0000"
         app:layout_constraintEnd_toEndOf="@+id/quick_mode_button"
         app:layout_constraintTop_toBottomOf="@+id/quick_mode_button" />
