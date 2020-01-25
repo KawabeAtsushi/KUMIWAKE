@@ -17,9 +17,9 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.pandatone.kumiwake.MainActivity
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.ui.CustomDialog
 import com.pandatone.kumiwake.sekigime.SekigimeResult
 import com.pandatone.kumiwake.sekigime.SelectTableType
+import com.pandatone.kumiwake.ui.DialogWarehouse
 import java.util.*
 
 /**
@@ -118,22 +118,19 @@ class QuickKumiwakeResult : AppCompatActivity() {
     internal fun onReKumiwake() {
         val title = getString(R.string.re_kumiwake_title)
         val message = getString(R.string.re_kumiwake_description) + getString(R.string.run_confirmation)
-        val customDialog = CustomDialog()
-        customDialog.setTitle(title)
-        customDialog.setMessage(message)
-        CustomDialog.mPositiveBtnListener = View.OnClickListener {
-            val scrollView = findViewById<View>(R.id.kumiwake_scroll) as ScrollView
-            scrollView.scrollTo(0, 0)
-            startMethod()
-            for (i in 0 until groupNo) {
-                resultArray = arrayArray[i]
-                Collections.sort(resultArray, KumiwakeComparator())
-                addView(resultArray, i)
-            }
-            customDialog.dismiss()
-            Toast.makeText(applicationContext, getText(R.string.re_kumiwake_finished), Toast.LENGTH_SHORT).show()
+        DialogWarehouse(supportFragmentManager).decisionDialog(title,message, this::reKumiwake)
+    }
+
+    private fun reKumiwake(){
+        val scrollView = findViewById<View>(R.id.kumiwake_scroll) as ScrollView
+        scrollView.scrollTo(0, 0)
+        startMethod()
+        for (i in 0 until groupNo) {
+            resultArray = arrayArray[i]
+            Collections.sort(resultArray, KumiwakeComparator())
+            addView(resultArray, i)
         }
-        customDialog.show(supportFragmentManager, "Btn")
+        Toast.makeText(applicationContext, getText(R.string.re_kumiwake_finished), Toast.LENGTH_SHORT).show()
     }
 
     @OnClick(R.id.share_result)

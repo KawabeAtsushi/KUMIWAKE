@@ -69,11 +69,6 @@
         <activity
             android:name=".sekigime.SekigimeResult"
             android:screenOrientation="portrait" />
-        <activity android:name=".setting.SettingHelp">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
         <activity
             android:name=".member.AddMember"
             android:screenOrientation="portrait" />

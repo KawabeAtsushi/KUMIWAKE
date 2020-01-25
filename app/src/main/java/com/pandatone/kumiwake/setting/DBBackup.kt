@@ -5,22 +5,22 @@ import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import com.pandatone.kumiwake.MyApplication
+import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
-import java.io.*
-import androidx.core.app.ActivityCompat.startActivityForResult
-import android.content.Intent
-import androidx.core.content.ContextCompat.startActivity
-import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.ui.DialogWarehouse
+import com.pandatone.kumiwake.ui.FMDialogViewModel
+import com.pandatone.kumiwake.ui.FileManagerDialog
+import com.pandatone.kumiwake.ui.sekigime.SekigimeFragment
 import com.pandatone.kumiwake.ui.settings.SettingsFragment
+import java.io.*
 
 
 object DBBackup {
     private val dir_path: String
         get() {
-//            val sdDir = Environment.getExternalStorageDirectory().path     //SDカードディレクトリ
-//            return "$sdDir/KUMIWAKE_Backup"
-            return SettingsFragment().decodedfilePath
+            val sdDir = Environment.getExternalStorageDirectory().path     //SDカードディレクトリ
+            return "$sdDir/KUMIWAKE_Backup"
         }
     private val mb_db_file: String
         get() {
@@ -42,8 +42,6 @@ object DBBackup {
         }
     private var b: Boolean = false
 
-    private val CHOSE_FILE_CODE:String = "asdfgh"
-
     fun dbBackup(c: Context) {
         checkSDStatus(c)
 
@@ -58,47 +56,48 @@ object DBBackup {
             }
         }
 
-        fileCopy(mb_db_file, "$dir_path/mb.db", c, true)
-        fileCopy(gp_db_file, "$dir_path/gp.db", c, true)//DBのファイルをSDにコピー
+        var err = 0
+        err += fileCopy(mb_db_file, "$dir_path/mb.db", c)
+        err += fileCopy(gp_db_file, "$dir_path/gp.db", c)//DBのファイルをSDにコピー
+
+        if (err == 0) {
+            Toast.makeText(c, MyApplication.context?.getString(R.string.back_up_completed), Toast.LENGTH_SHORT).show()
+        }else{
+            Toast.makeText(c, MyApplication.context?.getString(R.string.failed_backup), Toast.LENGTH_SHORT).show()
+        }
     }
 
-    fun dbImport(c: Context) {
+    fun dbImport(importDir: String, c: Context) {
         checkSDStatus(c)
 
-        val f = File(dir_path)
+        var err = 0
+        val f = File(importDir)
         b = f.exists()           //SDカードにkumiwakeディレクトリがあるか。
         if (!b) {
             Toast.makeText(c, MyApplication.context?.getString(R.string.not_exist_file), Toast.LENGTH_SHORT).show()
-            return
+            err = 3
         }
 
-        fileCopy("$dir_path/mb.db", mb_db_file, c, false)
-        fileCopy("$dir_path/gp.db", gp_db_file, c, false)//DBのファイルをインポート
+        err += fileCopy("$importDir/mb.db", mb_db_file, c)
+        err += fileCopy("$importDir/gp.db", gp_db_file, c) //DBのファイルをインポート
+
+        if (err != 0) {
+            FMDialogViewModel().path.postValue(importDir)
+        } else {
+            Toast.makeText(c, MyApplication.context?.getString(R.string.import_completed), Toast.LENGTH_SHORT).show()
+            FMDialogViewModel().showDialog.postValue(false)
+        }
     }
 
 
     //ファイルのコピー（チャネルを使用）
-    private fun fileCopy(file_src: String, file_dist: String, c: Context, backup: Boolean) {
-        var err: Int
-        val fis: FileInputStream
-        val fos: FileOutputStream
+    private fun fileCopy(src_path: String, dest_path: String, c: Context): Int {
+        var err: Int = 0
 
-        Log.d("file_src",file_src)
-        Log.d("file_dist",file_dist)
-
-        err = 0
-        val fi = File(file_src)
-        val fo = File(file_dist)
+        val src = File(src_path)
+        val dest = File(dest_path)
         try {
-            fis = FileInputStream(fi)
-            val chi = fis.channel
-
-            fos = FileOutputStream(fo)
-            val cho = fos.channel
-
-            chi.transferTo(0, chi.size(), cho)
-            chi.close()
-            cho.close()
+            src.copyTo(dest, overwrite = true)
         } catch (e: FileNotFoundException) {
             err = 1
             Toast.makeText(c, MyApplication.context?.getString(R.string.not_exist_file), Toast.LENGTH_SHORT).show()
@@ -106,12 +105,7 @@ object DBBackup {
             err = 2
             Toast.makeText(c, MyApplication.context?.getString(R.string.error_has_occurred), Toast.LENGTH_SHORT).show()
         }
-
-        if (err == 0 && backup) {
-            Toast.makeText(c, MyApplication.context?.getString(R.string.back_up_completed), Toast.LENGTH_SHORT).show()
-        } else if (err == 0 && !backup) {
-            Toast.makeText(c, MyApplication.context?.getString(R.string.import_completed), Toast.LENGTH_SHORT).show()
-        }
+        return err
     }
 
     private fun checkSDStatus(c: Context) {

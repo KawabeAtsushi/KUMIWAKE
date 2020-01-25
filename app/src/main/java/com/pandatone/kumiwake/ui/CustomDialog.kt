@@ -4,28 +4,22 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.os.Environment
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.setting.DBBackup
-import com.pandatone.kumiwake.setting.RefreshData
-import java.io.File
 
 /**
  * Created by atsushi_2 on 2016/11/11.
  */
 
-class CustomDialog : DialogFragment() {
-    private var mTitle = ""
-    private var mMessage: CharSequence = ""
+class CustomDialog(private var mTitle: String, private var mMessage: CharSequence) : DialogFragment() {
 
-    //onClickリスナ
-    private val mOnClickListener = View.OnClickListener { dismiss() }
+    //onClickリスナ(Positive)
+    var mPositiveBtnListener: View.OnClickListener? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = activity?.let { Dialog(it) }
@@ -43,54 +37,13 @@ class CustomDialog : DialogFragment() {
         // OK ボタンのリスナ
         if (mPositiveBtnListener == null) {
             dialog.findViewById<View>(R.id.negative_button).visibility = View.GONE
-            dialog.findViewById<View>(R.id.positive_button).setOnClickListener(mOnClickListener)
+            dialog.findViewById<View>(R.id.positive_button).setOnClickListener { dismiss() }
         } else {
             dialog.findViewById<View>(R.id.positive_button).setOnClickListener(mPositiveBtnListener)
+            // いいえボタンのリスナ
+            dialog.findViewById<View>(R.id.negative_button).setOnClickListener{ dismiss() }
         }
 
-        // いいえボタンのリスナ
-        dialog.findViewById<View>(R.id.negative_button).setOnClickListener(mOnClickListener)
         return dialog
-    }
-
-    //タイトル
-    fun setTitle(title: String) {
-        mTitle = title
-        mPositiveBtnListener = null
-    }
-
-    //メッセージ設定
-    fun setMessage(msg: CharSequence) {
-        mMessage = msg
-    }
-
-    fun setOnPositiveClickListener(code: Int) {
-        mPositiveBtnListener = View.OnClickListener {
-            when (code) {
-                1 -> activity?.let { it1 -> DBBackup.dbBackup(it1) }
-                2 -> activity?.let { it1 -> DBBackup.dbImport(it1) }
-                3 -> {
-                    val mbFile = File(Environment.getExternalStorageDirectory().path + "/KUMIWAKE_Backup/mb.db")
-                    val gpFile = File(Environment.getExternalStorageDirectory().path + "/KUMIWAKE_Backup/gp.db")
-                    val dir = File(Environment.getExternalStorageDirectory().path + "/KUMIWAKE_Backup")
-
-                    if (!dir.exists()) {
-                        Toast.makeText(activity, getString(R.string.not_exist_file), Toast.LENGTH_SHORT).show()
-                        dismiss()
-                        return@OnClickListener
-                    }
-                    mbFile.delete()
-                    gpFile.delete()
-                    dir.delete()
-                    Toast.makeText(activity, getString(R.string.deleted_backup_file), Toast.LENGTH_SHORT).show()
-                }
-                4 -> activity?.let { it1 -> RefreshData.refresh(it1) }
-            }
-            dismiss()
-        }
-    }
-
-    companion object {
-        var mPositiveBtnListener: View.OnClickListener? = null
     }
 }

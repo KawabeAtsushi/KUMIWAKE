@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,23 +20,23 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.setting.DBBackup
+import com.pandatone.kumiwake.setting.RefreshData
 import com.pandatone.kumiwake.ui.DialogWarehouse
-import android.app.Activity.RESULT_OK
-import com.pandatone.kumiwake.MyApplication
-import java.io.UnsupportedEncodingException
-import java.net.URLDecoder
+import com.pandatone.kumiwake.ui.FileManagerDialog
+import java.io.File
 
 
 class SettingsFragment : Fragment() {
 
     private lateinit var settingsViewModel: MembersViewModel
-    private lateinit var howToUse_adapter: ArrayAdapter<String>
-    private lateinit var backup_adapter: ArrayAdapter<String>
-    private lateinit var other_adapter: ArrayAdapter<String>
-    private lateinit var how_to_use_str: Array<String>
-    private lateinit var backup_str: Array<String>
-    private lateinit var other_str: Array<String>
-    private val dialog: DialogWarehouse
+    private lateinit var howToUseAdapter: ArrayAdapter<String>
+    private lateinit var backupAdapter: ArrayAdapter<String>
+    private lateinit var otherAdapter: ArrayAdapter<String>
+    private lateinit var howToUseStr: Array<String>
+    private lateinit var backupStr: Array<String>
+    private lateinit var otherStr: Array<String>
+    val dialog: DialogWarehouse
         get() {
             return DialogWarehouse(requireFragmentManager())
         }
@@ -58,10 +59,10 @@ class SettingsFragment : Fragment() {
                 0 -> {
                     val message = (getString(R.string.how_to_kumiwake) + "■" + getString(R.string.normal_mode) + "■\n"
                             + getString(R.string.description_of_normal_kumiwake) + "\n\n■" + getString(R.string.quick_mode) + "■\n" + getString(R.string.description_of_quick_kumiwake))
-                    dialog.confirmationDialog(how_to_use_str[0], message)
+                    dialog.confirmationDialog(howToUseStr[0], message)
                 }
-                1 -> dialog.confirmationDialog(how_to_use_str[1], getText(R.string.how_to_member))
-                2 -> dialog.confirmationDialog(how_to_use_str[2], getText(R.string.how_to_sekigime))
+                1 -> dialog.confirmationDialog(howToUseStr[1], getText(R.string.how_to_member))
+                2 -> dialog.confirmationDialog(howToUseStr[2], getText(R.string.how_to_sekigime))
             }
         }
         backupList = root.findViewById(R.id.back_up_list)
@@ -93,40 +94,56 @@ class SettingsFragment : Fragment() {
     private fun setViews() {
         val context = activity!!.baseContext
 
-        how_to_use_str = arrayOf(getString(R.string.about_kumiwake), getString(R.string.about_member), getString(R.string.about_sekigime))
-        backup_str = arrayOf(getString(R.string.back_up_db), getString(R.string.import_db), getString(R.string.delete_backup), getString(R.string.refresh_data))
-        other_str = arrayOf(getString(R.string.app_version), getString(R.string.advertise_delete), getString(R.string.contact_us), getString(R.string.share_app), getString(R.string.privacy_policy))
-        howToUse_adapter = ArrayAdapter(context, android.R.layout.simple_expandable_list_item_1, how_to_use_str)
-        backup_adapter = ArrayAdapter(context, android.R.layout.simple_expandable_list_item_1, backup_str)
-        other_adapter = ArrayAdapter(context, android.R.layout.simple_expandable_list_item_1, other_str)
+        howToUseStr = arrayOf(getString(R.string.about_kumiwake), getString(R.string.about_member), getString(R.string.about_sekigime))
+        backupStr = arrayOf(getString(R.string.back_up_db), getString(R.string.import_db), getString(R.string.delete_backup), getString(R.string.refresh_data))
+        otherStr = arrayOf(getString(R.string.app_version), getString(R.string.advertise_delete), getString(R.string.contact_us), getString(R.string.share_app), getString(R.string.privacy_policy))
+        howToUseAdapter = ArrayAdapter(context, android.R.layout.simple_expandable_list_item_1, howToUseStr)
+        backupAdapter = ArrayAdapter(context, android.R.layout.simple_expandable_list_item_1, backupStr)
+        otherAdapter = ArrayAdapter(context, android.R.layout.simple_expandable_list_item_1, otherStr)
 
-        howToUseList.adapter = howToUse_adapter
-        backupList.adapter = backup_adapter
-        otherList.adapter = other_adapter
+        howToUseList.adapter = howToUseAdapter
+        backupList.adapter = backupAdapter
+        otherList.adapter = otherAdapter
     }
 
     private fun onBackup() {
         val title = getString(R.string.back_up_db)
         val message = getString(R.string.back_up_attention) + getString(R.string.run_confirmation)
-        dialog.decisionDialog(title, message, 1)
+        dialog.decisionDialog(title, message) { activity?.let { DBBackup.dbBackup(it) } }
     }
 
     private fun onImport() {
         val title = getString(R.string.import_db)
         val message = getString(R.string.import_attention) + getString(R.string.run_confirmation)
-        dialog.decisionDialog(title, message, 2)
+        dialog.importDialog(title, message) { activity?.let { DBBackup.dbImport(Environment.getExternalStorageDirectory().path + "/KUMIWAKE_Backup", it) } }
     }
 
     private fun onDeleteBackup() {
         val title = getString(R.string.delete_backup)
         val message = getString(R.string.delete_backup_attention)
-        dialog.decisionDialog(title, message, 3)
+        dialog.decisionDialog(title, message, this::deleteBackup)
     }
 
     private fun onRefreshData() {
         val title = getString(R.string.refresh_data)
         val message = getString(R.string.refresh_attention) + getString(R.string.run_confirmation)
-        dialog.decisionDialog(title, message, 4)
+        dialog.decisionDialog(title, message) { activity?.let { it -> RefreshData.refresh(it) } }
+    }
+
+    private fun deleteBackup() {
+
+        val mbFile = File(Environment.getExternalStorageDirectory().path + "/KUMIWAKE_Backup/mb.db")
+        val gpFile = File(Environment.getExternalStorageDirectory().path + "/KUMIWAKE_Backup/gp.db")
+        val dir = File(Environment.getExternalStorageDirectory().path + "/KUMIWAKE_Backup")
+
+        if (!dir.exists()) {
+            Toast.makeText(activity, getString(R.string.not_exist_file), Toast.LENGTH_SHORT).show()
+        } else {
+            mbFile.delete()
+            gpFile.delete()
+            dir.delete()
+            Toast.makeText(activity, getString(R.string.deleted_backup_file), Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun showVersionName(context: Context) {
@@ -178,34 +195,9 @@ class SettingsFragment : Fragment() {
     }
 
     private fun toPrivacyPolicy() {
-//        val uri = Uri.parse("https://gist.githubusercontent.com/KawabeAtsushi/39f3ea332b05a6b053b263784a77cd51/raw/7666e22b85561c34a95863f9482ed900482d2c8d/privacy%2520policy")
-//        val intent = Intent(Intent.ACTION_VIEW, uri)
-//        startActivity(intent)
-        onClick()
-    }
-
-    // 識別用のコード
-    private val CHOSE_FILE_CODE = 12345
-    public var decodedfilePath:String = ""
-
-    private fun onClick() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        intent.type = "file/*"
-        startActivityForResult(Intent.createChooser(intent, "FileManager"), CHOSE_FILE_CODE)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        try {
-            if (requestCode == CHOSE_FILE_CODE && resultCode == RESULT_OK) {
-                val filePath = data!!.dataString!!.replace("file://", "")
-                decodedfilePath = URLDecoder.decode(filePath, "utf-8")
-                Toast.makeText(activity, decodedfilePath, Toast.LENGTH_SHORT).show()
-            }
-        } catch (e: UnsupportedEncodingException) {
-            // いい感じに例外処理
-        }
-
+        val uri = Uri.parse("https://gist.githubusercontent.com/KawabeAtsushi/39f3ea332b05a6b053b263784a77cd51/raw/7666e22b85561c34a95863f9482ed900482d2c8d/privacy%2520policy")
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
     }
 
     /////////////////////////パーミッション/////////////////////////////////////////////////

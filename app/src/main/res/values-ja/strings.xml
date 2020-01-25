@@ -159,4 +159,8 @@
     <string name="member_list">メンバー/グループ 一覧</string>
     <string name="hint">ヒント</string>
     <string name="error_has_occurred">エラーが発生しました。</string>
+    <string name="error">エラー</string>
+    <string name="nothing_file">\"KUMIWAKE_Backup\"フォルダーは以下のパスにありませんでした。</string>
+    <string name="failed_import">データのインポートに失敗しました。\n\"KUMIWAKE_Backup\"へのパスを指定してください。</string>
+    <string name="file_path">ファイルパス</string>
 </resources>

@@ -14,14 +14,16 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.ui.CustomDialog
 import com.pandatone.kumiwake.MainActivity
 import com.pandatone.kumiwake.member.Name
+import com.pandatone.kumiwake.ui.DialogWarehouse
 
 /**
  * Created by atsushi_2 on 2016/07/16.
  */
 class SekigimeResult : AppCompatActivity() {
+
+    private lateinit var draw:DrawTableView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,57 +46,38 @@ class SekigimeResult : AppCompatActivity() {
         if (fmDeploy) {
             convertAlternatelyFmArray()
         }
-        val draw = DrawTableView(this)
+        draw = DrawTableView(this)
         val wm = applicationContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
         val disp = wm.defaultDisplay
         val size = Point()
         disp.getSize(size)
-        val group_spinner = Spinner(this)
+        val groupSpinner = Spinner(this)
         val layout = LinearLayout(this)
-        val re_sekigime = Button(this)
-        val go_home = Button(this)
+        val reSekigime = Button(this)
+        val goHome = Button(this)
         val buttonWidth = (180 * scale).toInt()
         val buttonHeight = (50 * scale).toInt()
         val centerX = ((size.x - buttonWidth) / 2).toFloat()
-        re_sekigime.text = getText(R.string.re_sekigime)
-        go_home.text = getText(R.string.go_home)
+        reSekigime.text = getText(R.string.re_sekigime)
+        goHome.text = getText(R.string.go_home)
         val llp1 = LinearLayout.LayoutParams(buttonWidth, buttonHeight)
         val llp2 = LinearLayout.LayoutParams(buttonWidth, buttonHeight)
         llp1.setMargins(llp1.leftMargin, (10 * scale).toInt(), llp1.rightMargin, (10 * scale).toInt())
-        re_sekigime.layoutParams = llp1
-        re_sekigime.translationX = centerX
+        reSekigime.layoutParams = llp1
+        reSekigime.translationX = centerX
         llp2.setMargins(llp2.leftMargin, (10 * scale).toInt(), llp2.rightMargin, (90 * scale).toInt())
-        go_home.layoutParams = llp2
-        go_home.translationX = centerX
-        re_sekigime.background = ContextCompat.getDrawable(this, R.drawable.sekigime_orange_button)
-        go_home.background = ContextCompat.getDrawable(this, R.drawable.simple_green_button)
-        group_spinner.background = ContextCompat.getDrawable(this, R.drawable.spinner_button)
-        re_sekigime.setOnClickListener {
+        goHome.layoutParams = llp2
+        goHome.translationX = centerX
+        reSekigime.background = ContextCompat.getDrawable(this, R.drawable.sekigime_orange_button)
+        goHome.background = ContextCompat.getDrawable(this, R.drawable.simple_green_button)
+        groupSpinner.background = ContextCompat.getDrawable(this, R.drawable.spinner_button)
+        reSekigime.setOnClickListener {
             val message = getString(R.string.re_sekigime_description) + getString(R.string.run_confirmation)
             val title = getString(R.string.re_sekigime_title)
-            val customDialog = CustomDialog()
-            customDialog.setTitle(title)
-            customDialog.setMessage(message)
-            CustomDialog.mPositiveBtnListener = View.OnClickListener {
-                for (i in 0 until groupNo) {
-                    if (Normalmode) {
-                        arrayArrayNormal[i].shuffle()
-                    } else {
-                        arrayArrayQuick[i].shuffle()
-                    }
-                }
-                if (fmDeploy) {
-                    convertAlternatelyFmArray()
-                }
-                DrawTableView.point = 0
-                draw.reDraw()
-                Toast.makeText(applicationContext, getText(R.string.re_sekigime_finished), Toast.LENGTH_SHORT).show()
-                customDialog.dismiss()
-            }
-            customDialog.show(supportFragmentManager, "Btn")
+            DialogWarehouse(supportFragmentManager).decisionDialog(title,message, this::reSekigime)
         }
-        go_home.setOnClickListener {
+        goHome.setOnClickListener {
             val intent = Intent(applicationContext, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
@@ -111,12 +94,12 @@ class SekigimeResult : AppCompatActivity() {
             list.add(group)
         }
         adapter.addAll(list)
-        group_spinner.adapter = adapter
+        groupSpinner.adapter = adapter
         val lp = LinearLayout.LayoutParams(buttonWidth, buttonHeight)
-        group_spinner.layoutParams = lp
-        group_spinner.translationY = 15 * scale
-        group_spinner.translationX = (centerX * 1.1).toFloat()
-        group_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        groupSpinner.layoutParams = lp
+        groupSpinner.translationY = 15 * scale
+        groupSpinner.translationX = (centerX * 1.1).toFloat()
+        groupSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int,
                                         id: Long) {
                 DrawTableView.point = 0
@@ -131,12 +114,28 @@ class SekigimeResult : AppCompatActivity() {
         val scrollView = ScrollView(this)
         reLayout.addView(scrollView)
         reLayout.addView(adView, param2)
-        layout.addView(group_spinner)
+        layout.addView(groupSpinner)
         layout.addView(draw)
-        layout.addView(re_sekigime)
-        layout.addView(go_home)
+        layout.addView(reSekigime)
+        layout.addView(goHome)
         scrollView.addView(layout)
         setContentView(reLayout)
+    }
+
+    private fun reSekigime(){
+        for (i in 0 until groupNo) {
+            if (Normalmode) {
+                arrayArrayNormal[i].shuffle()
+            } else {
+                arrayArrayQuick[i].shuffle()
+            }
+        }
+        if (fmDeploy) {
+            convertAlternatelyFmArray()
+        }
+        DrawTableView.point = 0
+        draw.reDraw()
+        Toast.makeText(applicationContext, getText(R.string.re_sekigime_finished), Toast.LENGTH_SHORT).show()
     }
 
     private fun convertAlternatelyFmArray() {
