@@ -1,7 +1,6 @@
 package com.pandatone.kumiwake.member
 
 import android.app.Activity
-import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
@@ -18,17 +17,17 @@ object Sort {
     private lateinit var ST: String
     internal var initial = 0
 
-    fun memberSort(builder: androidx.appcompat.app.AlertDialog.Builder, activity: Activity) {
+    fun memberSort(builder: androidx.appcompat.app.AlertDialog.Builder, activity: Activity,listAdp:NameListAdapter) {
 
         val dbAdapter = MemberListAdapter(activity)
 
         val items = arrayOf(
-                MyApplication.context?.getString(R.string.registration_ascending),
-                MyApplication.context?.getString(R.string.registration_descending),
-                MyApplication.context?.getString(R.string.name_ascending),
-                MyApplication.context?.getString(R.string.name_descending),
-                MyApplication.context?.getString(R.string.age_ascending),
-                MyApplication.context?.getString(R.string.age_descending))
+                activity.getString(R.string.registration_ascending),
+                activity.getString(R.string.registration_descending),
+                activity.getString(R.string.name_ascending),
+                activity.getString(R.string.name_descending),
+                activity.getString(R.string.age_ascending),
+                activity.getString(R.string.age_descending))
 
         builder.setTitle(R.string.sorting)
         builder.setSingleChoiceItems(items, initial) { _, which -> initial = which }
@@ -63,7 +62,7 @@ object Sort {
             dbAdapter.sortNames(NS, ST)
             NameListAdapter.nowSort = NS
             NameListAdapter.sortType = ST
-            FragmentMember.listAdp.notifyDataSetChanged() //loadName()を呼ばない！
+            listAdp.notifyDataSetChanged() //loadName()を呼ばない！
         }
         // アラートダイアログのボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
         builder.setNegativeButton(R.string.cancel) { _, _ -> }
@@ -77,12 +76,12 @@ object Sort {
         val gpdbAdapter = GroupListAdapter(activity)
 
         val items = arrayOf(
-                MyApplication.context?.getString(R.string.registration_ascending),
-                MyApplication.context?.getString(R.string.registration_descending),
-                MyApplication.context?.getString(R.string.name_ascending),
-                MyApplication.context?.getString(R.string.name_descending),
-                MyApplication.context?.getString(R.string.member_ascending),
-                MyApplication.context?.getString(R.string.member_descending))
+                activity.getString(R.string.registration_ascending),
+                activity.getString(R.string.registration_descending),
+                activity.getString(R.string.name_ascending),
+                activity.getString(R.string.name_descending),
+                activity.getString(R.string.member_ascending),
+                activity.getString(R.string.member_descending))
         builder.setTitle(R.string.sorting)
         builder.setSingleChoiceItems(items, initial) { _, which -> initial = which }
 
@@ -96,7 +95,7 @@ object Sort {
                 5 -> gpdbAdapter.sortGroups(GroupListAdapter.GP_BELONG, DESC)
             }
 
-            FragmentGroup.listAdp.notifyDataSetChanged()
+            FragmentGroupChoiceMode.listAdp.notifyDataSetChanged()
         }
         // アラートダイアログのボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
         builder.setNegativeButton(R.string.cancel) { _, _ -> }

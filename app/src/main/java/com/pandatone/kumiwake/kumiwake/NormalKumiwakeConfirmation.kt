@@ -7,10 +7,8 @@ import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GPListViewAdapter
 import com.pandatone.kumiwake.adapter.GroupListAdapter
@@ -64,10 +62,10 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
         if (KumiwakeSelectMode.sekigime) {
             val button = findViewById<Button>(R.id.kumiwake_btn)
             confirmation_title_txt.setText(R.string.sekigime_confirm)
-            between_arrows_txt.text = MyApplication.context?.getText(R.string.sekigime)
+            between_arrows_txt.text = getText(R.string.sekigime)
             button.setText(R.string.go_select_seats_type)
             button.typeface = Typeface.DEFAULT
-            button.setTextColor(ContextCompat.getColor(MyApplication.context!!, android.R.color.white))
+            button.setTextColor(resources.getColor(android.R.color.white))
             button.textSize = 20F
         }
         member_no_txt.text = (memberArray.size.toString() + " " + getText(R.string.people)

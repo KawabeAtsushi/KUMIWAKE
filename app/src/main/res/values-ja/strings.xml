@@ -91,7 +91,7 @@
     <string name="back_up_completed">バックアップが完了しました。</string>
     <string name="import_completed">インポートが完了しました。</string>
     <string name="not_mounted">SDカードが挿入されていません。</string>
-    <string name="failed_backup">データのバックアップに失敗しました。 SDカードが挿入されているか確認してください。</string>
+    <string name="failed_backup">データのバックアップに失敗しました。</string>
     <string name="not_exist_file">バックアップファイルが存在しません。</string>
     <string name="delete_backup">バックアップファイルの削除</string>
     <string name="deleted_backup_file">バックアップファイルを削除しました。</string>
@@ -163,4 +163,5 @@
     <string name="nothing_file">\"KUMIWAKE_Backup\"フォルダーは以下のパスにありませんでした。</string>
     <string name="failed_import">データのインポートに失敗しました。\n\"KUMIWAKE_Backup\"へのパスを指定してください。</string>
     <string name="file_path">ファイルパス</string>
+    <string name="failed_to_mkdirs">バックアップディレクトリの作成に失敗しました。</string>
 </resources>

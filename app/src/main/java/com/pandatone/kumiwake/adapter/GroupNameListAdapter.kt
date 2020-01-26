@@ -8,8 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import androidx.core.content.ContextCompat
-import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 
 /**
@@ -44,13 +42,13 @@ class GroupNameListAdapter(private val context: Context, private val groupList: 
         v = inflater.inflate(R.layout.row_group, null)
 
         if (gSelection.get(listItem.id)) {
-            v!!.setBackgroundColor(ContextCompat.getColor(MyApplication.context!!, R.color.checked_list))
+            v!!.setBackgroundColor(context.getColor(R.color.checked_list))
         }
 
         nameTextView = v?.findViewById<View>(R.id.groupName) as TextView
         numberOfMemberTextView = v.findViewById<View>(R.id.theNumberOfMember) as TextView
         nameTextView.text = listItem.group
-        numberOfMemberTextView.text = "${listItem.belongNo}${MyApplication.context?.getText(R.string.people)}"
+        numberOfMemberTextView.text = "${listItem.belongNo}${context.getText(R.string.people)}"
 
         return v
     }

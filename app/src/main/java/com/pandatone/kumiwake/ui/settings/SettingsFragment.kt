@@ -23,7 +23,6 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.setting.DBBackup
 import com.pandatone.kumiwake.setting.RefreshData
 import com.pandatone.kumiwake.ui.DialogWarehouse
-import com.pandatone.kumiwake.ui.FileManagerDialog
 import java.io.File
 
 
@@ -109,13 +108,13 @@ class SettingsFragment : Fragment() {
     private fun onBackup() {
         val title = getString(R.string.back_up_db)
         val message = getString(R.string.back_up_attention) + getString(R.string.run_confirmation)
-        dialog.decisionDialog(title, message) { activity?.let { DBBackup.dbBackup(it) } }
+        dialog.fmDialog(title, message,true)
     }
 
     private fun onImport() {
         val title = getString(R.string.import_db)
         val message = getString(R.string.import_attention) + getString(R.string.run_confirmation)
-        dialog.importDialog(title, message) { activity?.let { DBBackup.dbImport(Environment.getExternalStorageDirectory().path + "/KUMIWAKE_Backup", it) } }
+        dialog.fmDialog(title, message,false)
     }
 
     private fun onDeleteBackup() {
@@ -132,16 +131,12 @@ class SettingsFragment : Fragment() {
 
     private fun deleteBackup() {
 
-        val mbFile = File(Environment.getExternalStorageDirectory().path + "/KUMIWAKE_Backup/mb.db")
-        val gpFile = File(Environment.getExternalStorageDirectory().path + "/KUMIWAKE_Backup/gp.db")
         val dir = File(Environment.getExternalStorageDirectory().path + "/KUMIWAKE_Backup")
 
         if (!dir.exists()) {
             Toast.makeText(activity, getString(R.string.not_exist_file), Toast.LENGTH_SHORT).show()
         } else {
-            mbFile.delete()
-            gpFile.delete()
-            dir.delete()
+            dir.deleteRecursively()
             Toast.makeText(activity, getString(R.string.deleted_backup_file), Toast.LENGTH_SHORT).show()
         }
     }

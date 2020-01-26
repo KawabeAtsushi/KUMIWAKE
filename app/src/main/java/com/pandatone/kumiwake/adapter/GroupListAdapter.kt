@@ -6,9 +6,8 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 import android.widget.ArrayAdapter
-import com.pandatone.kumiwake.member.FragmentGroup
+import com.pandatone.kumiwake.member.FragmentGroupChoiceMode
 import java.io.IOException
 import java.io.Serializable
 
@@ -106,7 +105,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
                 " WHERE " + GP_NAME + " like '%" + group + "%' OR "
                 + GP_READ + " like '%" + group_read + "%';")
         val c = db.rawQuery(query, null)
-        getCursor(c, FragmentGroup.groupList)
+        getCursor(c, FragmentGroupChoiceMode.groupList)
         close()
     }
 
@@ -115,7 +114,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
         val query = "SELECT * FROM " +
                 TABLE_NAME + " ORDER BY " + sortBy + " " + sortType + ";"
         val c = db.rawQuery(query, null)
-        getCursor(c, FragmentGroup.groupList)
+        getCursor(c, FragmentGroupChoiceMode.groupList)
         close()
     }
 

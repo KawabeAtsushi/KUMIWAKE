@@ -41,7 +41,6 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         val i = intent
-        startAction = i.getBooleanExtra(ACTION_MODE, false)
         groupId = i.getIntExtra(GROUP_ID, -1)
         kumiwake_select = i.getBooleanExtra(NORMAL_SELECT, false)
         if (i.getSerializableExtra(MEMBER_ARRAY) != null) {
@@ -53,11 +52,10 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     private fun setViews() {
         viewPager = findViewById<View>(R.id.view_pager) as ViewPager
-        val adapter = CustomPagerAdapter(manager)
+        val adapter = CustomPagerAdapter(context,manager,false)
         viewPager.adapter = adapter
         decision = findViewById<View>(R.id.decisionBt) as Button
 
-        if (startAction) {
             viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
                 //スクロール中（page切り替え中）に呼ばれる
                 override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -72,18 +70,15 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
                     decision.translationY = 1000 * positionOffset * (1 - 2 * position) //0to1->up,1to0->down
                 }
             })
-        }
     }
 
     private fun visibleViews() {
-        if (startAction) {
             decision.visibility = View.VISIBLE
-            FragmentGroup.adviceInFG.visibility = View.VISIBLE
-            FragmentMember.fab.hide()
-            FragmentGroup.fab.hide()
-            FragmentMember.fab.isEnabled = false
-            FragmentGroup.fab.isEnabled = false
-        }
+            FragmentGroupChoiceMode.adviceInFG.visibility = View.VISIBLE
+            FragmentMemberChoiceMode.fab.hide()
+            FragmentGroupChoiceMode.fab.hide()
+            FragmentMemberChoiceMode.fab.isEnabled = false
+            FragmentGroupChoiceMode.fab.isEnabled = false
     }
 
 
@@ -95,9 +90,9 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
             override fun onPageScrollStateChanged(state: Int) {
                 page = viewPager.currentItem
                 val itemFilter = menu.findItem(R.id.item_filter)
-                itemFilter.isVisible = page != 1
+                itemFilter.isVisible = (page == 0)
                 val allSelect = menu.findItem(R.id.item_all_select)
-                allSelect.isVisible = !(startAction && page == 1)
+                allSelect.isVisible = (page == 0)
             }
         })
 
@@ -125,8 +120,8 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
                 searchAutoComplete.setText("")
             } else {
                 searchView.onActionViewCollapsed()
-                FragmentMember().loadName()
-                FragmentGroup().loadName()
+                FragmentMemberChoiceMode().loadName()
+                FragmentGroupChoiceMode().loadName()
             }
         }
 
@@ -137,7 +132,7 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val viewPager = findViewById<View>(R.id.view_pager) as ViewPager
-        val adapter = CustomPagerAdapter(manager)
+        val adapter = CustomPagerAdapter(context,manager,false)
         adapter.findFragmentByPosition(viewPager, page).onOptionsItemSelected(item)
 
         return false
@@ -150,9 +145,9 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
     override fun onQueryTextChange(newText: String): Boolean {
         try {
             if (page == 0) {
-                FragmentMember().selectName(newText)
+                FragmentMemberChoiceMode().selectName(newText)
             } else {
-                FragmentGroup().selectGroup(newText)
+                FragmentGroupChoiceMode().selectGroup(newText)
             }
         } catch (e: IOException) {
             e.printStackTrace()
@@ -167,12 +162,10 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         lateinit var viewPager: ViewPager
 
         //intent key
-        const val ACTION_MODE = "action_mode"
         const val GROUP_ID = "group_id"
         const val NORMAL_SELECT = "normal_select"
         const val MEMBER_ARRAY = "memberArray"
 
-        var startAction: Boolean = false
         var kumiwake_select: Boolean = false
         var groupId: Int = 0
 

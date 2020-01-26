@@ -10,11 +10,10 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import com.pandatone.kumiwake.member.FragmentMember
+import com.pandatone.kumiwake.member.FragmentMemberChoiceMode
 import com.pandatone.kumiwake.member.Name
 import java.io.IOException
 import java.util.*
@@ -119,7 +118,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         val query = "SELECT * FROM " +
                 TABLE_NAME + " ORDER BY " + sortBy + " " + sortType + ";"
         val c = db.rawQuery(query, null)
-        getCursor(c, FragmentMember.nameList,true)
+        getCursor(c, FragmentMemberChoiceMode.nameList,true)
         close()
 
     }
@@ -131,7 +130,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
                 " WHERE " + MB_NAME + " like '%" + name + "%' OR "
                 + MB_READ + " like '%" + name + "%';")
         val c = db.rawQuery(query, null)
-        getCursor(c, FragmentMember.nameList,true)
+        getCursor(c, FragmentMemberChoiceMode.nameList,true)
         close()
     }
 
@@ -143,7 +142,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
                 " WHERE " + MB_SEX + " like '" + sex + "%' AND (" + MB_AGE + " BETWEEN " + minage + " AND " + maxage +
                 ") AND (" + MB_BELONG + " like '" + belongNo + "%' OR " + MB_BELONG + " like '%," + belongNo + "%');" //BelongIdのマッチング式OR (e.g),1,2,3,4
         val c = db.rawQuery(query, null)
-        getCursor(c, FragmentMember.nameList,true)
+        getCursor(c, FragmentMemberChoiceMode.nameList,true)
         close()
     }
 

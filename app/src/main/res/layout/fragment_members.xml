@@ -1,132 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.viewpager.widget.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/view_pager"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="?attr/actionBarSize">
 
-    <ImageView
-        android:id="@+id/category_icon2"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="30dp"
-        android:contentDescription="@string/kumiwake"
-        android:src="@drawable/icon_2"
-        app:layout_constraintBottom_toTopOf="@id/member_list_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <!--    後に記述したViewが前面に来る-->
-
-    <TextView
-        android:id="@+id/member_list_button"
-        android:layout_width="0dp"
+    <androidx.viewpager.widget.PagerTitleStrip
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/top_member_button"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="start"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingStart="@dimen/main_button_start_padding"
-        android:paddingEnd="5dp"
-        android:text="@string/member_list"
-        android:textColor="#ffffff"
-        android:textSize="28sp"
-        android:textAllCaps="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/category_icon2"
-        app:layout_constraintBottom_toTopOf="@id/add_member_button"/>
+        android:layout_gravity="top"
+        android:background="#33b5e5"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:textColor="#fff" />
 
-    <ImageView
-        android:id="@+id/MemberListIcon"
-        android:layout_width="@dimen/main_icon_size"
-        android:layout_height="@dimen/main_icon_size"
-        android:background="@drawable/top_member_icon_background"
-        android:contentDescription="@string/member"
-        android:padding="12dp"
-        android:src="@drawable/ic_members_24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/member_list_button"
-        app:layout_constraintEnd_toStartOf="@+id/member_list_button"
-        app:layout_constraintStart_toStartOf="@+id/member_list_button"
-        app:layout_constraintTop_toTopOf="@+id/member_list_button" />
-
-
-    <TextView
-        android:id="@+id/add_member_button"
-        android:layout_width="0dp"
+    <Button
+        android:id="@+id/decisionBt"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/top_quick_button"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="start"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingStart="@dimen/main_button_start_padding"
-        android:paddingEnd="5dp"
-        android:text="@string/add_member"
-        android:textColor="#ffffff"
-        android:textSize="30sp"
-        android:textAllCaps="true"
-        app:layout_constraintBottom_toTopOf="@id/add_group_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/member_list_button" />
-
-    <ImageView
-        android:id="@+id/AddMemberIcon"
-        android:layout_width="@dimen/main_icon_size"
-        android:layout_height="@dimen/main_icon_size"
-        android:background="@drawable/top_quick_text_background"
-        android:contentDescription="@string/add_member_title"
-        android:padding="12dp"
-        android:src="@drawable/ic_add_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/add_member_button"
-        app:layout_constraintEnd_toStartOf="@+id/add_member_button"
-        app:layout_constraintStart_toStartOf="@+id/add_member_button"
-        app:layout_constraintTop_toTopOf="@+id/add_member_button" />
-
-    <TextView
-        android:id="@+id/add_group_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/top_add_group_button"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="start"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingStart="@dimen/main_button_start_padding"
-        android:paddingEnd="5dp"
-        android:text="@string/add_group"
-        android:textColor="#ffffff"
-        android:textSize="30sp"
-        android:textAllCaps="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_member_button" />
-
-    <ImageView
-        android:id="@+id/AddGroupIcon"
-        android:layout_width="@dimen/main_icon_size"
-        android:layout_height="@dimen/main_icon_size"
-        android:background="@drawable/top_addgroup_icon_background"
-        android:contentDescription="@string/add_group_title"
-        android:padding="12dp"
-        android:src="@drawable/ic_add_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/add_group_button"
-        app:layout_constraintEnd_toStartOf="@+id/add_group_button"
-        app:layout_constraintStart_toStartOf="@+id/add_group_button"
-        app:layout_constraintTop_toTopOf="@+id/add_group_button" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="22dp"
+        android:background="@drawable/simple_orange_button"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:text="@string/decide"
+        android:textSize="20sp"
+        android:visibility="invisible" />
+</androidx.viewpager.widget.ViewPager>

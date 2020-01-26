@@ -24,12 +24,8 @@ class DialogWarehouse(private var fragmentManager: FragmentManager) {
         ft.commitAllowingStateLoss()
     }
 
-    fun importDialog(title: String, message: CharSequence, function: () -> Unit) {
-        val customDialog = FileManagerDialog(title, message)
-        customDialog.mPositiveBtnListener = View.OnClickListener {
-            function()
-            customDialog.dismiss()
-        }
+    fun fmDialog(title: String, message: CharSequence, backup: Boolean) {
+        val customDialog = FileManagerDialog(title, message, backup)
         val ft = fragmentManager.beginTransaction()
         ft.add(customDialog, null)
         ft.commitAllowingStateLoss()

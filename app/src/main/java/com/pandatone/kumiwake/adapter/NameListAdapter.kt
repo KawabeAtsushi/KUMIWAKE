@@ -10,8 +10,6 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
-import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.Name
 
@@ -51,7 +49,7 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
             v = inflater.inflate(R.layout.row_member, null)
 
             if (mSelection.get(listItem!!.id)) {
-                v?.setBackgroundColor(ContextCompat.getColor(MyApplication.context!!, R.color.checked_list))
+                v?.setBackgroundColor(context.getColor(R.color.checked_list))
             }
 
             setSexIcon(v!!, position)
@@ -72,7 +70,7 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
         if (getItem(position)!!.sex == context.getText(R.string.man)) {
             memberIcon.setImageResource(R.drawable.member_img)
         } else {
-            memberIcon.setColorFilter(ContextCompat.getColor(MyApplication.context!!, R.color.woman))
+            memberIcon.setColorFilter(context.getColor(R.color.woman))
         }
     }
 

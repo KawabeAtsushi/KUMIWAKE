@@ -2,9 +2,7 @@ package com.pandatone.kumiwake.setting
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
-import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
@@ -44,7 +42,7 @@ object RefreshData {
         //グループのメンバー数登録
         updateBelongNo()
 
-        Toast.makeText(context, MyApplication.context?.getString(R.string.refresh_completed), Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(R.string.refresh_completed), Toast.LENGTH_SHORT).show()
     }
 
     private fun allDelete(code: Int) {

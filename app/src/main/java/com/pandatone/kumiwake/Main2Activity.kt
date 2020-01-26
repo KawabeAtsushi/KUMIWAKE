@@ -2,7 +2,6 @@ package com.pandatone.kumiwake
 
 import android.os.Bundle
 import android.text.Html
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -13,10 +12,8 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.pandatone.kumiwake.ui.kumiwake.KumiwakeFragment
 import com.pandatone.kumiwake.ui.members.MembersFragment
-import com.pandatone.kumiwake.ui.members.MembersFragment2
 import com.pandatone.kumiwake.ui.sekigime.SekigimeFragment
 import com.pandatone.kumiwake.ui.settings.SettingsFragment
-import kotlin.math.absoluteValue
 
 
 class Main2Activity : AppCompatActivity() {
@@ -62,7 +59,7 @@ class Main2Activity : AppCompatActivity() {
                 }
 
                 R.id.navigation_members -> {
-                    openFragment(MembersFragment2())
+                    openFragment(MembersFragment())
                     supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Blue.primaryColor))
                     supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>"+ getString(R.string.member) + "</font>")
                     true

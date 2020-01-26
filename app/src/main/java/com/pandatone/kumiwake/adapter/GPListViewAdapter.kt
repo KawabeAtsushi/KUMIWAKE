@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ListView
 import android.widget.TextView
-import com.pandatone.kumiwake.MyApplication
 import com.pandatone.kumiwake.R
 import java.util.*
 
@@ -46,7 +45,7 @@ class GPListViewAdapter(private val context: Context, nameList: ArrayList<GroupL
         memberNoTextView = v.findViewById<View>(R.id.memberNo) as TextView
         memberNoTextView.visibility = View.VISIBLE
         nameTextView.text = listElements[position].group
-        memberNoTextView.text = listElements[position].belongNo.toString() + MyApplication.context?.getString(R.string.people)
+        memberNoTextView.text = listElements[position].belongNo.toString() + context.getString(R.string.people)
 
         return v
     }

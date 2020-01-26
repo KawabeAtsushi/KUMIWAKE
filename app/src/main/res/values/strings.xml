@@ -161,4 +161,5 @@
     <string name="nothing_file">\"KUMIWAKE_Backup\" folder doesn\'t exist in</string>
     <string name="failed_import">Data import failed.\nPlease specify the path to \"KUMIWAKE_Backup\".</string>
     <string name="file_path">File Path</string>
+    <string name="failed_to_mkdirs">Failed to make backup directory</string>
 </resources>

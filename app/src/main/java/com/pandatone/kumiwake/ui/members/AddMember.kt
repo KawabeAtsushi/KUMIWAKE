@@ -1,9 +1,6 @@
-package com.pandatone.kumiwake.member
+package com.pandatone.kumiwake.ui.members
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -21,6 +18,8 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
 import com.pandatone.kumiwake.kumiwake.NormalMode
+import com.pandatone.kumiwake.member.FragmentGroupChoiceMode
+import com.pandatone.kumiwake.member.Name
 import kotlinx.android.synthetic.main.add_member.*
 import java.util.*
 
@@ -50,10 +49,10 @@ class AddMember : AppCompatActivity() {
         findViews()
         ageEditText!!.setText("")
         val i = intent
-        val position = i.getIntExtra(POSITION, -1)
+        val member = i.getSerializableExtra(MEMBER) as Name?
         fromNormalMode = i.getBooleanExtra(FROM_NORMAL_MODE, false)
-        if (position != -1) {
-            setItem(position)
+        if (member != null) {
+            setItem(member)
             member_registration_continue_btn.visibility = View.GONE
         }
 
@@ -87,14 +86,13 @@ class AddMember : AppCompatActivity() {
         belongSpinner = findViewById<View>(R.id.select_group_spinner) as Button
     }
 
-    private fun setItem(position: Int) {
-        val listItem = FragmentMember.nameList[position]
+    private fun setItem(listItem: Name) {
         val listId = listItem.id
         val name = listItem.name
         val read = listItem.read
         val sex = listItem.sex
         val age = listItem.age.toString()
-        val belong = MemberClick.viewBelong(position)
+        val belong = MemberClick.viewBelong(listItem, dbAdapter!!)
 
         nameEditText!!.setText(name)
         readEditText!!.setText(read)
@@ -119,7 +117,7 @@ class AddMember : AppCompatActivity() {
         val textArray = buttonText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         // 候補リスト
         val list = ArrayList<String>()
-        for (listItem in FragmentGroup.groupList) {
+        for (listItem in FragmentGroupChoiceMode.groupList) {
             list.add(listItem.group)
         }
         val belongArray = list.toTypedArray()
@@ -216,7 +214,7 @@ class AddMember : AppCompatActivity() {
         val belong = belongConvertToNo()
 
         dbAdapter!!.updateMember(listId, name, sex, age, belong, read)
-        FragmentMember().loadName()
+        FragmentMemberMain().loadName()
     }
 
     private fun update(listId: Int) {
@@ -280,8 +278,8 @@ class AddMember : AppCompatActivity() {
             }
             if (change!!) {
                 k = 0
-                while (k < FragmentGroup.listAdp.count) {
-                    val listItem = FragmentGroup.groupList[k]
+                while (k < FragmentGroupChoiceMode.listAdp.count) {
+                    val listItem = FragmentGroupChoiceMode.groupList[k]
                     val groupName = listItem.group
                     if (beforeBelong!![i] == groupName) {
                         id = listItem.id
@@ -308,8 +306,8 @@ class AddMember : AppCompatActivity() {
             if (change!!) {
                 groupListAdapter.open()
                 k = 0
-                while (k < FragmentGroup.listAdp.count) {
-                    val listItem = FragmentGroup.groupList[k]
+                while (k < FragmentGroupChoiceMode.listAdp.count) {
+                    val listItem = FragmentGroupChoiceMode.groupList[k]
                     val groupName = listItem.group
                     if (afterBelong!![i] == groupName) {
                         id = listItem.id
@@ -339,7 +337,7 @@ class AddMember : AppCompatActivity() {
         val belongNo = StringBuilder()
 
         for (belongGroup in belongTextArray) {
-            for (listItem in FragmentGroup.groupList) {
+            for (listItem in FragmentGroupChoiceMode.groupList) {
                 if (belongGroup == listItem.group) {
                     val listId = listItem.id.toString()
                     belongNo.append("$listId,")
@@ -350,7 +348,7 @@ class AddMember : AppCompatActivity() {
     }
 
     companion object {
-        const val POSITION = "position"
+        const val MEMBER = "position"
         const val FROM_NORMAL_MODE = "fromNormalMode"
     }
 }

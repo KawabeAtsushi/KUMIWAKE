@@ -1,15 +1,13 @@
-package com.pandatone.kumiwake.member
+package com.pandatone.kumiwake.ui.members
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Button
 import android.widget.ListView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
@@ -19,6 +17,8 @@ import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MBListViewAdapter
+import com.pandatone.kumiwake.member.MemberMain
+import com.pandatone.kumiwake.member.Name
 import kotlinx.android.synthetic.main.part_review_listview.*
 
 
@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.part_review_listview.*
  */
 class AddGroup : AppCompatActivity() {
     private var textInputLayout: TextInputLayout? = null
-    private var nextId = FragmentGroup.dbAdapter.maxId + 1 //FragmentGroupなしだとX
+    private var nextId = FragmentGroupMain.dbAdapter.maxId + 1 //FragmentGroupMainなしだとX
     private lateinit var adapter: MBListViewAdapter
     private lateinit var listView: ListView
     private var editId: Int = 0
@@ -55,9 +55,9 @@ class AddGroup : AppCompatActivity() {
         }
 
         val nameByBelong: ArrayList<Name> = if (editId == nextId) {
-            FragmentMember().searchBelong(nextId.toString())
+            FragmentMemberMain().searchBelong(nextId.toString())
         } else {
-            FragmentMember().searchBelong(editId.toString())
+            FragmentMemberMain().searchBelong(editId.toString())
         }
         firstMembers = nameByBelong
     }
@@ -76,15 +76,15 @@ class AddGroup : AppCompatActivity() {
     public override fun onStart() {
         super.onStart()
         val nameByBelong: ArrayList<Name> = if (editId == nextId) {
-            FragmentMember().searchBelong(nextId.toString())
+            FragmentMemberMain().searchBelong(nextId.toString())
         } else {
-            FragmentMember().searchBelong(editId.toString())
+            FragmentMemberMain().searchBelong(editId.toString())
         }
 
         adapter = MBListViewAdapter(this@AddGroup, nameByBelong, false, showLeaderNo = false)
         listView.adapter = adapter
         numberOfSelectedMember.text = adapter.count.toString() + getString(R.string.people) + getString(R.string.selected)
-        FragmentMember().duplicateBelong()
+        FragmentMemberMain().duplicateBelong()
     }
 
 
@@ -97,26 +97,23 @@ class AddGroup : AppCompatActivity() {
         } else {
             saveItem()
             Toast.makeText(this, getString(R.string.group) + " \"" + group + "\" " + getString(R.string.registered), Toast.LENGTH_SHORT).show()
-            MemberMain.startAction = false
             finish()
         }
     }
 
     @OnClick(R.id.group_cancel_btn)
     internal fun cancel() {
-        FragmentMember().deleteBelongInfoAll(editId)
+        FragmentMemberMain().deleteBelongInfoAll(editId)
         if (editId != nextId)
             restoreBelong()
-        MemberMain.startAction = false
         finish()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            FragmentMember().deleteBelongInfoAll(editId)
+            FragmentMemberMain().deleteBelongInfoAll(editId)
             if (editId != nextId)
                 restoreBelong()
-            MemberMain.startAction = false
             finish()
             return true
         }
@@ -137,7 +134,7 @@ class AddGroup : AppCompatActivity() {
 
 
     private fun setItem(id: Int) {
-        for (group in FragmentGroup.groupList) {
+        for (group in FragmentGroupMain.groupList) {
             if (group.id == id) {
                 groupEditText.setText(group.group)
                 break
@@ -164,7 +161,6 @@ class AddGroup : AppCompatActivity() {
 
     private fun moveMemberMain() {
         val intent = Intent(this, MemberMain::class.java)
-        intent.putExtra(MemberMain.ACTION_MODE, true)
         intent.putExtra(MemberMain.NORMAL_SELECT, false)
         intent.putExtra(MemberMain.GROUP_ID, groupId)
         startActivity(intent)
@@ -177,21 +173,21 @@ class AddGroup : AppCompatActivity() {
             firstMemberIds.add(member.id)
         }
 
-        FragmentMember.dbAdapter.open()     // DBの読み込み(読み書きの方)
+        FragmentMemberMain.dbAdapter.open()     // DBの読み込み(読み書きの方)
         var i = 1
-        while (i < FragmentMember.listAdp.count) {
-            val listItem:Name = FragmentMember.nameList[i]
+        while (i < FragmentMemberMain.listAdp.count) {
+            val listItem: Name = FragmentMemberMain.nameList[i]
             val listId = listItem.id
 
             if (firstMemberIds.contains(listId)) {
                 val newBelong = StringBuilder()
                 newBelong.append(listItem.belong)
                 newBelong.append("$editId,")
-                FragmentMember.dbAdapter.addBelong(listId.toString(), newBelong.toString())
+                FragmentMemberMain.dbAdapter.addBelong(listId.toString(), newBelong.toString())
             }
             i += 2
         }
-        FragmentMember.dbAdapter.close()    // DBを閉じる
+        FragmentMemberMain.dbAdapter.close()    // DBを閉じる
     }
 
     companion object {

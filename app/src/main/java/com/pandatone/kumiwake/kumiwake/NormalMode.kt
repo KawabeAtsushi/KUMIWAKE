@@ -18,7 +18,7 @@ import butterknife.OnClick
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MBListViewAdapter
-import com.pandatone.kumiwake.member.AddMember
+import com.pandatone.kumiwake.ui.members.AddMember
 import com.pandatone.kumiwake.member.MemberMain
 import com.pandatone.kumiwake.member.Name
 import kotlinx.android.synthetic.main.normal_mode.*
@@ -63,7 +63,6 @@ class NormalMode : AppCompatActivity() {
 
     private fun moveMemberMain() {
         val intent = Intent(this, MemberMain::class.java)
-        intent.putExtra(MemberMain.ACTION_MODE, true)
         intent.putExtra(MemberMain.NORMAL_SELECT, true)
         intent.putExtra(MemberMain.MEMBER_ARRAY, memberArray)
         startActivityForResult(intent, 1000)
@@ -113,6 +112,7 @@ class NormalMode : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, i: Intent?) {
+        super.onActivityResult(requestCode, resultCode, i)
 
         if (resultCode == Activity.RESULT_OK) {
             memberArray = i!!.getSerializableExtra(MEMBER_ARRAY) as ArrayList<Name>
