@@ -138,34 +138,34 @@ class FragmentMemberChoiceMode : ListFragment() {
         var belongId = ""
         val sexGroup = layout.findViewById<View>(R.id.sexGroup) as RadioGroup
         val sexButton = layout.findViewById<View>(sexGroup.checkedRadioButtonId) as RadioButton
-        val error_age_range = layout.findViewById<View>(R.id.error_age_range) as TextView
+        val errorAgeRange = layout.findViewById<View>(R.id.error_age_range) as TextView
         var sex = sexButton.text as String
-        val max_age = layout.findViewById<View>(R.id.max_age) as TextInputEditText
-        val min_age = layout.findViewById<View>(R.id.min_age) as TextInputEditText
+        val maxAge1 = layout.findViewById<View>(R.id.max_age) as TextInputEditText
+        val minAge1 = layout.findViewById<View>(R.id.min_age) as TextInputEditText
 
         if (clear) {
             spinner.setSelection(0)
             sexGroup.check(R.id.noSelect)
-            max_age.setText("")
-            min_age.setText("")
+            maxAge1.setText("")
+            minAge1.setText("")
         }
 
-        val maxAge: Int = if (max_age.text.toString() != "") {
-            AddMember().getValue(max_age)
+        val maxAge: Int = if (maxAge1.text.toString() != "") {
+            AddMember().getValue(maxAge1)
         } else {
             1000
         }
-        val minAge: Int = if (min_age.text.toString() != "") {
-            AddMember().getValue(min_age)
+        val minAge: Int = if (minAge1.text.toString() != "") {
+            AddMember().getValue(minAge1)
         } else {
             0
         }
 
         if (maxAge < minAge) {
-            error_age_range.visibility = View.VISIBLE
-            error_age_range.setText(R.string.range_error)
+            errorAgeRange.visibility = View.VISIBLE
+            errorAgeRange.setText(R.string.range_error)
         } else {
-            error_age_range.visibility = View.GONE
+            errorAgeRange.visibility = View.GONE
 
             if (sex == getString(R.string.all)) {
                 sex = ""
@@ -186,7 +186,7 @@ class FragmentMemberChoiceMode : ListFragment() {
 
     }
 
-    fun filtering(builder: androidx.appcompat.app.AlertDialog.Builder) {
+    private fun filtering(builder: androidx.appcompat.app.AlertDialog.Builder) {
         val inflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val layout = inflater.inflate(R.layout.filter_member, activity!!.findViewById<View>(R.id.filter_member) as? ViewGroup)
         val belongSpinner = layout.findViewById<View>(R.id.filter_belong_spinner) as Spinner
@@ -299,6 +299,36 @@ class FragmentMemberChoiceMode : ListFragment() {
         }
 
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
+            val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
+
+            // アクションアイテム選択時
+            when (item.itemId) {
+
+                R.id.item_all_select -> {
+                    var i = 1
+                    while (i < listAdp.count) {
+                        lv.setItemChecked(i, true)
+                        i += 2
+                    }
+                }
+
+                R.id.item_sort -> {
+                    lv.clearChoices()
+                    listAdp.clearSelection()
+                    mode.title = "0" + getString(R.string.selected)
+                    Sort.memberSort(builder, requireActivity(), listAdp)
+                    val dialog = builder.create()
+                    dialog.show()
+                }
+
+                R.id.item_filter -> {
+                    lv.clearChoices()
+                    listAdp.clearSelection()
+                    mode.title = "0" + getString(R.string.selected)
+                    filtering(builder)
+                }
+            }
+
             return false
         }
 

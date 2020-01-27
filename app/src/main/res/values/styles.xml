@@ -10,6 +10,14 @@
         <item name="windowActionModeOverlay">true</item>
     </style>
 
+    <style name="MainTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- アクションモード -->
+        <item name="windowActionModeOverlay">true</item>
+    </style>
+
     <!-- hintのスタイル -->
 
     <style name="Topeka.TextAppearance.CategoryItem" parent="TextAppearance.AppCompat.Small">

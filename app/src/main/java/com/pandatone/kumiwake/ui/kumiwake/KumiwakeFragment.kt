@@ -1,10 +1,16 @@
 package com.pandatone.kumiwake.ui.kumiwake
 
+import android.content.Context.WINDOW_SERVICE
 import android.content.Intent
+import android.graphics.Point
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.Space
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.pandatone.kumiwake.Main2Activity
@@ -13,6 +19,7 @@ import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.kumiwake.QuickMode
 import com.pandatone.kumiwake.sekigime.SekigimeResult
 import com.pandatone.kumiwake.ui.DialogWarehouse
+import kotlinx.android.synthetic.main.fragment_kumiwake.*
 
 
 class KumiwakeFragment : Fragment() {
@@ -33,6 +40,18 @@ class KumiwakeFragment : Fragment() {
         kumiwakeViewModel =
                 ViewModelProviders.of(this).get(KumiwakeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_kumiwake, container, false)
+
+        val size = Point().also {
+            (context!!.getSystemService(WINDOW_SERVICE) as WindowManager).defaultDisplay.apply { getSize(it) }
+        }
+        val width = size.x
+        val height = size.y
+        val resize = 150 * height/width
+        val icon:ImageView = root.findViewById(R.id.main_icon)
+        val layoutParams = icon.layoutParams
+        layoutParams.height = resize
+        layoutParams.height = resize
+        icon.layoutParams = layoutParams
 
         val normalButton: TextView = root.findViewById(R.id.normal_mode_button)
         normalButton.setOnClickListener {
@@ -57,6 +76,12 @@ class KumiwakeFragment : Fragment() {
         }
 
         return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val space: Space = kumiwake_space
+        space.minimumHeight = Main2Activity.adHeight
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

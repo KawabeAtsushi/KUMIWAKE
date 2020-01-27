@@ -1,10 +1,15 @@
 package com.pandatone.kumiwake.ui.sekigime
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Point
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.Space
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.pandatone.kumiwake.Main2Activity
@@ -13,6 +18,8 @@ import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.kumiwake.QuickMode
 import com.pandatone.kumiwake.sekigime.SekigimeResult
 import com.pandatone.kumiwake.ui.DialogWarehouse
+import kotlinx.android.synthetic.main.activity_main2.*
+import kotlinx.android.synthetic.main.fragment_sekigime.*
 
 class SekigimeFragment : Fragment() {
 
@@ -32,6 +39,18 @@ class SekigimeFragment : Fragment() {
         sekigimeViewModel =
                 ViewModelProviders.of(this).get(SekigimeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_sekigime, container, false)
+
+        val size = Point().also {
+            (context!!.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.apply { getSize(it) }
+        }
+        val width = size.x
+        val height = size.y
+        val resize = 150 * height/width
+        val icon:ImageView = root.findViewById(R.id.main_icon)
+        val layoutParams = icon.layoutParams
+        layoutParams.height = resize
+        layoutParams.height = resize
+        icon.layoutParams = layoutParams
 
         val normalButton: TextView = root.findViewById(R.id.normal_mode_button)
         normalButton.setOnClickListener {

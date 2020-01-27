@@ -6,11 +6,38 @@
     android:layout_marginTop="?attr/actionBarSize"
     android:background="@color/green_background">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/background_anim1"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        app:lottie_colorFilter="#4FFF"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/green_bubble"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_icon"
+        app:layout_constraintBottom_toTopOf="@id/background_anim2"
+        />
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/background_anim2"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:scaleX="-1"
+        app:lottie_colorFilter="#4FFF"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/green_bubble"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/background_anim1"
+        app:layout_constraintBottom_toTopOf="@id/main_icon"
+        />
+
     <ImageView
-        android:id="@+id/category_icon3"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="30dp"
+        android:id="@+id/main_icon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:contentDescription="@string/sekigime"
         android:src="@drawable/icon_3"
         app:layout_constraintBottom_toTopOf="@id/normal_mode_button"
@@ -25,7 +52,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
-        android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
         android:background="@drawable/top_normal_button"
         android:clickable="true"
@@ -41,7 +67,7 @@
         android:textAllCaps="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/category_icon3"
+        app:layout_constraintTop_toBottomOf="@id/main_icon"
         app:layout_constraintBottom_toTopOf="@+id/quick_mode_button"/>
 
     <ImageView
@@ -73,6 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
         android:layout_marginEnd="30dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/top_quick_button"
         android:clickable="true"
         android:focusable="true"
@@ -85,10 +112,10 @@
         android:textColor="#ffffff"
         android:textSize="30sp"
         android:textAllCaps="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/sekigime_space"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/normal_mode_button" />
+        app:layout_constraintTop_toBottomOf="@+id/hintForNormalMode" />
 
     <ImageView
         android:id="@+id/QuickModeIcon"
@@ -111,6 +138,16 @@
         android:src="@drawable/ic_help_outline_dark_24dp"
         android:backgroundTint="#0000"
         app:layout_constraintEnd_toEndOf="@+id/quick_mode_button"
-        app:layout_constraintTop_toBottomOf="@+id/quick_mode_button" />
+        app:layout_constraintTop_toBottomOf="@+id/quick_mode_button"/>
+
+    <Space
+        android:id="@+id/sekigime_space"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="@dimen/hint_icon_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
