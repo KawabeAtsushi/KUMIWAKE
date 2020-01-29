@@ -40,18 +40,6 @@ class SekigimeFragment : Fragment() {
                 ViewModelProviders.of(this).get(SekigimeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_sekigime, container, false)
 
-        val size = Point().also {
-            (context!!.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.apply { getSize(it) }
-        }
-        val width = size.x
-        val height = size.y
-        val resize = 150 * height/width
-        val icon:ImageView = root.findViewById(R.id.main_icon)
-        val layoutParams = icon.layoutParams
-        layoutParams.height = resize
-        layoutParams.height = resize
-        icon.layoutParams = layoutParams
-
         val normalButton: TextView = root.findViewById(R.id.normal_mode_button)
         normalButton.setOnClickListener {
             SekigimeResult.Normalmode = true

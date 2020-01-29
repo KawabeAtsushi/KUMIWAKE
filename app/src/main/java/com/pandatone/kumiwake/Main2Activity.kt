@@ -1,12 +1,16 @@
 package com.pandatone.kumiwake
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Html
+import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
@@ -14,10 +18,12 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.pandatone.kumiwake.ui.DialogWarehouse
 import com.pandatone.kumiwake.ui.kumiwake.KumiwakeFragment
 import com.pandatone.kumiwake.ui.members.MembersFragment
 import com.pandatone.kumiwake.ui.sekigime.SekigimeFragment
 import com.pandatone.kumiwake.ui.settings.SettingsFragment
+import kotlinx.android.synthetic.main.activity_main2.*
 
 
 class Main2Activity : AppCompatActivity() {
@@ -47,9 +53,19 @@ class Main2Activity : AppCompatActivity() {
         //MobileAds.initialize(getApplicationContext(), "ca-app-pub-2315101868638564/8665451539");
         mAdView = findViewById<View>(R.id.adView) as AdView
         val adRequest = AdRequest.Builder()
-                .addTestDevice("BB707E3F7B5413908B2DD12063887489").build()
+                .addTestDevice("8124DDB5C185E5CA87E826BAB5D4AA10").build()
         mAdView.loadAd(adRequest)
-        adHeight = mAdView.height
+    }
+
+    override fun dispatchKeyEvent(e: KeyEvent): Boolean {
+        // 戻るボタンが押されたとき
+        when (e.keyCode) {
+            KeyEvent.KEYCODE_BACK -> {
+                DialogWarehouse(supportFragmentManager).decisionDialog("KUMIWAKE",getString(R.string.app_exit_confirmation)){finish()}
+                return true
+            }
+        }
+        return super.dispatchKeyEvent(e)
     }
 
 
@@ -62,6 +78,7 @@ class Main2Activity : AppCompatActivity() {
                 openFragment(KumiwakeFragment())
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Red.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.kumiwake) + "</font>")
+                container.background = getDrawable(R.color.red_background)
                 mAdView.visibility = View.VISIBLE
                 true
             }
@@ -70,6 +87,7 @@ class Main2Activity : AppCompatActivity() {
                 openFragment(SekigimeFragment())
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Green.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#616161'>" + getString(R.string.sekigime) + "</font>")
+                container.background = getDrawable(R.color.green_background)
                 mAdView.visibility = View.VISIBLE
                 true
             }
@@ -78,6 +96,7 @@ class Main2Activity : AppCompatActivity() {
                 openFragment(MembersFragment())
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Blue.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.member) + "</font>")
+                container.background = ColorDrawable(Color.WHITE)
                 mAdView.visibility = View.GONE
                 true
             }
@@ -86,6 +105,7 @@ class Main2Activity : AppCompatActivity() {
                 openFragment(SettingsFragment())
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Yellow.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#616161'>" + getString(R.string.setting_help) + "</font>")
+                container.background = getDrawable(R.color.yellow_background)
                 mAdView.visibility = View.GONE
                 true
             }
@@ -94,6 +114,8 @@ class Main2Activity : AppCompatActivity() {
     }
 
     private fun openFragment(fragment: Fragment) {
+        // アニメーション無しでバックスタックを消去
+        supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_layout, fragment)
         transaction.addToBackStack(null)
@@ -110,6 +132,5 @@ class Main2Activity : AppCompatActivity() {
 
     companion object {
         var sekigime = false
-        var adHeight = 0
     }
 }

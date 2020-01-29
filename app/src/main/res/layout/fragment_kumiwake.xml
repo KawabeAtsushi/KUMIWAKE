@@ -3,17 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="?attr/actionBarSize"
-    android:background="@color/red_background">
+    android:layout_marginTop="?attr/actionBarSize">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_image_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_image_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/background_anim1"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:adjustViewBounds="true"
         app:layout_constraintBottom_toTopOf="@id/background_anim2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_icon"
+        app:layout_constraintEnd_toEndOf="@id/guideline_image_end"
+        app:layout_constraintStart_toStartOf="@id/guideline_image_start"
+        app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_colorFilter="#9FFF"
         app:lottie_loop="true"
@@ -22,12 +37,14 @@
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/background_anim2"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
         android:scaleX="-1"
-        app:layout_constraintBottom_toTopOf="@id/main_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/background_anim1"
+        android:adjustViewBounds="true"
+        app:layout_constraintBottom_toTopOf="@id/half_guideline"
+        app:layout_constraintEnd_toEndOf="@id/guideline_image_end"
+        app:layout_constraintStart_toStartOf="@id/guideline_image_start"
+        app:layout_constraintTop_toBottomOf ="@id/background_anim1"
         app:lottie_autoPlay="true"
         app:lottie_colorFilter="#9FFF"
         app:lottie_loop="true"
@@ -35,16 +52,26 @@
 
     <ImageView
         android:id="@+id/main_icon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:contentDescription="@string/kumiwake"
         android:src="@drawable/kumiwake_icon"
-        app:layout_constraintBottom_toTopOf="@id/normal_mode_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/half_guideline"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_image_end"
+        app:layout_constraintStart_toStartOf="@id/guideline_image_start"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!--    後に記述したViewが前面に来る-->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/half_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
 
     <TextView
         android:id="@+id/normal_mode_button"
@@ -64,10 +91,9 @@
         android:textAllCaps="true"
         android:textColor="#ffffff"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/quick_mode_button"
+        app:layout_constraintTop_toBottomOf="@id/half_guideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_icon" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/NormalModeIcon"
@@ -98,7 +124,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginTop="10dp"
         android:background="@drawable/top_quick_button"
         android:clickable="true"
         android:focusable="true"
@@ -111,10 +136,10 @@
         android:textAllCaps="true"
         android:textColor="#ffffff"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@id/kumiwake_space"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hintForNormalMode" />
+        app:layout_constraintTop_toBottomOf="@id/normal_mode_button"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <ImageView
         android:id="@+id/QuickModeIcon"
@@ -137,15 +162,7 @@
         android:contentDescription="@string/hint"
         android:src="@drawable/ic_help_outline_dark_24dp"
         app:layout_constraintEnd_toEndOf="@+id/quick_mode_button"
-        app:layout_constraintTop_toBottomOf="@+id/quick_mode_button"/>
+        app:layout_constraintTop_toBottomOf="@+id/quick_mode_button" />
 
-    <Space
-        android:id="@+id/kumiwake_space"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="@dimen/hint_icon_size"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -164,4 +164,5 @@
     <string name="failed_import">データのインポートに失敗しました。\n\"KUMIWAKE_Backup\"へのパスを指定してください。</string>
     <string name="file_path">ファイルパス</string>
     <string name="failed_to_mkdirs">バックアップディレクトリの作成に失敗しました。</string>
+    <string name="app_exit_confirmation">アプリを終了しますか？</string>
 </resources>

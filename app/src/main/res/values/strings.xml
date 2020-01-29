@@ -151,7 +151,7 @@
     <string name="refresh_data">Refresh data</string>
     <string name="refresh_completed">Refresh was completed.</string>
     <string name="refresh_attention">If there is a problem with the data, it may be improved by refreshing the database.\n</string>
-    <string name="continue_register">Continue to register</string>
+    <string name="continue_register">Continue</string>
     <string name="title_activity_main2" translatable="false">Main2Activity</string>
     <string name="add_group">Add group</string>
     <string name="add_member">Add member</string>
@@ -162,4 +162,5 @@
     <string name="failed_import">Data import failed.\nPlease specify the path to \"KUMIWAKE_Backup\".</string>
     <string name="file_path">File Path</string>
     <string name="failed_to_mkdirs">Failed to make backup directory</string>
+    <string name="app_exit_confirmation">Quit app?</string>
 </resources>
