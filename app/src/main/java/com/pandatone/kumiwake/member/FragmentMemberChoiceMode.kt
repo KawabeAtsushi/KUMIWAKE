@@ -266,7 +266,7 @@ class FragmentMemberChoiceMode : ListFragment() {
                 while (i < listAdp.count) {
                     val checked = booleanArray.get(i)
                     val listItem: Name = nameList[i]
-                    if (checked && listItem.sex != "initial") {
+                    if (checked && listItem.sex != "Index") {
                         memberArray.add(listItem)
                     }
                     i += 2

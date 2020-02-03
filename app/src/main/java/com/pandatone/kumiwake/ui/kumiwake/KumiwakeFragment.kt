@@ -57,11 +57,11 @@ class KumiwakeFragment : Fragment() {
 
         val normalHelp: ImageButton = root.findViewById(R.id.hintForNormalMode)
         normalHelp.setOnClickListener {
-            dialog.confirmationDialog(getString(R.string.hint) + " : " + getString(R.string.normal_mode), getString(R.string.description_of_normal_kumiwake))
+            dialog.confirmationDialog(getString(R.string.normal_mode), getString(R.string.description_of_normal_kumiwake))
         }
         val quickHelp: ImageButton = root.findViewById(R.id.hintForQuickMode)
         quickHelp.setOnClickListener {
-            dialog.confirmationDialog(getString(R.string.hint) + " : " + getString(R.string.quick_mode), getString(R.string.description_of_quick_kumiwake))
+            dialog.confirmationDialog(getString(R.string.quick_mode), getString(R.string.description_of_quick_kumiwake))
         }
 
         return root
@@ -74,7 +74,7 @@ class KumiwakeFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_help -> dialog.confirmationDialog(getString(R.string.hint) + " : " + getString(R.string.kumiwake), getString(R.string.how_to_kumiwake))
+            R.id.menu_help -> dialog.confirmationDialog(getString(R.string.kumiwake), getString(R.string.how_to_kumiwake))
         }
         return true
     }

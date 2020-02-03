@@ -55,11 +55,11 @@ class SekigimeFragment : Fragment() {
 
         val normalHelp: ImageButton = root.findViewById(R.id.hintForNormalMode)
         normalHelp.setOnClickListener {
-            dialog.confirmationDialog(getString(R.string.hint) + " : " + getString(R.string.normal_mode), getString(R.string.description_of_normal_sekigime))
+            dialog.confirmationDialog(getString(R.string.normal_mode), getString(R.string.description_of_normal_sekigime))
         }
         val quickHelp: ImageButton = root.findViewById(R.id.hintForQuickMode)
         quickHelp.setOnClickListener {
-            dialog.confirmationDialog(getString(R.string.hint) + " : " + getString(R.string.quick_mode), getString(R.string.description_of_quick_sekigime))
+            dialog.confirmationDialog(getString(R.string.quick_mode), getString(R.string.description_of_quick_sekigime))
         }
 
         return root
@@ -72,7 +72,7 @@ class SekigimeFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_help -> dialog.confirmationDialog(getString(R.string.hint) + " : " + getString(R.string.sekigime), getString(R.string.how_to_sekigime))
+            R.id.menu_help -> dialog.confirmationDialog(getString(R.string.sekigime), getString(R.string.how_to_sekigime))
         }
         return true
     }

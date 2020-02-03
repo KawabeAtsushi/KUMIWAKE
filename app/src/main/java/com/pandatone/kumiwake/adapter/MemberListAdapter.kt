@@ -160,7 +160,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
                         Name(
                                 0,
                                 null.toString(),
-                                "initial",
+                                "Index",
                                 c.getInt(3),
                                 c.getInt(4),
                                 null.toString(),
@@ -170,7 +170,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
                         Name(
                                 0,
                                 null.toString(),
-                                "initial",
+                                "Index",
                                 c.getInt(3),
                                 c.getInt(4),
                                 null.toString(),

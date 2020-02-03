@@ -34,7 +34,7 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
     }
 
     override fun isEnabled(position: Int): Boolean {
-        return getItem(position)!!.sex != "initial"
+        return getItem(position)!!.sex != "Index"
     }
 
     @SuppressLint("InflateParams")
