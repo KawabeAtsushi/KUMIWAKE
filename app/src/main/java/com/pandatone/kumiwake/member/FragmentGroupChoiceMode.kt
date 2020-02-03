@@ -7,7 +7,6 @@ import android.text.TextUtils
 import android.view.*
 import android.widget.AbsListView
 import android.widget.AdapterView
-import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.ListFragment
@@ -15,8 +14,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.GroupNameListAdapter
-import com.pandatone.kumiwake.ui.members.AddGroup
-import com.pandatone.kumiwake.ui.members.GroupClick
 import java.io.IOException
 
 

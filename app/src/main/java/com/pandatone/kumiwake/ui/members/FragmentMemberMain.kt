@@ -13,6 +13,8 @@ import com.google.android.material.textfield.TextInputEditText
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.MemberListAdapter
 import com.pandatone.kumiwake.adapter.NameListAdapter
+import com.pandatone.kumiwake.member.AddMember
+import com.pandatone.kumiwake.member.MemberClick
 import com.pandatone.kumiwake.member.Name
 import com.pandatone.kumiwake.member.Sort
 import java.io.IOException

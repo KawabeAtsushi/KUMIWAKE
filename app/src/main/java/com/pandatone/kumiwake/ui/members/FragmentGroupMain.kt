@@ -15,6 +15,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.GroupNameListAdapter
+import com.pandatone.kumiwake.member.AddGroup
+import com.pandatone.kumiwake.member.GroupClick
 import com.pandatone.kumiwake.member.Sort
 import java.io.IOException
 

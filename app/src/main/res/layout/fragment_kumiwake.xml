@@ -6,14 +6,14 @@
     android:layout_marginTop="?attr/actionBarSize">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_image_start"
+        android:id="@+id/guideline_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.1" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_image_end"
+        android:id="@+id/guideline_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -26,8 +26,8 @@
         android:layout_marginTop="20dp"
         android:adjustViewBounds="true"
         app:layout_constraintBottom_toTopOf="@id/background_anim2"
-        app:layout_constraintEnd_toEndOf="@id/guideline_image_end"
-        app:layout_constraintStart_toStartOf="@id/guideline_image_start"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_colorFilter="#9FFF"
@@ -42,8 +42,8 @@
         android:scaleX="-1"
         android:adjustViewBounds="true"
         app:layout_constraintBottom_toTopOf="@id/half_guideline"
-        app:layout_constraintEnd_toEndOf="@id/guideline_image_end"
-        app:layout_constraintStart_toStartOf="@id/guideline_image_start"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toBottomOf ="@id/background_anim1"
         app:lottie_autoPlay="true"
         app:lottie_colorFilter="#9FFF"
@@ -61,8 +61,8 @@
         android:contentDescription="@string/kumiwake"
         android:src="@drawable/kumiwake_icon"
         app:layout_constraintBottom_toTopOf="@id/half_guideline"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_image_end"
-        app:layout_constraintStart_toStartOf="@id/guideline_image_start"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!--    後に記述したViewが前面に来る-->
@@ -76,24 +76,24 @@
     <TextView
         android:id="@+id/normal_mode_button"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
-        android:layout_marginEnd="30dp"
+        android:layout_height="@dimen/main_icon_size"
+        android:layout_marginStart="30dp"
         android:background="@drawable/top_normal_button"
         android:clickable="true"
         android:focusable="true"
-        android:gravity="start"
+        android:gravity="center_vertical"
         android:paddingStart="@dimen/main_button_start_padding"
         android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingEnd="5dp"
+        android:paddingEnd="15dp"
         android:paddingBottom="@dimen/activity_vertical_margin"
+        android:autoSizeTextType="uniform"
         android:text="@string/normal_mode"
         android:textAllCaps="true"
         android:textColor="#ffffff"
-        android:textSize="30sp"
+        android:textSize="@dimen/main_button_text_size"
         app:layout_constraintTop_toBottomOf="@id/half_guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toStartOf="@id/guideline_start" />
 
     <ImageView
         android:id="@+id/NormalModeIcon"
@@ -121,23 +121,23 @@
     <TextView
         android:id="@+id/quick_mode_button"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
-        android:layout_marginEnd="30dp"
+        android:layout_height="@dimen/main_icon_size"
+        android:layout_marginStart="30dp"
         android:background="@drawable/top_quick_button"
         android:clickable="true"
         android:focusable="true"
-        android:gravity="start"
+        android:gravity="center_vertical"
         android:paddingStart="@dimen/main_button_start_padding"
         android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingEnd="5dp"
+        android:paddingEnd="15dp"
         android:paddingBottom="@dimen/activity_vertical_margin"
+        android:autoSizeTextType="uniform"
         android:text="@string/quick_mode"
         android:textAllCaps="true"
         android:textColor="#ffffff"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="@dimen/main_button_text_size"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toBottomOf="@id/normal_mode_button"
         app:layout_constraintBottom_toBottomOf="parent" />
 

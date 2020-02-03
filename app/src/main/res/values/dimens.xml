@@ -31,4 +31,5 @@
     <dimen name="hint_icon_size">30dp</dimen>
     <dimen name="main_button_start_padding">40dp</dimen>
     <dimen name="main_button_margin">40dp</dimen>
+    <dimen name="main_button_text_size">28sp</dimen>
 </resources>
