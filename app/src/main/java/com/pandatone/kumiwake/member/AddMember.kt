@@ -321,7 +321,7 @@ class AddMember : AppCompatActivity() {
         }
     }
 
-    fun getValue(toText: EditText): Int {
+    private fun getValue(toText: EditText): Int {
         val text = toText.text.toString()
         var a = 0
         if (text.isNotEmpty()) {

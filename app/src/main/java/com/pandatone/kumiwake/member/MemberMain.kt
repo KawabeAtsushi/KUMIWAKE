@@ -42,7 +42,6 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
 
         val i = intent
         groupId = i.getIntExtra(GROUP_ID, -1)
-        kumiwake_select = i.getBooleanExtra(NORMAL_SELECT, false)
         if (i.getSerializableExtra(MEMBER_ARRAY) != null) {
             memberArray = i.getSerializableExtra(MEMBER_ARRAY) as ArrayList<Name>
         }
@@ -70,15 +69,6 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
                     decision.translationY = 1000 * positionOffset * (1 - 2 * position) //0to1->up,1to0->down
                 }
             })
-    }
-
-    private fun visibleViews() {
-            decision.visibility = View.VISIBLE
-            FragmentGroupChoiceMode.adviceInFG.visibility = View.VISIBLE
-            FragmentMemberChoiceMode.fab.hide()
-            FragmentGroupChoiceMode.fab.hide()
-            FragmentMemberChoiceMode.fab.isEnabled = false
-            FragmentGroupChoiceMode.fab.isEnabled = false
     }
 
 
@@ -125,7 +115,7 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
             }
         }
 
-        visibleViews()
+        decision.visibility = View.VISIBLE
 
         return true
     }
@@ -163,10 +153,8 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
 
         //intent key
         const val GROUP_ID = "group_id"
-        const val NORMAL_SELECT = "normal_select"
         const val MEMBER_ARRAY = "memberArray"
 
-        var kumiwake_select: Boolean = false
         var groupId: Int = 0
 
         var memberArray: ArrayList<Name> = ArrayList()

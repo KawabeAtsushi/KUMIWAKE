@@ -24,6 +24,7 @@ import java.io.IOException
 class FragmentGroupChoiceMode : ListFragment() {
     private lateinit var listItem: GroupListAdapter.Group
     private var checkedCount = 0
+    private lateinit var dbAdapter: GroupListAdapter
 
     // 必須*
     // Fragment生成時にシステムが呼び出す
@@ -38,9 +39,10 @@ class FragmentGroupChoiceMode : ListFragment() {
     // Fragmentが初めてUIを描画する時にシステムが呼び出す
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.tab_group, container, false)
-        adviceInFG = view.findViewById<View>(R.id.advice_in_fg) as TextView
-        fab = view.findViewById<View>(R.id.group_fab) as FloatingActionButton
-        fab.setOnClickListener { moveAddGroup() }
+        val adviceInFG = view.findViewById<View>(R.id.advice_in_fg) as TextView
+        val fab = view.findViewById<View>(R.id.group_fab) as FloatingActionButton
+        adviceInFG.visibility = View.VISIBLE
+        fab.hide()
 
         // Fragmentとlayoutを紐付ける
         super.onCreateView(inflater, container, savedInstanceState)
@@ -56,41 +58,6 @@ class FragmentGroupChoiceMode : ListFragment() {
     // UIパーツの設定などを行う
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         listView.isFastScrollEnabled = true
-
-        listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            //行をクリックした時の処理
-            val builder = AlertDialog.Builder(activity!!)
-            val builder2 = android.app.AlertDialog.Builder(activity)
-            val inflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val view2 = inflater.inflate(R.layout.group_info, activity!!.findViewById<View>(R.id.info_layout) as ViewGroup?)
-            val groupName = groupList[position].group
-            if (MemberMain.searchView.isActivated)
-                MemberMain.searchView.onActionViewCollapsed()
-            FragmentMemberChoiceMode().loadName()
-
-            val items = arrayOf(getString(R.string.information), getString(R.string.edit), getString(R.string.delete))
-            builder.setTitle(groupName)
-            builder.setItems(items) { _, which ->
-                when (which) {
-                    0 -> {
-                        GroupClick.groupInfoDialog(view2, builder2)
-                        GroupClick.setInfo(context!!, groupList[position],FragmentMemberChoiceMode().searchBelong(groupList[position].id.toString()))
-                        val dialog2 = builder2.create()
-                        dialog2.show()
-                        GroupClick.okBt.setOnClickListener { dialog2.dismiss() }
-                    }
-                    1 -> {
-                        val i = Intent(activity, AddGroup::class.java)
-                        i.putExtra(AddGroup.GROUP_ID, groupList[position].id)
-                        startActivity(i)
-                    }
-                    2 -> deleteSingleGroup(position, groupName)
-                }
-            }
-            val dialog = builder.create()
-            dialog.show()
-        }
-
         listView.isTextFilterEnabled = true
     }
 
@@ -129,26 +96,6 @@ class FragmentGroupChoiceMode : ListFragment() {
         super.onStart()
         loadName()
         FragmentMemberChoiceMode().loadName()
-    }
-
-    private fun deleteSingleGroup(position: Int, group: String) {
-        val builder = AlertDialog.Builder(activity!!)
-        builder.setTitle(group)
-        builder.setMessage(R.string.Do_delete)
-        // OKの時の処理
-        builder.setPositiveButton("OK") { _, _ ->
-            dbAdapter.open()
-            listItem = groupList[position]
-            val listId = listItem.id
-            dbAdapter.selectDelete(listId.toString())
-            dbAdapter.close()    // DBを閉じる
-            FragmentMemberChoiceMode().loadName()
-            loadName()
-        }
-
-        builder.setNegativeButton(R.string.cancel) { _, _ -> }
-        val dialog = builder.create()
-        dialog.show()
     }
 
     //////////////////////////////////////////////////////////////////////////////////////
@@ -230,10 +177,7 @@ class FragmentGroupChoiceMode : ListFragment() {
 
     companion object {
         internal lateinit var listAdp: GroupNameListAdapter
-        internal lateinit var dbAdapter: GroupListAdapter
         internal var groupList: ArrayList<GroupListAdapter.Group> = ArrayList()
-        internal lateinit var fab: FloatingActionButton
-        internal lateinit var adviceInFG: TextView
     }
 
 }

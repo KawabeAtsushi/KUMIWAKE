@@ -17,6 +17,7 @@ import com.pandatone.kumiwake.member.FragmentMemberChoiceMode
 import com.pandatone.kumiwake.member.Name
 import java.io.IOException
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MemberListAdapter(private val context: Context) : BaseAdapter() {
@@ -196,6 +197,12 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
             } while (c.moveToNext())
         }
         c.close()
+    }
+
+    fun getAllMembers(): ArrayList<Name>{
+        val nameList: ArrayList<Name> = ArrayList()
+        getCursor(getDB,nameList,false)
+        return nameList
     }
 
     fun addBelong(id: String, newBelong: String) {
