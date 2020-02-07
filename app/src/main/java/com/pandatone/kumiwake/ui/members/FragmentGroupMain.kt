@@ -170,14 +170,10 @@ class FragmentGroupMain : ListFragment() {
             menu.getItem(2).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
             menu.getItem(3).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
             menu.getItem(4).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
-            val searchIcon = menu.findItem(R.id.search_view)
-            val deleteIcon = menu.findItem(R.id.item_delete)
-            val itemFilter = menu.findItem(R.id.item_filter)
-            val allSelect = menu.findItem(R.id.item_all_select)
-            itemFilter.isVisible = false
-            searchIcon.isVisible = false
-            deleteIcon.isVisible = true
-            allSelect.isVisible = true
+            menu.findItem(R.id.search_view).isVisible = false
+            menu.findItem(R.id.item_delete).isVisible = true
+            menu.findItem(R.id.item_filter).isVisible = false
+            menu.findItem(R.id.item_all_select).isVisible = true
             return true
         }
 

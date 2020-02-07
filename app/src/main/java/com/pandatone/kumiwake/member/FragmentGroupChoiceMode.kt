@@ -22,7 +22,6 @@ import java.io.IOException
  * Created by atsushi_2 on 2016/02/23.
  */
 class FragmentGroupChoiceMode : ListFragment() {
-    private lateinit var listItem: GroupListAdapter.Group
     private var checkedCount = 0
     private lateinit var dbAdapter: GroupListAdapter
 
@@ -47,11 +46,6 @@ class FragmentGroupChoiceMode : ListFragment() {
         // Fragmentとlayoutを紐付ける
         super.onCreateView(inflater, container, savedInstanceState)
         return view
-    }
-
-    private fun moveAddGroup() {
-        val intent = Intent(activity, AddGroup::class.java)
-        startActivity(intent)
     }
 
     // Viewの生成が完了した後に呼ばれる

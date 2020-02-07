@@ -8,10 +8,11 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
 import com.pandatone.kumiwake.adapter.NameListAdapter
 
-class MembersMenuAction(val context: Context) {
+class MembersMenuAction(val context: Context,val groupList: ArrayList<GroupListAdapter.Group>) {
 
     val dbAdapter = MemberListAdapter(context)
 
@@ -68,7 +69,7 @@ class MembersMenuAction(val context: Context) {
         }
     }
 
-    private fun filtering(builder: androidx.appcompat.app.AlertDialog.Builder) {
+    fun filtering(builder: androidx.appcompat.app.AlertDialog.Builder) {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val layout = inflater.inflate(R.layout.filter_member, R.id.filter_member as ViewGroup)
         val belongSpinner = layout.findViewById<View>(R.id.filter_belong_spinner) as Spinner
@@ -100,7 +101,7 @@ class MembersMenuAction(val context: Context) {
             NameListAdapter.sortType = "ASC"
             dbAdapter.sortNames(NameListAdapter.nowSort, NameListAdapter.sortType)
             filter(layout, belongSpinner, false)
-            listAdp.notifyDataSetChanged()
+            //listAdp.notifyDataSetChanged()
             dialog2.dismiss()
         }
 

@@ -135,7 +135,7 @@ class FragmentMemberMain : ListFragment() {
             }
 
             R.id.item_filter -> {
-                filtering(builder)
+                MembersMenuAction(activity!!,FragmentGroupMain.groupList).filtering(builder)
             }
         }
 
@@ -212,7 +212,7 @@ class FragmentMemberMain : ListFragment() {
                     lv.clearChoices()
                     listAdp.clearSelection()
                     mode.title = "0" + getString(R.string.selected)
-                    filtering(builder)
+                    MembersMenuAction(activity!!,FragmentGroupMain.groupList).filtering(builder)
                 }
             }
 

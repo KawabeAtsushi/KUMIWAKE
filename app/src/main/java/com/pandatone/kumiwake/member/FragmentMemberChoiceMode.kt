@@ -15,6 +15,7 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.MemberListAdapter
 import com.pandatone.kumiwake.adapter.NameListAdapter
 import com.pandatone.kumiwake.kumiwake.NormalMode
+import com.pandatone.kumiwake.ui.members.MembersMenuAction
 import java.io.IOException
 import java.util.*
 
@@ -123,7 +124,7 @@ class FragmentMemberChoiceMode : ListFragment() {
             }
 
             R.id.item_filter -> {
-                filtering(builder)
+                MembersMenuAction(activity!!,FragmentGroupChoiceMode.groupList).filtering(builder)
             }
         }
 
@@ -205,7 +206,7 @@ class FragmentMemberChoiceMode : ListFragment() {
                     lv.clearChoices()
                     listAdp.clearSelection()
                     mode.title = "0" + getString(R.string.selected)
-                    filtering(builder)
+                    MembersMenuAction(activity!!,FragmentGroupChoiceMode.groupList).filtering(builder)
                 }
             }
 
@@ -246,23 +247,6 @@ class FragmentMemberChoiceMode : ListFragment() {
             dbAdapter.picName(newText)
         }
         listAdp.notifyDataSetChanged()
-    }
-
-    fun searchBelong(belongId: String): ArrayList<Name> {
-        val memberArrayByBelong = ArrayList<Name>()
-        dbAdapter.open()
-        var i = 1
-        while (i < listAdp.count) {
-            val listItem: Name = nameList[i]
-            val belongText = listItem.belong
-            val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            if (Arrays.asList<String>(*belongArray).contains(belongId)) {
-                memberArrayByBelong.add(Name(listItem.id, listItem.name, listItem.sex, 0, 0, null.toString(), null.toString(), null.toString()))
-            }
-            i += 2
-        }
-        dbAdapter.close()
-        return memberArrayByBelong
     }
 
     fun checkByGroup(groupId: Int) {

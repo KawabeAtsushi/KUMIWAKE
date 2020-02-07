@@ -42,6 +42,7 @@ class AddGroup : AppCompatActivity() {
     private var members: ArrayList<Name> = ArrayList()
     private lateinit var groupEditText: AppCompatEditText
     private lateinit var dbAdapter: GroupListAdapter
+    private lateinit var mbAdapter: MemberListAdapter
 
     private val groupId: Int
         get() {
@@ -57,6 +58,7 @@ class AddGroup : AppCompatActivity() {
         setContentView(R.layout.add_group)
         ButterKnife.bind(this)
         dbAdapter = GroupListAdapter(this)
+        mbAdapter = MemberListAdapter(this)
         findViews()
         val i = intent
         editId = i.getIntExtra(GROUP_ID, nextId)
@@ -165,7 +167,6 @@ class AddGroup : AppCompatActivity() {
     }
 
     private fun updateBelong() {
-        val mbAdapter = MemberListAdapter(this)
         mbAdapter.open()     // DBの読み込み(読み書きの方)
         var i = 1
         val nameList = mbAdapter.getAllMembers()
@@ -183,7 +184,6 @@ class AddGroup : AppCompatActivity() {
         }
 
         mbAdapter.close()    // DBを閉じる
-        loadName()
     }
 
     private fun deleteBelongInfo(listItem: Name, groupId: Int, listId: Int) {
@@ -201,7 +201,7 @@ class AddGroup : AppCompatActivity() {
             for (item in list) {
                 newBelong.append("$item,")
             }
-            dbAdapter.addBelong(listId.toString(), newBelong.toString())
+            mbAdapter.addBelong(listId.toString(), newBelong.toString())
         }
     }
 
