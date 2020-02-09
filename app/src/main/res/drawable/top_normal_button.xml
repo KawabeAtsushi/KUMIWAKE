@@ -4,7 +4,7 @@
     <!-- ボタンが押されていない状態 -->
     <item android:state_pressed="false">
 
-        <shape android:shape="rectangle">
+        <shape android:shape="oval">
 
             <!-- 角の丸み -->
             <corners android:bottomRightRadius="15dp" android:topRightRadius="15dp" />

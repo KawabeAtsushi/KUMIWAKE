@@ -57,9 +57,11 @@
     <string name="move_confirmation">move to confirmation</string>
     <string name="all">All</string>
     <string name="normal_mode">Normal mode</string>
+    <string name="top_normal_mode">Normal\nmode</string>
     <string name="nothing">Nothing</string>
     <string name="people">ppl</string>
     <string name="quick_mode">Quick mode</string>
+    <string name="top_quick_mode">Quick\nmode</string>
     <string name="re_kumiwake_title">Re:KUMIWAKE</string>
     <string name="re_kumiwake">try again</string>
     <string name="re_kumiwake_description">Execute KUMIWAKE(grouping) again on the same conditions.</string>

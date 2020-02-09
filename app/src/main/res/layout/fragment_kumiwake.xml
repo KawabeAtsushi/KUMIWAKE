@@ -73,27 +73,32 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/quarter_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75" />
+
     <TextView
         android:id="@+id/normal_mode_button"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/main_icon_size"
-        android:layout_marginStart="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
         android:background="@drawable/top_normal_button"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center_vertical"
-        android:paddingStart="@dimen/main_button_start_padding"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingEnd="15dp"
-        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:padding="35dp"
         android:autoSizeTextType="uniform"
-        android:text="@string/normal_mode"
+        android:text="@string/top_normal_mode"
         android:textAllCaps="true"
         android:textColor="#ffffff"
         android:textSize="@dimen/main_button_text_size"
+        android:textAlignment="center"
         app:layout_constraintTop_toBottomOf="@id/half_guideline"
-        app:layout_constraintEnd_toEndOf="@id/guideline_end"
-        app:layout_constraintStart_toStartOf="@id/guideline_start" />
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintBottom_toTopOf="@id/quarter_guideline"/>
 
     <ImageView
         android:id="@+id/NormalModeIcon"
@@ -103,10 +108,8 @@
         android:contentDescription="@string/normal_mode"
         android:padding="12dp"
         android:src="@drawable/ic_star_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/normal_mode_button"
-        app:layout_constraintEnd_toStartOf="@+id/normal_mode_button"
-        app:layout_constraintStart_toStartOf="@+id/normal_mode_button"
-        app:layout_constraintTop_toTopOf="@+id/normal_mode_button" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+        app:layout_constraintBottom_toBottomOf="@+id/normal_mode_button"/>
 
     <ImageButton
         android:id="@+id/hintForNormalMode"
@@ -116,53 +119,51 @@
         android:contentDescription="@string/hint"
         android:src="@drawable/ic_help_outline_dark_24dp"
         app:layout_constraintEnd_toEndOf="@+id/normal_mode_button"
-        app:layout_constraintTop_toBottomOf="@+id/normal_mode_button" />
+        app:layout_constraintTop_toBottomOf="@id/normal_mode_button"
+        app:layout_constraintBottom_toBottomOf="@id/normal_mode_button"/>
 
     <TextView
         android:id="@+id/quick_mode_button"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/main_icon_size"
-        android:layout_marginStart="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
         android:background="@drawable/top_quick_button"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center_vertical"
-        android:paddingStart="@dimen/main_button_start_padding"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingEnd="15dp"
-        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:padding="35dp"
         android:autoSizeTextType="uniform"
-        android:text="@string/quick_mode"
+        android:text="@string/top_quick_mode"
+        android:textAlignment="center"
         android:textAllCaps="true"
         android:textColor="#ffffff"
         android:textSize="@dimen/main_button_text_size"
         app:layout_constraintEnd_toEndOf="@id/guideline_end"
-        app:layout_constraintStart_toStartOf="@id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@id/normal_mode_button"
+        app:layout_constraintTop_toBottomOf="@id/quarter_guideline"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <ImageView
         android:id="@+id/QuickModeIcon"
         android:layout_width="@dimen/main_icon_size"
         android:layout_height="@dimen/main_icon_size"
-        android:background="@drawable/top_quick_text_background"
+        android:background="@drawable/top_quick_button"
         android:contentDescription="@string/quick_mode"
         android:padding="12dp"
         android:src="@drawable/ic_flash_on_black_24dp"
         app:layout_constraintBottom_toBottomOf="@+id/quick_mode_button"
-        app:layout_constraintEnd_toStartOf="@+id/quick_mode_button"
         app:layout_constraintStart_toStartOf="@+id/quick_mode_button"
-        app:layout_constraintTop_toTopOf="@+id/quick_mode_button" />
+        app:layout_constraintEnd_toStartOf="@+id/quick_mode_button"/>
 
     <ImageButton
         android:id="@+id/hintForQuickMode"
         android:layout_width="@dimen/hint_icon_size"
         android:layout_height="@dimen/hint_icon_size"
-        android:backgroundTint="#0000"
+        android:padding="30dp"
+        android:background="@drawable/top_quick_button"
         android:contentDescription="@string/hint"
         android:src="@drawable/ic_help_outline_dark_24dp"
-        app:layout_constraintEnd_toEndOf="@+id/quick_mode_button"
-        app:layout_constraintTop_toBottomOf="@+id/quick_mode_button" />
+        app:layout_constraintStart_toEndOf="@id/quick_mode_button"
+        app:layout_constraintBottom_toBottomOf="@id/quick_mode_button"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

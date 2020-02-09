@@ -4,10 +4,7 @@
     <!-- ボタンが押されていない状態 -->
     <item android:state_pressed="false">
 
-        <shape android:shape="rectangle">
-
-            <!-- 角の丸み -->
-            <corners android:bottomRightRadius="15dp" android:topRightRadius="15dp" />
+        <shape android:shape="oval">
 
             <solid android:color="@color/green_unpressed" />
 
