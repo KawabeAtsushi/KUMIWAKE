@@ -104,22 +104,22 @@
         android:id="@+id/NormalModeIcon"
         android:layout_width="@dimen/main_icon_size"
         android:layout_height="@dimen/main_icon_size"
-        android:background="@drawable/top_normal_text_background"
+        android:background="@drawable/top_normal_button"
         android:contentDescription="@string/normal_mode"
         android:padding="12dp"
         android:src="@drawable/ic_star_black_24dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-        app:layout_constraintBottom_toBottomOf="@+id/normal_mode_button"/>
+        app:layout_constraintStart_toEndOf="@+id/normal_mode_button"
+        app:layout_constraintTop_toTopOf="@+id/normal_mode_button"/>
 
     <ImageButton
         android:id="@+id/hintForNormalMode"
         android:layout_width="@dimen/hint_icon_size"
         android:layout_height="@dimen/hint_icon_size"
-        android:backgroundTint="#0000"
+        android:padding="30dp"
+        android:background="@drawable/top_normal_button"
         android:contentDescription="@string/hint"
         android:src="@drawable/ic_help_outline_dark_24dp"
-        app:layout_constraintEnd_toEndOf="@+id/normal_mode_button"
-        app:layout_constraintTop_toBottomOf="@id/normal_mode_button"
+        app:layout_constraintStart_toEndOf="@+id/normal_mode_button"
         app:layout_constraintBottom_toBottomOf="@id/normal_mode_button"/>
 
     <TextView
