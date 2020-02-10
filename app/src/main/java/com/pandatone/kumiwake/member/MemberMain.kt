@@ -151,7 +151,7 @@ class MemberMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         lateinit var decision: Button
         lateinit var viewPager: ViewPager
 
-        //intent key
+        //intent keys
         const val GROUP_ID = "group_id"
         const val MEMBER_ARRAY = "memberArray"
 

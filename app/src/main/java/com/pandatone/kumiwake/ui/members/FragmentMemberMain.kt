@@ -290,30 +290,6 @@ class FragmentMemberMain : ListFragment() {
         listAdp.notifyDataSetChanged()
     }
 
-    fun duplicateBelong() {
-        dbAdapter.open()
-        var i = 1
-        while (i < listAdp.count) {
-            val listItem: Name = nameList[i]
-            val listId = listItem.id
-            val belongText = listItem.belong
-            val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            val list = ArrayList(Arrays.asList<String>(*belongArray))
-            val hs = HashSet<String>()
-            hs.addAll(list)
-            list.clear()
-            list.addAll(hs)
-            val newBelong = StringBuilder()
-
-            for (item in list) {
-                newBelong.append("$item,")
-            }
-            dbAdapter.addBelong(listId.toString(), newBelong.toString())
-            i += 2
-        }
-        dbAdapter.close()
-    }
-
     fun deleteBelongInfoAll(groupId: Int) {
         dbAdapter.open()
         for (member in nameList) {
@@ -356,20 +332,6 @@ class FragmentMemberMain : ListFragment() {
         }
         dbAdapter.close()
         return memberArrayByBelong
-    }
-
-    fun checkByGroup(groupId: Int) {
-        var i = 1
-        while (i < listAdp.count) {
-            val listItem: Name = nameList[i]
-            val belongText = listItem.belong
-            val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            val list = ArrayList(Arrays.asList<String>(*belongArray))
-            if (list.contains(groupId.toString())) {
-                lv.setItemChecked(i, true)
-            }
-            i += 2
-        }
     }
 
     fun updateBelongNo() {

@@ -164,4 +164,5 @@
     <string name="file_path">File Path</string>
     <string name="failed_to_mkdirs">Failed to make backup directory</string>
     <string name="app_exit_confirmation">Quit app?</string>
+    <string name="edit_exit_confirmation">Quit edit?\nEdits are discarded.</string>
 </resources>

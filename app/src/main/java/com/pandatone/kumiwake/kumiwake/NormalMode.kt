@@ -63,7 +63,6 @@ class NormalMode : AppCompatActivity() {
 
     private fun moveMemberMain() {
         val intent = Intent(this, MemberMain::class.java)
-        intent.putExtra(MemberMain.NORMAL_SELECT, true)
         intent.putExtra(MemberMain.MEMBER_ARRAY, memberArray)
         startActivityForResult(intent, 1000)
     }
@@ -115,7 +114,7 @@ class NormalMode : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, i)
 
         if (resultCode == Activity.RESULT_OK) {
-            memberArray = i!!.getSerializableExtra(MEMBER_ARRAY) as ArrayList<Name>
+            memberArray = i!!.getSerializableExtra(MemberMain.MEMBER_ARRAY) as ArrayList<Name>
         }
 
         adapter = MBListViewAdapter(this, memberArray, false, showLeaderNo = false)
@@ -129,7 +128,6 @@ class NormalMode : AppCompatActivity() {
         internal lateinit var listView: ListView
         internal lateinit var memberArray: ArrayList<Name>
         //intent keys
-        const val MEMBER_ARRAY = "memberArray"
         const val NORMAL_MEMBER_ARRAY = "normal_memberArray"
         const val NORMAL_GROUP_ARRAY = "normal_groupArray"
     }

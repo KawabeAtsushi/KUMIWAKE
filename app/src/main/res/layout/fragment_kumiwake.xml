@@ -126,7 +126,8 @@
         android:id="@+id/quick_mode_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/top_quick_button"
         android:clickable="true"
         android:focusable="true"
@@ -138,7 +139,7 @@
         android:textAllCaps="true"
         android:textColor="#ffffff"
         android:textSize="@dimen/main_button_text_size"
-        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintEnd_toStartOf="@id/hintForQuickMode"
         app:layout_constraintTop_toBottomOf="@id/quarter_guideline"
         app:layout_constraintBottom_toBottomOf="parent" />
 
@@ -151,7 +152,6 @@
         android:padding="12dp"
         android:src="@drawable/ic_flash_on_black_24dp"
         app:layout_constraintBottom_toBottomOf="@+id/quick_mode_button"
-        app:layout_constraintStart_toStartOf="@+id/quick_mode_button"
         app:layout_constraintEnd_toStartOf="@+id/quick_mode_button"/>
 
     <ImageButton
@@ -162,7 +162,7 @@
         android:background="@drawable/top_quick_button"
         android:contentDescription="@string/hint"
         android:src="@drawable/ic_help_outline_dark_24dp"
-        app:layout_constraintStart_toEndOf="@id/quick_mode_button"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
         app:layout_constraintBottom_toBottomOf="@id/quick_mode_button"/>
 
 
