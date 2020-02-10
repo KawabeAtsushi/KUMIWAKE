@@ -8,13 +8,13 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.ArrayAdapter
 import com.pandatone.kumiwake.member.FragmentGroupChoiceMode
+import com.pandatone.kumiwake.member.Group
 import java.io.IOException
-import java.io.Serializable
 
 /**
  * Created by atsushi_2 on 2016/03/20.
  */
-class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(context, 0) {
+class GroupListAdapter(context: Context) : ArrayAdapter<Group>(context, 0) {
 
     private var dbHelper: DatabaseHelper
 
@@ -78,19 +78,19 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
 
     //Listの情報取得
     fun getCursor(c: Cursor, groupList: ArrayList<Group>) {
-        var listItem: Group
+        var group: Group
 
         groupList.clear()
 
         if (c.moveToFirst()) {
             do {
-                listItem = Group(
+                group = Group(
                         c.getInt(c.getColumnIndex(GP_ID)),
                         c.getString(c.getColumnIndex(GP_NAME)),
                         c.getString(c.getColumnIndex(GP_READ)),
                         c.getInt(c.getColumnIndex(GP_BELONG))
                 )
-                groupList.add(listItem)          // 取得した要素をgroupListに追加
+                groupList.add(group)          // 取得した要素をgroupListに追加
 
             } while (c.moveToNext())
         }
@@ -162,24 +162,6 @@ class GroupListAdapter(context: Context) : ArrayAdapter<GroupListAdapter.Group>(
             e.printStackTrace()
         }
         close()
-    }
-
-    class Group(id: Int, group_name: String, group_name_read: String, belong_no: Int) : Serializable {
-        var id: Int
-            private set
-        var group: String
-            private set
-        private var groupRead: String
-        var belongNo: Int
-            private set
-
-        init {
-            this.id = id
-            this.group = group_name
-            this.groupRead = group_name_read
-            this.belongNo = belong_no
-        }
-
     }
 
     companion object {

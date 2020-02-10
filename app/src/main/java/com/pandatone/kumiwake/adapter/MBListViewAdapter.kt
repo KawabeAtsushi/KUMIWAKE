@@ -11,19 +11,19 @@ import android.widget.ListView
 import android.widget.TextView
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.kumiwake.KumiwakeCustom
-import com.pandatone.kumiwake.member.Name
+import com.pandatone.kumiwake.member.Member
 import java.util.*
 
 /**
  * Created by atsushi_2 on 2016/04/16.
  */
-class MBListViewAdapter(private val context: Context, nameList: ArrayList<Name>, private val showStar: Boolean, showLeaderNo: Boolean) : BaseAdapter() {
+class MBListViewAdapter(private val context: Context, memberList: ArrayList<Member>, private val showStar: Boolean, showLeaderNo: Boolean) : BaseAdapter() {
     private val inflater: LayoutInflater
-    private var listElements: ArrayList<Name> = ArrayList()
+    private var listElements: ArrayList<Member> = ArrayList()
     private val showLdNo = showLeaderNo
 
     init {
-        listElements = nameList
+        listElements = memberList
         inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     }

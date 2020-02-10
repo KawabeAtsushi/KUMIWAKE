@@ -11,22 +11,22 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.member.Name
+import com.pandatone.kumiwake.member.Member
 
 //FragmentMember用リストadapter
 
-class NameListAdapter(private val context: Context, private val nameList: List<Name>) : BaseAdapter() {
+class NameListAdapter(private val context: Context, private val memberList: List<Member>) : BaseAdapter() {
     private var params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(0, 1)
     private var nowData = "ￚ no data ￚ"
     private var preData = "ￚ no data ￚ"
     private var mSelection = SparseBooleanArray()
 
     override fun getCount(): Int {
-        return nameList.size
+        return memberList.size
     }
 
-    override fun getItem(position: Int): Name? {
-        return nameList[position]
+    override fun getItem(position: Int): Member? {
+        return memberList[position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -40,7 +40,7 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
     @SuppressLint("InflateParams")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
         val nameTextView: TextView
-        val listItem = getItem(position)
+        val member = getItem(position)
         val v: View?
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
@@ -48,14 +48,14 @@ class NameListAdapter(private val context: Context, private val nameList: List<N
 
             v = inflater.inflate(R.layout.row_member, null)
 
-            if (mSelection.get(listItem!!.id)) {
+            if (mSelection.get(member!!.id)) {
                 v?.setBackgroundColor(context.resources.getColor(R.color.checked_list))
             }
 
             setSexIcon(v!!, position)
 
             nameTextView = v.findViewById<View>(R.id.memberName) as TextView
-            nameTextView.text = listItem.name
+            nameTextView.text = member.name
 
         } else {
             //イニシャルRow

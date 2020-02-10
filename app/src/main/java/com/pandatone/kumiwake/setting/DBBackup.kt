@@ -4,16 +4,12 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.os.Environment
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.FragmentManager
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
-import com.pandatone.kumiwake.ui.FMDialogViewModel
-import com.pandatone.kumiwake.ui.FileManagerDialog
 import java.io.*
 
 
@@ -25,7 +21,7 @@ object DBBackup {
         }
     private val mb_db_file: String
         get() {
-            MemberListAdapter(context).also {
+            MemberListAdapter(ArrayList(),context).also {
                 it.open()
                 it.getDB
                 it.close()

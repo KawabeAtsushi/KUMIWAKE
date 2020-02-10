@@ -8,14 +8,15 @@ import android.view.*
 import android.widget.AbsListView
 import android.widget.AdapterView
 import android.widget.ListView
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.ListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.pandatone.kumiwake.AddGroupKeys
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.GroupNameListAdapter
 import com.pandatone.kumiwake.member.AddGroup
+import com.pandatone.kumiwake.member.Group
 import com.pandatone.kumiwake.member.GroupClick
 import com.pandatone.kumiwake.member.Sort
 import java.io.IOException
@@ -25,14 +26,13 @@ import java.io.IOException
  * Created by atsushi_2 on 2016/02/23.
  */
 class FragmentGroupMain : ListFragment() {
-    private lateinit var listItem: GroupListAdapter.Group
     private var checkedCount = 0
 
     // 必須*
     // Fragment生成時にシステムが呼び出す
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        dbAdapter = GroupListAdapter(requireContext())
+        gpAdapter = GroupListAdapter(requireContext())
         groupList = ArrayList()
         listAdp = GroupNameListAdapter(requireContext(), groupList)
     }
@@ -41,18 +41,17 @@ class FragmentGroupMain : ListFragment() {
     // Fragmentが初めてUIを描画する時にシステムが呼び出す
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.tab_group, container, false)
-        adviceInFG = view.findViewById<View>(R.id.advice_in_fg) as TextView
-        fab = view.findViewById<View>(R.id.group_fab) as FloatingActionButton
-        fab.setOnClickListener { moveAddGroup() }
+        (view.findViewById<View>(R.id.group_fab) as FloatingActionButton).setOnClickListener { moveAddGroup() }
 
         // Fragmentとlayoutを紐付ける
         super.onCreateView(inflater, container, savedInstanceState)
         return view
     }
 
-    private fun moveAddGroup() {
-        val intent = Intent(activity, AddGroup::class.java)
-        startActivity(intent)
+    override fun onStart() {
+        super.onStart()
+        loadName()
+        FragmentMemberMain().loadName()
     }
 
     // Viewの生成が完了した後に呼ばれる
@@ -66,7 +65,7 @@ class FragmentGroupMain : ListFragment() {
             val builder2 = android.app.AlertDialog.Builder(activity)
             val inflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val view2 = inflater.inflate(R.layout.group_info, activity!!.findViewById<View>(R.id.info_layout) as ViewGroup?)
-            val groupName = groupList[position].group
+            val groupName = groupList[position].name
             if (MembersFragment.searchView.isActivated)
                 MembersFragment.searchView.onActionViewCollapsed()
             FragmentMemberMain().loadName()
@@ -84,7 +83,7 @@ class FragmentGroupMain : ListFragment() {
                     }
                     1 -> {
                         val i = Intent(activity, AddGroup::class.java)
-                        i.putExtra(AddGroup.GROUP_ID, groupList[position].id)
+                        i.putExtra(AddGroupKeys.EDIT_ID.key, groupList[position].id)
                         startActivity(i)
                     }
                     2 -> deleteSingleGroup(position, groupName)
@@ -104,8 +103,9 @@ class FragmentGroupMain : ListFragment() {
         listView.isTextFilterEnabled = true
     }
 
+    // アクションアイテム選択時
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // アクションアイテム選択時
+
         when (item.itemId) {
             android.R.id.home -> activity!!.finish()
 
@@ -116,6 +116,7 @@ class FragmentGroupMain : ListFragment() {
             R.id.item_sort -> {
                 val builder = AlertDialog.Builder(activity!!)
                 Sort.groupSort(builder, activity!!)
+                listAdp.notifyDataSetChanged()
                 val dialog = builder.create()
                 dialog.show()
             }
@@ -124,29 +125,24 @@ class FragmentGroupMain : ListFragment() {
         return false
     }
 
-    //Activity生成後に呼ばれる
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    //グループ登録画面に遷移
+    private fun moveAddGroup() {
+        val intent = Intent(activity, AddGroup::class.java)
+        startActivity(intent)
     }
 
-    override fun onStart() {
-        super.onStart()
-        loadName()
-        FragmentMemberMain().loadName()
-    }
-
+    //１つグループ削除
     private fun deleteSingleGroup(position: Int, group: String) {
         val builder = AlertDialog.Builder(activity!!)
         builder.setTitle(group)
         builder.setMessage(R.string.Do_delete)
         // OKの時の処理
         builder.setPositiveButton("OK") { _, _ ->
-            dbAdapter.open()
-            listItem = groupList[position]
-            val listId = listItem.id
-            FragmentMemberMain().deleteBelongInfoAll(listId)
-            dbAdapter.selectDelete(listId.toString())
-            dbAdapter.close()    // DBを閉じる
+            gpAdapter.open()
+            val groupId = groupList[position].id
+            FragmentMemberMain().deleteBelongInfoAll(groupId)
+            gpAdapter.selectDelete(groupId.toString())
+            gpAdapter.close()    // DBを閉じる
             FragmentMemberMain().loadName()
             loadName()
         }
@@ -194,6 +190,7 @@ class FragmentGroupMain : ListFragment() {
                     mode.title = "0" + getString(R.string.selected)
                     val builder = AlertDialog.Builder(activity!!)
                     Sort.groupSort(builder, activity!!)
+                    listAdp.notifyDataSetChanged()
                     val dialog = builder.create()
                     dialog.show()
                 }
@@ -228,6 +225,7 @@ class FragmentGroupMain : ListFragment() {
 
     }
 
+    //複数グループ削除
     fun deleteMultiGroup(mode: ActionMode) {
 
         // アラートダイアログ表示
@@ -238,18 +236,17 @@ class FragmentGroupMain : ListFragment() {
         builder.setPositiveButton("OK") { _, _ ->
             val list = listView.checkedItemPositions
 
-            dbAdapter.open()     // DBの読み込み(読み書きの方)
+            gpAdapter.open()     // DBの読み込み(読み書きの方)
             for (i in 0 until listAdp.count) {
                 val checked = list.get(i)
                 if (checked) {
                     // IDを取得する
-                    listItem = groupList[i]
-                    val listId = listItem.id
-                    FragmentMemberMain().deleteBelongInfoAll(listId)
-                    dbAdapter.selectDelete(listId.toString())     // DBから取得したIDが入っているデータを削除する
+                    val groupId = groupList[i].id
+                    FragmentMemberMain().deleteBelongInfoAll(groupId)
+                    gpAdapter.selectDelete(groupId.toString())     // DBから取得したIDが入っているデータを削除する
                 }
             }
-            dbAdapter.close()    // DBを閉じる
+            gpAdapter.close()    // DBを閉じる
             listAdp.clearSelection()
             FragmentMemberMain().loadName()
             loadName()
@@ -263,31 +260,31 @@ class FragmentGroupMain : ListFragment() {
         listView.isTextFilterEnabled = true
     }
 
+    //検索した時のグループ絞り込み
     @Throws(IOException::class)
     fun selectGroup(newText: String) {
         if (TextUtils.isEmpty(newText)) {
-            dbAdapter.picGroup(null.toString(), null.toString())
+            gpAdapter.picGroup(null.toString(), null.toString())
         } else {
-            dbAdapter.picGroup(newText, newText)
+            gpAdapter.picGroup(newText, newText)
         }
-
     }
 
+    //リスト表示更新
     fun loadName() {
-        dbAdapter.open()
-        val c = dbAdapter.getDB
-        dbAdapter.getCursor(c, groupList)
-        dbAdapter.close()
+        gpAdapter.open()
+        val c = gpAdapter.getDB
+        gpAdapter.getCursor(c, groupList)
+        gpAdapter.close()
         listAdapter = listAdp
         listAdp.notifyDataSetChanged()
     }
 
     companion object {
-        internal lateinit var listAdp: GroupNameListAdapter
-        internal lateinit var dbAdapter: GroupListAdapter
-        internal var groupList: ArrayList<GroupListAdapter.Group> = ArrayList()
-        internal lateinit var fab: FloatingActionButton
-        internal lateinit var adviceInFG: TextView
+        //最初から存在してほしいのでprivateのcompanionにする（じゃないと落ちる。コルーチンとか使えばいけるかも）
+        private lateinit var listAdp: GroupNameListAdapter
+        internal lateinit var gpAdapter: GroupListAdapter
+        internal var groupList: ArrayList<Group> = ArrayList()
     }
 
 }

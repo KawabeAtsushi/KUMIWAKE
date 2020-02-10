@@ -14,13 +14,14 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.pandatone.kumiwake.AddMemberKeys
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
 import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.ui.members.FragmentMemberMain
 import kotlinx.android.synthetic.main.add_member.*
-import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by atsushi_2 on 2016/02/24.
@@ -35,21 +36,21 @@ class AddMember : AppCompatActivity() {
     private var sexButton: RadioButton? = null
     private var ageEditText: EditText? = null
     private var belongSpinner: Button? = null
-    private var dbAdapter: MemberListAdapter? = null
+    private var mbAdapter: MemberListAdapter? = null
     private var fromNormalMode = false
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_member)
         ButterKnife.bind(this)
-        dbAdapter = MemberListAdapter(this)
+        mbAdapter = MemberListAdapter(ArrayList(),this)
         beforeBelong = null
         afterBelong = null
         findViews()
         ageEditText!!.setText("")
         val i = intent
-        val member = i.getSerializableExtra(MEMBER) as Name?
-        fromNormalMode = i.getBooleanExtra(FROM_NORMAL_MODE, false)
+        val member = i.getSerializableExtra(AddMemberKeys.MEMBER.key) as Member?
+        fromNormalMode = i.getBooleanExtra(AddMemberKeys.FROM_NORMAL_MODE.key, false)
         if (member != null) {
             setItem(member)
             member_registration_continue_btn.visibility = View.GONE
@@ -76,6 +77,7 @@ class AddMember : AppCompatActivity() {
         })
     }
 
+    //Viewの宣言
     private fun findViews() {
         nameEditText = findViewById<View>(R.id.input_name) as TextInputEditText
         readEditText = findViewById<View>(R.id.input_name_read) as TextInputEditText
@@ -85,13 +87,14 @@ class AddMember : AppCompatActivity() {
         belongSpinner = findViewById<View>(R.id.select_group_spinner) as Button
     }
 
-    private fun setItem(listItem: Name) {
-        val listId = listItem.id
-        val name = listItem.name
-        val read = listItem.read
-        val sex = listItem.sex
-        val age = listItem.age.toString()
-        val belong = MemberClick.viewBelong(listItem, dbAdapter!!)
+    //Updateの場合の初期アイテム表示
+    private fun setItem(member: Member) {
+        val listId = member.id
+        val name = member.name
+        val read = member.read
+        val sex = member.sex
+        val age = member.age.toString()
+        val belong = MemberClick.viewBelong(member, mbAdapter!!)
 
         nameEditText!!.setText(name)
         readEditText!!.setText(read)
@@ -116,8 +119,8 @@ class AddMember : AppCompatActivity() {
         val textArray = buttonText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         // 候補リスト
         val list = ArrayList<String>()
-        for (listItem in FragmentGroupChoiceMode.groupList) {
-            list.add(listItem.group)
+        for (group in FragmentGroupChoiceMode.groupList) {
+            list.add(group.name)
         }
         val belongArray = list.toTypedArray()
         // 選択リスト
@@ -179,6 +182,7 @@ class AddMember : AppCompatActivity() {
         finish()
     }
 
+    //メンバー登録　finish true:終了, false:続けて登録
     private fun register(finish: Boolean) {
         val name = nameEditText!!.text!!.toString()
         if (TextUtils.isEmpty(name)) {
@@ -188,8 +192,9 @@ class AddMember : AppCompatActivity() {
             saveItem()
             afterBelong = belongSpinner!!.text.toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             changeBelongNo()
+
             if (fromNormalMode) {
-                NormalMode.memberArray.add(MemberListAdapter(this).newMember)
+                NormalMode.memberArray.add(MemberListAdapter(ArrayList(),this).newMember)
             }
 
             Toast.makeText(this, getText(R.string.member).toString() + " \"" + name + "\" " + getText(R.string.registered), Toast.LENGTH_SHORT).show()
@@ -204,18 +209,20 @@ class AddMember : AppCompatActivity() {
         }
     }
 
-    private fun updateItem(listId: Int) {
+    //メンバー登録処理
+    private fun saveItem() {
         sexButton = findViewById<View>(sexGroup!!.checkedRadioButtonId) as RadioButton
+
         val name = nameEditText!!.text!!.toString()
         val read = readEditText!!.text!!.toString()
         val sex = sexButton!!.text as String
         val age = getValue(ageEditText!!)
         val belong = belongConvertToNo()
 
-        dbAdapter!!.updateMember(listId, name, sex, age, belong, read)
-        FragmentMemberMain().loadName()
+        mbAdapter!!.saveName(name, sex, age, belong, read)
     }
 
+    //メンバー情報更新ボタンリスナー
     private fun update(listId: Int) {
         val updateBt = findViewById<View>(R.id.member_registration_finish_btn) as Button
         updateBt.setText(R.string.update)
@@ -234,18 +241,20 @@ class AddMember : AppCompatActivity() {
         }
     }
 
-    private fun saveItem() {
+    //メンバー情報更新処理
+    private fun updateItem(listId: Int) {
         sexButton = findViewById<View>(sexGroup!!.checkedRadioButtonId) as RadioButton
-
         val name = nameEditText!!.text!!.toString()
         val read = readEditText!!.text!!.toString()
         val sex = sexButton!!.text as String
         val age = getValue(ageEditText!!)
         val belong = belongConvertToNo()
 
-        dbAdapter!!.saveName(name, sex, age, belong, read)
+        mbAdapter!!.updateMember(listId, name, sex, age, belong, read)
+        FragmentMemberMain().loadName()
     }
 
+    //メンバーのbelong更新に伴う、グループの所属人数データの更新
     private fun changeBelongNo() {
         var i = 0
         var j: Int
@@ -277,12 +286,12 @@ class AddMember : AppCompatActivity() {
             }
             if (change!!) {
                 k = 0
-                while (k < FragmentGroupChoiceMode.listAdp.count) {
-                    val listItem = FragmentGroupChoiceMode.groupList[k]
-                    val groupName = listItem.group
+                while (k < FragmentGroupChoiceMode.groupList.size) {
+                    val group = FragmentGroupChoiceMode.groupList[k]
+                    val groupName = group.name
                     if (beforeBelong!![i] == groupName) {
-                        id = listItem.id
-                        belongNo = listItem.belongNo - 1
+                        id = group.id
+                        belongNo = group.belongNo - 1
                         groupListAdapter.updateBelongNo(id.toString(), belongNo)
                     }
                     k++
@@ -305,12 +314,12 @@ class AddMember : AppCompatActivity() {
             if (change!!) {
                 groupListAdapter.open()
                 k = 0
-                while (k < FragmentGroupChoiceMode.listAdp.count) {
-                    val listItem = FragmentGroupChoiceMode.groupList[k]
-                    val groupName = listItem.group
+                while (k < FragmentGroupChoiceMode.groupList.size) {
+                    val group = FragmentGroupChoiceMode.groupList[k]
+                    val groupName = group.name
                     if (afterBelong!![i] == groupName) {
-                        id = listItem.id
-                        belongNo = listItem.belongNo + 1
+                        id = group.id
+                        belongNo = group.belongNo + 1
                         groupListAdapter.updateBelongNo(id.toString(), belongNo)
                     }
                     k++
@@ -321,6 +330,7 @@ class AddMember : AppCompatActivity() {
         }
     }
 
+    //String to Int
     private fun getValue(toText: EditText): Int {
         val text = toText.text.toString()
         var a = 0
@@ -330,25 +340,21 @@ class AddMember : AppCompatActivity() {
         return a
     }
 
+    //グループ名をグループIDに変換
     private fun belongConvertToNo(): String {
         val belongText = belongSpinner!!.text.toString()
         val belongTextArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         val belongNo = StringBuilder()
 
         for (belongGroup in belongTextArray) {
-            for (listItem in FragmentGroupChoiceMode.groupList) {
-                if (belongGroup == listItem.group) {
-                    val listId = listItem.id.toString()
-                    belongNo.append("$listId,")
+            for (group in FragmentGroupChoiceMode.groupList) {
+                if (belongGroup == group.name) {
+                    val groupId = group.id.toString()
+                    belongNo.append("$groupId,")
                 }
             }
         }
         return belongNo.toString()
-    }
-
-    companion object {
-        const val MEMBER = "position"
-        const val FROM_NORMAL_MODE = "fromNormalMode"
     }
 }
 

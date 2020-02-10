@@ -9,21 +9,20 @@ import android.widget.BaseAdapter
 import android.widget.ListView
 import android.widget.TextView
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.member.Group
 import java.util.*
 
 /**
  * Created by atsushi_2 on 2016/04/16.
  */
-class GPListViewAdapter(private val context: Context, nameList: ArrayList<GroupListAdapter.Group>) : BaseAdapter() {
-
-    private var listElements: ArrayList<GroupListAdapter.Group> = nameList
+class GPListViewAdapter(private val context: Context, val groupList: ArrayList<Group>) : BaseAdapter() {
 
     override fun getCount(): Int {
-        return listElements.size
+        return groupList.size
     }
 
     override fun getItem(position: Int): String {
-        return listElements[position].toString()
+        return groupList[position].toString()
     }
 
     override fun getItemId(position: Int): Long {
@@ -44,8 +43,8 @@ class GPListViewAdapter(private val context: Context, nameList: ArrayList<GroupL
         nameTextView = v!!.findViewById<View>(R.id.groupName) as TextView
         memberNoTextView = v.findViewById<View>(R.id.memberNo) as TextView
         memberNoTextView.visibility = View.VISIBLE
-        nameTextView.text = listElements[position].group
-        memberNoTextView.text = listElements[position].belongNo.toString() + context.getString(R.string.people)
+        nameTextView.text = groupList[position].name
+        memberNoTextView.text = groupList[position].belongNo.toString() + context.getString(R.string.people)
 
         return v
     }

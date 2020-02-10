@@ -13,14 +13,11 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import com.pandatone.kumiwake.member.FragmentMemberChoiceMode
-import com.pandatone.kumiwake.member.Name
+import com.pandatone.kumiwake.member.Member
 import java.io.IOException
-import java.util.*
-import kotlin.collections.ArrayList
 
 
-class MemberListAdapter(private val context: Context) : BaseAdapter() {
+class MemberListAdapter(private val memberList: ArrayList<Member>, val context: Context) : BaseAdapter() {
 
 
     private var dbHelper: DatabaseHelper
@@ -32,14 +29,14 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         dbHelper = DatabaseHelper(this.context)
     }
 
-    val newMember: Name
+    val newMember: Member
         @SuppressLint("Recycle")
         get() {
             open()
             val c = db.rawQuery("SELECT * FROM $TABLE_NAME" +
                     " WHERE $MB_ID=(SELECT MAX($MB_ID) FROM $TABLE_NAME);", null)
             c.moveToFirst()
-            val listItem = Name(
+            val member = Member(
                     c.getInt(0),
                     c.getString(1),
                     c.getString(2),
@@ -49,11 +46,15 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
                     c.getString(6),
                     c.getString(7))
             close()
-            return listItem
+            return member
         }
 
     override fun getCount(): Int {
-        return 0
+        val memberList: ArrayList<Member> = ArrayList()
+        open()
+        getCursor(getDB, memberList, false)
+        close()
+        return memberList.size
     }
 
     override fun getItem(position: Int): Any? {
@@ -119,7 +120,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
         val query = "SELECT * FROM " +
                 TABLE_NAME + " ORDER BY " + sortBy + " " + sortType + ";"
         val c = db.rawQuery(query, null)
-        getCursor(c, FragmentMemberChoiceMode.nameList,true)
+        getCursor(c, memberList, true)
         close()
 
     }
@@ -131,7 +132,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
                 " WHERE " + MB_NAME + " like '%" + name + "%' OR "
                 + MB_READ + " like '%" + name + "%';")
         val c = db.rawQuery(query, null)
-        getCursor(c, FragmentMemberChoiceMode.nameList,true)
+        getCursor(c, memberList, true)
         close()
     }
 
@@ -143,22 +144,22 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
                 " WHERE " + MB_SEX + " like '" + sex + "%' AND (" + MB_AGE + " BETWEEN " + minage + " AND " + maxage +
                 ") AND (" + MB_BELONG + " like '" + belongNo + "%' OR " + MB_BELONG + " like '%," + belongNo + "%');" //BelongIdのマッチング式OR (e.g),1,2,3,4
         val c = db.rawQuery(query, null)
-        getCursor(c, FragmentMemberChoiceMode.nameList,true)
+        getCursor(c, memberList, true)
         close()
     }
 
-    fun getCursor(c: Cursor, nameList: ArrayList<Name>, addInit: Boolean) {
-        var listItem: Name
+    fun getCursor(c: Cursor, memberList: ArrayList<Member>, addInit: Boolean) {
+        var member: Member
 
-        nameList.clear()
+        memberList.clear()
 
         if (c.moveToFirst()) {
             do {
-                if(addInit) {
+                if (addInit) {
                     val read = c.getString(7)
                     //頭文字帯用要素の追加
-                    listItem = if (read != "ￚ no data ￚ" && read.isNotEmpty()) {
-                        Name(
+                    member = if (read != "ￚ no data ￚ" && read.isNotEmpty()) {
+                        Member(
                                 0,
                                 null.toString(),
                                 "Index",
@@ -168,7 +169,7 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
                                 null.toString(),
                                 read.toUpperCase()[0].toString())
                     } else {
-                        Name(
+                        Member(
                                 0,
                                 null.toString(),
                                 "Index",
@@ -178,11 +179,11 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
                                 null.toString(),
                                 "ￚ no data ￚ")
                     }
-                    nameList.add(listItem)          // 取得した要素をnameListに追加
+                    memberList.add(member)          // 取得した要素をnameListに追加
                 }
 
                 //member rowを追加
-                listItem = Name(
+                member = Member(
                         c.getInt(0),
                         c.getString(1),
                         c.getString(2),
@@ -192,17 +193,19 @@ class MemberListAdapter(private val context: Context) : BaseAdapter() {
                         c.getString(6),
                         c.getString(7))
 
-                nameList.add(listItem)          // 取得した要素をnameListに追加
+                memberList.add(member)          // 取得した要素をnameListに追加
 
             } while (c.moveToNext())
         }
         c.close()
     }
 
-    fun getAllMembers(): ArrayList<Name>{
-        val nameList: ArrayList<Name> = ArrayList()
-        getCursor(getDB,nameList,false)
-        return nameList
+    fun getAllMembers(): ArrayList<Member> {
+        val memberList: ArrayList<Member> = ArrayList()
+        open()
+        getCursor(getDB, memberList, false)
+        close()
+        return memberList
     }
 
     fun addBelong(id: String, newBelong: String) {

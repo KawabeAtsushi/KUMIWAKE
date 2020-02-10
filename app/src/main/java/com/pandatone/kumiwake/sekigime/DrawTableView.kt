@@ -7,14 +7,15 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 import java.util.*
 
 /**
  * Created by atsushi_2 on 2016/07/15.
  */
 class DrawTableView(context: Context) : View(context) {
-    private var square_no = SekigimeResult.square_no
-    private var Normalmode: Boolean? = SekigimeResult.Normalmode
+    private var squareNo = SekigimeResult.square_no
+    private var normalMode: Boolean? = StatusHolder.normalMode
     private var doubleDeploy: Boolean? = SekigimeResult.doubleDeploy
     private var arrayArrayQuick = SekigimeResult.arrayArrayQuick
     private var arrayArrayNormal = SekigimeResult.arrayArrayNormal
@@ -28,22 +29,22 @@ class DrawTableView(context: Context) : View(context) {
     private var lastY = 0
     private var seatsNo: Int = 0
     private var a: Int = 0
-    private var disp_width: Int = 0
+    private var dispWidth: Int = 0
     private lateinit var x: ArrayList<Double>
     private lateinit var y: ArrayList<Double>
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         memberNo(position)
         scale = resources.displayMetrics.density / 2
-        disp_width = MeasureSpec.getSize(widthMeasureSpec)
+        dispWidth = MeasureSpec.getSize(widthMeasureSpec)
         var height = 0
         when (tableType) {
-            "square" -> height = (seatsNo - square_no * 2) * 68 + 450
+            "square" -> height = (seatsNo - squareNo * 2) * 68 + 450
             "parallel" -> height = seatsNo * 68 + 250
             "circle" -> height = 810
             "counter" -> height = seatsNo * 132 + 100
         }
-        setMeasuredDimension(disp_width, (height * scale).toInt())
+        setMeasuredDimension(dispWidth, (height * scale).toInt())
     }
 
 
@@ -118,16 +119,16 @@ class DrawTableView(context: Context) : View(context) {
         val cPaint = Paint()
         val sPaint = Paint()
         val tableHeight: Int = if (doubleDeploy!!) {
-            if ((seatsNo - square_no * 2) % 2 == 0) {
-                130 * (seatsNo - square_no * 2) / 2 + 235
+            if ((seatsNo - squareNo * 2) % 2 == 0) {
+                130 * (seatsNo - squareNo * 2) / 2 + 235
             } else {
-                130 * (seatsNo - square_no * 2 + 1) / 2 + 235
+                130 * (seatsNo - squareNo * 2 + 1) / 2 + 235
             }
         } else {
-            if ((seatsNo - square_no) % 2 == 0) {
-                130 * (seatsNo - square_no) / 2 + 235
+            if ((seatsNo - squareNo) % 2 == 0) {
+                130 * (seatsNo - squareNo) / 2 + 235
             } else {
-                130 * (seatsNo - square_no + 1) / 2 + 235
+                130 * (seatsNo - squareNo + 1) / 2 + 235
             }
         }
 
@@ -136,7 +137,7 @@ class DrawTableView(context: Context) : View(context) {
         cPaint.strokeWidth = 10 * scale
         cPaint.isAntiAlias = true
         cPaint.style = Paint.Style.STROKE
-        val rectRight = disp_width - 180 * scale
+        val rectRight = dispWidth - 180 * scale
         canvas.drawRect(180 * scale, 230 * scale, rectRight, tableHeight * scale, cPaint)
         cPaint.color = Color.parseColor("#90ffffff")
         cPaint.style = Paint.Style.FILL
@@ -144,22 +145,22 @@ class DrawTableView(context: Context) : View(context) {
 
         //椅子
         sPaint.color = Color.parseColor("#000000")
-        if (square_no > 5) {
+        if (squareNo > 5) {
             sPaint.strokeWidth = 3 * scale
         } else {
-            sPaint.strokeWidth = (8 - square_no) * scale
+            sPaint.strokeWidth = (8 - squareNo) * scale
         }
         sPaint.isAntiAlias = true
         sPaint.style = Paint.Style.STROKE
-        r = if (square_no > 10) {
+        r = if (squareNo > 10) {
             23 * scale
         } else {
-            (50 - 3 * (square_no - 1)) * scale
+            (50 - 3 * (squareNo - 1)) * scale
         }
         var transX = 0
         val transY = 130
-        if (square_no != 0) {
-            transX = (rectRight - 110 * scale).toInt() / (square_no + 1)
+        if (squareNo != 0) {
+            transX = (rectRight - 110 * scale).toInt() / (squareNo + 1)
         }
 
         //間隔
@@ -167,7 +168,7 @@ class DrawTableView(context: Context) : View(context) {
         var b = 0
         var i = 0
         var j = 0
-        while (a < square_no) {
+        while (a < squareNo) {
             canvas.drawCircle(transX + 150 * scale, 155 * scale, r, sPaint)
             canvas.translate(transX.toFloat(), 0f)
             x.add(transX.toDouble() * (a + 1) + 150 * scale)
@@ -178,7 +179,7 @@ class DrawTableView(context: Context) : View(context) {
         canvas.translate((-transX * a).toFloat(), 0f)
         if (doubleDeploy!!) {
             val initialY = ((tableHeight + 75) * scale).toInt()
-            while (a < square_no * 2) {
+            while (a < squareNo * 2) {
                 canvas.drawCircle(transX + 150 * scale, initialY.toFloat(), r, sPaint)
                 canvas.translate(transX.toFloat(), 0f)
                 x.add(transX.toDouble() * (b + 1) + 150 * scale)
@@ -191,15 +192,15 @@ class DrawTableView(context: Context) : View(context) {
         canvas.translate((-transX * b).toFloat(), 0f)
         lastX = 0
         lastY = 0
-        if (point < square_no) {
+        if (point < squareNo) {
             setFocusGradation(canvas)
         }
-        setFmBackground(canvas, 0, square_no)
+        setFmBackground(canvas, 0, squareNo)
         if (doubleDeploy!!) {
-            if (point in square_no until a) {
+            if (point in squareNo until a) {
                 setFocusGradation(canvas)
             }
-            setFmBackground(canvas, square_no, a)
+            setFmBackground(canvas, squareNo, a)
         }
 
         r = 50 * scale
@@ -250,7 +251,7 @@ class DrawTableView(context: Context) : View(context) {
         cPaint.strokeWidth = 10 * scale
         cPaint.isAntiAlias = true
         cPaint.style = Paint.Style.STROKE
-        val rectRight = disp_width - 180 * scale
+        val rectRight = dispWidth - 180 * scale
         canvas.drawRect(180 * scale, 100 * scale, rectRight, tableHeight.toFloat(), cPaint)
         cPaint.color = Color.parseColor("#90ffffff")
         cPaint.style = Paint.Style.FILL
@@ -301,7 +302,7 @@ class DrawTableView(context: Context) : View(context) {
         val cPaint = Paint()
         val sPaint = Paint()
         val centerY: Float
-        val centerX: Float = (disp_width / 2).toFloat()
+        val centerX: Float = (dispWidth / 2).toFloat()
 
         // 円
         cPaint.color = Color.parseColor("#000000")
@@ -382,7 +383,7 @@ class DrawTableView(context: Context) : View(context) {
     ////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun memberNo(position: Int) {
-        seatsNo = if (Normalmode!!) {
+        seatsNo = if (normalMode!!) {
             arrayArrayNormal[position].size
         } else {
             arrayArrayQuick[position].size
@@ -390,7 +391,7 @@ class DrawTableView(context: Context) : View(context) {
     }
 
     private fun initialName(canvas: Canvas, i: Int, X: Float, Y: Float) {
-        val nameInitial: String = if (Normalmode!!) {
+        val nameInitial: String = if (normalMode!!) {
             arrayArrayNormal[position][i].name[0].toString()
         } else {
             arrayArrayQuick[position][i].replace("[^0-9]".toRegex(), "")   //文字列から数値のみ抜き出し
@@ -409,7 +410,7 @@ class DrawTableView(context: Context) : View(context) {
         sPaint.style = Paint.Style.FILL
 
         for (i in startNo until endNo) {
-            if (Normalmode!!) {
+            if (normalMode!!) {
                 if (arrayArrayNormal[position][i].sex == resources.getText(R.string.man)) {
                     sPaint.color = ContextCompat.getColor(context, R.color.thin_man)
                 } else {
@@ -462,7 +463,7 @@ class DrawTableView(context: Context) : View(context) {
         // 文字列用ペイントの生成
         val textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         textPaint.textSize = 60 * scale
-        val text: String = if (Normalmode!!) {
+        val text: String = if (normalMode!!) {
             arrayArrayNormal[position][point].name
         } else {
             arrayArrayQuick[position][point]
@@ -486,7 +487,7 @@ class DrawTableView(context: Context) : View(context) {
                 textY = (yP + 22 * scale).toFloat()
                 textStartX = 200 * scale
                 when {
-                    point < square_no -> textY = yP.toFloat() + 150 * scale
+                    point < squareNo -> textY = yP.toFloat() + 150 * scale
                     point < a -> textY = yP.toFloat() - 110 * scale
                     point < (seatsNo + a) / 2 -> textStartX = (xP + 140 * scale).toFloat()
                     else -> textStartX = (xP - (90 * scale).toDouble() - textWidth.toDouble() - r.toDouble()).toFloat()
@@ -531,7 +532,7 @@ class DrawTableView(context: Context) : View(context) {
         // 吹き出し用ペイントの生成
         val balloonPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         balloonPaint.textSize = 35 * scale
-        if (Normalmode!!) {
+        if (normalMode!!) {
             if (arrayArrayNormal[position][point].sex == resources.getText(R.string.man)) {
                 balloonPaint.color = ContextCompat.getColor(context, R.color.man)
             } else {

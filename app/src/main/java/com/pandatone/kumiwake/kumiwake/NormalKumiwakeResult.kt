@@ -16,11 +16,11 @@ import butterknife.OnClick
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
-import com.pandatone.kumiwake.MainActivity
-import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MBListViewAdapter
-import com.pandatone.kumiwake.member.Name
+import com.pandatone.kumiwake.member.Group
+import com.pandatone.kumiwake.member.Member
 import com.pandatone.kumiwake.sekigime.SekigimeResult
 import com.pandatone.kumiwake.sekigime.SelectTableType
 import com.pandatone.kumiwake.ui.DialogWarehouse
@@ -32,12 +32,12 @@ import kotlin.collections.ArrayList
  */
 class NormalKumiwakeResult : AppCompatActivity() {
 
-    private lateinit var memberArray: ArrayList<Name>
-    private lateinit var leaderArray: ArrayList<Name>
-    private lateinit var groupArray: ArrayList<GroupListAdapter.Group>
-    private lateinit var arrayArray: ArrayList<ArrayList<Name>>
-    private lateinit var manArray: ArrayList<Name>
-    private lateinit var womanArray: ArrayList<Name>
+    private lateinit var memberArray: ArrayList<Member>
+    private lateinit var leaderArray: ArrayList<Member>
+    private lateinit var groupArray: ArrayList<Group>
+    private lateinit var arrayArray: ArrayList<ArrayList<Member>>
+    private lateinit var manArray: ArrayList<Member>
+    private lateinit var womanArray: ArrayList<Member>
     private var groupCount: Int = 0
     private var memberSize: Int = 0
     private var evenFmRatio: Boolean = false
@@ -56,31 +56,31 @@ class NormalKumiwakeResult : AppCompatActivity() {
                 .addTestDevice("BB707E3F7B5413908B2DD12063887489").build()
         mAdView.loadAd(adRequest)
         val i = intent
-        if (i.getSerializableExtra(NormalMode.NORMAL_MEMBER_ARRAY) != null) {
-            memberArray = i.getSerializableExtra(NormalMode.NORMAL_MEMBER_ARRAY) as ArrayList<Name>
+        if (i.getSerializableExtra(ArrayKeys.NORMAL_MEMBER_ARRAY.key) != null) {
+            memberArray = i.getSerializableExtra(ArrayKeys.NORMAL_MEMBER_ARRAY.key) as ArrayList<Member>
         }
-        if (i.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) != null) {
-            groupArray = i.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) as ArrayList<GroupListAdapter.Group>
+        if (i.getSerializableExtra(ArrayKeys.NORMAL_GROUP_ARRAY.key) != null) {
+            groupArray = i.getSerializableExtra(ArrayKeys.NORMAL_GROUP_ARRAY.key) as ArrayList<Group>
         }
-        if (i.getSerializableExtra(NormalKumiwakeConfirmation.LEADER_ARRAY) != null) {
-            leaderArray = i.getSerializableExtra(NormalKumiwakeConfirmation.LEADER_ARRAY) as ArrayList<Name>
+        if (i.getSerializableExtra(ArrayKeys.LEADER_ARRAY.key) != null) {
+            leaderArray = i.getSerializableExtra(ArrayKeys.LEADER_ARRAY.key) as ArrayList<Member>
         }
 
-        evenFmRatio = i.getBooleanExtra(KumiwakeCustom.EVEN_FM_RATIO, false)
-        even_age_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_AGE_RATIO, false)
+        evenFmRatio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, false)
+        even_age_ratio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_AGE_RATIO.key, false)
         groupCount = groupArray.size
         memberSize = memberArray.size
 
         startMethod()
 
-        if (!KumiwakeSelectMode.sekigime) {
+        if (!StatusHolder.sekigime) {
             timer = Timer()
             timerTask = MyTimerTask(this)
             timer!!.scheduleAtFixedRate(timerTask, 100, 100)
         } else {
             val groupNameArray = ArrayList<String>(groupCount)
             for (j in 0 until groupCount) {
-                groupNameArray.add(groupArray[j].group)
+                groupNameArray.add(groupArray[j].name)
                 arrayArray[j].shuffle()
             }
             val intent = Intent(this, SelectTableType::class.java)
@@ -107,7 +107,7 @@ class NormalKumiwakeResult : AppCompatActivity() {
 
         arrayArray = ArrayList(groupCount)
         for (g in 0 until groupCount) {
-            arrayArray.add(savedInstanceState.getSerializable("ARRAY$g") as ArrayList<Name>)
+            arrayArray.add(savedInstanceState.getSerializable("ARRAY$g") as ArrayList<Member>)
         }
     }
 
@@ -182,7 +182,7 @@ class NormalKumiwakeResult : AppCompatActivity() {
     internal fun onClicked() {
         val groupNameArray = ArrayList<String>(groupCount)
         for (j in 0 until groupCount) {
-            groupNameArray.add(groupArray[j].group)
+            groupNameArray.add(groupArray[j].name)
             arrayArray[j].shuffle()
         }
         val intent = Intent(this, SelectTableType::class.java)
@@ -214,7 +214,7 @@ class NormalKumiwakeResult : AppCompatActivity() {
     //　　　　　　　　　　　　　　　　　　　　　　　　各種処理メソッド                                                           ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private fun setLeader(array: ArrayList<Name>) {
+    private fun setLeader(array: ArrayList<Member>) {
         val leaderNoList = KumiwakeCustom.leaderNoList
 
         for (leader in array) {
@@ -234,7 +234,7 @@ class NormalKumiwakeResult : AppCompatActivity() {
         }
     }
 
-    private fun evenKumiwakeSetter(array1: ArrayList<Name>, array2: ArrayList<Name>?, sortCode: String) {
+    private fun evenKumiwakeSetter(array1: ArrayList<Member>, array2: ArrayList<Member>?, sortCode: String) {
 
         if (sortCode == "age") {
             array1.shuffle()
@@ -248,8 +248,8 @@ class NormalKumiwakeResult : AppCompatActivity() {
         setLeader(leaderArray)
     }
 
-    private fun kumiwakeCreateGroup(array: ArrayList<Name>, addNo: Int, sum: Int): ArrayList<Name> {
-        val result = ArrayList<Name>()
+    private fun kumiwakeCreateGroup(array: ArrayList<Member>, addNo: Int, sum: Int): ArrayList<Member> {
+        val result = ArrayList<Member>()
 
         for (i in 0 until addNo) {
             result.add(array[sum + i])
@@ -259,7 +259,7 @@ class NormalKumiwakeResult : AppCompatActivity() {
         return result
     }
 
-    private fun evenCreateGroup(array: ArrayList<Name>) {
+    private fun evenCreateGroup(array: ArrayList<Member>) {
         val groupCapacity = IntArray(groupCount)
         var addGroupNo = 0
         var nowGroupMemberCount: Int
@@ -368,7 +368,7 @@ class NormalKumiwakeResult : AppCompatActivity() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @SuppressLint("InflateParams")
-    private fun addView(resultArray: ArrayList<Name>, i: Int) {
+    private fun addView(resultArray: ArrayList<Member>, i: Int) {
         val groupName: TextView
         val arrayList: ListView
         val layout = findViewById<View>(R.id.result_layout) as LinearLayout
@@ -378,7 +378,7 @@ class NormalKumiwakeResult : AppCompatActivity() {
         }
         layout.addView(v)
         groupName = v.findViewById<View>(R.id.result_group) as TextView
-        groupName.text = groupArray[i].group
+        groupName.text = groupArray[i].name
         arrayList = v.findViewById<View>(R.id.result_member_listView) as ListView
         val adapter = MBListViewAdapter(this, resultArray, true, showLeaderNo = false)
         arrayList.adapter = adapter
@@ -426,7 +426,7 @@ class NormalKumiwakeResult : AppCompatActivity() {
 
         for ((i, array) in arrayArray.withIndex()) {
             resultTxt.append("\n")
-            resultTxt.append("《${groupArray[i].group}》\n")
+            resultTxt.append("《${groupArray[i].name}》\n")
 
             for (member in array) {
                 when {
@@ -485,9 +485,9 @@ internal class MyTimerTask(private val context: Context) : TimerTask() {
 
 }
 
-internal class KumiwakeViewComparator : Comparator<Name> {
+internal class KumiwakeViewComparator : Comparator<Member> {
 
-    override fun compare(n1: Name, n2: Name): Int {
+    override fun compare(n1: Member, n2: Member): Int {
         var value = 0
 
         val n1_sex = n1.sex
@@ -511,9 +511,9 @@ internal class KumiwakeViewComparator : Comparator<Name> {
     }
 }
 
-internal class KumiwakeAgeComparator : Comparator<Name> {
+internal class KumiwakeAgeComparator : Comparator<Member> {
 
-    override fun compare(n1: Name, n2: Name): Int {
+    override fun compare(n1: Member, n2: Member): Int {
         var value = 0
 
         val n1Age = n1.age
@@ -528,9 +528,9 @@ internal class KumiwakeAgeComparator : Comparator<Name> {
     }
 }
 
-internal class KumiwakeLeaderComparator : Comparator<Name> {
+internal class KumiwakeLeaderComparator : Comparator<Member> {
 
-    override fun compare(n1: Name, n2: Name): Int {
+    override fun compare(n1: Member, n2: Member): Int {
         var value = 0
 
         val n1_ld = n1.role

@@ -1,124 +1,132 @@
 package com.pandatone.kumiwake
 
-import android.app.Activity
-import android.app.ActivityOptions
-import android.content.Intent
-import android.graphics.Point
-import android.os.Build
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.transition.Explode
+import android.text.Html
+import android.view.KeyEvent
+import android.view.MenuItem
 import android.view.View
-import android.view.Window
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
-import com.pandatone.kumiwake.kumiwake.KumiwakeSelectMode
-import com.pandatone.kumiwake.member.MemberMain
-import com.pandatone.kumiwake.setting.SettingHelp
-import java.util.*
+import com.pandatone.kumiwake.ui.DialogWarehouse
+import com.pandatone.kumiwake.ui.kumiwake.KumiwakeFragment
+import com.pandatone.kumiwake.ui.members.MembersFragment
+import com.pandatone.kumiwake.ui.sekigime.SekigimeFragment
+import com.pandatone.kumiwake.ui.settings.SettingsFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : Activity(), View.OnClickListener {
-    private lateinit var mCategories: List<Category>
-    private var kumiwake: Category? = null
-    private var member: Category? = null
-    private var sekigime: Category? = null
-    private var setting: Category? = null
+class MainActivity : AppCompatActivity() {
+
+    lateinit var mAdView: AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
-            window.exitTransition = Explode()
-        }
         setContentView(R.layout.activity_main)
-        setViews()
+
+        val navView: AHBottomNavigation = findViewById(R.id.nav_view)
+
+        navView.addItem(AHBottomNavigationItem(R.string.kumiwake, R.drawable.ic_kumiwake_24px, Theme.Red.primaryColor))
+        navView.addItem(AHBottomNavigationItem(R.string.sekigime, R.drawable.ic_sekigime_24px, Theme.Green.primaryColor))
+        navView.addItem(AHBottomNavigationItem(R.string.member, R.drawable.ic_members_24dp, Theme.Blue.primaryColor))
+        navView.addItem(AHBottomNavigationItem(R.string.setting_help, R.drawable.ic_settings_24dp, Theme.Yellow.primaryColor))
+
+        navView.isColored = true
+
+        setUpToolbar()
+        navView.setOnTabSelectedListener(mOnNavigationItemSelectedListener)
+
+        // To open the first tab as default
+        openFragment(KumiwakeFragment())
 
         MobileAds.initialize(this, "ca-app-pub-2315101868638564~1560987130")
         //MobileAds.initialize(getApplicationContext(), "ca-app-pub-2315101868638564/8665451539");
-        val mAdView = findViewById<View>(R.id.adView) as AdView
+        mAdView = findViewById<View>(R.id.adView) as AdView
         val adRequest = AdRequest.Builder()
-                .addTestDevice("BB707E3F7B5413908B2DD12063887489").build()
+                .addTestDevice("8124DDB5C185E5CA87E826BAB5D4AA10").build()
         mAdView.loadAd(adRequest)
-
     }
 
-    override fun onClick(v: View) {
-        val category: Category = when (v.id) {
-            R.id.category_item1 -> mCategories[0]
-            R.id.category_item2 -> mCategories[1]
-            R.id.category_item3 -> mCategories[2]
-            else -> mCategories[3]
-        }
-        val res = resources
-        val mPackageName = packageName
-        val title: TextView
-        title = v.findViewById<View>(res.getIdentifier("category_title" + category.id, "id", mPackageName)) as TextView
-        startActivityWithTransition(category.id, title)
-    }
-
-    private fun setViews() {
-        var v: FrameLayout
-        var icon: ImageView
-        var title: TextView
-
-        val size = Point()
-        windowManager.defaultDisplay.getSize(size)
-        val screenWidth = size.x
-        val screenHeight = size.y
-        val halfScreenWidth = (screenWidth * 0.5).toInt()
-        val miniScreenHeight = (screenHeight * 0.34).toInt()
-
-        val res = resources
-        val mPackageName = packageName
-        kumiwake = Category(getString(R.string.kumiwake), "1", Theme.Red)
-        member = Category(getString(R.string.member), "2", Theme.Blue)
-        sekigime = Category(getString(R.string.sekigime), "3", Theme.Green)
-        setting = Category(getString(R.string.setting_help), "4", Theme.Yellow)
-        mCategories = Arrays.asList<Category>(kumiwake, member, sekigime, setting)
-
-        for (i in 0..3) {
-            val category = mCategories[i]
-            v = findViewById<View>(res.getIdentifier("category_item" + category.id!!, "id", mPackageName)) as FrameLayout
-            icon = v.findViewById<View>(res.getIdentifier("category_icon" + category.id, "id", mPackageName)) as ImageView
-            title = v.findViewById<View>(res.getIdentifier("category_title" + category.id, "id", mPackageName)) as TextView
-
-            v.layoutParams.width = halfScreenWidth
-            v.layoutParams.height = miniScreenHeight
-            v.setBackgroundColor(ContextCompat.getColor(applicationContext, category.theme.windowBackgroundColor))
-            icon.setImageResource(res.getIdentifier("icon_" + category.id, "drawable", mPackageName))
-            title.text = category.name
-            title.setTextColor(ContextCompat.getColor(applicationContext, category.theme.textPrimaryColor))
-            title.setBackgroundColor(ContextCompat.getColor(applicationContext, category.theme.primaryColor))
-            v.setOnClickListener(this)
-        }
-    }
-
-    private fun startActivityWithTransition(id: String?, tv: TextView) {
-        val intent: Intent
-
-        when (id) {
-            "1" -> {
-                KumiwakeSelectMode.sekigime = false
-                intent = Intent(this, KumiwakeSelectMode::class.java)
+    override fun dispatchKeyEvent(e: KeyEvent): Boolean {
+        // 戻るボタンが押されたとき
+        when (e.keyCode) {
+            KeyEvent.KEYCODE_BACK -> {
+                DialogWarehouse(supportFragmentManager).decisionDialog("KUMIWAKE",getString(R.string.app_exit_confirmation)){finish()}
+                return true
             }
-            "2" -> intent = Intent(this, MemberMain::class.java)
-            "3" -> {
-                KumiwakeSelectMode.sekigime = true
-                intent = Intent(this, KumiwakeSelectMode::class.java)
-            }
-            else -> intent = Intent(this, SettingHelp::class.java)
         }
+        return super.dispatchKeyEvent(e)
+    }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this, tv, "explodeTv").toBundle())
-        } else {
-            startActivity(intent)
+    //NavigationBarのクリックリスナー
+    private val mOnNavigationItemSelectedListener = AHBottomNavigation.OnTabSelectedListener { position, _ ->
+        val menuItem: MenuItem = AHBottomNavigationAdapter(this, R.menu.bottom_nav_menu).getMenuItem(position)
+        supportActionBar!!.title = menuItem.title
+        when (menuItem.itemId) {
+
+            R.id.navigation_kumiwake -> {
+                openFragment(KumiwakeFragment())
+                supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Red.primaryColor))
+                supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.kumiwake) + "</font>")
+                container.background = getDrawable(R.color.red_background)
+                mAdView.visibility = View.VISIBLE
+                true
+            }
+
+            R.id.navigation_sekigime -> {
+                openFragment(SekigimeFragment())
+                supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Green.primaryColor))
+                supportActionBar!!.title = Html.fromHtml("<font color='#616161'>" + getString(R.string.sekigime) + "</font>")
+                container.background = getDrawable(R.color.green_background)
+                mAdView.visibility = View.VISIBLE
+                true
+            }
+
+            R.id.navigation_members -> {
+                openFragment(MembersFragment())
+                supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Blue.primaryColor))
+                supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.member) + "</font>")
+                container.background = ColorDrawable(Color.WHITE)
+                mAdView.visibility = View.GONE
+                true
+            }
+
+            R.id.navigation_settings -> {
+                openFragment(SettingsFragment())
+                supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Yellow.primaryColor))
+                supportActionBar!!.title = Html.fromHtml("<font color='#616161'>" + getString(R.string.setting_help) + "</font>")
+                container.background = getDrawable(R.color.yellow_background)
+                mAdView.visibility = View.GONE
+                true
+            }
+            else -> false
         }
     }
 
+    //Fragment初期表示（引数のfragmentが最初に表示される）
+    private fun openFragment(fragment: Fragment) {
+        // アニメーション無しでバックスタックを消去
+        supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_layout, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    //ツールバー初期表示
+    private fun setUpToolbar() {
+        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        setSupportActionBar(toolbar)
+        supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.kumiwake) + "</font>")
+    }
 }

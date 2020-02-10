@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.MemberListAdapter
+import com.pandatone.kumiwake.ui.members.FragmentGroupMain
 
 /**
  * Created by atsushi_2 on 2016/04/17.
@@ -34,7 +35,7 @@ object MemberClick {
     }
 
     @SuppressLint("SetTextI18n")
-    fun setInfo(c:Context, member: Name, dbAdapter:MemberListAdapter) {
+    fun setInfo(c:Context, member: Member, dbAdapter:MemberListAdapter) {
         name.text = c.getText(R.string.member_name).toString() + " : " + member.name + " (" + member.read + ")"
         sex.text = c.getText(R.string.sex).toString() + " : " + member.sex
         age.text = c.getText(R.string.age).toString() + " : " + member.age.toString()
@@ -47,24 +48,24 @@ object MemberClick {
 
     }
 
-    fun viewBelong(member: Name, dbAdapter:MemberListAdapter): String {
+    fun viewBelong(member: Member, mbAdapter:MemberListAdapter): String {
         val result: String
 
-        dbAdapter.open()
+        mbAdapter.open()
         val belongText = member.belong
         val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         val newBelong = StringBuilder()
 
         for (belongGroup in belongArray) {
-            for (listItem in FragmentGroupChoiceMode.groupList) {
-                val groupId = listItem.id.toString()
+            for (group in FragmentGroupMain.groupList) {
+                val groupId = group.id.toString()
                 if (belongGroup == groupId) {
-                    val listName = listItem.group
+                    val listName = group.name
                     newBelong.append("$listName,")
                 }
             }
         }
-        dbAdapter.close()
+        mbAdapter.close()
         result = if (newBelong.toString() == "") {
             ""
         } else {

@@ -28,7 +28,6 @@ import java.io.File
 
 class SettingsFragment : Fragment() {
 
-    private lateinit var settingsViewModel: MembersViewModel
     private lateinit var howToUseAdapter: ArrayAdapter<String>
     private lateinit var backupAdapter: ArrayAdapter<String>
     private lateinit var otherAdapter: ArrayAdapter<String>
@@ -48,8 +47,6 @@ class SettingsFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        settingsViewModel =
-                ViewModelProviders.of(this).get(MembersViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_settings, container, false)
         howToUseList = root.findViewById(R.id.how_to_use_list)
         howToUseList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->

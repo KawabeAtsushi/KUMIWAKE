@@ -1,8 +1,6 @@
 package com.pandatone.kumiwake.member
 
 import android.app.Activity
-import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -10,11 +8,10 @@ import android.view.*
 import android.widget.*
 import androidx.fragment.app.ListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.textfield.TextInputEditText
+import com.pandatone.kumiwake.AddGroupKeys
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.MemberListAdapter
 import com.pandatone.kumiwake.adapter.NameListAdapter
-import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.ui.members.MembersMenuAction
 import java.io.IOException
 import java.util.*
@@ -25,16 +22,13 @@ import java.util.*
  */
 class FragmentMemberChoiceMode : ListFragment() {
     private var memberArray = MemberMain.memberArray
-    private lateinit var dbAdapter: MemberListAdapter
-    private lateinit var listAdp: NameListAdapter
+    private var memberList: ArrayList<Member> = ArrayList()
     private lateinit var lv: ListView
-    private var nameList: ArrayList<Name> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        dbAdapter = MemberListAdapter(requireContext())
-        nameList = ArrayList()
-        listAdp = NameListAdapter(requireContext(), nameList)
+        mbAdapter = MemberListAdapter(memberList,requireContext())
+        listAdp = NameListAdapter(requireContext(), memberList)
         NameListAdapter.nowSort = MemberListAdapter.MB_ID
         NameListAdapter.sortType = "ASC"
         Sort.initial = 0
@@ -64,7 +58,7 @@ class FragmentMemberChoiceMode : ListFragment() {
 
         // 行を長押しした時の処理
         lv.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
-            lv.setItemChecked(position, !listAdp.isPositionChecked(nameList[position].id))
+            lv.setItemChecked(position, !listAdp.isPositionChecked(memberList[position].id))
             false
         }
 
@@ -77,14 +71,14 @@ class FragmentMemberChoiceMode : ListFragment() {
         FragmentGroupChoiceMode().loadName()
         NameListAdapter.nowSort = MemberListAdapter.MB_ID
         NameListAdapter.sortType = "ASC"
-        dbAdapter.sortNames(NameListAdapter.nowSort, NameListAdapter.sortType)
+        mbAdapter.sortNames(NameListAdapter.nowSort, NameListAdapter.sortType)
 
         lv.startActionMode(CallbackMB())
 
         for (member in memberArray) {
             var i = 1
             while (i < listAdp.count) {
-                val listItem: Name = nameList[i]
+                val listItem: Member = memberList[i]
                 if (listItem.id == member.id) {
                     lv.setItemChecked(i, !listAdp.isPositionChecked(listItem.id))
                 }
@@ -94,7 +88,7 @@ class FragmentMemberChoiceMode : ListFragment() {
 
         lv.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
-            lv.setItemChecked(position, !listAdp.isPositionChecked(nameList[position].id))
+            lv.setItemChecked(position, !listAdp.isPositionChecked(memberList[position].id))
         }
     }
 
@@ -124,7 +118,7 @@ class FragmentMemberChoiceMode : ListFragment() {
             }
 
             R.id.item_filter -> {
-                MembersMenuAction(activity!!,FragmentGroupChoiceMode.groupList).filtering(builder)
+                MembersMenuAction(activity!!,memberList,FragmentGroupChoiceMode.groupList).filtering(builder)
             }
         }
 
@@ -145,20 +139,20 @@ class FragmentMemberChoiceMode : ListFragment() {
 
             //メンバー決定
             memberArray.clear()
-            dbAdapter.open()
+            mbAdapter.open()
             var i = 1
             while (i < listAdp.count) {
                 val checked = booleanArray.get(i)
-                val listItem: Name = nameList[i]
-                if (checked && listItem.sex != "Index") {
-                    memberArray.add(listItem)
+                val member: Member = memberList[i]
+                if (checked && member.sex != "Index") {
+                    memberArray.add(member)
                 }
                 i += 2
             }
-            dbAdapter.close()
+            mbAdapter.close()
 
             val intent = Intent()
-            intent.putExtra(NormalMode.MEMBER_ARRAY, memberArray)
+            intent.putExtra(AddGroupKeys.MEMBER_ARRAY.key, memberArray)
             requireActivity().setResult(Activity.RESULT_OK, intent)
             requireActivity().finish()
             listAdp.clearSelection()
@@ -206,7 +200,7 @@ class FragmentMemberChoiceMode : ListFragment() {
                     lv.clearChoices()
                     listAdp.clearSelection()
                     mode.title = "0" + getString(R.string.selected)
-                    MembersMenuAction(activity!!,FragmentGroupChoiceMode.groupList).filtering(builder)
+                    MembersMenuAction(activity!!,memberList,FragmentGroupChoiceMode.groupList).filtering(builder)
                 }
             }
 
@@ -230,9 +224,9 @@ class FragmentMemberChoiceMode : ListFragment() {
             checkedCount = lv.checkedItemCount
 
             if (checked) {
-                listAdp.setNewSelection(nameList[position].id, checked)
+                listAdp.setNewSelection(memberList[position].id, checked)
             } else {
-                listAdp.removeSelection(nameList[position].id)
+                listAdp.removeSelection(memberList[position].id)
             }
 
             mode.title = checkedCount.toString() + getString(R.string.selected)
@@ -242,9 +236,9 @@ class FragmentMemberChoiceMode : ListFragment() {
     @Throws(IOException::class)
     fun selectName(newText: String) {
         if (TextUtils.isEmpty(newText)) {
-            dbAdapter.picName(null.toString())
+            mbAdapter.picName(null.toString())
         } else {
-            dbAdapter.picName(newText)
+            mbAdapter.picName(newText)
         }
         listAdp.notifyDataSetChanged()
     }
@@ -252,8 +246,8 @@ class FragmentMemberChoiceMode : ListFragment() {
     fun checkByGroup(groupId: Int) {
         var i = 1
         while (i < listAdp.count) {
-            val listItem: Name = nameList[i]
-            val belongText = listItem.belong
+            val member: Member = memberList[i]
+            val belongText = member.belong
             val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             val list = ArrayList(Arrays.asList<String>(*belongArray))
             if (list.contains(groupId.toString())) {
@@ -264,16 +258,18 @@ class FragmentMemberChoiceMode : ListFragment() {
     }
 
     fun loadName() {
-        dbAdapter.open()
-        val c = dbAdapter.getDB
-        dbAdapter.getCursor(c, Companion.nameList, true)
-        dbAdapter.close()
+        mbAdapter.open()
+        val c = mbAdapter.getDB
+        mbAdapter.getCursor(c, memberList, true)
+        mbAdapter.close()
         listAdapter = listAdp
         listAdp.notifyDataSetChanged()
     }
 
-    companion object {
-        var nameList: ArrayList<Name> = ArrayList()
+    companion object{
+        //最初から存在してほしいのでprivateのcompanionにする（じゃないと落ちる。コルーチンとか使えばいけるかも）
+        private lateinit var mbAdapter: MemberListAdapter
+        private lateinit var listAdp: NameListAdapter
     }
 
 }

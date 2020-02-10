@@ -38,10 +38,10 @@ object GroupClick {
     }
 
     @SuppressLint("SetTextI18n")
-    fun setInfo(c:Context,item : GroupListAdapter.Group,nameByBelong:ArrayList<Name>) {
-        val adapter = MBListViewAdapter(c, nameByBelong, false, showLeaderNo = false)
+    fun setInfo(c:Context, item : Group, memberByBelong:ArrayList<Member>) {
+        val adapter = MBListViewAdapter(c, memberByBelong, false, showLeaderNo = false)
 
-        group.text = "${c.getText(R.string.group_name)} : ${item.group}"
+        group.text = "${c.getText(R.string.group_name)} : ${item.name}"
         number.text = "${c.getText(R.string.number_of_member)} : ${adapter.count}${c.getString(R.string.people)}"
         belongMb.text = "${c.getText(R.string.belong)}${c.getText(R.string.member)}"
         belongList.adapter = adapter

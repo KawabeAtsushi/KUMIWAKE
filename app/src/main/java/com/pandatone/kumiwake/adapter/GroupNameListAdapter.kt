@@ -9,11 +9,12 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.member.Group
 
 /**
  * Created by atsushi_2 on 2016/03/20.
  */
-class GroupNameListAdapter(private val context: Context, private val groupList: List<GroupListAdapter.Group>) : BaseAdapter() {
+class GroupNameListAdapter(private val context: Context, private val groupList: List<Group>) : BaseAdapter() {
 
     @SuppressLint("UseSparseArrays")
     private var gSelection = SparseBooleanArray()
@@ -36,19 +37,19 @@ class GroupNameListAdapter(private val context: Context, private val groupList: 
         val nameTextView: TextView
         val numberOfMemberTextView: TextView
         val v: View?
-        val listItem = groupList[position]
+        val group = groupList[position]
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         v = inflater.inflate(R.layout.row_group, null)
 
-        if (gSelection.get(listItem.id)) {
-            v!!.setBackgroundColor(context.getColor(R.color.checked_list))
+        if (gSelection.get(group.id)) {
+            v!!.setBackgroundColor(context.resources.getColor(R.color.checked_list))
         }
 
         nameTextView = v?.findViewById<View>(R.id.groupName) as TextView
         numberOfMemberTextView = v.findViewById<View>(R.id.theNumberOfMember) as TextView
-        nameTextView.text = listItem.group
-        numberOfMemberTextView.text = "${listItem.belongNo}${context.getText(R.string.people)}"
+        nameTextView.text = group.name
+        numberOfMemberTextView.text = "${group.belongNo}${context.getText(R.string.people)}"
 
         return v
     }

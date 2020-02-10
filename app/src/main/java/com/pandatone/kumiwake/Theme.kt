@@ -21,9 +21,6 @@ import androidx.annotation.ColorRes
 import com.pandatone.kumiwake.R
 
 /**
- * A way to make simple changes to the application's appearance at runtime in correlation to its
- * [Category].
- *
  * Usually this should be done via attributes and [android.view.ContextThemeWrapper]s.
  * In one case in Topeka it is more performant to work like this.
  * This case involves a trade-off between statically loading these themes versus inflation

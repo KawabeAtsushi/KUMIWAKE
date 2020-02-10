@@ -13,9 +13,10 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
-import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.MainActivity
-import com.pandatone.kumiwake.member.Name
+import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
+import com.pandatone.kumiwake.member.Member
 import com.pandatone.kumiwake.ui.DialogWarehouse
 
 /**
@@ -24,6 +25,7 @@ import com.pandatone.kumiwake.ui.DialogWarehouse
 class SekigimeResult : AppCompatActivity() {
 
     private lateinit var draw:DrawTableView
+    private var groupNo: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +38,10 @@ class SekigimeResult : AppCompatActivity() {
         param2.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
         param2.setMargins(param2.leftMargin, param2.topMargin, param2.rightMargin, (12 * scale).toInt())
         val adView = AdView(this)
-        adView.adUnitId = "ca-app-pub-2315101868638564/8665451539"
+        adView.adUnitId = "ca-app-pub-2315101868638564~1560987130"
         adView.adSize = AdSize.BANNER
         val adRequest = AdRequest.Builder()
-                .addTestDevice("BB707E3F7B5413908B2DD12063887489").build()
+                .addTestDevice("8124DDB5C185E5CA87E826BAB5D4AA10").build()
         adView.loadAd(adRequest)
 
         groupNo = groupArray!!.size
@@ -78,7 +80,7 @@ class SekigimeResult : AppCompatActivity() {
             DialogWarehouse(supportFragmentManager).decisionDialog(title,message, this::reSekigime)
         }
         goHome.setOnClickListener {
-            val intent = Intent(applicationContext, MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
         }
@@ -124,7 +126,7 @@ class SekigimeResult : AppCompatActivity() {
 
     private fun reSekigime(){
         for (i in 0 until groupNo) {
-            if (Normalmode) {
+            if (StatusHolder.normalMode) {
                 arrayArrayNormal[i].shuffle()
             } else {
                 arrayArrayQuick[i].shuffle()
@@ -150,10 +152,10 @@ class SekigimeResult : AppCompatActivity() {
         var k: Int
         var a: Int
         var memberSum: Int
-        if (Normalmode) {
+        if (StatusHolder.normalMode) {
             createFmArrayForNormal()
-            var smallerArray: ArrayList<ArrayList<Name>>
-            var biggerArray: ArrayList<ArrayList<Name>>
+            var smallerArray: ArrayList<ArrayList<Member>>
+            var biggerArray: ArrayList<ArrayList<Member>>
             arrayArrayNormal = ArrayList(groupNo)
             for (g in 0 until groupNo) {
                 arrayArrayNormal.add(ArrayList())
@@ -285,7 +287,7 @@ class SekigimeResult : AppCompatActivity() {
     }
 
     private fun createFmArrayForNormal() {
-        var item: Name
+        var item: Member
         arrayArrayNormalMan = ArrayList(groupNo)
         arrayArrayNormalWoman = ArrayList(groupNo)
         for (g in 0 until groupNo) {
@@ -326,17 +328,15 @@ class SekigimeResult : AppCompatActivity() {
 
     companion object {
 
-        var arrayArrayNormal: ArrayList<ArrayList<Name>> = ArrayList()
-        var arrayArrayNormalMan: ArrayList<ArrayList<Name>> = ArrayList()
-        var arrayArrayNormalWoman: ArrayList<ArrayList<Name>> = ArrayList()
+        var arrayArrayNormal: ArrayList<ArrayList<Member>> = ArrayList()
+        var arrayArrayNormalMan: ArrayList<ArrayList<Member>> = ArrayList()
+        var arrayArrayNormalWoman: ArrayList<ArrayList<Member>> = ArrayList()
         var arrayArrayQuick: ArrayList<ArrayList<String>> = ArrayList()
         var arrayArrayQuickMan: ArrayList<ArrayList<String>> = ArrayList()
         var arrayArrayQuickWoman: ArrayList<ArrayList<String>> = ArrayList()
         var groupArray: ArrayList<String>? = null
-        var Normalmode: Boolean = false
         var doubleDeploy: Boolean = false
         var fmDeploy: Boolean = false
         var square_no: Int = 0
-        var groupNo: Int = 0
     }
 }

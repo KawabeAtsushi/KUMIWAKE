@@ -10,12 +10,13 @@ import android.view.ViewGroup
 import android.widget.*
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.kumiwake.KumiwakeCustom
+import com.pandatone.kumiwake.member.Group
 import java.util.*
 
 /**
  * Created by atsushi_2 on 2016/03/20.
  */
-class EditGroupListAdapter(private val context: Context, private val groupList: List<GroupListAdapter.Group>, private val scrollView: ScrollView) : BaseAdapter() {
+class EditGroupListAdapter(private val context: Context, private val groupList: List<Group>, private val scrollView: ScrollView) : BaseAdapter() {
     private var beforeNo: Int = 0
     private var afterNo: Int = 0
 
@@ -38,7 +39,7 @@ class EditGroupListAdapter(private val context: Context, private val groupList: 
         val numberOfMemberEditText: EditText
         val leader: TextView
         var v = convertView
-        val listItem = groupList[position]
+        val group = groupList[position]
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         if (v == null) {
             v = inflater.inflate(R.layout.row_edit_group, null)
@@ -47,8 +48,8 @@ class EditGroupListAdapter(private val context: Context, private val groupList: 
         nameEditText = v!!.findViewById<View>(R.id.editGroupName) as EditText
         numberOfMemberEditText = v.findViewById<View>(R.id.editTheNumberOfMember) as EditText
         leader = v.findViewById<View>(R.id.leader) as TextView
-        nameEditText.setText(listItem.group)
-        numberOfMemberEditText.setText(listItem.belongNo.toString())
+        nameEditText.setText(group.name)
+        numberOfMemberEditText.setText(group.belongNo.toString())
         leader.text = "${context.getString(R.string.leader)} : ${context.getString(R.string.nothing)}"
         groupNameView[position] = nameEditText
         memberNoView[position] = numberOfMemberEditText

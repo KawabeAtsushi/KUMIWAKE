@@ -23,15 +23,20 @@ import java.io.IOException
  */
 class FragmentGroupChoiceMode : ListFragment() {
     private var checkedCount = 0
-    private lateinit var dbAdapter: GroupListAdapter
 
     // 必須*
     // Fragment生成時にシステムが呼び出す
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        dbAdapter = GroupListAdapter(requireContext())
+        gpAdapter = GroupListAdapter(requireContext())
         groupList = ArrayList()
         listAdp = GroupNameListAdapter(requireContext(), groupList)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        loadName()
+        FragmentMemberChoiceMode().loadName()
     }
 
     // 必須*
@@ -67,6 +72,7 @@ class FragmentGroupChoiceMode : ListFragment() {
             R.id.item_sort -> {
                 val builder = AlertDialog.Builder(activity!!)
                 Sort.groupSort(builder, activity!!)
+                listAdp.notifyDataSetChanged()
                 val dialog = builder.create()
                 dialog.show()
             }
@@ -84,12 +90,6 @@ class FragmentGroupChoiceMode : ListFragment() {
                 MemberMain.viewPager.setCurrentItem(0, true)
                 FragmentMemberChoiceMode().checkByGroup(groupList[position].id)
             }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        loadName()
-        FragmentMemberChoiceMode().loadName()
     }
 
     //////////////////////////////////////////////////////////////////////////////////////
@@ -150,28 +150,21 @@ class FragmentGroupChoiceMode : ListFragment() {
 
     }
 
-    @Throws(IOException::class)
-    fun selectGroup(newText: String) {
-        if (TextUtils.isEmpty(newText)) {
-            dbAdapter.picGroup(null.toString(), null.toString())
-        } else {
-            dbAdapter.picGroup(newText, newText)
-        }
-
-    }
-
+    //リスト表示更新
     fun loadName() {
-        dbAdapter.open()
-        val c = dbAdapter.getDB
-        dbAdapter.getCursor(c, groupList)
-        dbAdapter.close()
+        gpAdapter.open()
+        val c = gpAdapter.getDB
+        gpAdapter.getCursor(c, groupList)
+        gpAdapter.close()
         listAdapter = listAdp
         listAdp.notifyDataSetChanged()
     }
 
     companion object {
-        internal lateinit var listAdp: GroupNameListAdapter
-        internal var groupList: ArrayList<GroupListAdapter.Group> = ArrayList()
+        //最初から存在してほしいのでprivateのcompanionにする（じゃないと落ちる。コルーチンとか使えばいけるかも）
+        private lateinit var gpAdapter: GroupListAdapter
+        private lateinit var listAdp: GroupNameListAdapter
+        internal var groupList: ArrayList<Group> = ArrayList()
     }
 
 }

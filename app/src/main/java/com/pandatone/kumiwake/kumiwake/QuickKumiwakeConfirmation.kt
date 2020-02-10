@@ -14,7 +14,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.pandatone.kumiwake.QuickModeKeys
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 import kotlinx.android.synthetic.main.kumiwake_confirmation.*
 import java.util.*
 
@@ -27,8 +29,8 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
     private lateinit var manArray: ArrayList<String>
     private lateinit var womanArray: ArrayList<String>
     private lateinit var groupArray: ArrayList<String>
-    private lateinit var memberAdapter: ArrayAdapter<String>
-    private lateinit var groupAdapter: ArrayAdapter<String>
+    private lateinit var mbAdapter: ArrayAdapter<String>
+    private lateinit var gpAdapter: ArrayAdapter<String>
     private var evenFmRatio: Boolean = false
     private lateinit var viewGroup: RelativeLayout
 
@@ -37,10 +39,10 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
         setContentView(R.layout.kumiwake_confirmation)
         ButterKnife.bind(this)
         intent.also {
-            manArray = it.getStringArrayListExtra(QuickMode.QuickModeEnum.MAN_LIST.str)
-            womanArray = it.getStringArrayListExtra(QuickMode.QuickModeEnum.WOMAN_LIST.str)
-            groupArray = it.getStringArrayListExtra(QuickMode.QuickModeEnum.GROUP_LIST.str)
-            evenFmRatio = it.getBooleanExtra(QuickMode.QuickModeEnum.EVEN_FM_RATIO.str, false)
+            manArray = it.getStringArrayListExtra(QuickModeKeys.MAN_LIST.key)
+            womanArray = it.getStringArrayListExtra(QuickModeKeys.WOMAN_LIST.key)
+            groupArray = it.getStringArrayListExtra(QuickModeKeys.GROUP_LIST.key)
+            evenFmRatio = it.getBooleanExtra(QuickModeKeys.EVEN_FM_RATIO.key, false)
         }
         memberArray = ArrayList()
         memberArray.addAll(manArray)
@@ -59,7 +61,7 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun findViews() {
-        if (KumiwakeSelectMode.sekigime) {
+        if (StatusHolder.sekigime) {
             val button = findViewById<Button>(R.id.kumiwake_btn)
             confirmation_title_txt.setText(R.string.sekigime_confirm)
             between_arrows_txt.text = getText(R.string.sekigime)
@@ -89,35 +91,35 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
 
         custom_review_txt.text = customText.toString()
 
-        for (i in 0 until memberAdapter.count) {
-            val item = memberAdapter.getView(i, null, kumiwake_member_listView)
+        for (i in 0 until mbAdapter.count) {
+            val item = mbAdapter.getView(i, null, kumiwake_member_listView)
             val memberIcon: ImageView
             memberIcon = item.findViewById<View>(R.id.memberIcon) as ImageView
             if (memberArray[i].matches((".*" + "♡" + ".*").toRegex())) {
                 memberIcon.setColorFilter(ContextCompat.getColor(applicationContext, R.color.woman))
             }
         }
-        setRowHeight(kumiwake_member_listView, memberAdapter)
-        setRowHeight(groupListView, groupAdapter)
+        setRowHeight(kumiwake_member_listView, mbAdapter)
+        setRowHeight(groupListView, gpAdapter)
     }
 
     @OnClick(R.id.kumiwake_btn)
     internal fun onClicked() {
         Intent(this, QuickKumiwakeResult::class.java).also {
-            it.putStringArrayListExtra(QuickMode.QuickModeEnum.MEMBER_LIST.str, memberArray)
-            it.putStringArrayListExtra(QuickMode.QuickModeEnum.MAN_LIST.str, manArray)
-            it.putStringArrayListExtra(QuickMode.QuickModeEnum.WOMAN_LIST.str, womanArray)
-            it.putStringArrayListExtra(QuickMode.QuickModeEnum.GROUP_LIST.str, groupArray)
-            it.putExtra(QuickMode.QuickModeEnum.EVEN_FM_RATIO.str, evenFmRatio)
+            it.putStringArrayListExtra(QuickModeKeys.MEMBER_LIST.key, memberArray)
+            it.putStringArrayListExtra(QuickModeKeys.MAN_LIST.key, manArray)
+            it.putStringArrayListExtra(QuickModeKeys.WOMAN_LIST.key, womanArray)
+            it.putStringArrayListExtra(QuickModeKeys.GROUP_LIST.key, groupArray)
+            it.putExtra(QuickModeKeys.EVEN_FM_RATIO.key, evenFmRatio)
             startActivity(it)
         }
     }
 
     private fun setAdapter() {
-        memberAdapter = MemberArrayAdapter(this, R.layout.mini_row_member, memberArray, true)
-        groupAdapter = ArrayAdapter(this, R.layout.mini_row_group, R.id.groupName, groupArray)
-        kumiwake_member_listView.adapter = memberAdapter
-        groupListView.adapter = groupAdapter
+        mbAdapter = MemberArrayAdapter(this, R.layout.mini_row_member, memberArray, true)
+        gpAdapter = ArrayAdapter(this, R.layout.mini_row_group, R.id.groupName, groupArray)
+        kumiwake_member_listView.adapter = mbAdapter
+        groupListView.adapter = gpAdapter
     }
 
     companion object {

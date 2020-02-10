@@ -16,7 +16,9 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.pandatone.kumiwake.MainActivity
+import com.pandatone.kumiwake.QuickModeKeys
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.sekigime.SekigimeResult
 import com.pandatone.kumiwake.sekigime.SelectTableType
 import com.pandatone.kumiwake.ui.DialogWarehouse
@@ -47,11 +49,11 @@ class QuickKumiwakeResult : AppCompatActivity() {
                 .addTestDevice("BB707E3F7B5413908B2DD12063887489").build()
         mAdView.loadAd(adRequest)
         val i = intent.also {
-            memberArray = it.getStringArrayListExtra(QuickMode.QuickModeEnum.MEMBER_LIST.str)
-            manArray = it.getStringArrayListExtra(QuickMode.QuickModeEnum.MAN_LIST.str)
-            womanArray = it.getStringArrayListExtra(QuickMode.QuickModeEnum.WOMAN_LIST.str)
-            groupArray = it.getStringArrayListExtra(QuickMode.QuickModeEnum.GROUP_LIST.str)
-            evenFmRatio = it.getBooleanExtra(QuickMode.QuickModeEnum.EVEN_FM_RATIO.str, false)
+            memberArray = it.getStringArrayListExtra(QuickModeKeys.MEMBER_LIST.key)
+            manArray = it.getStringArrayListExtra(QuickModeKeys.MAN_LIST.key)
+            womanArray = it.getStringArrayListExtra(QuickModeKeys.WOMAN_LIST.key)
+            groupArray = it.getStringArrayListExtra(QuickModeKeys.GROUP_LIST.key)
+            evenFmRatio = it.getBooleanExtra(QuickModeKeys.EVEN_FM_RATIO.key, false)
         }
         groupNo = groupArray.size
 
@@ -60,7 +62,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
 
         startMethod()
 
-        if (!KumiwakeSelectMode.sekigime) {
+        if (!StatusHolder.sekigime) {
             for (v in 0 until groupNo) {
                 resultArray = arrayArray[v]
                 Collections.sort(resultArray, KumiwakeComparator())

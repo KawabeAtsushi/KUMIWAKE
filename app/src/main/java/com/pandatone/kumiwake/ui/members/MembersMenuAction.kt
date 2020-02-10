@@ -8,13 +8,14 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
 import com.pandatone.kumiwake.adapter.NameListAdapter
+import com.pandatone.kumiwake.member.Group
+import com.pandatone.kumiwake.member.Member
 
-class MembersMenuAction(val context: Context,val groupList: ArrayList<GroupListAdapter.Group>) {
+class MembersMenuAction(val context: Context,val memberList: ArrayList<Member>,val groupList: ArrayList<Group>) {
 
-    val dbAdapter = MemberListAdapter(context)
+    val dbAdapter = MemberListAdapter(memberList,context)
 
     private fun filter(layout: View, spinner: Spinner, clear: Boolean) {
 
@@ -58,9 +59,9 @@ class MembersMenuAction(val context: Context,val groupList: ArrayList<GroupListA
             if (belong == context.getString(R.string.no_selected)) {
                 belongId = ""
             } else {
-                for (listItem in groupList) {
-                    if (belong == listItem.group) {
-                        belongId = listItem.id.toString() + ","
+                for (group in groupList) {
+                    if (belong == group.name) {
+                        belongId = group.id.toString() + ","
                     }
                 }
             }
@@ -77,8 +78,8 @@ class MembersMenuAction(val context: Context,val groupList: ArrayList<GroupListA
         val list = ArrayList<String>() // 新インスタンスを生成
         list.add(context.getString(R.string.no_selected))
 
-        for (listItem in groupList) {
-            list.add(listItem.group)
+        for (group in groupList) {
+            list.add(group.name)
         }
 
         adapter.addAll(list)

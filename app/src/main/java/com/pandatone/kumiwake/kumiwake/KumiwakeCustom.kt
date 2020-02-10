@@ -14,11 +14,14 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.pandatone.kumiwake.ArrayKeys
+import com.pandatone.kumiwake.KumiwakeCustomKeys
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.EditGroupListAdapter
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MBListViewAdapter
-import com.pandatone.kumiwake.member.Name
+import com.pandatone.kumiwake.member.Group
+import com.pandatone.kumiwake.member.Member
 import kotlinx.android.synthetic.main.kumiwake_custom.*
 import kotlinx.android.synthetic.main.part_review_listview.*
 import java.util.*
@@ -28,12 +31,13 @@ import java.util.*
  * Created by atsushi_2 on 2016/05/27.
  */
 class KumiwakeCustom : AppCompatActivity() {
+    private lateinit var memberListView: ListView
+    private lateinit var groupListView: ListView
     private var mbAdapter: MBListViewAdapter? = null
     private var gpAdapter: EditGroupListAdapter? = null
-    private lateinit var memberArray: ArrayList<Name>
-    private lateinit var groupArray: ArrayList<GroupListAdapter.Group>
-    private lateinit var newGroupArray: ArrayList<GroupListAdapter.Group>
-    private var nextSet = 0
+    private lateinit var memberArray: ArrayList<Member>
+    private lateinit var groupArray: ArrayList<Group>
+    private lateinit var newGroupArray: ArrayList<Group>
     private var screenHeight = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,45 +46,43 @@ class KumiwakeCustom : AppCompatActivity() {
         setContentView(R.layout.kumiwake_custom)
         ButterKnife.bind(this)
 
-        if (intent.getSerializableExtra(NormalMode.NORMAL_MEMBER_ARRAY) != null) {
-            memberArray = intent.getSerializableExtra(NormalMode.NORMAL_MEMBER_ARRAY) as ArrayList<Name>
+        if (intent.getSerializableExtra(ArrayKeys.NORMAL_MEMBER_ARRAY.key) != null) {
+            memberArray = intent.getSerializableExtra(ArrayKeys.NORMAL_MEMBER_ARRAY.key) as ArrayList<Member>
         }
-        if (intent.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) != null) {
-            groupArray = intent.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) as ArrayList<GroupListAdapter.Group>
+        if (intent.getSerializableExtra(ArrayKeys.NORMAL_GROUP_ARRAY.key) != null) {
+            groupArray = intent.getSerializableExtra(ArrayKeys.NORMAL_GROUP_ARRAY.key) as ArrayList<Group>
         }
         mbAdapter = MBListViewAdapter(this, memberArray, true, showLeaderNo = true)
         gpAdapter = EditGroupListAdapter(this, groupArray, custom_scroll)
         findViews()
         setViews()
-        memberList.adapter = mbAdapter
-        groupList.adapter = gpAdapter
+        memberListView.adapter = mbAdapter
+        groupListView.adapter = gpAdapter
 
         setKeyboardListener()
-
-        memberList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+        memberListView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
-            memberList.requestFocus()
+            memberListView.requestFocus()
             changeLeader(position)
         }
-
         custom_scroll.post { custom_scroll.fullScroll(ScrollView.FOCUS_UP) }
-
         leaderNoList = arrayOfNulls(groupArray.size) //n番目にグループnのリーダーのidを格納
     }
 
-
+    //View宣言
     private fun findViews() {
-        memberList = findViewById(R.id.memberListView)
-        groupList = findViewById(R.id.groupListView)
-        memberList.emptyView = findViewById(R.id.emptyMemberList)
+        memberListView = findViewById(R.id.memberListView)
+        groupListView = findViewById(R.id.groupListView)
+        memberListView.emptyView = findViewById(R.id.emptyMemberList)
     }
 
+    //View初期化
     @SuppressLint("SetTextI18n")
     fun setViews() {
         member_add_btn.visibility = View.GONE
         member_register_and_add_btn.visibility = View.GONE
-        mbAdapter?.let { MBListViewAdapter.setRowHeight(memberList, it) }
-        gpAdapter?.let { EditGroupListAdapter.setRowHeight(groupList, it) }
+        mbAdapter?.let { MBListViewAdapter.setRowHeight(memberListView, it) }
+        gpAdapter?.let { EditGroupListAdapter.setRowHeight(groupListView, it) }
         numberOfSelectedMember.text = memberArray.size.toString() + getString(R.string.people)
         group_no_txt.text = groupArray.size.toString() + " " + getText(R.string.group)
         val size = Point()
@@ -88,11 +90,12 @@ class KumiwakeCustom : AppCompatActivity() {
         screenHeight = size.y
     }
 
+    //組み分け確認画面に遷移ボタン
     @OnClick(R.id.normal_kumiwake_button)
     internal fun onClicked() {
         var memberSum = 0
         var allowToNext: Boolean? = true
-        for (i in 0 until groupList.count) {
+        for (i in 0 until groupListView.count) {
             val memberNo = EditGroupListAdapter.getMemberNo(i)
             memberSum += memberNo
             if (memberNo <= 0 || memberSum > memberArray.size) {
@@ -101,12 +104,12 @@ class KumiwakeCustom : AppCompatActivity() {
         }
 
         if (allowToNext!!) {
-            recreateGrouplist()
+            createGroupArray()
             val intent = Intent(this, NormalKumiwakeConfirmation::class.java)
-            intent.putExtra(NormalMode.NORMAL_MEMBER_ARRAY, memberArray)
-            intent.putExtra(NormalMode.NORMAL_GROUP_ARRAY, newGroupArray)
-            intent.putExtra(EVEN_FM_RATIO, even_fm_ratio_check.isChecked)
-            intent.putExtra(EVEN_AGE_RATIO, even_age_ratio_check.isChecked)
+            intent.putExtra(ArrayKeys.NORMAL_MEMBER_ARRAY.key, memberArray)
+            intent.putExtra(ArrayKeys.NORMAL_GROUP_ARRAY.key, newGroupArray)
+            intent.putExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, even_fm_ratio_check.isChecked)
+            intent.putExtra(KumiwakeCustomKeys.EVEN_AGE_RATIO.key, even_age_ratio_check.isChecked)
             startActivity(intent)
             overridePendingTransition(R.anim.in_right, R.anim.out_left)
         } else {
@@ -114,11 +117,12 @@ class KumiwakeCustom : AppCompatActivity() {
         }
     }
 
+    //初期状態に戻すボタン
     @OnClick(R.id.back_to_initial_mbNo)
-    internal fun onbcClicked() {
+    internal fun onBCClicked() {
         var et: EditText
-        for (i in 0 until groupList.count) {
-            et = groupList.getChildAt(i).findViewById<View>(R.id.editTheNumberOfMember) as EditText
+        for (i in 0 until groupListView.count) {
+            et = groupListView.getChildAt(i).findViewById<View>(R.id.editTheNumberOfMember) as EditText
             et.isFocusable = false
             et.setText(groupArray[i].belongNo.toString())
             et.isFocusableInTouchMode = true
@@ -126,23 +130,25 @@ class KumiwakeCustom : AppCompatActivity() {
         }
     }
 
+    //リーダーの選択・解除処理
     @SuppressLint("SetTextI18n")
     fun changeLeader(position: Int) {
         val id = memberArray[position].id
         val name = memberArray[position].name
+        var nextSet = 0
 
         //リーダー解除
         if (leaderNoList.contains(id)) {
 
             nextSet = leaderNoList.indexOf(id)
             leaderNoList[nextSet] = null
-            val leader = groupList.getChildAt(nextSet).findViewById<View>(R.id.leader) as TextView
+            val leader = groupListView.getChildAt(nextSet).findViewById<View>(R.id.leader) as TextView
             leader.text = getText(R.string.leader).toString() + ":" + getText(R.string.nothing)
 
         } else if (nextSet != -1) {//最大数登録したら終わり(indexが-1返される)
             //リーダー登録
             leaderNoList[nextSet] = id
-            val leader = groupList.getChildAt(nextSet).findViewById<View>(R.id.leader) as TextView
+            val leader = groupListView.getChildAt(nextSet).findViewById<View>(R.id.leader) as TextView
             leader.text = getText(R.string.leader).toString() + ":" + name
             nextSet = leaderNoList.indexOfFirst { it == null }
         }
@@ -150,20 +156,22 @@ class KumiwakeCustom : AppCompatActivity() {
         mbAdapter?.notifyDataSetChanged()
     }
 
-    private fun recreateGrouplist() {
+    //GroupArrayの作成
+    private fun createGroupArray() {
         newGroupArray = ArrayList()
-        for (i in 0 until groupList.count) {
+        for (i in 0 until groupListView.count) {
             val groupName = EditGroupListAdapter.getGroupName(i)
             val memberNo = EditGroupListAdapter.getMemberNo(i)
-            newGroupArray.add(GroupListAdapter.Group(i, groupName, "", memberNo))
+            newGroupArray.add(Group(i, groupName, "", memberNo))
         }
     }
 
+    //人数配分の自動調整
     fun changeBelongNo(position: Int, addNo: Int) {
-        val et: EditText = if (position == groupList.count - 1) {
-            groupList.getChildAt(0).findViewById<View>(R.id.editTheNumberOfMember) as EditText
+        val et: EditText = if (position == groupListView.count - 1) {
+            groupListView.getChildAt(0).findViewById<View>(R.id.editTheNumberOfMember) as EditText
         } else {
-            groupList.getChildAt(position + 1).findViewById<View>(R.id.editTheNumberOfMember) as EditText
+            groupListView.getChildAt(position + 1).findViewById<View>(R.id.editTheNumberOfMember) as EditText
         }
         var nowNo = 0
         val newNo: Int
@@ -181,6 +189,7 @@ class KumiwakeCustom : AppCompatActivity() {
         }
     }
 
+    //キーボードによるレイアウト崩れを防ぐ
     private fun setKeyboardListener() {
         val activityRootView = findViewById<View>(R.id.custom_root_layout)
         val view = findViewById<View>(R.id.normal_kumiwake_button)
@@ -200,14 +209,7 @@ class KumiwakeCustom : AppCompatActivity() {
     }
 
     companion object {
-
-        const val EVEN_FM_RATIO = "even_fm_ratio"
-        const val EVEN_AGE_RATIO = "even_age_ratio"
-
         internal var leaderNoList: Array<Int?> = emptyArray()
-        internal lateinit var memberList: ListView
-        internal lateinit var groupList: ListView
-
     }
 
 }

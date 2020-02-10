@@ -6,7 +6,8 @@ import android.widget.Toast
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MemberListAdapter
-import com.pandatone.kumiwake.member.Name
+import com.pandatone.kumiwake.member.Group
+import com.pandatone.kumiwake.member.Member
 
 
 object RefreshData {
@@ -15,12 +16,12 @@ object RefreshData {
     lateinit var mbDbAdapter: MemberListAdapter
     lateinit var gpDbAdapter: GroupListAdapter
 
-    private val nameList: ArrayList<Name> = ArrayList()
-    val groupList: ArrayList<GroupListAdapter.Group> = ArrayList()
+    private val memberList: ArrayList<Member> = ArrayList()
+    val groupList: ArrayList<Group> = ArrayList()
 
     fun refresh(context: Context) {
 
-        mbDbAdapter = MemberListAdapter(context)
+        mbDbAdapter = MemberListAdapter(memberList,context)
         gpDbAdapter = GroupListAdapter(context)
 
         //旧グループ確保＆データベース全削除＆新グループ登録
@@ -34,7 +35,7 @@ object RefreshData {
         //旧メンバー確保＆データベース全削除＆新メンバー登録
         mbDbAdapter.open()
         val mbc = mbDbAdapter.getDB
-        mbDbAdapter.getCursor(mbc, nameList,false)
+        mbDbAdapter.getCursor(mbc, memberList,false)
         allDelete(0)
         mbDbAdapter.close()
         saveAllName()
@@ -71,7 +72,7 @@ object RefreshData {
     }
 
     private fun saveAllName() {
-        val oldGroupList: ArrayList<GroupListAdapter.Group> = ArrayList(groupList) //DeepCopyコピー渡し
+        val oldGroupList: ArrayList<Group> = ArrayList(groupList) //DeepCopyコピー渡し
 
         //groupListを最新の状態に更新
         gpDbAdapter.open()
@@ -80,7 +81,7 @@ object RefreshData {
         gpDbAdapter.getCursor(gpc, groupList)
         gpDbAdapter.close()
 
-        for (member in nameList) {
+        for (member in memberList) {
             val belong = convertToNewBelong(member, oldGroupList)
             mbDbAdapter.saveName(member.name, member.sex, member.age, belong, member.read)
         }
@@ -89,7 +90,7 @@ object RefreshData {
     private fun saveAllGroup() {
 
         for (group in groupList) {
-            gpDbAdapter.saveGroup(group.group, group.group, 0)
+            gpDbAdapter.saveGroup(group.name, group.name, 0)
         }
     }
 
@@ -97,12 +98,12 @@ object RefreshData {
     //////////Belong更新メソッド/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private fun convertToNewBelong(member: Name, oldGroupList: ArrayList<GroupListAdapter.Group>): String {
+    private fun convertToNewBelong(member: Member, oldGroupList: ArrayList<Group>): String {
         val belongGroupNames = belongNoToName(member, oldGroupList)
         return belongTextToNo(belongGroupNames)
     }
 
-    private fun belongNoToName(member: Name, oldGroupList: ArrayList<GroupListAdapter.Group>): String {
+    private fun belongNoToName(member: Member, oldGroupList: ArrayList<Group>): String {
         val result: String
 
         val belongText = member.belong
@@ -113,7 +114,7 @@ object RefreshData {
             for (group in oldGroupList) {
                 val groupId = group.id.toString()
                 if (belongGroup == groupId) {
-                    val listName = group.group
+                    val listName = group.name
                     newBelong.append("$listName,")
                 }
             }
@@ -134,10 +135,10 @@ object RefreshData {
         val belongNo = StringBuilder()
 
         for (belongGroup in belongTextArray) {
-            for (listItem in groupList) {
-                if (belongGroup == listItem.group) {
-                    val listId = listItem.id.toString()
-                    belongNo.append("$listId,")
+            for (group in groupList) {
+                if (belongGroup == group.name) {
+                    val groupId = group.id.toString()
+                    belongNo.append("$groupId,")
                 }
             }
         }
@@ -156,10 +157,10 @@ object RefreshData {
         }
     }
 
-    private fun countBelongedMember(group: GroupListAdapter.Group): Int {
+    private fun countBelongedMember(group: Group): Int {
         var belongNo = 0
 
-        for (member in nameList) {
+        for (member in memberList) {
             val belongText = member.belong
             val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             if (belongArray.contains(group.id.toString()))

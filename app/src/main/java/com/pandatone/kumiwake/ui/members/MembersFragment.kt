@@ -32,6 +32,7 @@ class MembersFragment : Fragment(), SearchView.OnQueryTextListener {
         return root
     }
 
+    //Viewの宣言・初期化
     private fun setViews(root :View) {
         viewPager = root.findViewById<View>(R.id.view_pager) as ViewPager
         val adapter = CustomPagerAdapter(context!!,childFragmentManager,true)
@@ -96,6 +97,7 @@ class MembersFragment : Fragment(), SearchView.OnQueryTextListener {
         return false
     }
 
+    //検索ボックスの文字入力のたびに呼ばれる
     override fun onQueryTextChange(newText: String): Boolean {
         try {
             if (page == 0) {

@@ -13,14 +13,17 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
-import butterknife.ButterKnife
 import butterknife.OnClick
+import com.pandatone.kumiwake.ArrayKeys
+import com.pandatone.kumiwake.AddGroupKeys
+import com.pandatone.kumiwake.AddMemberKeys
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MBListViewAdapter
 import com.pandatone.kumiwake.member.AddMember
+import com.pandatone.kumiwake.member.Group
 import com.pandatone.kumiwake.member.MemberMain
-import com.pandatone.kumiwake.member.Name
+import com.pandatone.kumiwake.member.Member
 import kotlinx.android.synthetic.main.normal_mode.*
 import kotlinx.android.synthetic.main.part_review_listview.view.*
 import java.util.*
@@ -34,9 +37,6 @@ class NormalMode : AppCompatActivity() {
     private lateinit var errorGroup: TextView
     private lateinit var errorMember: TextView
 
-    private val clickAdd = View.OnClickListener { moveMemberMain() }
-    private val clickResister = View.OnClickListener { moveAddMember() }
-
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,14 +45,14 @@ class NormalMode : AppCompatActivity() {
             window.exitTransition = Slide()
         }
         setContentView(R.layout.normal_mode)
-        ButterKnife.bind(this)
         findViews()
         memberArray = ArrayList()
-        add_group_listview.member_add_btn.setOnClickListener(clickAdd)
-        add_group_listview.member_register_and_add_btn.setOnClickListener(clickResister)
+        add_group_listview.member_add_btn.setOnClickListener(){ moveMemberMain() }
+        add_group_listview.member_register_and_add_btn.setOnClickListener(){ moveAddMember() }
         add_group_listview.numberOfSelectedMember.text = "0${getString(R.string.people)}${getString(R.string.selected)}"
     }
 
+    //Viewの宣言
     private fun findViews() {
         listView = findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.memberListView) as ListView
         listView.emptyView = findViewById<View>(R.id.add_group_listview).findViewById(R.id.emptyMemberList)
@@ -61,16 +61,18 @@ class NormalMode : AppCompatActivity() {
         errorMember = findViewById<View>(R.id.error_member_no_txt) as TextView
     }
 
+    //MemberMainに遷移
     private fun moveMemberMain() {
         val intent = Intent(this, MemberMain::class.java)
-        intent.putExtra(MemberMain.MEMBER_ARRAY, memberArray)
-        startActivityForResult(intent, 1000)
+        intent.putExtra(AddGroupKeys.MEMBER_ARRAY.key, memberArray)
+        startActivityForResult(intent, 0)
     }
 
+    //AddMemberに遷移
     private fun moveAddMember() {
         val intent = Intent(this, AddMember::class.java)
-        intent.putExtra(AddMember.FROM_NORMAL_MODE, true)
-        startActivityForResult(intent, 100) //これで呼ぶとActivityが終わった時にonActivityResultが呼ばれる。
+        intent.putExtra(AddMemberKeys.FROM_NORMAL_MODE.key, true)
+        startActivityForResult(intent, 0) //これで呼ぶとActivityが終わった時にonActivityResultが呼ばれる。
     }
 
     @OnClick(R.id.normal_kumiwake_btn)
@@ -89,22 +91,22 @@ class NormalMode : AppCompatActivity() {
         } else if (group_no == "0") {
             errorGroup.setText(R.string.require_correct_No)
         } else {
-            val groupArray = ArrayList<GroupListAdapter.Group>()
+            val groupArray = ArrayList<Group>()
             val groupNo = Integer.parseInt(group_no)
             val eachMemberNo = memberArray.size / groupNo
             val remainder = memberArray.size % groupNo
 
             for (i in 0 until remainder) {
-                groupArray.add(GroupListAdapter.Group(i, getText(R.string.group).toString() + " " + (i + 1).toString(), "", eachMemberNo + 1))
+                groupArray.add(Group(i, getText(R.string.group).toString() + " " + (i + 1).toString(), "", eachMemberNo + 1))
             }
 
             for (i in remainder until groupNo) {
-                groupArray.add(GroupListAdapter.Group(i, getText(R.string.group).toString() + " " + (i + 1).toString(), "", eachMemberNo))
+                groupArray.add(Group(i, getText(R.string.group).toString() + " " + (i + 1).toString(), "", eachMemberNo))
             }
 
             val intent = Intent(this, KumiwakeCustom::class.java)
-            intent.putExtra(NORMAL_MEMBER_ARRAY, memberArray)
-            intent.putExtra(NORMAL_GROUP_ARRAY, groupArray)
+            intent.putExtra(ArrayKeys.NORMAL_MEMBER_ARRAY.key, memberArray)
+            intent.putExtra(ArrayKeys.NORMAL_GROUP_ARRAY.key, groupArray)
             startActivity(intent)
             overridePendingTransition(R.anim.in_right, R.anim.out_left)
         }
@@ -114,7 +116,7 @@ class NormalMode : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, i)
 
         if (resultCode == Activity.RESULT_OK) {
-            memberArray = i!!.getSerializableExtra(MemberMain.MEMBER_ARRAY) as ArrayList<Name>
+            memberArray = i!!.getSerializableExtra(AddGroupKeys.MEMBER_ARRAY.key) as ArrayList<Member>
         }
 
         adapter = MBListViewAdapter(this, memberArray, false, showLeaderNo = false)
@@ -126,10 +128,7 @@ class NormalMode : AppCompatActivity() {
     companion object {
         @SuppressLint("StaticFieldLeak")
         internal lateinit var listView: ListView
-        internal lateinit var memberArray: ArrayList<Name>
-        //intent keys
-        const val NORMAL_MEMBER_ARRAY = "normal_memberArray"
-        const val NORMAL_GROUP_ARRAY = "normal_groupArray"
+        internal lateinit var memberArray: ArrayList<Member>
     }
 
 }

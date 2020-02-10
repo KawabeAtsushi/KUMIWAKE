@@ -13,6 +13,7 @@ import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.pandatone.kumiwake.QuickModeKeys
 import com.pandatone.kumiwake.R
 import kotlinx.android.synthetic.main.quick_mode.*
 import java.util.*
@@ -21,14 +22,6 @@ import java.util.*
  * Created by atsushi_2 on 2016/05/02.
  */
 class QuickMode : AppCompatActivity(), TextWatcher {
-
-    enum class QuickModeEnum(val str:String){
-        EVEN_FM_RATIO("even_fm_ratio"),
-        MAN_LIST("QuickModeManList"),
-        WOMAN_LIST("QuickModeWomanList"),
-        GROUP_LIST("QuickModeGroupList"),
-        MEMBER_LIST("QuickModeMemberList")
-    }
 
     private var memberNo: Int = 0
     private var manNo: Int = 0
@@ -102,10 +95,10 @@ class QuickMode : AppCompatActivity(), TextWatcher {
                     groupList.add(getText(R.string.group).toString() + " " + i.toString())
                 }
                 val intent = Intent(this, QuickKumiwakeConfirmation::class.java)
-                intent.putStringArrayListExtra(QuickModeEnum.MAN_LIST.str, manList)
-                intent.putStringArrayListExtra(QuickModeEnum.WOMAN_LIST.str, womanList)
-                intent.putStringArrayListExtra(QuickModeEnum.GROUP_LIST.str, groupList)
-                intent.putExtra(QuickModeEnum.EVEN_FM_RATIO.str, even_fm_ratio_check.isChecked)
+                intent.putStringArrayListExtra(QuickModeKeys.MAN_LIST.key, manList)
+                intent.putStringArrayListExtra(QuickModeKeys.WOMAN_LIST.key, womanList)
+                intent.putStringArrayListExtra(QuickModeKeys.GROUP_LIST.key, groupList)
+                intent.putExtra(QuickModeKeys.EVEN_FM_RATIO.key, even_fm_ratio_check.isChecked)
                 startActivity(intent)
                 overridePendingTransition(R.anim.in_right, R.anim.out_left)
             }

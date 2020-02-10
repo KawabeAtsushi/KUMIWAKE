@@ -19,7 +19,7 @@ object Sort {
 
     fun memberSort(builder: androidx.appcompat.app.AlertDialog.Builder, activity: Activity,listAdp:NameListAdapter) {
 
-        val dbAdapter = MemberListAdapter(activity)
+        val mbAdapter = MemberListAdapter(ArrayList(),activity)
 
         val items = arrayOf(
                 activity.getString(R.string.registration_ascending),
@@ -59,7 +59,7 @@ object Sort {
                     ST = DESC
                 }
             }
-            dbAdapter.sortNames(NS, ST)
+            mbAdapter.sortNames(NS, ST)
             NameListAdapter.nowSort = NS
             NameListAdapter.sortType = ST
             listAdp.notifyDataSetChanged() //loadName()を呼ばない！
@@ -73,7 +73,7 @@ object Sort {
 
     fun groupSort(builder: androidx.appcompat.app.AlertDialog.Builder, activity: Activity) {
 
-        val gpdbAdapter = GroupListAdapter(activity)
+        val gpAdapter = GroupListAdapter(activity)
 
         val items = arrayOf(
                 activity.getString(R.string.registration_ascending),
@@ -87,15 +87,13 @@ object Sort {
 
         builder.setPositiveButton("OK") { _, _ ->
             when (initial) {
-                0 -> gpdbAdapter.sortGroups(GroupListAdapter.GP_ID, ASC)
-                1 -> gpdbAdapter.sortGroups(GroupListAdapter.GP_ID, DESC)
-                2 -> gpdbAdapter.sortGroups(GroupListAdapter.GP_NAME, ASC)
-                3 -> gpdbAdapter.sortGroups(GroupListAdapter.GP_NAME, DESC)
-                4 -> gpdbAdapter.sortGroups(GroupListAdapter.GP_BELONG, ASC)
-                5 -> gpdbAdapter.sortGroups(GroupListAdapter.GP_BELONG, DESC)
+                0 -> gpAdapter.sortGroups(GroupListAdapter.GP_ID, ASC)
+                1 -> gpAdapter.sortGroups(GroupListAdapter.GP_ID, DESC)
+                2 -> gpAdapter.sortGroups(GroupListAdapter.GP_NAME, ASC)
+                3 -> gpAdapter.sortGroups(GroupListAdapter.GP_NAME, DESC)
+                4 -> gpAdapter.sortGroups(GroupListAdapter.GP_BELONG, ASC)
+                5 -> gpAdapter.sortGroups(GroupListAdapter.GP_BELONG, DESC)
             }
-
-            FragmentGroupChoiceMode.listAdp.notifyDataSetChanged()
         }
         // アラートダイアログのボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
         builder.setNegativeButton(R.string.cancel) { _, _ -> }

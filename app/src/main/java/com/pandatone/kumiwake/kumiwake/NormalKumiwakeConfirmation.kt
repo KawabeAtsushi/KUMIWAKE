@@ -7,13 +7,15 @@ import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import butterknife.ButterKnife
-import butterknife.OnClick
+import com.pandatone.kumiwake.ArrayKeys
+import com.pandatone.kumiwake.KumiwakeCustomKeys
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.GPListViewAdapter
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MBListViewAdapter
-import com.pandatone.kumiwake.member.Name
+import com.pandatone.kumiwake.member.Group
+import com.pandatone.kumiwake.member.Member
 import kotlinx.android.synthetic.main.kumiwake_confirmation.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -22,32 +24,30 @@ import kotlin.collections.ArrayList
  * Created by atsushi_2 on 2016/05/08.
  */
 class NormalKumiwakeConfirmation : AppCompatActivity() {
-    private lateinit var memberArray: ArrayList<Name>
-    private lateinit var newMemberArray: ArrayList<Name>
-    private lateinit var leaderArray: ArrayList<Name>
-    private lateinit var groupArray: ArrayList<GroupListAdapter.Group>
-    private lateinit var memberAdapter: MBListViewAdapter
-    private lateinit var groupAdapter: GPListViewAdapter
-    private var even_fm_ratio: Boolean = false
-    private var even_age_ratio: Boolean = false
+    private lateinit var memberArray: ArrayList<Member>
+    private lateinit var newMemberArray: ArrayList<Member>
+    private lateinit var leaderArray: ArrayList<Member>
+    private lateinit var groupArray: ArrayList<Group>
+    private var evenFmRatio: Boolean = false
+    private var evenAgeRatio: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kumiwake_confirmation)
-        ButterKnife.bind(this)
+        findViewById<Button>(R.id.kumiwake_btn).setOnClickListener { doKumiwake() }
+
         val i = intent
-        if (i.getSerializableExtra(NormalMode.NORMAL_MEMBER_ARRAY) != null) {
-            memberArray = i.getSerializableExtra(NormalMode.NORMAL_MEMBER_ARRAY) as ArrayList<Name>
+        if (i.getSerializableExtra(ArrayKeys.NORMAL_MEMBER_ARRAY.key) != null) {
+            memberArray = i.getSerializableExtra(ArrayKeys.NORMAL_MEMBER_ARRAY.key) as ArrayList<Member>
         }
-        if (i.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) != null) {
-            groupArray = i.getSerializableExtra(NormalMode.NORMAL_GROUP_ARRAY) as ArrayList<GroupListAdapter.Group>
+        if (i.getSerializableExtra(ArrayKeys.NORMAL_GROUP_ARRAY.key) != null) {
+            groupArray = i.getSerializableExtra(ArrayKeys.NORMAL_GROUP_ARRAY.key) as ArrayList<Group>
         }
 
-        even_fm_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_FM_RATIO, false)
-        even_age_ratio = i.getBooleanExtra(KumiwakeCustom.EVEN_AGE_RATIO, false)
+        evenFmRatio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, false)
+        evenAgeRatio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_AGE_RATIO.key, false)
         createLeaderArray()
         findViews()
-        setAdapter()
         setViews()
         scrollView.post { scrollView.scrollTo(0, 0) }
 
@@ -59,7 +59,7 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun findViews() {
 
-        if (KumiwakeSelectMode.sekigime) {
+        if (StatusHolder.sekigime) {
             val button = findViewById<Button>(R.id.kumiwake_btn)
             confirmation_title_txt.setText(R.string.sekigime_confirm)
             between_arrows_txt.text = getText(R.string.sekigime)
@@ -74,6 +74,7 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
         group_no_txt.text = groupArray.size.toString() + " " + getText(R.string.group)
     }
 
+    //Manの数
     private fun countManNo(): Int {
         var manNo = 0
         for (member in memberArray) {
@@ -84,6 +85,7 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
         return manNo
     }
 
+    //リーダーArray作成
     private fun createLeaderArray() {
         leaderArray = ArrayList()
         newMemberArray = ArrayList()
@@ -103,49 +105,40 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
         }
 
         Collections.sort(leaderArray, KumiwakeLeaderComparator())
-
     }
 
+    //Viewの初期化処理
     private fun setViews() {
-        val custom_text = StringBuilder()
-
-        if (even_fm_ratio) {
-            custom_text.append("☆" + getText(R.string.even_out_male_female_ratio) + "\n")
-        }
-        if (even_age_ratio) {
-            custom_text.append("☆" + getText(R.string.even_out_age_ratio) + "\n")
-        }
-
-        custom_review_txt.text = custom_text.toString()
-
-        MBListViewAdapter.setRowHeight(kumiwake_member_listView, memberAdapter)
-        GPListViewAdapter.setRowHeight(groupListView, groupAdapter)
-    }
-
-    @OnClick(R.id.kumiwake_btn)
-    internal fun onClicked() {
-        val intent = Intent(this, NormalKumiwakeResult::class.java)
-        intent.putExtra(NormalMode.NORMAL_MEMBER_ARRAY, newMemberArray)
-        intent.putExtra(NormalMode.NORMAL_GROUP_ARRAY, groupArray)
-        intent.putExtra(LEADER_ARRAY, leaderArray)
-        intent.putExtra(KumiwakeCustom.EVEN_FM_RATIO, even_fm_ratio)
-        intent.putExtra(KumiwakeCustom.EVEN_AGE_RATIO, even_age_ratio)
-        startActivity(intent)
-    }
-
-    private fun setAdapter() {
         Collections.sort(newMemberArray, KumiwakeViewComparator())
         memberArray.clear()
         memberArray.addAll(leaderArray)
         memberArray.addAll(newMemberArray)
-        memberAdapter = MBListViewAdapter(this, memberArray, true, showLeaderNo = true)
-        groupAdapter = GPListViewAdapter(this, groupArray)
-        kumiwake_member_listView.adapter = memberAdapter
-        groupListView.adapter = groupAdapter
+        val mbAdapter = MBListViewAdapter(this, memberArray, true, showLeaderNo = true)
+        val gpAdapter = GPListViewAdapter(this, groupArray)
+        kumiwake_member_listView.adapter = mbAdapter
+        groupListView.adapter = gpAdapter
+
+        val customText = StringBuilder()
+        if (evenFmRatio) {
+            customText.append("☆" + getText(R.string.even_out_male_female_ratio) + "\n")
+        }
+        if (evenAgeRatio) {
+            customText.append("☆" + getText(R.string.even_out_age_ratio) + "\n")
+        }
+        custom_review_txt.text = customText.toString()
+        MBListViewAdapter.setRowHeight(kumiwake_member_listView, mbAdapter)
+        GPListViewAdapter.setRowHeight(groupListView, gpAdapter)
     }
 
-    companion object {
-        const val LEADER_ARRAY = "leader_array"
+    //組み分け実行
+    private fun doKumiwake() {
+        val intent = Intent(this, NormalKumiwakeResult::class.java)
+        intent.putExtra(ArrayKeys.NORMAL_MEMBER_ARRAY.key, newMemberArray)
+        intent.putExtra(ArrayKeys.NORMAL_GROUP_ARRAY.key, groupArray)
+        intent.putExtra(ArrayKeys.LEADER_ARRAY.key, leaderArray)
+        intent.putExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, evenFmRatio)
+        intent.putExtra(KumiwakeCustomKeys.EVEN_AGE_RATIO.key, evenAgeRatio)
+        startActivity(intent)
     }
 
 }

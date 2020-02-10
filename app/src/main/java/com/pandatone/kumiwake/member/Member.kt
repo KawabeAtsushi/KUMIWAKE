@@ -5,7 +5,7 @@ import java.io.Serializable
 /**
  * Created by atsushi_2 on 2016/03/02.
  */
-class Name(id: Int, name: String, sex: String, age: Int, grade: Int, belong: String, role: String, read: String) : Serializable {
+class Member(id: Int, name: String, sex: String, age: Int, grade: Int, belong: String, role: String, read: String) : Serializable {
     var id: Int = 0
         private set
     var name: String
@@ -33,8 +33,8 @@ class Name(id: Int, name: String, sex: String, age: Int, grade: Int, belong: Str
     }
 
     override fun equals(other: Any?): Boolean {
-        if (other != null && other is Name) {
-            val target = other as Name?
+        if (other != null && other is Member) {
+            val target = other as Member?
 
             return target!!.id == this.id
         }

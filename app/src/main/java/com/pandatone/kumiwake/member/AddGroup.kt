@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.pandatone.kumiwake.AddGroupKeys
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupListAdapter
 import com.pandatone.kumiwake.adapter.MBListViewAdapter
@@ -30,11 +31,11 @@ import kotlin.collections.ArrayList
  */
 class AddGroup : AppCompatActivity() {
     private var textInputLayout: TextInputLayout? = null
-    private var nextId = FragmentGroupMain.dbAdapter.maxId + 1 //FragmentGroupMainなしだとX
+    private var nextId = FragmentGroupMain.gpAdapter.maxId + 1 //FragmentGroupMainなしだとX
     private lateinit var adapter: MBListViewAdapter
     private lateinit var listView: ListView
     private var editId: Int = 0
-    private var members: ArrayList<Name> = ArrayList()
+    private var members: ArrayList<Member> = ArrayList()
     private lateinit var groupEditText: AppCompatEditText
     private lateinit var dbAdapter: GroupListAdapter
     private lateinit var mbAdapter: MemberListAdapter
@@ -52,14 +53,12 @@ class AddGroup : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_group)
         dbAdapter = GroupListAdapter(this)
-        mbAdapter = MemberListAdapter(this)
+        mbAdapter = MemberListAdapter(members,this)
         findViews()
-        val i = intent
-        editId = i.getIntExtra(GROUP_ID, nextId)
+        editId = intent.getIntExtra(AddGroupKeys.EDIT_ID.key, nextId)
         if (editId != nextId) {
             setItem(editId)
         }
-
         members = FragmentMemberMain().searchBelong(editId.toString())
     }
 
@@ -96,7 +95,7 @@ class AddGroup : AppCompatActivity() {
     private fun setItem(id: Int) {
         for (group in FragmentGroupMain.groupList) {
             if (group.id == id) {
-                groupEditText.setText(group.group)
+                groupEditText.setText(group.name)
                 break
             }
         }
@@ -155,7 +154,6 @@ class AddGroup : AppCompatActivity() {
     //メンバー選択(ManberMain)へ移動
     private fun moveMemberMain() {
         val intent = Intent(this, MemberMain::class.java)
-        intent.putExtra(MemberMain.GROUP_ID, groupId)
         startActivity(intent)
     }
 
@@ -166,14 +164,13 @@ class AddGroup : AppCompatActivity() {
         val nameList = mbAdapter.getAllMembers()
         nameList.forEach { member ->
             val listId = member.id
-            val newId = MemberMain.groupId
             if (members.contains(member)) {
                 val newBelong = StringBuilder()
                 newBelong.append(member.belong)
-                newBelong.append("$newId,")
+                newBelong.append("$groupId,")
                 mbAdapter.addBelong(listId.toString(), newBelong.toString())
             } else {
-                deleteBelongInfo(member, newId, listId)
+                deleteBelongInfo(member, groupId, listId)
             }
         }
 
@@ -181,8 +178,8 @@ class AddGroup : AppCompatActivity() {
     }
 
     //指定したremoveIdのBelongを削除
-    private fun deleteBelongInfo(listItem: Name, removeId: Int, listId: Int) {
-        val belongText = listItem.belong
+    private fun deleteBelongInfo(member: Member, removeId: Int, listId: Int) {
+        val belongText = member.belong
         val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         val list = java.util.ArrayList(Arrays.asList<String>(*belongArray))
         val hs = HashSet<String>()
@@ -229,16 +226,12 @@ class AddGroup : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, i)
 
         if (resultCode == Activity.RESULT_OK) {
-            members = i!!.getSerializableExtra(MemberMain.MEMBER_ARRAY) as ArrayList<Name>
+            members = i!!.getSerializableExtra(AddGroupKeys.MEMBER_ARRAY.key) as ArrayList<Member>
         }
         adapter = MBListViewAdapter(this@AddGroup, members, false, showLeaderNo = false)
         listView.adapter = adapter
         numberOfSelectedMember.text = adapter.count.toString() + getString(R.string.people) + getString(R.string.selected)
         cleanUpBelong()
-    }
-
-    companion object {
-        const val GROUP_ID = "group_id"
     }
 
 }

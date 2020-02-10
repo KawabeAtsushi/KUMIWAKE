@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 import kotlinx.android.synthetic.main.square_custom.*
 
 /**
@@ -22,7 +23,7 @@ class SquareTableCustom : AppCompatActivity() {
         setContentView(R.layout.square_custom)
         ButterKnife.bind(this)
 
-        if (SekigimeResult.Normalmode) {
+        if (StatusHolder.normalMode) {
             val array = SekigimeResult.arrayArrayNormal
             for (item in array) {
                 val size = item.size
