@@ -154,7 +154,8 @@ class AddGroup : AppCompatActivity() {
     //メンバー選択(ManberMain)へ移動
     private fun moveMemberMain() {
         val intent = Intent(this, MemberMain::class.java)
-        startActivity(intent)
+        intent.putExtra(AddGroupKeys.MEMBER_ARRAY.key, members)
+        startActivityForResult(intent, 0)
     }
 
     //memberのbelongを更新

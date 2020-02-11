@@ -32,6 +32,7 @@ class FragmentMemberMain : ListFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mbAdapter = MemberListAdapter(memberList,requireContext())
+        memberList = mbAdapter.getAllMembers()
         listAdp = NameListAdapter(requireContext(), memberList)
         NameListAdapter.nowSort = MemberListAdapter.MB_ID
         NameListAdapter.sortType = "ASC"
@@ -299,7 +300,7 @@ class FragmentMemberMain : ListFragment() {
     //全てのメンバーからグループ(groupIdのグループ)を削除（グループ削除の際にコール）
     fun deleteBelongInfoAll(groupId: Int) {
         mbAdapter.open()
-        for (member in memberList) {
+        memberList.forEach{member ->
             deleteBelongInfo(member, groupId, member.id)
         }
         mbAdapter.close()
@@ -328,15 +329,12 @@ class FragmentMemberMain : ListFragment() {
     fun searchBelong(belongId: String): ArrayList<Member> {
         val memberArrayByBelong = ArrayList<Member>()
         mbAdapter.open()
-        var i = 1
-        while (i < listAdp.count) {
-            val member: Member = memberList[i]
+        memberList.forEach{member ->
             val belongText = member.belong
             val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             if (Arrays.asList<String>(*belongArray).contains(belongId)) {
                 memberArrayByBelong.add(Member(member.id, member.name, member.sex, 0, 0, null.toString(), null.toString(), null.toString()))
             }
-            i += 2
         }
         mbAdapter.close()
         return memberArrayByBelong
@@ -347,7 +345,7 @@ class FragmentMemberMain : ListFragment() {
         for (group in FragmentGroupMain.groupList) {
             val groupId = group.id.toString()
             var belongNo = 0
-            for (member in memberList) {
+            memberList.forEach{member ->
                 val belongArray = member.belong.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                 val list = ArrayList(Arrays.asList<String>(*belongArray))
                 if (list.contains(groupId)) {

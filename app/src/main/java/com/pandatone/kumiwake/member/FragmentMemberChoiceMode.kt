@@ -35,11 +35,6 @@ class FragmentMemberChoiceMode : ListFragment() {
         loadName()
     }
 
-    override fun onResume() {
-        super.onResume()
-        loadName()
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.tab_member, container, false)
         val fab = view.findViewById<View>(R.id.member_fab) as FloatingActionButton
@@ -67,13 +62,12 @@ class FragmentMemberChoiceMode : ListFragment() {
 
     override fun onStart() {
         super.onStart()
+        lv.startActionMode(CallbackMB())
         loadName()
         FragmentGroupChoiceMode().loadName()
         NameListAdapter.nowSort = MemberListAdapter.MB_ID
         NameListAdapter.sortType = "ASC"
         mbAdapter.sortNames(NameListAdapter.nowSort, NameListAdapter.sortType)
-
-        lv.startActionMode(CallbackMB())
 
         for (member in memberArray) {
             var i = 1
@@ -139,7 +133,6 @@ class FragmentMemberChoiceMode : ListFragment() {
 
             //メンバー決定
             memberArray.clear()
-            mbAdapter.open()
             var i = 1
             while (i < listAdp.count) {
                 val checked = booleanArray.get(i)
@@ -149,7 +142,6 @@ class FragmentMemberChoiceMode : ListFragment() {
                 }
                 i += 2
             }
-            mbAdapter.close()
 
             val intent = Intent()
             intent.putExtra(AddGroupKeys.MEMBER_ARRAY.key, memberArray)
