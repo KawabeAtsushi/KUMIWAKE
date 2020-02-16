@@ -165,7 +165,7 @@
     <string name="file_path">ファイルパス</string>
     <string name="failed_to_mkdirs">バックアップディレクトリの作成に失敗しました。</string>
     <string name="app_exit_confirmation">アプリを終了しますか？</string>
-    <string name="top_normal_mode">ノーマル\\nモード</string>
-    <string name="top_quick_mode">クイック\\nモード</string>
+    <string name="top_normal_mode">ノーマル\nモード</string>
+    <string name="top_quick_mode">クイック\nモード</string>
     <string name="edit_exit_confirmation">編集画面を閉じますか？\\n編集情報は破棄されます。</string>
 </resources>

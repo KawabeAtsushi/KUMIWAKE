@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.adapter.GroupListAdapter
-import com.pandatone.kumiwake.adapter.MemberListAdapter
+import com.pandatone.kumiwake.adapter.GroupAdapter
+import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.member.Group
 import com.pandatone.kumiwake.member.Member
 
@@ -13,16 +13,16 @@ import com.pandatone.kumiwake.member.Member
 object RefreshData {
 
     @SuppressLint("StaticFieldLeak")
-    lateinit var mbDbAdapter: MemberListAdapter
-    lateinit var gpDbAdapter: GroupListAdapter
+    lateinit var mbDbAdapter: MemberAdapter
+    lateinit var gpDbAdapter: GroupAdapter
 
     private val memberList: ArrayList<Member> = ArrayList()
     val groupList: ArrayList<Group> = ArrayList()
 
     fun refresh(context: Context) {
 
-        mbDbAdapter = MemberListAdapter(memberList,context)
-        gpDbAdapter = GroupListAdapter(context)
+        mbDbAdapter = MemberAdapter(memberList,context)
+        gpDbAdapter = GroupAdapter(context)
 
         //旧グループ確保＆データベース全削除＆新グループ登録
         gpDbAdapter.open()
@@ -49,24 +49,24 @@ object RefreshData {
     private fun allDelete(code: Int) {
 
         if (code == 0) {
-            MemberListAdapter.db.beginTransaction()                      // トランザクション開始
+            MemberAdapter.db.beginTransaction()                      // トランザクション開始
             try {
-                MemberListAdapter.db.delete(MemberListAdapter.TABLE_NAME, null, null)
-                MemberListAdapter.db.setTransactionSuccessful()          // トランザクションへコミット
+                MemberAdapter.db.delete(MemberAdapter.TABLE_NAME, null, null)
+                MemberAdapter.db.setTransactionSuccessful()          // トランザクションへコミット
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {
-                MemberListAdapter.db.endTransaction()                    // トランザクションの終了
+                MemberAdapter.db.endTransaction()                    // トランザクションの終了
             }
         } else {
-            GroupListAdapter.db.beginTransaction()                      // トランザクション開始
+            GroupAdapter.db.beginTransaction()                      // トランザクション開始
             try {
-                GroupListAdapter.db.delete(GroupListAdapter.TABLE_NAME, null, null)
-                GroupListAdapter.db.setTransactionSuccessful()          // トランザクションへコミット
+                GroupAdapter.db.delete(GroupAdapter.TABLE_NAME, null, null)
+                GroupAdapter.db.setTransactionSuccessful()          // トランザクションへコミット
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {
-                GroupListAdapter.db.endTransaction()                    // トランザクションの終了
+                GroupAdapter.db.endTransaction()                    // トランザクションの終了
             }
         }
     }

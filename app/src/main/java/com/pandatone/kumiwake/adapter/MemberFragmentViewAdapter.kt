@@ -15,7 +15,7 @@ import com.pandatone.kumiwake.member.Member
 
 //FragmentMember用リストadapter
 
-class NameListAdapter(private val context: Context, private val memberList: List<Member>) : BaseAdapter() {
+class MemberFragmentViewAdapter(private val context: Context, private val memberList: List<Member>) : BaseAdapter() {
     private var params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(0, 1)
     private var nowData = "ￚ no data ￚ"
     private var preData = "ￚ no data ￚ"
@@ -78,21 +78,21 @@ class NameListAdapter(private val context: Context, private val memberList: List
         val nowItem = getItem(position)
 
         when (nowSort) {
-            MemberListAdapter.MB_READ -> nowData = nowItem!!.read
-            MemberListAdapter.MB_AGE -> nowData = nowItem!!.age.toString()
+            MemberAdapter.MB_READ -> nowData = nowItem!!.read
+            MemberAdapter.MB_AGE -> nowData = nowItem!!.age.toString()
         }
 
         if (position >= 2) { val preItem = getItem(position - 2)
 
             when (nowSort) {
-                MemberListAdapter.MB_READ -> preData = preItem!!.read
-                MemberListAdapter.MB_AGE -> preData = preItem!!.age.toString()
+                MemberAdapter.MB_READ -> preData = preItem!!.read
+                MemberAdapter.MB_AGE -> preData = preItem!!.age.toString()
             }
         }
 
         //イニシャルRowとメンバーRowが交互に登録されているので表示するRowを選ぶ
         //一行目の場合と、前のイニシャルRowと異なる場合に表示
-        if ((nowData != preData || position == 0) && nowSort != MemberListAdapter.MB_ID) {
+        if ((nowData != preData || position == 0) && nowSort != MemberAdapter.MB_ID) {
             val initialText = v?.findViewById<View>(R.id.initial) as TextView
             initialText.text = nowData
         } else {
@@ -123,7 +123,7 @@ class NameListAdapter(private val context: Context, private val memberList: List
     }
 
     companion object {
-        internal var nowSort = MemberListAdapter.MB_ID
+        internal var nowSort = MemberAdapter.MB_ID
         internal var sortType = "ASC"
     }
 

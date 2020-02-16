@@ -15,9 +15,9 @@ import androidx.appcompat.widget.AppCompatEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.AddGroupKeys
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.adapter.GroupListAdapter
-import com.pandatone.kumiwake.adapter.MBListViewAdapter
-import com.pandatone.kumiwake.adapter.MemberListAdapter
+import com.pandatone.kumiwake.adapter.GroupAdapter
+import com.pandatone.kumiwake.adapter.SmallMBListAdapter
+import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.ui.DialogWarehouse
 import com.pandatone.kumiwake.ui.members.FragmentGroupMain
 import com.pandatone.kumiwake.ui.members.FragmentMemberMain
@@ -32,13 +32,13 @@ import kotlin.collections.ArrayList
 class AddGroup : AppCompatActivity() {
     private var textInputLayout: TextInputLayout? = null
     private var nextId = FragmentGroupMain.gpAdapter.maxId + 1 //FragmentGroupMainなしだとX
-    private lateinit var adapter: MBListViewAdapter
+    private lateinit var adapter: SmallMBListAdapter
     private lateinit var listView: ListView
     private var editId: Int = 0
     private var members: ArrayList<Member> = ArrayList()
     private lateinit var groupEditText: AppCompatEditText
-    private lateinit var dbAdapter: GroupListAdapter
-    private lateinit var mbAdapter: MemberListAdapter
+    private lateinit var gpAdapter: GroupAdapter
+    private lateinit var mbAdapter: MemberAdapter
 
     private val groupId: Int
         get() {
@@ -52,8 +52,8 @@ class AddGroup : AppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_group)
-        dbAdapter = GroupListAdapter(this)
-        mbAdapter = MemberListAdapter(members,this)
+        gpAdapter = GroupAdapter(this)
+        mbAdapter = MemberAdapter(members,this)
         findViews()
         editId = intent.getIntExtra(AddGroupKeys.EDIT_ID.key, nextId)
         if (editId != nextId) {
@@ -77,7 +77,7 @@ class AddGroup : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     public override fun onStart() {
         super.onStart()
-        adapter = MBListViewAdapter(this@AddGroup, members, false, showLeaderNo = false)
+        adapter = SmallMBListAdapter(this@AddGroup, members, false, showLeaderNo = false)
         listView.adapter = adapter
         numberOfSelectedMember.text = adapter.count.toString() + getString(R.string.people) + getString(R.string.selected)
     }
@@ -121,7 +121,7 @@ class AddGroup : AppCompatActivity() {
     private fun saveItem() {
         val name = groupEditText.text!!.toString()
         updateBelong()
-        dbAdapter.saveGroup(name, name, adapter.count)
+        gpAdapter.saveGroup(name, name, adapter.count)
     }
 
     //updateボタンの処理
@@ -146,12 +146,12 @@ class AddGroup : AppCompatActivity() {
     private fun updateItem(listId: Int) {
         val name = groupEditText.text!!.toString()
         updateBelong()
-        dbAdapter.open()
-        dbAdapter.updateGroup(listId, name, name, adapter.count)
-        dbAdapter.close()
+        gpAdapter.open()
+        gpAdapter.updateGroup(listId, name, name, adapter.count)
+        gpAdapter.close()
     }
 
-    //メンバー選択(ManberMain)へ移動
+    //メンバー選択(MemberMain)へ移動
     private fun moveMemberMain() {
         val intent = Intent(this, MemberMain::class.java)
         intent.putExtra(AddGroupKeys.MEMBER_ARRAY.key, members)
@@ -199,7 +199,7 @@ class AddGroup : AppCompatActivity() {
 
     //重複するBelongの削除
     private fun cleanUpBelong() {
-        dbAdapter.open()
+        gpAdapter.open()
         var i = 1
         val nameList = mbAdapter.getAllMembers()
         nameList.forEach { member ->
@@ -219,17 +219,17 @@ class AddGroup : AppCompatActivity() {
             mbAdapter.addBelong(listId.toString(), newBelong.toString())
             i += 2
         }
-        dbAdapter.close()
+        gpAdapter.close()
     }
 
-    //メンバー選択(ManberMain)からのコールバック
+    //メンバー選択(MemberMain)からのコールバック
     override fun onActivityResult(requestCode: Int, resultCode: Int, i: Intent?) {
         super.onActivityResult(requestCode, resultCode, i)
 
         if (resultCode == Activity.RESULT_OK) {
             members = i!!.getSerializableExtra(AddGroupKeys.MEMBER_ARRAY.key) as ArrayList<Member>
         }
-        adapter = MBListViewAdapter(this@AddGroup, members, false, showLeaderNo = false)
+        adapter = SmallMBListAdapter(this@AddGroup, members, false, showLeaderNo = false)
         listView.adapter = adapter
         numberOfSelectedMember.text = adapter.count.toString() + getString(R.string.people) + getString(R.string.selected)
         cleanUpBelong()

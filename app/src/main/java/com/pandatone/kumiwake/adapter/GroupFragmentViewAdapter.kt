@@ -14,7 +14,7 @@ import com.pandatone.kumiwake.member.Group
 /**
  * Created by atsushi_2 on 2016/03/20.
  */
-class GroupNameListAdapter(private val context: Context, private val groupList: List<Group>) : BaseAdapter() {
+class GroupFragmentViewAdapter(private val context: Context, private val groupList: List<Group>) : BaseAdapter() {
 
     @SuppressLint("UseSparseArrays")
     private var gSelection = SparseBooleanArray()

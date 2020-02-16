@@ -18,8 +18,7 @@ import com.pandatone.kumiwake.ArrayKeys
 import com.pandatone.kumiwake.AddGroupKeys
 import com.pandatone.kumiwake.AddMemberKeys
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.adapter.GroupListAdapter
-import com.pandatone.kumiwake.adapter.MBListViewAdapter
+import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.member.AddMember
 import com.pandatone.kumiwake.member.Group
 import com.pandatone.kumiwake.member.MemberMain
@@ -32,7 +31,7 @@ import java.util.*
  * Created by atsushi_2 on 2016/05/02.
  */
 class NormalMode : AppCompatActivity() {
-    private var adapter: MBListViewAdapter? = null
+    private var adapter: SmallMBListAdapter? = null
     private lateinit var gpNoEditText: AppCompatEditText
     private lateinit var errorGroup: TextView
     private lateinit var errorMember: TextView
@@ -119,9 +118,9 @@ class NormalMode : AppCompatActivity() {
             memberArray = i!!.getSerializableExtra(AddGroupKeys.MEMBER_ARRAY.key) as ArrayList<Member>
         }
 
-        adapter = MBListViewAdapter(this, memberArray, false, showLeaderNo = false)
+        adapter = SmallMBListAdapter(this, memberArray, false, showLeaderNo = false)
         listView.adapter = adapter
-        MBListViewAdapter.setRowHeight(listView, adapter!!)
+        SmallMBListAdapter.setRowHeight(listView, adapter!!)
         add_group_listview.numberOfSelectedMember.text = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
     }
 

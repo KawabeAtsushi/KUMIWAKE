@@ -8,8 +8,8 @@ import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.adapter.GroupListAdapter
-import com.pandatone.kumiwake.adapter.MBListViewAdapter
+import com.pandatone.kumiwake.adapter.GroupAdapter
+import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.ui.members.FragmentGroupMain
 
 /**
@@ -39,7 +39,7 @@ object GroupClick {
 
     @SuppressLint("SetTextI18n")
     fun setInfo(c:Context, item : Group, memberByBelong:ArrayList<Member>) {
-        val adapter = MBListViewAdapter(c, memberByBelong, false, showLeaderNo = false)
+        val adapter = SmallMBListAdapter(c, memberByBelong, false, showLeaderNo = false)
 
         group.text = "${c.getText(R.string.group_name)} : ${item.name}"
         number.text = "${c.getText(R.string.number_of_member)} : ${adapter.count}${c.getString(R.string.people)}"
@@ -48,7 +48,7 @@ object GroupClick {
 
         //メンバー数の更新
         val belongNo: Int
-        val GPdbAdapter = GroupListAdapter(c)
+        val GPdbAdapter = GroupAdapter(c)
 
         val id: Int = item.id
         belongNo = adapter.count

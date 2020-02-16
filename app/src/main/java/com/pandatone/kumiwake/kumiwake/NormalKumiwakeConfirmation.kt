@@ -11,9 +11,8 @@ import com.pandatone.kumiwake.ArrayKeys
 import com.pandatone.kumiwake.KumiwakeCustomKeys
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
-import com.pandatone.kumiwake.adapter.GPListViewAdapter
-import com.pandatone.kumiwake.adapter.GroupListAdapter
-import com.pandatone.kumiwake.adapter.MBListViewAdapter
+import com.pandatone.kumiwake.adapter.SmallGPListAdapter
+import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.member.Group
 import com.pandatone.kumiwake.member.Member
 import kotlinx.android.synthetic.main.kumiwake_confirmation.*
@@ -113,8 +112,8 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
         memberArray.clear()
         memberArray.addAll(leaderArray)
         memberArray.addAll(newMemberArray)
-        val mbAdapter = MBListViewAdapter(this, memberArray, true, showLeaderNo = true)
-        val gpAdapter = GPListViewAdapter(this, groupArray)
+        val mbAdapter = SmallMBListAdapter(this, memberArray, true, showLeaderNo = true)
+        val gpAdapter = SmallGPListAdapter(this, groupArray)
         kumiwake_member_listView.adapter = mbAdapter
         groupListView.adapter = gpAdapter
 
@@ -126,8 +125,8 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
             customText.append("☆" + getText(R.string.even_out_age_ratio) + "\n")
         }
         custom_review_txt.text = customText.toString()
-        MBListViewAdapter.setRowHeight(kumiwake_member_listView, mbAdapter)
-        GPListViewAdapter.setRowHeight(groupListView, gpAdapter)
+        SmallMBListAdapter.setRowHeight(kumiwake_member_listView, mbAdapter)
+        SmallGPListAdapter.setRowHeight(groupListView, gpAdapter)
     }
 
     //組み分け実行

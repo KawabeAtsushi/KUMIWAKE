@@ -17,7 +17,7 @@ import com.pandatone.kumiwake.member.Member
 import java.io.IOException
 
 
-class MemberListAdapter(private val memberList: ArrayList<Member>, val context: Context) : BaseAdapter() {
+class MemberAdapter(private val memberList: ArrayList<Member>, val context: Context) : BaseAdapter() {
 
 
     private var dbHelper: DatabaseHelper
@@ -90,7 +90,7 @@ class MemberListAdapter(private val memberList: ArrayList<Member>, val context: 
 
 
     // Adapter Methods
-    fun open(): MemberListAdapter {
+    fun open(): MemberAdapter {
         db = dbHelper.writableDatabase
         return this
     }

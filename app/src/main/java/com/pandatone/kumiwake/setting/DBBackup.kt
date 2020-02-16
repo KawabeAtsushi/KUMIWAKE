@@ -8,8 +8,8 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.adapter.GroupListAdapter
-import com.pandatone.kumiwake.adapter.MemberListAdapter
+import com.pandatone.kumiwake.adapter.GroupAdapter
+import com.pandatone.kumiwake.adapter.MemberAdapter
 import java.io.*
 
 
@@ -21,21 +21,21 @@ object DBBackup {
         }
     private val mb_db_file: String
         get() {
-            MemberListAdapter(ArrayList(),context).also {
+            MemberAdapter(ArrayList(),context).also {
                 it.open()
                 it.getDB
                 it.close()
             }
-            return MemberListAdapter.db.path
+            return MemberAdapter.db.path
         }
     private val gp_db_file: String
         get() {
-            GroupListAdapter(context).also {
+            GroupAdapter(context).also {
                 it.open()
                 it.getDB
                 it.close()
             }
-            return GroupListAdapter.db.path   //DBのディレクトリとファイル名
+            return GroupAdapter.db.path   //DBのディレクトリとファイル名
         }
     private lateinit var context:Context
     private var b: Boolean = false

@@ -16,8 +16,8 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.AddMemberKeys
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.adapter.GroupListAdapter
-import com.pandatone.kumiwake.adapter.MemberListAdapter
+import com.pandatone.kumiwake.adapter.GroupAdapter
+import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.ui.members.FragmentMemberMain
 import kotlinx.android.synthetic.main.add_member.*
@@ -36,14 +36,14 @@ class AddMember : AppCompatActivity() {
     private var sexButton: RadioButton? = null
     private var ageEditText: EditText? = null
     private var belongSpinner: Button? = null
-    private var mbAdapter: MemberListAdapter? = null
+    private var mbAdapter: MemberAdapter? = null
     private var fromNormalMode = false
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_member)
         ButterKnife.bind(this)
-        mbAdapter = MemberListAdapter(ArrayList(),this)
+        mbAdapter = MemberAdapter(ArrayList(),this)
         beforeBelong = null
         afterBelong = null
         findViews()
@@ -194,7 +194,7 @@ class AddMember : AppCompatActivity() {
             changeBelongNo()
 
             if (fromNormalMode) {
-                NormalMode.memberArray.add(MemberListAdapter(ArrayList(),this).newMember)
+                NormalMode.memberArray.add(MemberAdapter(ArrayList(),this).newMember)
             }
 
             Toast.makeText(this, getText(R.string.member).toString() + " \"" + name + "\" " + getText(R.string.registered), Toast.LENGTH_SHORT).show()
@@ -262,7 +262,7 @@ class AddMember : AppCompatActivity() {
         var id: Int
         var belongNo: Int
         var change: Boolean? = true
-        val groupListAdapter = GroupListAdapter(this)
+        val groupListAdapter = GroupAdapter(this)
 
         val beforeBelongNo: Int = if (beforeBelong != null) {
             beforeBelong!!.size

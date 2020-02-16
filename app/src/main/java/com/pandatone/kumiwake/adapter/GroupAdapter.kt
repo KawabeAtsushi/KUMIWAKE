@@ -14,7 +14,7 @@ import java.io.IOException
 /**
  * Created by atsushi_2 on 2016/03/20.
  */
-class GroupListAdapter(context: Context) : ArrayAdapter<Group>(context, 0) {
+class GroupAdapter(context: Context) : ArrayAdapter<Group>(context, 0) {
 
     private var dbHelper: DatabaseHelper
 
@@ -51,7 +51,7 @@ class GroupListAdapter(context: Context) : ArrayAdapter<Group>(context, 0) {
         }
     }
 
-    fun open(): GroupListAdapter {
+    fun open(): GroupAdapter {
         db = dbHelper.writableDatabase
         return this
     }

@@ -16,7 +16,7 @@ import java.util.*
 /**
  * Created by atsushi_2 on 2016/03/20.
  */
-class EditGroupListAdapter(private val context: Context, private val groupList: List<Group>, private val scrollView: ScrollView) : BaseAdapter() {
+class EditGroupViewAdapter(private val context: Context, private val groupList: List<Group>, private val scrollView: ScrollView) : BaseAdapter() {
     private var beforeNo: Int = 0
     private var afterNo: Int = 0
 
@@ -111,7 +111,7 @@ class EditGroupListAdapter(private val context: Context, private val groupList: 
         }
 
 
-        fun setRowHeight(listView: ListView, listAdp: EditGroupListAdapter) {
+        fun setRowHeight(listView: ListView, listAdp: EditGroupViewAdapter) {
             var totalHeight = 0
 
             for (j in 0 until listAdp.count) {

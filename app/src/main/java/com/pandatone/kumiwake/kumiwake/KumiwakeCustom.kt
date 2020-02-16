@@ -17,9 +17,8 @@ import butterknife.OnClick
 import com.pandatone.kumiwake.ArrayKeys
 import com.pandatone.kumiwake.KumiwakeCustomKeys
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.adapter.EditGroupListAdapter
-import com.pandatone.kumiwake.adapter.GroupListAdapter
-import com.pandatone.kumiwake.adapter.MBListViewAdapter
+import com.pandatone.kumiwake.adapter.EditGroupViewAdapter
+import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.member.Group
 import com.pandatone.kumiwake.member.Member
 import kotlinx.android.synthetic.main.kumiwake_custom.*
@@ -33,8 +32,8 @@ import java.util.*
 class KumiwakeCustom : AppCompatActivity() {
     private lateinit var memberListView: ListView
     private lateinit var groupListView: ListView
-    private var mbAdapter: MBListViewAdapter? = null
-    private var gpAdapter: EditGroupListAdapter? = null
+    private var mbAdapter: SmallMBListAdapter? = null
+    private var gpAdapter: EditGroupViewAdapter? = null
     private lateinit var memberArray: ArrayList<Member>
     private lateinit var groupArray: ArrayList<Group>
     private lateinit var newGroupArray: ArrayList<Group>
@@ -52,8 +51,8 @@ class KumiwakeCustom : AppCompatActivity() {
         if (intent.getSerializableExtra(ArrayKeys.NORMAL_GROUP_ARRAY.key) != null) {
             groupArray = intent.getSerializableExtra(ArrayKeys.NORMAL_GROUP_ARRAY.key) as ArrayList<Group>
         }
-        mbAdapter = MBListViewAdapter(this, memberArray, true, showLeaderNo = true)
-        gpAdapter = EditGroupListAdapter(this, groupArray, custom_scroll)
+        mbAdapter = SmallMBListAdapter(this, memberArray, true, showLeaderNo = true)
+        gpAdapter = EditGroupViewAdapter(this, groupArray, custom_scroll)
         findViews()
         setViews()
         memberListView.adapter = mbAdapter
@@ -81,8 +80,8 @@ class KumiwakeCustom : AppCompatActivity() {
     fun setViews() {
         member_add_btn.visibility = View.GONE
         member_register_and_add_btn.visibility = View.GONE
-        mbAdapter?.let { MBListViewAdapter.setRowHeight(memberListView, it) }
-        gpAdapter?.let { EditGroupListAdapter.setRowHeight(groupListView, it) }
+        mbAdapter?.let { SmallMBListAdapter.setRowHeight(memberListView, it) }
+        gpAdapter?.let { EditGroupViewAdapter.setRowHeight(groupListView, it) }
         numberOfSelectedMember.text = memberArray.size.toString() + getString(R.string.people)
         group_no_txt.text = groupArray.size.toString() + " " + getText(R.string.group)
         val size = Point()
@@ -96,7 +95,7 @@ class KumiwakeCustom : AppCompatActivity() {
         var memberSum = 0
         var allowToNext: Boolean? = true
         for (i in 0 until groupListView.count) {
-            val memberNo = EditGroupListAdapter.getMemberNo(i)
+            val memberNo = EditGroupViewAdapter.getMemberNo(i)
             memberSum += memberNo
             if (memberNo <= 0 || memberSum > memberArray.size) {
                 allowToNext = false
@@ -160,8 +159,8 @@ class KumiwakeCustom : AppCompatActivity() {
     private fun createGroupArray() {
         newGroupArray = ArrayList()
         for (i in 0 until groupListView.count) {
-            val groupName = EditGroupListAdapter.getGroupName(i)
-            val memberNo = EditGroupListAdapter.getMemberNo(i)
+            val groupName = EditGroupViewAdapter.getGroupName(i)
+            val memberNo = EditGroupViewAdapter.getMemberNo(i)
             newGroupArray.add(Group(i, groupName, "", memberNo))
         }
     }

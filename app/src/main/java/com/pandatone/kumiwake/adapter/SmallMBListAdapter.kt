@@ -17,7 +17,7 @@ import java.util.*
 /**
  * Created by atsushi_2 on 2016/04/16.
  */
-class MBListViewAdapter(private val context: Context, memberList: ArrayList<Member>, private val showStar: Boolean, showLeaderNo: Boolean) : BaseAdapter() {
+class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Member>, private val showStar: Boolean, showLeaderNo: Boolean) : BaseAdapter() {
     private val inflater: LayoutInflater
     private var listElements: ArrayList<Member> = ArrayList()
     private val showLdNo = showLeaderNo
@@ -94,7 +94,7 @@ class MBListViewAdapter(private val context: Context, memberList: ArrayList<Memb
 
     companion object {
 
-        fun setRowHeight(listView: ListView, listAdp: MBListViewAdapter) {
+        fun setRowHeight(listView: ListView, listAdp: SmallMBListAdapter) {
             var totalHeight = 40
 
             for (j in 0 until listAdp.count) {

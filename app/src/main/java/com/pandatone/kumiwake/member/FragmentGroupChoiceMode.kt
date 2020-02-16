@@ -1,9 +1,6 @@
 package com.pandatone.kumiwake.member
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.*
 import android.widget.AbsListView
 import android.widget.AdapterView
@@ -12,10 +9,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.ListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.adapter.GroupListAdapter
-import com.pandatone.kumiwake.adapter.GroupNameListAdapter
-import java.io.IOException
-
+import com.pandatone.kumiwake.adapter.GroupAdapter
+import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
 
 
 /**
@@ -28,9 +23,9 @@ class FragmentGroupChoiceMode : ListFragment() {
     // Fragment生成時にシステムが呼び出す
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        gpAdapter = GroupListAdapter(requireContext())
+        gpAdapter = GroupAdapter(requireContext())
         groupList = ArrayList()
-        listAdp = GroupNameListAdapter(requireContext(), groupList)
+        listAdp = GroupFragmentViewAdapter(requireContext(), groupList)
     }
 
     override fun onStart() {
@@ -162,8 +157,8 @@ class FragmentGroupChoiceMode : ListFragment() {
 
     companion object {
         //最初から存在してほしいのでprivateのcompanionにする（じゃないと落ちる。コルーチンとか使えばいけるかも）
-        private lateinit var gpAdapter: GroupListAdapter
-        private lateinit var listAdp: GroupNameListAdapter
+        private lateinit var gpAdapter: GroupAdapter
+        private lateinit var listAdp: GroupFragmentViewAdapter
         internal var groupList: ArrayList<Group> = ArrayList()
     }
 

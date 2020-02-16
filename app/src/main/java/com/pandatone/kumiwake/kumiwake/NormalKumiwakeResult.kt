@@ -17,8 +17,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.pandatone.kumiwake.*
-import com.pandatone.kumiwake.adapter.GroupListAdapter
-import com.pandatone.kumiwake.adapter.MBListViewAdapter
+import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.member.Group
 import com.pandatone.kumiwake.member.Member
 import com.pandatone.kumiwake.sekigime.SekigimeResult
@@ -380,10 +379,10 @@ class NormalKumiwakeResult : AppCompatActivity() {
         groupName = v.findViewById<View>(R.id.result_group) as TextView
         groupName.text = groupArray[i].name
         arrayList = v.findViewById<View>(R.id.result_member_listView) as ListView
-        val adapter = MBListViewAdapter(this, resultArray, true, showLeaderNo = false)
+        val adapter = SmallMBListAdapter(this, resultArray, true, showLeaderNo = false)
         arrayList.adapter = adapter
         setBackGround(v)
-        MBListViewAdapter.setRowHeight(arrayList, adapter)
+        SmallMBListAdapter.setRowHeight(arrayList, adapter)
     }
 
     private fun setMargin(leftDp: Int, topDp: Int, rightDp: Int, bottomDp: Int): LinearLayout.LayoutParams {

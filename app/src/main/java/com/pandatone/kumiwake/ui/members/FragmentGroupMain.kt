@@ -13,8 +13,8 @@ import androidx.fragment.app.ListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pandatone.kumiwake.AddGroupKeys
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.adapter.GroupListAdapter
-import com.pandatone.kumiwake.adapter.GroupNameListAdapter
+import com.pandatone.kumiwake.adapter.GroupAdapter
+import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
 import com.pandatone.kumiwake.member.AddGroup
 import com.pandatone.kumiwake.member.Group
 import com.pandatone.kumiwake.member.GroupClick
@@ -32,9 +32,9 @@ class FragmentGroupMain : ListFragment() {
     // Fragment生成時にシステムが呼び出す
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        gpAdapter = GroupListAdapter(requireContext())
+        gpAdapter = GroupAdapter(requireContext())
         groupList = ArrayList()
-        listAdp = GroupNameListAdapter(requireContext(), groupList)
+        listAdp = GroupFragmentViewAdapter(requireContext(), groupList)
     }
 
     // 必須*
@@ -282,8 +282,8 @@ class FragmentGroupMain : ListFragment() {
 
     companion object {
         //最初から存在してほしいのでprivateのcompanionにする（じゃないと落ちる。コルーチンとか使えばいけるかも）
-        private lateinit var listAdp: GroupNameListAdapter
-        internal lateinit var gpAdapter: GroupListAdapter
+        private lateinit var listAdp: GroupFragmentViewAdapter
+        internal lateinit var gpAdapter: GroupAdapter
         internal var groupList: ArrayList<Group> = ArrayList()
     }
 

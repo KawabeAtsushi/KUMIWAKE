@@ -2,9 +2,9 @@ package com.pandatone.kumiwake.member
 
 import android.app.Activity
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.adapter.GroupListAdapter
-import com.pandatone.kumiwake.adapter.MemberListAdapter
-import com.pandatone.kumiwake.adapter.NameListAdapter
+import com.pandatone.kumiwake.adapter.GroupAdapter
+import com.pandatone.kumiwake.adapter.MemberAdapter
+import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter
 
 /**
  * Created by atsushi_2 on 2016/03/30.
@@ -17,9 +17,9 @@ object Sort {
     private lateinit var ST: String
     internal var initial = 0
 
-    fun memberSort(builder: androidx.appcompat.app.AlertDialog.Builder, activity: Activity,listAdp:NameListAdapter) {
+    fun memberSort(builder: androidx.appcompat.app.AlertDialog.Builder, activity: Activity,listAdp:MemberFragmentViewAdapter) {
 
-        val mbAdapter = MemberListAdapter(ArrayList(),activity)
+        val mbAdapter = MemberAdapter(ArrayList(),activity)
 
         val items = arrayOf(
                 activity.getString(R.string.registration_ascending),
@@ -35,33 +35,33 @@ object Sort {
         builder.setPositiveButton("OK") { _, _ ->
             when (initial) {
                 0 -> {
-                    NS = MemberListAdapter.MB_ID
+                    NS = MemberAdapter.MB_ID
                     ST = ASC
                 }
                 1 -> {
-                    NS = MemberListAdapter.MB_ID
+                    NS = MemberAdapter.MB_ID
                     ST = DESC
                 }
                 2 -> {
-                    NS = MemberListAdapter.MB_READ
+                    NS = MemberAdapter.MB_READ
                     ST = ASC
                 }
                 3 -> {
-                    NS = MemberListAdapter.MB_READ
+                    NS = MemberAdapter.MB_READ
                     ST = DESC
                 }
                 4 -> {
-                    NS = MemberListAdapter.MB_AGE
+                    NS = MemberAdapter.MB_AGE
                     ST = ASC
                 }
                 5 -> {
-                    NS = MemberListAdapter.MB_AGE
+                    NS = MemberAdapter.MB_AGE
                     ST = DESC
                 }
             }
             mbAdapter.sortNames(NS, ST)
-            NameListAdapter.nowSort = NS
-            NameListAdapter.sortType = ST
+            MemberFragmentViewAdapter.nowSort = NS
+            MemberFragmentViewAdapter.sortType = ST
             listAdp.notifyDataSetChanged() //loadName()を呼ばない！
         }
         // アラートダイアログのボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
@@ -73,7 +73,7 @@ object Sort {
 
     fun groupSort(builder: androidx.appcompat.app.AlertDialog.Builder, activity: Activity) {
 
-        val gpAdapter = GroupListAdapter(activity)
+        val gpAdapter = GroupAdapter(activity)
 
         val items = arrayOf(
                 activity.getString(R.string.registration_ascending),
@@ -87,12 +87,12 @@ object Sort {
 
         builder.setPositiveButton("OK") { _, _ ->
             when (initial) {
-                0 -> gpAdapter.sortGroups(GroupListAdapter.GP_ID, ASC)
-                1 -> gpAdapter.sortGroups(GroupListAdapter.GP_ID, DESC)
-                2 -> gpAdapter.sortGroups(GroupListAdapter.GP_NAME, ASC)
-                3 -> gpAdapter.sortGroups(GroupListAdapter.GP_NAME, DESC)
-                4 -> gpAdapter.sortGroups(GroupListAdapter.GP_BELONG, ASC)
-                5 -> gpAdapter.sortGroups(GroupListAdapter.GP_BELONG, DESC)
+                0 -> gpAdapter.sortGroups(GroupAdapter.GP_ID, ASC)
+                1 -> gpAdapter.sortGroups(GroupAdapter.GP_ID, DESC)
+                2 -> gpAdapter.sortGroups(GroupAdapter.GP_NAME, ASC)
+                3 -> gpAdapter.sortGroups(GroupAdapter.GP_NAME, DESC)
+                4 -> gpAdapter.sortGroups(GroupAdapter.GP_BELONG, ASC)
+                5 -> gpAdapter.sortGroups(GroupAdapter.GP_BELONG, DESC)
             }
         }
         // アラートダイアログのボタンがクリックされた時に呼び出されるコールバックリスナーを登録します

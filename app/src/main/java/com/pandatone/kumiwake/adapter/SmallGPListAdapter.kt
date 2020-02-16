@@ -15,7 +15,7 @@ import java.util.*
 /**
  * Created by atsushi_2 on 2016/04/16.
  */
-class GPListViewAdapter(private val context: Context, val groupList: ArrayList<Group>) : BaseAdapter() {
+class SmallGPListAdapter(private val context: Context, val groupList: ArrayList<Group>) : BaseAdapter() {
 
     override fun getCount(): Int {
         return groupList.size
@@ -51,7 +51,7 @@ class GPListViewAdapter(private val context: Context, val groupList: ArrayList<G
 
     companion object {
 
-        fun setRowHeight(listView: ListView, listAdp: GPListViewAdapter) {
+        fun setRowHeight(listView: ListView, listAdp: SmallGPListAdapter) {
             var totalHeight = 0
 
             for (j in 0 until listAdp.count) {

@@ -10,8 +10,8 @@ import androidx.fragment.app.ListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pandatone.kumiwake.AddGroupKeys
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.adapter.MemberListAdapter
-import com.pandatone.kumiwake.adapter.NameListAdapter
+import com.pandatone.kumiwake.adapter.MemberAdapter
+import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter
 import com.pandatone.kumiwake.ui.members.MembersMenuAction
 import java.io.IOException
 import java.util.*
@@ -27,10 +27,10 @@ class FragmentMemberChoiceMode : ListFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mbAdapter = MemberListAdapter(memberList,requireContext())
-        listAdp = NameListAdapter(requireContext(), memberList)
-        NameListAdapter.nowSort = MemberListAdapter.MB_ID
-        NameListAdapter.sortType = "ASC"
+        mbAdapter = MemberAdapter(memberList,requireContext())
+        listAdp = MemberFragmentViewAdapter(requireContext(), memberList)
+        MemberFragmentViewAdapter.nowSort = MemberAdapter.MB_ID
+        MemberFragmentViewAdapter.sortType = "ASC"
         Sort.initial = 0
         loadName()
     }
@@ -65,9 +65,9 @@ class FragmentMemberChoiceMode : ListFragment() {
         lv.startActionMode(CallbackMB())
         loadName()
         FragmentGroupChoiceMode().loadName()
-        NameListAdapter.nowSort = MemberListAdapter.MB_ID
-        NameListAdapter.sortType = "ASC"
-        mbAdapter.sortNames(NameListAdapter.nowSort, NameListAdapter.sortType)
+        MemberFragmentViewAdapter.nowSort = MemberAdapter.MB_ID
+        MemberFragmentViewAdapter.sortType = "ASC"
+        mbAdapter.sortNames(MemberFragmentViewAdapter.nowSort, MemberFragmentViewAdapter.sortType)
 
         for (member in memberArray) {
             var i = 1
@@ -260,8 +260,8 @@ class FragmentMemberChoiceMode : ListFragment() {
 
     companion object{
         //最初から存在してほしいのでprivateのcompanionにする（じゃないと落ちる。コルーチンとか使えばいけるかも）
-        private lateinit var mbAdapter: MemberListAdapter
-        private lateinit var listAdp: NameListAdapter
+        private lateinit var mbAdapter: MemberAdapter
+        private lateinit var listAdp: MemberFragmentViewAdapter
     }
 
 }
