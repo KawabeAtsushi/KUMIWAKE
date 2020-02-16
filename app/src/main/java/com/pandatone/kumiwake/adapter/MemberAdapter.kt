@@ -209,13 +209,11 @@ class MemberAdapter(private val memberList: ArrayList<Member>, val context: Cont
     }
 
     fun addBelong(id: String, newBelong: String) {
-        try {
-            val values = ContentValues()
-            values.put(MB_BELONG, newBelong)
-            db.update(TABLE_NAME, values, "$MB_ID=?", arrayOf(id))
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        open()
+        val values = ContentValues()
+        values.put(MB_BELONG, newBelong)
+        db.update(TABLE_NAME, values, "$MB_ID=?", arrayOf(id))
+        close()
     }
 
     fun saveName(name: String, sex: String, age: Int, belong: String, read: String) {

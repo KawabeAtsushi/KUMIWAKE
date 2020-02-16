@@ -125,8 +125,8 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
             customText.append("☆" + getText(R.string.even_out_age_ratio) + "\n")
         }
         custom_review_txt.text = customText.toString()
-        SmallMBListAdapter.setRowHeight(kumiwake_member_listView, mbAdapter)
-        SmallGPListAdapter.setRowHeight(groupListView, gpAdapter)
+        mbAdapter.setRowHeight(kumiwake_member_listView)
+        gpAdapter.setRowHeight(groupListView)
     }
 
     //組み分け実行

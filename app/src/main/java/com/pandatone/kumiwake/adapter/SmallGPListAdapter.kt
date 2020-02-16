@@ -49,21 +49,18 @@ class SmallGPListAdapter(private val context: Context, val groupList: ArrayList<
         return v
     }
 
-    companion object {
+    fun setRowHeight(listView: ListView) {
+        var totalHeight = 0
 
-        fun setRowHeight(listView: ListView, listAdp: SmallGPListAdapter) {
-            var totalHeight = 0
-
-            for (j in 0 until listAdp.count) {
-                val item = listAdp.getView(j, null, listView)
-                item.measure(0, 0)
-                totalHeight += item.measuredHeight
-            }
-
-            listView.layoutParams.height = totalHeight + listView.dividerHeight * (listAdp.count - 1)
-            listView.requestLayout()
+        for (j in 0 until this.count) {
+            val item = this.getView(j, null, listView)
+            item.measure(0, 0)
+            totalHeight += item.measuredHeight
         }
 
+        listView.layoutParams.height = totalHeight + listView.dividerHeight * (this.count - 1)
+        listView.requestLayout()
     }
+
 }
 

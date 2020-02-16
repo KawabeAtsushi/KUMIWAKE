@@ -86,43 +86,41 @@ class EditGroupViewAdapter(private val context: Context, private val groupList: 
         return v
     }
 
-    companion object {
-        @SuppressLint("UseSparseArrays")
-        private val groupNameView = HashMap<Int, EditText>()
-        @SuppressLint("UseSparseArrays")
-        private val memberNoView = HashMap<Int, EditText>()
+    @SuppressLint("UseSparseArrays")
+    private val groupNameView = HashMap<Int, EditText>()
+    @SuppressLint("UseSparseArrays")
+    private val memberNoView = HashMap<Int, EditText>()
 
-        fun getGroupName(position: Int): String {
-            var groupName = R.string.nothing.toString()
-            val groupNameEditText = groupNameView[position]
-            if (groupNameEditText!!.text != null) {
-                groupName = groupNameEditText.text.toString()
-            }
-            return groupName
+    fun getGroupName(position: Int): String {
+        var groupName = R.string.nothing.toString()
+        val groupNameEditText = groupNameView[position]
+        if (groupNameEditText!!.text != null) {
+            groupName = groupNameEditText.text.toString()
+        }
+        return groupName
+    }
+
+    fun getMemberNo(position: Int): Int {
+        var memberNo = 0
+        val memberNoEditText = memberNoView[position]
+        if (memberNoEditText!!.text.toString().isNotEmpty()) {
+            memberNo = Integer.parseInt(memberNoEditText.text.toString())
+        }
+        return memberNo
+    }
+
+
+    fun setRowHeight(listView: ListView) {
+        var totalHeight = 0
+
+        for (j in 0 until this.count) {
+            val item = this.getView(j, null, listView)
+            item?.measure(0, 0)
+            totalHeight += item!!.measuredHeight
         }
 
-        fun getMemberNo(position: Int): Int {
-            var memberNo = 0
-            val memberNoEditText = memberNoView[position]
-            if (memberNoEditText!!.text.toString().isNotEmpty()) {
-                memberNo = Integer.parseInt(memberNoEditText.text.toString())
-            }
-            return memberNo
-        }
-
-
-        fun setRowHeight(listView: ListView, listAdp: EditGroupViewAdapter) {
-            var totalHeight = 0
-
-            for (j in 0 until listAdp.count) {
-                val item = listAdp.getView(j, null, listView)
-                item?.measure(0, 0)
-                totalHeight += item!!.measuredHeight
-            }
-
-            listView.layoutParams.height = totalHeight + listView.dividerHeight * (listAdp.count - 1)
-            listView.requestLayout()
-        }
+        listView.layoutParams.height = totalHeight + listView.dividerHeight * (this.count - 1)
+        listView.requestLayout()
     }
 
 }

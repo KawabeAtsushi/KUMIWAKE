@@ -50,8 +50,6 @@ object MemberClick {
 
     fun viewBelong(member: Member, mbAdapter:MemberAdapter): String {
         val result: String
-
-        mbAdapter.open()
         val belongText = member.belong
         val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         val newBelong = StringBuilder()
@@ -65,7 +63,6 @@ object MemberClick {
                 }
             }
         }
-        mbAdapter.close()
         result = if (newBelong.toString() == "") {
             ""
         } else {

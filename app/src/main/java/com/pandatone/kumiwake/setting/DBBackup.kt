@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.os.Environment
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -44,6 +45,9 @@ object DBBackup {
     fun dbBackup(c: Context, path:String, dialog: Dialog) {
         context = c
         checkSDStatus(context)
+
+        Log.d("ExternalStorageNew", context.getExternalFilesDir(null).toString())
+        Log.d("ExternalStorage", path)
 
         val f = File(path)
 

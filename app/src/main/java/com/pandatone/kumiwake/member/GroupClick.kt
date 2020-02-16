@@ -48,11 +48,11 @@ object GroupClick {
 
         //メンバー数の更新
         val belongNo: Int
-        val GPdbAdapter = GroupAdapter(c)
+        val gpAdapter = GroupAdapter(c)
 
         val id: Int = item.id
         belongNo = adapter.count
-        GPdbAdapter.updateBelongNo(id.toString(), belongNo)
+        gpAdapter.updateBelongNo(id.toString(), belongNo)
         FragmentGroupMain().loadName()
     }
 }

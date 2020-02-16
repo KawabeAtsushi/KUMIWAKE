@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Button
@@ -146,9 +147,7 @@ class AddGroup : AppCompatActivity() {
     private fun updateItem(listId: Int) {
         val name = groupEditText.text!!.toString()
         updateBelong()
-        gpAdapter.open()
         gpAdapter.updateGroup(listId, name, name, adapter.count)
-        gpAdapter.close()
     }
 
     //メンバー選択(MemberMain)へ移動
@@ -160,8 +159,6 @@ class AddGroup : AppCompatActivity() {
 
     //memberのbelongを更新
     private fun updateBelong() {
-        mbAdapter.open()     // DBの読み込み(読み書きの方)
-        var i = 1
         val nameList = mbAdapter.getAllMembers()
         nameList.forEach { member ->
             val listId = member.id
@@ -174,8 +171,6 @@ class AddGroup : AppCompatActivity() {
                 deleteBelongInfo(member, groupId, listId)
             }
         }
-
-        mbAdapter.close()    // DBを閉じる
     }
 
     //指定したremoveIdのBelongを削除
@@ -199,8 +194,6 @@ class AddGroup : AppCompatActivity() {
 
     //重複するBelongの削除
     private fun cleanUpBelong() {
-        gpAdapter.open()
-        var i = 1
         val nameList = mbAdapter.getAllMembers()
         nameList.forEach { member ->
             val listId = member.id
@@ -216,10 +209,9 @@ class AddGroup : AppCompatActivity() {
             for (item in list) {
                 newBelong.append("$item,")
             }
+            Log.d("Called!!!!!!!!!!!!!!!",newBelong.toString())
             mbAdapter.addBelong(listId.toString(), newBelong.toString())
-            i += 2
         }
-        gpAdapter.close()
     }
 
     //メンバー選択(MemberMain)からのコールバック
@@ -231,8 +223,8 @@ class AddGroup : AppCompatActivity() {
         }
         adapter = SmallMBListAdapter(this@AddGroup, members, false, showLeaderNo = false)
         listView.adapter = adapter
+        adapter.setRowHeight(listView)
         numberOfSelectedMember.text = adapter.count.toString() + getString(R.string.people) + getString(R.string.selected)
-        cleanUpBelong()
     }
 
 }

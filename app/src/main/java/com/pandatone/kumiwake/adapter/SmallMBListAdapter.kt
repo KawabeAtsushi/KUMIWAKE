@@ -66,7 +66,7 @@ class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Mem
         if (listElements[position].sex == context.getText(R.string.man)) {
             memberIcon.setImageResource(R.drawable.member_img)
         } else {
-            memberIcon.setColorFilter(context.getColor(R.color.woman))
+            memberIcon.setColorFilter(context.resources.getColor(R.color.woman))
         }
     }
 
@@ -91,21 +91,17 @@ class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Mem
         }
     }
 
+    fun setRowHeight(listView: ListView) {
+        var totalHeight = 40
 
-    companion object {
-
-        fun setRowHeight(listView: ListView, listAdp: SmallMBListAdapter) {
-            var totalHeight = 40
-
-            for (j in 0 until listAdp.count) {
-                val item = listAdp.getView(j, null, listView)
-                item.measure(0, 0)
-                totalHeight += item.measuredHeight
-            }
-
-            listView.layoutParams.height = totalHeight + listView.dividerHeight * (listAdp.count - 1)
-            listView.requestLayout()
+        for (j in 0 until this.count) {
+            val item = this.getView(j, null, listView)
+            item.measure(0, 0)
+            totalHeight += item.measuredHeight
         }
+
+        listView.layoutParams.height = totalHeight + listView.dividerHeight * (this.count - 1)
+        listView.requestLayout()
     }
 
 }

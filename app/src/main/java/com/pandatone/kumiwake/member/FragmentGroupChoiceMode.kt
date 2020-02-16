@@ -31,7 +31,6 @@ class FragmentGroupChoiceMode : ListFragment() {
     override fun onStart() {
         super.onStart()
         loadName()
-        FragmentMemberChoiceMode().loadName()
     }
 
     // 必須*

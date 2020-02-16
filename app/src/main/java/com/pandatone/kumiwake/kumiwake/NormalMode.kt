@@ -120,7 +120,7 @@ class NormalMode : AppCompatActivity() {
 
         adapter = SmallMBListAdapter(this, memberArray, false, showLeaderNo = false)
         listView.adapter = adapter
-        SmallMBListAdapter.setRowHeight(listView, adapter!!)
+        adapter!!.setRowHeight(listView)
         add_group_listview.numberOfSelectedMember.text = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
     }
 

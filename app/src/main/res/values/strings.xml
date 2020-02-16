@@ -159,7 +159,7 @@
     <string name="add_member">Add member</string>
     <string name="member_list">Members/Groups list</string>
     <string name="error">Error</string>
-    <string name="nothing_file">\"KUMIWAKE_Backup\" folder doesn\'t exist in</string>
+    <string name="nothing_file">Backed-up file doesn\'t exist in</string>
     <string name="failed_import">Data import failed.\nPlease specify the path to \"KUMIWAKE_Backup\".</string>
     <string name="file_path">File Path</string>
     <string name="failed_to_mkdirs">Failed to make backup directory</string>

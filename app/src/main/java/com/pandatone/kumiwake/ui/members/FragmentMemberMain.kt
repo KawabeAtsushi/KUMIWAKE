@@ -5,12 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.ListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pandatone.kumiwake.AddMemberKeys
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter
 import com.pandatone.kumiwake.member.AddMember
@@ -19,6 +21,7 @@ import com.pandatone.kumiwake.member.Member
 import com.pandatone.kumiwake.member.Sort
 import java.io.IOException
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -27,12 +30,15 @@ import java.util.*
 class FragmentMemberMain : ListFragment() {
 
     private lateinit var lv: ListView
-    private var memberList: ArrayList<Member> = ArrayList()
+    private val memberList:ArrayList<Member>
+        get() {
+            return StatusHolder.allMember
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mbAdapter = MemberAdapter(memberList,requireContext())
-        memberList = mbAdapter.getAllMembers()
+        StatusHolder.allMember = mbAdapter.getAllMembers()
         listAdp = MemberFragmentViewAdapter(requireContext(), memberList)
         MemberFragmentViewAdapter.nowSort = MemberAdapter.MB_ID
         MemberFragmentViewAdapter.sortType = "ASC"
@@ -152,11 +158,9 @@ class FragmentMemberMain : ListFragment() {
         builder.setMessage(R.string.Do_delete)
         // OKの時の処理
         builder.setPositiveButton("OK") { _, _ ->
-            mbAdapter.open()
             val member: Member = memberList[position]
             val listId = member.id
             mbAdapter.selectDelete(listId.toString())
-            mbAdapter.close()    // DBを閉じる
             loadName()
             updateBelongNo()
             FragmentGroupMain().loadName()
@@ -258,7 +262,6 @@ class FragmentMemberMain : ListFragment() {
             // OKの時の処理
             builder.setPositiveButton("OK") { _, _ ->
                 val booleanArray = lv.checkedItemPositions
-                mbAdapter.open()     // DBの読み込み(読み書きの方)
                 var i = 1
                 while (i < listAdp.count) {
                     val checked = booleanArray.get(i)
@@ -270,7 +273,6 @@ class FragmentMemberMain : ListFragment() {
                     }
                     i += 2
                 }
-                mbAdapter.close()    // DBを閉じる
                 listAdp.clearSelection()
                 loadName()
                 updateBelongNo()
@@ -328,7 +330,6 @@ class FragmentMemberMain : ListFragment() {
     //引数belongIdのグループに所属するメンバーリストを返す
     fun searchBelong(belongId: String): ArrayList<Member> {
         val memberArrayByBelong = ArrayList<Member>()
-        mbAdapter.open()
         memberList.forEach{member ->
             val belongText = member.belong
             val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -336,7 +337,6 @@ class FragmentMemberMain : ListFragment() {
                 memberArrayByBelong.add(Member(member.id, member.name, member.sex, 0, 0, null.toString(), null.toString(), null.toString()))
             }
         }
-        mbAdapter.close()
         return memberArrayByBelong
     }
 

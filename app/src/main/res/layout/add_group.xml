@@ -52,8 +52,7 @@
         android:id="@+id/add_group_listview"
         layout="@layout/part_review_listview"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/form_between_margin" />
 
     <LinearLayout

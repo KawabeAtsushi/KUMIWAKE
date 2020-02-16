@@ -2,6 +2,7 @@ package com.pandatone.kumiwake.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +24,7 @@ class GroupFragmentViewAdapter(private val context: Context, private val groupLi
         return groupList.size
     }
 
-    override fun getItem(position: Int): Any {
+    override fun getItem(position: Int): Group {
         return groupList[position]
     }
 
@@ -32,15 +33,18 @@ class GroupFragmentViewAdapter(private val context: Context, private val groupLi
     }
 
 
-    @SuppressLint("InflateParams", "SetTextI18n")
+    @SuppressLint("InflateParams", "SetTextI18n", "ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
         val nameTextView: TextView
         val numberOfMemberTextView: TextView
         val v: View?
-        val group = groupList[position]
+        val group = getItem(position)
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         v = inflater.inflate(R.layout.row_group, null)
+
+        Log.d("group:",group.name)
+        Log.d("id:",group.id.toString())
 
         if (gSelection.get(group.id)) {
             v!!.setBackgroundColor(context.resources.getColor(R.color.checked_list))

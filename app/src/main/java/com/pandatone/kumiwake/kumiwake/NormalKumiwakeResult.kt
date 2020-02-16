@@ -382,7 +382,7 @@ class NormalKumiwakeResult : AppCompatActivity() {
         val adapter = SmallMBListAdapter(this, resultArray, true, showLeaderNo = false)
         arrayList.adapter = adapter
         setBackGround(v)
-        SmallMBListAdapter.setRowHeight(arrayList, adapter)
+        adapter.setRowHeight(arrayList)
     }
 
     private fun setMargin(leftDp: Int, topDp: Int, rightDp: Int, bottomDp: Int): LinearLayout.LayoutParams {

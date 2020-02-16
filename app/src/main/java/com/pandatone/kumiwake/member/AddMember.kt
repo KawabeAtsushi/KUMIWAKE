@@ -312,7 +312,6 @@ class AddMember : AppCompatActivity() {
                 j++
             }
             if (change!!) {
-                groupListAdapter.open()
                 k = 0
                 while (k < FragmentGroupChoiceMode.groupList.size) {
                     val group = FragmentGroupChoiceMode.groupList[k]
@@ -324,7 +323,6 @@ class AddMember : AppCompatActivity() {
                     }
                     k++
                 }
-                groupListAdapter.close()
             }
             i++
         }

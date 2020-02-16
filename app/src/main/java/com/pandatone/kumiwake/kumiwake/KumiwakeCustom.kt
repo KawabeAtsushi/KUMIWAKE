@@ -33,7 +33,7 @@ class KumiwakeCustom : AppCompatActivity() {
     private lateinit var memberListView: ListView
     private lateinit var groupListView: ListView
     private var mbAdapter: SmallMBListAdapter? = null
-    private var gpAdapter: EditGroupViewAdapter? = null
+    private var editGPAdapter: EditGroupViewAdapter? = null
     private lateinit var memberArray: ArrayList<Member>
     private lateinit var groupArray: ArrayList<Group>
     private lateinit var newGroupArray: ArrayList<Group>
@@ -52,11 +52,11 @@ class KumiwakeCustom : AppCompatActivity() {
             groupArray = intent.getSerializableExtra(ArrayKeys.NORMAL_GROUP_ARRAY.key) as ArrayList<Group>
         }
         mbAdapter = SmallMBListAdapter(this, memberArray, true, showLeaderNo = true)
-        gpAdapter = EditGroupViewAdapter(this, groupArray, custom_scroll)
+        editGPAdapter = EditGroupViewAdapter(this, groupArray, custom_scroll)
         findViews()
         setViews()
         memberListView.adapter = mbAdapter
-        groupListView.adapter = gpAdapter
+        groupListView.adapter = editGPAdapter
 
         setKeyboardListener()
         memberListView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
@@ -80,8 +80,8 @@ class KumiwakeCustom : AppCompatActivity() {
     fun setViews() {
         member_add_btn.visibility = View.GONE
         member_register_and_add_btn.visibility = View.GONE
-        mbAdapter?.let { SmallMBListAdapter.setRowHeight(memberListView, it) }
-        gpAdapter?.let { EditGroupViewAdapter.setRowHeight(groupListView, it) }
+        mbAdapter?.setRowHeight(memberListView)
+        editGPAdapter?.setRowHeight(groupListView)
         numberOfSelectedMember.text = memberArray.size.toString() + getString(R.string.people)
         group_no_txt.text = groupArray.size.toString() + " " + getText(R.string.group)
         val size = Point()
@@ -95,7 +95,7 @@ class KumiwakeCustom : AppCompatActivity() {
         var memberSum = 0
         var allowToNext: Boolean? = true
         for (i in 0 until groupListView.count) {
-            val memberNo = EditGroupViewAdapter.getMemberNo(i)
+            val memberNo = editGPAdapter!!.getMemberNo(i)
             memberSum += memberNo
             if (memberNo <= 0 || memberSum > memberArray.size) {
                 allowToNext = false
@@ -159,8 +159,8 @@ class KumiwakeCustom : AppCompatActivity() {
     private fun createGroupArray() {
         newGroupArray = ArrayList()
         for (i in 0 until groupListView.count) {
-            val groupName = EditGroupViewAdapter.getGroupName(i)
-            val memberNo = EditGroupViewAdapter.getMemberNo(i)
+            val groupName = editGPAdapter!!.getGroupName(i)
+            val memberNo = editGPAdapter!!.getMemberNo(i)
             newGroupArray.add(Group(i, groupName, "", memberNo))
         }
     }

@@ -10,6 +10,7 @@ import androidx.fragment.app.ListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pandatone.kumiwake.AddGroupKeys
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter
 import com.pandatone.kumiwake.ui.members.MembersMenuAction
@@ -22,12 +23,15 @@ import java.util.*
  */
 class FragmentMemberChoiceMode : ListFragment() {
     private var memberArray = MemberMain.memberArray
-    private var memberList: ArrayList<Member> = ArrayList()
-    private lateinit var lv: ListView
+    private val memberList:ArrayList<Member>
+        get() {
+            return StatusHolder.allMember
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mbAdapter = MemberAdapter(memberList,requireContext())
+        StatusHolder.allMember = mbAdapter.getAllMembers()
         listAdp = MemberFragmentViewAdapter(requireContext(), memberList)
         MemberFragmentViewAdapter.nowSort = MemberAdapter.MB_ID
         MemberFragmentViewAdapter.sortType = "ASC"
@@ -249,7 +253,7 @@ class FragmentMemberChoiceMode : ListFragment() {
         }
     }
 
-    fun loadName() {
+    private fun loadName() {
         mbAdapter.open()
         val c = mbAdapter.getDB
         mbAdapter.getCursor(c, memberList, true)
@@ -262,6 +266,7 @@ class FragmentMemberChoiceMode : ListFragment() {
         //最初から存在してほしいのでprivateのcompanionにする（じゃないと落ちる。コルーチンとか使えばいけるかも）
         private lateinit var mbAdapter: MemberAdapter
         private lateinit var listAdp: MemberFragmentViewAdapter
+        lateinit var lv: ListView
     }
 
 }

@@ -99,7 +99,6 @@ class GroupAdapter(context: Context) : ArrayAdapter<Group>(context, 0) {
 
     @Throws(IOException::class)
     fun picGroup(group: String, group_read: String) {
-
         open()
         val query = ("SELECT * FROM " + TABLE_NAME +
                 " WHERE " + GP_NAME + " like '%" + group + "%' OR "

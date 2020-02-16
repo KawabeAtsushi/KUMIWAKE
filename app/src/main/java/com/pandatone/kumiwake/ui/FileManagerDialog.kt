@@ -96,6 +96,7 @@ class FileManagerDialog(private var mTitle: String, private var mMessage: CharSe
         mDialog.findViewById<View>(R.id.cancel_button).setOnClickListener { dismiss() }
     }
 
+    //ブラウズボタンのクリック処理
     private fun onBrowseClick() {
         if(backup) {
             val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)

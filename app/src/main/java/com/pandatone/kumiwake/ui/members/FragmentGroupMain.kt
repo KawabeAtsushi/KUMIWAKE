@@ -138,11 +138,9 @@ class FragmentGroupMain : ListFragment() {
         builder.setMessage(R.string.Do_delete)
         // OKの時の処理
         builder.setPositiveButton("OK") { _, _ ->
-            gpAdapter.open()
             val groupId = groupList[position].id
             FragmentMemberMain().deleteBelongInfoAll(groupId)
             gpAdapter.selectDelete(groupId.toString())
-            gpAdapter.close()    // DBを閉じる
             FragmentMemberMain().loadName()
             loadName()
         }
@@ -235,8 +233,6 @@ class FragmentGroupMain : ListFragment() {
         // OKの時の処理
         builder.setPositiveButton("OK") { _, _ ->
             val list = listView.checkedItemPositions
-
-            gpAdapter.open()     // DBの読み込み(読み書きの方)
             for (i in 0 until listAdp.count) {
                 val checked = list.get(i)
                 if (checked) {
@@ -246,7 +242,6 @@ class FragmentGroupMain : ListFragment() {
                     gpAdapter.selectDelete(groupId.toString())     // DBから取得したIDが入っているデータを削除する
                 }
             }
-            gpAdapter.close()    // DBを閉じる
             listAdp.clearSelection()
             FragmentMemberMain().loadName()
             loadName()

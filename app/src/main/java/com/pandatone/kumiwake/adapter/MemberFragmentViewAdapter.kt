@@ -2,6 +2,7 @@ package com.pandatone.kumiwake.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
@@ -25,7 +26,7 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
         return memberList.size
     }
 
-    override fun getItem(position: Int): Member? {
+    override fun getItem(position: Int): Member {
         return memberList[position]
     }
 
@@ -34,7 +35,7 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
     }
 
     override fun isEnabled(position: Int): Boolean {
-        return getItem(position)!!.sex != "Index"
+        return getItem(position).sex != "Index"
     }
 
     @SuppressLint("InflateParams")
@@ -45,10 +46,13 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         if (isEnabled(position)) {
+            
+            Log.d("member:", member.name)
+            Log.d("belong:", member.belong)
 
             v = inflater.inflate(R.layout.row_member, null)
 
-            if (mSelection.get(member!!.id)) {
+            if (mSelection.get(member.id)) {
                 v?.setBackgroundColor(context.resources.getColor(R.color.checked_list))
             }
 
@@ -67,7 +71,7 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
 
     private fun setSexIcon(v: View, position: Int) {
         val memberIcon: ImageView = v.findViewById<View>(R.id.memberIcon) as ImageView
-        if (getItem(position)!!.sex == context.getText(R.string.man)) {
+        if (getItem(position).sex == context.getText(R.string.man)) {
             memberIcon.setImageResource(R.drawable.member_img)
         } else {
             memberIcon.setColorFilter(context.resources.getColor(R.color.woman))
@@ -78,15 +82,15 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
         val nowItem = getItem(position)
 
         when (nowSort) {
-            MemberAdapter.MB_READ -> nowData = nowItem!!.read
-            MemberAdapter.MB_AGE -> nowData = nowItem!!.age.toString()
+            MemberAdapter.MB_READ -> nowData = nowItem.read
+            MemberAdapter.MB_AGE -> nowData = nowItem.age.toString()
         }
 
         if (position >= 2) { val preItem = getItem(position - 2)
 
             when (nowSort) {
-                MemberAdapter.MB_READ -> preData = preItem!!.read
-                MemberAdapter.MB_AGE -> preData = preItem!!.age.toString()
+                MemberAdapter.MB_READ -> preData = preItem.read
+                MemberAdapter.MB_AGE -> preData = preItem.age.toString()
             }
         }
 
