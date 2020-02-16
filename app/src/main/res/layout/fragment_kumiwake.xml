@@ -82,9 +82,11 @@
 
     <TextView
         android:id="@+id/normal_mode_button"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:padding="20dp"
         android:background="@drawable/top_normal_button"
         android:clickable="true"
@@ -98,6 +100,7 @@
         android:maxLines="2"
         app:layout_constraintTop_toBottomOf="@id/half_guideline"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintEnd_toStartOf="@id/hintForNormalMode"
         app:layout_constraintBottom_toTopOf="@id/quarter_guideline"/>
 
     <ImageButton
@@ -105,18 +108,20 @@
         android:layout_width="@dimen/hint_icon_size"
         android:layout_height="@dimen/hint_icon_size"
         android:padding="30dp"
+        android:layout_marginEnd="30dp"
         android:background="@drawable/top_normal_button"
         android:contentDescription="@string/hint"
         android:src="@drawable/ic_help_outline_dark_24dp"
-        app:layout_constraintStart_toEndOf="@+id/normal_mode_button"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_end"
         app:layout_constraintBottom_toBottomOf="@id/normal_mode_button"/>
 
     <TextView
         android:id="@+id/quick_mode_button"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="30dp"
         android:padding="20dp"
         android:background="@drawable/top_quick_button"
         android:clickable="true"
@@ -129,6 +134,7 @@
         android:textSize="@dimen/main_button_text_size"
         android:maxLines="2"
         app:layout_constraintEnd_toStartOf="@id/hintForQuickMode"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
         app:layout_constraintTop_toBottomOf="@id/quarter_guideline"
         app:layout_constraintBottom_toBottomOf="parent" />
 

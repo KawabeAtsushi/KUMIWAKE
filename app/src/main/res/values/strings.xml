@@ -160,9 +160,9 @@
     <string name="member_list">Members/Groups list</string>
     <string name="error">Error</string>
     <string name="nothing_file">Backed-up file doesn\'t exist in</string>
-    <string name="failed_import">Data import failed.\nPlease specify the path to \"KUMIWAKE_Backup\".</string>
+    <string name="failed_import">Data import failed.\nPush \"OK\" and try again with change file pass to </string>
     <string name="file_path">File Path</string>
-    <string name="failed_to_mkdirs">Failed to make backup directory</string>
+    <string name="failed_to_mkdirs">Failed to make backup directory on SD card.\nPush \"OK\" and try again with change file pass to </string>
     <string name="app_exit_confirmation">Quit app?</string>
     <string name="edit_exit_confirmation">Quit edit?\nEdits are discarded.</string>
     <string name="hint">hint</string>

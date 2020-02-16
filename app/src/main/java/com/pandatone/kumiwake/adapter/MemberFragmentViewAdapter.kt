@@ -46,9 +46,6 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         if (isEnabled(position)) {
-            
-            Log.d("member:", member.name)
-            Log.d("belong:", member.belong)
 
             v = inflater.inflate(R.layout.row_member, null)
 

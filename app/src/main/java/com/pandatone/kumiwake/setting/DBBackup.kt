@@ -46,9 +46,6 @@ object DBBackup {
         context = c
         checkSDStatus(context)
 
-        Log.d("ExternalStorageNew", context.getExternalFilesDir(null).toString())
-        Log.d("ExternalStorage", path)
-
         val f = File(path)
 
         b = f.exists()           //SDカードにkumiwakeディレクトリがあるか。
@@ -82,7 +79,7 @@ object DBBackup {
         b = f.exists()           //SDカードにkumiwakeディレクトリがあるか。
         if (!b) {
             Toast.makeText(c, c.getString(R.string.not_exist_file), Toast.LENGTH_SHORT).show()
-            err = 3
+            return
         }
 
         err += fileCopy("$path/mb.db", mb_db_file, c)
