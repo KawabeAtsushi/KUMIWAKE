@@ -61,7 +61,7 @@ E-mail:ganbalism@gmail.com
 [師匠の記事](https://qiita.com/rmakiyama/items/779cf6407f70b40e4ee7)
 
 [DataBindingで実現するMVVM Architecture](https://speakerdeck.com/star_zero/databindingteshi-xian-surumvvm-architecture?slide=27)
-### スコープ関数 & inline
+### Improve safty
 [Kotlin スコープ関数 用途まとめ](https://qiita.com/ngsw_taro/items/d29e3080d9fc8a38691e)
 
 [Kotlinのスコープ関数を使い分けたい](http://nyanyoni.hateblo.jp/entry/2017/08/19/152200)
