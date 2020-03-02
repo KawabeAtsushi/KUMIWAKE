@@ -62,7 +62,7 @@ class FragmentGroupMain : ListFragment() {
         listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
             val builder = AlertDialog.Builder(activity!!)
-            val builder2 = android.app.AlertDialog.Builder(activity)
+            val builder2 = AlertDialog.Builder(activity!!)
             val inflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val view2 = inflater.inflate(R.layout.group_info, activity!!.findViewById<View>(R.id.info_layout) as ViewGroup?)
             val groupName = groupList[position].name

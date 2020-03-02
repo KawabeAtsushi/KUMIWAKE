@@ -1,6 +1,6 @@
 package com.pandatone.kumiwake.ui
 
-import android.app.Dialog
+import androidx.appcompat.app.AppCompatDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -21,8 +21,8 @@ class CustomDialog(private var mTitle: String, private var mMessage: CharSequenc
     //onClickリスナ(Positive)
     var mPositiveBtnListener: View.OnClickListener? = null
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = activity?.let { Dialog(it) }
+    override fun onCreateDialog(savedInstanceState: Bundle?): AppCompatDialog {
+        val dialog = activity?.let { AppCompatDialog(it) }
         // タイトル非表示
         dialog?.window!!.requestFeature(Window.FEATURE_NO_TITLE)
         // フルスクリーン
@@ -36,12 +36,12 @@ class CustomDialog(private var mTitle: String, private var mMessage: CharSequenc
         (dialog.findViewById<View>(R.id.dialog_message) as TextView).text = mMessage
         // OK ボタンのリスナ
         if (mPositiveBtnListener == null) {
-            dialog.findViewById<View>(R.id.negative_button).visibility = View.GONE
-            dialog.findViewById<View>(R.id.positive_button).setOnClickListener { dismiss() }
+            (dialog.findViewById<View>(R.id.negative_button) as TextView).visibility = View.GONE
+            (dialog.findViewById<View>(R.id.positive_button) as TextView).setOnClickListener { dismiss() }
         } else {
-            dialog.findViewById<View>(R.id.positive_button).setOnClickListener(mPositiveBtnListener)
+            (dialog.findViewById<View>(R.id.positive_button) as TextView).setOnClickListener(mPositiveBtnListener)
             // いいえボタンのリスナ
-            dialog.findViewById<View>(R.id.negative_button).setOnClickListener{ dismiss() }
+            (dialog.findViewById<View>(R.id.negative_button) as TextView).setOnClickListener{ dismiss() }
         }
 
         return dialog

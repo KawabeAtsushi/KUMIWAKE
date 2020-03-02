@@ -1,24 +1,21 @@
 package com.pandatone.kumiwake
 
-import android.graphics.Color
 import android.graphics.Point
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Html
-import android.view.KeyEvent
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewTreeObserver
+import android.view.*
+import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.pandatone.kumiwake.ui.DialogWarehouse
@@ -39,10 +36,10 @@ class MainActivity : AppCompatActivity() {
 
         val navView: AHBottomNavigation = findViewById(R.id.nav_view)
 
-        navView.addItem(AHBottomNavigationItem(R.string.kumiwake, R.drawable.ic_kumiwake_24px, Theme.Red.primaryColor))
-        navView.addItem(AHBottomNavigationItem(R.string.sekigime, R.drawable.ic_sekigime_24px, Theme.Green.primaryColor))
-        navView.addItem(AHBottomNavigationItem(R.string.member, R.drawable.ic_members_24dp, Theme.Blue.primaryColor))
-        navView.addItem(AHBottomNavigationItem(R.string.setting_help, R.drawable.ic_settings_24dp, Theme.Yellow.primaryColor))
+        navView.addItem(AHBottomNavigationItem(R.string.kumiwake, R.drawable.ic_kumiwake_24px, Theme.Kumiwake.primaryColor))
+        navView.addItem(AHBottomNavigationItem(R.string.sekigime, R.drawable.ic_sekigime_24px, Theme.Sekigime.primaryColor))
+        navView.addItem(AHBottomNavigationItem(R.string.member, R.drawable.ic_members_24dp, Theme.Member.primaryColor))
+        navView.addItem(AHBottomNavigationItem(R.string.setting_help, R.drawable.ic_settings_24dp, Theme.Setting.primaryColor))
 
         navView.isColored = true
 
@@ -81,36 +78,40 @@ class MainActivity : AppCompatActivity() {
 
             R.id.navigation_kumiwake -> {
                 openFragment(KumiwakeFragment())
-                supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Red.primaryColor))
+                supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Kumiwake.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.kumiwake) + "</font>")
-                container.background = getDrawable(R.color.red_background)
+                container.background = getDrawable(Theme.Kumiwake.backgroundColor)
+                setStatusBarColor(Theme.Kumiwake.primaryColor)
                 mAdView.visibility = View.VISIBLE
                 true
             }
 
             R.id.navigation_sekigime -> {
                 openFragment(SekigimeFragment())
-                supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Green.primaryColor))
+                supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Sekigime.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#616161'>" + getString(R.string.sekigime) + "</font>")
-                container.background = getDrawable(R.color.green_background)
+                container.background = getDrawable(Theme.Sekigime.backgroundColor)
+                setStatusBarColor(Theme.Sekigime.primaryColor)
                 mAdView.visibility = View.VISIBLE
                 true
             }
 
             R.id.navigation_members -> {
                 openFragment(MembersFragment())
-                supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Blue.primaryColor))
+                supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Member.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.member) + "</font>")
-                container.background = ColorDrawable(Color.WHITE)
+                container.background = ColorDrawable(Theme.Member.backgroundColor)
+                setStatusBarColor(Theme.Member.primaryColor)
                 mAdView.visibility = View.GONE
                 true
             }
 
             R.id.navigation_settings -> {
                 openFragment(SettingsFragment())
-                supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Yellow.primaryColor))
+                supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Setting.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#616161'>" + getString(R.string.setting_help) + "</font>")
-                container.background = getDrawable(R.color.yellow_background)
+                container.background = getDrawable(Theme.Setting.backgroundColor)
+                setStatusBarColor(Theme.Setting.primaryColor)
                 mAdView.visibility = View.GONE
                 true
             }
@@ -133,6 +134,15 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
         supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.kumiwake) + "</font>")
+    }
+
+    //ステータスバーの色変更
+    fun setStatusBarColor(@ColorRes colorId: Int) {
+        this.apply {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.statusBarColor = ContextCompat.getColor(this, colorId)
+        }
     }
 
     //キーボードによるレイアウト崩れを防ぐ

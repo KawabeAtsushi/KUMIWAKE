@@ -93,7 +93,8 @@ class AddGroup : AppCompatActivity() {
 
     //グループ更新編集時の初期情報表示処理
     private fun setItem(id: Int) {
-        for (group in FragmentGroupMain.groupList) {
+        val groupList = GroupAdapter(this).getAllGroups()
+        for (group in groupList) {
             if (group.id == id) {
                 groupEditText.setText(group.name)
                 break

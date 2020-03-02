@@ -1,6 +1,6 @@
 package com.pandatone.kumiwake.ui.members
 
-import android.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -78,7 +78,7 @@ class FragmentMemberMain : ListFragment() {
         lv.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
             val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
-            val builder2 = AlertDialog.Builder(activity)
+            val builder2 = AlertDialog.Builder(activity!!)
             val inflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val view2 = inflater.inflate(R.layout.member_info, activity!!.findViewById<View>(R.id.info_layout) as ViewGroup?)
             val memberName = memberList[position].name
@@ -138,8 +138,7 @@ class FragmentMemberMain : ListFragment() {
             }
 
             R.id.item_filter -> {
-                Filtering(requireActivity(), memberList, FragmentGroupMain.groupList).showFilterDialog(builder)
-                listAdp.notifyDataSetChanged()
+                Filtering(requireActivity(), memberList).showFilterDialog(builder, listAdp)
             }
         }
 
@@ -216,8 +215,7 @@ class FragmentMemberMain : ListFragment() {
                     lv.clearChoices()
                     listAdp.clearSelection()
                     mode.title = "0" + getString(R.string.selected)
-                    Filtering(activity!!, memberList, FragmentGroupMain.groupList).showFilterDialog(builder)
-                    listAdp.notifyDataSetChanged()
+                    Filtering(activity!!, memberList).showFilterDialog(builder, listAdp)
                 }
             }
 

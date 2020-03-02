@@ -60,6 +60,15 @@ class GroupAdapter(context: Context) : ArrayAdapter<Group>(context, 0) {
         dbHelper.close()
     }
 
+    //すべてのグループ取得
+    fun getAllGroups(): ArrayList<Group> {
+        val groupListList: ArrayList<Group> = ArrayList()
+        open()
+        getCursor(getDB, groupListList)
+        close()
+        return groupListList
+    }
+
 
     //レコードの選択削除
     fun selectDelete(position: String) {

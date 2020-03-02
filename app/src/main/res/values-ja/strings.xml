@@ -29,10 +29,8 @@
     <string name="clear">クリア</string>
     <string name="cancel">キャンセル</string>
     <string name="age">年齢</string>
-    <string name="age2">歳</string>
     <string name="no_member">メンバーが\nいません</string>
     <string name="no_group">グループが\nありません</string>
-    <string name="create">作成する</string>
     <string name="delete">削除</string>
     <string name="Do_delete">削除しますか？</string>
     <string name="selected">" 選択中"</string>
@@ -67,7 +65,6 @@
     <string name="move_confirmation">確認画面へ</string>
     <string name="number_of_groups_is_much_too">グループ数がメンバー数を超えています</string>
     <string name="even_out_male_female_ratio">男女比を均等にする</string>
-    <string name="even_out_person_ratio">人数を均等にする</string>
     <string name="even_out_age_ratio">年齢を均等にする</string>
     <string name="kumiwake_confirm">以下の内容で組分けします。</string>
     <string name="sekigime_confirm">以下の内容で席決めします。</string>
@@ -108,7 +105,6 @@
     <string name="seats_type_confirmation">この座席タイプでよろしいですか？</string>
     <string name="be_custom">＊カスタムあり</string>
     <string name="run">実行する</string>
-    <string name="start">開始</string>
     <string name="single_square_type">片側</string>
     <string name="double_square_type">両側</string>
     <string name="square_custom_description">テーブルの短辺における座席の設定を行います。</string>
@@ -154,18 +150,16 @@
     <string name="refresh_completed">データのリフレッシュが完了しました。</string>
     <string name="refresh_attention">データに不具合がみられる場合に、データベースをリフレッシュすることで改善することがあります。\n</string>
     <string name="continue_register">続けて登録</string>
-    <string name="add_group">グループ追加</string>
-    <string name="add_member">メンバー追加</string>
-    <string name="member_list">メンバー/グループ 一覧</string>
     <string name="hint">ヒント</string>
     <string name="error_has_occurred">エラーが発生しました。</string>
     <string name="error">エラー</string>
     <string name="nothing_file">\"KUMIWAKE_Backup\"フォルダーは以下のパスにありませんでした。</string>
-    <string name="failed_import">\"OK\"を押すと以下のパスでインポートを再実行します。</string>
-    <string name="file_path">ファイルパス</string>
+    <string name="failed_import">以下のパスにバックアップデータを配置し、\"OK\"を押してインポートを再実行して下さい。</string>
     <string name="failed_to_mkdirs">バックアップディレクトリの作成に失敗しました。\n\"OK\"を押すと以下のパスでバックアップを再実行します。</string>
     <string name="app_exit_confirmation">アプリを終了しますか？</string>
     <string name="top_normal_mode">ノーマル\nモード</string>
     <string name="top_quick_mode">クイック\nモード</string>
     <string name="edit_exit_confirmation">編集画面を閉じますか？\n編集情報は破棄されます。</string>
+    <string name="copy_path">パスをコピー</string>
+    <string name="copied_path">パスをクリップボードにコピーしました。</string>
 </resources>

@@ -23,7 +23,6 @@ import kotlin.collections.ArrayList
  */
 class FragmentMemberChoiceMode : ListFragment() {
     private var memberArray = MemberMain.memberArray
-    private var memberList:ArrayList<Member> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,8 +112,7 @@ class FragmentMemberChoiceMode : ListFragment() {
             }
 
             R.id.item_filter -> {
-                Filtering(activity!!, memberList, FragmentGroupChoiceMode.groupList).showFilterDialog(builder)
-                listAdp.notifyDataSetChanged()
+                Filtering(activity!!, memberList).showFilterDialog(builder, listAdp)
             }
         }
 
@@ -194,8 +192,7 @@ class FragmentMemberChoiceMode : ListFragment() {
                     lv.clearChoices()
                     listAdp.clearSelection()
                     mode.title = "0" + getString(R.string.selected)
-                    Filtering(activity!!, memberList, FragmentGroupChoiceMode.groupList).showFilterDialog(builder)
-                    listAdp.notifyDataSetChanged()
+                    Filtering(activity!!, memberList).showFilterDialog(builder, listAdp)
                 }
             }
 
@@ -266,6 +263,7 @@ class FragmentMemberChoiceMode : ListFragment() {
         private lateinit var mbAdapter: MemberAdapter
         private lateinit var listAdp: MemberFragmentViewAdapter
         lateinit var lv: ListView
+        private var memberList:ArrayList<Member> = ArrayList()
     }
 
 }

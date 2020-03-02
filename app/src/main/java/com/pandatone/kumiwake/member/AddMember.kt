@@ -18,6 +18,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.AddMemberKeys
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupAdapter
+import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.ui.DialogWarehouse
@@ -40,6 +41,7 @@ class AddMember : AppCompatActivity() {
     private var belongSpinner: Button? = null
     private var mbAdapter: MemberAdapter? = null
     private var fromNormalMode = false
+    private lateinit var groupList: ArrayList<Group>
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -119,9 +121,10 @@ class AddMember : AppCompatActivity() {
         // 選択中の候補を取得
         val buttonText = belongSpinner!!.text.toString()
         val textArray = buttonText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        groupList = GroupAdapter(this).getAllGroups()
         // 候補リスト
         val list = ArrayList<String>()
-        for (group in FragmentGroupChoiceMode.groupList) {
+        for (group in groupList) {
             list.add(group.name)
         }
         val belongArray = list.toTypedArray()
@@ -297,8 +300,8 @@ class AddMember : AppCompatActivity() {
             }
             if (change!!) {
                 k = 0
-                while (k < FragmentGroupChoiceMode.groupList.size) {
-                    val group = FragmentGroupChoiceMode.groupList[k]
+                while (k < groupList.size) {
+                    val group = groupList[k]
                     val groupName = group.name
                     if (beforeBelong!![i] == groupName) {
                         id = group.id
@@ -324,8 +327,8 @@ class AddMember : AppCompatActivity() {
             }
             if (change!!) {
                 k = 0
-                while (k < FragmentGroupChoiceMode.groupList.size) {
-                    val group = FragmentGroupChoiceMode.groupList[k]
+                while (k < groupList.size) {
+                    val group = groupList[k]
                     val groupName = group.name
                     if (afterBelong!![i] == groupName) {
                         id = group.id
@@ -356,7 +359,7 @@ class AddMember : AppCompatActivity() {
         val belongNo = StringBuilder()
 
         for (belongGroup in belongTextArray) {
-            for (group in FragmentGroupChoiceMode.groupList) {
+            for (group in groupList) {
                 if (belongGroup == group.name) {
                     val groupId = group.id.toString()
                     belongNo.append("$groupId,")

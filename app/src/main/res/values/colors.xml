@@ -23,10 +23,6 @@
     <color name="red_unpressed">#ff7777</color>
     <color name="green_pressed">#00F74B</color>
     <color name="green_unpressed">#78ff84</color>
-    <color name="blue_pressed">#0091EA</color>
-    <color name="blue_unpressed">#40C4FF</color>
-    <color name="orange_pressed">#FFA000</color>
-    <color name="orange_unpressed">#ffc02e</color>
 
 
     <color name="text_light">@android:color/white</color>

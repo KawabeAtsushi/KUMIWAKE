@@ -2,26 +2,30 @@
 
 <resources>
 
-    <style name="AppTheme" parent="Base.Theme.AppCompat.Light">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <!-- アクションモード -->
         <item name="windowActionModeOverlay">true</item>
+        <!-- プライマリカラー -->
+        <item name="colorPrimary">@android:color/darker_gray</item>
+        <!-- ステータスバーの背景色 -->
+        <item name="android:colorPrimaryDark">@android:color/white</item>
     </style>
 
-    <style name="MainTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="MainTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <!-- アクションモード -->
         <item name="windowActionModeOverlay">true</item>
+        <!-- プライマリカラー -->
+        <item name="colorPrimary">@android:color/darker_gray</item>
+        <!-- ステータスバーの背景色 -->
+        <item name="android:colorPrimaryDark">@color/red_title</item>
     </style>
 
     <!-- hintのスタイル -->
-
-    <style name="Topeka.TextAppearance.CategoryItem" parent="TextAppearance.AppCompat.Small">
-        <item name="android:textSize">@dimen/category_item_text_size</item>
-    </style>
 
 </resources>

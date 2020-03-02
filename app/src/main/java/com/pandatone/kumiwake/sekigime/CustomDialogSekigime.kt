@@ -1,6 +1,6 @@
 package com.pandatone.kumiwake.sekigime
 
-import android.app.Dialog
+import androidx.appcompat.app.AppCompatDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -25,8 +25,8 @@ class CustomDialogSekigime : DialogFragment() {
     //onClickリスナ
     private val mOnClickLisner = View.OnClickListener { dismiss() }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = activity?.let { Dialog(it) }
+    override fun onCreateDialog(savedInstanceState: Bundle?): AppCompatDialog {
+        val dialog = activity?.let { AppCompatDialog(it) }
         // タイトル非表示
         dialog?.window!!.requestFeature(Window.FEATURE_NO_TITLE)
         // フルスクリーン
@@ -43,17 +43,17 @@ class CustomDialogSekigime : DialogFragment() {
 
         //カスタム表示
         val custom = dialog.findViewById<View>(R.id.be_custom) as TextView
-        val positive_bt = dialog.findViewById<View>(R.id.positive_button) as Button
+        val positiveBt = dialog.findViewById<View>(R.id.positive_button) as Button
         if (mPosition == 1) {
             custom.visibility = View.VISIBLE
-            positive_bt.text = getText(R.string.move_custom)
+            positiveBt.text = getText(R.string.move_custom)
         }
         // OK ボタンのリスナ
         setOnPositiveClickListener()
-        positive_bt.setOnClickListener(mPositiveBtnListener)
+        positiveBt.setOnClickListener(mPositiveBtnListener)
 
         // いいえボタンのリスナ
-        dialog.findViewById<View>(R.id.negative_button).setOnClickListener(mOnClickLisner)
+        (dialog.findViewById<Button>(R.id.negative_button) as Button).setOnClickListener(mOnClickLisner)
         return dialog
     }
 

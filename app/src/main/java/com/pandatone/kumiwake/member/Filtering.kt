@@ -10,11 +10,57 @@ import androidx.appcompat.app.AlertDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
+import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
+import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter
 
-class Filtering(val activity: Activity, private val memberList: ArrayList<Member>, val groupList: ArrayList<Group>) {
+class Filtering(val activity: Activity, private val memberList: ArrayList<Member>) {
 
     private val mbAdapter = MemberAdapter(activity)
+    private val groupList: ArrayList<Group> = GroupAdapter(activity).getAllGroups()
+
+    //filterダイアログ生成
+    fun showFilterDialog(builder: androidx.appcompat.app.AlertDialog.Builder,listAdp: MemberFragmentViewAdapter) {
+        val inflater = activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater.inflate(R.layout.filter_member, activity.findViewById<View>(R.id.filter_member) as? ViewGroup)
+        val belongSpinner = layout.findViewById<View>(R.id.filter_belong_spinner) as Spinner
+        val adapter = ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item)
+        val list = ArrayList<String>() // 新インスタンスを生成
+        list.add(activity.getString(R.string.no_selected))
+
+        for (group in groupList) {
+            list.add(group.name)
+        }
+
+        adapter.addAll(list)
+        adapter.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item)
+        belongSpinner.adapter = adapter
+        builder.setTitle(activity.getText(R.string.filtering))
+        builder.setView(layout)
+        builder.setPositiveButton("OK", null)
+        builder.setNegativeButton(R.string.cancel) { _, _ -> }
+        builder.setNeutralButton(R.string.clear, null)
+        // back keyを使用不可に設定
+        builder.setCancelable(false)
+        val dialog2 = builder.create()
+        dialog2.show()
+
+        val okButton = dialog2.getButton(AlertDialog.BUTTON_POSITIVE)
+        okButton.setOnClickListener {
+            StatusHolder.nowSort = MemberAdapter.MB_ID
+            StatusHolder.sortType = "ASC"
+            mbAdapter.sortNames(StatusHolder.nowSort, StatusHolder.sortType, memberList)
+            filter(layout, belongSpinner, false)
+            listAdp.notifyDataSetChanged()
+            dialog2.dismiss()
+        }
+
+        val clearBtn = dialog2.getButton(AlertDialog.BUTTON_NEUTRAL)
+        clearBtn.setOnClickListener {
+            filter(layout, belongSpinner, true)
+        }
+}
 
     //フィルタリングメソッド
     private fun filter(layout: View, spinner: Spinner, clear: Boolean) {
@@ -67,49 +113,6 @@ class Filtering(val activity: Activity, private val memberList: ArrayList<Member
             }
 
             mbAdapter.filterName(sex, minAge, maxAge, belongId, memberList)
-        }
-    }
-
-    //filterダイアログ生成
-    fun showFilterDialog(builder: androidx.appcompat.app.AlertDialog.Builder) {
-        val inflater = activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val layout = inflater.inflate(R.layout.filter_member, activity.findViewById<View>(R.id.filter_member) as? ViewGroup)
-        val belongSpinner = layout.findViewById<View>(R.id.filter_belong_spinner) as Spinner
-        val adapter = ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item)
-        val list = ArrayList<String>() // 新インスタンスを生成
-        list.add(activity.getString(R.string.no_selected))
-
-        for (group in groupList) {
-            list.add(group.name)
-        }
-
-        adapter.addAll(list)
-        adapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item)
-        belongSpinner.adapter = adapter
-        builder.setTitle(activity.getText(R.string.filtering))
-        builder.setView(layout)
-        builder.setPositiveButton("OK", null)
-        builder.setNegativeButton(R.string.cancel) { _, _ -> }
-        builder.setNeutralButton(R.string.clear, null)
-        // back keyを使用不可に設定
-        builder.setCancelable(false)
-        val dialog2 = builder.create()
-        dialog2.show()
-
-        val okButton = dialog2.getButton(AlertDialog.BUTTON_POSITIVE)
-        okButton.setOnClickListener {
-            StatusHolder.nowSort = MemberAdapter.MB_ID
-            StatusHolder.sortType = "ASC"
-            mbAdapter.sortNames(StatusHolder.nowSort, StatusHolder.sortType, memberList)
-            filter(layout, belongSpinner, false)
-            //listAdp.notifyDataSetChanged()
-            dialog2.dismiss()
-        }
-
-        val clearBtn = dialog2.getButton(AlertDialog.BUTTON_NEUTRAL)
-        clearBtn.setOnClickListener {
-            filter(layout, belongSpinner, true)
         }
     }
 

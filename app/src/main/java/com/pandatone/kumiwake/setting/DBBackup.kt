@@ -1,7 +1,7 @@
 package com.pandatone.kumiwake.setting
 
 import android.annotation.SuppressLint
-import android.app.Dialog
+import androidx.appcompat.app.AppCompatDialog
 import android.content.Context
 import android.os.Environment
 import android.view.View
@@ -41,7 +41,7 @@ object DBBackup {
     private var b: Boolean = false
 
     @SuppressLint("SetTextI18n")
-    fun dbBackup(c: Context, path:String, dialog: Dialog) {
+    fun dbBackup(c: Context, path:String, dialog: AppCompatDialog) {
         context = c
         checkSDStatus(context)
 
@@ -69,7 +69,7 @@ object DBBackup {
     }
 
     @SuppressLint("SetTextI18n")
-    fun dbImport(c: Context, path:String, dialog: Dialog) {
+    fun dbImport(c: Context, path:String, dialog: AppCompatDialog) {
         context = c
         checkSDStatus(context)
 

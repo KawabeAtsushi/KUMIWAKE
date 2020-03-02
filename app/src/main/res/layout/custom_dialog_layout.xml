@@ -39,40 +39,56 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
                 <!-- メッセージ -->
 
                 <TextView
                     android:id="@+id/dialog_message"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:lineSpacingExtra="6dp"
                     android:text=""
                     android:textColor="#333333"
                     android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/copy_path_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    android:text="@string/copy_path"
+                    />
+
             </LinearLayout>
+
         </ScrollView>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginTop="26dp"
+            android:orientation="horizontal"
+            style="?android:attr/buttonBarStyle">
             <!-- OK ボタン -->
-            <Button
+            <Button style="?android:attr/buttonBarButtonStyle"
                 android:id="@+id/positive_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
                 android:background="@drawable/dialog_positive_bt"
                 android:text="OK"
                 android:textColor="@android:color/white" />
 
-            <Button
+            <Button style="?android:attr/buttonBarButtonStyle"
                 android:id="@+id/negative_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
                 android:layout_marginStart="10dp"
                 android:background="@drawable/dialog_negative_bt"
                 android:text="@string/cancel"

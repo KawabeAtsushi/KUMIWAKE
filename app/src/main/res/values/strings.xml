@@ -3,7 +3,6 @@
     <string name="app_name">KUMIWAKE</string>
     <string name="decide">Decide</string>
     <string name="delete">Delete</string>
-    <string name="create">Create</string>
     <string name="edit">Edit</string>
     <string name="do_kumiwake">Do kumiwake!</string>
     <string name="Do_delete">Are you sure to delete?</string>
@@ -23,7 +22,6 @@
     <string name="failed_backup">Failed to backup data.</string>
     <string name="error_has_occurred">An error has occurred.</string>
     <string name="age">Age</string>
-    <string name="age2">""</string>
     <string name="all_select">Select all</string>
     <string name="data">Data</string>
     <string name="back_up_completed">Backup was completed.</string>
@@ -81,10 +79,8 @@
     <string name="not_mounted">SD card is not mounted.</string>
     <string name="update">update</string>
     <string name="updated">is updated</string>
-    <string name="start">start</string>
     <string name="even_out_age_ratio">To equalize the age ratio</string>
     <string name="even_out_male_female_ratio">To equalize the gender ratio</string>
-    <string name="even_out_person_ratio">To equalize the member ratio</string>
     <string name="go_home">back to home</string>
     <string name="go_sekigime">do sekigime with these groups</string>
     <string name="fm_placed_alternately">Arrange men and women alternately</string>
@@ -154,16 +150,13 @@
     <string name="refresh_completed">Refresh was completed.</string>
     <string name="refresh_attention">If there is a problem with the data, it may be improved by refreshing the database.\n</string>
     <string name="continue_register">Continue</string>
-    <string name="title_activity_main2" translatable="false">Main2Activity</string>
-    <string name="add_group">Add group</string>
-    <string name="add_member">Add member</string>
-    <string name="member_list">Members/Groups list</string>
     <string name="error">Error</string>
     <string name="nothing_file">Backed-up file doesn\'t exist in</string>
-    <string name="failed_import">Data import failed.\nPush \"OK\" and try again with change file pass to </string>
-    <string name="file_path">File Path</string>
+    <string name="failed_import">Data import failed.\nPush \"OK\" and try again with put the back-up file in</string>
     <string name="failed_to_mkdirs">Failed to make backup directory on SD card.\nPush \"OK\" and try again with change file pass to </string>
     <string name="app_exit_confirmation">Quit app?</string>
     <string name="edit_exit_confirmation">Quit edit?\nEdits are discarded.</string>
     <string name="hint">hint</string>
+    <string name="copy_path">Copy Path</string>
+    <string name="copied_path">Path copied to clipboard.</string>
 </resources>
