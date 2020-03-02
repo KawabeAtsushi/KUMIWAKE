@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder.Companion.nowSort
 import com.pandatone.kumiwake.member.Member
 
 //FragmentMember用リストadapter
@@ -121,11 +122,6 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
 
     fun isPositionChecked(id: Int): Boolean {
         return mSelection.get(id)
-    }
-
-    companion object {
-        internal var nowSort = MemberAdapter.MB_ID
-        internal var sortType = "ASC"
     }
 
 }

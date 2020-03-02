@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Button
@@ -54,7 +53,7 @@ class AddGroup : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_group)
         gpAdapter = GroupAdapter(this)
-        mbAdapter = MemberAdapter(members,this)
+        mbAdapter = MemberAdapter(this)
         findViews()
         editId = intent.getIntExtra(AddGroupKeys.EDIT_ID.key, nextId)
         if (editId != nextId) {
@@ -209,7 +208,6 @@ class AddGroup : AppCompatActivity() {
             for (item in list) {
                 newBelong.append("$item,")
             }
-            Log.d("Called!!!!!!!!!!!!!!!",newBelong.toString())
             mbAdapter.addBelong(listId.toString(), newBelong.toString())
         }
     }

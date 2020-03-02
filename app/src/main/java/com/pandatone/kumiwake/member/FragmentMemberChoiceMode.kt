@@ -13,9 +13,9 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter
-import com.pandatone.kumiwake.ui.members.MembersMenuAction
 import java.io.IOException
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -23,18 +23,15 @@ import java.util.*
  */
 class FragmentMemberChoiceMode : ListFragment() {
     private var memberArray = MemberMain.memberArray
-    private val memberList:ArrayList<Member>
-        get() {
-            return StatusHolder.allMember
-        }
+    private var memberList:ArrayList<Member> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mbAdapter = MemberAdapter(memberList,requireContext())
-        StatusHolder.allMember = mbAdapter.getAllMembers()
+        mbAdapter = MemberAdapter(requireContext())
+        memberList = mbAdapter.getAllMembers()
         listAdp = MemberFragmentViewAdapter(requireContext(), memberList)
-        MemberFragmentViewAdapter.nowSort = MemberAdapter.MB_ID
-        MemberFragmentViewAdapter.sortType = "ASC"
+        StatusHolder.nowSort = MemberAdapter.MB_ID
+        StatusHolder.sortType = "ASC"
         Sort.initial = 0
         loadName()
     }
@@ -69,9 +66,9 @@ class FragmentMemberChoiceMode : ListFragment() {
         lv.startActionMode(CallbackMB())
         loadName()
         FragmentGroupChoiceMode().loadName()
-        MemberFragmentViewAdapter.nowSort = MemberAdapter.MB_ID
-        MemberFragmentViewAdapter.sortType = "ASC"
-        mbAdapter.sortNames(MemberFragmentViewAdapter.nowSort, MemberFragmentViewAdapter.sortType)
+        StatusHolder.nowSort = MemberAdapter.MB_ID
+        StatusHolder.sortType = "ASC"
+        mbAdapter.sortNames(StatusHolder.nowSort, StatusHolder.sortType,memberList)
 
         for (member in memberArray) {
             var i = 1
@@ -110,13 +107,14 @@ class FragmentMemberChoiceMode : ListFragment() {
             }
 
             R.id.item_sort -> {
-                Sort.memberSort(builder, requireActivity(), listAdp)
+                Sort.memberSort(builder, requireActivity(),memberList, listAdp)
                 val dialog = builder.create()
                 dialog.show()
             }
 
             R.id.item_filter -> {
-                MembersMenuAction(activity!!,memberList,FragmentGroupChoiceMode.groupList).filtering(builder)
+                Filtering(activity!!, memberList, FragmentGroupChoiceMode.groupList).showFilterDialog(builder)
+                listAdp.notifyDataSetChanged()
             }
         }
 
@@ -187,7 +185,7 @@ class FragmentMemberChoiceMode : ListFragment() {
                     lv.clearChoices()
                     listAdp.clearSelection()
                     mode.title = "0" + getString(R.string.selected)
-                    Sort.memberSort(builder, requireActivity(), listAdp)
+                    Sort.memberSort(builder, requireActivity(), memberList,listAdp)
                     val dialog = builder.create()
                     dialog.show()
                 }
@@ -196,7 +194,8 @@ class FragmentMemberChoiceMode : ListFragment() {
                     lv.clearChoices()
                     listAdp.clearSelection()
                     mode.title = "0" + getString(R.string.selected)
-                    MembersMenuAction(activity!!,memberList,FragmentGroupChoiceMode.groupList).filtering(builder)
+                    Filtering(activity!!, memberList, FragmentGroupChoiceMode.groupList).showFilterDialog(builder)
+                    listAdp.notifyDataSetChanged()
                 }
             }
 
@@ -232,9 +231,9 @@ class FragmentMemberChoiceMode : ListFragment() {
     @Throws(IOException::class)
     fun selectName(newText: String) {
         if (TextUtils.isEmpty(newText)) {
-            mbAdapter.picName(null.toString())
+            mbAdapter.picName(null.toString(),memberList)
         } else {
-            mbAdapter.picName(newText)
+            mbAdapter.picName(newText,memberList)
         }
         listAdp.notifyDataSetChanged()
     }

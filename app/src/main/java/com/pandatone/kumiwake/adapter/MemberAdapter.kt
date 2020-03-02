@@ -10,6 +10,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -17,11 +18,12 @@ import com.pandatone.kumiwake.member.Member
 import java.io.IOException
 
 
-class MemberAdapter(private val memberList: ArrayList<Member>, val context: Context) : BaseAdapter() {
+class MemberAdapter(val context: Context) : BaseAdapter() {
 
 
     private var dbHelper: DatabaseHelper
 
+    //DB取得
     val getDB: Cursor
         get() = db.query(TABLE_NAME, null, null, null, null, null, null)
 
@@ -29,6 +31,7 @@ class MemberAdapter(private val memberList: ArrayList<Member>, val context: Cont
         dbHelper = DatabaseHelper(this.context)
     }
 
+    //最新のメンバーを取得
     val newMember: Member
         @SuppressLint("Recycle")
         get() {
@@ -49,6 +52,7 @@ class MemberAdapter(private val memberList: ArrayList<Member>, val context: Cont
             return member
         }
 
+    //全メンバー数を取得
     override fun getCount(): Int {
         val memberList: ArrayList<Member> = ArrayList()
         open()
@@ -114,19 +118,18 @@ class MemberAdapter(private val memberList: ArrayList<Member>, val context: Cont
         close()
     }
 
-    fun sortNames(sortBy: String, sortType: String) {
-
+    //ソート
+    fun sortNames(sortBy: String, sortType: String, memberList: ArrayList<Member>) {
         open()
         val query = "SELECT * FROM " +
                 TABLE_NAME + " ORDER BY " + sortBy + " " + sortType + ";"
         val c = db.rawQuery(query, null)
         getCursor(c, memberList, true)
         close()
-
     }
 
     @Throws(IOException::class)
-    fun picName(name: String) {
+    fun picName(name: String, memberList: ArrayList<Member>) {
         open()
         val query = ("SELECT * FROM " + TABLE_NAME +
                 " WHERE " + MB_NAME + " like '%" + name + "%' OR "
@@ -137,11 +140,10 @@ class MemberAdapter(private val memberList: ArrayList<Member>, val context: Cont
     }
 
     @Throws(IOException::class)
-    fun filterName(sex: String, minage: Int, maxage: Int, belongNo: String) {
-
+    fun filterName(sex: String, minAge: Int, maxAge: Int, belongNo: String, memberList: ArrayList<Member>) {
         open()
         val query = "SELECT * FROM " + TABLE_NAME +
-                " WHERE " + MB_SEX + " like '" + sex + "%' AND (" + MB_AGE + " BETWEEN " + minage + " AND " + maxage +
+                " WHERE " + MB_SEX + " like '" + sex + "%' AND (" + MB_AGE + " BETWEEN " + minAge + " AND " + maxAge +
                 ") AND (" + MB_BELONG + " like '" + belongNo + "%' OR " + MB_BELONG + " like '%," + belongNo + "%');" //BelongIdのマッチング式OR (e.g),1,2,3,4
         val c = db.rawQuery(query, null)
         getCursor(c, memberList, true)

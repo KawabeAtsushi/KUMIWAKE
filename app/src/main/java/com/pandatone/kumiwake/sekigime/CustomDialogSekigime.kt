@@ -26,9 +26,9 @@ class CustomDialogSekigime : DialogFragment() {
     private val mOnClickLisner = View.OnClickListener { dismiss() }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = Dialog(this.context)
+        val dialog = activity?.let { Dialog(it) }
         // タイトル非表示
-        dialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
+        dialog?.window!!.requestFeature(Window.FEATURE_NO_TITLE)
         // フルスクリーン
         dialog.window!!.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)

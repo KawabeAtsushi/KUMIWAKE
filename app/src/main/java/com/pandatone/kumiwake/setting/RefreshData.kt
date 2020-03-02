@@ -21,7 +21,7 @@ object RefreshData {
 
     fun refresh(context: Context) {
 
-        mbDbAdapter = MemberAdapter(memberList,context)
+        mbDbAdapter = MemberAdapter(context)
         gpDbAdapter = GroupAdapter(context)
 
         //旧グループ確保＆データベース全削除＆新グループ登録

@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake
 
+import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.member.Member
 
 class StatusHolder {
@@ -7,7 +8,8 @@ class StatusHolder {
     companion object {
         var normalMode:Boolean = true //true: ノーマルモード, false: クイックモード
         var sekigime: Boolean = false //true: 席決めモード, false: 組み分けモード
-        var allMember: ArrayList<Member> = ArrayList() //全メンバー
+        var nowSort = MemberAdapter.MB_ID //ソート対象要素
+        var sortType = "ASC" //降順・昇順
     }
 
 }

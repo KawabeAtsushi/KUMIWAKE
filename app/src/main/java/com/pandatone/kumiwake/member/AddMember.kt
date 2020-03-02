@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.view.KeyEvent
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -19,6 +20,7 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.kumiwake.NormalMode
+import com.pandatone.kumiwake.ui.DialogWarehouse
 import com.pandatone.kumiwake.ui.members.FragmentMemberMain
 import kotlinx.android.synthetic.main.add_member.*
 import kotlin.collections.ArrayList
@@ -43,7 +45,7 @@ class AddMember : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_member)
         ButterKnife.bind(this)
-        mbAdapter = MemberAdapter(ArrayList(),this)
+        mbAdapter = MemberAdapter(this)
         beforeBelong = null
         afterBelong = null
         findViews()
@@ -182,6 +184,15 @@ class AddMember : AppCompatActivity() {
         finish()
     }
 
+    //バックキーの処理
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            DialogWarehouse(supportFragmentManager).decisionDialog("KUMIWAKE", getString(R.string.edit_exit_confirmation)) { finish() }
+            return true
+        }
+        return false
+    }
+
     //メンバー登録　finish true:終了, false:続けて登録
     private fun register(finish: Boolean) {
         val name = nameEditText!!.text!!.toString()
@@ -194,7 +205,7 @@ class AddMember : AppCompatActivity() {
             changeBelongNo()
 
             if (fromNormalMode) {
-                NormalMode.memberArray.add(MemberAdapter(ArrayList(),this).newMember)
+                NormalMode.memberArray.add(MemberAdapter(this).newMember)
             }
 
             Toast.makeText(this, getText(R.string.member).toString() + " \"" + name + "\" " + getText(R.string.registered), Toast.LENGTH_SHORT).show()

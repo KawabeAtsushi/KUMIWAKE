@@ -1,12 +1,15 @@
 package com.pandatone.kumiwake
 
 import android.graphics.Color
+import android.graphics.Point
+import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Html
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewTreeObserver
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -55,6 +58,8 @@ class MainActivity : AppCompatActivity() {
         val adRequest = AdRequest.Builder()
                 .addTestDevice("8124DDB5C185E5CA87E826BAB5D4AA10").build()
         mAdView.loadAd(adRequest)
+
+        setKeyboardListener(navView)
     }
 
     override fun dispatchKeyEvent(e: KeyEvent): Boolean {
@@ -128,5 +133,26 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
         supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.kumiwake) + "</font>")
+    }
+
+    //キーボードによるレイアウト崩れを防ぐ
+    private fun setKeyboardListener(navView: View) {
+        val activityRootView = findViewById<View>(R.id.fragment_layout)
+        val size = Point()
+        windowManager.defaultDisplay.getSize(size)
+        val screenHeight = size.y
+        activityRootView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            private val r = Rect()
+
+            override fun onGlobalLayout() {
+                activityRootView.getWindowVisibleDisplayFrame(r)
+                val heightDiff = activityRootView.rootView.height - r.height()
+                if (heightDiff > screenHeight * 0.2) {
+                    navView.visibility = View.GONE
+                } else {
+                    navView.visibility = View.VISIBLE
+                }
+            }
+        })
     }
 }

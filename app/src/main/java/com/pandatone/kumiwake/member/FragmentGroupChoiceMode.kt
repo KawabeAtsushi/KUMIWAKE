@@ -86,64 +86,6 @@ class FragmentGroupChoiceMode : ListFragment() {
             }
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////-------- ActionMode時の処理 ----------///////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////
-
-
-    private inner class Callback : AbsListView.MultiChoiceModeListener {
-
-        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-            // アクションモード初期化処理
-            val inflater = activity!!.menuInflater
-            inflater.inflate(R.menu.member_menu, menu)
-            menu.getItem(2).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
-            menu.getItem(3).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
-            menu.getItem(4).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
-            val searchIcon = menu.findItem(R.id.search_view)
-            val deleteIcon = menu.findItem(R.id.item_delete)
-            val itemFilter = menu.findItem(R.id.item_filter)
-            val allSelect = menu.findItem(R.id.item_all_select)
-            itemFilter.isVisible = false
-            searchIcon.isVisible = false
-            deleteIcon.isVisible = false
-            allSelect.isVisible = false
-
-            return true
-        }
-
-        override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-            // アクションアイテム選択時
-            return false
-        }
-
-        override fun onDestroyActionMode(mode: ActionMode) {
-            // 決定ボタン押下時
-            listAdp.clearSelection()
-        }
-
-        override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
-            // アクションモード表示事前処理
-            return true
-        }
-
-        override fun onItemCheckedStateChanged(mode: ActionMode,
-                                               position: Int, id: Long, checked: Boolean) {
-            // アクションモード時のアイテムの選択状態変更時
-
-            checkedCount = listView.checkedItemCount
-            listView.checkedItemPosition
-
-            if (checked) {
-                listAdp.setNewSelection(groupList[position].id, checked)
-            } else {
-                listAdp.removeSelection(groupList[position].id)
-            }
-            mode.title = checkedCount.toString() + getString(R.string.selected)
-        }
-
-    }
-
     //リスト表示更新
     fun loadName() {
         gpAdapter.open()

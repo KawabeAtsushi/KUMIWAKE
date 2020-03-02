@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.os.Environment
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -22,7 +21,7 @@ object DBBackup {
         }
     private val mb_db_file: String
         get() {
-            MemberAdapter(ArrayList(),context).also {
+            MemberAdapter(context).also {
                 it.open()
                 it.getDB
                 it.close()

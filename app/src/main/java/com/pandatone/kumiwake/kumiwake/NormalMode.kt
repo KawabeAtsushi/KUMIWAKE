@@ -8,12 +8,13 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.transition.Slide
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
+import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
-import butterknife.OnClick
 import com.pandatone.kumiwake.ArrayKeys
 import com.pandatone.kumiwake.AddGroupKeys
 import com.pandatone.kumiwake.AddMemberKeys
@@ -49,6 +50,7 @@ class NormalMode : AppCompatActivity() {
         add_group_listview.member_add_btn.setOnClickListener(){ moveMemberMain() }
         add_group_listview.member_register_and_add_btn.setOnClickListener(){ moveAddMember() }
         add_group_listview.numberOfSelectedMember.text = "0${getString(R.string.people)}${getString(R.string.selected)}"
+        findViewById<Button>(R.id.normal_kumiwake_btn).setOnClickListener(){ onNextClick() }
     }
 
     //Viewの宣言
@@ -74,24 +76,23 @@ class NormalMode : AppCompatActivity() {
         startActivityForResult(intent, 0) //これで呼ぶとActivityが終わった時にonActivityResultが呼ばれる。
     }
 
-    @OnClick(R.id.normal_kumiwake_btn)
-    fun onClicked() {
-        val group_no = gpNoEditText.text!!.toString()
+    fun onNextClick() {
+        val inputGroupNo = gpNoEditText.text!!.toString()
 
         errorGroup.text = ""
         errorMember.text = ""
 
         if (adapter == null) {
             errorMember.setText(R.string.error_empty_member_list)
-        } else if (group_no != "" && Integer.parseInt(group_no) > adapter?.count!!) {
+        } else if (inputGroupNo != "" && Integer.parseInt(inputGroupNo) > adapter?.count!!) {
             errorGroup.setText(R.string.number_of_groups_is_much_too)
-        } else if (TextUtils.isEmpty(group_no)) {
+        } else if (TextUtils.isEmpty(inputGroupNo)) {
             errorGroup.setText(R.string.error_empty_group_no)
-        } else if (group_no == "0") {
+        } else if (inputGroupNo == "0") {
             errorGroup.setText(R.string.require_correct_No)
         } else {
             val groupArray = ArrayList<Group>()
-            val groupNo = Integer.parseInt(group_no)
+            val groupNo = Integer.parseInt(inputGroupNo)
             val eachMemberNo = memberArray.size / groupNo
             val remainder = memberArray.size % groupNo
 

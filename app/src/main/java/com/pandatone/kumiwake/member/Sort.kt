@@ -2,6 +2,8 @@ package com.pandatone.kumiwake.member
 
 import android.app.Activity
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder.Companion.nowSort
+import com.pandatone.kumiwake.StatusHolder.Companion.sortType
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter
@@ -17,9 +19,9 @@ object Sort {
     private lateinit var ST: String
     internal var initial = 0
 
-    fun memberSort(builder: androidx.appcompat.app.AlertDialog.Builder, activity: Activity,listAdp:MemberFragmentViewAdapter) {
+    fun memberSort(builder: androidx.appcompat.app.AlertDialog.Builder, activity: Activity, memberList: ArrayList<Member>, listAdp: MemberFragmentViewAdapter) {
 
-        val mbAdapter = MemberAdapter(ArrayList(),activity)
+        val mbAdapter = MemberAdapter(activity)
 
         val items = arrayOf(
                 activity.getString(R.string.registration_ascending),
@@ -59,9 +61,9 @@ object Sort {
                     ST = DESC
                 }
             }
-            mbAdapter.sortNames(NS, ST)
-            MemberFragmentViewAdapter.nowSort = NS
-            MemberFragmentViewAdapter.sortType = ST
+            mbAdapter.sortNames(NS, ST, memberList)
+            nowSort = NS
+            sortType = ST
             listAdp.notifyDataSetChanged() //loadName()を呼ばない！
         }
         // アラートダイアログのボタンがクリックされた時に呼び出されるコールバックリスナーを登録します

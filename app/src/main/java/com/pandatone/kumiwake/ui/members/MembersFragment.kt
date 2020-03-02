@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ImageSpan
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView
@@ -14,7 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.CustomPagerAdapter
-import com.pandatone.kumiwake.member.*
 import java.io.IOException
 
 class MembersFragment : Fragment(), SearchView.OnQueryTextListener {
@@ -33,9 +33,9 @@ class MembersFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     //Viewの宣言・初期化
-    private fun setViews(root :View) {
+    private fun setViews(root: View) {
         viewPager = root.findViewById<View>(R.id.view_pager) as ViewPager
-        val adapter = CustomPagerAdapter(context!!,childFragmentManager,true)
+        val adapter = CustomPagerAdapter(context!!, childFragmentManager, true)
         viewPager.adapter = adapter
         (root.findViewById<View>(R.id.decisionBt) as Button).visibility = View.GONE
     }
@@ -51,13 +51,12 @@ class MembersFragment : Fragment(), SearchView.OnQueryTextListener {
                 page = viewPager.currentItem
                 val itemFilter = menu.findItem(R.id.item_filter)
                 itemFilter.isVisible = page != 1
-                val allSelect = menu.findItem(R.id.item_all_select)
-                allSelect.isVisible = true
             }
         })
 
         searchView = menu.findItem(R.id.search_view).actionView as SearchView
         searchView.setOnQueryTextListener(this)
+        searchView.setOnClickListener { menuItemVisible(menu, false) }
         val searchAutoComplete = searchView.findViewById<View>(androidx.appcompat.R.id.search_src_text) as SearchView.SearchAutoComplete
         val ssb = SpannableStringBuilder("　")
         // ヒントテキスト
@@ -83,13 +82,19 @@ class MembersFragment : Fragment(), SearchView.OnQueryTextListener {
                 FragmentMemberMain().loadName()
                 FragmentGroupMain().loadName()
             }
+            menuItemVisible(menu, true)
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val adapter = CustomPagerAdapter(context!!,childFragmentManager,true)
-        adapter.findFragmentByPosition(viewPager, page).onOptionsItemSelected(item)
+    private fun menuItemVisible(menu: Menu, visibility: Boolean) {
+        menu.findItem(R.id.item_all_select).isVisible = visibility
+        menu.findItem(R.id.item_sort).isVisible = visibility
+        menu.findItem(R.id.item_filter).isVisible = visibility && page != 1
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val adapter = CustomPagerAdapter(context!!, childFragmentManager, true)
+        adapter.findFragmentByPosition(viewPager, page).onOptionsItemSelected(item)
         return false
     }
 

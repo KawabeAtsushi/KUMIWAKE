@@ -1,5 +1,6 @@
-package com.pandatone.kumiwake.ui.members
+package com.pandatone.kumiwake.member
 
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -8,15 +9,14 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.MemberAdapter
-import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter
-import com.pandatone.kumiwake.member.Group
-import com.pandatone.kumiwake.member.Member
 
-class MembersMenuAction(val context: Context,val memberList: ArrayList<Member>,val groupList: ArrayList<Group>) {
+class Filtering(val activity: Activity, private val memberList: ArrayList<Member>, val groupList: ArrayList<Group>) {
 
-    val dbAdapter = MemberAdapter(memberList,context)
+    private val mbAdapter = MemberAdapter(activity)
 
+    //フィルタリングメソッド
     private fun filter(layout: View, spinner: Spinner, clear: Boolean) {
 
         val belong: String = spinner.selectedItem as String
@@ -52,11 +52,11 @@ class MembersMenuAction(val context: Context,val memberList: ArrayList<Member>,v
         } else {
             errorAgeRange.visibility = View.GONE
 
-            if (sex == context.getString(R.string.all)) {
+            if (sex == activity.getString(R.string.all)) {
                 sex = ""
             }
 
-            if (belong == context.getString(R.string.no_selected)) {
+            if (belong == activity.getString(R.string.no_selected)) {
                 belongId = ""
             } else {
                 for (group in groupList) {
@@ -66,17 +66,18 @@ class MembersMenuAction(val context: Context,val memberList: ArrayList<Member>,v
                 }
             }
 
-            dbAdapter.filterName(sex, minAge, maxAge, belongId)
+            mbAdapter.filterName(sex, minAge, maxAge, belongId, memberList)
         }
     }
 
-    fun filtering(builder: androidx.appcompat.app.AlertDialog.Builder) {
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val layout = inflater.inflate(R.layout.filter_member, R.id.filter_member as ViewGroup)
+    //filterダイアログ生成
+    fun showFilterDialog(builder: androidx.appcompat.app.AlertDialog.Builder) {
+        val inflater = activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater.inflate(R.layout.filter_member, activity.findViewById<View>(R.id.filter_member) as? ViewGroup)
         val belongSpinner = layout.findViewById<View>(R.id.filter_belong_spinner) as Spinner
-        val adapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item)
+        val adapter = ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item)
         val list = ArrayList<String>() // 新インスタンスを生成
-        list.add(context.getString(R.string.no_selected))
+        list.add(activity.getString(R.string.no_selected))
 
         for (group in groupList) {
             list.add(group.name)
@@ -86,7 +87,7 @@ class MembersMenuAction(val context: Context,val memberList: ArrayList<Member>,v
         adapter.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item)
         belongSpinner.adapter = adapter
-        builder.setTitle(context.getText(R.string.filtering))
+        builder.setTitle(activity.getText(R.string.filtering))
         builder.setView(layout)
         builder.setPositiveButton("OK", null)
         builder.setNegativeButton(R.string.cancel) { _, _ -> }
@@ -98,9 +99,9 @@ class MembersMenuAction(val context: Context,val memberList: ArrayList<Member>,v
 
         val okButton = dialog2.getButton(AlertDialog.BUTTON_POSITIVE)
         okButton.setOnClickListener {
-            MemberFragmentViewAdapter.nowSort = MemberAdapter.MB_ID
-            MemberFragmentViewAdapter.sortType = "ASC"
-            dbAdapter.sortNames(MemberFragmentViewAdapter.nowSort, MemberFragmentViewAdapter.sortType)
+            StatusHolder.nowSort = MemberAdapter.MB_ID
+            StatusHolder.sortType = "ASC"
+            mbAdapter.sortNames(StatusHolder.nowSort, StatusHolder.sortType, memberList)
             filter(layout, belongSpinner, false)
             //listAdp.notifyDataSetChanged()
             dialog2.dismiss()
@@ -112,6 +113,7 @@ class MembersMenuAction(val context: Context,val memberList: ArrayList<Member>,v
         }
     }
 
+    //年齢：editTxt -> int
     private fun getValue(toText: EditText): Int {
         val text = toText.text.toString()
         var a = 0

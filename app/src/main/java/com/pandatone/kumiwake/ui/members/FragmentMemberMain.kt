@@ -5,9 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.*
-import android.widget.*
+import android.widget.AbsListView
+import android.widget.AdapterView
+import android.widget.ListView
 import androidx.fragment.app.ListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pandatone.kumiwake.AddMemberKeys
@@ -15,10 +16,7 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter
-import com.pandatone.kumiwake.member.AddMember
-import com.pandatone.kumiwake.member.MemberClick
-import com.pandatone.kumiwake.member.Member
-import com.pandatone.kumiwake.member.Sort
+import com.pandatone.kumiwake.member.*
 import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
@@ -29,19 +27,15 @@ import kotlin.collections.ArrayList
  */
 class FragmentMemberMain : ListFragment() {
 
-    private lateinit var lv: ListView
-    private val memberList:ArrayList<Member>
-        get() {
-            return StatusHolder.allMember
-        }
+    private var memberList: ArrayList<Member> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mbAdapter = MemberAdapter(memberList,requireContext())
-        StatusHolder.allMember = mbAdapter.getAllMembers()
+        mbAdapter = MemberAdapter(requireContext())
+        memberList = mbAdapter.getAllMembers()
         listAdp = MemberFragmentViewAdapter(requireContext(), memberList)
-        MemberFragmentViewAdapter.nowSort = MemberAdapter.MB_ID
-        MemberFragmentViewAdapter.sortType = "ASC"
+        StatusHolder.nowSort = MemberAdapter.MB_ID
+        StatusHolder.sortType = "ASC"
         Sort.initial = 0
         loadName()
     }
@@ -55,9 +49,9 @@ class FragmentMemberMain : ListFragment() {
         super.onStart()
         loadName()
         FragmentGroupMain().loadName()
-        MemberFragmentViewAdapter.nowSort = MemberAdapter.MB_ID
-        MemberFragmentViewAdapter.sortType = "ASC"
-        mbAdapter.sortNames(MemberFragmentViewAdapter.nowSort, MemberFragmentViewAdapter.sortType)
+        StatusHolder.nowSort = MemberAdapter.MB_ID
+        StatusHolder.sortType = "ASC"
+        mbAdapter.sortNames(StatusHolder.nowSort, StatusHolder.sortType, memberList)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -138,13 +132,14 @@ class FragmentMemberMain : ListFragment() {
             }
 
             R.id.item_sort -> {
-                Sort.memberSort(builder, requireActivity(), listAdp)
+                Sort.memberSort(builder, requireActivity(), memberList, listAdp)
                 val dialog = builder.create()
                 dialog.show()
             }
 
             R.id.item_filter -> {
-                MembersMenuAction(activity!!,memberList,FragmentGroupMain.groupList).filtering(builder)
+                Filtering(requireActivity(), memberList, FragmentGroupMain.groupList).showFilterDialog(builder)
+                listAdp.notifyDataSetChanged()
             }
         }
 
@@ -212,7 +207,7 @@ class FragmentMemberMain : ListFragment() {
                     lv.clearChoices()
                     listAdp.clearSelection()
                     mode.title = "0" + getString(R.string.selected)
-                    Sort.memberSort(builder, requireActivity(), listAdp)
+                    Sort.memberSort(builder, requireActivity(), memberList, listAdp)
                     val dialog = builder.create()
                     dialog.show()
                 }
@@ -221,7 +216,8 @@ class FragmentMemberMain : ListFragment() {
                     lv.clearChoices()
                     listAdp.clearSelection()
                     mode.title = "0" + getString(R.string.selected)
-                    MembersMenuAction(activity!!,memberList,FragmentGroupMain.groupList).filtering(builder)
+                    Filtering(activity!!, memberList, FragmentGroupMain.groupList).showFilterDialog(builder)
+                    listAdp.notifyDataSetChanged()
                 }
             }
 
@@ -241,7 +237,6 @@ class FragmentMemberMain : ListFragment() {
         override fun onItemCheckedStateChanged(mode: ActionMode,
                                                position: Int, id: Long, checked: Boolean) {
             // アクションモード時のアイテムの選択状態変更時
-
             checkedCount = lv.checkedItemCount
 
             if (checked) {
@@ -292,9 +287,9 @@ class FragmentMemberMain : ListFragment() {
     @Throws(IOException::class)
     fun selectName(newText: String) {
         if (TextUtils.isEmpty(newText)) {
-            mbAdapter.picName(null.toString())
+            mbAdapter.picName(null.toString(), memberList)
         } else {
-            mbAdapter.picName(newText)
+            mbAdapter.picName(newText, memberList)
         }
         listAdp.notifyDataSetChanged()
     }
@@ -302,7 +297,7 @@ class FragmentMemberMain : ListFragment() {
     //全てのメンバーからグループ(groupIdのグループ)を削除（グループ削除の際にコール）
     fun deleteBelongInfoAll(groupId: Int) {
         mbAdapter.open()
-        memberList.forEach{member ->
+        memberList.forEach { member ->
             deleteBelongInfo(member, groupId, member.id)
         }
         mbAdapter.close()
@@ -330,7 +325,7 @@ class FragmentMemberMain : ListFragment() {
     //引数belongIdのグループに所属するメンバーリストを返す
     fun searchBelong(belongId: String): ArrayList<Member> {
         val memberArrayByBelong = ArrayList<Member>()
-        memberList.forEach{member ->
+        memberList.forEach { member ->
             val belongText = member.belong
             val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             if (Arrays.asList<String>(*belongArray).contains(belongId)) {
@@ -345,7 +340,7 @@ class FragmentMemberMain : ListFragment() {
         for (group in FragmentGroupMain.groupList) {
             val groupId = group.id.toString()
             var belongNo = 0
-            memberList.forEach{member ->
+            memberList.forEach { member ->
                 val belongArray = member.belong.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                 val list = ArrayList(Arrays.asList<String>(*belongArray))
                 if (list.contains(groupId)) {
@@ -366,9 +361,10 @@ class FragmentMemberMain : ListFragment() {
         listAdp.notifyDataSetChanged()
     }
 
-    companion object{
+    companion object {
         //最初から存在してほしいのでprivateのcompanionにする（じゃないと落ちる。コルーチンとか使えばいけるかも）
         private lateinit var mbAdapter: MemberAdapter
         private lateinit var listAdp: MemberFragmentViewAdapter
+        private lateinit var lv: ListView
     }
 }
