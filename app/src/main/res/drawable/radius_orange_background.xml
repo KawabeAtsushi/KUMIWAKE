@@ -1,0 +1,14 @@
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- 角の丸み -->
+    <corners android:radius="30dp" />
+    <padding
+        android:bottom="5dp"
+        android:top="5dp"
+        android:left="10dp"
+        android:right="10dp" />
+    <solid android:color="@color/thin_orange" />
+
+</shape>

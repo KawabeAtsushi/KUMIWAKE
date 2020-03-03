@@ -16,7 +16,7 @@ import java.util.*
 /**
  * Created by atsushi_2 on 2016/03/20.
  */
-class EditGroupViewAdapter(private val context: Context, private val groupList: List<Group>, private val scrollView: ScrollView) : BaseAdapter() {
+class EditGroupViewAdapter(private val context: Context, private val groupList: List<Group>, private val scrollView: ScrollView,private val groupListView: ListView) : BaseAdapter() {
     private var beforeNo: Int = 0
     private var afterNo: Int = 0
 
@@ -70,7 +70,7 @@ class EditGroupViewAdapter(private val context: Context, private val groupList: 
                     afterNo = Integer.parseInt(numberOfMemberEditText.text.toString())
 
                     val addNo = beforeNo - afterNo
-                    KumiwakeCustom().changeBelongNo(position, addNo)
+                    changeBelongNo(position, addNo)
                     if (afterNo < 0) {
                         numberOfMemberEditText.setTextColor(Color.RED)
                     } else {
@@ -84,6 +84,29 @@ class EditGroupViewAdapter(private val context: Context, private val groupList: 
         }
 
         return v
+    }
+
+    //人数配分の自動調整
+    private fun changeBelongNo(position: Int, addNo: Int) {
+        val et: EditText = if (position == groupListView.count - 1) {
+            groupListView.getChildAt(0).findViewById<View>(R.id.editTheNumberOfMember) as EditText
+        } else {
+            groupListView.getChildAt(position + 1).findViewById<View>(R.id.editTheNumberOfMember) as EditText
+        }
+        var nowNo = 0
+        val newNo: Int
+
+        if (et.text.toString().isNotEmpty()) {
+            nowNo = Integer.parseInt(et.text.toString())
+        }
+        newNo = nowNo + addNo
+        et.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(3))
+        et.setText(newNo.toString())
+        if (newNo < 0) {
+            et.setTextColor(Color.RED)
+        } else {
+            et.setTextColor(Color.BLACK)
+        }
     }
 
     @SuppressLint("UseSparseArrays")

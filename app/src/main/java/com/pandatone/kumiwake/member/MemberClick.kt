@@ -36,14 +36,14 @@ object MemberClick {
 
     @SuppressLint("SetTextI18n")
     fun setInfo(c:Context, member: Member, dbAdapter:MemberAdapter) {
-        name.text = c.getText(R.string.member_name).toString() + " : " + member.name + " (" + member.read + ")"
-        sex.text = c.getText(R.string.sex).toString() + " : " + member.sex
-        age.text = c.getText(R.string.age).toString() + " : " + member.age.toString()
+        name.text = member.name + " (" + member.read + ")"
+        sex.text = member.sex
+        age.text = member.age.toString()
 
         if (viewBelong(member, dbAdapter) !== "") {
-            belong.text = c.getText(R.string.belong).toString() + " : " + viewBelong(member, dbAdapter)
+            belong.text = viewBelong(member, dbAdapter)
         } else {
-            belong.text = c.getText(R.string.belong).toString() + " : " + c.getText(R.string.nothing)
+            belong.text = c.getText(R.string.nothing)
         }
 
     }

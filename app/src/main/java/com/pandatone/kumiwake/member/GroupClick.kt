@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import androidx.appcompat.app.AlertDialog
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,8 +32,8 @@ class GroupClick(val c:Activity) {
         val view = inflater.inflate(R.layout.group_info, c.findViewById<View>(R.id.info_layout) as ViewGroup?)
 
         group = view.findViewById<View>(R.id.infoName) as TextView
-        number = view.findViewById<View>(R.id.infoNoOfMb) as TextView
-        belongMb = view.findViewById<View>(R.id.infoMember) as TextView
+        number = view.findViewById<View>(R.id.infoMBNo) as TextView
+        belongMb = view.findViewById<View>(R.id.indexMember) as TextView
         belongList = view.findViewById<View>(R.id.belongList) as ListView
         okBt = view.findViewById<View>(R.id.okBt) as Button
 
@@ -50,8 +49,8 @@ class GroupClick(val c:Activity) {
     fun setInfo(item : Group, memberByBelong:ArrayList<Member>) {
         val adapter = SmallMBListAdapter(c, memberByBelong, false, showLeaderNo = false)
 
-        group.text = "${c.getText(R.string.group_name)} : ${item.name}"
-        number.text = "${c.getText(R.string.number_of_member)} : ${adapter.count}${c.getString(R.string.people)}"
+        group.text = item.name
+        number.text = "${adapter.count}${c.getString(R.string.people)}"
         belongMb.text = "${c.getText(R.string.belong)}${c.getText(R.string.member)}"
         belongList.adapter = adapter
 

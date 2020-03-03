@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/info_layout"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -7,43 +8,99 @@
     android:padding="10dp">
 
     <TextView
+        android:id="@+id/indexName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/info_margin"
+        android:layout_marginTop="15dp"
+        android:text="@string/member_name"
+        android:background="@drawable/index_background"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/infoName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/info_margin" />
+        android:layout_marginStart="@dimen/info_margin"
+        app:layout_constraintTop_toTopOf="@id/indexName"
+        app:layout_constraintBottom_toBottomOf="@id/indexName"
+        app:layout_constraintStart_toEndOf="@id/indexName"/>
+
+    <TextView
+        android:id="@+id/indexSex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/info_margin"
+        android:layout_marginTop="15dp"
+        android:text="@string/sex"
+        android:background="@drawable/index_background"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/indexName"/>
 
     <TextView
         android:id="@+id/infoSex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/info_margin" />
+        android:layout_marginStart="@dimen/info_margin"
+        app:layout_constraintTop_toTopOf="@id/indexSex"
+        app:layout_constraintBottom_toBottomOf="@id/indexSex"
+        app:layout_constraintStart_toEndOf="@id/indexSex"/>
+
+    <TextView
+        android:id="@+id/indexAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/info_margin"
+        android:layout_marginTop="15dp"
+        android:text="@string/age"
+        android:background="@drawable/index_background"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/indexSex"/>
 
     <TextView
         android:id="@+id/infoAge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/info_margin" />
+        android:layout_marginStart="@dimen/info_margin"
+        app:layout_constraintTop_toTopOf="@id/indexAge"
+        app:layout_constraintBottom_toBottomOf="@id/indexAge"
+        app:layout_constraintStart_toEndOf="@id/indexAge"/>
+
+    <TextView
+        android:id="@+id/indexBelong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/info_margin"
+        android:layout_marginTop="15dp"
+        android:text="@string/belong"
+        android:background="@drawable/index_background"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/indexAge"/>
 
     <TextView
         android:id="@+id/infoBelong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/info_margin" />
+        android:layout_marginStart="@dimen/info_margin"
+        app:layout_constraintTop_toTopOf="@id/indexBelong"
+        app:layout_constraintBottom_toBottomOf="@id/indexBelong"
+        app:layout_constraintStart_toEndOf="@id/indexBelong"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/okBt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:text=" OK " />
+        android:padding="10dp"
+        android:layout_margin="15dp"
+        android:text=" OK "
+        app:layout_constraintTop_toBottomOf="@id/indexBelong"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,7 @@ import android.graphics.Point
 import android.graphics.Rect
 import android.os.Bundle
 import android.text.InputFilter
+import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.WindowManager
@@ -38,6 +39,7 @@ class KumiwakeCustom : AppCompatActivity() {
     private lateinit var groupArray: ArrayList<Group>
     private lateinit var newGroupArray: ArrayList<Group>
     private var screenHeight = 0
+    private var nextSet = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +53,9 @@ class KumiwakeCustom : AppCompatActivity() {
         if (intent.getSerializableExtra(ArrayKeys.NORMAL_GROUP_ARRAY.key) != null) {
             groupArray = intent.getSerializableExtra(ArrayKeys.NORMAL_GROUP_ARRAY.key) as ArrayList<Group>
         }
-        mbAdapter = SmallMBListAdapter(this, memberArray, true, showLeaderNo = true)
-        editGPAdapter = EditGroupViewAdapter(this, groupArray, custom_scroll)
         findViews()
+        mbAdapter = SmallMBListAdapter(this, memberArray, true, showLeaderNo = true)
+        editGPAdapter = EditGroupViewAdapter(this, groupArray, custom_scroll, groupListView)
         setViews()
         memberListView.adapter = mbAdapter
         groupListView.adapter = editGPAdapter
@@ -134,16 +136,12 @@ class KumiwakeCustom : AppCompatActivity() {
     fun changeLeader(position: Int) {
         val id = memberArray[position].id
         val name = memberArray[position].name
-        var nextSet = 0
-
         //リーダー解除
         if (leaderNoList.contains(id)) {
-
             nextSet = leaderNoList.indexOf(id)
             leaderNoList[nextSet] = null
             val leader = groupListView.getChildAt(nextSet).findViewById<View>(R.id.leader) as TextView
             leader.text = getText(R.string.leader).toString() + ":" + getText(R.string.nothing)
-
         } else if (nextSet != -1) {//最大数登録したら終わり(indexが-1返される)
             //リーダー登録
             leaderNoList[nextSet] = id
@@ -162,29 +160,6 @@ class KumiwakeCustom : AppCompatActivity() {
             val groupName = editGPAdapter!!.getGroupName(i)
             val memberNo = editGPAdapter!!.getMemberNo(i)
             newGroupArray.add(Group(i, groupName, "", memberNo))
-        }
-    }
-
-    //人数配分の自動調整
-    fun changeBelongNo(position: Int, addNo: Int) {
-        val et: EditText = if (position == groupListView.count - 1) {
-            groupListView.getChildAt(0).findViewById<View>(R.id.editTheNumberOfMember) as EditText
-        } else {
-            groupListView.getChildAt(position + 1).findViewById<View>(R.id.editTheNumberOfMember) as EditText
-        }
-        var nowNo = 0
-        val newNo: Int
-
-        if (et.text.toString().isNotEmpty()) {
-            nowNo = Integer.parseInt(et.text.toString())
-        }
-        newNo = nowNo + addNo
-        et.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(3))
-        et.setText(newNo.toString())
-        if (newNo < 0) {
-            et.setTextColor(Color.RED)
-        } else {
-            et.setTextColor(Color.BLACK)
         }
     }
 

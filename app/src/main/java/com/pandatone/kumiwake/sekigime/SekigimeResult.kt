@@ -71,7 +71,7 @@ class SekigimeResult : AppCompatActivity() {
         llp2.setMargins(llp2.leftMargin, (10 * scale).toInt(), llp2.rightMargin, (90 * scale).toInt())
         goHome.layoutParams = llp2
         goHome.translationX = centerX
-        reSekigime.background = ContextCompat.getDrawable(this, R.drawable.sekigime_orange_button)
+        reSekigime.background = ContextCompat.getDrawable(this, R.drawable.simple_orange_button)
         goHome.background = ContextCompat.getDrawable(this, R.drawable.simple_green_button)
         //groupDropdown.background = ContextCompat.getDrawable(this, R.drawable.Dropdown_button)
         reSekigime.setOnClickListener {

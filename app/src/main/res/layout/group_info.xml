@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/info_layout"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -7,46 +8,77 @@
     android:padding="10dp">
 
     <TextView
+        android:id="@+id/indexName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/info_margin"
+        android:text="@string/group_name"
+        android:background="@drawable/index_background"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/infoName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/info_margin" />
+        android:layout_margin="@dimen/info_margin"
+        app:layout_constraintTop_toTopOf="@id/indexName"
+        app:layout_constraintBottom_toBottomOf="@id/indexName"
+        app:layout_constraintStart_toEndOf="@id/indexName"/>
 
     <TextView
-        android:id="@+id/infoNoOfMb"
+        android:id="@+id/indexMBNo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/info_margin" />
+        android:layout_margin="@dimen/info_margin"
+        android:text="@string/number_of_member"
+        android:background="@drawable/index_background"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/indexName"/>
 
     <TextView
-        android:id="@+id/infoMember"
+        android:id="@+id/infoMBNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/info_margin"
+        app:layout_constraintTop_toTopOf="@id/indexMBNo"
+        app:layout_constraintBottom_toBottomOf="@id/indexMBNo"
+        app:layout_constraintStart_toEndOf="@id/indexMBNo"/>
+
+    <TextView
+        android:id="@+id/indexMember"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="@dimen/info_margin"/>
+        android:layout_marginStart="@dimen/info_margin"
+        android:background="@drawable/index_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/indexMBNo"/>
 
     <ListView
         android:id="@+id/belongList"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/info_margin"
-        android:background="@drawable/listview_background"/>
+        android:background="@drawable/listview_background"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintTop_toBottomOf="@id/indexMember"
+        app:layout_constraintBottom_toTopOf="@id/okBt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/okBt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:padding="10dp"
         android:layout_margin="10dp"
-        android:text=" OK " />
+        android:text=" OK "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
