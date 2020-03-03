@@ -160,6 +160,6 @@
     <string name="top_normal_mode">ノーマル\nモード</string>
     <string name="top_quick_mode">クイック\nモード</string>
     <string name="edit_exit_confirmation">編集画面を閉じますか？\n編集情報は破棄されます。</string>
-    <string name="copy_path">パスをコピー</string>
-    <string name="copied_path">パスをクリップボードにコピーしました。</string>
+    <string name="specify_path">パスを指定</string>
+    <string name="specify_path_message">\"KUMIWAKE_Backup\"へのファイルパスを指定してください。</string>
 </resources>

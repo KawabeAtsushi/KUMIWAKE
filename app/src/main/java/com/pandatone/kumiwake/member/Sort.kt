@@ -2,8 +2,8 @@ package com.pandatone.kumiwake.member
 
 import android.app.Activity
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.StatusHolder.Companion.nowSort
-import com.pandatone.kumiwake.StatusHolder.Companion.sortType
+import com.pandatone.kumiwake.StatusHolder.nowSort
+import com.pandatone.kumiwake.StatusHolder.sortType
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter

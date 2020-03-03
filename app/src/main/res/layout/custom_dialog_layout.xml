@@ -26,7 +26,7 @@
             android:id="@+id/dialog_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/dialog_title"
+            android:background="@drawable/dialog_title_green"
             android:padding="10dp"
             android:text="Title"
             android:textColor="@android:color/white"
@@ -40,6 +40,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:orientation="vertical">
                 <!-- メッセージ -->
 
@@ -48,22 +50,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
                     android:lineSpacingExtra="6dp"
                     android:text=""
                     android:textColor="#333333"
                     android:textSize="16sp" />
 
-                <Button
-                    android:id="@+id/copy_path_button"
+                <TextView
+                    android:id="@+id/dialog_path"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:lineSpacingExtra="6dp"
+                    android:text=""
+                    android:textColor="#55f"
+                    android:textSize="14sp"
+                    android:visibility="gone"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/specify_path_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:layout_marginEnd="20dp"
                     android:layout_marginTop="5dp"
                     android:visibility="gone"
-                    android:text="@string/copy_path"
+                    android:text="@string/specify_path"
                     />
 
             </LinearLayout>
@@ -77,20 +87,20 @@
             android:orientation="horizontal"
             style="?android:attr/buttonBarStyle">
             <!-- OK ボタン -->
-            <Button style="?android:attr/buttonBarButtonStyle"
+            <com.google.android.material.button.MaterialButton style="?android:attr/buttonBarButtonStyle"
                 android:id="@+id/positive_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/dialog_positive_bt"
+                android:backgroundTint="@android:color/holo_green_light"
                 android:text="OK"
                 android:textColor="@android:color/white" />
 
-            <Button style="?android:attr/buttonBarButtonStyle"
+            <com.google.android.material.button.MaterialButton style="?android:attr/buttonBarButtonStyle"
                 android:id="@+id/negative_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:background="@drawable/dialog_negative_bt"
+                android:backgroundTint="@color/gray"
                 android:text="@string/cancel"
                 android:textColor="@android:color/white" />
         </LinearLayout>

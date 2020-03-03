@@ -19,7 +19,6 @@
         android:id="@+id/item_all_select"
         android:title="@string/all_select"
         android:icon="@drawable/ic_select_all_black_24dp"
-        tools:ignore="AppCompatResource"
         app:showAsAction="ifRoom" />
 
     <item

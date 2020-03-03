@@ -123,7 +123,7 @@
         </LinearLayout>
 
         <!--spinner-->
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/select_group_spinner"
             android:layout_width="match_parent"
             android:layout_height="60dp"

@@ -1,7 +1,5 @@
 package com.pandatone.kumiwake.ui
 
-import android.annotation.TargetApi
-import android.app.ActionBar
 import androidx.appcompat.app.AppCompatDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -11,10 +9,12 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.setting.DBBackup
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
-import android.os.Build
 import android.view.*
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
+import com.google.android.material.textfield.TextInputEditText
 
 
 /**
@@ -56,7 +56,10 @@ class FileManagerDialog(private var mTitle: String, private var mMessage: CharSe
         // タイトル設定
         (mDialog.findViewById<View>(R.id.dialog_title) as TextView).text = getString(R.string.error)
         // メッセージ設定
-        (mDialog.findViewById<View>(R.id.dialog_message) as TextView).text = getString(R.string.failed_to_mkdirs) + "\n" + path
+        val pathTextView = mDialog.findViewById<View>(R.id.dialog_path) as TextView
+        pathTextView.visibility = View.VISIBLE
+        (mDialog.findViewById<View>(R.id.dialog_message) as TextView).text = getString(R.string.failed_to_mkdirs)
+        pathTextView.text = path
         // OKボタンのリスナ
         (mDialog.findViewById<View>(R.id.positive_button) as TextView).setOnClickListener {
             activity?.let { it1 -> DBBackup.dbBackup(it1, path, mDialog) }
@@ -68,35 +71,60 @@ class FileManagerDialog(private var mTitle: String, private var mMessage: CharSe
 
     //インポートエラーの際のダイアログ生成
     private fun setImportErrorView(mDialog: AppCompatDialog, path: String) {
-        //コピーパスボタン設定
-        val copyPathButton = mDialog.findViewById<Button>(R.id.copy_path_button)
-        if (copyPathButton != null) {
-            copyPathButton.visibility = View.VISIBLE
-            copyPathButton.setOnClickListener { copyToClipboard(path) }
-        }
-
         // タイトル設定
         (mDialog.findViewById<View>(R.id.dialog_title) as TextView).text = getString(R.string.error)
         // メッセージ設定
-        (mDialog.findViewById<View>(R.id.dialog_message) as TextView).text = getString(R.string.nothing_file) + "\n" + DBBackup.dir_path +
-                "\n\n" + getString(R.string.failed_import) + "\n" + path
+        val messageTextView = mDialog.findViewById<View>(R.id.dialog_message) as TextView
+        val pathTextView = mDialog.findViewById<View>(R.id.dialog_path) as TextView
+        pathTextView.visibility = View.VISIBLE
+        messageTextView.text = getString(R.string.nothing_file) + "\n" + DBBackup.dir_path +
+                "\n\n" + getString(R.string.failed_import)
+        pathTextView.text = path
+
+        //コピーパスボタン設定
+        val allocatePathButton = mDialog.findViewById<Button>(R.id.specify_path_button)
+        if (allocatePathButton != null) {
+            allocatePathButton.visibility = View.VISIBLE
+            allocatePathButton.setOnClickListener {
+                specifyPath(pathTextView)
+            }
+        }
 
         // OKボタンのリスナ
         (mDialog.findViewById<View>(R.id.positive_button) as TextView).setOnClickListener {
-            activity?.let { it1 -> DBBackup.dbImport(it1, path, mDialog) }
+            val location = pathTextView.text.toString()
+            activity?.let { it1 -> DBBackup.dbImport(it1, location, mDialog) }
             dismiss()
         }
         // Cancel ボタンのリスナ
         (mDialog.findViewById<View>(R.id.negative_button) as TextView).setOnClickListener { dismiss() }
     }
 
-    //テキストをコピー
-    private fun copyToClipboard(text: String) {
-        // copy to clipboard
-        val clipboardManager = context?.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-                ?: return
-        clipboardManager.setPrimaryClip(ClipData.newPlainText("copyText", text))
-        Toast.makeText(activity, getString(R.string.copied_path), Toast.LENGTH_SHORT).show()
+    //パスを指定
+    private fun specifyPath(pathView:TextView) {
+        val inflater = activity?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater.inflate(R.layout.input_text_dialog, activity?.findViewById<View>(R.id.filter_member) as? ViewGroup)
+        val pathInputBox = layout.findViewById<View>(R.id.path_input) as TextInputEditText
+        val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
+        builder.setTitle(activity?.getText(R.string.specify_path))
+        builder.setView(layout)
+        builder.setPositiveButton("OK", null)
+        builder.setNegativeButton(R.string.cancel) { _, _ -> }
+        val dialog = builder.create()
+        dialog.show()
+
+        val okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        okButton.setOnClickListener{
+            if(!pathInputBox.text.isNullOrEmpty()){
+                val location = pathInputBox.text.toString()
+                pathView.text = location
+            }
+            dialog.dismiss()
+        }
+        val cancelBtn = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+        cancelBtn.setOnClickListener {
+            dialog.dismiss()
+        }
     }
 
 }

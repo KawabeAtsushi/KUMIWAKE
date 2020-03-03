@@ -12,7 +12,7 @@ import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import java.io.*
 
-
+@SuppressLint("StaticFieldLeak")
 object DBBackup {
     val dir_path: String
         get() {

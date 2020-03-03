@@ -2,30 +2,28 @@
 
 <resources>
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <!-- アクションモード -->
         <item name="windowActionModeOverlay">true</item>
         <!-- プライマリカラー -->
-        <item name="colorPrimary">@android:color/darker_gray</item>
-        <!-- ステータスバーの背景色 -->
-        <item name="android:colorPrimaryDark">@android:color/white</item>
-    </style>
-
-    <style name="MainTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <!-- アクションモード -->
-        <item name="windowActionModeOverlay">true</item>
-        <!-- プライマリカラー -->
-        <item name="colorPrimary">@android:color/darker_gray</item>
+        <item name="colorPrimary">@android:color/holo_green_light</item>
+        <!-- セカンダリカラー -->
+        <item name="colorSecondary">@android:color/white</item>
         <!-- ステータスバーの背景色 -->
         <item name="android:colorPrimaryDark">@color/red_title</item>
     </style>
 
-    <!-- hintのスタイル -->
+    <style name="KumiwakeTheme" parent="AppTheme">
+        <!-- ステータスバーの背景色 -->
+        <item name="android:colorPrimaryDark">@color/red_title</item>
+    </style>
+
+    <style name="SekigimeTheme" parent="AppTheme">
+        <!-- ステータスバーの背景色 -->
+        <item name="android:colorPrimaryDark">@color/green_title</item>
+    </style>
 
 </resources>

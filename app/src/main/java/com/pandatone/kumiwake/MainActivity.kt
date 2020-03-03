@@ -24,6 +24,11 @@ import com.pandatone.kumiwake.ui.members.MembersFragment
 import com.pandatone.kumiwake.ui.sekigime.SekigimeFragment
 import com.pandatone.kumiwake.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import android.util.TypedValue
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import com.pandatone.kumiwake.PublicMethods.setStatusBarColor
 
 
 class MainActivity : AppCompatActivity() {
@@ -81,7 +86,8 @@ class MainActivity : AppCompatActivity() {
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Kumiwake.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.kumiwake) + "</font>")
                 container.background = getDrawable(Theme.Kumiwake.backgroundColor)
-                setStatusBarColor(Theme.Kumiwake.primaryColor)
+                setStatusBarColor(this,Theme.Kumiwake.primaryColor)
+                setTheme(R.style.KumiwakeTheme)
                 mAdView.visibility = View.VISIBLE
                 true
             }
@@ -91,7 +97,8 @@ class MainActivity : AppCompatActivity() {
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Sekigime.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#616161'>" + getString(R.string.sekigime) + "</font>")
                 container.background = getDrawable(Theme.Sekigime.backgroundColor)
-                setStatusBarColor(Theme.Sekigime.primaryColor)
+                setStatusBarColor(this,Theme.Sekigime.primaryColor)
+                setTheme(R.style.SekigimeTheme)
                 mAdView.visibility = View.VISIBLE
                 true
             }
@@ -101,7 +108,7 @@ class MainActivity : AppCompatActivity() {
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Member.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.member) + "</font>")
                 container.background = ColorDrawable(Theme.Member.backgroundColor)
-                setStatusBarColor(Theme.Member.primaryColor)
+                setStatusBarColor(this,Theme.Member.primaryColor)
                 mAdView.visibility = View.GONE
                 true
             }
@@ -111,7 +118,7 @@ class MainActivity : AppCompatActivity() {
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Setting.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#616161'>" + getString(R.string.setting_help) + "</font>")
                 container.background = getDrawable(Theme.Setting.backgroundColor)
-                setStatusBarColor(Theme.Setting.primaryColor)
+                setStatusBarColor(this,Theme.Setting.primaryColor)
                 mAdView.visibility = View.GONE
                 true
             }
@@ -134,15 +141,6 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
         supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.kumiwake) + "</font>")
-    }
-
-    //ステータスバーの色変更
-    fun setStatusBarColor(@ColorRes colorId: Int) {
-        this.apply {
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = ContextCompat.getColor(this, colorId)
-        }
     }
 
     //キーボードによるレイアウト崩れを防ぐ

@@ -53,7 +53,7 @@ class SettingsFragment : Fragment() {
             //行をクリックした時の処理
             when (position) {
                 0 -> {
-                    val message = (getString(R.string.how_to_kumiwake) + "■" + getString(R.string.normal_mode) + "■\n"
+                    val message = (getString(R.string.how_to_kumiwake) + "\n\n■" + getString(R.string.normal_mode) + "■\n"
                             + getString(R.string.description_of_normal_kumiwake) + "\n\n■" + getString(R.string.quick_mode) + "■\n" + getString(R.string.description_of_quick_kumiwake))
                     dialog.confirmationDialog(howToUseStr[0], message)
                 }

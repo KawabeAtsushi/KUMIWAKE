@@ -132,7 +132,7 @@
     <string name="run_confirmation">\nMay you proceed?</string>
     <string name="kumiwake_conditions">Grouping conditions</string>
     <string name="select_group_info">You can set the group names and the number of the belong members for each group.</string>
-    <string name="how_to_kumiwake">☆It is the mode of grouping☆\n\nSelect from "Normal mode" or "Quick mode" and execute grouping.\n\n</string>
+    <string name="how_to_kumiwake">☆It is the mode of grouping☆\n\nSelect from "Normal mode" or "Quick mode" and execute grouping.</string>
     <string name="how_to_member">☆It is the mode of register members for \"KUMIWAKE\" and \"SEKIGIME\"☆\n\nSwitch member list or group list by swiping.\n\nOn each screen, you click the \'+\' button which is displayed by the screen lower right, and you can add new member or new group.\n\nBy registering members to the group, you can select all members which belong the group at once when you do "KUMIWAKE" and so on.</string>
     <string name="how_to_sekigime">☆It is the mode of seat allocation☆  When you do SEKIGIME from SEKIGIME button at home page, the members and the groups you selected are divided in each table at random. Procedure of selecting members and groups are the same as KUMIWAKE.  You can also do SEKIGIME from KUMIWAKE result page. In this case, the members are divided in each group created by KUMIWAKE.</string>
     <string name="article_title">☆KUMIWAKE☆\nApplication of auto-grouping and seat positioning can be!\nVery useful for group activities!!\n↓↓Click here for download↓↓\n(Android only)</string>
@@ -157,6 +157,6 @@
     <string name="app_exit_confirmation">Quit app?</string>
     <string name="edit_exit_confirmation">Quit edit?\nEdits are discarded.</string>
     <string name="hint">hint</string>
-    <string name="copy_path">Copy Path</string>
-    <string name="copied_path">Path copied to clipboard.</string>
+    <string name="specify_path">Specify Path</string>
+    <string name="specify_path_message">Please specify file path to "KUMIWAKE_Backup".</string>
 </resources>

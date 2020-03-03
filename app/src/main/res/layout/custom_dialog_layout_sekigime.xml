@@ -26,7 +26,7 @@
             android:id="@+id/dialog_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/dialog_title2"
+            android:background="@drawable/dialog_title_orange"
             android:padding="10dp"
             android:text="Title"
             android:textColor="@android:color/white"
@@ -73,22 +73,22 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <!-- OK ボタン -->
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/positive_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:background="@drawable/dialog_positive_bt2"
+                android:backgroundTint="@color/orange"
                 android:text="@string/run"
                 android:textColor="@android:color/white" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/negative_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:layout_marginStart="10dp"
-                android:background="@drawable/dialog_negative_bt"
+                android:backgroundTint="@color/gray"
                 android:text="@string/cancel"
                 android:textColor="@android:color/white" />
         </LinearLayout>

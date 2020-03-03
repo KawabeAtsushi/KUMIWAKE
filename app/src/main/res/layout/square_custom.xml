@@ -116,7 +116,7 @@
                 android:progress="0"
                 android:thumb="@drawable/seekbar_control" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/move_result"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
