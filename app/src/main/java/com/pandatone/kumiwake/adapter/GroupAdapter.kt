@@ -107,22 +107,22 @@ class GroupAdapter(context: Context) : ArrayAdapter<Group>(context, 0) {
     }
 
     @Throws(IOException::class)
-    fun picGroup(group: String, group_read: String) {
+    fun picGroup(group: String, groupList: ArrayList<Group>) {
         open()
         val query = ("SELECT * FROM " + TABLE_NAME +
                 " WHERE " + GP_NAME + " like '%" + group + "%' OR "
-                + GP_READ + " like '%" + group_read + "%';")
+                + GP_READ + " like '%" + group + "%';")
         val c = db.rawQuery(query, null)
-        getCursor(c, FragmentGroupChoiceMode.groupList)
+        getCursor(c, groupList)
         close()
     }
 
-    fun sortGroups(sortBy: String, sortType: String) {
+    fun sortGroups(sortBy: String, sortType: String,groupList: ArrayList<Group>) {
         open()
         val query = "SELECT * FROM " +
                 TABLE_NAME + " ORDER BY " + sortBy + " " + sortType + ";"
         val c = db.rawQuery(query, null)
-        getCursor(c, FragmentGroupChoiceMode.groupList)
+        getCursor(c, groupList)
         close()
     }
 

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.*
 import android.widget.AbsListView
 import android.widget.AdapterView
@@ -26,8 +27,6 @@ import kotlin.collections.ArrayList
  * Created by atsushi_2 on 2016/02/23.
  */
 class FragmentMemberMain : ListFragment() {
-
-    private var memberList: ArrayList<Member> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -195,10 +194,14 @@ class FragmentMemberMain : ListFragment() {
                 }
 
                 R.id.item_all_select -> {
-                    var i = 1
-                    while (i < listAdp.count) {
-                        lv.setItemChecked(i, true)
-                        i += 2
+                    if (checkedCount >= listAdp.count / 2) {
+                        clearSelection(mode)
+                    } else {
+                        var i = 1
+                        while (i < listAdp.count) {
+                            lv.setItemChecked(i, true)
+                            i += 2
+                        }
                     }
                 }
 
@@ -237,13 +240,26 @@ class FragmentMemberMain : ListFragment() {
             // アクションモード時のアイテムの選択状態変更時
             checkedCount = lv.checkedItemCount
 
-            if (checked) {
-                listAdp.setNewSelection(memberList[position].id, checked)
+            if (checkedCount == 0) {
+                listAdp.setNewSelection(memberList[position].id, true)
+                clearSelection(mode)
             } else {
-                listAdp.removeSelection(memberList[position].id)
+                if (checked) {
+                    listAdp.setNewSelection(memberList[position].id, checked)
+                } else {
+                    listAdp.removeSelection(memberList[position].id)
+                }
             }
 
             mode.title = checkedCount.toString() + getString(R.string.selected)
+        }
+
+        //全選択解除
+        private fun clearSelection(mode: ActionMode) {
+            lv.clearChoices()
+            listAdp.clearSelection()
+            checkedCount = 0
+            mode.title = "0" + getString(R.string.selected)
         }
 
         //複数メンバー削除
@@ -283,7 +299,8 @@ class FragmentMemberMain : ListFragment() {
 
     //メンバーの検索表示処理
     @Throws(IOException::class)
-    fun selectName(newText: String) {
+    fun searchMember(newText: String) {
+        Log.d("SearchText",newText)
         if (TextUtils.isEmpty(newText)) {
             mbAdapter.picName(null.toString(), memberList)
         } else {
@@ -323,5 +340,6 @@ class FragmentMemberMain : ListFragment() {
         private lateinit var mbAdapter: MemberAdapter
         private lateinit var listAdp: MemberFragmentViewAdapter
         private lateinit var lv: ListView
+        private var memberList: ArrayList<Member> = ArrayList() //searchMemberの関係
     }
 }

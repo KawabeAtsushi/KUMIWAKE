@@ -5,6 +5,7 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder.nowSort
 import com.pandatone.kumiwake.StatusHolder.sortType
 import com.pandatone.kumiwake.adapter.GroupAdapter
+import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter
 
@@ -73,7 +74,7 @@ object Sort {
         builder.setCancelable(false)
     }
 
-    fun groupSort(builder: androidx.appcompat.app.AlertDialog.Builder, activity: Activity) {
+    fun groupSort(builder: androidx.appcompat.app.AlertDialog.Builder, activity: Activity, groupList: ArrayList<Group>, listAdp: GroupFragmentViewAdapter) {
 
         val gpAdapter = GroupAdapter(activity)
 
@@ -89,13 +90,14 @@ object Sort {
 
         builder.setPositiveButton("OK") { _, _ ->
             when (initial) {
-                0 -> gpAdapter.sortGroups(GroupAdapter.GP_ID, ASC)
-                1 -> gpAdapter.sortGroups(GroupAdapter.GP_ID, DESC)
-                2 -> gpAdapter.sortGroups(GroupAdapter.GP_NAME, ASC)
-                3 -> gpAdapter.sortGroups(GroupAdapter.GP_NAME, DESC)
-                4 -> gpAdapter.sortGroups(GroupAdapter.GP_BELONG, ASC)
-                5 -> gpAdapter.sortGroups(GroupAdapter.GP_BELONG, DESC)
+                0 -> gpAdapter.sortGroups(GroupAdapter.GP_ID, ASC,groupList)
+                1 -> gpAdapter.sortGroups(GroupAdapter.GP_ID, DESC,groupList)
+                2 -> gpAdapter.sortGroups(GroupAdapter.GP_NAME, ASC,groupList)
+                3 -> gpAdapter.sortGroups(GroupAdapter.GP_NAME, DESC,groupList)
+                4 -> gpAdapter.sortGroups(GroupAdapter.GP_BELONG, ASC,groupList)
+                5 -> gpAdapter.sortGroups(GroupAdapter.GP_BELONG, DESC,groupList)
             }
+            listAdp.notifyDataSetChanged()
         }
         // アラートダイアログのボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
         builder.setNegativeButton(R.string.cancel) { _, _ -> }

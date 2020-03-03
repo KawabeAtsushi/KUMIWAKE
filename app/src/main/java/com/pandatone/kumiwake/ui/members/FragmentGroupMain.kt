@@ -73,7 +73,7 @@ class FragmentGroupMain : ListFragment() {
             builder.setItems(items) { _, which ->
                 when (which) {
                     0 -> {
-                        GroupClick(activity!!).infoDialog(groupList[position], GroupMethods.searchBelong(requireContext(),groupList[position].id.toString()))
+                        GroupClick(activity!!).infoDialog(groupList[position], GroupMethods.searchBelong(requireContext(), groupList[position].id.toString()))
                     }
                     1 -> {
                         val i = Intent(activity, AddGroup::class.java)
@@ -103,14 +103,15 @@ class FragmentGroupMain : ListFragment() {
         when (item.itemId) {
             android.R.id.home -> activity!!.finish()
 
-            R.id.item_all_select -> for (i in 0 until listAdp.count) {
-                listView.setItemChecked(i, true)
+            R.id.item_all_select -> {
+                for (i in 0 until listAdp.count) {
+                    listView.setItemChecked(i, true)
+                }
             }
 
             R.id.item_sort -> {
                 val builder = AlertDialog.Builder(activity!!)
-                Sort.groupSort(builder, activity!!)
-                listAdp.notifyDataSetChanged()
+                Sort.groupSort(builder, activity!!, groupList, listAdp)
                 val dialog = builder.create()
                 dialog.show()
             }
@@ -133,7 +134,7 @@ class FragmentGroupMain : ListFragment() {
         // OKの時の処理
         builder.setPositiveButton("OK") { _, _ ->
             val groupId = groupList[position].id
-            GroupMethods.deleteBelongInfoAll(requireContext(),groupId)
+            GroupMethods.deleteBelongInfoAll(requireContext(), groupId)
             gpAdapter.selectDelete(groupId.toString())
             FragmentMemberMain().loadName()
             loadName()
@@ -172,22 +173,32 @@ class FragmentGroupMain : ListFragment() {
                     deleteMultiGroup(mode)
                 }
 
-                R.id.item_all_select -> for (i in 0 until listAdp.count) {
+                R.id.item_all_select -> {
+                    if (checkedCount >= listAdp.count / 2) {
+                        clearSelection(mode)
+                    } else {for (i in 0 until listAdp.count) {
                     listView.setItemChecked(i, true)
-                }
+                }}}
 
                 R.id.item_sort -> {
                     listView.clearChoices()
                     listAdp.clearSelection()
                     mode.title = "0" + getString(R.string.selected)
                     val builder = AlertDialog.Builder(activity!!)
-                    Sort.groupSort(builder, activity!!)
-                    listAdp.notifyDataSetChanged()
+                    Sort.groupSort(builder, activity!!, groupList, listAdp)
                     val dialog = builder.create()
                     dialog.show()
                 }
             }
             return false
+        }
+
+        //全選択解除
+        private fun clearSelection(mode: ActionMode) {
+            listView.clearChoices()
+            listAdp.clearSelection()
+            checkedCount = 0
+            mode.title = "0" + getString(R.string.selected)
         }
 
         override fun onDestroyActionMode(mode: ActionMode) {
@@ -232,7 +243,7 @@ class FragmentGroupMain : ListFragment() {
                 if (checked) {
                     // IDを取得する
                     val groupId = groupList[i].id
-                    GroupMethods.deleteBelongInfoAll(requireContext(),groupId)
+                    GroupMethods.deleteBelongInfoAll(requireContext(), groupId)
                     gpAdapter.selectDelete(groupId.toString())     // DBから取得したIDが入っているデータを削除する
                 }
             }
@@ -251,11 +262,11 @@ class FragmentGroupMain : ListFragment() {
 
     //検索した時のグループ絞り込み
     @Throws(IOException::class)
-    fun selectGroup(newText: String) {
+    fun searchGroup(newText: String) {
         if (TextUtils.isEmpty(newText)) {
-            gpAdapter.picGroup(null.toString(), null.toString())
+            gpAdapter.picGroup(null.toString(), groupList)
         } else {
-            gpAdapter.picGroup(newText, newText)
+            gpAdapter.picGroup(newText, groupList)
         }
     }
 

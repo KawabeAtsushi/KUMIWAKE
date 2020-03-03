@@ -18,6 +18,7 @@ import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
  */
 class FragmentGroupChoiceMode : ListFragment() {
     private var checkedCount = 0
+    private var groupList: ArrayList<Group> = ArrayList()
 
     // 必須*
     // Fragment生成時にシステムが呼び出す
@@ -54,27 +55,6 @@ class FragmentGroupChoiceMode : ListFragment() {
         listView.isTextFilterEnabled = true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // アクションアイテム選択時
-        when (item.itemId) {
-            android.R.id.home -> activity!!.finish()
-
-            R.id.item_all_select -> for (i in 0 until listAdp.count) {
-                listView.setItemChecked(i, true)
-            }
-
-            R.id.item_sort -> {
-                val builder = AlertDialog.Builder(activity!!)
-                Sort.groupSort(builder, activity!!)
-                listAdp.notifyDataSetChanged()
-                val dialog = builder.create()
-                dialog.show()
-            }
-        }
-
-        return false
-    }
-
     //Activity生成後に呼ばれる
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -100,7 +80,6 @@ class FragmentGroupChoiceMode : ListFragment() {
         //最初から存在してほしいのでprivateのcompanionにする（じゃないと落ちる。コルーチンとか使えばいけるかも）
         private lateinit var gpAdapter: GroupAdapter
         private lateinit var listAdp: GroupFragmentViewAdapter
-        internal var groupList: ArrayList<Group> = ArrayList()
     }
 
 }

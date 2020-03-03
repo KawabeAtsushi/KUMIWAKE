@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ImageSpan
-import android.util.Log
 import android.view.*
-import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.res.ResourcesCompat
@@ -105,9 +103,9 @@ class MembersFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onQueryTextChange(newText: String): Boolean {
         try {
             if (page == 0) {
-                FragmentMemberMain().selectName(newText)
+                FragmentMemberMain().searchMember(newText)
             } else {
-                FragmentGroupMain().selectGroup(newText)
+                FragmentGroupMain().searchGroup(newText)
             }
         } catch (e: IOException) {
             e.printStackTrace()
