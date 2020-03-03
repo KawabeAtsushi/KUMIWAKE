@@ -19,8 +19,6 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-
-
 /**
  * Created by atsushi_2 on 2016/02/23.
  */
@@ -63,7 +61,7 @@ class FragmentMemberChoiceMode : ListFragment() {
         FragmentGroupChoiceMode().loadName()
         StatusHolder.nowSort = MemberAdapter.MB_ID
         StatusHolder.sortType = "ASC"
-        mbAdapter.sortNames(StatusHolder.nowSort, StatusHolder.sortType,memberList)
+        mbAdapter.sortNames(StatusHolder.nowSort, StatusHolder.sortType, memberList)
 
         for (member in memberArray) {
             var i = 1
@@ -132,10 +130,14 @@ class FragmentMemberChoiceMode : ListFragment() {
             // アクションアイテム選択時
             when (item.itemId) {
                 R.id.item_all_select -> {
-                    var i = 1
-                    while (i < listAdp.count) {
-                        lv.setItemChecked(i, true)
-                        i += 2
+                    if (checkedCount >= listAdp.count / 2) {
+                        clearSelection(mode)
+                    } else {
+                        var i = 1
+                        while (i < listAdp.count) {
+                            lv.setItemChecked(i, true)
+                            i += 2
+                        }
                     }
                 }
 
@@ -143,7 +145,7 @@ class FragmentMemberChoiceMode : ListFragment() {
                     lv.clearChoices()
                     listAdp.clearSelection()
                     mode.title = "0" + getString(R.string.selected)
-                    Sort.memberSort(builder, requireActivity(), memberList,listAdp)
+                    Sort.memberSort(builder, requireActivity(), memberList, listAdp)
                     val dialog = builder.create()
                     dialog.show()
                 }
@@ -169,14 +171,27 @@ class FragmentMemberChoiceMode : ListFragment() {
 
         override fun onItemCheckedStateChanged(mode: ActionMode,
                                                position: Int, id: Long, checked: Boolean) {
-            // アクションモード時のアイテムの選択状態変更時
+            // アクションモード時のアイテムの選択状態変更時(変更後)
             checkedCount = lv.checkedItemCount
-            if (checked) {
-                listAdp.setNewSelection(memberList[position].id, checked)
+
+            if (checkedCount == 0) {
+                listAdp.setNewSelection(memberList[position].id, true)
+                clearSelection(mode)
             } else {
-                listAdp.removeSelection(memberList[position].id)
+                if (checked) {
+                    listAdp.setNewSelection(memberList[position].id, checked)
+                } else {
+                    listAdp.removeSelection(memberList[position].id)
+                }
+                mode.title = checkedCount.toString() + getString(R.string.selected)
             }
-            mode.title = checkedCount.toString() + getString(R.string.selected)
+        }
+
+        private fun clearSelection(mode: ActionMode) {
+            lv.clearChoices()
+            listAdp.clearSelection()
+            checkedCount = 0
+            mode.title = "0" + getString(R.string.selected)
         }
     }
 
@@ -203,12 +218,12 @@ class FragmentMemberChoiceMode : ListFragment() {
         listAdp.notifyDataSetChanged()
     }
 
-    companion object{
+    companion object {
         //最初から存在してほしいのでprivateのcompanionにする（じゃないと落ちる。コルーチンとか使えばいけるかも）
         private lateinit var mbAdapter: MemberAdapter
         private lateinit var listAdp: MemberFragmentViewAdapter
         lateinit var lv: ListView
-        private var memberList:ArrayList<Member> = ArrayList()
+        private var memberList: ArrayList<Member> = ArrayList()
     }
 
 }

@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/under_button_height"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/normal_kumiwake_btn">
@@ -94,17 +94,28 @@
 
     </LinearLayout>
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.92" />
+
+
     <com.google.android.material.button.MaterialButton
+        style="@style/Button.Solid.Rectangle"
         android:id="@+id/normal_kumiwake_btn"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/under_button_height"
-        android:background="@drawable/next_green_button"
-        android:layout_gravity="center|bottom"
-        android:drawableEnd="@drawable/ic_arrow_black"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:drawableEnd="@drawable/ic_arrow_white"
         android:text="@string/move_custom"
         android:textColor="@android:color/white"
         android:textSize="20sp"
         android:textAlignment="center"
+        app:backgroundTint="?android:attr/colorPrimaryDark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline_button"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

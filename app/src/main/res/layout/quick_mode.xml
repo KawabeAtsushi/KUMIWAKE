@@ -12,7 +12,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:background="@drawable/next_green_button"
-        android:drawableEnd="@drawable/ic_arrow_black"
+        android:drawableEnd="@drawable/ic_arrow_white"
         android:text="@string/move_confirmation"
         android:textColor="@android:color/white"
         android:textSize="20sp" />

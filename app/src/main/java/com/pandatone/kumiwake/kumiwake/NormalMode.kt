@@ -65,6 +65,7 @@ class NormalMode : AppCompatActivity() {
 
     //MemberMainに遷移
     private fun moveMemberMain() {
+        errorMember.text = ""
         val intent = Intent(this, MemberMain::class.java)
         intent.putExtra(AddGroupKeys.MEMBER_ARRAY.key, memberArray)
         startActivityForResult(intent, 0)
@@ -72,12 +73,14 @@ class NormalMode : AppCompatActivity() {
 
     //AddMemberに遷移
     private fun moveAddMember() {
+        errorMember.text = ""
         val intent = Intent(this, AddMember::class.java)
         intent.putExtra(AddMemberKeys.FROM_NORMAL_MODE.key, true)
         startActivityForResult(intent, 0) //これで呼ぶとActivityが終わった時にonActivityResultが呼ばれる。
     }
 
-    fun onNextClick() {
+    //次に進むボタン
+    private fun onNextClick() {
         val inputGroupNo = gpNoEditText.text!!.toString()
 
         errorGroup.text = ""
@@ -122,7 +125,6 @@ class NormalMode : AppCompatActivity() {
 
         adapter = SmallMBListAdapter(this, memberArray, false, showLeaderNo = false)
         listView.adapter = adapter
-        //adapter!!.setRowHeight(listView)
         add_group_listview.numberOfSelectedMember.text = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
     }
 

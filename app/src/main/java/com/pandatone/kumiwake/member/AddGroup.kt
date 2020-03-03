@@ -223,7 +223,6 @@ class AddGroup : AppCompatActivity() {
         }
         adapter = SmallMBListAdapter(this@AddGroup, members, false, showLeaderNo = false)
         listView.adapter = adapter
-        adapter.setRowHeight(listView)
         numberOfSelectedMember.text = adapter.count.toString() + getString(R.string.people) + getString(R.string.selected)
     }
 
