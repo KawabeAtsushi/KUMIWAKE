@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -35,18 +36,20 @@
                 android:textColor="#fff" />
         </androidx.viewpager.widget.ViewPager>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/decisionBt"
+            style="@style/Button.Transparent.Rounded"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|bottom"
             android:layout_marginBottom="22dp"
-            android:background="@drawable/simple_orange_button"
-            android:paddingEnd="30dp"
-            android:paddingStart="30dp"
+            android:padding="15dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
             android:text="@string/decide"
+            android:textColor="@android:color/black"
             android:textSize="20sp"
-            android:visibility="invisible" />
+            app:backgroundTint="#90ffc02e" />
 
     </FrameLayout>
 </LinearLayout>

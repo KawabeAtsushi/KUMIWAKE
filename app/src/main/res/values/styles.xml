@@ -14,6 +14,15 @@
         <item name="android:colorPrimaryDark">@color/red_title</item>
     </style>
 
+    <!-- Base application theme. -->
+    <style name="MemberTheme" parent="AppTheme">
+        <item name="android:colorPrimaryDark">@color/blue_title</item>
+        <item name="actionModeCloseButtonStyle">@style/NoCloseButtonActionModeStyle</item>
+    </style>
+    <style name="NoCloseButtonActionModeStyle">
+        <item name="android:visibility">invisible</item>
+    </style>
+
 
     <!-- Buttons -->
     <style name="Button.Solid" parent="Widget.MaterialComponents.Button" />
@@ -25,7 +34,7 @@
     </style>
 
     <style name="Button.Transparent.Rounded">
-        <item name="cornerRadius">5dp</item>
+        <item name="cornerRadius">7dp</item>
     </style>
 
 </resources>

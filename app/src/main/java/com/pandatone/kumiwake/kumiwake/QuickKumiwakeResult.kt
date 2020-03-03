@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import butterknife.ButterKnife
@@ -37,7 +38,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
     private var groupNo: Int = 0
     private var evenFmRatio: Boolean = false
     private lateinit var arrayArray: ArrayList<ArrayList<String>>
-    private lateinit var viewGroup: RelativeLayout
+    private lateinit var viewGroup: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +58,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
         }
         groupNo = groupArray.size
 
-        viewGroup = findViewById<View>(R.id.result_view) as RelativeLayout
+        viewGroup = findViewById<View>(R.id.result_view) as ConstraintLayout
         viewGroup.background = ContextCompat.getDrawable(this, R.drawable.quick_img)
 
         startMethod()

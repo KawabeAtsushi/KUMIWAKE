@@ -26,13 +26,15 @@
         android:id="@+id/infoMember"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/info_margin" />
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="@dimen/info_margin"/>
 
     <ListView
         android:id="@+id/belongList"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
-        android:layout_margin="@dimen/info_margin" />
+        android:layout_margin="@dimen/info_margin"
+        android:background="@drawable/listview_background"/>
 
 
     <Button

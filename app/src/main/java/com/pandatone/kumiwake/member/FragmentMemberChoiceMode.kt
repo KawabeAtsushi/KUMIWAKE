@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.ListFragment
@@ -16,6 +17,8 @@ import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter
 import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
+
+
 
 
 /**
@@ -50,13 +53,6 @@ class FragmentMemberChoiceMode : ListFragment() {
         lv.choiceMode = ListView.CHOICE_MODE_MULTIPLE_MODAL
         lv.setMultiChoiceModeListener(CallbackMB())
         lv.isFastScrollEnabled = true
-
-        // 行を長押しした時の処理
-        lv.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
-            lv.setItemChecked(position, !listAdp.isPositionChecked(memberList[position].id))
-            false
-        }
-
         lv.isTextFilterEnabled = true
     }
 
@@ -78,11 +74,6 @@ class FragmentMemberChoiceMode : ListFragment() {
                 }
                 i += 2
             }
-        }
-
-        lv.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            //行をクリックした時の処理
-            lv.setItemChecked(position, !listAdp.isPositionChecked(memberList[position].id))
         }
     }
 
@@ -110,7 +101,6 @@ class FragmentMemberChoiceMode : ListFragment() {
                 }
                 i += 2
             }
-
             val intent = Intent()
             intent.putExtra(AddGroupKeys.MEMBER_ARRAY.key, memberArray)
             requireActivity().setResult(Activity.RESULT_OK, intent)
@@ -120,7 +110,6 @@ class FragmentMemberChoiceMode : ListFragment() {
 
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             // アクションモード初期化処理
-
             val inflater = activity!!.menuInflater
             inflater.inflate(R.menu.member_menu, menu)
             val searchIcon = menu.findItem(R.id.search_view)
@@ -130,6 +119,10 @@ class FragmentMemberChoiceMode : ListFragment() {
             deleteIcon.isVisible = false
             checkedCount = lv.checkedItemCount
             mode.title = checkedCount.toString() + getString(R.string.selected)
+            lv.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+                //行をクリックした時の処理
+                lv.setItemChecked(position, !listAdp.isPositionChecked(memberList[position].id))
+            }
             return true
         }
 
@@ -138,8 +131,6 @@ class FragmentMemberChoiceMode : ListFragment() {
 
             // アクションアイテム選択時
             when (item.itemId) {
-                android.R.id.home -> activity!!.finish()
-
                 R.id.item_all_select -> {
                     var i = 1
                     while (i < listAdp.count) {
@@ -164,12 +155,10 @@ class FragmentMemberChoiceMode : ListFragment() {
                     Filtering(activity!!, memberList).showFilterDialog(builder, listAdp)
                 }
             }
-
             return false
         }
 
         override fun onDestroyActionMode(mode: ActionMode) {
-            // 決定ボタン押下時
             listAdp.clearSelection()
         }
 
@@ -181,27 +170,14 @@ class FragmentMemberChoiceMode : ListFragment() {
         override fun onItemCheckedStateChanged(mode: ActionMode,
                                                position: Int, id: Long, checked: Boolean) {
             // アクションモード時のアイテムの選択状態変更時
-
             checkedCount = lv.checkedItemCount
-
             if (checked) {
                 listAdp.setNewSelection(memberList[position].id, checked)
             } else {
                 listAdp.removeSelection(memberList[position].id)
             }
-
             mode.title = checkedCount.toString() + getString(R.string.selected)
         }
-    }
-
-    @Throws(IOException::class)
-    fun selectName(newText: String) {
-        if (TextUtils.isEmpty(newText)) {
-            mbAdapter.picName(null.toString(),memberList)
-        } else {
-            mbAdapter.picName(newText,memberList)
-        }
-        listAdp.notifyDataSetChanged()
     }
 
     fun checkByGroup(groupId: Int) {
@@ -210,7 +186,7 @@ class FragmentMemberChoiceMode : ListFragment() {
             val member: Member = memberList[i]
             val belongText = member.belong
             val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            val list = ArrayList(Arrays.asList<String>(*belongArray))
+            val list = ArrayList(listOf<String>(*belongArray))
             if (list.contains(groupId.toString())) {
                 lv.setItemChecked(i, true)
             }

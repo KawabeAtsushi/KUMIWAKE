@@ -106,6 +106,4 @@ class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Mem
 
 }
 
-class ViewHolder(var memberIcon: ImageView, var starIcon: ImageView, var leaderNo: TextView, var nameTextView: TextView)
-
 

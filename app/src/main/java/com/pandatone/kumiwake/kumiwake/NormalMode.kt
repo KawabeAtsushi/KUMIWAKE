@@ -36,6 +36,7 @@ class NormalMode : AppCompatActivity() {
     private lateinit var gpNoEditText: AppCompatEditText
     private lateinit var errorGroup: TextView
     private lateinit var errorMember: TextView
+    private lateinit var listView: ListView
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -121,13 +122,11 @@ class NormalMode : AppCompatActivity() {
 
         adapter = SmallMBListAdapter(this, memberArray, false, showLeaderNo = false)
         listView.adapter = adapter
-        adapter!!.setRowHeight(listView)
+        //adapter!!.setRowHeight(listView)
         add_group_listview.numberOfSelectedMember.text = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
     }
 
     companion object {
-        @SuppressLint("StaticFieldLeak")
-        internal lateinit var listView: ListView
         internal lateinit var memberArray: ArrayList<Member>
     }
 

@@ -37,7 +37,6 @@ class MembersFragment : Fragment(), SearchView.OnQueryTextListener {
         viewPager = root.findViewById<View>(R.id.view_pager) as ViewPager
         val adapter = CustomPagerAdapter(context!!, childFragmentManager, true)
         viewPager.adapter = adapter
-        (root.findViewById<View>(R.id.decisionBt) as Button).visibility = View.GONE
     }
 
 

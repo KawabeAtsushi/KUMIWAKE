@@ -13,17 +13,4 @@
         android:paddingTop="4dp"
         android:paddingBottom="4dp"
         android:textColor="#fff" />
-
-    <Button
-        android:id="@+id/decisionBt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|bottom"
-        android:layout_marginBottom="22dp"
-        android:background="@drawable/simple_orange_button"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp"
-        android:text="@string/decide"
-        android:textSize="20sp"
-        android:visibility="invisible" />
 </androidx.viewpager.widget.ViewPager>

@@ -29,7 +29,7 @@ class MemberMain : AppCompatActivity() {
 
         supportActionBar!!.setTitle(R.string.member_main)
         supportActionBar!!.setDisplayShowTitleEnabled(true)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(false)
 
         val i = intent
         if (i.getSerializableExtra(AddGroupKeys.MEMBER_ARRAY.key) != null) {
