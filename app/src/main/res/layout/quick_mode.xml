@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/quick_img">
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/quick_kumiwake_btn"
         android:layout_width="match_parent"
         android:layout_height="@dimen/under_button_height"
@@ -182,11 +182,11 @@
             </LinearLayout>
 
             <SeekBar
-                android:id="@+id/sex_seekbar"
+                android:id="@+id/sex_seekBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:max="100"
-                android:progress="100"
+                android:progress="50"
                 android:progressDrawable="@drawable/seekbar_progress"
                 android:thumb="@drawable/seekbar_control" />
 

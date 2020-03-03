@@ -150,26 +150,21 @@
         android:textColor="@color/red"
         android:textSize="12sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/form_marginTop"
-        android:layout_marginBottom="@dimen/form_between_margin"
-        android:text="@string/group"
-        android:textColor="@color/hint"
-        android:textSize="@dimen/form_textSize"
-        android:textStyle="bold" />
-
-    <Spinner
-        android:id="@+id/filter_belong_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center"
-        android:paddingStart="20dp"
-        android:paddingEnd="30dp"
-        android:background="@drawable/spinner_button"
-        android:ellipsize="end"
-        android:singleLine="true" />
+        android:hint="@string/group">
+
+        <AutoCompleteTextView
+            android:id="@+id/filter_belong_dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 
 </LinearLayout>

@@ -12,14 +12,15 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.ListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pandatone.kumiwake.AddGroupKeys
+import com.pandatone.kumiwake.GroupMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
-import com.pandatone.kumiwake.member.AddGroup
-import com.pandatone.kumiwake.member.Group
-import com.pandatone.kumiwake.member.GroupClick
-import com.pandatone.kumiwake.member.Sort
+import com.pandatone.kumiwake.adapter.MemberAdapter
+import com.pandatone.kumiwake.member.*
 import java.io.IOException
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -62,9 +63,6 @@ class FragmentGroupMain : ListFragment() {
         listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
             val builder = AlertDialog.Builder(activity!!)
-            val builder2 = AlertDialog.Builder(activity!!)
-            val inflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val view2 = inflater.inflate(R.layout.group_info, activity!!.findViewById<View>(R.id.info_layout) as ViewGroup?)
             val groupName = groupList[position].name
             if (MembersFragment.searchView.isActivated)
                 MembersFragment.searchView.onActionViewCollapsed()
@@ -75,11 +73,7 @@ class FragmentGroupMain : ListFragment() {
             builder.setItems(items) { _, which ->
                 when (which) {
                     0 -> {
-                        GroupClick.groupInfoDialog(view2, builder2)
-                        GroupClick.setInfo(context!!, groupList[position], FragmentMemberMain().searchBelong(groupList[position].id.toString()))
-                        val dialog2 = builder2.create()
-                        dialog2.show()
-                        GroupClick.okBt.setOnClickListener { dialog2.dismiss() }
+                        GroupClick(activity!!).infoDialog(groupList[position], GroupMethods.searchBelong(requireContext(),groupList[position].id.toString()))
                     }
                     1 -> {
                         val i = Intent(activity, AddGroup::class.java)
@@ -139,7 +133,7 @@ class FragmentGroupMain : ListFragment() {
         // OKの時の処理
         builder.setPositiveButton("OK") { _, _ ->
             val groupId = groupList[position].id
-            FragmentMemberMain().deleteBelongInfoAll(groupId)
+            GroupMethods.deleteBelongInfoAll(requireContext(),groupId)
             gpAdapter.selectDelete(groupId.toString())
             FragmentMemberMain().loadName()
             loadName()
@@ -238,7 +232,7 @@ class FragmentGroupMain : ListFragment() {
                 if (checked) {
                     // IDを取得する
                     val groupId = groupList[i].id
-                    FragmentMemberMain().deleteBelongInfoAll(groupId)
+                    GroupMethods.deleteBelongInfoAll(requireContext(),groupId)
                     gpAdapter.selectDelete(groupId.toString())     // DBから取得したIDが入っているデータを削除する
                 }
             }

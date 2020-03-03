@@ -87,7 +87,6 @@ class MainActivity : AppCompatActivity() {
                 supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.kumiwake) + "</font>")
                 container.background = getDrawable(Theme.Kumiwake.backgroundColor)
                 setStatusBarColor(this,Theme.Kumiwake.primaryColor)
-                setTheme(R.style.KumiwakeTheme)
                 mAdView.visibility = View.VISIBLE
                 true
             }
@@ -98,7 +97,6 @@ class MainActivity : AppCompatActivity() {
                 supportActionBar!!.title = Html.fromHtml("<font color='#616161'>" + getString(R.string.sekigime) + "</font>")
                 container.background = getDrawable(Theme.Sekigime.backgroundColor)
                 setStatusBarColor(this,Theme.Sekigime.primaryColor)
-                setTheme(R.style.SekigimeTheme)
                 mAdView.visibility = View.VISIBLE
                 true
             }

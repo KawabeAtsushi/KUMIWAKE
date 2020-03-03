@@ -292,47 +292,6 @@ class FragmentMemberMain : ListFragment() {
         listAdp.notifyDataSetChanged()
     }
 
-    //全てのメンバーからグループ(groupIdのグループ)を削除（グループ削除の際にコール）
-    fun deleteBelongInfoAll(groupId: Int) {
-        mbAdapter.open()
-        memberList.forEach { member ->
-            deleteBelongInfo(member, groupId, member.id)
-        }
-        mbAdapter.close()
-    }
-
-    //メンバー(member)の所属グループ(groupIdのグループ)を削除
-    private fun deleteBelongInfo(member: Member, groupId: Int, listId: Int) {
-        val belongText = member.belong
-        val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        val list = ArrayList(Arrays.asList<String>(*belongArray))
-        val hs = HashSet<String>()
-        hs.addAll(list)
-        list.clear()
-        list.addAll(hs)
-        if (list.contains(groupId.toString())) {
-            list.remove(groupId.toString())
-            val newBelong = StringBuilder()
-            for (item in list) {
-                newBelong.append("$item,")
-            }
-            mbAdapter.addBelong(listId.toString(), newBelong.toString())
-        }
-    }
-
-    //引数belongIdのグループに所属するメンバーリストを返す
-    fun searchBelong(belongId: String): ArrayList<Member> {
-        val memberArrayByBelong = ArrayList<Member>()
-        memberList.forEach { member ->
-            val belongText = member.belong
-            val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            if (Arrays.asList<String>(*belongArray).contains(belongId)) {
-                memberArrayByBelong.add(Member(member.id, member.name, member.sex, 0, 0, null.toString(), null.toString(), null.toString()))
-            }
-        }
-        return memberArrayByBelong
-    }
-
     //Groupの所属人数データ更新
     fun updateBelongNo() {
         for (group in FragmentGroupMain.groupList) {

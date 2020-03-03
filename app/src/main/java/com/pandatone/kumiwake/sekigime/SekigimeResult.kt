@@ -54,7 +54,7 @@ class SekigimeResult : AppCompatActivity() {
         val disp = wm.defaultDisplay
         val size = Point()
         disp.getSize(size)
-        val groupSpinner = Spinner(this)
+        val groupDropdown = Spinner(this)
         val layout = LinearLayout(this)
         val reSekigime = Button(this)
         val goHome = Button(this)
@@ -73,7 +73,7 @@ class SekigimeResult : AppCompatActivity() {
         goHome.translationX = centerX
         reSekigime.background = ContextCompat.getDrawable(this, R.drawable.sekigime_orange_button)
         goHome.background = ContextCompat.getDrawable(this, R.drawable.simple_green_button)
-        groupSpinner.background = ContextCompat.getDrawable(this, R.drawable.spinner_button)
+        //groupDropdown.background = ContextCompat.getDrawable(this, R.drawable.Dropdown_button)
         reSekigime.setOnClickListener {
             val message = getString(R.string.re_sekigime_description) + getString(R.string.run_confirmation)
             val title = getString(R.string.re_sekigime_title)
@@ -87,21 +87,18 @@ class SekigimeResult : AppCompatActivity() {
         layout.orientation = LinearLayout.VERTICAL
         layout.background = ContextCompat.getDrawable(this, R.drawable.sekigime_img)
 
-        val adapter = ArrayAdapter<String>(this, R.layout.spinner_layout)
-        adapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item
-        )
+        val adapter = ArrayAdapter<String>(this, R.layout.dropdown_item_layout)
         val list = ArrayList<String>() // 新インスタンスを生成
         for (group in groupArray!!) {
             list.add(group)
         }
         adapter.addAll(list)
-        groupSpinner.adapter = adapter
+        groupDropdown.adapter = adapter
         val lp = LinearLayout.LayoutParams(buttonWidth, buttonHeight)
-        groupSpinner.layoutParams = lp
-        groupSpinner.translationY = 15 * scale
-        groupSpinner.translationX = (centerX * 1.1).toFloat()
-        groupSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        groupDropdown.layoutParams = lp
+        groupDropdown.translationY = 15 * scale
+        groupDropdown.translationX = (centerX * 1.1).toFloat()
+        groupDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int,
                                         id: Long) {
                 DrawTableView.point = 0
@@ -116,7 +113,7 @@ class SekigimeResult : AppCompatActivity() {
         val scrollView = ScrollView(this)
         reLayout.addView(scrollView)
         reLayout.addView(adView, param2)
-        layout.addView(groupSpinner)
+        layout.addView(groupDropdown)
         layout.addView(draw)
         layout.addView(reSekigime)
         layout.addView(goHome)

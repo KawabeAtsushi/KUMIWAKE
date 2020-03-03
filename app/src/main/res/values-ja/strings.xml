@@ -133,7 +133,7 @@
     <string name="about_sekigime">席決めについて</string>
     <string name="about_member">メンバーについて</string>
     <string name="choose_app">アプリを選択</string>
-    <string name="how_to_kumiwake">☆グループ分けを行うモードです☆\n\n「ノーマルモード」と「クイックモード」の二種類から選んで組分けを行います。\n\n</string>
+    <string name="how_to_kumiwake">☆グループ分けを行うモードです☆\n\n「ノーマルモード」と「クイックモード」の二種類から選んで組分けを行います。</string>
     <string name="how_to_sekigime">☆配席をランダムに決定するモードです☆\n\nホーム画面の「席決め」のボタンから席決めを行うと、選択したメンバー・グループでランダムに席が振り分けられます。\n
                                         メンバー・グループの選択は「組分け」と同じ要領で行います。\n\n
                                         「組分け」の結果画面のボタンから席決めを行うこともできます。\nこの場合、組分けで作成されたグループごとに配席が決められます。</string>

@@ -18,7 +18,6 @@ import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.AddMemberKeys
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupAdapter
-import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.ui.DialogWarehouse
@@ -38,7 +37,7 @@ class AddMember : AppCompatActivity() {
     private var sexGroup: RadioGroup? = null
     private var sexButton: RadioButton? = null
     private var ageEditText: EditText? = null
-    private var belongSpinner: Button? = null
+    private var belongDropdown: Button? = null
     private var mbAdapter: MemberAdapter? = null
     private var fromNormalMode = false
     private lateinit var groupList: ArrayList<Group>
@@ -88,7 +87,7 @@ class AddMember : AppCompatActivity() {
         textInputLayout = findViewById<View>(R.id.member_form_input_layout) as TextInputLayout
         sexGroup = findViewById<View>(R.id.sexGroup) as RadioGroup
         ageEditText = findViewById<View>(R.id.input_age) as EditText
-        belongSpinner = findViewById<View>(R.id.select_group_spinner) as Button
+        belongDropdown = findViewById<View>(R.id.select_group_choicer) as Button
     }
 
     //Updateの場合の初期アイテム表示
@@ -108,7 +107,7 @@ class AddMember : AppCompatActivity() {
             sexGroup!!.check(R.id.manBtn)
         }
         ageEditText!!.setText(age)
-        belongSpinner!!.text = belong
+        belongDropdown!!.text = belong
 
         update(listId)
 
@@ -116,10 +115,10 @@ class AddMember : AppCompatActivity() {
 
 
     @SuppressLint("SetTextI18n")
-    @OnClick(R.id.select_group_spinner)
-    internal fun onSelectGroupSpinnerClicked(view: View) {
+    @OnClick(R.id.select_group_choicer)
+    internal fun onSelectGroupDropdownClicked(view: View) {
         // 選択中の候補を取得
-        val buttonText = belongSpinner!!.text.toString()
+        val buttonText = belongDropdown!!.text.toString()
         val textArray = buttonText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         groupList = GroupAdapter(this).getAllGroups()
         // 候補リスト
@@ -143,29 +142,29 @@ class AddMember : AppCompatActivity() {
         val dialog = AlertDialog.Builder(this)
         // 選択イベント
         dialog.setMultiChoiceItems(belongArray, checkArray) { _, value, isChecked ->
-            val text = belongSpinner!!.text.toString()
+            val text = belongDropdown!!.text.toString()
             // 選択された場合
             if (isChecked) {
                 // ボタンの表示に追加
-                belongSpinner!!.text = text + (if ("" == text) "" else ",") + belongArray[value]
+                belongDropdown!!.text = text + (if ("" == text) "" else ",") + belongArray[value]
             } else {
                 // ボタンの表示から削除
                 when {
-                    text.indexOf(belongArray[value] + ",") >= 0 -> belongSpinner!!.text = text.replace(belongArray[value] + ",", "")
-                    text.indexOf("," + belongArray[value]) >= 0 -> belongSpinner!!.text = text.replace("," + belongArray[value], "")
-                    else -> belongSpinner!!.text = text.replace(belongArray[value], "")
+                    text.indexOf(belongArray[value] + ",") >= 0 -> belongDropdown!!.text = text.replace(belongArray[value] + ",", "")
+                    text.indexOf("," + belongArray[value]) >= 0 -> belongDropdown!!.text = text.replace("," + belongArray[value], "")
+                    else -> belongDropdown!!.text = text.replace(belongArray[value], "")
                 }
             }
         }
         dialog.setPositiveButton(getText(R.string.decide), null)
         dialog.setNeutralButton(getText(R.string.clear)) { _, _ ->
-            belongSpinner!!.text = ""
+            belongDropdown!!.text = ""
             // 再表示
-            onSelectGroupSpinnerClicked(view)
+            onSelectGroupDropdownClicked(view)
         }
         dialog.setNegativeButton(getText(R.string.cancel)) { _, _ ->
             // 選択前の状態に戻す
-            belongSpinner!!.text = buttonText
+            belongDropdown!!.text = buttonText
         }
         dialog.show()
 
@@ -204,7 +203,7 @@ class AddMember : AppCompatActivity() {
             textInputLayout!!.error = getText(R.string.error_empty_name)
         } else {
             saveItem()
-            afterBelong = belongSpinner!!.text.toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            afterBelong = belongDropdown!!.text.toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             changeBelongNo()
 
             if (fromNormalMode) {
@@ -247,7 +246,7 @@ class AddMember : AppCompatActivity() {
                 textInputLayout!!.error = getText(R.string.error_empty_name)
             } else {
                 updateItem(listId)
-                afterBelong = belongSpinner!!.text.toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                afterBelong = belongDropdown!!.text.toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                 changeBelongNo()
                 Toast.makeText(applicationContext, getText(R.string.member).toString() + " \"" + name + "\" " + getText(R.string.updated), Toast.LENGTH_SHORT).show()
                 finish()
@@ -354,7 +353,7 @@ class AddMember : AppCompatActivity() {
 
     //グループ名をグループIDに変換
     private fun belongConvertToNo(): String {
-        val belongText = belongSpinner!!.text.toString()
+        val belongText = belongDropdown!!.text.toString()
         val belongTextArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         val belongNo = StringBuilder()
 

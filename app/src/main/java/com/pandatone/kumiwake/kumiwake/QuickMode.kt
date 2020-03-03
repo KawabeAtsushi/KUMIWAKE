@@ -1,7 +1,6 @@
 package com.pandatone.kumiwake.kumiwake
 
 import android.content.Intent
-import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -36,7 +35,7 @@ class QuickMode : AppCompatActivity(), TextWatcher {
         setContentView(R.layout.quick_mode)
         ButterKnife.bind(this)
 
-        sex_seekbar.isEnabled = false
+        sex_seekBar.isEnabled = false
         member_no_form.addTextChangedListener(this)
     }
 
@@ -47,15 +46,15 @@ class QuickMode : AppCompatActivity(), TextWatcher {
     override fun afterTextChanged(s: Editable) {
         if (s.toString() != "") {
             memberNo = Integer.parseInt(s.toString())
-            sex_seekbar.isEnabled = true
+            sex_seekBar.isEnabled = true
         } else {
             memberNo = 0
-            sex_seekbar.isEnabled = false
+            sex_seekBar.isEnabled = false
         }
-        sex_seekbar.max = memberNo
-        sex_seekbar.progress = memberNo
+        sex_seekBar.max = memberNo
+        sex_seekBar.progress = memberNo
 
-        sex_seekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        sex_seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onStartTrackingTouch(sex_seekbar: SeekBar) {}
 
             override fun onProgressChanged(sex_seekbar: SeekBar, progress: Int, fromTouch: Boolean) {

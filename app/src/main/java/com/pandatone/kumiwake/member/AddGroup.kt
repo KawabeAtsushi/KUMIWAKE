@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.AddGroupKeys
+import com.pandatone.kumiwake.GroupMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
@@ -59,7 +60,7 @@ class AddGroup : AppCompatActivity() {
         if (editId != nextId) {
             setItem(editId)
         }
-        members = FragmentMemberMain().searchBelong(editId.toString())
+        members = GroupMethods.searchBelong(this,editId.toString())
     }
 
     //各Viewの初期化処理

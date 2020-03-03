@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/normal_img">
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/kumiwake_btn"
         android:layout_width="match_parent"
         android:layout_height="@dimen/under_button_height"

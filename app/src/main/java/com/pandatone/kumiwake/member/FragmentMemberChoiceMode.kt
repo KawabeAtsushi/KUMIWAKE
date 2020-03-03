@@ -86,38 +86,6 @@ class FragmentMemberChoiceMode : ListFragment() {
         }
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////-------- Menuの処理 ----------///////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
-
-        // アクションアイテム選択時
-        when (item.itemId) {
-            android.R.id.home -> activity!!.finish()
-
-            R.id.item_all_select -> {
-                var i = 1
-                while (i < listAdp.count) {
-                    lv.setItemChecked(i, true)
-                    i += 2
-                }
-            }
-
-            R.id.item_sort -> {
-                Sort.memberSort(builder, requireActivity(),memberList, listAdp)
-                val dialog = builder.create()
-                dialog.show()
-            }
-
-            R.id.item_filter -> {
-                Filtering(activity!!, memberList).showFilterDialog(builder, listAdp)
-            }
-        }
-
-        return false
-    }
 
     //////////////////////////////////////////////////////////////////////////////////////
     /////////////////////-------- ActionMode時の処理 ----------///////////////////////////
@@ -170,6 +138,7 @@ class FragmentMemberChoiceMode : ListFragment() {
 
             // アクションアイテム選択時
             when (item.itemId) {
+                android.R.id.home -> activity!!.finish()
 
                 R.id.item_all_select -> {
                     var i = 1

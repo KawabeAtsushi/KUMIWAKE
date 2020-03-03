@@ -9,21 +9,23 @@
         <!-- アクションモード -->
         <item name="windowActionModeOverlay">true</item>
         <!-- プライマリカラー -->
-        <item name="colorPrimary">@android:color/holo_green_light</item>
-        <!-- セカンダリカラー -->
-        <item name="colorSecondary">@android:color/white</item>
+        <item name="colorPrimary">#00897B</item>
         <!-- ステータスバーの背景色 -->
         <item name="android:colorPrimaryDark">@color/red_title</item>
     </style>
 
-    <style name="KumiwakeTheme" parent="AppTheme">
-        <!-- ステータスバーの背景色 -->
-        <item name="android:colorPrimaryDark">@color/red_title</item>
+
+    <!-- Buttons -->
+    <style name="Button.Solid" parent="Widget.MaterialComponents.Button" />
+    <style name="Button.Transparent" parent="Widget.MaterialComponents.Button.TextButton" />
+    <style name="Button.Outline" parent="Widget.MaterialComponents.Button.OutlinedButton" />
+
+    <style name="Button.Solid.Curve">
+        <item name="cornerRadius">28dp</item>
     </style>
 
-    <style name="SekigimeTheme" parent="AppTheme">
-        <!-- ステータスバーの背景色 -->
-        <item name="android:colorPrimaryDark">@color/green_title</item>
+    <style name="Button.Transparent.Rounded">
+        <item name="cornerRadius">5dp</item>
     </style>
 
 </resources>
