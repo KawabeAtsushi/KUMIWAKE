@@ -166,7 +166,7 @@ class QuickKumiwakeResult : AppCompatActivity() {
         var targetGroupNo: Int
 
         for (i in memberArray.indices) {
-            //メンバーを追加するグループを回す(0-groupNo)
+            //メンバーを追加するグループを回す(0-tableNo)
             targetGroupNo = i % groupNo
             arrayArray[targetGroupNo].add(memberArray[i])
         }
@@ -179,13 +179,13 @@ class QuickKumiwakeResult : AppCompatActivity() {
         var womanTargetGroupNo: Int
 
         for (i in manArray.indices) {
-            //メンバーを追加するグループを回す(0-groupNo)
+            //メンバーを追加するグループを回す(0-tableNo)
             manTargetGroupNo = i % groupNo
             arrayArray[manTargetGroupNo].add(manArray[i])
         }
 
         for (i in womanArray.indices) {
-            //メンバーを追加するグループを回す(0-groupNo)
+            //メンバーを追加するグループを回す(0-tableNo)
             womanTargetGroupNo = (i + firstPos) % groupNo
             arrayArray[womanTargetGroupNo].add(womanArray[i])
         }

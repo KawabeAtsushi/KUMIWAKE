@@ -22,7 +22,7 @@ enum class ArrayKeys(val key:String){
 
 //AddMemberのintent key
 enum class AddMemberKeys(val key:String){
-    MEMBER("position"),
+    MEMBER("tableNo"),
     FROM_NORMAL_MODE("fromNormalMode")
 }
 

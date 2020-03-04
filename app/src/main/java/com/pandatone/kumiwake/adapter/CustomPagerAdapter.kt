@@ -30,7 +30,7 @@ class CustomPagerAdapter(private var context: Context, fm: FragmentManager, val 
                 FragmentGroupChoiceMode()
             }
         }
-        throw IllegalStateException("position $position is invalid for this viewpager")
+        throw IllegalStateException("tableNo $position is invalid for this viewpager")
     }
 
     override fun getItemPosition(`object`: Any): Int {

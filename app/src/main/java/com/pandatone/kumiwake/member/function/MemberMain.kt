@@ -49,7 +49,7 @@ class MemberMain : AppCompatActivity() {
             viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
                 //スクロール中（page切り替え中）に呼ばれる
                 override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                    //position:遷移中pageのindex
+                    //tableNo:遷移中pageのindex
                     //positionOffset:遷移前→遷移後のoffset割合を0~1で返す
                     //positionOffsetPixels:positionOffsetをpixelで返す
                     if (position == 0) {

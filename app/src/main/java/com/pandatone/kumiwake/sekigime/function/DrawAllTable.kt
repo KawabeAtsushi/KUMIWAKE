@@ -15,7 +15,7 @@ import kotlin.math.abs
 /**
  * Created by atsushi_2 on 2016/07/15.
  */
-class DrawTableView(context: Context) : View(context) {
+class DrawAllTable(context: Context) : View(context) {
     private var squareNo = SekigimeResult.square_no
     private var normalMode: Boolean? = StatusHolder.normalMode
     private var doubleDeploy: Boolean? = SekigimeResult.doubleDeploy

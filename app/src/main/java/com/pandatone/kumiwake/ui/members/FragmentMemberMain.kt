@@ -304,7 +304,6 @@ class FragmentMemberMain : ListFragment() {
     //メンバーの検索表示処理
     @Throws(IOException::class)
     fun searchMember(newText: String) {
-        Log.d("SearchText",newText)
         if (TextUtils.isEmpty(newText)) {
             mbAdapter.picName(null.toString(), memberList)
         } else {
