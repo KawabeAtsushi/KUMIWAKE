@@ -162,4 +162,6 @@
     <string name="edit_exit_confirmation">編集画面を閉じますか？\n編集情報は破棄されます。</string>
     <string name="specify_path">パスを指定</string>
     <string name="specify_path_message">\"KUMIWAKE_Backup\"へのファイルパスを指定してください。</string>
+    <string name="show_all">全表示</string>
+    <string name="show_detail">詳細表示</string>
 </resources>

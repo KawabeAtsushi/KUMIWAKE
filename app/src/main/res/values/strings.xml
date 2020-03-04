@@ -159,4 +159,6 @@
     <string name="hint">hint</string>
     <string name="specify_path">Specify Path</string>
     <string name="specify_path_message">Please specify file path to "KUMIWAKE_Backup".</string>
+    <string name="show_all">Show all</string>
+    <string name="show_detail">Show detail</string>
 </resources>

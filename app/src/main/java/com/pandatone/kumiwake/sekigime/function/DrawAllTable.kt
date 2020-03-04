@@ -15,14 +15,13 @@ import kotlin.math.abs
 /**
  * Created by atsushi_2 on 2016/07/15.
  */
+
 class DrawAllTable(context: Context) : View(context) {
     private var squareNo = SekigimeResult.square_no
     private var normalMode: Boolean? = StatusHolder.normalMode
     private var doubleDeploy: Boolean? = SekigimeResult.doubleDeploy
     private var arrayArrayQuick = SekigimeResult.arrayArrayQuick
     private var arrayArrayNormal = SekigimeResult.arrayArrayNormal
-    private var xCoordinate = 0f
-    private var yCoordinate = 0f
     private var scale: Float = 0.toFloat()
 
     private var canvasHeight: Float = 0.toFloat()
@@ -34,6 +33,8 @@ class DrawAllTable(context: Context) : View(context) {
     private var dispWidth: Int = 0
     private lateinit var x: ArrayList<Double>
     private lateinit var y: ArrayList<Double>
+    private var tableType = DrawTableView.tableType
+    private var tableNo = DrawTableView.tableNo
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         memberNo(tableNo)
@@ -65,51 +66,8 @@ class DrawAllTable(context: Context) : View(context) {
         }
 
         if (tableType != "square") {
-            setFocusGradation(canvas)
-            setFmBackground(canvas, 0, seatsNo)
-            drawMemberName(canvas, tableType)
+            setFmBackground(canvas, 0, seatsNo,tableNo)
         }
-    }
-
-    // 再描画
-    fun reDraw() {
-        invalidate()
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-
-        val action = event.actionMasked
-        if (action == MotionEvent.ACTION_DOWN) {
-            parent.requestDisallowInterceptTouchEvent(true)
-        } else if (action == MotionEvent.ACTION_MOVE) {
-            parent.requestDisallowInterceptTouchEvent(false)
-        }
-
-        if (abs(event.x - xCoordinate) > 1 && abs(event.y - yCoordinate) > 1) {
-
-            xCoordinate = event.x
-            yCoordinate = event.y
-            val xArray = x
-            val yArray = y
-            var x: Double?
-            var y: Double?
-
-            for (i in xArray.indices) {
-                x = xArray[i]
-                if (abs(xCoordinate - x) <= r) {
-                    for (j in yArray.indices) {
-                        y = yArray[j]
-                        if (abs(yCoordinate - y) <= r && j == i) {
-                            point = j
-                            reDraw()
-                        }
-                    }
-                }
-            }
-        }
-
-        return true
     }
 
 
@@ -194,15 +152,9 @@ class DrawAllTable(context: Context) : View(context) {
         canvas.translate((-transX * b).toFloat(), 0f)
         lastX = 0
         lastY = 0
-        if (point < squareNo) {
-            setFocusGradation(canvas)
-        }
-        setFmBackground(canvas, 0, squareNo)
+        setFmBackground(canvas, 0, squareNo,tableNo)
         if (doubleDeploy!!) {
-            if (point in squareNo until a) {
-                setFocusGradation(canvas)
-            }
-            setFmBackground(canvas, squareNo, a)
+            setFmBackground(canvas, squareNo, a,tableNo)
         }
 
         r = 50 * scale
@@ -229,11 +181,7 @@ class DrawAllTable(context: Context) : View(context) {
             (seatsNo - a) / 2 == 0 -> (transY * Math.floor(((seatsNo - a) / 2).toDouble()) * scale).toInt()
             else -> (transY * Math.floor(((seatsNo - a + 1) / 2).toDouble()) * scale).toInt()
         }
-        if (point >= a) {
-            setFocusGradation(canvas)
-        }
-        setFmBackground(canvas, a, seatsNo)
-        drawMemberName(canvas, tableType)
+        setFmBackground(canvas, a, seatsNo,tableNo)
     }
 
 
@@ -394,7 +342,7 @@ class DrawAllTable(context: Context) : View(context) {
     }
 
     //座席にイニシャルを描画
-    private fun initialName(canvas: Canvas, i: Int, X: Float, Y: Float) {
+    private fun initialName(canvas: Canvas, i: Int, X: Float, Y: Float,tableNo: Int) {
         val nameInitial: String = if (normalMode!!) {
             arrayArrayNormal[tableNo][i].name[0].toString()
         } else {
@@ -409,7 +357,7 @@ class DrawAllTable(context: Context) : View(context) {
     }
 
     //性別によって座席の色を変更
-    private fun setFmBackground(canvas: Canvas, startNo: Int, endNo: Int) {
+    private fun setFmBackground(canvas: Canvas, startNo: Int, endNo: Int,tableNo: Int) {
         val sPaint = Paint()
         sPaint.isAntiAlias = true
         sPaint.style = Paint.Style.FILL
@@ -432,31 +380,13 @@ class DrawAllTable(context: Context) : View(context) {
             val xP = x[i] - lastX
             val yP = y[i] - lastY
             canvas.drawCircle(xP.toFloat(), yP.toFloat(), r, sPaint)
-            initialName(canvas, i, xP.toFloat(), yP.toFloat())
+            initialName(canvas, i, xP.toFloat(), yP.toFloat(),0)
+            drawMemberName(canvas, DrawTableView.tableType,0,i)
         }
     }
 
-    //座席選択状態のグラデーション効果
-    private fun setFocusGradation(canvas: Canvas) {
-        val xP = x[point] - lastX
-        val yP = y[point] - lastY
-        val gradient = RadialGradient(xP.toFloat(), yP.toFloat(), 1.5.toFloat() * r, Color.parseColor("#ffaa00"),
-                Color.argb(0, 0, 0, 0), Shader.TileMode.CLAMP)
-        val graPaint = Paint()
-        graPaint.isDither = true
-        ///端を滑らかにする。
-        graPaint.shader = gradient
-        canvas.drawCircle(xP.toFloat(), yP.toFloat(), 1.5.toFloat() * r, graPaint)
-        graPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OVER)
-        graPaint.reset()
-        graPaint.isAntiAlias = true
-        graPaint.style = Paint.Style.FILL
-        graPaint.color = Color.WHITE
-        canvas.drawCircle(xP.toFloat(), yP.toFloat(), r, graPaint)
-    }
-
     //メンバー名の吹き出しを描画
-    private fun drawMemberName(canvas: Canvas, type: String?) {
+    private fun drawMemberName(canvas: Canvas, type: String?,tableNo:Int,point:Int) {
         val xP = x[point] - lastX
         val yP = y[point] - lastY
         var textSize = (60 * scale).toInt()
@@ -558,12 +488,6 @@ class DrawAllTable(context: Context) : View(context) {
 
         // 文字列の描画
         canvas.drawText(text, textStartX, textY, textPaint)
-    }
-
-    companion object {
-        var point = 0 //フォーカスする席番号
-        var tableNo = 0 //表示するテーブル番号
-        var tableType: String = "circle"
     }
 
 }

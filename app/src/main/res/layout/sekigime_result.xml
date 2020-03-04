@@ -7,6 +7,7 @@
     android:background="@drawable/sekigime_img">
 
     <ScrollView
+        android:id="@+id/result_scroller"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,6 +22,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                android:id="@+id/group_selector"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -59,12 +61,24 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:padding="15dp"
-                    android:layout_gravity="center"
                     android:text="@string/re_kumiwake"
+                    android:textColor="@android:color/white"
+                    app:backgroundTint="#ff6666"
+                    app:layout_constraintEnd_toStartOf="parent"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/show_all"
+                    style="@style/Button.Transparent.Rounded"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:padding="15dp"
+                    android:text="@string/show_all"
                     android:textColor="@android:color/white"
                     app:backgroundTint="@color/orange"
                     app:layout_constraintEnd_toStartOf="parent"
-                    app:layout_constraintHorizontal_chainStyle="spread"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <com.google.android.material.button.MaterialButton
