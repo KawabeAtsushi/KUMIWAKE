@@ -13,8 +13,8 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.SmallGPListAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
-import com.pandatone.kumiwake.member.Function.Group
-import com.pandatone.kumiwake.member.Function.Member
+import com.pandatone.kumiwake.member.function.Group
+import com.pandatone.kumiwake.member.function.Member
 import kotlinx.android.synthetic.main.kumiwake_confirmation.*
 import java.util.*
 import kotlin.collections.ArrayList

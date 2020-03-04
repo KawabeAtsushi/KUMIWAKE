@@ -12,7 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder.nowSort
-import com.pandatone.kumiwake.member.Function.Member
+import com.pandatone.kumiwake.member.function.Member
 
 //FragmentMember用リストadapter
 

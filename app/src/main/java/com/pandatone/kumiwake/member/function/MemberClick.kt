@@ -1,4 +1,4 @@
-package com.pandatone.kumiwake.member.Function
+package com.pandatone.kumiwake.member.function
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AlertDialog

@@ -11,14 +11,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.ListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pandatone.kumiwake.AddGroupKeys
-import com.pandatone.kumiwake.member.Function.GroupMethods
+import com.pandatone.kumiwake.member.function.GroupMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
 import com.pandatone.kumiwake.member.*
-import com.pandatone.kumiwake.member.Function.Group
-import com.pandatone.kumiwake.member.Function.GroupClick
-import com.pandatone.kumiwake.member.Function.Sort
+import com.pandatone.kumiwake.member.function.Group
+import com.pandatone.kumiwake.member.function.GroupClick
+import com.pandatone.kumiwake.member.function.Sort
 import java.io.IOException
 import kotlin.collections.ArrayList
 

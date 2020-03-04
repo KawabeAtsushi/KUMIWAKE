@@ -1,4 +1,4 @@
-package com.pandatone.kumiwake.member.Function
+package com.pandatone.kumiwake.member.function
 
 import android.content.Context
 import com.pandatone.kumiwake.adapter.MemberAdapter

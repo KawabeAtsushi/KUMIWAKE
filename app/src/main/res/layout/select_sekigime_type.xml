@@ -1,84 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/sekigime_img"
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:gravity="center"
         android:text="@string/select_seats_type"
-        android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline_top"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="8"
-        android:orientation="horizontal">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
         <ImageButton
             android:id="@+id/square_table"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_margin="10dp"
             android:src="@drawable/square_table"
             android:background="@drawable/translucent_orange_btn"
             android:scaleType="fitCenter"
             android:padding="10dp"
             android:text="@string/square_table"
-            android:contentDescription="@string/square_table" />
+            android:contentDescription="@string/square_table"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
+            app:layout_constraintTop_toBottomOf="@id/guideline_top"
+            app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"/>
 
 
         <ImageButton
             android:id="@+id/parallel_table"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_margin="10dp"
             android:src="@drawable/parallel_table"
             android:background="@drawable/translucent_orange_btn"
             android:scaleType="fitCenter"
             android:padding="10dp"
             android:text="@string/parallel_table"
-            android:contentDescription="@string/parallel_table" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="8"
-        android:orientation="horizontal">
+            android:contentDescription="@string/parallel_table"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guideline_vertical"
+            app:layout_constraintTop_toBottomOf="@id/guideline_top"
+            app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"/>
 
         <ImageButton
             android:id="@+id/circle_table"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_margin="10dp"
             android:src="@drawable/circle_table"
             android:background="@drawable/translucent_orange_btn"
             android:scaleType="fitCenter"
             android:padding="5dp"
             android:text="@string/circle_table"
-            android:contentDescription="@string/circle_table" />
+            android:contentDescription="@string/circle_table"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
+            app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
 
         <ImageButton
             android:id="@+id/counter_table"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_margin="10dp"
             android:src="@drawable/counter_table"
             android:background="@drawable/translucent_orange_btn"
             android:scaleType="fitCenter"
             android:padding="35dp"
             android:text="@string/counter_table"
-            android:contentDescription="@string/counter_table" />
-    </LinearLayout>
-</LinearLayout>
+            android:contentDescription="@string/counter_table"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guideline_vertical"
+            app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

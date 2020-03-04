@@ -9,8 +9,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
-import com.pandatone.kumiwake.member.Function.Group
-import com.pandatone.kumiwake.member.Function.MemberMain
+import com.pandatone.kumiwake.member.function.Group
+import com.pandatone.kumiwake.member.function.MemberMain
 
 
 /**

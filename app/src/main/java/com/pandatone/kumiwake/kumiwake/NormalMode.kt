@@ -17,9 +17,9 @@ import androidx.appcompat.widget.AppCompatEditText
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.member.AddMember
-import com.pandatone.kumiwake.member.Function.Group
-import com.pandatone.kumiwake.member.Function.MemberMain
-import com.pandatone.kumiwake.member.Function.Member
+import com.pandatone.kumiwake.member.function.Group
+import com.pandatone.kumiwake.member.function.MemberMain
+import com.pandatone.kumiwake.member.function.Member
 import kotlinx.android.synthetic.main.normal_mode.*
 import kotlinx.android.synthetic.main.part_review_listview.view.*
 import java.util.*

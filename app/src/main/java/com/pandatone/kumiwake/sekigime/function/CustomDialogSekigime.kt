@@ -1,4 +1,4 @@
-package com.pandatone.kumiwake.sekigime.Function
+package com.pandatone.kumiwake.sekigime.function
 
 import androidx.appcompat.app.AppCompatDialog
 import android.content.Intent

@@ -16,8 +16,8 @@ import com.google.android.gms.ads.AdView
 import com.pandatone.kumiwake.MainActivity
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
-import com.pandatone.kumiwake.member.Function.Member
-import com.pandatone.kumiwake.sekigime.Function.DrawTableView
+import com.pandatone.kumiwake.member.function.Member
+import com.pandatone.kumiwake.sekigime.function.DrawTableView
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 
 /**

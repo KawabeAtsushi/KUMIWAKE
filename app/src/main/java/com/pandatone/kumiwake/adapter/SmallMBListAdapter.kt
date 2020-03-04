@@ -11,7 +11,7 @@ import android.widget.ListView
 import android.widget.TextView
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.kumiwake.KumiwakeCustom
-import com.pandatone.kumiwake.member.Function.Member
+import com.pandatone.kumiwake.member.function.Member
 import java.util.*
 
 /**

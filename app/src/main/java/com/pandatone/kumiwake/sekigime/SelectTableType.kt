@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.sekigime.Function.CustomDialogSekigime
-import com.pandatone.kumiwake.sekigime.Function.DrawTableView
+import com.pandatone.kumiwake.sekigime.function.CustomDialogSekigime
+import com.pandatone.kumiwake.sekigime.function.DrawTableView
 
 /**
  * Created by atsushi_2 on 2016/07/13.

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.member.Function.Group
+import com.pandatone.kumiwake.member.function.Group
 
 /**
  * Created by atsushi_2 on 2016/03/20.

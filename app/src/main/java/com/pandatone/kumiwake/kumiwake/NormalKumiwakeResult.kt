@@ -18,8 +18,8 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
-import com.pandatone.kumiwake.member.Function.Group
-import com.pandatone.kumiwake.member.Function.Member
+import com.pandatone.kumiwake.member.function.Group
+import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.sekigime.SekigimeResult
 import com.pandatone.kumiwake.sekigime.SelectTableType
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse

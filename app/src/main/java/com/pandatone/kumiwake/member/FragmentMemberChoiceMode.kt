@@ -12,10 +12,10 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter
-import com.pandatone.kumiwake.member.Function.Filtering
-import com.pandatone.kumiwake.member.Function.Member
-import com.pandatone.kumiwake.member.Function.MemberMain
-import com.pandatone.kumiwake.member.Function.Sort
+import com.pandatone.kumiwake.member.function.Filtering
+import com.pandatone.kumiwake.member.function.Member
+import com.pandatone.kumiwake.member.function.MemberMain
+import com.pandatone.kumiwake.member.function.Sort
 import kotlin.collections.ArrayList
 
 

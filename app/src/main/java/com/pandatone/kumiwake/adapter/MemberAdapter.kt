@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import com.pandatone.kumiwake.member.Function.Member
+import com.pandatone.kumiwake.member.function.Member
 import java.io.IOException
 
 

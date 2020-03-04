@@ -1,4 +1,4 @@
-package com.pandatone.kumiwake.sekigime.Function
+package com.pandatone.kumiwake.sekigime.function
 
 import android.annotation.SuppressLint
 import android.content.Context
