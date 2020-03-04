@@ -12,8 +12,10 @@ import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.QuickModeKeys
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 import kotlinx.android.synthetic.main.quick_mode.*
 import java.util.*
 
@@ -32,6 +34,7 @@ class QuickMode : AppCompatActivity(), TextWatcher {
             window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
             window.exitTransition = Slide()
         }
+        setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.quick_mode)
         ButterKnife.bind(this)
 

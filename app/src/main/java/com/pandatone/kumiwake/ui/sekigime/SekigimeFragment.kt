@@ -7,13 +7,11 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.pandatone.kumiwake.MainActivity
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.kumiwake.QuickMode
-import com.pandatone.kumiwake.sekigime.SekigimeResult
-import com.pandatone.kumiwake.ui.DialogWarehouse
+import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 
 class SekigimeFragment : Fragment() {
 

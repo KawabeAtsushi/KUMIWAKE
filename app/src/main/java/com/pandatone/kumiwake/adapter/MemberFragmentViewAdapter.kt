@@ -2,7 +2,6 @@ package com.pandatone.kumiwake.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder.nowSort
-import com.pandatone.kumiwake.member.Member
+import com.pandatone.kumiwake.member.Function.Member
 
 //FragmentMember用リストadapter
 

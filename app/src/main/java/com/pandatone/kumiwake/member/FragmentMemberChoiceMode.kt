@@ -3,8 +3,6 @@ package com.pandatone.kumiwake.member
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.ListFragment
@@ -14,8 +12,10 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter
-import java.io.IOException
-import java.util.*
+import com.pandatone.kumiwake.member.Function.Filtering
+import com.pandatone.kumiwake.member.Function.Member
+import com.pandatone.kumiwake.member.Function.MemberMain
+import com.pandatone.kumiwake.member.Function.Sort
 import kotlin.collections.ArrayList
 
 

@@ -17,10 +17,14 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.AddMemberKeys
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.kumiwake.NormalMode
-import com.pandatone.kumiwake.ui.DialogWarehouse
+import com.pandatone.kumiwake.member.Function.Group
+import com.pandatone.kumiwake.member.Function.Member
+import com.pandatone.kumiwake.member.Function.MemberClick
+import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import com.pandatone.kumiwake.ui.members.FragmentMemberMain
 import kotlinx.android.synthetic.main.add_member.*
 import kotlin.collections.ArrayList
@@ -44,6 +48,7 @@ class AddMember : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.add_member)
         ButterKnife.bind(this)
         mbAdapter = MemberAdapter(this)

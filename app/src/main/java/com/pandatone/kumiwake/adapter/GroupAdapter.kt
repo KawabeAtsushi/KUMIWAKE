@@ -7,8 +7,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.ArrayAdapter
-import com.pandatone.kumiwake.member.FragmentGroupChoiceMode
-import com.pandatone.kumiwake.member.Group
+import com.pandatone.kumiwake.member.Function.Group
 import java.io.IOException
 
 /**

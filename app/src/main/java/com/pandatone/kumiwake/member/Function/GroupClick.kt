@@ -1,4 +1,4 @@
-package com.pandatone.kumiwake.member
+package com.pandatone.kumiwake.member.Function
 
 import android.annotation.SuppressLint
 import android.app.Activity

@@ -14,14 +14,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.AddGroupKeys
-import com.pandatone.kumiwake.GroupMethods
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
-import com.pandatone.kumiwake.ui.DialogWarehouse
+import com.pandatone.kumiwake.member.Function.GroupMethods
+import com.pandatone.kumiwake.member.Function.Member
+import com.pandatone.kumiwake.member.Function.MemberMain
+import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import com.pandatone.kumiwake.ui.members.FragmentGroupMain
-import com.pandatone.kumiwake.ui.members.FragmentMemberMain
 import kotlinx.android.synthetic.main.part_review_listview.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -52,6 +54,7 @@ class AddGroup : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.add_group)
         gpAdapter = GroupAdapter(this)
         mbAdapter = MemberAdapter(this)

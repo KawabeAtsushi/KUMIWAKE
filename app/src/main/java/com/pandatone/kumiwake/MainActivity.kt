@@ -6,10 +6,8 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Html
 import android.view.*
-import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
@@ -18,16 +16,12 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
-import com.pandatone.kumiwake.ui.DialogWarehouse
+import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import com.pandatone.kumiwake.ui.kumiwake.KumiwakeFragment
 import com.pandatone.kumiwake.ui.members.MembersFragment
 import com.pandatone.kumiwake.ui.sekigime.SekigimeFragment
 import com.pandatone.kumiwake.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import android.util.TypedValue
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import com.pandatone.kumiwake.PublicMethods.setStatusBarColor
 
 
@@ -37,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        StatusHolder.nowTheme = R.style.AppTheme
         setContentView(R.layout.activity_main)
 
         val navView: AHBottomNavigation = findViewById(R.id.nav_view)

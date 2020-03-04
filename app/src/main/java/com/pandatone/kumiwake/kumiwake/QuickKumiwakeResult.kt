@@ -22,7 +22,7 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.sekigime.SekigimeResult
 import com.pandatone.kumiwake.sekigime.SelectTableType
-import com.pandatone.kumiwake.ui.DialogWarehouse
+import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import java.util.*
 
 /**

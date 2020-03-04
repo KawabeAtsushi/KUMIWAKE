@@ -42,19 +42,22 @@
         <activity android:name=".kumiwake.NormalKumiwakeResult"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".member.MemberMain"
+            android:name=".member.Function.MemberMain"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
-            android:theme="@style/MemberTheme"/>
+            android:theme="@style/MemberChoiceTheme"/>
         <activity
             android:name=".sekigime.SelectTableType"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/SekigimeTheme"/>
         <activity
             android:name=".sekigime.SquareTableCustom"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/SekigimeTheme"/>
         <activity
             android:name=".sekigime.SekigimeResult"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/SekigimeTheme"/>
         <activity
             android:name=".member.AddMember"
             android:screenOrientation="portrait" />

@@ -2,6 +2,7 @@ package com.pandatone.kumiwake
 
 import android.app.Activity
 import android.view.WindowManager
+import android.widget.Switch
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 
@@ -14,10 +15,11 @@ object PublicMethods {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.statusBarColor = ContextCompat.getColor(this, colorId)
         }
-    }
-
-    fun setKumiwakeTheme(activity: Activity, @ColorRes colorId: Int) {
-        setStatusBarColor(activity,colorId)
+        when(colorId){
+            Theme.Kumiwake.primaryColor -> StatusHolder.nowTheme = R.style.AppTheme
+            Theme.Sekigime.primaryColor -> StatusHolder.nowTheme = R.style.SekigimeTheme
+            Theme.Member.primaryColor -> StatusHolder.nowTheme = R.style.MemberTheme
+        }
     }
 
 }

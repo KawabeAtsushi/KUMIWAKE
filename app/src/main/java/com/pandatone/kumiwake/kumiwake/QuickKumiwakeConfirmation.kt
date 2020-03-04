@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -32,10 +33,11 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
     private lateinit var mbAdapter: ArrayAdapter<String>
     private lateinit var gpAdapter: ArrayAdapter<String>
     private var evenFmRatio: Boolean = false
-    private lateinit var viewGroup: RelativeLayout
+    private lateinit var viewGroup: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.kumiwake_confirmation)
         ButterKnife.bind(this)
         intent.also {
@@ -78,7 +80,7 @@ class QuickKumiwakeConfirmation : AppCompatActivity() {
             member_no_txt.text = memberArray.size.toString() + " " + getText(R.string.people)
         }
         group_no_txt.text = groupArray.size.toString() + " " + getText(R.string.group)
-        viewGroup = findViewById<View>(R.id.confirmation_view) as RelativeLayout
+        viewGroup = findViewById<View>(R.id.confirmation_view) as ConstraintLayout
         viewGroup.background = null
         viewGroup.background = ContextCompat.getDrawable(this, R.drawable.quick_img)
     }

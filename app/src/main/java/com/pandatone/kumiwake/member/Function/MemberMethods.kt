@@ -1,4 +1,4 @@
-package com.pandatone.kumiwake
+package com.pandatone.kumiwake.member.Function
 
 import android.app.Activity
 import android.view.WindowManager
@@ -17,7 +17,7 @@ object MemberMethods {
     }
 
     fun setKumiwakeTheme(activity: Activity, @ColorRes colorId: Int) {
-        setStatusBarColor(activity,colorId)
+        setStatusBarColor(activity, colorId)
     }
 
 }

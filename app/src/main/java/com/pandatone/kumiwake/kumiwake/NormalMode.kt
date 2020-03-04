@@ -8,22 +8,18 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.transition.Slide
 import android.view.View
-import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
-import com.pandatone.kumiwake.ArrayKeys
-import com.pandatone.kumiwake.AddGroupKeys
-import com.pandatone.kumiwake.AddMemberKeys
-import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.member.AddMember
-import com.pandatone.kumiwake.member.Group
-import com.pandatone.kumiwake.member.MemberMain
-import com.pandatone.kumiwake.member.Member
+import com.pandatone.kumiwake.member.Function.Group
+import com.pandatone.kumiwake.member.Function.MemberMain
+import com.pandatone.kumiwake.member.Function.Member
 import kotlinx.android.synthetic.main.normal_mode.*
 import kotlinx.android.synthetic.main.part_review_listview.view.*
 import java.util.*
@@ -45,6 +41,7 @@ class NormalMode : AppCompatActivity() {
             window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
             window.exitTransition = Slide()
         }
+        setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.normal_mode)
         findViews()
         memberArray = ArrayList()

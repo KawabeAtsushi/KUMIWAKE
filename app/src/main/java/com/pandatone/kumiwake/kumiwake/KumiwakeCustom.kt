@@ -6,8 +6,6 @@ import android.graphics.Color
 import android.graphics.Point
 import android.graphics.Rect
 import android.os.Bundle
-import android.text.InputFilter
-import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.WindowManager
@@ -18,10 +16,11 @@ import butterknife.OnClick
 import com.pandatone.kumiwake.ArrayKeys
 import com.pandatone.kumiwake.KumiwakeCustomKeys
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.EditGroupViewAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
-import com.pandatone.kumiwake.member.Group
-import com.pandatone.kumiwake.member.Member
+import com.pandatone.kumiwake.member.Function.Group
+import com.pandatone.kumiwake.member.Function.Member
 import kotlinx.android.synthetic.main.kumiwake_custom.*
 import kotlinx.android.synthetic.main.part_review_listview.*
 import java.util.*
@@ -44,6 +43,7 @@ class KumiwakeCustom : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.kumiwake_custom)
         ButterKnife.bind(this)
 

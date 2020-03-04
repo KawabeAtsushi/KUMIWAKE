@@ -6,8 +6,8 @@ import android.widget.Toast
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
-import com.pandatone.kumiwake.member.Group
-import com.pandatone.kumiwake.member.Member
+import com.pandatone.kumiwake.member.Function.Group
+import com.pandatone.kumiwake.member.Function.Member
 
 
 object RefreshData {

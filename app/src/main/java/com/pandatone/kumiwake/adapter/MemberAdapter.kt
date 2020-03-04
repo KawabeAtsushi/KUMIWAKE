@@ -10,11 +10,10 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import com.pandatone.kumiwake.member.Member
+import com.pandatone.kumiwake.member.Function.Member
 import java.io.IOException
 
 

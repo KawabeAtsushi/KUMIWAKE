@@ -13,8 +13,8 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.SmallGPListAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
-import com.pandatone.kumiwake.member.Group
-import com.pandatone.kumiwake.member.Member
+import com.pandatone.kumiwake.member.Function.Group
+import com.pandatone.kumiwake.member.Function.Member
 import kotlinx.android.synthetic.main.kumiwake_confirmation.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -32,6 +32,7 @@ class NormalKumiwakeConfirmation : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.kumiwake_confirmation)
         findViewById<Button>(R.id.kumiwake_btn).setOnClickListener { doKumiwake() }
 

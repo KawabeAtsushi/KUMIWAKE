@@ -16,15 +16,16 @@ import com.google.android.gms.ads.AdView
 import com.pandatone.kumiwake.MainActivity
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
-import com.pandatone.kumiwake.member.Member
-import com.pandatone.kumiwake.ui.DialogWarehouse
+import com.pandatone.kumiwake.member.Function.Member
+import com.pandatone.kumiwake.sekigime.Function.DrawTableView
+import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 
 /**
  * Created by atsushi_2 on 2016/07/16.
  */
 class SekigimeResult : AppCompatActivity() {
 
-    private lateinit var draw:DrawTableView
+    private lateinit var draw: DrawTableView
     private var groupNo: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {

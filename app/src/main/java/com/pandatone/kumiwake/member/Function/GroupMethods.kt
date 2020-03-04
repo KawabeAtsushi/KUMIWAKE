@@ -1,12 +1,7 @@
-package com.pandatone.kumiwake
+package com.pandatone.kumiwake.member.Function
 
-import android.app.Activity
 import android.content.Context
-import android.view.WindowManager
-import androidx.annotation.ColorRes
-import androidx.core.content.ContextCompat
 import com.pandatone.kumiwake.adapter.MemberAdapter
-import com.pandatone.kumiwake.member.Member
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -32,13 +27,13 @@ object GroupMethods {
         val members = mbAdapter.getAllMembers()
         mbAdapter.open()
         members.forEach { member ->
-            deleteBelongInfo(member, groupId, member.id,mbAdapter)
+            deleteBelongInfo(member, groupId, member.id, mbAdapter)
         }
         mbAdapter.close()
     }
 
     //メンバー(member)を所属グループ(groupIdのグループ)から脱退
-    private fun deleteBelongInfo(member: Member, groupId: Int, listId: Int,mbAdapter:MemberAdapter) {
+    private fun deleteBelongInfo(member: Member, groupId: Int, listId: Int, mbAdapter:MemberAdapter) {
         val belongText = member.belong
         val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         val list = ArrayList(Arrays.asList<String>(*belongArray))

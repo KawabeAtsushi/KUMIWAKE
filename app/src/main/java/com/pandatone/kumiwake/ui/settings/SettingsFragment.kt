@@ -18,11 +18,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.setting.DBBackup
 import com.pandatone.kumiwake.setting.RefreshData
-import com.pandatone.kumiwake.ui.DialogWarehouse
+import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import java.io.File
 
 

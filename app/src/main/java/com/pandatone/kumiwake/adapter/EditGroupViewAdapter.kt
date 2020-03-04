@@ -9,14 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.kumiwake.KumiwakeCustom
-import com.pandatone.kumiwake.member.Group
+import com.pandatone.kumiwake.member.Function.Group
 import java.util.*
 
 /**
  * Created by atsushi_2 on 2016/03/20.
  */
-class EditGroupViewAdapter(private val context: Context, private val groupList: List<Group>, private val scrollView: ScrollView,private val groupListView: ListView) : BaseAdapter() {
+class EditGroupViewAdapter(private val context: Context, private val groupList: List<Group>, private val scrollView: ScrollView, private val groupListView: ListView) : BaseAdapter() {
     private var beforeNo: Int = 0
     private var afterNo: Int = 0
 

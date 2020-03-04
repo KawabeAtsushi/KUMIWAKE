@@ -2,15 +2,15 @@ package com.pandatone.kumiwake.member
 
 import android.os.Bundle
 import android.view.*
-import android.widget.AbsListView
 import android.widget.AdapterView
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.ListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
+import com.pandatone.kumiwake.member.Function.Group
+import com.pandatone.kumiwake.member.Function.MemberMain
 
 
 /**

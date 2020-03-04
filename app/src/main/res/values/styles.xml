@@ -2,6 +2,8 @@
 
 <resources>
 
+    <!-- Themes -->
+    <!-- Application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
@@ -14,8 +16,18 @@
         <item name="android:colorPrimaryDark">@color/red_title</item>
     </style>
 
-    <!-- Base application theme. -->
+    <!-- Sekigime theme -->
+    <style name="SekigimeTheme" parent="AppTheme">
+        <item name="android:colorPrimaryDark">@color/green_title</item>
+    </style>
+
+    <!-- Member theme -->
     <style name="MemberTheme" parent="AppTheme">
+        <item name="android:colorPrimaryDark">@color/blue_title</item>
+    </style>
+
+    <!-- Member ChoiceMode theme. -->
+    <style name="MemberChoiceTheme" parent="AppTheme">
         <item name="android:colorPrimaryDark">@color/blue_title</item>
         <item name="actionModeCloseButtonStyle">@style/NoCloseButtonActionModeStyle</item>
     </style>
