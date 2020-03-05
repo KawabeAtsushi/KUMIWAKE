@@ -1,23 +1,25 @@
 package com.pandatone.kumiwake
 
 import androidx.annotation.StyleRes
+import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
 
 object StatusHolder {
 
-        var normalMode:Boolean = true //true: ノーマルモード, false: クイックモード
-        var sekigime: Boolean = false //true: 席決めモード, false: 組み分けモード
-        @StyleRes var nowTheme:Int = R.style.AppTheme
-        var nowSort = MemberAdapter.MB_ID //ソート対象要素
-        var sortType = "ASC" //降順・昇順
+    var normalMode: Boolean = true //true: ノーマルモード, false: クイックモード
+    var sekigime: Boolean = false //true: 席決めモード, false: 組み分けモード
 
-}
+    @StyleRes
+    var nowTheme: Int = R.style.AppTheme
 
-//intent keys for intent array
-enum class ArrayKeys(val key:String){
-    NORMAL_MEMBER_ARRAY("normal_memberArray"),
-    NORMAL_GROUP_ARRAY("normal_groupArray"),
-    LEADER_ARRAY("leader_array")
+    var mbNowSort = MemberAdapter.MB_ID //ソート対象要素
+    var mbSortType = "ASC" //降順・昇順
+    var gpNowSort = GroupAdapter.GP_ID //ソート対象要素
+    var gpSortType = "ASC" //降順・昇順
+
+    //Special Sex
+    var none = "none"
+    var index = "index"
 }
 
 //AddMemberのintent key
@@ -38,11 +40,9 @@ enum class KumiwakeCustomKeys(val key: String){
     EVEN_AGE_RATIO("even_age_ratio")
 }
 
-//quickModeのintent key
-enum class QuickModeKeys(val key:String){
-    EVEN_FM_RATIO("even_fm_ratio"),
-    MAN_LIST("QuickModeManList"),
-    WOMAN_LIST("QuickModeWomanList"),
-    GROUP_LIST("QuickModeGroupList"),
-    MEMBER_LIST("QuickModeMemberList")
+//kumiwake arrayのintent key
+enum class KumiwakeArrayKeys(val key:String){
+    MEMBER_LIST("MemberList"),
+    GROUP_LIST("GroupList"),
+    LEADER_LIST("LEADER_LIST")
 }

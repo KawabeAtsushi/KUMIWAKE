@@ -17,8 +17,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.member.AddMember
-import com.pandatone.kumiwake.member.function.Group
-import com.pandatone.kumiwake.member.function.MemberMain
+import com.pandatone.kumiwake.member.ChoiceMemberMain
 import com.pandatone.kumiwake.member.function.Member
 import kotlinx.android.synthetic.main.normal_mode.*
 import kotlinx.android.synthetic.main.part_review_listview.view.*
@@ -63,7 +62,7 @@ class NormalMode : AppCompatActivity() {
     //MemberMainに遷移
     private fun moveMemberMain() {
         errorMember.text = ""
-        val intent = Intent(this, MemberMain::class.java)
+        val intent = Intent(this, ChoiceMemberMain::class.java)
         intent.putExtra(AddGroupKeys.MEMBER_ARRAY.key, memberArray)
         startActivityForResult(intent, 0)
     }
@@ -92,22 +91,12 @@ class NormalMode : AppCompatActivity() {
         } else if (inputGroupNo == "0") {
             errorGroup.setText(R.string.require_correct_No)
         } else {
-            val groupArray = ArrayList<Group>()
             val groupNo = Integer.parseInt(inputGroupNo)
-            val eachMemberNo = memberArray.size / groupNo
-            val remainder = memberArray.size % groupNo
-
-            for (i in 0 until remainder) {
-                groupArray.add(Group(i, getText(R.string.group).toString() + " " + (i + 1).toString(), "", eachMemberNo + 1))
-            }
-
-            for (i in remainder until groupNo) {
-                groupArray.add(Group(i, getText(R.string.group).toString() + " " + (i + 1).toString(), "", eachMemberNo))
-            }
+            val groupArray = PublicMethods.initialGroupArray(this,groupNo,memberArray.size)
 
             val intent = Intent(this, KumiwakeCustom::class.java)
-            intent.putExtra(ArrayKeys.NORMAL_MEMBER_ARRAY.key, memberArray)
-            intent.putExtra(ArrayKeys.NORMAL_GROUP_ARRAY.key, groupArray)
+            intent.putExtra(KumiwakeArrayKeys.MEMBER_LIST.key, memberArray)
+            intent.putExtra(KumiwakeArrayKeys.GROUP_LIST.key, groupArray)
             startActivity(intent)
             overridePendingTransition(R.anim.in_right, R.anim.out_left)
         }

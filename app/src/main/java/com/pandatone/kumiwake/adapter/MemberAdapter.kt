@@ -13,6 +13,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.member.function.Member
 import java.io.IOException
 
@@ -163,7 +164,7 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
                         Member(
                                 0,
                                 null.toString(),
-                                "Index",
+                                StatusHolder.index,
                                 c.getInt(3),
                                 c.getInt(4),
                                 null.toString(),
@@ -173,7 +174,7 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
                         Member(
                                 0,
                                 null.toString(),
-                                "Index",
+                                StatusHolder.index,
                                 c.getInt(3),
                                 c.getInt(4),
                                 null.toString(),

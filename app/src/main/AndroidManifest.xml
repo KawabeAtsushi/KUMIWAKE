@@ -33,16 +33,12 @@
         <activity
             android:name=".kumiwake.KumiwakeCustom"
             android:screenOrientation="portrait" />
-        <activity android:name=".kumiwake.QuickKumiwakeConfirmation"
+        <activity android:name=".kumiwake.KumiwakeConfirmation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".kumiwake.NormalKumiwakeConfirmation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".kumiwake.QuickKumiwakeResult"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".kumiwake.NormalKumiwakeResult"
+        <activity android:name=".kumiwake.KumiwakeResult"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".member.function.MemberMain"
+            android:name=".member.ChoiceMemberMain"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/MemberChoiceTheme"/>
@@ -78,6 +74,16 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-2315101868638564~1560987130" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

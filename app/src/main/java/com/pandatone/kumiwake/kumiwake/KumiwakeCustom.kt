@@ -13,7 +13,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.pandatone.kumiwake.ArrayKeys
+import com.pandatone.kumiwake.KumiwakeArrayKeys
 import com.pandatone.kumiwake.KumiwakeCustomKeys
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
@@ -47,11 +47,11 @@ class KumiwakeCustom : AppCompatActivity() {
         setContentView(R.layout.kumiwake_custom)
         ButterKnife.bind(this)
 
-        if (intent.getSerializableExtra(ArrayKeys.NORMAL_MEMBER_ARRAY.key) != null) {
-            memberArray = intent.getSerializableExtra(ArrayKeys.NORMAL_MEMBER_ARRAY.key) as ArrayList<Member>
+        if (intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) != null) {
+            memberArray = intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>
         }
-        if (intent.getSerializableExtra(ArrayKeys.NORMAL_GROUP_ARRAY.key) != null) {
-            groupArray = intent.getSerializableExtra(ArrayKeys.NORMAL_GROUP_ARRAY.key) as ArrayList<Group>
+        if (intent.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) != null) {
+            groupArray = intent.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) as ArrayList<Group>
         }
         findViews()
         mbAdapter = SmallMBListAdapter(this, memberArray, true, showLeaderNo = true)
@@ -106,9 +106,9 @@ class KumiwakeCustom : AppCompatActivity() {
 
         if (allowToNext!!) {
             createGroupArray()
-            val intent = Intent(this, NormalKumiwakeConfirmation::class.java)
-            intent.putExtra(ArrayKeys.NORMAL_MEMBER_ARRAY.key, memberArray)
-            intent.putExtra(ArrayKeys.NORMAL_GROUP_ARRAY.key, newGroupArray)
+            val intent = Intent(this, KumiwakeConfirmation::class.java)
+            intent.putExtra(KumiwakeArrayKeys.MEMBER_LIST.key, memberArray)
+            intent.putExtra(KumiwakeArrayKeys.GROUP_LIST.key, newGroupArray)
             intent.putExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, even_fm_ratio_check.isChecked)
             intent.putExtra(KumiwakeCustomKeys.EVEN_AGE_RATIO.key, even_age_ratio_check.isChecked)
             startActivity(intent)

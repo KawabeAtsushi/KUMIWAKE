@@ -12,10 +12,8 @@ import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.pandatone.kumiwake.PublicMethods
-import com.pandatone.kumiwake.QuickModeKeys
-import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.StatusHolder
+import com.pandatone.kumiwake.*
+import com.pandatone.kumiwake.member.function.Member
 import kotlinx.android.synthetic.main.quick_mode.*
 import java.util.*
 
@@ -73,51 +71,49 @@ class QuickMode : AppCompatActivity(), TextWatcher {
 
     @OnClick(R.id.quick_kumiwake_btn)
     internal fun onClicked() {
-        val group_no = group_no_form.text!!.toString()
-        val member_no = member_no_form.text!!.toString()
+        val groupNo = group_no_form.text!!.toString()
+        val memNo = member_no_form.text!!.toString()
 
         error_member_no_txt.text = ""
         error_group_no_txt.text = ""
 
         when {
-            TextUtils.isEmpty(member_no) -> error_member_no_txt.setText(R.string.error_empty_member_no)
-            TextUtils.isEmpty(group_no) -> error_group_no_txt.setText(R.string.error_empty_group_no)
-            group_no == "0" -> error_group_no_txt.setText(R.string.require_correct_No)
-            Integer.parseInt(group_no) > memberNo -> {
+            TextUtils.isEmpty(memNo) -> error_member_no_txt.setText(R.string.error_empty_member_no)
+            TextUtils.isEmpty(groupNo) -> error_group_no_txt.setText(R.string.error_empty_group_no)
+            groupNo == "0" -> error_group_no_txt.setText(R.string.require_correct_No)
+            Integer.parseInt(groupNo) > memberNo -> {
                 error_group_no_txt.setText(R.string.number_of_groups_is_much_too)
             }
             else -> {
-                val womanList = ArrayList<String>()
-                val manList = createManList(manNo, womanNo)
-                val groupList = ArrayList<String>()
-                for (i in 1..womanNo) {
-                    womanList.add(getText(R.string.member).toString() + "♡" + i.toString())
-                }
-                for (i in 1..Integer.parseInt(group_no)) {
-                    groupList.add(getText(R.string.group).toString() + " " + i.toString())
-                }
-                val intent = Intent(this, QuickKumiwakeConfirmation::class.java)
-                intent.putStringArrayListExtra(QuickModeKeys.MAN_LIST.key, manList)
-                intent.putStringArrayListExtra(QuickModeKeys.WOMAN_LIST.key, womanList)
-                intent.putStringArrayListExtra(QuickModeKeys.GROUP_LIST.key, groupList)
-                intent.putExtra(QuickModeKeys.EVEN_FM_RATIO.key, even_fm_ratio_check.isChecked)
+                val memberList = createMemberList(manNo, womanNo)
+                val groupList = PublicMethods.initialGroupArray(this, Integer.parseInt(groupNo), memberList.size)
+                val intent = Intent(this, KumiwakeConfirmation::class.java)
+                intent.putExtra(KumiwakeArrayKeys.MEMBER_LIST.key, memberList)
+                intent.putExtra(KumiwakeArrayKeys.GROUP_LIST.key, groupList)
+                intent.putExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, even_fm_ratio_check.isChecked)
                 startActivity(intent)
                 overridePendingTransition(R.anim.in_right, R.anim.out_left)
             }
         }
     }
 
-    private fun createManList(manNo: Int, womanNo: Int): ArrayList<String> {
-        val manList = ArrayList<String>()
-        if (womanNo == 0) {
-            for (i in 1..manNo) {
-                manList.add(getText(R.string.member).toString() + " " + i.toString())
+    private fun createMemberList(manNo: Int, womanNo: Int): ArrayList<Member> {
+        val memberList = ArrayList<Member>()
+        if (manNo == 0 || womanNo == 0) {
+            for (i in 1..manNo + womanNo) {
+                val planeMember = Member(i, getText(R.string.member).toString() + " " + i.toString(), StatusHolder.none, 0, 0, "", "", "")
+                memberList.add(planeMember)
             }
         } else {
             for (i in 1..manNo) {
-                manList.add(getText(R.string.member).toString() + "♠" + i.toString())
+                val man = Member(i, getText(R.string.member).toString() + "♠" + i.toString(), getString(R.string.man), 0, 0, "", "", "")
+                memberList.add(man)
+            }
+            for (i in 1..womanNo) {
+                val woman = Member(i, getText(R.string.member).toString() + "♡" + i.toString(), getString(R.string.woman), 0, 0, "", "", "")
+                memberList.add(woman)
             }
         }
-        return manList
+        return memberList
     }
 }

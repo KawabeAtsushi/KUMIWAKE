@@ -11,7 +11,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.StatusHolder.nowSort
+import com.pandatone.kumiwake.StatusHolder
+import com.pandatone.kumiwake.StatusHolder.mbNowSort
 import com.pandatone.kumiwake.member.function.Member
 
 //FragmentMember用リストadapter
@@ -35,7 +36,7 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
     }
 
     override fun isEnabled(position: Int): Boolean {
-        return getItem(position).sex != "Index"
+        return getItem(position).sex != StatusHolder.index
     }
 
     @SuppressLint("InflateParams")
@@ -78,14 +79,14 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
     private fun addInitial(position: Int, v: View?) {
         val nowItem = getItem(position)
 
-        when (nowSort) {
+        when (mbNowSort) {
             MemberAdapter.MB_READ -> nowData = nowItem.read
             MemberAdapter.MB_AGE -> nowData = nowItem.age.toString()
         }
 
         if (position >= 2) { val preItem = getItem(position - 2)
 
-            when (nowSort) {
+            when (mbNowSort) {
                 MemberAdapter.MB_READ -> preData = preItem.read
                 MemberAdapter.MB_AGE -> preData = preItem.age.toString()
             }
@@ -93,7 +94,7 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
 
         //イニシャルRowとメンバーRowが交互に登録されているので表示するRowを選ぶ
         //一行目の場合と、前のイニシャルRowと異なる場合に表示
-        if ((nowData != preData || position == 0) && nowSort != MemberAdapter.MB_ID) {
+        if ((nowData != preData || position == 0) && mbNowSort != MemberAdapter.MB_ID) {
             val initialText = v?.findViewById<View>(R.id.initial) as TextView
             initialText.text = nowData
         } else {

@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import android.widget.AbsListView
 import android.widget.AdapterView
@@ -37,24 +36,15 @@ class FragmentMemberMain : ListFragment() {
         mbAdapter = MemberAdapter(requireContext())
         memberList = mbAdapter.getAllMembers()
         listAdp = MemberFragmentViewAdapter(requireContext(), memberList)
-        StatusHolder.nowSort = MemberAdapter.MB_ID
-        StatusHolder.sortType = "ASC"
+        StatusHolder.mbNowSort = MemberAdapter.MB_ID
+        StatusHolder.mbSortType = "ASC"
         Sort.initial = 0
-        loadName()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        loadName()
     }
 
     override fun onStart() {
         super.onStart()
         loadName()
         FragmentGroupMain().loadName()
-        StatusHolder.nowSort = MemberAdapter.MB_ID
-        StatusHolder.sortType = "ASC"
-        mbAdapter.sortNames(StatusHolder.nowSort, StatusHolder.sortType, memberList)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -335,6 +325,7 @@ class FragmentMemberMain : ListFragment() {
         mbAdapter.getCursor(c, memberList, true)
         mbAdapter.close()
         listAdapter = listAdp
+        mbAdapter.sortNames(StatusHolder.mbNowSort, StatusHolder.mbSortType, memberList)
         listAdp.notifyDataSetChanged()
     }
 

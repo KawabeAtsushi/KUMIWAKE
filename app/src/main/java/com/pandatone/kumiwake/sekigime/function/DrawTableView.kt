@@ -11,16 +11,15 @@ import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.sekigime.SekigimeResult
 import java.util.*
 import kotlin.math.abs
+import kotlin.math.floor
 
 /**
  * Created by atsushi_2 on 2016/07/15.
  */
 class DrawTableView(context: Context) : View(context) {
     private var squareNo = SekigimeResult.square_no
-    private var normalMode: Boolean? = StatusHolder.normalMode
     private var doubleDeploy: Boolean? = SekigimeResult.doubleDeploy
-    private var arrayArrayQuick = SekigimeResult.arrayArrayQuick
-    private var arrayArrayNormal = SekigimeResult.arrayArrayNormal
+    private var teamArray = SekigimeResult.teamArray
     private var xCoordinate = 0f
     private var yCoordinate = 0f
     private var scale: Float = 0.toFloat()
@@ -51,8 +50,7 @@ class DrawTableView(context: Context) : View(context) {
 
 
     override fun onDraw(canvas: Canvas) {
-        arrayArrayQuick = SekigimeResult.arrayArrayQuick
-        arrayArrayNormal = SekigimeResult.arrayArrayNormal
+        teamArray = SekigimeResult.teamArray
         x = ArrayList()
         y = ArrayList()
         memberNo(tableNo)
@@ -226,8 +224,8 @@ class DrawTableView(context: Context) : View(context) {
         lastX = 0
         lastY = when {
             seatsNo == 1 -> (transY * scale).toInt()
-            (seatsNo - a) / 2 == 0 -> (transY * Math.floor(((seatsNo - a) / 2).toDouble()) * scale).toInt()
-            else -> (transY * Math.floor(((seatsNo - a + 1) / 2).toDouble()) * scale).toInt()
+            (seatsNo - a) / 2 == 0 -> (transY * floor(((seatsNo - a) / 2).toDouble()) * scale).toInt()
+            else -> (transY * floor(((seatsNo - a + 1) / 2).toDouble()) * scale).toInt()
         }
         if (point >= a) {
             setFocusGradation(canvas)
@@ -386,19 +384,15 @@ class DrawTableView(context: Context) : View(context) {
 
     //テーブルの席数を代入 to seatsNo
     private fun memberNo(position: Int) {
-        seatsNo = if (normalMode!!) {
-            arrayArrayNormal[position].size
-        } else {
-            arrayArrayQuick[position].size
-        }
+        seatsNo = teamArray[position].size
     }
 
     //座席にイニシャルを描画
     private fun initialName(canvas: Canvas, i: Int, X: Float, Y: Float) {
-        val nameInitial: String = if (normalMode!!) {
-            arrayArrayNormal[tableNo][i].name[0].toString()
+        val nameInitial: String = if (StatusHolder.normalMode) {
+            teamArray[tableNo][i].name[0].toString()
         } else {
-            arrayArrayQuick[tableNo][i].replace("[^0-9]".toRegex(), "")   //文字列から数値のみ抜き出し
+            teamArray[tableNo][i].id.toString()   //QuickMode命名規則：メンバー + id
         }
         val textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         textPaint.textSize = r
@@ -415,18 +409,10 @@ class DrawTableView(context: Context) : View(context) {
         sPaint.style = Paint.Style.FILL
 
         for (i in startNo until endNo) {
-            if (normalMode!!) {
-                if (arrayArrayNormal[tableNo][i].sex == resources.getText(R.string.man)) {
-                    sPaint.color = ContextCompat.getColor(context, R.color.thin_man)
-                } else {
-                    sPaint.color = ContextCompat.getColor(context, R.color.thin_woman)
-                }
-            } else {
-                when {
-                    arrayArrayQuick[tableNo][i].matches((".*" + "♠" + ".*").toRegex()) -> sPaint.color = ContextCompat.getColor(context, R.color.thin_man)
-                    arrayArrayQuick[tableNo][i].matches((".*" + "♡" + ".*").toRegex()) -> sPaint.color = ContextCompat.getColor(context, R.color.thin_woman)
-                    else -> sPaint.color = ContextCompat.getColor(context, R.color.thin_white)
-                }
+            when (teamArray[tableNo][i].sex) {
+                resources.getText(R.string.man) -> sPaint.color = ContextCompat.getColor(context, R.color.thin_man)
+                resources.getText(R.string.woman) -> sPaint.color = ContextCompat.getColor(context, R.color.thin_woman)
+                else -> sPaint.color = ContextCompat.getColor(context, R.color.thin_white)
             }
 
             val xP = x[i] - lastX
@@ -470,11 +456,7 @@ class DrawTableView(context: Context) : View(context) {
         // 文字列用ペイントの生成
         val textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         textPaint.textSize = 60 * scale
-        val text: String = if (normalMode!!) {
-            arrayArrayNormal[tableNo][point].name
-        } else {
-            arrayArrayQuick[tableNo][point]
-        }
+        val text: String = teamArray[tableNo][point].name
         textWidth = textPaint.measureText(text)
         while (textWidth > 320) {
             textPaint.textSize = textSize.toFloat()
@@ -539,18 +521,10 @@ class DrawTableView(context: Context) : View(context) {
         // 吹き出し用ペイントの生成
         val balloonPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         balloonPaint.textSize = 35 * scale
-        if (normalMode!!) {
-            if (arrayArrayNormal[tableNo][point].sex == resources.getText(R.string.man)) {
-                balloonPaint.color = ContextCompat.getColor(context, R.color.man)
-            } else {
-                balloonPaint.color = ContextCompat.getColor(context, R.color.woman)
-            }
-        } else {
-            when {
-                arrayArrayQuick[tableNo][point].matches((".*" + "♠" + ".*").toRegex()) -> balloonPaint.color = ContextCompat.getColor(context, R.color.man)
-                arrayArrayQuick[tableNo][point].matches((".*" + "♡" + ".*").toRegex()) -> balloonPaint.color = ContextCompat.getColor(context, R.color.woman)
-                else -> balloonPaint.color = ContextCompat.getColor(context, R.color.green)
-            }
+        when (teamArray[tableNo][point].sex) {
+            resources.getText(R.string.man) -> balloonPaint.color = ContextCompat.getColor(context, R.color.man)
+            resources.getText(R.string.woman) -> balloonPaint.color = ContextCompat.getColor(context, R.color.woman)
+            else -> balloonPaint.color = ContextCompat.getColor(context, R.color.green)
         }
 
         val balloonRectF = RectF(balloonStartX, balloonStartY, balloonEndX, balloonEndY)

@@ -1,6 +1,7 @@
-package com.pandatone.kumiwake.member.function
+package com.pandatone.kumiwake.member
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -11,12 +12,20 @@ import androidx.viewpager.widget.ViewPager
 import com.pandatone.kumiwake.AddGroupKeys
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.CustomPagerAdapter
+import com.pandatone.kumiwake.member.function.Member
+import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 
 /**
  * Created by atsushi_2 on 2016/02/19.
  */
-class MemberMain : AppCompatActivity() {
+class ChoiceMemberMain : AppCompatActivity() {
 
     private val manager = supportFragmentManager
     private var page: Int = 0
@@ -24,12 +33,11 @@ class MemberMain : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.member_main)
-        val toolbar = findViewById<View>(R.id.tool_bar_2) as Toolbar
+        val toolbar = findViewById<View>(R.id.toolbar2) as Toolbar
         setSupportActionBar(toolbar)
 
-        supportActionBar!!.setTitle(R.string.member_main)
+        supportActionBar!!.title = "      0" + getString(R.string.selected)
         supportActionBar!!.setDisplayShowTitleEnabled(true)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(false)
 
         val i = intent
         if (i.getSerializableExtra(AddGroupKeys.MEMBER_ARRAY.key) != null) {
@@ -64,8 +72,10 @@ class MemberMain : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.member_menu, menu)
-        val delete = menu.findItem(R.id.item_delete)
-        delete.isVisible = false
+        val searchIcon = menu.findItem(R.id.search_view)
+        val deleteIcon = menu.findItem(R.id.item_delete)
+        searchIcon.isVisible = false
+        deleteIcon.isVisible = false
         viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageScrollStateChanged(state: Int) {
                 page = viewPager.currentItem
@@ -87,6 +97,17 @@ class MemberMain : AppCompatActivity() {
         adapter.findFragmentByPosition(viewPager, page).onOptionsItemSelected(item)
 
         return false
+    }
+
+    override fun dispatchKeyEvent(e: KeyEvent): Boolean {
+        // 戻るボタンが押されたとき
+        when (e.keyCode) {
+            KeyEvent.KEYCODE_BACK -> {
+                finish()
+                return true
+            }
+        }
+        return super.dispatchKeyEvent(e)
     }
 
     companion object {

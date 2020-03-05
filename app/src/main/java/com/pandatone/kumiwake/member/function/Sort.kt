@@ -2,8 +2,10 @@ package com.pandatone.kumiwake.member.function
 
 import android.app.Activity
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.StatusHolder.nowSort
-import com.pandatone.kumiwake.StatusHolder.sortType
+import com.pandatone.kumiwake.StatusHolder.gpNowSort
+import com.pandatone.kumiwake.StatusHolder.gpSortType
+import com.pandatone.kumiwake.StatusHolder.mbSortType
+import com.pandatone.kumiwake.StatusHolder.mbNowSort
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
@@ -16,8 +18,6 @@ object Sort {
 
     private const val ASC = "ASC"   //昇順 (1.2.3....)
     private const val DESC = "DESC" //降順 (3.2.1....)
-    private lateinit var NS: String
-    private lateinit var ST: String
     internal var initial = 0
 
     fun memberSort(builder: androidx.appcompat.app.AlertDialog.Builder, activity: Activity, memberList: ArrayList<Member>, listAdp: MemberFragmentViewAdapter) {
@@ -38,33 +38,31 @@ object Sort {
         builder.setPositiveButton("OK") { _, _ ->
             when (initial) {
                 0 -> {
-                    NS = MemberAdapter.MB_ID
-                    ST = ASC
+                    mbNowSort = MemberAdapter.MB_ID
+                    mbSortType = ASC
                 }
                 1 -> {
-                    NS = MemberAdapter.MB_ID
-                    ST = DESC
+                    mbNowSort = MemberAdapter.MB_ID
+                    mbSortType = DESC
                 }
                 2 -> {
-                    NS = MemberAdapter.MB_READ
-                    ST = ASC
+                    mbNowSort = MemberAdapter.MB_READ
+                    mbSortType = ASC
                 }
                 3 -> {
-                    NS = MemberAdapter.MB_READ
-                    ST = DESC
+                    mbNowSort = MemberAdapter.MB_READ
+                    mbSortType = DESC
                 }
                 4 -> {
-                    NS = MemberAdapter.MB_AGE
-                    ST = ASC
+                    mbNowSort = MemberAdapter.MB_AGE
+                    mbSortType = ASC
                 }
                 5 -> {
-                    NS = MemberAdapter.MB_AGE
-                    ST = DESC
+                    mbNowSort = MemberAdapter.MB_AGE
+                    mbSortType = DESC
                 }
             }
-            mbAdapter.sortNames(NS, ST, memberList)
-            nowSort = NS
-            sortType = ST
+            mbAdapter.sortNames(mbNowSort, mbSortType, memberList)
             listAdp.notifyDataSetChanged() //loadName()を呼ばない！
         }
         // アラートダイアログのボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
@@ -90,14 +88,33 @@ object Sort {
 
         builder.setPositiveButton("OK") { _, _ ->
             when (initial) {
-                0 -> gpAdapter.sortGroups(GroupAdapter.GP_ID, ASC,groupList)
-                1 -> gpAdapter.sortGroups(GroupAdapter.GP_ID, DESC,groupList)
-                2 -> gpAdapter.sortGroups(GroupAdapter.GP_NAME, ASC,groupList)
-                3 -> gpAdapter.sortGroups(GroupAdapter.GP_NAME, DESC,groupList)
-                4 -> gpAdapter.sortGroups(GroupAdapter.GP_BELONG, ASC,groupList)
-                5 -> gpAdapter.sortGroups(GroupAdapter.GP_BELONG, DESC,groupList)
+                0 -> {
+                    gpNowSort = GroupAdapter.GP_ID
+                    gpSortType = ASC
+                }
+                1 -> {
+                    gpNowSort = GroupAdapter.GP_ID
+                    gpSortType = DESC
+                }
+                2 -> {
+                    gpNowSort = GroupAdapter.GP_NAME
+                    gpSortType = ASC
+                }
+                3 -> {
+                    gpNowSort = GroupAdapter.GP_NAME
+                    gpSortType = DESC
+                }
+                4 -> {
+                    gpNowSort = GroupAdapter.GP_BELONG
+                    gpSortType = ASC
+                }
+                5 -> {
+                    gpNowSort = GroupAdapter.GP_BELONG
+                    gpSortType = DESC
+                }
             }
-            listAdp.notifyDataSetChanged()
+            gpAdapter.sortGroups(gpNowSort, gpSortType, groupList)
+            listAdp.notifyDataSetChanged() //loadName()を呼ばない！
         }
         // アラートダイアログのボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
         builder.setNegativeButton(R.string.cancel) { _, _ -> }

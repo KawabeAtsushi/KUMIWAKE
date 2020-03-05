@@ -5,7 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.*
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.ListFragment
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pandatone.kumiwake.AddGroupKeys
 import com.pandatone.kumiwake.R
@@ -14,24 +16,25 @@ import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter
 import com.pandatone.kumiwake.member.function.Filtering
 import com.pandatone.kumiwake.member.function.Member
-import com.pandatone.kumiwake.member.function.MemberMain
 import com.pandatone.kumiwake.member.function.Sort
 import kotlin.collections.ArrayList
+
+
 
 
 /**
  * Created by atsushi_2 on 2016/02/23.
  */
 class FragmentMemberChoiceMode : ListFragment() {
-    private var memberArray = MemberMain.memberArray
+    private var memberArray = ChoiceMemberMain.memberArray
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mbAdapter = MemberAdapter(requireContext())
         memberList = mbAdapter.getAllMembers()
         listAdp = MemberFragmentViewAdapter(requireContext(), memberList)
-        StatusHolder.nowSort = MemberAdapter.MB_ID
-        StatusHolder.sortType = "ASC"
+        StatusHolder.mbNowSort = MemberAdapter.MB_ID
+        StatusHolder.mbSortType = "ASC"
         Sort.initial = 0
         loadName()
     }
@@ -52,17 +55,16 @@ class FragmentMemberChoiceMode : ListFragment() {
         lv.setMultiChoiceModeListener(CallbackMB())
         lv.isFastScrollEnabled = true
         lv.isTextFilterEnabled = true
+
     }
 
     override fun onStart() {
         super.onStart()
-        lv.startActionMode(CallbackMB())
         loadName()
         FragmentGroupChoiceMode().loadName()
-        StatusHolder.nowSort = MemberAdapter.MB_ID
-        StatusHolder.sortType = "ASC"
-        mbAdapter.sortNames(StatusHolder.nowSort, StatusHolder.sortType, memberList)
-
+        val toolbar = activity!!.findViewById<View>(R.id.toolbar2) as Toolbar
+        toolbar.startActionMode(CallbackMB())
+        //初期の選択済みのメンバーをチェックする
         for (member in memberArray) {
             var i = 1
             while (i < listAdp.count) {
@@ -75,6 +77,34 @@ class FragmentMemberChoiceMode : ListFragment() {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
+
+        // アクションアイテム選択時
+        when (item.itemId) {
+            android.R.id.home -> activity!!.finish()
+
+            R.id.item_all_select -> {
+                var i = 1
+                while (i < listAdp.count) {
+                    lv.setItemChecked(i, true)
+                    i += 2
+                }
+            }
+
+            R.id.item_sort -> {
+                Sort.memberSort(builder, requireActivity(), memberList, listAdp)
+                val dialog = builder.create()
+                dialog.show()
+            }
+
+            R.id.item_filter -> {
+                Filtering(requireActivity(), memberList).showFilterDialog(builder, listAdp)
+            }
+        }
+
+        return false
+    }
 
     //////////////////////////////////////////////////////////////////////////////////////
     /////////////////////-------- ActionMode時の処理 ----------///////////////////////////
@@ -83,6 +113,7 @@ class FragmentMemberChoiceMode : ListFragment() {
     internal inner class CallbackMB : AbsListView.MultiChoiceModeListener {
 
         private var checkedCount = 0
+        private var page: Int = 0 //current Tab
 
         private val decisionClicked = View.OnClickListener {
 
@@ -94,7 +125,7 @@ class FragmentMemberChoiceMode : ListFragment() {
             while (i < listAdp.count) {
                 val checked = booleanArray.get(i)
                 val member: Member = memberList[i]
-                if (checked && member.sex != "Index") {
+                if (checked && member.sex != StatusHolder.index) {
                     memberArray.add(member)
                 }
                 i += 2
@@ -112,7 +143,7 @@ class FragmentMemberChoiceMode : ListFragment() {
             inflater.inflate(R.menu.member_menu, menu)
             val searchIcon = menu.findItem(R.id.search_view)
             val deleteIcon = menu.findItem(R.id.item_delete)
-            MemberMain.decision.setOnClickListener(decisionClicked)
+            ChoiceMemberMain.decision.setOnClickListener(decisionClicked)
             searchIcon.isVisible = false
             deleteIcon.isVisible = false
             checkedCount = lv.checkedItemCount
@@ -121,6 +152,17 @@ class FragmentMemberChoiceMode : ListFragment() {
                 //行をクリックした時の処理
                 lv.setItemChecked(position, !listAdp.isPositionChecked(memberList[position].id))
             }
+
+            ChoiceMemberMain.viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+                override fun onPageScrollStateChanged(state: Int) {
+                    page = ChoiceMemberMain.viewPager.currentItem
+                    val itemFilter = menu.findItem(R.id.item_filter)
+                    itemFilter.isVisible = (page == 0)
+                    val allSelect = menu.findItem(R.id.item_all_select)
+                    allSelect.isVisible = (page == 0)
+                }
+            })
+
             return true
         }
 
@@ -142,18 +184,17 @@ class FragmentMemberChoiceMode : ListFragment() {
                 }
 
                 R.id.item_sort -> {
-                    lv.clearChoices()
-                    listAdp.clearSelection()
-                    mode.title = "0" + getString(R.string.selected)
-                    Sort.memberSort(builder, requireActivity(), memberList, listAdp)
+                    if(page == 0) {
+                        Sort.memberSort(builder, requireActivity(), memberList, listAdp)
+                    }else{
+                        Sort.groupSort(builder, requireActivity(), FragmentGroupChoiceMode.groupList, FragmentGroupChoiceMode.listAdp)
+                        FragmentGroupChoiceMode.listAdp.notifyDataSetChanged()
+                    }
                     val dialog = builder.create()
                     dialog.show()
                 }
 
                 R.id.item_filter -> {
-                    lv.clearChoices()
-                    listAdp.clearSelection()
-                    mode.title = "0" + getString(R.string.selected)
                     Filtering(activity!!, memberList).showFilterDialog(builder, listAdp)
                 }
             }
@@ -161,7 +202,6 @@ class FragmentMemberChoiceMode : ListFragment() {
         }
 
         override fun onDestroyActionMode(mode: ActionMode) {
-            listAdp.clearSelection()
         }
 
         override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
@@ -174,17 +214,12 @@ class FragmentMemberChoiceMode : ListFragment() {
             // アクションモード時のアイテムの選択状態変更時(変更後)
             checkedCount = lv.checkedItemCount
 
-            if (checkedCount == 0) {
-                listAdp.setNewSelection(memberList[position].id, true)
-                clearSelection(mode)
-            } else {
-                if (checked) {
+            if (checked) {
                     listAdp.setNewSelection(memberList[position].id, checked)
                 } else {
                     listAdp.removeSelection(memberList[position].id)
                 }
                 mode.title = checkedCount.toString() + getString(R.string.selected)
-            }
         }
 
         private fun clearSelection(mode: ActionMode) {
@@ -215,6 +250,7 @@ class FragmentMemberChoiceMode : ListFragment() {
         mbAdapter.getCursor(c, memberList, true)
         mbAdapter.close()
         listAdapter = listAdp
+        mbAdapter.sortNames(StatusHolder.mbNowSort, StatusHolder.mbSortType, memberList)
         listAdp.notifyDataSetChanged()
     }
 

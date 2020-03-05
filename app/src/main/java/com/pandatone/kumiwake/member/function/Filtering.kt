@@ -52,9 +52,9 @@ class Filtering(val activity: Activity, private val memberList: ArrayList<Member
 
         val okButton = dialog2.getButton(AlertDialog.BUTTON_POSITIVE)
         okButton.setOnClickListener {
-            StatusHolder.nowSort = MemberAdapter.MB_ID
-            StatusHolder.sortType = "ASC"
-            mbAdapter.sortNames(StatusHolder.nowSort, StatusHolder.sortType, memberList)
+            StatusHolder.mbNowSort = MemberAdapter.MB_ID
+            StatusHolder.mbSortType = "ASC"
+            mbAdapter.sortNames(StatusHolder.mbNowSort, StatusHolder.mbSortType, memberList)
             filter(layout, belongDropdown, false)
             listAdp.notifyDataSetChanged()
             dialog2.dismiss()

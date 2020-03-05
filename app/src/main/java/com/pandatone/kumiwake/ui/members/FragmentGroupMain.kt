@@ -13,6 +13,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pandatone.kumiwake.AddGroupKeys
 import com.pandatone.kumiwake.member.function.GroupMethods
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
 import com.pandatone.kumiwake.member.*
@@ -36,6 +37,8 @@ class FragmentGroupMain : ListFragment() {
         gpAdapter = GroupAdapter(requireContext())
         groupList = ArrayList()
         listAdp = GroupFragmentViewAdapter(requireContext(), groupList)
+        StatusHolder.gpNowSort = GroupAdapter.GP_ID
+        StatusHolder.gpSortType = "ASC"
     }
 
     // 必須*
@@ -277,6 +280,7 @@ class FragmentGroupMain : ListFragment() {
         gpAdapter.getCursor(c, groupList)
         gpAdapter.close()
         listAdapter = listAdp
+        gpAdapter.sortGroups(StatusHolder.gpNowSort, StatusHolder.gpSortType, groupList)
         listAdp.notifyDataSetChanged()
     }
 

@@ -1,4 +1,4 @@
-package com.pandatone.kumiwake.ui.dialogs
+package com.pandatone.kumiwake.setting
 
 import androidx.appcompat.app.AppCompatDialog
 import android.graphics.Color
@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.setting.DBBackup
 import android.content.Context
 import android.view.*
 import android.widget.*

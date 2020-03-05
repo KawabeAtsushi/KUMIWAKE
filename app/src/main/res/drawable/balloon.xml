@@ -9,8 +9,7 @@
         android:top="5dp"
         android:left="10dp"
         android:right="10dp" />
-    <solid android:color="@android:color/white" />
-    <stroke android:width="3dp" android:color="#aaa" />
+    <solid android:color="@color/green" />
 
 </shape>
 

@@ -14,20 +14,18 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.pandatone.kumiwake.MainActivity
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.sekigime.function.DrawTableView
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
-import androidx.core.view.marginStart
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.sekigime.function.DrawAllTable
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.LinearLayout
-import kotlinx.android.synthetic.main.sekigime_result.*
+import com.pandatone.kumiwake.ShareViewImage
 
 
 /**
@@ -38,6 +36,8 @@ class SekigimeResult : AppCompatActivity() {
     private lateinit var draw: DrawTableView
     private var groupNo: Int = 0
     private var drawAll = true
+    private var teamArrayMan: ArrayList<ArrayList<Member>> = ArrayList()
+    private var teamArrayWoman: ArrayList<ArrayList<Member>> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,8 +101,10 @@ class SekigimeResult : AppCompatActivity() {
         resultLayout.removeAllViews()
         val dropdown = findViewById<TextInputLayout>(R.id.group_selector)
         val button = findViewById<Button>(R.id.show_all)
+        val shareButton = findViewById<Button>(R.id.share_image)
         if (drawAll) {
             dropdown.visibility = View.GONE
+            shareButton.visibility = View.VISIBLE
             val groupNameView = groupTextView()
             val drawAll = DrawAllTable(this)
             resultLayout.addView(groupNameView)
@@ -110,20 +112,23 @@ class SekigimeResult : AppCompatActivity() {
             button.text = getString(R.string.show_detail)
         } else {
             dropdown.visibility = View.VISIBLE
+            shareButton.visibility = View.GONE
             resultLayout.addView(draw)
             button.text = getString(R.string.show_all)
         }
         drawAll = !drawAll //描画モード切替
     }
 
+    @OnClick(R.id.share_image)
+    fun onShareImage() {
+        val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
+        ShareViewImage.shareView(this,resultLayout,getString(R.string.sekigime_result))
+    }
+
     //再席決め
     private fun reSekigime() {
         for (i in 0 until groupNo) {
-            if (StatusHolder.normalMode) {
-                arrayArrayNormal[i].shuffle()
-            } else {
-                arrayArrayQuick[i].shuffle()
-            }
+            teamArray[i].shuffle()
         }
         if (fmDeploy) {
             convertAlternatelyFmArray()
@@ -156,193 +161,98 @@ class SekigimeResult : AppCompatActivity() {
         var smaller: Float
         var addNo: Float
         var remainder: Float
-        var i: Int
+        var i: Int = 0
         var j: Int
         var k: Int
         var a: Int
         var memberSum: Int
-        if (StatusHolder.normalMode) {
-            createFmArrayForNormal()
-            var smallerArray: ArrayList<ArrayList<Member>>
-            var biggerArray: ArrayList<ArrayList<Member>>
-            arrayArrayNormal = ArrayList(groupNo)
-            for (g in 0 until groupNo) {
-                arrayArrayNormal.add(ArrayList())
+        createFmArray()
+        var smallerArray: ArrayList<ArrayList<Member>>
+        var biggerArray: ArrayList<ArrayList<Member>>
+        teamArray = ArrayList(groupNo)
+        for (g in 0 until groupNo) {
+            teamArray.add(ArrayList())
+        }
+        while (i < groupNo) {
+            manArrayNo = teamArrayMan[i].size.toFloat()
+            womanArrayNo = teamArrayWoman[i].size.toFloat()
+            if (manArrayNo < womanArrayNo) {
+                bigger = womanArrayNo
+                smaller = manArrayNo
+                biggerArray = teamArrayWoman
+                smallerArray = teamArrayMan
+            } else {
+                bigger = manArrayNo
+                smaller = womanArrayNo
+                biggerArray = teamArrayMan
+                smallerArray = teamArrayWoman
             }
-            i = 0
-            while (i < groupNo) {
-                manArrayNo = arrayArrayNormalMan[i].size.toFloat()
-                womanArrayNo = arrayArrayNormalWoman[i].size.toFloat()
-                if (manArrayNo < womanArrayNo) {
-                    bigger = womanArrayNo
-                    smaller = manArrayNo
-                    biggerArray = arrayArrayNormalWoman
-                    smallerArray = arrayArrayNormalMan
-                } else {
-                    bigger = manArrayNo
-                    smaller = womanArrayNo
-                    biggerArray = arrayArrayNormalMan
-                    smallerArray = arrayArrayNormalWoman
+            if (smaller != 0f) {
+                addNo = bigger / smaller
+                remainder = bigger % smaller - 1
+                memberSum = 0
+                a = 0
+                while (a < addNo / 2) {
+                    teamArray[i].add(biggerArray[i][memberSum])
+                    memberSum++
+                    a++
                 }
-                if (smaller != 0f) {
-                    addNo = bigger / smaller
-                    remainder = bigger % smaller - 1
-                    memberSum = 0
-                    a = 0
-                    while (a < addNo / 2) {
-                        arrayArrayNormal[i].add(biggerArray[i][memberSum])
-                        memberSum++
-                        a++
-                    }
-                    arrayArrayNormal[i].add(smallerArray[i][0])
-                    j = 1
-                    while (j < smaller) {
-                        k = 0
-                        while (k < addNo - 1) {
-                            arrayArrayNormal[i].add(biggerArray[i][memberSum])
-                            memberSum++
-                            k++
-                        }
-                        if (remainder != 0f) {
-                            arrayArrayNormal[i].add(biggerArray[i][memberSum])
-                            memberSum++
-                            remainder--
-                        }
-                        arrayArrayNormal[i].add(smallerArray[i][j])
-                        j++
-                    }
-                    while (a < addNo) {
-                        arrayArrayNormal[i].add(biggerArray[i][memberSum])
-                        memberSum++
-                        a++
-                    }
-                } else {
+                teamArray[i].add(smallerArray[i][0])
+                j = 1
+                while (j < smaller) {
                     k = 0
-                    while (k < bigger) {
-                        arrayArrayNormal[i].add(biggerArray[i][k])
+                    while (k < addNo - 1) {
+                        teamArray[i].add(biggerArray[i][memberSum])
+                        memberSum++
                         k++
                     }
-                }
-                i++
-
-            }
-        } else {
-            createFmArrayForQuick()
-            var smallerArray: ArrayList<ArrayList<String>>
-            var biggerArray: ArrayList<ArrayList<String>>
-            arrayArrayQuick = ArrayList(groupNo)
-            for (g in 0 until groupNo) {
-                arrayArrayQuick.add(ArrayList())
-            }
-            i = 0
-            while (i < groupNo) {
-                manArrayNo = arrayArrayQuickMan[i].size.toFloat()
-                womanArrayNo = arrayArrayQuickWoman[i].size.toFloat()
-                if (manArrayNo < womanArrayNo) {
-                    bigger = womanArrayNo
-                    smaller = manArrayNo
-                    biggerArray = arrayArrayQuickWoman
-                    smallerArray = arrayArrayQuickMan
-                } else {
-                    bigger = manArrayNo
-                    smaller = womanArrayNo
-                    biggerArray = arrayArrayQuickMan
-                    smallerArray = arrayArrayQuickWoman
-                }
-                if (smaller != 0f) {
-                    addNo = bigger / smaller
-                    remainder = bigger % smaller - 1
-                    memberSum = 0
-                    a = 0
-                    while (a < addNo / 2) {
-                        arrayArrayQuick[i].add(biggerArray[i][memberSum])
+                    if (remainder != 0f) {
+                        teamArray[i].add(biggerArray[i][memberSum])
                         memberSum++
-                        a++
+                        remainder--
                     }
-                    arrayArrayQuick[i].add(smallerArray[i][0])
-                    j = 1
-                    while (j < smaller) {
-                        k = 0
-                        while (k < addNo - 1) {
-                            arrayArrayQuick[i].add(biggerArray[i][memberSum])
-                            memberSum++
-                            k++
-                        }
-                        if (remainder != 0f) {
-                            arrayArrayQuick[i].add(biggerArray[i][memberSum])
-                            memberSum++
-                            remainder--
-                        }
-                        arrayArrayQuick[i].add(smallerArray[i][j])
-                        j++
-                    }
-                    while (a < addNo) {
-                        arrayArrayQuick[i].add(biggerArray[i][memberSum])
-                        memberSum++
-                        a++
-                    }
-
-                } else {
-                    k = 0
-                    while (k < bigger) {
-                        arrayArrayQuick[i].add(biggerArray[i][k])
-                        k++
-                    }
+                    teamArray[i].add(smallerArray[i][j])
+                    j++
                 }
-                i++
+                while (a < addNo) {
+                    teamArray[i].add(biggerArray[i][memberSum])
+                    memberSum++
+                    a++
+                }
+            } else {
+                k = 0
+                while (k < bigger) {
+                    teamArray[i].add(biggerArray[i][k])
+                    k++
+                }
             }
+            i++
 
         }
     }
 
-    private fun createFmArrayForNormal() {
+    private fun createFmArray() {
         var item: Member
-        arrayArrayNormalMan = ArrayList(groupNo)
-        arrayArrayNormalWoman = ArrayList(groupNo)
+        teamArrayMan = ArrayList(groupNo)
+        teamArrayWoman = ArrayList(groupNo)
         for (g in 0 until groupNo) {
-            arrayArrayNormalMan.add(ArrayList())
-            arrayArrayNormalWoman.add(ArrayList())
+            teamArrayMan.add(ArrayList())
+            teamArrayWoman.add(ArrayList())
         }
-        for (i in arrayArrayNormal.indices) {
-            for (j in 0 until arrayArrayNormal[i].size) {
-                item = arrayArrayNormal[i][j]
+        for (i in teamArray.indices) {
+            for (j in 0 until teamArray[i].size) {
+                item = teamArray[i][j]
                 if (item.sex == getText(R.string.man)) {
-                    arrayArrayNormalMan[i].add(item)
+                    teamArrayMan[i].add(item)
                 } else {
-                    arrayArrayNormalWoman[i].add(item)
-                }
-            }
-        }
-    }
-
-    private fun createFmArrayForQuick() {
-        var item: String
-        arrayArrayQuickMan = ArrayList(groupNo)
-        arrayArrayQuickWoman = ArrayList(groupNo)
-        for (g in 0 until groupNo) {
-            arrayArrayQuickMan.add(ArrayList())
-            arrayArrayQuickWoman.add(ArrayList())
-        }
-        for (i in arrayArrayQuick.indices) {
-            for (j in 0 until arrayArrayQuick[i].size) {
-                item = arrayArrayQuick[i][j]
-                if (item.matches((".*" + "♠" + ".*").toRegex())) {
-                    arrayArrayQuickMan[i].add(item)
-                } else {
-                    arrayArrayQuickWoman[i].add(item)
+                    teamArrayWoman[i].add(item)
                 }
             }
         }
     }
 
     companion object {
-
-        var arrayArrayNormal: ArrayList<ArrayList<Member>> = ArrayList()
-        var arrayArrayNormalMan: ArrayList<ArrayList<Member>> = ArrayList()
-        var arrayArrayNormalWoman: ArrayList<ArrayList<Member>> = ArrayList()
-        var arrayArrayQuick: ArrayList<ArrayList<String>> = ArrayList()
-        var arrayArrayQuickMan: ArrayList<ArrayList<String>> = ArrayList()
-        var arrayArrayQuickWoman: ArrayList<ArrayList<String>> = ArrayList()
+        var teamArray: ArrayList<ArrayList<Member>> = ArrayList()
         var groupArray: ArrayList<String>? = null
         var doubleDeploy: Boolean = false
         var fmDeploy: Boolean = false

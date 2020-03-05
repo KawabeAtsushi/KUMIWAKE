@@ -2,6 +2,7 @@ package com.pandatone.kumiwake.ui.dialogs
 
 import android.view.View
 import androidx.fragment.app.FragmentManager
+import com.pandatone.kumiwake.setting.FileManagerDialog
 
 class DialogWarehouse(private var fragmentManager: FragmentManager) {
 

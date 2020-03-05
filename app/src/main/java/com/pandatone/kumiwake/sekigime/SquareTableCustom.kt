@@ -23,23 +23,14 @@ class SquareTableCustom : AppCompatActivity() {
         setContentView(R.layout.square_custom)
         ButterKnife.bind(this)
 
-        if (StatusHolder.normalMode) {
-            val array = SekigimeResult.arrayArrayNormal
-            for (item in array) {
-                val size = item.size
-                if (size < mingroupNo) {
-                    mingroupNo = size
-                }
-            }
-        } else {
-            val array = SekigimeResult.arrayArrayQuick
-            for (item in array) {
-                val size = item.size
-                if (size < mingroupNo) {
-                    mingroupNo = size
-                }
+        val array = SekigimeResult.teamArray
+        for (item in array) {
+            val size = item.size
+            if (size < mingroupNo) {
+                mingroupNo = size
             }
         }
+
         square_seek_bar.max = mingroupNo / 4
         if (mingroupNo < 4) {
             square_seek_bar.isEnabled = false

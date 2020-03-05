@@ -44,7 +44,10 @@ class AddMember : AppCompatActivity() {
     private var belongDropdown: Button? = null
     private var mbAdapter: MemberAdapter? = null
     private var fromNormalMode = false
-    private lateinit var groupList: ArrayList<Group>
+    private val groupList: ArrayList<Group>
+        get() {
+                return GroupAdapter(this).getAllGroups()
+        }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -125,7 +128,6 @@ class AddMember : AppCompatActivity() {
         // 選択中の候補を取得
         val buttonText = belongDropdown!!.text.toString()
         val textArray = buttonText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        groupList = GroupAdapter(this).getAllGroups()
         // 候補リスト
         val list = ArrayList<String>()
         for (group in groupList) {

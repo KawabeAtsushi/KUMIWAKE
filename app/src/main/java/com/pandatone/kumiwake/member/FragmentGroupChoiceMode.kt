@@ -4,13 +4,15 @@ import android.os.Bundle
 import android.view.*
 import android.widget.AdapterView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.ListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
 import com.pandatone.kumiwake.member.function.Group
-import com.pandatone.kumiwake.member.function.MemberMain
+import com.pandatone.kumiwake.member.function.Sort
 
 
 /**
@@ -25,8 +27,9 @@ class FragmentGroupChoiceMode : ListFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         gpAdapter = GroupAdapter(requireContext())
-        groupList = ArrayList()
         listAdp = GroupFragmentViewAdapter(requireContext(), groupList)
+        StatusHolder.gpNowSort = GroupAdapter.GP_ID
+        StatusHolder.gpSortType = "ASC"
     }
 
     override fun onStart() {
@@ -61,9 +64,23 @@ class FragmentGroupChoiceMode : ListFragment() {
 
             listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                 //行をクリックした時の処理
-                MemberMain.viewPager.setCurrentItem(0, true)
+                ChoiceMemberMain.viewPager.setCurrentItem(0, true)
                 FragmentMemberChoiceMode().checkByGroup(groupList[position].id)
             }
+    }
+
+    // アクションアイテム選択時
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.item_sort -> {
+                val builder = AlertDialog.Builder(activity!!)
+                Sort.groupSort(builder, activity!!, groupList, listAdp)
+                val dialog = builder.create()
+                dialog.show()
+            }
+        }
+        return false
     }
 
     //リスト表示更新
@@ -73,13 +90,15 @@ class FragmentGroupChoiceMode : ListFragment() {
         gpAdapter.getCursor(c, groupList)
         gpAdapter.close()
         listAdapter = listAdp
+        gpAdapter.sortGroups(StatusHolder.gpNowSort, StatusHolder.gpSortType, groupList)
         listAdp.notifyDataSetChanged()
     }
 
     companion object {
         //最初から存在してほしいのでprivateのcompanionにする（じゃないと落ちる。コルーチンとか使えばいけるかも）
         private lateinit var gpAdapter: GroupAdapter
-        private lateinit var listAdp: GroupFragmentViewAdapter
+        internal lateinit var listAdp: GroupFragmentViewAdapter
+        internal var groupList: ArrayList<Group> = ArrayList()
     }
 
 }

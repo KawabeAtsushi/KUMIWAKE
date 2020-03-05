@@ -161,4 +161,5 @@
     <string name="specify_path_message">Please specify file path to "KUMIWAKE_Backup".</string>
     <string name="show_all">Show all</string>
     <string name="show_detail">Show detail</string>
+    <string name="sekigime_result">Seating result</string>
 </resources>

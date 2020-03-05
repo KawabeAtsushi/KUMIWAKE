@@ -21,7 +21,6 @@ import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.member.function.GroupMethods
 import com.pandatone.kumiwake.member.function.Member
-import com.pandatone.kumiwake.member.function.MemberMain
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import com.pandatone.kumiwake.ui.members.FragmentGroupMain
 import kotlinx.android.synthetic.main.part_review_listview.*
@@ -154,9 +153,9 @@ class AddGroup : AppCompatActivity() {
         gpAdapter.updateGroup(listId, name, name, adapter.count)
     }
 
-    //メンバー選択(MemberMain)へ移動
+    //メンバー選択(ChoiceMemberMain)へ移動
     private fun moveMemberMain() {
-        val intent = Intent(this, MemberMain::class.java)
+        val intent = Intent(this, ChoiceMemberMain::class.java)
         intent.putExtra(AddGroupKeys.MEMBER_ARRAY.key, members)
         startActivityForResult(intent, 0)
     }
@@ -217,7 +216,7 @@ class AddGroup : AppCompatActivity() {
         }
     }
 
-    //メンバー選択(MemberMain)からのコールバック
+    //メンバー選択(ChoiceMemberMain)からのコールバック
     override fun onActivityResult(requestCode: Int, resultCode: Int, i: Intent?) {
         super.onActivityResult(requestCode, resultCode, i)
 

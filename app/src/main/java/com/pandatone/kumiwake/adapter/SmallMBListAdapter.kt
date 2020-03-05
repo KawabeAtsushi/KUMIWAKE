@@ -63,10 +63,13 @@ class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Mem
 
     private fun setSexIcon(memberIcon: ImageView, position: Int) {
 
-        if (listElements[position].sex == context.getText(R.string.man)) {
+        val sex = listElements[position].sex
+        if (sex == context.getText(R.string.man)) {
             memberIcon.setImageResource(R.drawable.member_img)
-        } else {
+        } else if(sex == context.getText(R.string.woman)) {
             memberIcon.setColorFilter(context.resources.getColor(R.color.woman))
+        }else{
+            memberIcon.setColorFilter(context.resources.getColor(R.color.gray))
         }
     }
 
