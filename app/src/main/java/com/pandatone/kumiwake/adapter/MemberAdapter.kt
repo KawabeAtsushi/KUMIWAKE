@@ -210,10 +210,20 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
         return memberList
     }
 
-    fun addBelong(id: String, newBelong: String) {
+    //Belongの更新
+    fun updateBelong(id: String, newBelong: String) {
         open()
         val values = ContentValues()
         values.put(MB_BELONG, newBelong)
+        db.update(TABLE_NAME, values, "$MB_ID=?", arrayOf(id))
+        close()
+    }
+
+    //Ageの更新
+    fun updateAge(id: String, newAge: String) {
+        open()
+        val values = ContentValues()
+        values.put(MB_AGE, newAge)
         db.update(TABLE_NAME, values, "$MB_ID=?", arrayOf(id))
         close()
     }

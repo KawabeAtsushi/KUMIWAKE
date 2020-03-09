@@ -19,4 +19,5 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="hint_icon_size">50dp</dimen>
     <dimen name="main_button_text_size">27sp</dimen>
+    <dimen name="radio_button_text">20sp</dimen>
 </resources>

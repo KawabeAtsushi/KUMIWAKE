@@ -47,7 +47,7 @@ object GroupMethods {
             for (item in list) {
                 newBelong.append("$item,")
             }
-            mbAdapter.addBelong(listId.toString(), newBelong.toString())
+            mbAdapter.updateBelong(listId.toString(), newBelong.toString())
         }
     }
 

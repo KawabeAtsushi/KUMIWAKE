@@ -169,7 +169,7 @@ class AddGroup : AppCompatActivity() {
                 val newBelong = StringBuilder()
                 newBelong.append(member.belong)
                 newBelong.append("$groupId,")
-                mbAdapter.addBelong(listId.toString(), newBelong.toString())
+                mbAdapter.updateBelong(listId.toString(), newBelong.toString())
             } else {
                 deleteBelongInfo(member, groupId, listId)
             }
@@ -191,7 +191,7 @@ class AddGroup : AppCompatActivity() {
             for (item in list) {
                 newBelong.append("$item,")
             }
-            mbAdapter.addBelong(listId.toString(), newBelong.toString())
+            mbAdapter.updateBelong(listId.toString(), newBelong.toString())
         }
     }
 
@@ -212,7 +212,7 @@ class AddGroup : AppCompatActivity() {
             for (item in list) {
                 newBelong.append("$item,")
             }
-            mbAdapter.addBelong(listId.toString(), newBelong.toString())
+            mbAdapter.updateBelong(listId.toString(), newBelong.toString())
         }
     }
 

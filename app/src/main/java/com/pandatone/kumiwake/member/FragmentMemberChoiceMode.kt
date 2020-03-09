@@ -179,6 +179,7 @@ class FragmentMemberChoiceMode : ListFragment() {
                 }
 
                 R.id.item_sort -> {
+                    clearSelection(mode)
                     if (page == 0) {
                         Sort.memberSort(requireActivity(), memberList, listAdp)
                     } else {
@@ -188,6 +189,7 @@ class FragmentMemberChoiceMode : ListFragment() {
                 }
 
                 R.id.item_filter -> {
+                    clearSelection(mode)
                     Filtering(activity!!, memberList).showFilterDialog(requireActivity(), listAdp)
                 }
             }

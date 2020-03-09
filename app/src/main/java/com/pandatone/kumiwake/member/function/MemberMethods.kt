@@ -1,23 +1,43 @@
 package com.pandatone.kumiwake.member.function
 
-import android.app.Activity
-import android.view.WindowManager
-import androidx.annotation.ColorRes
-import androidx.core.content.ContextCompat
+import android.content.Context
+import com.pandatone.kumiwake.adapter.GroupAdapter
+import com.pandatone.kumiwake.adapter.MemberAdapter
+import com.pandatone.kumiwake.ui.members.FragmentGroupMain
 
 object MemberMethods {
 
-    //ステータスバーの色変更
-    fun setStatusBarColor(activity: Activity, @ColorRes colorId: Int) {
-        activity.apply {
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = ContextCompat.getColor(this, colorId)
+    //Groupの所属人数データ更新
+    fun updateBelongNo(context: Context) {
+        val gpAdapter = GroupAdapter(context)
+        val members = MemberAdapter(context).getAllMembers()
+        for (group in gpAdapter.getAllGroups()) {
+            val groupId = group.id.toString()
+            var belongNo = 0
+            members.forEach { member ->
+                val belongArray = member.belong.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                val list = ArrayList(listOf<String>(*belongArray))
+                if (list.contains(groupId)) {
+                    belongNo++
+                }
+            }
+            gpAdapter.updateBelongNo(groupId, belongNo)
         }
+        FragmentGroupMain().loadName()
     }
 
-    fun setKumiwakeTheme(activity: Activity, @ColorRes colorId: Int) {
-        setStatusBarColor(activity, colorId)
+    //memberのAgeを更新
+    fun updateAge(context: Context,memberList: ArrayList<Member>,newAge:Int ,define:Boolean) {
+        val mbAdapter = MemberAdapter(context)
+        memberList.forEach { member ->
+            val listId = member.id
+            if (define){
+                mbAdapter.updateAge(listId.toString(), newAge.toString())
+            }else{
+                val nowAge = member.age
+                mbAdapter.updateAge(listId.toString(), (nowAge+newAge).toString())
+            }
+        }
     }
 
 }

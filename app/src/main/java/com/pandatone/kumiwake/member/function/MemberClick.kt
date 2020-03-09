@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.ui.members.FragmentGroupMain
 
 /**
@@ -35,20 +34,20 @@ object MemberClick {
     }
 
     @SuppressLint("SetTextI18n")
-    fun setInfo(c:Context, member: Member, dbAdapter:MemberAdapter) {
+    fun setInfo(c: Context, member: Member) {
         name.text = member.name + " (" + member.read + ")"
         sex.text = member.sex
         age.text = member.age.toString()
 
-        if (viewBelong(member, dbAdapter) !== "") {
-            belong.text = viewBelong(member, dbAdapter)
+        if (viewBelong(member) !== "") {
+            belong.text = viewBelong(member)
         } else {
             belong.text = c.getText(R.string.nothing)
         }
 
     }
 
-    fun viewBelong(member: Member, mbAdapter:MemberAdapter): String {
+    fun viewBelong(member: Member): String {
         val result: String
         val belongText = member.belong
         val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()

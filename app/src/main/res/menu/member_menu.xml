@@ -33,4 +33,11 @@
         android:icon="@drawable/ic_filter_list_black_24dp"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/item_change_age"
+        android:title="@string/change_age"
+        android:icon="@drawable/ic_cake_black_24dp"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
 </menu>

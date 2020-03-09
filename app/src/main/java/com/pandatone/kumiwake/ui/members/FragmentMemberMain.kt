@@ -1,29 +1,26 @@
 package com.pandatone.kumiwake.ui.members
 
-import androidx.appcompat.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
-import android.widget.AbsListView
-import android.widget.AdapterView
-import android.widget.ListView
+import android.view.View.OnFocusChangeListener
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.ListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textfield.TextInputEditText
 import com.pandatone.kumiwake.AddMemberKeys
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter
-import com.pandatone.kumiwake.member.*
-import com.pandatone.kumiwake.member.function.Filtering
-import com.pandatone.kumiwake.member.function.Member
-import com.pandatone.kumiwake.member.function.MemberClick
-import com.pandatone.kumiwake.member.function.Sort
+import com.pandatone.kumiwake.member.AddMember
+import com.pandatone.kumiwake.member.function.*
 import java.io.IOException
-import java.util.*
-import kotlin.collections.ArrayList
+import java.lang.Math.abs
 
 
 /**
@@ -83,7 +80,7 @@ class FragmentMemberMain : ListFragment() {
                 when (which) {
                     0 -> {
                         MemberClick.memberInfoDialog(view2, builder2)
-                        MemberClick.setInfo(context!!, memberList[position], mbAdapter)
+                        MemberClick.setInfo(context!!, memberList[position])
                         val dialog2 = builder2.create()
                         dialog2.show()
                         MemberClick.okBt.setOnClickListener { dialog2.dismiss() }
@@ -124,7 +121,7 @@ class FragmentMemberMain : ListFragment() {
             }
 
             R.id.item_sort -> {
-                Sort.memberSort( requireActivity(), memberList, listAdp)
+                Sort.memberSort(requireActivity(), memberList, listAdp)
             }
 
             R.id.item_filter -> {
@@ -146,7 +143,7 @@ class FragmentMemberMain : ListFragment() {
             val listId = member.id
             mbAdapter.selectDelete(listId.toString())
             loadName()
-            updateBelongNo()
+            MemberMethods.updateBelongNo(requireContext())
             FragmentGroupMain().loadName()
         }
 
@@ -165,11 +162,10 @@ class FragmentMemberMain : ListFragment() {
 
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             // アクションモード初期化処理
-
             val inflater = activity!!.menuInflater
             inflater.inflate(R.menu.member_menu, menu)
-            val searchIcon = menu.findItem(R.id.search_view)
-            searchIcon.isVisible = false
+            menu.findItem(R.id.search_view).isVisible = false
+            menu.findItem(R.id.item_change_age).isVisible = true
             checkedCount = 0
             mode.title = checkedCount.toString() + getString(R.string.selected)
             return true
@@ -196,20 +192,19 @@ class FragmentMemberMain : ListFragment() {
                 }
 
                 R.id.item_sort -> {
-                    lv.clearChoices()
-                    listAdp.clearSelection()
-                    mode.title = "0" + getString(R.string.selected)
-                    Sort.memberSort( requireActivity(), memberList, listAdp)
+                    clearSelection(mode)
+                    Sort.memberSort(requireActivity(), memberList, listAdp)
                 }
 
                 R.id.item_filter -> {
-                    lv.clearChoices()
-                    listAdp.clearSelection()
-                    mode.title = "0" + getString(R.string.selected)
-                    Filtering(activity!!, memberList).showFilterDialog( requireActivity(),listAdp)
+                    clearSelection(mode)
+                    Filtering(activity!!, memberList).showFilterDialog(requireActivity(), listAdp)
+                }
+
+                R.id.item_change_age -> {
+                    changeAge()
                 }
             }
-
             return false
         }
 
@@ -223,6 +218,7 @@ class FragmentMemberMain : ListFragment() {
             return true
         }
 
+        //選択状態が変更されたとき
         override fun onItemCheckedStateChanged(mode: ActionMode,
                                                position: Int, id: Long, checked: Boolean) {
             // アクションモード時のアイテムの選択状態変更時
@@ -258,21 +254,14 @@ class FragmentMemberMain : ListFragment() {
             builder.setMessage(R.string.Do_delete)
             // OKの時の処理
             builder.setPositiveButton("OK") { _, _ ->
-                val booleanArray = lv.checkedItemPositions
-                var i = 1
-                while (i < listAdp.count) {
-                    val checked = booleanArray.get(i)
-                    if (checked) {
-                        // IDを取得する
-                        val member: Member = memberList[i]
-                        val listId = member.id
-                        mbAdapter.selectDelete(listId.toString())     // DBから取得したIDが入っているデータを削除する
-                    }
-                    i += 2
+                val checkedMembers = checkedMemberList()
+                checkedMembers.forEach { member ->
+                    val listId = member.id
+                    mbAdapter.selectDelete(listId.toString())     // DBから取得したIDが入っているデータを削除する
                 }
                 listAdp.clearSelection()
                 loadName()
-                updateBelongNo()
+                MemberMethods.updateBelongNo(requireContext())
                 FragmentGroupMain().loadName()
                 mode.finish()
             }
@@ -296,19 +285,70 @@ class FragmentMemberMain : ListFragment() {
         listAdp.notifyDataSetChanged()
     }
 
-    //Groupの所属人数データ更新
-    fun updateBelongNo() {
-        for (group in FragmentGroupMain.groupList) {
-            val groupId = group.id.toString()
-            var belongNo = 0
-            memberList.forEach { member ->
-                val belongArray = member.belong.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                val list = ArrayList(Arrays.asList<String>(*belongArray))
-                if (list.contains(groupId)) {
-                    belongNo++
-                }
+    //選択されているメンバーをリストで取得
+    fun checkedMemberList(): ArrayList<Member> {
+        val booleanArray = lv.checkedItemPositions
+        val checkedMemberList = ArrayList<Member>()
+        var i = 1
+        val members = memberList
+        while (i < listAdp.count) {
+            val checked = booleanArray.get(i)
+            if (checked) {
+                val member: Member = members[i]
+                checkedMemberList.add(member)
             }
-            FragmentGroupMain.gpAdapter.updateBelongNo(groupId, belongNo)
+            i += 2
+        }
+        return checkedMemberList
+    }
+
+//    //メンバー再選択処理(今後の課題)
+//    fun reChecked() {
+//        var i = 0
+//        val members = memberList
+//        val boolArray = SparseBooleanArray()
+//        while (i < listAdp.count) {
+//            val member = members[i]
+//            if (boolArray.get(member.id)) {
+//                listAdp.setNewSelection(member.id, true)
+//            }
+//            i += 2
+//        }
+//    }
+
+    //年齢変更ボタンクリック
+    fun changeAge() {
+        val activity = requireActivity()
+        val builder = androidx.appcompat.app.AlertDialog.Builder(activity)
+        val inflater = activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater.inflate(R.layout.change_age_dialog, activity.findViewById<View>(R.id.change_age_dialog) as? ViewGroup)
+        builder.setTitle(activity.getText(R.string.change_age))
+        builder.setView(layout)
+        builder.setPositiveButton("OK", null)
+        builder.setNegativeButton(R.string.cancel) { _, _ -> }
+        // back keyを使用不可に設定
+        builder.setCancelable(false)
+        val dialog = builder.create()
+        dialog.show()
+        val newAgeET = layout.findViewById<View>(R.id.specify_age) as TextInputEditText
+        var ageValue = 0
+        var method = ""
+        val conditionGroup = layout.findViewById<View>(R.id.conditionGroup) as RadioGroup
+        conditionGroup.setOnCheckedChangeListener { _, checkedId: Int ->
+            when (checkedId) {
+                R.id.define -> method = ""
+                R.id.plus -> method = "+"
+                R.id.decline -> method = "-"
+            }
+        }
+        val okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        okButton.setOnClickListener {
+            val newAge = Integer.parseInt(method + newAgeET.text.toString())
+            val conditionButton = layout.findViewById<View>(conditionGroup.checkedRadioButtonId) as RadioButton
+            val define = (conditionButton.id == R.id.define)
+            MemberMethods.updateAge(requireContext(), checkedMemberList(), newAge, define)     // 年齢更新
+            loadName()
+            dialog.dismiss()
         }
     }
 
@@ -328,6 +368,6 @@ class FragmentMemberMain : ListFragment() {
         private lateinit var mbAdapter: MemberAdapter
         private lateinit var listAdp: MemberFragmentViewAdapter
         private lateinit var lv: ListView
-        private var memberList: ArrayList<Member> = ArrayList() //searchMemberの関係
+        internal var memberList: ArrayList<Member> = ArrayList() //searchMemberの関係
     }
 }

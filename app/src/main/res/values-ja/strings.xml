@@ -24,7 +24,6 @@
     <string name="registered">を登録しました</string>
     <string name="sex">性別</string>
     <string name="input_required">*入力必須</string>
-    <string name="select_belong_group">グループを選択</string>
     <string name="decide">決 定</string>
     <string name="clear">クリア</string>
     <string name="cancel">キャンセル</string>
@@ -159,8 +158,6 @@
     <string name="failed_to_mkdirs">バックアップディレクトリの作成に失敗しました。\n\"OK\"を押すと以下のパスでバックアップを再実行します。</string>
     <string name="app_exit_confirmation">アプリを終了しますか？</string>
     <string name="edit_exit_confirmation">編集画面を閉じますか？\n編集情報は破棄されます。</string>
-    <string name="specify_path">パスを指定</string>
-    <string name="specify_path_message">\"KUMIWAKE_Backup\"へのファイルパスを指定してください。</string>
     <string name="show_all">全表示</string>
     <string name="show_detail">詳細表示</string>
     <string name="history">履歴</string>
@@ -169,4 +166,6 @@
     <string name="share">共有</string>
     <string name="copy_path">パスをコピー</string>
     <string name="copied_path">パスをコピーしました。</string>
+    <string name="change_age">年齢の変更</string>
+    <string name="define">固定値</string>
 </resources>

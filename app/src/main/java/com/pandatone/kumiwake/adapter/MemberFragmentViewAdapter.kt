@@ -67,6 +67,7 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
         return v
     }
 
+    //性別アイコン描画
     private fun setSexIcon(v: View, position: Int) {
         val memberIcon: ImageView = v.findViewById<View>(R.id.memberIcon) as ImageView
         if (getItem(position).sex == context.getText(R.string.man)) {
@@ -76,6 +77,7 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
         }
     }
 
+    //頭文字行挿入
     private fun addInitial(position: Int, v: View?) {
         val nowItem = getItem(position)
 
@@ -104,11 +106,13 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
         }
     }
 
+    //メンバーIDとチェックを紐づけて設定
     fun setNewSelection(id: Int, value: Boolean) {
         mSelection.append(id, value)
         notifyDataSetChanged()
     }
 
+    //チェック
     fun removeSelection(id: Int) {
         mSelection.delete(id)
         notifyDataSetChanged()
@@ -118,7 +122,6 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
         mSelection.clear()
         notifyDataSetChanged()
     }
-
 
     fun isPositionChecked(id: Int): Boolean {
         return mSelection.get(id)

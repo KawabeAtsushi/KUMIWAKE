@@ -23,6 +23,7 @@ import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.member.function.MemberClick
+import com.pandatone.kumiwake.member.function.MemberMethods
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import com.pandatone.kumiwake.ui.members.FragmentMemberMain
 import kotlinx.android.synthetic.main.add_member.*
@@ -78,13 +79,8 @@ class AddMember : AppCompatActivity() {
                 readEditText?.setText(yomigana)
             }
 
-            override fun beforeTextChanged(s: CharSequence, start: Int,
-                                           count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence, start: Int,
-                                       before: Int, count: Int) {
-            }
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         })
     }
 
@@ -109,7 +105,7 @@ class AddMember : AppCompatActivity() {
         val read = member.read
         val sex = member.sex
         val age = member.age.toString()
-        val belong = MemberClick.viewBelong(member, mbAdapter!!)
+        val belong = MemberClick.viewBelong(member)
 
         nameEditText!!.setText(name)
         readEditText!!.setText(read)
@@ -195,7 +191,7 @@ class AddMember : AppCompatActivity() {
         } else {
             saveItem()
             afterBelong = belongDropdown!!.text.toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            changeBelongNo()
+            MemberMethods.updateBelongNo(this)
 
             if (fromNormalMode) {
                 NormalMode.memberArray.add(MemberAdapter(this).newMember)
@@ -238,7 +234,7 @@ class AddMember : AppCompatActivity() {
             } else {
                 updateItem(listId)
                 afterBelong = belongDropdown!!.text.toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                changeBelongNo()
+                MemberMethods.updateBelongNo(this)
                 Toast.makeText(applicationContext, getText(R.string.member).toString() + " \"" + name + "\" " + getText(R.string.updated), Toast.LENGTH_SHORT).show()
                 finish()
             }
@@ -256,80 +252,6 @@ class AddMember : AppCompatActivity() {
 
         mbAdapter!!.updateMember(listId, name, sex, age, belong, read)
         FragmentMemberMain().loadName()
-    }
-
-    //メンバーのbelong更新に伴う、グループの所属人数データの更新
-    private fun changeBelongNo() {
-        var i = 0
-        var j: Int
-        var k: Int
-        var id: Int
-        var belongNo: Int
-        var change: Boolean? = true
-        val groupListAdapter = GroupAdapter(this)
-
-        val beforeBelongNo: Int = if (beforeBelong != null) {
-            beforeBelong!!.size
-        } else {
-            0
-        }
-        val afterBelongNo: Int = if (afterBelong != null) {
-            afterBelong!!.size
-        } else {
-            0
-        }
-
-        while (i < beforeBelongNo) {
-            j = 0
-            while (j < afterBelongNo) {
-
-                if (beforeBelong!![i] == afterBelong!![j]) {
-                    change = false
-                }
-                j++
-            }
-            if (change!!) {
-                k = 0
-                while (k < groupList.size) {
-                    val group = groupList[k]
-                    val groupName = group.name
-                    if (beforeBelong!![i] == groupName) {
-                        id = group.id
-                        belongNo = group.belongNo - 1
-                        groupListAdapter.updateBelongNo(id.toString(), belongNo)
-                    }
-                    k++
-                }
-            }
-            i++
-        }
-
-        change = true
-
-        i = 0
-        while (i < afterBelongNo) {
-            j = 0
-            while (j < beforeBelongNo) {
-                if (afterBelong!![i] == beforeBelong!![j]) {
-                    change = false
-                }
-                j++
-            }
-            if (change!!) {
-                k = 0
-                while (k < groupList.size) {
-                    val group = groupList[k]
-                    val groupName = group.name
-                    if (afterBelong!![i] == groupName) {
-                        id = group.id
-                        belongNo = group.belongNo + 1
-                        groupListAdapter.updateBelongNo(id.toString(), belongNo)
-                    }
-                    k++
-                }
-            }
-            i++
-        }
     }
 
     //String to Int

@@ -110,7 +110,6 @@ class MembersFragment : Fragment(), SearchView.OnQueryTextListener {
         } catch (e: IOException) {
             e.printStackTrace()
         }
-
         return false
     }
 
