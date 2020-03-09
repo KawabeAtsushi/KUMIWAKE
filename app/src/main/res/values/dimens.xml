@@ -18,5 +18,5 @@
     <dimen name="size_toolbar">48dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="hint_icon_size">50dp</dimen>
-    <dimen name="main_button_text_size">27dp</dimen>
+    <dimen name="main_button_text_size">27sp</dimen>
 </resources>

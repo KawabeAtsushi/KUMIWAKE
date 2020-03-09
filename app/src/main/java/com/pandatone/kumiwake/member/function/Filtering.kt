@@ -24,7 +24,8 @@ class Filtering(val activity: Activity, private val memberList: ArrayList<Member
     private val groupList: ArrayList<Group> = GroupAdapter(activity).getAllGroups()
 
     //filterダイアログ生成
-    fun showFilterDialog(builder: androidx.appcompat.app.AlertDialog.Builder,listAdp: MemberFragmentViewAdapter) {
+    fun showFilterDialog(activity: Activity,listAdp: MemberFragmentViewAdapter) {
+        val builder = androidx.appcompat.app.AlertDialog.Builder(activity)
         val inflater = activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val layout = inflater.inflate(R.layout.filter_member, activity.findViewById<View>(R.id.filter_member) as? ViewGroup)
         val belongDropdown = layout.findViewById<View>(R.id.filter_belong_dropdown) as AutoCompleteTextView
@@ -47,20 +48,20 @@ class Filtering(val activity: Activity, private val memberList: ArrayList<Member
         builder.setNeutralButton(R.string.clear, null)
         // back keyを使用不可に設定
         builder.setCancelable(false)
-        val dialog2 = builder.create()
-        dialog2.show()
+        val dialog = builder.create()
+        dialog.show()
 
-        val okButton = dialog2.getButton(AlertDialog.BUTTON_POSITIVE)
+        val okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
         okButton.setOnClickListener {
             StatusHolder.mbNowSort = MemberAdapter.MB_ID
             StatusHolder.mbSortType = "ASC"
             mbAdapter.sortNames(StatusHolder.mbNowSort, StatusHolder.mbSortType, memberList)
             filter(layout, belongDropdown, false)
             listAdp.notifyDataSetChanged()
-            dialog2.dismiss()
+            dialog.dismiss()
         }
 
-        val clearBtn = dialog2.getButton(AlertDialog.BUTTON_NEUTRAL)
+        val clearBtn = dialog.getButton(AlertDialog.BUTTON_NEUTRAL)
         clearBtn.setOnClickListener {
             filter(layout, belongDropdown, true)
         }

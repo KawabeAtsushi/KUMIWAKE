@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.text.Layout
+import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.pandatone.kumiwake.KumiwakeArrayKeys
 import com.pandatone.kumiwake.KumiwakeCustomKeys
 import com.pandatone.kumiwake.R
@@ -34,6 +37,10 @@ class KumiwakeConfirmation : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.kumiwake_confirmation)
+        if(!StatusHolder.normalMode){
+            val layout = findViewById<ConstraintLayout>(R.id.confirmation_view)
+            layout.background = getDrawable(R.drawable.quick_img)
+        }
         findViewById<Button>(R.id.kumiwake_btn).setOnClickListener { doKumiwake() }
 
         val i = intent

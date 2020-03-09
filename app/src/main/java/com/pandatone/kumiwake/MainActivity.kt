@@ -5,9 +5,13 @@ import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.*
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.Guideline
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
@@ -16,18 +20,16 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.pandatone.kumiwake.PublicMethods.setStatusBarColor
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import com.pandatone.kumiwake.ui.kumiwake.KumiwakeFragment
 import com.pandatone.kumiwake.ui.members.MembersFragment
 import com.pandatone.kumiwake.ui.sekigime.SekigimeFragment
 import com.pandatone.kumiwake.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import com.pandatone.kumiwake.PublicMethods.setStatusBarColor
 
 
 class MainActivity : AppCompatActivity() {
-
-    lateinit var mAdView: AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,12 +55,13 @@ class MainActivity : AppCompatActivity() {
         //MobileAds.initialize(getApplicationContext(), "ca-app-pub-2315101868638564/8665451539");
         mAdView = findViewById<View>(R.id.adView) as AdView
         val adRequest = AdRequest.Builder()
-                .addTestDevice("8124DDB5C185E5CA87E826BAB5D4AA10").build()
+                .addTestDevice("22B04B5FB0CABF82EA6C2A7A431ED725").build()
         mAdView.loadAd(adRequest)
 
         setKeyboardListener(navView)
     }
 
+    // 戻るボタンが押されたとき
     override fun dispatchKeyEvent(e: KeyEvent): Boolean {
         // 戻るボタンが押されたとき
         when (e.keyCode) {
@@ -156,4 +159,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
+    companion object {lateinit var mAdView:AdView }
 }

@@ -55,11 +55,9 @@
     <string name="move_confirmation">move to confirmation</string>
     <string name="all">All</string>
     <string name="normal_mode">Normal mode</string>
-    <string name="top_normal_mode">Normal\nmode</string>
     <string name="nothing">Nothing</string>
     <string name="people">ppl</string>
     <string name="quick_mode">Quick mode</string>
-    <string name="top_quick_mode">Quick\nmode</string>
     <string name="re_kumiwake_title">Re:KUMIWAKE</string>
     <string name="re_kumiwake">try again</string>
     <string name="re_kumiwake_description">Execute KUMIWAKE(grouping) again on the same conditions.</string>
@@ -162,4 +160,8 @@
     <string name="show_all">Show all</string>
     <string name="show_detail">Show detail</string>
     <string name="sekigime_result">Seating result</string>
+    <string name="history">history</string>
+    <string name="share_with_text">Share with text</string>
+    <string name="share_with_image">Share with image</string>
+    <string name="share">share</string>
 </resources>

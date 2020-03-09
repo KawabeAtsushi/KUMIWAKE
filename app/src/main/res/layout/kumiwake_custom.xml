@@ -5,7 +5,9 @@
     android:id="@+id/custom_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/normal_img">
+    android:background="@drawable/normal_img"
+    android:backgroundTint="@color/thin_white"
+    android:backgroundTintMode="src_atop">
 
     <ScrollView
         android:id="@+id/custom_scroll"
@@ -140,19 +142,12 @@
 
     </ScrollView>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.92" />
-
 
     <com.google.android.material.button.MaterialButton
         style="@style/Button.Solid.Rectangle"
         android:id="@+id/normal_kumiwake_button"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/under_button_height"
         android:drawableEnd="@drawable/ic_arrow_white"
         android:text="@string/move_confirmation"
         android:textColor="@android:color/white"
@@ -161,7 +156,6 @@
         app:backgroundTint="?android:attr/colorPrimaryDark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline_button"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

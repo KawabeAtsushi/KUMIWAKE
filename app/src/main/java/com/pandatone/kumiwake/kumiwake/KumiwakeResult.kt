@@ -10,6 +10,7 @@ import android.os.Handler
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ShareCompat
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -18,6 +19,7 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
+import com.pandatone.kumiwake.kumiwake.function.KumiwakeMethods
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.sekigime.SekigimeResult
@@ -25,7 +27,6 @@ import com.pandatone.kumiwake.sekigime.SelectTableType
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.reflect.typeOf
 
 /**
  * Created by atsushi_2 on 2016/05/10.
@@ -35,7 +36,7 @@ class KumiwakeResult : AppCompatActivity() {
     private lateinit var memberArray: ArrayList<Member>
     private lateinit var leaderArray: ArrayList<Member>
     private lateinit var groupArray: ArrayList<Group>
-    private lateinit var arrayArray: ArrayList<ArrayList<Member>>
+    private lateinit var resultArray: ArrayList<ArrayList<Member>>
     private lateinit var manArray: ArrayList<Member>
     private lateinit var womanArray: ArrayList<Member>
     private var groupCount: Int = 0
@@ -49,6 +50,10 @@ class KumiwakeResult : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kumiwake_result)
+        if(!StatusHolder.normalMode){
+            val layout = findViewById<ConstraintLayout>(R.id.result_view)
+            layout.background = getDrawable(R.drawable.quick_img)
+        }
         ButterKnife.bind(this)
         MobileAds.initialize(applicationContext, "ca-app-pub-2315101868638564/8665451539")
         val mAdView = findViewById<View>(R.id.adView) as AdView
@@ -81,11 +86,11 @@ class KumiwakeResult : AppCompatActivity() {
             val groupNameArray = ArrayList<String>(groupCount)
             for (j in 0 until groupCount) {
                 groupNameArray.add(groupArray[j].name)
-                arrayArray[j].shuffle()
+                resultArray[j].shuffle()
             }
             val intent = Intent(this, SelectTableType::class.java)
             SekigimeResult.groupArray = groupNameArray
-            SekigimeResult.teamArray = arrayArray
+            SekigimeResult.teamArray = resultArray
             startActivity(intent)
             finish()
         }
@@ -98,16 +103,16 @@ class KumiwakeResult : AppCompatActivity() {
         super.onSaveInstanceState(outState)
 
         for (i in 0 until groupCount) {
-            outState.putSerializable("ARRAY$i", arrayArray[i])
+            outState.putSerializable("ARRAY$i", resultArray[i])
         }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 
-        arrayArray = ArrayList(groupCount)
+        resultArray = ArrayList(groupCount)
         for (g in 0 until groupCount) {
-            arrayArray.add(savedInstanceState.getSerializable("ARRAY$g") as ArrayList<Member>)
+            resultArray.add(savedInstanceState.getSerializable("ARRAY$g") as ArrayList<Member>)
         }
     }
 
@@ -115,12 +120,12 @@ class KumiwakeResult : AppCompatActivity() {
     private fun startMethod() {
         memberArray.shuffle()
 
-        arrayArray = ArrayList(groupCount)
+        resultArray = ArrayList(groupCount)
         manArray = ArrayList()
         womanArray = ArrayList()
 
         for (g in 0 until groupCount) {
-            arrayArray.add(ArrayList())
+            resultArray.add(ArrayList())
         }
 
         if (evenFmRatio) {
@@ -146,7 +151,7 @@ class KumiwakeResult : AppCompatActivity() {
 
     fun addGroupView() {
         if (v < groupCount) {
-            addView(arrayArray[v], v)
+            addView(resultArray[v], v)
             v++
         }
         if (v == groupCount) {
@@ -175,7 +180,8 @@ class KumiwakeResult : AppCompatActivity() {
 
     @OnClick(R.id.share_result)
     internal fun shareResult() {
-        share()
+        val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
+        KumiwakeMethods.shareResult(this,this::share){ShareViewImage.shareView(this,resultLayout,getString(R.string.kumiwake_result))}
     }
 
     @OnClick(R.id.go_sekigime)
@@ -183,11 +189,11 @@ class KumiwakeResult : AppCompatActivity() {
         val groupNameArray = ArrayList<String>(groupCount)
         for (j in 0 until groupCount) {
             groupNameArray.add(groupArray[j].name)
-            arrayArray[j].shuffle()
+            resultArray[j].shuffle()
         }
         val intent = Intent(this, SelectTableType::class.java)
         SekigimeResult.groupArray = groupNameArray
-        SekigimeResult.teamArray = arrayArray
+        SekigimeResult.teamArray = resultArray
         startActivity(intent)
     }
 
@@ -204,8 +210,8 @@ class KumiwakeResult : AppCompatActivity() {
         var sum = 0
 
         for (i in 0 until groupCount) {
-            val addNo = groupArray[i].belongNo - arrayArray[i].size  //グループの規定人数－グループの現在数
-            arrayArray[i].addAll(kumiwakeCreateGroup(memberArray, addNo, sum))
+            val addNo = groupArray[i].belongNo - resultArray[i].size  //グループの規定人数－グループの現在数
+            resultArray[i].addAll(kumiwakeCreateGroup(memberArray, addNo, sum))
             sum += addNo
         }
     }
@@ -219,7 +225,7 @@ class KumiwakeResult : AppCompatActivity() {
 
         for (leader in array) {
             val id = leader.id
-            arrayArray[leaderNoList.indexOf(id)].add(leader)
+            resultArray[leaderNoList.indexOf(id)].add(leader)
         }
     }
 
@@ -278,7 +284,7 @@ class KumiwakeResult : AppCompatActivity() {
             }
 
             for (k in 0 until groupCount) {
-                while (groupCapacity[k] < arrayArray[k].size) {
+                while (groupCapacity[k] < resultArray[k].size) {
                     groupCapacity[k]++  //すでにある要素数より許容格納数が小さいなら＋１する
                     addSum++
                 }
@@ -305,7 +311,7 @@ class KumiwakeResult : AppCompatActivity() {
         val fullNo = BooleanArray(groupCount)  //要素数が許容格納数に達しているグループはtrue
         var memberSum = 0
         nowGroupNo = 0
-        nowGroupMemberCount = arrayArray[0].size
+        nowGroupMemberCount = resultArray[0].size
 
         while (memberSum < array.size) {
 
@@ -321,16 +327,16 @@ class KumiwakeResult : AppCompatActivity() {
                     nowGroupMemberCount = 0
 
                     if (!fullNo[addGroupNo]) {
-                        for (i in 0 until arrayArray[addGroupNo].size) {
-                            if (arrayArray[addGroupNo][i].sex == getText(R.string.man)) {
+                        for (i in 0 until resultArray[addGroupNo].size) {
+                            if (resultArray[addGroupNo][i].sex == getText(R.string.man)) {
                                 nowGroupMemberCount++
                             }
                         }
 
                         if (roopCount > groupCount) {  //一周してもループを抜けない場合
                             for (j in 0 until groupCount) {
-                                if (!fullNo[j] && arrayArray[j].size < min) {
-                                    min = arrayArray[j].size
+                                if (!fullNo[j] && resultArray[j].size < min) {
+                                    min = resultArray[j].size
                                     minJ = j
                                 }
                             }
@@ -339,7 +345,7 @@ class KumiwakeResult : AppCompatActivity() {
                         }
                     }
 
-                    if (groupArray[addGroupNo].belongNo == arrayArray[addGroupNo].size) {
+                    if (groupArray[addGroupNo].belongNo == resultArray[addGroupNo].size) {
                         fullNo[addGroupNo] = true
                     }
                     roopCount++
@@ -348,16 +354,16 @@ class KumiwakeResult : AppCompatActivity() {
                 while (memberSum < array.size && groupArray[addGroupNo].belongNo == nowGroupMemberCount) {
                     nowGroupNo++
                     addGroupNo = nowGroupNo % groupCount
-                    nowGroupMemberCount = arrayArray[addGroupNo].size
+                    nowGroupMemberCount = resultArray[addGroupNo].size
                 }
             }
 
             if (memberSum < array.size) {
-                arrayArray[addGroupNo].add(array[memberSum])
+                resultArray[addGroupNo].add(array[memberSum])
                 memberSum++
                 nowGroupNo++
                 addGroupNo = nowGroupNo % groupCount
-                nowGroupMemberCount = arrayArray[addGroupNo].size
+                nowGroupMemberCount = resultArray[addGroupNo].size
             }
         }
 
@@ -413,7 +419,7 @@ class KumiwakeResult : AppCompatActivity() {
         }
         drawable.setColor(Color.argb(150, R, G, B))
 
-        v.layoutParams = setMargin(10, 12, 10, 0)
+        v.layoutParams = setMargin(4, 6, 4, 6)
         v.background = drawable
     }
 
@@ -424,7 +430,7 @@ class KumiwakeResult : AppCompatActivity() {
         var sharedText = ""
         val resultTxt = StringBuilder()
 
-        for ((i, array) in arrayArray.withIndex()) {
+        for ((i, array) in resultArray.withIndex()) {
             resultTxt.append("\n")
             resultTxt.append("《${groupArray[i].name}》\n")
 
@@ -464,7 +470,6 @@ class KumiwakeResult : AppCompatActivity() {
 
         // Shareアプリ一覧のDialogの表示
         builder.startChooser()
-
     }
 
     companion object {

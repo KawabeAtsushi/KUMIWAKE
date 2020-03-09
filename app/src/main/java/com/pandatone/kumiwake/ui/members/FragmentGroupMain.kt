@@ -113,10 +113,7 @@ class FragmentGroupMain : ListFragment() {
             }
 
             R.id.item_sort -> {
-                val builder = AlertDialog.Builder(activity!!)
-                Sort.groupSort(builder, activity!!, groupList, listAdp)
-                val dialog = builder.create()
-                dialog.show()
+                Sort.groupSort( activity!!, groupList, listAdp)
             }
         }
 
@@ -187,10 +184,7 @@ class FragmentGroupMain : ListFragment() {
                     listView.clearChoices()
                     listAdp.clearSelection()
                     mode.title = "0" + getString(R.string.selected)
-                    val builder = AlertDialog.Builder(activity!!)
-                    Sort.groupSort(builder, activity!!, groupList, listAdp)
-                    val dialog = builder.create()
-                    dialog.show()
+                    Sort.groupSort( activity!!, groupList, listAdp)
                 }
             }
             return false

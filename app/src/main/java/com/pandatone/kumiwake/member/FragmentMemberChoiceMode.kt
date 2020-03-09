@@ -4,7 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.*
+import android.widget.AbsListView
+import android.widget.AdapterView
+import android.widget.ListView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.ListFragment
 import androidx.viewpager.widget.ViewPager
@@ -17,9 +19,6 @@ import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter
 import com.pandatone.kumiwake.member.function.Filtering
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.member.function.Sort
-import kotlin.collections.ArrayList
-
-
 
 
 /**
@@ -78,7 +77,6 @@ class FragmentMemberChoiceMode : ListFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
 
         // アクションアイテム選択時
         when (item.itemId) {
@@ -93,13 +91,11 @@ class FragmentMemberChoiceMode : ListFragment() {
             }
 
             R.id.item_sort -> {
-                Sort.memberSort(builder, requireActivity(), memberList, listAdp)
-                val dialog = builder.create()
-                dialog.show()
+                Sort.memberSort(requireActivity(), memberList, listAdp)
             }
 
             R.id.item_filter -> {
-                Filtering(requireActivity(), memberList).showFilterDialog(builder, listAdp)
+                Filtering(requireActivity(), memberList).showFilterDialog(requireActivity(),listAdp)
             }
         }
 
@@ -167,7 +163,6 @@ class FragmentMemberChoiceMode : ListFragment() {
         }
 
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-            val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
 
             // アクションアイテム選択時
             when (item.itemId) {
@@ -184,18 +179,16 @@ class FragmentMemberChoiceMode : ListFragment() {
                 }
 
                 R.id.item_sort -> {
-                    if(page == 0) {
-                        Sort.memberSort(builder, requireActivity(), memberList, listAdp)
-                    }else{
-                        Sort.groupSort(builder, requireActivity(), FragmentGroupChoiceMode.groupList, FragmentGroupChoiceMode.listAdp)
+                    if (page == 0) {
+                        Sort.memberSort(requireActivity(), memberList, listAdp)
+                    } else {
+                        Sort.groupSort(requireActivity(), FragmentGroupChoiceMode.groupList, FragmentGroupChoiceMode.listAdp)
                         FragmentGroupChoiceMode.listAdp.notifyDataSetChanged()
                     }
-                    val dialog = builder.create()
-                    dialog.show()
                 }
 
                 R.id.item_filter -> {
-                    Filtering(activity!!, memberList).showFilterDialog(builder, listAdp)
+                    Filtering(activity!!, memberList).showFilterDialog(requireActivity(), listAdp)
                 }
             }
             return false
@@ -215,11 +208,11 @@ class FragmentMemberChoiceMode : ListFragment() {
             checkedCount = lv.checkedItemCount
 
             if (checked) {
-                    listAdp.setNewSelection(memberList[position].id, checked)
-                } else {
-                    listAdp.removeSelection(memberList[position].id)
-                }
-                mode.title = checkedCount.toString() + getString(R.string.selected)
+                listAdp.setNewSelection(memberList[position].id, checked)
+            } else {
+                listAdp.removeSelection(memberList[position].id)
+            }
+            mode.title = checkedCount.toString() + getString(R.string.selected)
         }
 
         private fun clearSelection(mode: ActionMode) {

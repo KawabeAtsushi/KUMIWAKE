@@ -41,9 +41,13 @@
     <style name="Button.Transparent" parent="Widget.MaterialComponents.Button.TextButton" />
     <style name="Button.Outline" parent="Widget.MaterialComponents.Button.OutlinedButton" />
 
-    <!-- 横丸ボタン(Solid) -->
-    <style name="Button.Solid.Curve">
+    <!-- 丸枠ボタン(透明) -->
+    <style name="Button.Outline.History">
         <item name="cornerRadius">28dp</item>
+        <item name="android:insetTop">15dp</item>
+        <item name="android:insetBottom">15dp</item>
+        <item name="strokeWidth">3dp</item>
+        <item name="strokeColor">@color/thin_gray</item>
     </style>
     <!-- 角丸ボタン(透明) -->
     <style name="Button.Transparent.Rounded">

@@ -158,11 +158,13 @@
     <string name="failed_import">以下のパスにバックアップデータを配置し、\"OK\"を押してインポートを再実行して下さい。</string>
     <string name="failed_to_mkdirs">バックアップディレクトリの作成に失敗しました。\n\"OK\"を押すと以下のパスでバックアップを再実行します。</string>
     <string name="app_exit_confirmation">アプリを終了しますか？</string>
-    <string name="top_normal_mode">ノーマル\nモード</string>
-    <string name="top_quick_mode">クイック\nモード</string>
     <string name="edit_exit_confirmation">編集画面を閉じますか？\n編集情報は破棄されます。</string>
     <string name="specify_path">パスを指定</string>
     <string name="specify_path_message">\"KUMIWAKE_Backup\"へのファイルパスを指定してください。</string>
     <string name="show_all">全表示</string>
     <string name="show_detail">詳細表示</string>
+    <string name="history">履歴</string>
+    <string name="share_with_image">画像で共有</string>
+    <string name="share_with_text">テキストで共有</string>
+    <string name="share">共有</string>
 </resources>

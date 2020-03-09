@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="?attr/actionBarSize">
+<androidx.constraintlayout.widget.ConstraintLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:id="@+id/top_container"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:layout_marginTop="?attr/actionBarSize">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.1" />
+<androidx.constraintlayout.widget.Guideline
+    android:id="@+id/guideline_start"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_percent="0.1" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.9" />
+<androidx.constraintlayout.widget.Guideline
+    android:id="@+id/guideline_end"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_percent="0.9" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/background_anim1"
@@ -54,8 +56,8 @@
         android:id="@+id/main_icon"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginEnd="80dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginEnd="70dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:contentDescription="@string/sekigime"
@@ -65,89 +67,84 @@
         app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--    後に記述したViewが前面に来る-->
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/half_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+<!--    後に記述したViewが前面に来る-->
+<androidx.constraintlayout.widget.Guideline
+    android:id="@+id/half_guideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintGuide_percent="0.5" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/quarter_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75" />
-
-    <TextView
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/normal_mode_button"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="5dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:padding="20dp"
-        android:background="@drawable/top_normal_button"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center_vertical"
-        android:text="@string/top_normal_mode"
+        android:text="@string/normal_mode"
         android:textColor="#ffffff"
         android:textSize="@dimen/main_button_text_size"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:maxLines="2"
-        app:layout_constraintTop_toBottomOf="@id/half_guideline"
+        android:background="@drawable/top_normal_button"
+        android:singleLine="true"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintEnd_toStartOf="@id/hintForNormalMode"
-        app:layout_constraintBottom_toTopOf="@id/quarter_guideline"/>
+        app:layout_constraintTop_toBottomOf="@id/half_guideline"
+        app:layout_constraintBottom_toTopOf="@id/quick_mode_button"/>
 
-    <ImageButton
-        android:id="@+id/hintForNormalMode"
-        android:layout_width="@dimen/hint_icon_size"
-        android:layout_height="@dimen/hint_icon_size"
-        android:padding="30dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/top_normal_button"
-        android:contentDescription="@string/hint"
-        android:src="@drawable/ic_help_outline_dark_24dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-        app:layout_constraintBottom_toBottomOf="@id/normal_mode_button"/>
+<ImageButton
+    android:id="@+id/hintForNormalMode"
+    android:layout_width="@dimen/hint_icon_size"
+    android:layout_height="@dimen/hint_icon_size"
+    android:padding="30dp"
+    android:background="@drawable/top_normal_button"
+    android:contentDescription="@string/hint"
+    android:src="@drawable/ic_help_outline_dark_24dp"
+    app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+    app:layout_constraintBottom_toBottomOf="@id/normal_mode_button"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/quick_mode_button"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginStart="30dp"
-        android:padding="20dp"
-        android:background="@drawable/top_quick_button"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center_vertical"
-        android:text="@string/top_quick_mode"
-        android:textAlignment="center"
-        android:textAllCaps="true"
+        android:layout_marginBottom="20dp"
+        android:text="@string/quick_mode"
         android:textColor="#ffffff"
         android:textSize="@dimen/main_button_text_size"
-        android:maxLines="2"
-        app:layout_constraintEnd_toStartOf="@id/hintForQuickMode"
-        app:layout_constraintStart_toEndOf="@id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@id/quarter_guideline"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-    <ImageButton
-        android:id="@+id/hintForQuickMode"
-        android:layout_width="@dimen/hint_icon_size"
-        android:layout_height="@dimen/hint_icon_size"
-        android:padding="30dp"
+        android:singleLine="true"
         android:background="@drawable/top_quick_button"
-        android:contentDescription="@string/hint"
-        android:src="@drawable/ic_help_outline_dark_24dp"
-        app:layout_constraintEnd_toStartOf="@id/guideline_end"
-        app:layout_constraintBottom_toBottomOf="@id/quick_mode_button"/>
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintEnd_toStartOf="@id/hintForQuickMode"
+        app:layout_constraintTop_toBottomOf="@id/normal_mode_button"
+        app:layout_constraintBottom_toBottomOf="@id/history_button" />
+
+<ImageButton
+    android:id="@+id/hintForQuickMode"
+    android:layout_width="@dimen/hint_icon_size"
+    android:layout_height="@dimen/hint_icon_size"
+    android:padding="30dp"
+    android:background="@drawable/top_quick_button"
+    android:contentDescription="@string/hint"
+    android:src="@drawable/ic_help_outline_dark_24dp"
+    app:layout_constraintEnd_toStartOf="@id/guideline_end"
+    app:layout_constraintBottom_toBottomOf="@id/quick_mode_button"/>
+
+<com.google.android.material.button.MaterialButton
+    style="@style/Button.Outline.History"
+    android:id="@+id/history_button"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_margin="5dp"
+    android:text="@string/history"
+    android:textColor="@color/thin_gray"
+    android:textSize="@dimen/main_button_text_size"
+    android:singleLine="true"
+    android:visibility="gone"
+    app:backgroundTint="@color/thin_white"
+    app:layout_constraintStart_toEndOf="@id/guideline_start"
+    app:layout_constraintEnd_toStartOf="@id/guideline_end"
+    app:layout_constraintTop_toBottomOf="@id/quick_mode_button"
+    app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

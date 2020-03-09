@@ -2,11 +2,14 @@ package com.pandatone.kumiwake.ui.kumiwake
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.Guideline
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import com.pandatone.kumiwake.MainActivity
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.kumiwake.NormalMode
@@ -16,7 +19,6 @@ import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 
 class KumiwakeFragment : Fragment() {
 
-    private lateinit var kumiwakeViewModel: KumiwakeViewModel
     private val dialog: DialogWarehouse
         get() {
             return DialogWarehouse(requireFragmentManager())
@@ -29,8 +31,6 @@ class KumiwakeFragment : Fragment() {
     ): View? {
         setHasOptionsMenu(true)
 
-        kumiwakeViewModel =
-                ViewModelProviders.of(this).get(KumiwakeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_kumiwake, container, false)
 
         val normalButton: TextView = root.findViewById(R.id.normal_mode_button)
@@ -55,6 +55,18 @@ class KumiwakeFragment : Fragment() {
             dialog.confirmationDialog(getString(R.string.quick_mode), getString(R.string.description_of_quick_kumiwake))
         }
 
+        val layout = root.findViewById<ConstraintLayout>(R.id.top_container)
+        val adView = MainActivity.mAdView
+        val guideLine = root.findViewById<View>(R.id.half_guideline) as Guideline
+        adView.afterMeasured {
+            // layoutのレイアウトが完了したら、ガイドラインの位置を変更
+            val lHeight = layout.height.toFloat()
+            val adHeight = adView.height.toFloat()
+            val adRatio = adHeight/lHeight
+            val guideLineRatio = 0.5f - adRatio
+            guideLine.setGuidelinePercent(guideLineRatio)
+        }
+
         return root
     }
 
@@ -68,5 +80,17 @@ class KumiwakeFragment : Fragment() {
             R.id.menu_help -> dialog.confirmationDialog(getString(R.string.kumiwake), getString(R.string.how_to_kumiwake))
         }
         return true
+    }
+
+    //Viewのレイアウトが完了したタイミングで呼ばれる拡張関数
+    private inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
+        viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                if (width > 0 && height > 0) {
+                    viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    f()
+                }
+            }
+        })
     }
 }

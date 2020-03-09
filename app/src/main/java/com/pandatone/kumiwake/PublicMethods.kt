@@ -2,13 +2,17 @@ package com.pandatone.kumiwake
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Paint
+import android.util.TypedValue
+import android.view.View
+import android.view.ViewTreeObserver
 import android.view.WindowManager
+import android.widget.Button
+import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import com.pandatone.kumiwake.member.function.Group
-import android.graphics.Bitmap
-import android.view.View
-import java.io.ByteArrayOutputStream
+import kotlin.math.abs
 
 
 object PublicMethods {
@@ -39,6 +43,44 @@ object PublicMethods {
             groupArray.add(Group(i, context.getText(R.string.group).toString() + " " + (i + 1).toString(), "", eachMemberNo))
         }
         return groupArray
+    }
+
+    // view(TextView or Button)に合わせて文字が収まるようにリサイズ
+    fun View.resizeText(setText: String = "") {
+        val MIN_TEXT_SIZE = 10f //最小サイズを決める
+        var text = setText
+        if(text == "") {
+            if (this is TextView) {
+                text = this.text.toString()
+            } else if (this is Button) {
+                text = this.text.toString()
+            }
+        }
+        val padding: Int = this.paddingLeft
+        val paint = Paint()
+        val viewWidth: Int = this.width - padding * 2 //Viewのコンテンツ領域を取得
+        val viewHeight: Int = this.height - padding * 2 //パディングは上下左右同じとして
+        var textSize = 200f //テキストサイズの初期値を適当に決める
+        paint.textSize = textSize //テキストサイズをセット
+        var fm: Paint.FontMetrics = paint.fontMetrics
+        var textHeight: Float = abs(fm.top) + abs(fm.descent) //テキストの高さを取得
+        var textWidth: Float = paint.measureText(text) //テキストの幅を取得
+        while (viewWidth < textWidth || viewHeight < textHeight) { //ボタンに収まるまでループ
+            if (MIN_TEXT_SIZE >= textSize) { //最小サイズを下回ったら最小サイズに設定
+                textSize = MIN_TEXT_SIZE
+                break
+            }
+            textSize -= 8f //テキストサイズをデクリメント（間隔は適当に）
+            paint.textSize = textSize
+            fm = paint.fontMetrics
+            textHeight = abs(fm.top) + abs(fm.descent)
+            textWidth = paint.measureText(text) //テキストの縦横サイズを再取得
+        }
+        if (this is TextView) {
+            this.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize) //収まるサイズに設定
+        } else if (this is Button) {
+            this.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize) //収まるサイズに設定
+        }
     }
 
 }

@@ -110,7 +110,6 @@ class FragmentMemberMain : ListFragment() {
     //////////////////////////////////////////////////////////////////////////////////////
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
 
         // アクションアイテム選択時
         when (item.itemId) {
@@ -125,13 +124,11 @@ class FragmentMemberMain : ListFragment() {
             }
 
             R.id.item_sort -> {
-                Sort.memberSort(builder, requireActivity(), memberList, listAdp)
-                val dialog = builder.create()
-                dialog.show()
+                Sort.memberSort( requireActivity(), memberList, listAdp)
             }
 
             R.id.item_filter -> {
-                Filtering(requireActivity(), memberList).showFilterDialog(builder, listAdp)
+                Filtering(requireActivity(), memberList).showFilterDialog(requireActivity(), listAdp)
             }
         }
 
@@ -179,7 +176,6 @@ class FragmentMemberMain : ListFragment() {
         }
 
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-            val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
 
             // アクションアイテム選択時
             when (item.itemId) {
@@ -203,16 +199,14 @@ class FragmentMemberMain : ListFragment() {
                     lv.clearChoices()
                     listAdp.clearSelection()
                     mode.title = "0" + getString(R.string.selected)
-                    Sort.memberSort(builder, requireActivity(), memberList, listAdp)
-                    val dialog = builder.create()
-                    dialog.show()
+                    Sort.memberSort( requireActivity(), memberList, listAdp)
                 }
 
                 R.id.item_filter -> {
                     lv.clearChoices()
                     listAdp.clearSelection()
                     mode.title = "0" + getString(R.string.selected)
-                    Filtering(activity!!, memberList).showFilterDialog(builder, listAdp)
+                    Filtering(activity!!, memberList).showFilterDialog( requireActivity(),listAdp)
                 }
             }
 

@@ -20,8 +20,8 @@ object Sort {
     private const val DESC = "DESC" //降順 (3.2.1....)
     internal var initial = 0
 
-    fun memberSort(builder: androidx.appcompat.app.AlertDialog.Builder, activity: Activity, memberList: ArrayList<Member>, listAdp: MemberFragmentViewAdapter) {
-
+    fun memberSort(activity: Activity, memberList: ArrayList<Member>, listAdp: MemberFragmentViewAdapter) {
+        val builder = androidx.appcompat.app.AlertDialog.Builder(activity)
         val mbAdapter = MemberAdapter(activity)
 
         val items = arrayOf(
@@ -70,10 +70,11 @@ object Sort {
 
         // back keyを使用不可に設定
         builder.setCancelable(false)
+        builder.show()
     }
 
-    fun groupSort(builder: androidx.appcompat.app.AlertDialog.Builder, activity: Activity, groupList: ArrayList<Group>, listAdp: GroupFragmentViewAdapter) {
-
+    fun groupSort(activity: Activity, groupList: ArrayList<Group>, listAdp: GroupFragmentViewAdapter) {
+        val builder = androidx.appcompat.app.AlertDialog.Builder(activity)
         val gpAdapter = GroupAdapter(activity)
 
         val items = arrayOf(
@@ -121,7 +122,7 @@ object Sort {
 
         // back keyを使用不可に設定
         builder.setCancelable(false)
-
+        builder.show()
     }
 
 }
