@@ -19,8 +19,7 @@ import com.pandatone.kumiwake.sekigime.function.DrawTableView
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
-import butterknife.ButterKnife
-import butterknife.OnClick
+
 import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.sekigime.function.DrawAllTable
 import android.view.ViewGroup.MarginLayoutParams
@@ -42,11 +41,10 @@ class SekigimeResult : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.sekigime_result)
-        ButterKnife.bind(this)
-        MobileAds.initialize(applicationContext, "ca-app-pub-2315101868638564/8665451539")
+        MobileAds.initialize(this, getString(R.string.adApp_id))
         val mAdView = findViewById<View>(R.id.adView) as AdView
         val adRequest = AdRequest.Builder()
-                .addTestDevice("BB707E3F7B5413908B2DD12063887489").build()
+                .addTestDevice(getString(R.string.device_id)).build()
         mAdView.loadAd(adRequest)
 
         DrawTableView.point = 0 //フォーカスする席番号
@@ -78,24 +76,26 @@ class SekigimeResult : AppCompatActivity() {
         }
         val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
         resultLayout.addView(draw)
+
+        findViewById<Button>(R.id.re_sekigime).setOnClickListener { onReSekigime() }
+        findViewById<Button>(R.id.go_home).setOnClickListener { onGoHome() }
+        findViewById<Button>(R.id.show_all).setOnClickListener { onShowAll() }
+        findViewById<Button>(R.id.share_image).setOnClickListener { onShareImage() }
     }
 
-    @OnClick(R.id.re_sekigime)
-    fun onReSekigime() {
+    private fun onReSekigime() {
         val message = getString(R.string.re_sekigime_description) + getString(R.string.run_confirmation)
         val title = getString(R.string.re_sekigime_title)
         DialogWarehouse(supportFragmentManager).decisionDialog(title, message, this::reSekigime)
     }
 
-    @OnClick(R.id.go_home)
-    fun onGoHome() {
+    private fun onGoHome() {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
 
-    @OnClick(R.id.show_all)
-    fun onShowAll() {
+    private fun onShowAll() {
         findViewById<ScrollView>(R.id.result_scroller).fullScroll(ScrollView.FOCUS_UP)
         val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
         resultLayout.removeAllViews()
@@ -119,8 +119,8 @@ class SekigimeResult : AppCompatActivity() {
         drawAll = !drawAll //描画モード切替
     }
 
-    @OnClick(R.id.share_image)
-    fun onShareImage() {
+
+    private fun onShareImage() {
         val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
         ShareViewImage.shareView(this,resultLayout,getString(R.string.sekigime_result))
     }

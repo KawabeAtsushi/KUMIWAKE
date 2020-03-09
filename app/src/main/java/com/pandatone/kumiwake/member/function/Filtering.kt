@@ -80,7 +80,7 @@ class Filtering(val activity: Activity, private val memberList: ArrayList<Member
         val minAge1 = layout.findViewById<View>(R.id.min_age) as TextInputEditText
 
         if (clear) {
-            dropdown.setSelection(0)
+            dropdown.setText("")
             sexGroup.check(R.id.noSelect)
             maxAge1.setText("")
             minAge1.setText("")
@@ -101,7 +101,7 @@ class Filtering(val activity: Activity, private val memberList: ArrayList<Member
             errorAgeRange.visibility = View.VISIBLE
             errorAgeRange.setText(R.string.range_error)
         } else {
-            errorAgeRange.visibility = View.GONE
+            errorAgeRange.visibility = View.INVISIBLE
 
             if (sex == activity.getString(R.string.all)) {
                 sex = ""

@@ -3,23 +3,16 @@
 
     <!-- ボタンが押されていない状態 -->
     <item android:state_pressed="false">
-
         <shape android:shape="oval">
-
             <solid android:color="@color/red_unpressed" />
-
         </shape>
     </item>
 
     <!-- ボタンが押されている状態 -->
     <item android:state_pressed="true">
-
         <shape android:shape="oval">
-
             <solid android:color="@color/red_pressed" />
-
         </shape>
-
     </item>
 
 </selector>

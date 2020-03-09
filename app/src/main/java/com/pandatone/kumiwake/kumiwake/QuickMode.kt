@@ -8,10 +8,10 @@ import android.text.TextUtils
 import android.text.TextWatcher
 import android.transition.Slide
 import android.view.Window
+import android.widget.Button
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
-import butterknife.ButterKnife
-import butterknife.OnClick
+
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.member.function.Member
 import kotlinx.android.synthetic.main.quick_mode.*
@@ -34,10 +34,9 @@ class QuickMode : AppCompatActivity(), TextWatcher {
         }
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.quick_mode)
-        ButterKnife.bind(this)
-
         sex_seekBar.isEnabled = false
         member_no_form.addTextChangedListener(this)
+        findViewById<Button>(R.id.quick_kumiwake_btn).setOnClickListener { onNextClicked() }
     }
 
     override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -69,8 +68,7 @@ class QuickMode : AppCompatActivity(), TextWatcher {
         })
     }
 
-    @OnClick(R.id.quick_kumiwake_btn)
-    internal fun onClicked() {
+    internal fun onNextClicked() {
         val groupNo = group_no_form.text!!.toString()
         val memNo = member_no_form.text!!.toString()
 

@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="adApp_id" translatable="false">"ca-app-pub-2315101868638564~1560987130"</string>
+    <string name="adUnit_id" translatable="false">"ca-app-pub-2315101868638564/8665451539"</string>
+    <string name="device_id" translatable="false">"0EBEB22816119D6E46E0EF63A1547403"</string>
+</resources>

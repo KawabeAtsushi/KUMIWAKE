@@ -3,9 +3,10 @@ package com.pandatone.kumiwake.sekigime
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.Button
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
-import butterknife.ButterKnife
-import butterknife.OnClick
+
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.sekigime.function.CustomDialogSekigime
 import com.pandatone.kumiwake.sekigime.function.DrawTableView
@@ -21,33 +22,34 @@ class SelectTableType : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.select_sekigime_type)
-        ButterKnife.bind(this)
+
         inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+
+        findViewById<ImageButton>(R.id.square_table).setOnClickListener { onSquareClicked() }
+        findViewById<ImageButton>(R.id.parallel_table).setOnClickListener { onParallelClicked() }
+        findViewById<ImageButton>(R.id.circle_table).setOnClickListener { onCircleClicked() }
+        findViewById<ImageButton>(R.id.counter_table).setOnClickListener { onCounterClicked() }
     }
 
-    @OnClick(R.id.square_table)
-    internal fun onSquareClicked() {
+    private fun onSquareClicked() {
         DrawTableView.tableType = "square"
         title = getString(R.string.square_table)
         confirmationDialog(title, 1)
     }
 
-    @OnClick(R.id.parallel_table)
-    internal fun onParallelClicked() {
+    private fun onParallelClicked() {
         DrawTableView.tableType = "parallel"
         title = getString(R.string.parallel_table)
         confirmationDialog(title, 2)
     }
 
-    @OnClick(R.id.circle_table)
-    internal fun onCircleClicked() {
+    private fun onCircleClicked() {
         DrawTableView.tableType = "circle"
         title = getString(R.string.circle_table)
         confirmationDialog(title, 3)
     }
 
-    @OnClick(R.id.counter_table)
-    internal fun onCounterClicked() {
+    private fun onCounterClicked() {
         DrawTableView.tableType = "counter"
         title = getString(R.string.counter_table)
         confirmationDialog(title, 4)

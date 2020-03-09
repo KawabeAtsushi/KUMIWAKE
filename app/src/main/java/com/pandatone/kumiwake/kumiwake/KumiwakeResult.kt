@@ -12,8 +12,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ShareCompat
-import butterknife.ButterKnife
-import butterknife.OnClick
+
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
@@ -50,15 +49,15 @@ class KumiwakeResult : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kumiwake_result)
-        if(!StatusHolder.normalMode){
+        if (!StatusHolder.normalMode) {
             val layout = findViewById<ConstraintLayout>(R.id.result_view)
             layout.background = getDrawable(R.drawable.quick_img)
         }
-        ButterKnife.bind(this)
-        MobileAds.initialize(applicationContext, "ca-app-pub-2315101868638564/8665451539")
+
+        MobileAds.initialize(this, getString(R.string.adApp_id))
         val mAdView = findViewById<View>(R.id.adView) as AdView
         val adRequest = AdRequest.Builder()
-                .addTestDevice("BB707E3F7B5413908B2DD12063887489").build()
+                .addTestDevice(getString(R.string.device_id)).build()
         mAdView.loadAd(adRequest)
         val i = intent
         if (i.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) != null) {
@@ -97,6 +96,12 @@ class KumiwakeResult : AppCompatActivity() {
 
         val scrollView = findViewById<View>(R.id.kumiwake_scroll) as ScrollView
         scrollView.post { scrollView.fullScroll(ScrollView.FOCUS_UP) }
+
+
+        findViewById<Button>(R.id.re_kumiwake).setOnClickListener { onReKumiwake() }
+        findViewById<Button>(R.id.share_result).setOnClickListener { shareResult() }
+        findViewById<Button>(R.id.go_sekigime).setOnClickListener { onGoSekigime() }
+        findViewById<Button>(R.id.go_home).setOnClickListener { onGoHome() }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -159,8 +164,7 @@ class KumiwakeResult : AppCompatActivity() {
         }
     }
 
-    @OnClick(R.id.re_kumiwake)
-    internal fun onReKumiwake() {
+    private fun onReKumiwake() {
         v = 0
         nowGroupNo = 0
         timerTask = MyTimerTask(this)
@@ -178,14 +182,12 @@ class KumiwakeResult : AppCompatActivity() {
         Toast.makeText(applicationContext, getText(R.string.re_kumiwake_finished), Toast.LENGTH_SHORT).show()
     }
 
-    @OnClick(R.id.share_result)
-    internal fun shareResult() {
+    private fun shareResult() {
         val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
-        KumiwakeMethods.shareResult(this,this::share){ShareViewImage.shareView(this,resultLayout,getString(R.string.kumiwake_result))}
+        KumiwakeMethods.shareResult(this, this::share) { ShareViewImage.shareView(this, resultLayout, getString(R.string.kumiwake_result)) }
     }
 
-    @OnClick(R.id.go_sekigime)
-    internal fun onClicked() {
+    private fun onGoSekigime() {
         val groupNameArray = ArrayList<String>(groupCount)
         for (j in 0 until groupCount) {
             groupNameArray.add(groupArray[j].name)
@@ -197,8 +199,7 @@ class KumiwakeResult : AppCompatActivity() {
         startActivity(intent)
     }
 
-    @OnClick(R.id.go_home)
-    internal fun onClickedHome() {
+    private fun onGoHome() {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)

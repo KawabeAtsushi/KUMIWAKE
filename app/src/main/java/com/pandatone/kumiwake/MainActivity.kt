@@ -5,13 +5,9 @@ import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Html
-import android.util.Log
 import android.view.*
-import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.Guideline
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
@@ -21,6 +17,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.pandatone.kumiwake.PublicMethods.setStatusBarColor
+import com.pandatone.kumiwake.setting.PurchaseFreeAdOption
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import com.pandatone.kumiwake.ui.kumiwake.KumiwakeFragment
 import com.pandatone.kumiwake.ui.members.MembersFragment
@@ -51,14 +48,15 @@ class MainActivity : AppCompatActivity() {
         // To open the first tab as default
         openFragment(KumiwakeFragment())
 
-        MobileAds.initialize(this, "ca-app-pub-2315101868638564~1560987130")
-        //MobileAds.initialize(getApplicationContext(), "ca-app-pub-2315101868638564/8665451539");
+        MobileAds.initialize(this, getString(R.string.adApp_id))
         mAdView = findViewById<View>(R.id.adView) as AdView
         val adRequest = AdRequest.Builder()
-                .addTestDevice("22B04B5FB0CABF82EA6C2A7A431ED725").build()
+                .addTestDevice(getString(R.string.device_id)).build()
         mAdView.loadAd(adRequest)
 
         setKeyboardListener(navView)
+
+        PurchaseFreeAdOption(this).deleteAd(this, mAdView)
     }
 
     // 戻るボタンが押されたとき

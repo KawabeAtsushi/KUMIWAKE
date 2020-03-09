@@ -164,4 +164,6 @@
     <string name="share_with_text">Share with text</string>
     <string name="share_with_image">Share with image</string>
     <string name="share">share</string>
+    <string name="copy_path">Copy Path</string>
+    <string name="copied_path">Path copied to clipboard.</string>
 </resources>

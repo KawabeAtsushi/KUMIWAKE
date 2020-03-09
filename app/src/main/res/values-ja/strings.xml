@@ -167,4 +167,6 @@
     <string name="share_with_image">画像で共有</string>
     <string name="share_with_text">テキストで共有</string>
     <string name="share">共有</string>
+    <string name="copy_path">パスをコピー</string>
+    <string name="copied_path">パスをコピーしました。</string>
 </resources>

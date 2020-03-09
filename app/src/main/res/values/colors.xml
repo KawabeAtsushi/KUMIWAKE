@@ -34,12 +34,12 @@
     <color name="blue_title">#03a9f4</color>
     <color name="theme_blue_text">@color/text_light</color>
 
-    <color name="green_background">#80b9f6ca</color>
+    <color name="green_background">#d9ffd4</color>
     <color name="green_title">#1de9b6</color>
     <color name="green_background_title">#b9f6ca</color>
     <color name="theme_green_text">@color/text_dark</color>
 
-    <color name="red_background">#40ff8a80</color>
+    <color name="red_background">#ffd6dc</color>
     <color name="red_title">#ff5252</color>
     <color name="red_background_title">#ff8a80</color>
     <color name="theme_red_text">@color/text_light</color>

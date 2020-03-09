@@ -11,8 +11,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
-import butterknife.ButterKnife
-import butterknife.OnClick
+
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.AddMemberKeys
@@ -41,19 +40,20 @@ class AddMember : AppCompatActivity() {
     private var sexGroup: RadioGroup? = null
     private var sexButton: RadioButton? = null
     private var ageEditText: EditText? = null
-    private var belongDropdown: Button? = null
+    private var belongDropdown: AutoCompleteTextView? = null
     private var mbAdapter: MemberAdapter? = null
     private var fromNormalMode = false
     private val groupList: ArrayList<Group>
         get() {
-                return GroupAdapter(this).getAllGroups()
+            return GroupAdapter(this).getAllGroups()
         }
+    private var dialogShown = false
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.add_member)
-        ButterKnife.bind(this)
+
         mbAdapter = MemberAdapter(this)
         beforeBelong = null
         afterBelong = null
@@ -95,7 +95,11 @@ class AddMember : AppCompatActivity() {
         textInputLayout = findViewById<View>(R.id.member_form_input_layout) as TextInputLayout
         sexGroup = findViewById<View>(R.id.sexGroup) as RadioGroup
         ageEditText = findViewById<View>(R.id.input_age) as EditText
-        belongDropdown = findViewById<View>(R.id.select_group_choicer) as Button
+        belongDropdown = findViewById<View>(R.id.select_group_choicer) as AutoCompleteTextView
+        belongDropdown?.let { button -> button.setOnClickListener { onSelectGroupDropdownClicked(button) } }
+        findViewById<Button>(R.id.member_registration_finish_btn).setOnClickListener { register(true) }
+        findViewById<Button>(R.id.member_registration_continue_btn).setOnClickListener { register(false) }
+        findViewById<Button>(R.id.member_cancel_btn).setOnClickListener { finish() }
     }
 
     //Updateの場合の初期アイテム表示
@@ -115,7 +119,7 @@ class AddMember : AppCompatActivity() {
             sexGroup!!.check(R.id.manBtn)
         }
         ageEditText!!.setText(age)
-        belongDropdown!!.text = belong
+        belongDropdown!!.setText(belong)
 
         update(listId)
 
@@ -123,74 +127,54 @@ class AddMember : AppCompatActivity() {
 
 
     @SuppressLint("SetTextI18n")
-    @OnClick(R.id.select_group_choicer)
     internal fun onSelectGroupDropdownClicked(view: View) {
-        // 選択中の候補を取得
-        val buttonText = belongDropdown!!.text.toString()
-        val textArray = buttonText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        // 候補リスト
-        val list = ArrayList<String>()
-        for (group in groupList) {
-            list.add(group.name)
-        }
-        val belongArray = list.toTypedArray()
-        // 選択リスト
-        val checkArray = BooleanArray(belongArray.size)
-        for (i in belongArray.indices) {
-            checkArray[i] = false
-            for (data in textArray) {
-                if (belongArray[i] == data) {
-                    checkArray[i] = true
-                    break
+        if (!dialogShown) { //二回呼ばれる問題の解決
+            dialogShown = true
+            // 選択中の候補を取得
+            val buttonText = belongDropdown!!.text.toString()
+            val textArray = buttonText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            // 候補リスト
+            val list = ArrayList<String>()
+            for (group in groupList) {
+                list.add(group.name)
+            }
+            val belongArray = list.toTypedArray()
+            // 選択リスト
+            val checkArray = BooleanArray(belongArray.size)
+            for (i in belongArray.indices) {
+                checkArray[i] = false
+                for (data in textArray) {
+                    if (belongArray[i] == data) {
+                        checkArray[i] = true
+                        break
+                    }
                 }
             }
-        }
-        // ダイアログを生成
-        val dialog = AlertDialog.Builder(this)
-        // 選択イベント
-        dialog.setMultiChoiceItems(belongArray, checkArray) { _, value, isChecked ->
-            val text = belongDropdown!!.text.toString()
-            // 選択された場合
-            if (isChecked) {
-                // ボタンの表示に追加
-                belongDropdown!!.text = text + (if ("" == text) "" else ",") + belongArray[value]
-            } else {
-                // ボタンの表示から削除
-                when {
-                    text.indexOf(belongArray[value] + ",") >= 0 -> belongDropdown!!.text = text.replace(belongArray[value] + ",", "")
-                    text.indexOf("," + belongArray[value]) >= 0 -> belongDropdown!!.text = text.replace("," + belongArray[value], "")
-                    else -> belongDropdown!!.text = text.replace(belongArray[value], "")
+            // ダイアログを生成
+            val dialog = AlertDialog.Builder(this)
+            // 選択イベント
+            dialog.setMultiChoiceItems(belongArray, checkArray) { _, _, _ -> }
+            dialog.setPositiveButton(getText(R.string.decide)) { _, _ ->
+                val buffer = StringBuilder()
+                for (i in belongArray.indices) {
+                    if (checkArray[i]) {
+                        buffer.append((if (buffer.isEmpty()) "" else ",") + belongArray[i])
+                    }
                 }
+                belongDropdown!!.setText(buffer)
+                dialogShown = false
             }
+            dialog.setNeutralButton(getText(R.string.clear)) { _, _ ->
+                belongDropdown!!.setText("")
+                dialogShown = false
+                // 再表示
+                onSelectGroupDropdownClicked(view)
+            }
+            dialog.setNegativeButton(getText(R.string.cancel)) { _, _ -> dialogShown = false }
+            dialog.show()
+
+            beforeBelong = textArray
         }
-        dialog.setPositiveButton(getText(R.string.decide), null)
-        dialog.setNeutralButton(getText(R.string.clear)) { _, _ ->
-            belongDropdown!!.text = ""
-            // 再表示
-            onSelectGroupDropdownClicked(view)
-        }
-        dialog.setNegativeButton(getText(R.string.cancel)) { _, _ ->
-            // 選択前の状態に戻す
-            belongDropdown!!.text = buttonText
-        }
-        dialog.show()
-
-        beforeBelong = textArray
-    }
-
-    @OnClick(R.id.member_registration_finish_btn)
-    internal fun onRegistrationMemberClicked() {
-        register(true)
-    }
-
-    @OnClick(R.id.member_registration_continue_btn)
-    internal fun onRegistrationContinueMemberClicked() {
-        register(false)
-    }
-
-    @OnClick(R.id.member_cancel_btn)
-    internal fun cancel() {
-        finish()
     }
 
     //バックキーの処理

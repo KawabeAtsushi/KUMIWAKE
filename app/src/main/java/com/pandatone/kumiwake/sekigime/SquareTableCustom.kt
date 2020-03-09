@@ -2,10 +2,10 @@ package com.pandatone.kumiwake.sekigime
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
-import butterknife.ButterKnife
-import butterknife.OnClick
+
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import kotlinx.android.synthetic.main.square_custom.*
@@ -21,7 +21,7 @@ class SquareTableCustom : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.square_custom)
-        ButterKnife.bind(this)
+        findViewById<Button>(R.id.move_result).setOnClickListener { onNext() }
 
         val array = SekigimeResult.teamArray
         for (item in array) {
@@ -60,8 +60,7 @@ class SquareTableCustom : AppCompatActivity() {
         })
     }
 
-    @OnClick(R.id.move_result)
-    internal fun onClicked() {
+    internal fun onNext() {
         SekigimeResult.square_no = seatNo
         doubleDeploy = doubleSquareType.isChecked
         SekigimeResult.doubleDeploy = doubleDeploy

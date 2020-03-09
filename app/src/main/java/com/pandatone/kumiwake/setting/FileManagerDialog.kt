@@ -1,5 +1,7 @@
 package com.pandatone.kumiwake.setting
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import androidx.appcompat.app.AppCompatDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -7,6 +9,7 @@ import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.pandatone.kumiwake.R
 import android.content.Context
+import android.content.Context.CLIPBOARD_SERVICE
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -78,12 +81,10 @@ class FileManagerDialog(private var mTitle: String, private var mMessage: CharSe
         pathTextView.text = path
 
         //コピーパスボタン設定
-        val allocatePathButton = mDialog.findViewById<Button>(R.id.specify_path_button)
-        if (allocatePathButton != null) {
-            allocatePathButton.visibility = View.VISIBLE
-            allocatePathButton.setOnClickListener {
-                specifyPath(pathTextView)
-            }
+        val copyPathButton = mDialog.findViewById<Button>(R.id.copy_path_button)
+        if (copyPathButton != null) {
+            copyPathButton.visibility = View.VISIBLE
+            copyPathButton.setOnClickListener { copyToClipboard(path) }
         }
 
         // OKボタンのリスナ
@@ -96,7 +97,16 @@ class FileManagerDialog(private var mTitle: String, private var mMessage: CharSe
         (mDialog.findViewById<View>(R.id.negative_button) as TextView).setOnClickListener { dismiss() }
     }
 
-    //パスを指定
+    //テキストをコピー
+    private fun copyToClipboard(text: String) {
+        // copy to clipboard
+        val clipboardManager = context?.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                ?: return
+        clipboardManager.setPrimaryClip(ClipData.newPlainText("copyText", text))
+        Toast.makeText(activity, getString(R.string.copied_path), Toast.LENGTH_SHORT).show()
+    }
+
+    //パスを指定 (unUsed)
     private fun specifyPath(pathView:TextView) {
         val inflater = activity?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val layout = inflater.inflate(R.layout.input_text_dialog, activity?.findViewById<View>(R.id.filter_member) as? ViewGroup)

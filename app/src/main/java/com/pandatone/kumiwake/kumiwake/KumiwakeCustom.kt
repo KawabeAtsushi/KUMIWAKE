@@ -11,8 +11,6 @@ import android.view.ViewTreeObserver
 import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.pandatone.kumiwake.KumiwakeArrayKeys
 import com.pandatone.kumiwake.KumiwakeCustomKeys
 import com.pandatone.kumiwake.R
@@ -45,7 +43,6 @@ class KumiwakeCustom : AppCompatActivity() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.kumiwake_custom)
-        ButterKnife.bind(this)
 
         if (intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) != null) {
             memberArray = intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>
@@ -89,11 +86,12 @@ class KumiwakeCustom : AppCompatActivity() {
         val size = Point()
         windowManager.defaultDisplay.getSize(size)
         screenHeight = size.y
+        findViewById<Button>(R.id.normal_kumiwake_button).setOnClickListener { onNextClicked() }
+        findViewById<Button>(R.id.back_to_initial_mbNo).setOnClickListener { onBCClicked() }
     }
 
     //組み分け確認画面に遷移ボタン
-    @OnClick(R.id.normal_kumiwake_button)
-    internal fun onClicked() {
+    internal fun onNextClicked() {
         var memberSum = 0
         var allowToNext: Boolean? = true
         for (i in 0 until groupListView.count) {
@@ -119,7 +117,6 @@ class KumiwakeCustom : AppCompatActivity() {
     }
 
     //初期状態に戻すボタン
-    @OnClick(R.id.back_to_initial_mbNo)
     internal fun onBCClicked() {
         var et: EditText
         for (i in 0 until groupListView.count) {
