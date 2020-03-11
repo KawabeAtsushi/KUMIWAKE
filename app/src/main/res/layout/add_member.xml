@@ -140,7 +140,7 @@
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:focusable="false"
-                android:clickable="false"/>
+                android:clickable="false" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
@@ -163,7 +163,7 @@
             <Space
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/member_cancel_btn"

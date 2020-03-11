@@ -116,7 +116,7 @@ class GroupAdapter(context: Context) : ArrayAdapter<Group>(context, 0) {
         close()
     }
 
-    fun sortGroups(sortBy: String, sortType: String,groupList: ArrayList<Group>) {
+    fun sortGroups(sortBy: String, sortType: String, groupList: ArrayList<Group>) {
         open()
         val query = "SELECT * FROM " +
                 TABLE_NAME + " ORDER BY " + sortBy + " " + sortType + ";"

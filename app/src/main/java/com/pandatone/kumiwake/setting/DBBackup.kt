@@ -1,16 +1,18 @@
 package com.pandatone.kumiwake.setting
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatDialog
 import android.content.Context
 import android.os.Environment
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDialog
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
-import java.io.*
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
 
 @SuppressLint("StaticFieldLeak")
 object DBBackup {
@@ -37,11 +39,11 @@ object DBBackup {
             }
             return GroupAdapter.db.path   //DBのディレクトリとファイル名
         }
-    private lateinit var context:Context
+    private lateinit var context: Context
     private var b: Boolean = false
 
     @SuppressLint("SetTextI18n")
-    fun dbBackup(c: Context, path:String, dialog: AppCompatDialog) {
+    fun dbBackup(c: Context, path: String, dialog: AppCompatDialog) {
         context = c
         checkSDStatus(context)
 
@@ -62,14 +64,14 @@ object DBBackup {
 
         if (err == 0) {
             Toast.makeText(c, c.getString(R.string.back_up_completed), Toast.LENGTH_SHORT).show()
-        }else{
+        } else {
             Toast.makeText(c, c.getString(R.string.failed_backup), Toast.LENGTH_SHORT).show()
         }
         dialog.dismiss()
     }
 
     @SuppressLint("SetTextI18n")
-    fun dbImport(c: Context, path:String, dialog: AppCompatDialog) {
+    fun dbImport(c: Context, path: String, dialog: AppCompatDialog) {
         context = c
         checkSDStatus(context)
 
@@ -87,7 +89,7 @@ object DBBackup {
         if (err == 0) {
             dialog.dismiss()
             Toast.makeText(c, c.getString(R.string.import_completed), Toast.LENGTH_SHORT).show()
-        }else{
+        } else {
             Toast.makeText(c, "Error : $err", Toast.LENGTH_SHORT).show()
             // メッセージ設定
             (dialog.findViewById<View>(R.id.dialog_message) as TextView).text = c.getString(R.string.nothing_file) + "\n" + path +

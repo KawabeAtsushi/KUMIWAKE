@@ -1,6 +1,5 @@
 package com.pandatone.kumiwake.sekigime.function
 
-import androidx.appcompat.app.AppCompatDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -9,6 +8,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
+import androidx.appcompat.app.AppCompatDialog
 import androidx.fragment.app.DialogFragment
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.sekigime.SekigimeResult
@@ -55,7 +55,7 @@ class CustomDialogSekigime : DialogFragment() {
         positiveBt.setOnClickListener(mPositiveBtnListener)
 
         // いいえボタンのリスナ
-        (dialog.findViewById<Button>(R.id.negative_button) as Button).setOnClickListener(mOnClickLisner)
+        dialog.findViewById<Button>(R.id.negative_button)!!.setOnClickListener(mOnClickLisner)
         return dialog
     }
 

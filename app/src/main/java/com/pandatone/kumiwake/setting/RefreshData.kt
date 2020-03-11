@@ -14,7 +14,7 @@ object RefreshData {
 
     @SuppressLint("StaticFieldLeak")
     lateinit var mbDbAdapter: MemberAdapter
-    lateinit var gpDbAdapter: GroupAdapter
+    private lateinit var gpDbAdapter: GroupAdapter
 
     private val memberList: ArrayList<Member> = ArrayList()
     val groupList: ArrayList<Group> = ArrayList()
@@ -35,7 +35,7 @@ object RefreshData {
         //旧メンバー確保＆データベース全削除＆新メンバー登録
         mbDbAdapter.open()
         val mbc = mbDbAdapter.getDB
-        mbDbAdapter.getCursor(mbc, memberList,false)
+        mbDbAdapter.getCursor(mbc, memberList, false)
         allDelete(0)
         mbDbAdapter.close()
         saveAllName()

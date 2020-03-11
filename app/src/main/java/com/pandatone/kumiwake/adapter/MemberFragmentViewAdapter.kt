@@ -52,7 +52,7 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
             v = inflater.inflate(R.layout.row_member, null)
 
             if (mSelection.get(member.id)) {
-                v?.setBackgroundColor(PublicMethods.getColor(context,R.color.checked_list))
+                v?.setBackgroundColor(PublicMethods.getColor(context, R.color.checked_list))
             }
 
             setSexIcon(v!!, position)
@@ -74,7 +74,7 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
         if (getItem(position).sex == context.getText(R.string.man)) {
             memberIcon.setImageResource(R.drawable.member_img)
         } else {
-            memberIcon.setColorFilter(PublicMethods.getColor(context,R.color.woman))
+            memberIcon.setColorFilter(PublicMethods.getColor(context, R.color.woman))
         }
     }
 
@@ -87,7 +87,8 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
             MemberAdapter.MB_AGE -> nowData = nowItem.age.toString()
         }
 
-        if (position >= 2) { val preItem = getItem(position - 2)
+        if (position >= 2) {
+            val preItem = getItem(position - 2)
 
             when (mbNowSort) {
                 MemberAdapter.MB_READ -> preData = preItem.read

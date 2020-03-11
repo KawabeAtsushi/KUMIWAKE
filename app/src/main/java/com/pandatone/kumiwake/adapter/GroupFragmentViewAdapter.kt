@@ -44,7 +44,7 @@ class GroupFragmentViewAdapter(private val context: Context, private val groupLi
         v = inflater.inflate(R.layout.row_group, null)
 
         if (gSelection.get(group.id)) {
-            v!!.setBackgroundColor(PublicMethods.getColor(context,R.color.checked_list))
+            v!!.setBackgroundColor(PublicMethods.getColor(context, R.color.checked_list))
         }
 
         nameTextView = v?.findViewById<View>(R.id.groupName) as TextView

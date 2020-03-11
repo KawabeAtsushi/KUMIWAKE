@@ -16,7 +16,7 @@
         android:background="@drawable/index_background"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/infoName"
@@ -25,7 +25,7 @@
         android:layout_margin="@dimen/info_margin"
         app:layout_constraintTop_toTopOf="@id/indexName"
         app:layout_constraintBottom_toBottomOf="@id/indexName"
-        app:layout_constraintStart_toEndOf="@id/indexName"/>
+        app:layout_constraintStart_toEndOf="@id/indexName" />
 
     <TextView
         android:id="@+id/indexMBNo"
@@ -36,7 +36,7 @@
         android:background="@drawable/index_background"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/indexName"/>
+        app:layout_constraintTop_toBottomOf="@id/indexName" />
 
     <TextView
         android:id="@+id/infoMBNo"
@@ -45,7 +45,7 @@
         android:layout_margin="@dimen/info_margin"
         app:layout_constraintTop_toTopOf="@id/indexMBNo"
         app:layout_constraintBottom_toBottomOf="@id/indexMBNo"
-        app:layout_constraintStart_toEndOf="@id/indexMBNo"/>
+        app:layout_constraintStart_toEndOf="@id/indexMBNo" />
 
     <TextView
         android:id="@+id/indexMember"
@@ -55,7 +55,7 @@
         android:layout_marginStart="@dimen/info_margin"
         android:background="@drawable/index_background"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/indexMBNo"/>
+        app:layout_constraintTop_toBottomOf="@id/indexMBNo" />
 
     <ListView
         android:id="@+id/belongList"
@@ -67,7 +67,7 @@
         app:layout_constraintTop_toBottomOf="@id/indexMember"
         app:layout_constraintBottom_toTopOf="@id/okBt"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
     <com.google.android.material.button.MaterialButton
@@ -79,6 +79,6 @@
         android:text=" OK "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

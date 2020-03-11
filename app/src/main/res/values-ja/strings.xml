@@ -5,7 +5,6 @@
     <string name="group">グループ</string>
     <string name="sekigime">席決め</string>
     <string name="setting_help">設定／ヘルプ</string>
-    <string name="member_main">メンバー</string>
     <string name="search_view">キーワード検索</string>
     <string name="filtering">絞り込み</string>
     <string name="sorting">並べ替え</string>
@@ -54,7 +53,6 @@
     <string name="number_of_member">メンバー数</string>
     <string name="normal_mode">ノーマルモード</string>
     <string name="quick_mode">クイックモード</string>
-    <string name="select_mode">モード選択</string>
     <string name="description_of_normal_kumiwake">登録したメンバーを選択して組分けを行うモードです。\nグループごとの名前や人数の設定などの詳細なカスタマイズが行えます。</string>
     <string name="description_of_quick_kumiwake">人数とグループ数を指定して組分けを行うモードです。\nメンバーの登録が不要なので手軽に組分けを行えます。</string>
     <string name="description_of_normal_sekigime">登録したメンバーを選択して席決めを行うモードです。\nグループごとの名前や人数の設定などの詳細なカスタマイズが行えます。</string>
@@ -170,5 +168,4 @@
     <string name="detail_help">詳しい使い方 (専用サイトへ)</string>
     <string name="purchasing_text">広告削除の購入</string>
     <string name="purchased_history">購入履歴</string>
-    <string name="ad_deleted">広告を削除しました。</string>
 </resources>

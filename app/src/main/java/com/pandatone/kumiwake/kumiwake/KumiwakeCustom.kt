@@ -91,7 +91,7 @@ class KumiwakeCustom : AppCompatActivity() {
     }
 
     //組み分け確認画面に遷移ボタン
-    internal fun onNextClicked() {
+    private fun onNextClicked() {
         var memberSum = 0
         var allowToNext: Boolean? = true
         for (i in 0 until groupListView.count) {
@@ -117,7 +117,7 @@ class KumiwakeCustom : AppCompatActivity() {
     }
 
     //初期状態に戻すボタン
-    internal fun onBCClicked() {
+    private fun onBCClicked() {
         var et: EditText
         for (i in 0 until groupListView.count) {
             et = groupListView.getChildAt(i).findViewById<View>(R.id.editTheNumberOfMember) as EditText

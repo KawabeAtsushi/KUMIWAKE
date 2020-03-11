@@ -11,17 +11,16 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.ListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pandatone.kumiwake.AddGroupKeys
-import com.pandatone.kumiwake.member.function.GroupMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
-import com.pandatone.kumiwake.member.*
+import com.pandatone.kumiwake.member.AddGroup
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.GroupClick
+import com.pandatone.kumiwake.member.function.GroupMethods
 import com.pandatone.kumiwake.member.function.Sort
 import java.io.IOException
-import kotlin.collections.ArrayList
 
 
 /**
@@ -112,7 +111,7 @@ class FragmentGroupMain : ListFragment() {
             }
 
             R.id.item_sort -> {
-                Sort.groupSort( activity!!, groupList, listAdp)
+                Sort.groupSort(activity!!, groupList, listAdp)
             }
         }
 
@@ -175,15 +174,18 @@ class FragmentGroupMain : ListFragment() {
                 R.id.item_all_select -> {
                     if (checkedCount >= listAdp.count / 2) {
                         clearSelection(mode)
-                    } else {for (i in 0 until listAdp.count) {
-                    listView.setItemChecked(i, true)
-                }}}
+                    } else {
+                        for (i in 0 until listAdp.count) {
+                            listView.setItemChecked(i, true)
+                        }
+                    }
+                }
 
                 R.id.item_sort -> {
                     listView.clearChoices()
                     listAdp.clearSelection()
                     mode.title = "0" + getString(R.string.selected)
-                    Sort.groupSort( activity!!, groupList, listAdp)
+                    Sort.groupSort(activity!!, groupList, listAdp)
                 }
             }
             return false

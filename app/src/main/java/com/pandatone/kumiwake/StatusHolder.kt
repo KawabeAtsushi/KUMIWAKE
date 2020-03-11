@@ -26,29 +26,29 @@ object StatusHolder {
     var index = "index"
 
     //Purchase sku
-    val sku = "AD_FREE"
+    const val sku = "AD_FREE"
 }
 
 //AddMemberのintent key
-enum class AddMemberKeys(val key:String){
+enum class AddMemberKeys(val key: String) {
     MEMBER("tableNo"),
     FROM_NORMAL_MODE("fromNormalMode")
 }
 
 //AddGroupのintent key
-enum class AddGroupKeys(val key: String){
+enum class AddGroupKeys(val key: String) {
     EDIT_ID("edit_id"),
     MEMBER_ARRAY("memberArray")
 }
 
 //組み分け条件のkey
-enum class KumiwakeCustomKeys(val key: String){
+enum class KumiwakeCustomKeys(val key: String) {
     EVEN_FM_RATIO("even_fm_ratio"),
     EVEN_AGE_RATIO("even_age_ratio")
 }
 
 //kumiwake arrayのintent key
-enum class KumiwakeArrayKeys(val key:String){
+enum class KumiwakeArrayKeys(val key: String) {
     MEMBER_LIST("MemberList"),
     GROUP_LIST("GroupList"),
     LEADER_LIST("LEADER_LIST")

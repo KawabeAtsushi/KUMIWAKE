@@ -30,10 +30,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         app:srcCompat="@drawable/ic_add_white_24dp"
-        app:tint = "@android:color/white"
+        app:tint="@android:color/white"
         app:backgroundTint="#00ff00"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

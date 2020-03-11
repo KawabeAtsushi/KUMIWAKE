@@ -16,6 +16,8 @@ import android.widget.BaseAdapter
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.member.function.Member
 import java.io.IOException
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MemberAdapter(val context: Context) : BaseAdapter() {
@@ -169,7 +171,7 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
                                 c.getInt(4),
                                 null.toString(),
                                 null.toString(),
-                                read.toUpperCase()[0].toString())
+                                read.toUpperCase(Locale.getDefault())[0].toString())
                     } else {
                         Member(
                                 0,

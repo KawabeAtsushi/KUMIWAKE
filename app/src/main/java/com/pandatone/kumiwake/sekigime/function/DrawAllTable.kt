@@ -1,7 +1,10 @@
 package com.pandatone.kumiwake.sekigime.function
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.RectF
 import android.util.Log
 import android.view.View
 import com.pandatone.kumiwake.PublicMethods
@@ -9,8 +12,6 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.sekigime.SekigimeResult
 import com.pandatone.kumiwake.sekigime.function.DrawTableView.Companion.tableType
-import kotlinx.android.synthetic.main.select_sekigime_type.view.*
-import kotlin.collections.ArrayList
 import kotlin.math.*
 
 /**
@@ -453,7 +454,7 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
                 val startX = textCenterToStartX(text, xP, textPaint)
                 textStartX = nonProtrudeCircle(text, startX, textPaint)
                 val bottomY = textCenterToBottomY(yP, textPaint)
-                textBottomY = nonOverlapCircle(bottomY, point,textPaint)
+                textBottomY = nonOverlapCircle(bottomY, point, textPaint)
             }
             else -> {
                 r = 60 * dp
@@ -526,26 +527,30 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
     }
 
     //circleのバルーンが重ならないように描画
-    private fun nonOverlapCircle(bottomY: Float, point: Int,textPaint: Paint): Float {
-        if (point == 0) { //一番上の席
-            val nextCenterY = y[1] - lastY
-            val dist = abs(bottomY - nextCenterY) * dp //底辺と次の席の中心点の距離
-            return if (dist < 75 * dp) { //重ならない距離90dp
-                bottomY - (75 * dp -dist) //重ならない位置　+ マージン
-            } else {
-                bottomY
+    private fun nonOverlapCircle(bottomY: Float, point: Int, textPaint: Paint): Float {
+        when (point) {
+            0 -> { //一番上の席
+                val nextCenterY = y[1] - lastY
+                val dist = abs(bottomY - nextCenterY) * dp //底辺と次の席の中心点の距離
+                return if (dist < 75 * dp) { //重ならない距離90dp
+                    bottomY - (75 * dp - dist) //重ならない位置　+ マージン
+                } else {
+                    bottomY
+                }
             }
-        } else if (point == seatsNo / 2) { //一番下の席
-            val nextCenterY = y[point + 1] - lastY
-            val dist = abs(textBottomToTopY(bottomY,textPaint) - nextCenterY)*dp //上辺と次の席の中心点の距離
-            Log.d("Dist2",dist.toString())
-            return if (dist <= 75 * dp) { //重ならない距離90dp
-                bottomY + (75 * dp - dist) //重ならない位置　+ マージン
-            } else {
-                bottomY
+            seatsNo / 2 -> { //一番下の席
+                val nextCenterY = y[point + 1] - lastY
+                val dist = abs(textBottomToTopY(bottomY, textPaint) - nextCenterY) * dp //上辺と次の席の中心点の距離
+                Log.d("Dist2", dist.toString())
+                return if (dist <= 75 * dp) { //重ならない距離90dp
+                    bottomY + (75 * dp - dist) //重ならない位置　+ マージン
+                } else {
+                    bottomY
+                }
             }
-        } else {
-            return bottomY
+            else -> {
+                return bottomY
+            }
         }
     }
 

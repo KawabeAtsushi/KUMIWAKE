@@ -76,7 +76,7 @@ class SettingsFragment : Fragment() {
             //行をクリックした時の処理
             when (position) {
                 0 -> showVersionName(activity!!.baseContext)
-                1 -> startActivity(Intent(activity,PurchaseFreeAdOption::class.java))
+                1 -> startActivity(Intent(activity, PurchaseFreeAdOption::class.java))
                 2 -> launchMailer()
                 3 -> shareApp()
                 4 -> toPrivacyPolicy()
@@ -86,7 +86,7 @@ class SettingsFragment : Fragment() {
                 when (pos) {
                     1 -> {
                         StatusHolder.cheakStatus = true
-                        startActivity(Intent(activity,PurchaseFreeAdOption::class.java))
+                        startActivity(Intent(activity, PurchaseFreeAdOption::class.java))
                     }
                 }
                 false

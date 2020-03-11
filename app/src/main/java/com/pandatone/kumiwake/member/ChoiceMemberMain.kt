@@ -13,13 +13,6 @@ import com.pandatone.kumiwake.AddGroupKeys
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.CustomPagerAdapter
 import com.pandatone.kumiwake.member.function.Member
-import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-
 
 
 /**
@@ -50,24 +43,24 @@ class ChoiceMemberMain : AppCompatActivity() {
     //Viewの宣言・初期化
     private fun setViews() {
         viewPager = findViewById<View>(R.id.view_pager) as ViewPager
-        val adapter = CustomPagerAdapter(this,manager,false)
+        val adapter = CustomPagerAdapter(this, manager, false)
         viewPager.adapter = adapter
         decision = findViewById<View>(R.id.decisionBt) as Button
 
-            viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
-                //スクロール中（page切り替え中）に呼ばれる
-                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                    //tableNo:遷移中pageのindex
-                    //positionOffset:遷移前→遷移後のoffset割合を0~1で返す
-                    //positionOffsetPixels:positionOffsetをpixelで返す
-                    if (position == 0) {
-                        decision.visibility = View.VISIBLE
-                    } else {
-                        decision.visibility = View.GONE
-                    }
-                    decision.translationY = 1000 * positionOffset * (1 - 2 * position) //0to1->up,1to0->down
+        viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+            //スクロール中（page切り替え中）に呼ばれる
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                //tableNo:遷移中pageのindex
+                //positionOffset:遷移前→遷移後のoffset割合を0~1で返す
+                //positionOffsetPixels:positionOffsetをpixelで返す
+                if (position == 0) {
+                    decision.visibility = View.VISIBLE
+                } else {
+                    decision.visibility = View.GONE
                 }
-            })
+                decision.translationY = 1000 * positionOffset * (1 - 2 * position) //0to1->up,1to0->down
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -93,7 +86,7 @@ class ChoiceMemberMain : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val viewPager = findViewById<View>(R.id.view_pager) as ViewPager
-        val adapter = CustomPagerAdapter(this,manager,false)
+        val adapter = CustomPagerAdapter(this, manager, false)
         adapter.findFragmentByPosition(viewPager, page).onOptionsItemSelected(item)
 
         return false

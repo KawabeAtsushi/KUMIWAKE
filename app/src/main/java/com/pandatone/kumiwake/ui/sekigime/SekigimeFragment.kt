@@ -64,7 +64,7 @@ class SekigimeFragment : Fragment() {
             // layoutのレイアウトが完了したら、ガイドラインの位置を変更
             val lHeight = layout.height.toFloat()
             val adHeight = adView.height.toFloat()
-            val adRatio = adHeight/lHeight
+            val adRatio = adHeight / lHeight
             val guideLineRatio = 0.5f - adRatio
             guideLine.setGuidelinePercent(guideLineRatio)
         }

@@ -1,10 +1,12 @@
 package com.pandatone.kumiwake.member
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.ListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pandatone.kumiwake.R
@@ -19,7 +21,6 @@ import com.pandatone.kumiwake.member.function.Sort
  * Created by atsushi_2 on 2016/02/23.
  */
 class FragmentGroupChoiceMode : ListFragment() {
-    private var checkedCount = 0
     private var groupList: ArrayList<Group> = ArrayList()
 
     // 必須*
@@ -62,11 +63,11 @@ class FragmentGroupChoiceMode : ListFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-            listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-                //行をクリックした時の処理
-                ChoiceMemberMain.viewPager.setCurrentItem(0, true)
-                FragmentMemberChoiceMode().checkByGroup(groupList[position].id)
-            }
+        listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+            //行をクリックした時の処理
+            ChoiceMemberMain.viewPager.setCurrentItem(0, true)
+            FragmentMemberChoiceMode().checkByGroup(groupList[position].id)
+        }
     }
 
     // アクションアイテム選択時
@@ -74,7 +75,7 @@ class FragmentGroupChoiceMode : ListFragment() {
 
         when (item.itemId) {
             R.id.item_sort -> {
-                Sort.groupSort( activity!!, groupList, listAdp)
+                Sort.groupSort(activity!!, groupList, listAdp)
             }
         }
         return false

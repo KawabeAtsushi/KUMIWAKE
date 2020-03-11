@@ -11,7 +11,7 @@
         android:background="@drawable/index_background"
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/memberListView"
@@ -22,7 +22,7 @@
         android:background="@drawable/listview_background"
         app:layout_constrainedHeight="true"
         app:layout_constraintTop_toBottomOf="@id/numberOfSelectedMember"
-        app:layout_constraintBottom_toTopOf="@id/member_add_btn"/>
+        app:layout_constraintBottom_toTopOf="@id/member_add_btn" />
 
     <TextView
         android:id="@+id/emptyMemberList"
@@ -36,41 +36,41 @@
         android:textSize="18sp"
         android:textColor="#80ff0000"
         app:layout_constraintTop_toBottomOf="@id/numberOfSelectedMember"
-        app:layout_constraintBottom_toTopOf="@id/member_add_btn"/>
+        app:layout_constraintBottom_toTopOf="@id/member_add_btn" />
 
-        <com.google.android.material.button.MaterialButton
-            style="@style/Button.Transparent.Rounded"
-            android:id="@+id/member_add_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:layout_margin="@dimen/form_between_margin"
-            android:padding="15dp"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:text="@string/select_member"
-            android:textColor="#000000"
-            app:backgroundTint="#90ffc02e"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintBottom_toBottomOf= "parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/member_register_and_add_btn"/>
+    <com.google.android.material.button.MaterialButton
+        style="@style/Button.Transparent.Rounded"
+        android:id="@+id/member_add_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_margin="@dimen/form_between_margin"
+        android:padding="15dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:text="@string/select_member"
+        android:textColor="#000000"
+        app:backgroundTint="#90ffc02e"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/member_register_and_add_btn" />
 
-        <com.google.android.material.button.MaterialButton
-            style="@style/Button.Transparent.Rounded"
-            android:id="@+id/member_register_and_add_btn"
-            android:layout_width="50dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="10dp"
-            android:text="＋"
-            android:textStyle="bold"
-            android:textSize="30dp"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            app:backgroundTint="#9000e676"
-            app:layout_constraintTop_toTopOf="@id/member_add_btn"
-            app:layout_constraintBottom_toBottomOf= "@id/member_add_btn"
-            app:layout_constraintStart_toEndOf="@id/member_add_btn"
-            app:layout_constraintEnd_toEndOf="parent"/>
+    <com.google.android.material.button.MaterialButton
+        style="@style/Button.Transparent.Rounded"
+        android:id="@+id/member_register_and_add_btn"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:text="＋"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        app:backgroundTint="#9000e676"
+        app:layout_constraintTop_toTopOf="@id/member_add_btn"
+        app:layout_constraintBottom_toBottomOf="@id/member_add_btn"
+        app:layout_constraintStart_toEndOf="@id/member_add_btn"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

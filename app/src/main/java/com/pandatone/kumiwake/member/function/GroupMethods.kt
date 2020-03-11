@@ -14,7 +14,7 @@ object GroupMethods {
         members.forEach { member ->
             val belongText = member.belong
             val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            if (Arrays.asList<String>(*belongArray).contains(belongId)) {
+            if (listOf(*belongArray).contains(belongId)) {
                 memberArrayByBelong.add(Member(member.id, member.name, member.sex, 0, 0, null.toString(), null.toString(), null.toString()))
             }
         }
@@ -22,7 +22,7 @@ object GroupMethods {
     }
 
     //全てのメンバーをグループ(groupIdのグループ)から脱退（グループ削除の際にコール）
-    fun deleteBelongInfoAll(context: Context,groupId: Int) {
+    fun deleteBelongInfoAll(context: Context, groupId: Int) {
         val mbAdapter = MemberAdapter(context)
         val members = mbAdapter.getAllMembers()
         mbAdapter.open()
@@ -33,10 +33,10 @@ object GroupMethods {
     }
 
     //メンバー(member)を所属グループ(groupIdのグループ)から脱退
-    private fun deleteBelongInfo(member: Member, groupId: Int, listId: Int, mbAdapter:MemberAdapter) {
+    private fun deleteBelongInfo(member: Member, groupId: Int, listId: Int, mbAdapter: MemberAdapter) {
         val belongText = member.belong
         val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        val list = ArrayList(Arrays.asList<String>(*belongArray))
+        val list = ArrayList(listOf(*belongArray))
         val hs = HashSet<String>()
         hs.addAll(list)
         list.clear()

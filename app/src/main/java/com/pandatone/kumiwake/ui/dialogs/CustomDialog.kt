@@ -1,6 +1,5 @@
 package com.pandatone.kumiwake.ui.dialogs
 
-import androidx.appcompat.app.AppCompatDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -8,6 +7,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatDialog
 import androidx.fragment.app.DialogFragment
 import com.pandatone.kumiwake.R
 
@@ -40,7 +40,7 @@ class CustomDialog(private var mTitle: String, private var mMessage: CharSequenc
         } else {
             (dialog.findViewById<View>(R.id.positive_button) as TextView).setOnClickListener(mPositiveBtnListener)
             // いいえボタンのリスナ
-            (dialog.findViewById<View>(R.id.negative_button) as TextView).setOnClickListener{ dismiss() }
+            (dialog.findViewById<View>(R.id.negative_button) as TextView).setOnClickListener { dismiss() }
         }
 
         return dialog

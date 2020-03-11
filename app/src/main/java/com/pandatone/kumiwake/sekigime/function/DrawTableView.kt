@@ -3,7 +3,6 @@ package com.pandatone.kumiwake.sekigime.function
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import com.pandatone.kumiwake.PublicMethods
@@ -11,9 +10,7 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.sekigime.SekigimeResult
 import java.util.*
-import kotlin.math.abs
-import kotlin.math.floor
-import kotlin.math.roundToInt
+import kotlin.math.*
 
 
 /**
@@ -59,7 +56,7 @@ class DrawTableView(context: Context) : View(context) {
         when (tableType) {
             "square" -> {
                 height = if (doubleDeploy!!) {
-                    (seatsNo - squareNo*2 + 1) * 68 + 350
+                    (seatsNo - squareNo * 2 + 1) * 68 + 350
                 } else {
                     (seatsNo - squareNo) * 68 + 350
                 }
@@ -384,8 +381,8 @@ class DrawTableView(context: Context) : View(context) {
 
         for (i in 0 until seatsNo) {
             canvas.drawCircle(0f, centerY, r, sPaint)
-            x.add((-centerY * Math.cos(Math.toRadians((-270 - 360.0 * i / seatsNo))) + centerX).toFloat())
-            y.add((centerY * Math.sin(Math.toRadians(-270 - 360.0 * i / seatsNo)) + 430 * dp).toFloat())
+            x.add((-centerY * cos(Math.toRadians((-270 - 360.0 * i / seatsNo))) + centerX).toFloat())
+            y.add((centerY * sin(Math.toRadians(-270 - 360.0 * i / seatsNo)) + 430 * dp).toFloat())
             //(度)ずつ回転し描画
             canvas.rotate(360f / seatsNo)
         }

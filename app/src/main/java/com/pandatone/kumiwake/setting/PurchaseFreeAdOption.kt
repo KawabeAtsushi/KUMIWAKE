@@ -22,7 +22,7 @@ queryPurchaseHistory()
 
 class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, AcknowledgePurchaseResponseListener {
     private var billingClient: BillingClient? = null
-    var mySkuDetailsList: List<SkuDetails>? = null
+    private var mySkuDetailsList: List<SkuDetails>? = null
 
     // アプリ開始時に呼ばれる
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -5,10 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
-import android.view.View.OnFocusChangeListener
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.ListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
@@ -20,7 +18,6 @@ import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter
 import com.pandatone.kumiwake.member.AddMember
 import com.pandatone.kumiwake.member.function.*
 import java.io.IOException
-import java.lang.Math.abs
 
 
 /**
@@ -67,7 +64,7 @@ class FragmentMemberMain : ListFragment() {
         lv.isFastScrollEnabled = true
         lv.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
-            val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
+            val builder = AlertDialog.Builder(activity!!)
             val builder2 = AlertDialog.Builder(activity!!)
             val inflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val view2 = inflater.inflate(R.layout.member_info, activity!!.findViewById<View>(R.id.info_layout) as ViewGroup?)
@@ -134,7 +131,7 @@ class FragmentMemberMain : ListFragment() {
 
     //単一メンバー削除
     private fun deleteSingleMember(position: Int, name: String) {
-        val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
+        val builder = AlertDialog.Builder(activity!!)
         builder.setTitle(name)
         builder.setMessage(R.string.Do_delete)
         // OKの時の処理
@@ -249,7 +246,7 @@ class FragmentMemberMain : ListFragment() {
         //複数メンバー削除
         private fun deleteMultiMember(mode: ActionMode) {
             // アラートダイアログ表示
-            val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
+            val builder = AlertDialog.Builder(activity!!)
             builder.setTitle(checkedCount.toString() + " " + getString(R.string.member) + getString(R.string.delete))
             builder.setMessage(R.string.Do_delete)
             // OKの時の処理
@@ -319,7 +316,7 @@ class FragmentMemberMain : ListFragment() {
     //年齢変更ボタンクリック
     fun changeAge() {
         val activity = requireActivity()
-        val builder = androidx.appcompat.app.AlertDialog.Builder(activity)
+        val builder = AlertDialog.Builder(activity)
         val inflater = activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val layout = inflater.inflate(R.layout.change_age_dialog, activity.findViewById<View>(R.id.change_age_dialog) as? ViewGroup)
         builder.setTitle(activity.getText(R.string.change_age))

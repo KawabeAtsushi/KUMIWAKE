@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/guideline_top"/>
+        app:layout_constraintBottom_toTopOf="@id/guideline_top" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_top"
@@ -38,69 +38,69 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
-        <ImageButton
-            android:id="@+id/square_table"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/square_table"
-            android:background="@drawable/translucent_orange_btn"
-            android:scaleType="fitCenter"
-            android:padding="10dp"
-            android:text="@string/square_table"
-            android:contentDescription="@string/square_table"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
-            app:layout_constraintTop_toBottomOf="@id/guideline_top"
-            app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"/>
+    <ImageButton
+        android:id="@+id/square_table"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/square_table"
+        android:background="@drawable/translucent_orange_btn"
+        android:scaleType="fitCenter"
+        android:padding="10dp"
+        android:text="@string/square_table"
+        android:contentDescription="@string/square_table"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
+        app:layout_constraintTop_toBottomOf="@id/guideline_top"
+        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal" />
 
 
-        <ImageButton
-            android:id="@+id/parallel_table"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/parallel_table"
-            android:background="@drawable/translucent_orange_btn"
-            android:scaleType="fitCenter"
-            android:padding="10dp"
-            android:text="@string/parallel_table"
-            android:contentDescription="@string/parallel_table"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/guideline_vertical"
-            app:layout_constraintTop_toBottomOf="@id/guideline_top"
-            app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"/>
+    <ImageButton
+        android:id="@+id/parallel_table"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/parallel_table"
+        android:background="@drawable/translucent_orange_btn"
+        android:scaleType="fitCenter"
+        android:padding="10dp"
+        android:text="@string/parallel_table"
+        android:contentDescription="@string/parallel_table"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
+        app:layout_constraintTop_toBottomOf="@id/guideline_top"
+        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal" />
 
-        <ImageButton
-            android:id="@+id/circle_table"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/circle_table"
-            android:background="@drawable/translucent_orange_btn"
-            android:scaleType="fitCenter"
-            android:padding="5dp"
-            android:text="@string/circle_table"
-            android:contentDescription="@string/circle_table"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
-            app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+    <ImageButton
+        android:id="@+id/circle_table"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/circle_table"
+        android:background="@drawable/translucent_orange_btn"
+        android:scaleType="fitCenter"
+        android:padding="5dp"
+        android:text="@string/circle_table"
+        android:contentDescription="@string/circle_table"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
-        <ImageButton
-            android:id="@+id/counter_table"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/counter_table"
-            android:background="@drawable/translucent_orange_btn"
-            android:scaleType="fitCenter"
-            android:padding="35dp"
-            android:text="@string/counter_table"
-            android:contentDescription="@string/counter_table"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/guideline_vertical"
-            app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+    <ImageButton
+        android:id="@+id/counter_table"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/counter_table"
+        android:background="@drawable/translucent_orange_btn"
+        android:scaleType="fitCenter"
+        android:padding="35dp"
+        android:text="@string/counter_table"
+        android:contentDescription="@string/counter_table"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

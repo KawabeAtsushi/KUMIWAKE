@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="?attr/actionBarSize">
@@ -24,7 +24,8 @@
             <ListView
                 android:id="@+id/how_to_use_list"
                 android:layout_width="match_parent"
-                android:layout_height="270dp" />
+                android:layout_height="270dp"
+                tools:ignore="NestedScrolling" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -36,7 +37,8 @@
             <ListView
                 android:id="@+id/back_up_list"
                 android:layout_width="match_parent"
-                android:layout_height="270dp" />
+                android:layout_height="270dp"
+                tools:ignore="NestedScrolling" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -48,7 +50,8 @@
             <ListView
                 android:id="@+id/other_list"
                 android:layout_width="match_parent"
-                android:layout_height="330dp" />
+                android:layout_height="330dp"
+                tools:ignore="NestedScrolling" />
 
         </LinearLayout>
     </ScrollView>

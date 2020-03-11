@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
-
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.StatusHolder
 import kotlinx.android.synthetic.main.square_custom.*
 
 /**
@@ -60,7 +58,7 @@ class SquareTableCustom : AppCompatActivity() {
         })
     }
 
-    internal fun onNext() {
+    private fun onNext() {
         SekigimeResult.square_no = seatNo
         doubleDeploy = doubleSquareType.isChecked
         SekigimeResult.doubleDeploy = doubleDeploy

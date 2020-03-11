@@ -19,8 +19,6 @@ package com.pandatone.kumiwake
 import android.graphics.Color
 import androidx.annotation.ColorRes
 
-import com.pandatone.kumiwake.R
-
 /**
  * Usually this should be done via attributes and [android.view.ContextThemeWrapper]s.
  * In one case in Topeka it is more performant to work like this.

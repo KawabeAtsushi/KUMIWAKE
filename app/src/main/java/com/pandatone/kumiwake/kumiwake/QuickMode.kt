@@ -68,7 +68,7 @@ class QuickMode : AppCompatActivity(), TextWatcher {
         })
     }
 
-    internal fun onNextClicked() {
+    private fun onNextClicked() {
         val groupNo = group_no_form.text!!.toString()
         val memNo = member_no_form.text!!.toString()
 

@@ -2,18 +2,19 @@ package com.pandatone.kumiwake.setting
 
 import android.content.ClipData
 import android.content.ClipboardManager
-import androidx.appcompat.app.AppCompatDialog
+import android.content.Context.CLIPBOARD_SERVICE
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatDialog
 import androidx.fragment.app.DialogFragment
 import com.pandatone.kumiwake.R
-import android.content.Context
-import android.content.Context.CLIPBOARD_SERVICE
-import android.view.*
-import android.widget.*
-import androidx.appcompat.app.AlertDialog
-import com.google.android.material.textfield.TextInputEditText
 
 
 /**

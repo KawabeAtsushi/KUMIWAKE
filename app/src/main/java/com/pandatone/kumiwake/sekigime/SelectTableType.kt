@@ -3,10 +3,8 @@ package com.pandatone.kumiwake.sekigime
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.widget.Button
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
-
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.sekigime.function.CustomDialogSekigime
 import com.pandatone.kumiwake.sekigime.function.DrawTableView

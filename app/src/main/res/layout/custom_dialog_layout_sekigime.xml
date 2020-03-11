@@ -1,98 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_marginStart="6dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginEnd="6dp"
+    android:layout_marginBottom="6dp"
+    android:background="@drawable/dialog_appearance2"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="20dp">
 
-    <!-- コンテンツ -->
 
-    <LinearLayout
+    <!-- タイトル -->
+
+    <TextView
+        android:id="@+id/dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="6dp"
-        android:background="@drawable/dialog_appearance2"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingBottom="20dp">
+        android:background="@drawable/dialog_title_orange"
+        android:padding="10dp"
+        android:text="Title"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="7dp"
+        android:text="@string/seats_type_confirmation"
+        android:textSize="17dp" />
+
+    <TextView
+        android:id="@+id/be_custom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginStart="10dp"
+        android:text="@string/be_custom"
+        android:textColor="@color/red"
+        android:textSize="15dp"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/table_img"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        android:src="@drawable/circle_table" />
 
 
-        <!-- タイトル -->
+    <CheckBox
+        android:id="@+id/even_fm_deploy_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
+        android:text="@string/fm_placed_alternately"
+        android:textSize="@dimen/form_textSize" />
 
-        <TextView
-            android:id="@+id/dialog_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/dialog_title_orange"
-            android:padding="10dp"
-            android:text="Title"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
-
-        <TextView
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <!-- OK ボタン -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/positive_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="7dp"
-            android:text="@string/seats_type_confirmation"
-            android:textSize="17dp" />
+            android:layout_marginTop="6dp"
+            android:backgroundTint="@color/orange"
+            android:text="@string/run"
+            android:textColor="@android:color/white" />
 
-        <TextView
-            android:id="@+id/be_custom"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/negative_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
             android:layout_marginStart="10dp"
-            android:text="@string/be_custom"
-            android:textColor="@color/red"
-            android:textSize="15dp"
-            android:visibility="gone" />
-
-        <ImageView
-            android:id="@+id/table_img"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:src="@drawable/circle_table"
-            android:scaleType="centerCrop" />
-
-
-        <CheckBox
-            android:id="@+id/even_fm_deploy_check"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginStart="10dp"
-            android:text="@string/fm_placed_alternately"
-            android:textSize="@dimen/form_textSize" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <!-- OK ボタン -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/positive_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:backgroundTint="@color/orange"
-                android:text="@string/run"
-                android:textColor="@android:color/white" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/negative_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:layout_marginStart="10dp"
-                android:backgroundTint="@color/gray"
-                android:text="@string/cancel"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
-
+            android:layout_marginTop="6dp"
+            android:backgroundTint="@color/gray"
+            android:text="@string/cancel"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

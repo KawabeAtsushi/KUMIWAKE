@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.pandatone.kumiwake.R
@@ -14,8 +15,6 @@ import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter
-import android.widget.AdapterView.OnItemClickListener
-
 
 
 class Filtering(val activity: Activity, private val memberList: ArrayList<Member>) {
@@ -24,8 +23,8 @@ class Filtering(val activity: Activity, private val memberList: ArrayList<Member
     private val groupList: ArrayList<Group> = GroupAdapter(activity).getAllGroups()
 
     //filterダイアログ生成
-    fun showFilterDialog(activity: Activity,listAdp: MemberFragmentViewAdapter) {
-        val builder = androidx.appcompat.app.AlertDialog.Builder(activity)
+    fun showFilterDialog(activity: Activity, listAdp: MemberFragmentViewAdapter) {
+        val builder = AlertDialog.Builder(activity)
         val inflater = activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val layout = inflater.inflate(R.layout.filter_member, activity.findViewById<View>(R.id.filter_member) as? ViewGroup)
         val belongDropdown = layout.findViewById<View>(R.id.filter_belong_dropdown) as AutoCompleteTextView
@@ -65,7 +64,7 @@ class Filtering(val activity: Activity, private val memberList: ArrayList<Member
         clearBtn.setOnClickListener {
             filter(layout, belongDropdown, true)
         }
-}
+    }
 
     //フィルタリングメソッド
     private fun filter(layout: View, dropdown: AutoCompleteTextView, clear: Boolean) {

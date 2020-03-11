@@ -1,18 +1,18 @@
 package com.pandatone.kumiwake
 
-import android.widget.Toast
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
-import android.net.Uri
-import android.os.Environment
 import android.view.View
-import java.io.*
+import android.widget.Toast
 import androidx.core.content.FileProvider
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 
 
 object ShareViewImage {
@@ -70,7 +70,7 @@ object ShareViewImage {
 
     /**
      * キャプチャを撮る
-     * @param 撮りたいview
+     * @param　撮りたいView
      * @return 撮ったキャプチャ(Bitmap)
      */
     private fun saveViewCapture(view: View, output: FileOutputStream) {

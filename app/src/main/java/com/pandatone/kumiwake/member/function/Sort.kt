@@ -4,8 +4,8 @@ import android.app.Activity
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder.gpNowSort
 import com.pandatone.kumiwake.StatusHolder.gpSortType
-import com.pandatone.kumiwake.StatusHolder.mbSortType
 import com.pandatone.kumiwake.StatusHolder.mbNowSort
+import com.pandatone.kumiwake.StatusHolder.mbSortType
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter

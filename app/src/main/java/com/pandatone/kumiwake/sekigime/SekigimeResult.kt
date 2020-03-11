@@ -6,26 +6,21 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup.MarginLayoutParams
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import android.widget.AdapterView.OnItemClickListener
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
+import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.MainActivity
+import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.ShareViewImage
 import com.pandatone.kumiwake.member.function.Member
+import com.pandatone.kumiwake.sekigime.function.DrawAllTable
 import com.pandatone.kumiwake.sekigime.function.DrawTableView
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemClickListener
-
-import com.google.android.material.textfield.TextInputLayout
-import android.view.ViewGroup.MarginLayoutParams
-import android.widget.LinearLayout
-import com.pandatone.kumiwake.PublicMethods
-import com.pandatone.kumiwake.ShareViewImage
-import com.pandatone.kumiwake.sekigime.function.DrawAllTable
 
 
 /**
@@ -51,7 +46,7 @@ class SekigimeResult : AppCompatActivity() {
         }
         drawView(0)
         val groupDropdown = findViewById<View>(R.id.group_dropdown) as AutoCompleteTextView
-        groupDropdown.onItemClickListener = AdapterView.OnItemClickListener { _, _, _, _ ->
+        groupDropdown.onItemClickListener = OnItemClickListener { _, _, _, _ ->
             val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             manager.hideSoftInputFromWindow(groupDropdown.windowToken, 0)
         }
@@ -73,7 +68,7 @@ class SekigimeResult : AppCompatActivity() {
         findViewById<Button>(R.id.share_image).setOnClickListener { onShareImage() }
     }
 
-    private fun drawView(position:Int){
+    private fun drawView(position: Int) {
         DrawTableView.tableNo = position
         draw = DrawTableView(this)
         val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
@@ -105,7 +100,7 @@ class SekigimeResult : AppCompatActivity() {
             shareButton.visibility = View.VISIBLE
             button.text = getString(R.string.show_detail)
             for (group in groupArray!!.withIndex()) {
-                val drawAll = DrawAllTable(this,group.index)
+                val drawAll = DrawAllTable(this, group.index)
                 val groupNameView = groupTextView(group.value)
                 resultLayout.addView(groupNameView)
                 resultLayout.addView(drawAll)
@@ -122,7 +117,7 @@ class SekigimeResult : AppCompatActivity() {
 
     private fun onShareImage() {
         val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
-        ShareViewImage.shareView(this,resultLayout,getString(R.string.sekigime_result))
+        ShareViewImage.shareView(this, resultLayout, getString(R.string.sekigime_result))
     }
 
     //再席決め
@@ -133,10 +128,10 @@ class SekigimeResult : AppCompatActivity() {
         if (fmDeploy) {
             convertAlternatelyFmArray()
         }
-        if(!drawAll){
+        if (!drawAll) {
             drawAll = true
             onShowAll()
-        }else {
+        } else {
             DrawTableView.point = 0
             draw.reDraw()
         }
@@ -144,7 +139,7 @@ class SekigimeResult : AppCompatActivity() {
     }
 
     //グループ名前のTextView生成
-    private fun groupTextView(groupName:String): TextView {
+    private fun groupTextView(groupName: String): TextView {
         val groupNameView = TextView(this)
         groupNameView.text = groupName
         groupNameView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30.0f)

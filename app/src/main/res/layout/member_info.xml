@@ -17,7 +17,7 @@
         android:background="@drawable/index_background"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/infoName"
@@ -26,7 +26,7 @@
         android:layout_marginStart="@dimen/info_margin"
         app:layout_constraintTop_toTopOf="@id/indexName"
         app:layout_constraintBottom_toBottomOf="@id/indexName"
-        app:layout_constraintStart_toEndOf="@id/indexName"/>
+        app:layout_constraintStart_toEndOf="@id/indexName" />
 
     <TextView
         android:id="@+id/indexSex"
@@ -38,7 +38,7 @@
         android:background="@drawable/index_background"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/indexName"/>
+        app:layout_constraintTop_toBottomOf="@id/indexName" />
 
     <TextView
         android:id="@+id/infoSex"
@@ -47,7 +47,7 @@
         android:layout_marginStart="@dimen/info_margin"
         app:layout_constraintTop_toTopOf="@id/indexSex"
         app:layout_constraintBottom_toBottomOf="@id/indexSex"
-        app:layout_constraintStart_toEndOf="@id/indexSex"/>
+        app:layout_constraintStart_toEndOf="@id/indexSex" />
 
     <TextView
         android:id="@+id/indexAge"
@@ -59,7 +59,7 @@
         android:background="@drawable/index_background"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/indexSex"/>
+        app:layout_constraintTop_toBottomOf="@id/indexSex" />
 
     <TextView
         android:id="@+id/infoAge"
@@ -68,7 +68,7 @@
         android:layout_marginStart="@dimen/info_margin"
         app:layout_constraintTop_toTopOf="@id/indexAge"
         app:layout_constraintBottom_toBottomOf="@id/indexAge"
-        app:layout_constraintStart_toEndOf="@id/indexAge"/>
+        app:layout_constraintStart_toEndOf="@id/indexAge" />
 
     <TextView
         android:id="@+id/indexBelong"
@@ -80,7 +80,7 @@
         android:background="@drawable/index_background"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/indexAge"/>
+        app:layout_constraintTop_toBottomOf="@id/indexAge" />
 
     <TextView
         android:id="@+id/infoBelong"
@@ -89,7 +89,7 @@
         android:layout_marginStart="@dimen/info_margin"
         app:layout_constraintTop_toTopOf="@id/indexBelong"
         app:layout_constraintBottom_toBottomOf="@id/indexBelong"
-        app:layout_constraintStart_toEndOf="@id/indexBelong"/>
+        app:layout_constraintStart_toEndOf="@id/indexBelong" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/okBt"
@@ -101,6 +101,6 @@
         app:layout_constraintTop_toBottomOf="@id/indexBelong"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

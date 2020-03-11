@@ -95,7 +95,7 @@ class FragmentMemberChoiceMode : ListFragment() {
             }
 
             R.id.item_filter -> {
-                Filtering(requireActivity(), memberList).showFilterDialog(requireActivity(),listAdp)
+                Filtering(requireActivity(), memberList).showFilterDialog(requireActivity(), listAdp)
             }
         }
 
@@ -231,7 +231,7 @@ class FragmentMemberChoiceMode : ListFragment() {
             val member: Member = memberList[i]
             val belongText = member.belong
             val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            val list = ArrayList(listOf<String>(*belongArray))
+            val list = ArrayList(listOf(*belongArray))
             if (list.contains(groupId.toString())) {
                 lv.setItemChecked(i, true)
             }

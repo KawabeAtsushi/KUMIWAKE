@@ -17,8 +17,8 @@ import com.pandatone.kumiwake.AddGroupKeys
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.GroupAdapter
-import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
+import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.member.function.GroupMethods
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
@@ -62,7 +62,7 @@ class AddGroup : AppCompatActivity() {
         if (editId != nextId) {
             setItem(editId)
         }
-        members = GroupMethods.searchBelong(this,editId.toString())
+        members = GroupMethods.searchBelong(this, editId.toString())
     }
 
     //各Viewの初期化処理
@@ -180,7 +180,7 @@ class AddGroup : AppCompatActivity() {
     private fun deleteBelongInfo(member: Member, removeId: Int, listId: Int) {
         val belongText = member.belong
         val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        val list = java.util.ArrayList(Arrays.asList<String>(*belongArray))
+        val list = java.util.ArrayList(listOf(*belongArray))
         val hs = HashSet<String>()
         hs.addAll(list)
         list.clear()
@@ -202,7 +202,7 @@ class AddGroup : AppCompatActivity() {
             val listId = member.id
             val belongText = member.belong
             val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            val list = ArrayList(Arrays.asList<String>(*belongArray))
+            val list = ArrayList(listOf(*belongArray))
             //HashSetによって重複を削除
             val hs = HashSet<String>()
             hs.addAll(list)

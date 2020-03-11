@@ -6,128 +6,128 @@
     android:background="@color/green_background"
     android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/square_custom_description"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/index_background"
+            android:text="@string/square_custom_deployment"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/square_custom_deployment_description"
+            android:textColor="@color/gray" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:checkedButton="@+id/doubleSquareType"
             android:orientation="vertical">
 
-            <TextView
+            <RadioButton
+                android:id="@+id/doubleSquareType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/square_custom_description"
-                android:textSize="20sp" />
+                android:layout_margin="5dp"
+                android:text="@string/double_square_type"
+                android:textSize="25sp" />
 
-            <TextView
+            <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/index_background"
-                android:text="@string/square_custom_deployment"
-                android:textSize="20sp" />
+                android:layout_margin="5dp"
+                android:text="@string/single_square_type"
+                android:textSize="25sp" />
+        </RadioGroup>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:text="@string/square_custom_deployment_description"
-                android:textColor="@color/gray" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/index_background"
+            android:text="@string/square_custom_select_no"
+            android:textSize="20sp" />
 
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:checkedButton="@+id/doubleSquareType"
-                android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/square_custom_select_no_description"
+            android:textColor="@color/gray" />
 
-                <RadioButton
-                    android:id="@+id/doubleSquareType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="@string/double_square_type"
-                    android:textSize="25sp" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="@string/single_square_type"
-                    android:textSize="25sp" />
-            </RadioGroup>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/index_background"
-                android:text="@string/square_custom_select_no"
-                android:textSize="20sp" />
+                android:layout_gravity="start"
+                android:text="@string/seat_no"
+                android:textSize="@dimen/ratio_text_size" />
 
             <TextView
+                android:id="@+id/seat_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:text="@string/square_custom_select_no_description"
-                android:textColor="@color/gray" />
+                android:layout_marginStart="@dimen/ratio_margin_size"
+                android:layout_marginEnd="@dimen/ratio_margin_size"
+                android:text="0"
+                android:textColor="@color/man"
+                android:textSize="@dimen/ratio_text_size" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:text="@string/seat_no"
-                    android:textSize="@dimen/ratio_text_size" />
-
-                <TextView
-                    android:id="@+id/seat_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/ratio_margin_size"
-                    android:layout_marginEnd="@dimen/ratio_margin_size"
-                    android:text="0"
-                    android:textColor="@color/man"
-                    android:textSize="@dimen/ratio_text_size" />
-
-
-            </LinearLayout>
-
-            <SeekBar
-                android:id="@+id/square_seek_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="30dp"
-                android:max="0"
-                android:progress="0"
-                android:thumb="@drawable/seekbar_control" />
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/Button.Transparent.Rounded"
-                android:id="@+id/move_result"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="50dp"
-                android:layout_marginBottom="30dp"
-                android:padding="15dp"
-                android:paddingStart="30dp"
-                android:paddingEnd="30dp"
-                android:text="@string/run"
-                android:textColor="@android:color/black"
-                android:textSize="25sp"
-                app:backgroundTint="#90ffc02e" />
 
         </LinearLayout>
-    </ScrollView>
+
+        <SeekBar
+            android:id="@+id/square_seek_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="30dp"
+            android:max="0"
+            android:progress="0"
+            android:thumb="@drawable/seekbar_control" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Button.Transparent.Rounded"
+            android:id="@+id/move_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="30dp"
+            android:padding="15dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:text="@string/run"
+            android:textColor="@android:color/black"
+            android:textSize="25sp"
+            app:backgroundTint="#90ffc02e" />
+
+    </LinearLayout>
+</ScrollView>

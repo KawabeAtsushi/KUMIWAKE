@@ -6,7 +6,6 @@ import android.graphics.Paint
 import android.os.Build
 import android.util.TypedValue
 import android.view.View
-import android.view.ViewTreeObserver
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
@@ -39,7 +38,7 @@ object PublicMethods {
         activity.apply {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = PublicMethods.getColor(this, colorId)
+            window.statusBarColor = getColor(this, colorId)
         }
         when (colorId) {
             Theme.Kumiwake.primaryColor -> StatusHolder.nowTheme = R.style.AppTheme

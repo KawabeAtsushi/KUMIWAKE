@@ -17,7 +17,7 @@
         android:textColor="@color/hint"
         android:textSize="@dimen/form_textSize"
         android:textStyle="bold"
-        android:background="@drawable/index_background"/>
+        android:background="@drawable/index_background" />
 
     <RadioGroup
         android:id="@+id/sexGroup"
@@ -56,7 +56,7 @@
             android:button="@null"
             android:singleLine="true"
             android:text="@string/woman"
-            android:textAlignment="center"/>
+            android:textAlignment="center" />
 
     </RadioGroup>
 
@@ -70,7 +70,7 @@
         android:textColor="@color/hint"
         android:textSize="@dimen/form_textSize"
         android:textStyle="bold"
-        android:background="@drawable/index_background"/>
+        android:background="@drawable/index_background" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -162,7 +162,7 @@
             android:id="@+id/filter_belong_dropdown"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusable="false"/>
+            android:focusable="false" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

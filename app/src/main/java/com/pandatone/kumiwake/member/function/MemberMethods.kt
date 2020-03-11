@@ -16,7 +16,7 @@ object MemberMethods {
             var belongNo = 0
             members.forEach { member ->
                 val belongArray = member.belong.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                val list = ArrayList(listOf<String>(*belongArray))
+                val list = ArrayList(listOf(*belongArray))
                 if (list.contains(groupId)) {
                     belongNo++
                 }
@@ -27,15 +27,15 @@ object MemberMethods {
     }
 
     //memberのAgeを更新
-    fun updateAge(context: Context,memberList: ArrayList<Member>,newAge:Int ,define:Boolean) {
+    fun updateAge(context: Context, memberList: ArrayList<Member>, newAge: Int, define: Boolean) {
         val mbAdapter = MemberAdapter(context)
         memberList.forEach { member ->
             val listId = member.id
-            if (define){
+            if (define) {
                 mbAdapter.updateAge(listId.toString(), newAge.toString())
-            }else{
+            } else {
                 val nowAge = member.age
-                mbAdapter.updateAge(listId.toString(), (nowAge+newAge).toString())
+                mbAdapter.updateAge(listId.toString(), (nowAge + newAge).toString())
             }
         }
     }

@@ -2,7 +2,6 @@ package com.pandatone.kumiwake.ui.kumiwake
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.ImageButton
 import android.widget.TextView
@@ -62,7 +61,7 @@ class KumiwakeFragment : Fragment() {
             // layoutのレイアウトが完了したら、ガイドラインの位置を変更
             val lHeight = layout.height.toFloat()
             val adHeight = adView.height.toFloat()
-            val adRatio = adHeight/lHeight
+            val adRatio = adHeight / lHeight
             val guideLineRatio = 0.5f - adRatio
             guideLine.setGuidelinePercent(guideLineRatio)
         }

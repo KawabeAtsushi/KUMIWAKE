@@ -1,110 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_marginStart="6dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginEnd="6dp"
+    android:layout_marginBottom="6dp"
+    android:background="@drawable/dialog_appearance"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="20dp">
 
-    <!-- コンテンツ -->
 
-    <LinearLayout
+    <!-- タイトル -->
+
+    <TextView
+        android:id="@+id/dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="6dp"
-        android:background="@drawable/dialog_appearance"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingBottom="20dp">
+        android:background="@drawable/dialog_title_green"
+        android:padding="10dp"
+        android:text="Title"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 
-
-        <!-- タイトル -->
-
-        <TextView
-            android:id="@+id/dialog_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/dialog_title_green"
-            android:padding="10dp"
-            android:text="Title"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="6">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:orientation="vertical">
-                <!-- メッセージ -->
-
-                <TextView
-                    android:id="@+id/dialog_message"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:lineSpacingExtra="6dp"
-                    android:text=""
-                    android:textColor="#333333"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/dialog_path"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:lineSpacingExtra="6dp"
-                    android:text=""
-                    android:textColor="#55f"
-                    android:textSize="14sp"
-                    android:visibility="gone"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/copy_path_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="5dp"
-                    android:visibility="gone"
-                    android:text="@string/copy_path"
-                    />
-
-            </LinearLayout>
-
-        </ScrollView>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
-            android:orientation="horizontal"
-            style="?android:attr/buttonBarStyle">
-            <!-- OK ボタン -->
-            <com.google.android.material.button.MaterialButton style="?android:attr/buttonBarButtonStyle"
-                android:id="@+id/positive_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/holo_green_light"
-                android:text="OK"
-                android:textColor="@android:color/white" />
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical">
+            <!-- メッセージ -->
 
-            <com.google.android.material.button.MaterialButton style="?android:attr/buttonBarButtonStyle"
-                android:id="@+id/negative_button"
+            <TextView
+                android:id="@+id/dialog_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:backgroundTint="@color/gray"
-                android:text="@string/cancel"
-                android:textColor="@android:color/white" />
+                android:layout_marginTop="20dp"
+                android:lineSpacingExtra="6dp"
+                android:text=""
+                android:textColor="#333333"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/dialog_path"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:lineSpacingExtra="6dp"
+                android:text=""
+                android:textColor="#55f"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/copy_path_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="5dp"
+                android:text="@string/copy_path"
+                android:visibility="gone" />
+
         </LinearLayout>
 
+    </ScrollView>
+
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:orientation="horizontal">
+        <!-- OK ボタン -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/positive_button"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/holo_green_light"
+            android:text="OK"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/negative_button"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:backgroundTint="@color/gray"
+            android:text="@string/cancel"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
