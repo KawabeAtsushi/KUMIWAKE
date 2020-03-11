@@ -10,6 +10,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.StatusHolder.mbNowSort
@@ -51,7 +52,7 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
             v = inflater.inflate(R.layout.row_member, null)
 
             if (mSelection.get(member.id)) {
-                v?.setBackgroundColor(context.resources.getColor(R.color.checked_list))
+                v?.setBackgroundColor(PublicMethods.getColor(context,R.color.checked_list))
             }
 
             setSexIcon(v!!, position)
@@ -73,7 +74,7 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
         if (getItem(position).sex == context.getText(R.string.man)) {
             memberIcon.setImageResource(R.drawable.member_img)
         } else {
-            memberIcon.setColorFilter(context.resources.getColor(R.color.woman))
+            memberIcon.setColorFilter(PublicMethods.getColor(context,R.color.woman))
         }
     }
 

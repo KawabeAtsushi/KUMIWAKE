@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.function.Group
 
@@ -43,7 +44,7 @@ class GroupFragmentViewAdapter(private val context: Context, private val groupLi
         v = inflater.inflate(R.layout.row_group, null)
 
         if (gSelection.get(group.id)) {
-            v!!.setBackgroundColor(context.resources.getColor(R.color.checked_list))
+            v!!.setBackgroundColor(PublicMethods.getColor(context,R.color.checked_list))
         }
 
         nameTextView = v?.findViewById<View>(R.id.groupName) as TextView

@@ -9,6 +9,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
+import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.kumiwake.KumiwakeCustom
 import com.pandatone.kumiwake.member.function.Member
@@ -67,9 +68,9 @@ class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Mem
         if (sex == context.getText(R.string.man)) {
             memberIcon.setImageResource(R.drawable.member_img)
         } else if(sex == context.getText(R.string.woman)) {
-            memberIcon.setColorFilter(context.resources.getColor(R.color.woman))
+            memberIcon.setColorFilter(PublicMethods.getColor(context,R.color.woman))
         }else{
-            memberIcon.setColorFilter(context.resources.getColor(R.color.gray))
+            memberIcon.setColorFilter(PublicMethods.getColor(context,R.color.gray))
         }
     }
 

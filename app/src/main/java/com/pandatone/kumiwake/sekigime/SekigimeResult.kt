@@ -21,10 +21,10 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
 
 import com.google.android.material.textfield.TextInputLayout
-import com.pandatone.kumiwake.sekigime.function.DrawAllTable
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.LinearLayout
 import com.pandatone.kumiwake.ShareViewImage
+import com.pandatone.kumiwake.sekigime.function.DrawAllTable
 
 
 /**
@@ -56,12 +56,12 @@ class SekigimeResult : AppCompatActivity() {
         }
         draw = DrawTableView(this)
 
-        val groupDropdown = findViewById<View>(com.pandatone.kumiwake.R.id.group_dropdown) as AutoCompleteTextView
+        val groupDropdown = findViewById<View>(R.id.group_dropdown) as AutoCompleteTextView
         groupDropdown.onItemClickListener = AdapterView.OnItemClickListener { _, _, _, _ ->
             val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             manager.hideSoftInputFromWindow(groupDropdown.windowToken, 0)
         }
-        val adapter = ArrayAdapter<String>(this, com.pandatone.kumiwake.R.layout.dropdown_item_layout)
+        val adapter = ArrayAdapter<String>(this, R.layout.dropdown_item_layout)
         val list = ArrayList<String>() // 新インスタンスを生成
         for (group in groupArray!!) {
             list.add(group)

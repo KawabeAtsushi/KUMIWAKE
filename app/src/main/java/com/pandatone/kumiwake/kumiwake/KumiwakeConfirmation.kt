@@ -10,10 +10,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.pandatone.kumiwake.KumiwakeArrayKeys
-import com.pandatone.kumiwake.KumiwakeCustomKeys
-import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.StatusHolder
+import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallGPListAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.member.function.Group
@@ -72,7 +69,7 @@ class KumiwakeConfirmation : AppCompatActivity() {
             between_arrows_txt.text = getText(R.string.sekigime)
             button.setText(R.string.go_select_seats_type)
             button.typeface = Typeface.DEFAULT
-            button.setTextColor(resources.getColor(android.R.color.white))
+            button.setTextColor(PublicMethods.getColor(this,android.R.color.white))
             button.textSize = 20F
         }
         member_no_txt.text = (memberArray.size.toString() + " " + getText(R.string.people)
