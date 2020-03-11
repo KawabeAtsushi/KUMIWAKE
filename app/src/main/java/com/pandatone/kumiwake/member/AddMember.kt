@@ -18,6 +18,7 @@ import com.pandatone.kumiwake.AddMemberKeys
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.GroupAdapter
+import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.member.function.Group
@@ -25,6 +26,7 @@ import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.member.function.MemberClick
 import com.pandatone.kumiwake.member.function.MemberMethods
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
+import com.pandatone.kumiwake.ui.members.FragmentGroupMain
 import com.pandatone.kumiwake.ui.members.FragmentMemberMain
 import kotlinx.android.synthetic.main.add_member.*
 import kotlin.collections.ArrayList
@@ -56,6 +58,8 @@ class AddMember : AppCompatActivity() {
         setContentView(R.layout.add_member)
 
         mbAdapter = MemberAdapter(this)
+        FragmentGroupMain.gpAdapter = GroupAdapter(this)
+        FragmentGroupMain.listAdp = GroupFragmentViewAdapter(this, groupList)
         beforeBelong = null
         afterBelong = null
         findViews()

@@ -15,10 +15,12 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import com.pandatone.kumiwake.*
+import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.member.AddMember
 import com.pandatone.kumiwake.member.ChoiceMemberMain
 import com.pandatone.kumiwake.member.function.Member
+import com.pandatone.kumiwake.ui.members.FragmentGroupMain
 import kotlinx.android.synthetic.main.normal_mode.*
 import kotlinx.android.synthetic.main.part_review_listview.view.*
 import java.util.*

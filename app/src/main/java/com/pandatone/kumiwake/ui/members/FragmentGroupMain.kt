@@ -35,7 +35,6 @@ class FragmentGroupMain : ListFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         gpAdapter = GroupAdapter(requireContext())
-        groupList = ArrayList()
         listAdp = GroupFragmentViewAdapter(requireContext(), groupList)
         StatusHolder.gpNowSort = GroupAdapter.GP_ID
         StatusHolder.gpSortType = "ASC"
@@ -280,7 +279,7 @@ class FragmentGroupMain : ListFragment() {
 
     companion object {
         //最初から存在してほしいのでprivateのcompanionにする（じゃないと落ちる。コルーチンとか使えばいけるかも）
-        private lateinit var listAdp: GroupFragmentViewAdapter
+        internal lateinit var listAdp: GroupFragmentViewAdapter
         internal lateinit var gpAdapter: GroupAdapter
         internal var groupList: ArrayList<Group> = ArrayList()
     }

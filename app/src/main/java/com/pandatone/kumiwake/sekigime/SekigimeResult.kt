@@ -47,15 +47,13 @@ class SekigimeResult : AppCompatActivity() {
                 .addTestDevice(getString(R.string.device_id)).build()
         mAdView.loadAd(adRequest)
 
-        DrawTableView.point = 0 //フォーカスする席番号
         DrawTableView.tableNo = 0 //表示するテーブル番号
 
         groupNo = groupArray!!.size
         if (fmDeploy) {
             convertAlternatelyFmArray()
         }
-        draw = DrawTableView(this)
-
+        drawView(0)
         val groupDropdown = findViewById<View>(R.id.group_dropdown) as AutoCompleteTextView
         groupDropdown.onItemClickListener = AdapterView.OnItemClickListener { _, _, _, _ ->
             val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -70,17 +68,21 @@ class SekigimeResult : AppCompatActivity() {
         groupDropdown.setAdapter(adapter)
         groupDropdown.hint = list[0]
         groupDropdown.onItemClickListener = OnItemClickListener { _, _, position, _ ->
-            DrawTableView.point = 0
-            DrawTableView.tableNo = position
-            draw.reDraw()
+            drawView(position)
+            //draw.reDraw()
         }
-        val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
-        resultLayout.addView(draw)
-
         findViewById<Button>(R.id.re_sekigime).setOnClickListener { onReSekigime() }
         findViewById<Button>(R.id.go_home).setOnClickListener { onGoHome() }
         findViewById<Button>(R.id.show_all).setOnClickListener { onShowAll() }
         findViewById<Button>(R.id.share_image).setOnClickListener { onShareImage() }
+    }
+
+    private fun drawView(position:Int){
+        DrawTableView.tableNo = position
+        draw = DrawTableView(this)
+        val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
+        resultLayout.removeAllViews()
+        resultLayout.addView(draw)
     }
 
     private fun onReSekigime() {
@@ -105,11 +107,13 @@ class SekigimeResult : AppCompatActivity() {
         if (drawAll) {
             dropdown.visibility = View.GONE
             shareButton.visibility = View.VISIBLE
-            val groupNameView = groupTextView()
-            val drawAll = DrawAllTable(this)
-            resultLayout.addView(groupNameView)
-            resultLayout.addView(drawAll)
             button.text = getString(R.string.show_detail)
+            for (group in groupArray!!.withIndex()) {
+                val drawAll = DrawAllTable(this,group.index)
+                val groupNameView = groupTextView(group.value)
+                resultLayout.addView(groupNameView)
+                resultLayout.addView(drawAll)
+            }
         } else {
             dropdown.visibility = View.VISIBLE
             shareButton.visibility = View.GONE
@@ -133,22 +137,27 @@ class SekigimeResult : AppCompatActivity() {
         if (fmDeploy) {
             convertAlternatelyFmArray()
         }
-        DrawTableView.point = 0
-        draw.reDraw()
+        if(!drawAll){
+            drawAll = true
+            onShowAll()
+        }else {
+            DrawTableView.point = 0
+            draw.reDraw()
+        }
         Toast.makeText(applicationContext, getText(R.string.re_sekigime_finished), Toast.LENGTH_SHORT).show()
     }
 
     //グループ名前のTextView生成
-    private fun groupTextView(): TextView {
+    private fun groupTextView(groupName:String): TextView {
         val groupNameView = TextView(this)
-        groupNameView.text = "AAAAAAAA"
+        groupNameView.text = groupName
         groupNameView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30.0f)
         groupNameView.background = getDrawable(R.drawable.index_white_background)
         groupNameView.gravity = Gravity.CENTER
         val lp = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         val mlp = lp as MarginLayoutParams
-        mlp.setMargins(70, 30, 70, 0)
+        mlp.setMargins(70, 140, 70, 0)
         groupNameView.layoutParams = mlp
         return groupNameView
     }
