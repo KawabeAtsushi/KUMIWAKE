@@ -19,6 +19,8 @@ import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.Skus
+import com.pandatone.kumiwake.setting.PurchaseFreeAdOption
 import com.pandatone.kumiwake.setting.RefreshData
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import java.io.File
@@ -57,6 +59,7 @@ class SettingsFragment : Fragment() {
                 }
                 1 -> dialog.confirmationDialog(howToUseStr[1], getText(R.string.how_to_member))
                 2 -> dialog.confirmationDialog(howToUseStr[2], getText(R.string.how_to_sekigime))
+                3 -> toWebSite()
             }
         }
         backupList = root.findViewById(R.id.back_up_list)
@@ -73,7 +76,7 @@ class SettingsFragment : Fragment() {
             //行をクリックした時の処理
             when (position) {
                 0 -> showVersionName(activity!!.baseContext)
-                1 -> dialog.confirmationDialog(getString(R.string.advertise_delete), getString(R.string.wait_for_implementation))
+                1 -> PurchaseFreeAdOption(requireContext()).showBillingDialog(Skus.AdFree,requireActivity())
                 2 -> launchMailer()
                 3 -> shareApp()
                 4 -> toPrivacyPolicy()
@@ -88,7 +91,7 @@ class SettingsFragment : Fragment() {
     private fun setViews() {
         val context = activity!!.baseContext
 
-        howToUseStr = arrayOf(getString(R.string.about_kumiwake), getString(R.string.about_member), getString(R.string.about_sekigime))
+        howToUseStr = arrayOf(getString(R.string.about_kumiwake), getString(R.string.about_member), getString(R.string.about_sekigime), getString(R.string.detail_help))
         backupStr = arrayOf(getString(R.string.back_up_db), getString(R.string.import_db), getString(R.string.delete_backup), getString(R.string.refresh_data))
         otherStr = arrayOf(getString(R.string.app_version), getString(R.string.advertise_delete), getString(R.string.contact_us), getString(R.string.share_app), getString(R.string.privacy_policy))
         howToUseAdapter = ArrayAdapter(context, android.R.layout.simple_expandable_list_item_1, howToUseStr)
@@ -103,13 +106,13 @@ class SettingsFragment : Fragment() {
     private fun onBackup() {
         val title = getString(R.string.back_up_db)
         val message = getString(R.string.back_up_attention) + getString(R.string.run_confirmation)
-        dialog.fmDialog(title, message,true)
+        dialog.fmDialog(title, message, true)
     }
 
     private fun onImport() {
         val title = getString(R.string.import_db)
         val message = getString(R.string.import_attention) + getString(R.string.run_confirmation)
-        dialog.fmDialog(title, message,false)
+        dialog.fmDialog(title, message, false)
     }
 
     private fun onDeleteBackup() {
@@ -186,6 +189,12 @@ class SettingsFragment : Fragment() {
 
     private fun toPrivacyPolicy() {
         val uri = Uri.parse("https://gist.githubusercontent.com/KawabeAtsushi/39f3ea332b05a6b053b263784a77cd51/raw/7666e22b85561c34a95863f9482ed900482d2c8d/privacy%2520policy")
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
+    }
+
+    private fun toWebSite() {
+        val uri = Uri.parse("https://peraichi.com/landing_pages/view/kumiwake")
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
     }

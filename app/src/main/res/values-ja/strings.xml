@@ -55,10 +55,10 @@
     <string name="normal_mode">ノーマルモード</string>
     <string name="quick_mode">クイックモード</string>
     <string name="select_mode">モード選択</string>
-    <string name="description_of_normal_kumiwake">登録したメンバーを選択して組分けを行うモードです。\nグループごとの名前や人数の設定などのカスタマイズが行えます。</string>
-    <string name="description_of_quick_kumiwake">人数とグループ数を指定して組分けを行うモードです。\n詳細な設定が不要なので素早く組分けを行えます。</string>
-    <string name="description_of_normal_sekigime">登録したメンバーを選択して席決めを行うモードです。\nグループごとの名前や人数の設定などのカスタマイズが行えます。</string>
-    <string name="description_of_quick_sekigime">人数とグループ数を指定して席決めを行うモードです。\n詳細な設定が不要なので素早く席決めを行えます。</string>
+    <string name="description_of_normal_kumiwake">登録したメンバーを選択して組分けを行うモードです。\nグループごとの名前や人数の設定などの詳細なカスタマイズが行えます。</string>
+    <string name="description_of_quick_kumiwake">人数とグループ数を指定して組分けを行うモードです。\nメンバーの登録が不要なので手軽に組分けを行えます。</string>
+    <string name="description_of_normal_sekigime">登録したメンバーを選択して席決めを行うモードです。\nグループごとの名前や人数の設定などの詳細なカスタマイズが行えます。</string>
+    <string name="description_of_quick_sekigime">人数とグループ数を指定して席決めを行うモードです。\nメンバーの登録が不要なので手軽に席決めを行えます。</string>
     <string name="number_of_groups">グループ数</string>
     <string name="do_kumiwake">組分けする！</string>
     <string name="move_confirmation">確認画面へ</string>
@@ -141,7 +141,6 @@
                                     それぞれの画面を表示した状態で画面右下に表示される「＋」のボタンを押すとメンバー・グループの追加ができます。\n\n
                                     グループにメンバーを登録しておくことで、「組分け」などでメンバーを選択する際にグループに所属するメンバーをまとめて選択できます。</string>
     <string name="article_title">自動でグループ分け・席決めができるアプリ『KUMIWAKE』が登場！！\n飲み会、配車、その他グループ活動にご活用ください☆\n\n                                    ↓↓ダウンロードはこちら↓↓\n                                    （Android限定）</string>
-    <string name="wait_for_implementation">\n実装をお待ちください。(時期未定)\n</string>
     <string name="member_name_read">読み</string>
     <string name="please_permit">ストレージの使用を許可してください。</string>
     <string name="share_result">結果をシェア</string>
@@ -168,4 +167,5 @@
     <string name="copied_path">パスをコピーしました。</string>
     <string name="change_age">年齢の変更</string>
     <string name="define">固定値</string>
+    <string name="detail_help">詳しい使い方 (専用サイトへ)</string>
 </resources>
