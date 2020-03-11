@@ -23,6 +23,7 @@ import android.widget.AdapterView.OnItemClickListener
 import com.google.android.material.textfield.TextInputLayout
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.LinearLayout
+import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.ShareViewImage
 import com.pandatone.kumiwake.sekigime.function.DrawAllTable
 
@@ -41,12 +42,7 @@ class SekigimeResult : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.sekigime_result)
-        MobileAds.initialize(this, getString(R.string.adApp_id))
-        val mAdView = findViewById<View>(R.id.adView) as AdView
-        val adRequest = AdRequest.Builder()
-                .addTestDevice(getString(R.string.device_id)).build()
-        mAdView.loadAd(adRequest)
-
+        PublicMethods.showAd(this)
         DrawTableView.tableNo = 0 //表示するテーブル番号
 
         groupNo = groupArray!!.size

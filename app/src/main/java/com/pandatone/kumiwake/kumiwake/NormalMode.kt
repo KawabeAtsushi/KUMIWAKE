@@ -46,10 +46,10 @@ class NormalMode : AppCompatActivity() {
         setContentView(R.layout.normal_mode)
         findViews()
         memberArray = ArrayList()
-        add_group_listview.member_add_btn.setOnClickListener(){ moveMemberMain() }
-        add_group_listview.member_register_and_add_btn.setOnClickListener(){ moveAddMember() }
+        add_group_listview.member_add_btn.setOnClickListener { moveMemberMain() }
+        add_group_listview.member_register_and_add_btn.setOnClickListener { moveAddMember() }
         add_group_listview.numberOfSelectedMember.text = "0${getString(R.string.people)}${getString(R.string.selected)}"
-        findViewById<Button>(R.id.normal_kumiwake_btn).setOnClickListener(){ onNextClick() }
+        findViewById<Button>(R.id.normal_kumiwake_btn).setOnClickListener { onNextClick() }
     }
 
     //Viewの宣言

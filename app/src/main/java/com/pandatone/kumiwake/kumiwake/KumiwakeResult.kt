@@ -54,11 +54,7 @@ class KumiwakeResult : AppCompatActivity() {
             layout.background = getDrawable(R.drawable.quick_img)
         }
 
-        MobileAds.initialize(this, getString(R.string.adApp_id))
-        val mAdView = findViewById<View>(R.id.adView) as AdView
-        val adRequest = AdRequest.Builder()
-                .addTestDevice(getString(R.string.device_id)).build()
-        mAdView.loadAd(adRequest)
+        PublicMethods.showAd(this)
         val i = intent
         if (i.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) != null) {
             memberArray = i.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>

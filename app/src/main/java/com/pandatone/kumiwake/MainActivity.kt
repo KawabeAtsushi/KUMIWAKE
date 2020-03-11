@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake
 
+import android.content.Intent
 import android.graphics.Point
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
@@ -32,7 +33,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         StatusHolder.nowTheme = R.style.AppTheme
         setContentView(R.layout.activity_main)
+        if (StatusHolder.adCheck) {
+            startActivity(Intent(this, PurchaseFreeAdOption::class.java))
+        }
 
+        mAdView = findViewById<View>(R.id.adView) as AdView
+        if (StatusHolder.adDeleated) {
+            mAdView.visibility = View.GONE
+        } else {
+            MobileAds.initialize(this, getString(R.string.adApp_id))
+            val adRequest = AdRequest.Builder()
+                    .addTestDevice(getString(R.string.device_id)).build()
+            mAdView.loadAd(adRequest)
+        }
         val navView: AHBottomNavigation = findViewById(R.id.nav_view)
 
         navView.addItem(AHBottomNavigationItem(R.string.kumiwake, R.drawable.ic_kumiwake_24px, Theme.Kumiwake.primaryColor))
@@ -47,16 +60,7 @@ class MainActivity : AppCompatActivity() {
 
         // To open the first tab as default
         openFragment(KumiwakeFragment())
-
-        MobileAds.initialize(this, getString(R.string.adApp_id))
-        mAdView = findViewById<View>(R.id.adView) as AdView
-        val adRequest = AdRequest.Builder()
-                .addTestDevice(getString(R.string.device_id)).build()
-        mAdView.loadAd(adRequest)
-
         setKeyboardListener(navView)
-
-        PurchaseFreeAdOption(this).deleteAd(this, mAdView)
     }
 
     // 戻るボタンが押されたとき
@@ -64,7 +68,7 @@ class MainActivity : AppCompatActivity() {
         // 戻るボタンが押されたとき
         when (e.keyCode) {
             KeyEvent.KEYCODE_BACK -> {
-                DialogWarehouse(supportFragmentManager).decisionDialog("KUMIWAKE",getString(R.string.app_exit_confirmation)){finish()}
+                DialogWarehouse(supportFragmentManager).decisionDialog("KUMIWAKE", getString(R.string.app_exit_confirmation)) { finish() }
                 return true
             }
         }
@@ -82,8 +86,12 @@ class MainActivity : AppCompatActivity() {
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Kumiwake.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.kumiwake) + "</font>")
                 container.background = getDrawable(Theme.Kumiwake.backgroundColor)
-                setStatusBarColor(this,Theme.Kumiwake.primaryColor)
-                mAdView.visibility = View.VISIBLE
+                setStatusBarColor(this, Theme.Kumiwake.primaryColor)
+                if (StatusHolder.adDeleated) {
+                    mAdView.visibility = View.GONE
+                } else {
+                    mAdView.visibility = View.VISIBLE
+                }
                 true
             }
 
@@ -92,8 +100,12 @@ class MainActivity : AppCompatActivity() {
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Sekigime.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#616161'>" + getString(R.string.sekigime) + "</font>")
                 container.background = getDrawable(Theme.Sekigime.backgroundColor)
-                setStatusBarColor(this,Theme.Sekigime.primaryColor)
-                mAdView.visibility = View.VISIBLE
+                setStatusBarColor(this, Theme.Sekigime.primaryColor)
+                if (StatusHolder.adDeleated) {
+                    mAdView.visibility = View.GONE
+                } else {
+                    mAdView.visibility = View.VISIBLE
+                }
                 true
             }
 
@@ -102,7 +114,7 @@ class MainActivity : AppCompatActivity() {
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Member.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.member) + "</font>")
                 container.background = ColorDrawable(Theme.Member.backgroundColor)
-                setStatusBarColor(this,Theme.Member.primaryColor)
+                setStatusBarColor(this, Theme.Member.primaryColor)
                 mAdView.visibility = View.GONE
                 true
             }
@@ -112,7 +124,7 @@ class MainActivity : AppCompatActivity() {
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Setting.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#616161'>" + getString(R.string.setting_help) + "</font>")
                 container.background = getDrawable(Theme.Setting.backgroundColor)
-                setStatusBarColor(this,Theme.Setting.primaryColor)
+                setStatusBarColor(this, Theme.Setting.primaryColor)
                 mAdView.visibility = View.GONE
                 true
             }
@@ -158,5 +170,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    companion object {lateinit var mAdView:AdView }
+    companion object {
+        lateinit var mAdView: AdView
+    }
 }

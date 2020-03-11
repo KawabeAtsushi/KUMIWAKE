@@ -12,11 +12,27 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.pandatone.kumiwake.member.function.Group
 import kotlin.math.abs
 
 
 object PublicMethods {
+
+    //広告の表示
+    fun showAd(activity: Activity) {
+        val mAdView = activity.findViewById<View>(R.id.adView) as AdView
+        if (StatusHolder.adDeleated) {
+            mAdView.visibility = View.GONE
+        } else {
+            MobileAds.initialize(activity, activity.getString(R.string.adApp_id))
+            val adRequest = AdRequest.Builder()
+                    .addTestDevice(activity.getString(R.string.device_id)).build()
+            mAdView.loadAd(adRequest)
+        }
+    }
 
     //ステータスバーの色変更
     fun setStatusBarColor(activity: Activity, @ColorRes colorId: Int) {
@@ -50,7 +66,7 @@ object PublicMethods {
     fun View.resizeText(setText: String = "") {
         val MIN_TEXT_SIZE = 10f //最小サイズを決める
         var text = setText
-        if(text == "") {
+        if (text == "") {
             if (this is TextView) {
                 text = this.text.toString()
             } else if (this is Button) {
@@ -85,10 +101,10 @@ object PublicMethods {
     }
 
     //getColor
-    fun getColor(context: Context, @ColorRes colorId: Int):Int{
+    fun getColor(context: Context, @ColorRes colorId: Int): Int {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ContextCompat.getColor(context,colorId)
-        }else{
+            ContextCompat.getColor(context, colorId)
+        } else {
             context.resources.getColor(colorId)
         }
     }

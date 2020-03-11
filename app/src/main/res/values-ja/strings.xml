@@ -168,4 +168,7 @@
     <string name="change_age">年齢の変更</string>
     <string name="define">固定値</string>
     <string name="detail_help">詳しい使い方 (専用サイトへ)</string>
+    <string name="purchasing_text">広告削除の購入</string>
+    <string name="purchased_history">購入履歴</string>
+    <string name="ad_deleted">広告を削除しました。</string>
 </resources>

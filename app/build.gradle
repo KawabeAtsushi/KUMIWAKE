@@ -3,6 +3,14 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 
 android {
+    signingConfigs {
+        config {
+            storeFile file('C:\\Users\\KAWABE\\work\\App release\\kumiwake_release.jks')
+            storePassword 'kawaatsu89'
+            keyAlias = 'myalias'
+            keyPassword 'kawaatsu89'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion '28.0.3'
 
@@ -20,7 +28,9 @@ android {
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 13
-        versionName "3.0.0" // major update +1.0.0 / add functions +0.1.0 / debug + 0.0.1
+        versionName "3.0.0"
+        signingConfig signingConfigs.config
+// major update +1.0.0 / add functions +0.1.0 / debug + 0.0.1
     }
     buildTypes {
 
@@ -34,9 +44,13 @@ android {
             release {
                 minifyEnabled true //リリースの時だけtrue
                 shrinkResources true //リリースの時だけtrue
+                debuggable true
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             }
 
+        }
+        release {
+            debuggable = true
         }
     }
 }

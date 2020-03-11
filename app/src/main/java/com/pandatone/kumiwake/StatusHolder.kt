@@ -6,6 +6,10 @@ import com.pandatone.kumiwake.adapter.MemberAdapter
 
 object StatusHolder {
 
+    var adDeleated = false //広告は非表示か
+    var adCheck = true //広告削除購入済みかチェック
+    var cheakStatus = false //購入履歴チェックモード
+
     var normalMode: Boolean = true //true: ノーマルモード, false: クイックモード
     var sekigime: Boolean = false //true: 席決めモード, false: 組み分けモード
 
@@ -20,6 +24,9 @@ object StatusHolder {
     //Special Sex
     var none = "none"
     var index = "index"
+
+    //Purchase sku
+    val sku = "AD_FREE"
 }
 
 //AddMemberのintent key

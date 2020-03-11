@@ -101,7 +101,6 @@ class FileManagerDialog(private var mTitle: String, private var mMessage: CharSe
     private fun copyToClipboard(text: String) {
         // copy to clipboard
         val clipboardManager = context?.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-                ?: return
         clipboardManager.setPrimaryClip(ClipData.newPlainText("copyText", text))
         Toast.makeText(activity, getString(R.string.copied_path), Toast.LENGTH_SHORT).show()
     }

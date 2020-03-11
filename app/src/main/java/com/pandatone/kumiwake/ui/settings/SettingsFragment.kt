@@ -19,7 +19,7 @@ import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.Skus
+import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.setting.PurchaseFreeAdOption
 import com.pandatone.kumiwake.setting.RefreshData
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
@@ -76,10 +76,20 @@ class SettingsFragment : Fragment() {
             //行をクリックした時の処理
             when (position) {
                 0 -> showVersionName(activity!!.baseContext)
-                1 -> PurchaseFreeAdOption(requireContext()).showBillingDialog(Skus.AdFree,requireActivity())
+                1 -> startActivity(Intent(activity,PurchaseFreeAdOption::class.java))
                 2 -> launchMailer()
                 3 -> shareApp()
                 4 -> toPrivacyPolicy()
+            }
+            otherList.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, pos, _ ->
+                //行をクリックした時の処理
+                when (pos) {
+                    1 -> {
+                        StatusHolder.cheakStatus = true
+                        startActivity(Intent(activity,PurchaseFreeAdOption::class.java))
+                    }
+                }
+                false
             }
         }
 

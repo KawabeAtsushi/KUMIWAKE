@@ -165,4 +165,7 @@
     <string name="change_age">Change age</string>
     <string name="define">define</string>
     <string name="detail_help">Detailed help(Japanese only)</string>
+    <string name="purchasing_text">Ad removal purchase</string>
+    <string name="purchased_history">Purchase history</string>
+    <string name="ad_deleted">Ad deleted.</string>
 </resources>
