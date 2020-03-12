@@ -2,7 +2,9 @@ package com.pandatone.kumiwake
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Paint
+import android.net.Uri
 import android.os.Build
 import android.util.TypedValue
 import android.view.View
@@ -11,10 +13,12 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.pandatone.kumiwake.member.function.Group
+import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import kotlin.math.abs
 
 
@@ -105,6 +109,15 @@ object PublicMethods {
             ContextCompat.getColor(context, colorId)
         } else {
             context.resources.getColor(colorId)
+        }
+    }
+
+    //webサイトへ
+    fun toWebSite(context: Context,fragmentManager: FragmentManager) {
+        DialogWarehouse(fragmentManager).decisionDialog(context.getString(R.string.move_kumiwake_site),context.getString(R.string.move_kumiwake_site_discription)) {
+            val uri = Uri.parse("https://peraichi.com/landing_pages/view/kumiwake")
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            context.startActivity(intent)
         }
     }
 }

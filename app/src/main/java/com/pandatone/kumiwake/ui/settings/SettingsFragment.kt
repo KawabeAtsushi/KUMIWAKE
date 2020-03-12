@@ -24,6 +24,7 @@ import com.pandatone.kumiwake.setting.PurchaseFreeAdOption
 import com.pandatone.kumiwake.setting.RefreshData
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import java.io.File
+import com.pandatone.kumiwake.PublicMethods
 
 
 class SettingsFragment : Fragment() {
@@ -59,7 +60,7 @@ class SettingsFragment : Fragment() {
                 }
                 1 -> dialog.confirmationDialog(howToUseStr[1], getText(R.string.how_to_member))
                 2 -> dialog.confirmationDialog(howToUseStr[2], getText(R.string.how_to_sekigime))
-                3 -> toWebSite()
+                3 -> PublicMethods.toWebSite(requireContext(),requireFragmentManager())
             }
         }
         backupList = root.findViewById(R.id.back_up_list)
@@ -199,12 +200,6 @@ class SettingsFragment : Fragment() {
 
     private fun toPrivacyPolicy() {
         val uri = Uri.parse("https://gist.githubusercontent.com/KawabeAtsushi/39f3ea332b05a6b053b263784a77cd51/raw/7666e22b85561c34a95863f9482ed900482d2c8d/privacy%2520policy")
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        startActivity(intent)
-    }
-
-    private fun toWebSite() {
-        val uri = Uri.parse("https://peraichi.com/landing_pages/view/kumiwake")
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
     }

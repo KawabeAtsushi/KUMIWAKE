@@ -166,4 +166,8 @@
     <string name="purchasing_text">Ad removal purchase</string>
     <string name="purchased_history">Purchase history</string>
     <string name="ad_delete">Ad delete</string>
+    <string name="cancel_purchase">Cancel purchase</string>
+    <string name="ad_deleted_already">Ad deleated already</string>
+    <string name="move_kumiwake_site">Move official site</string>
+    <string name="move_kumiwake_site_discription">Go to the KUMIWAKE official site.\nIs it OK? (Japanese only)</string>
 </resources>

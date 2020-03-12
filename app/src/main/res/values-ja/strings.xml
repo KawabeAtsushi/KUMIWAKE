@@ -95,7 +95,7 @@
     <string name="no_selected">選択なし</string>
     <string name="range_error">指定範囲が不適切です</string>
     <string name="square_table">角テーブル(囲み)</string>
-    <string name="parallel_table">角テーブル(並列)</string>
+    <string name="parallel_table">角テーブル(２列)</string>
     <string name="circle_table">丸テーブル</string>
     <string name="counter_table">カウンター</string>
     <string name="go_select_seats_type">座席タイプの選択へ</string>
@@ -169,4 +169,8 @@
     <string name="purchasing_text">広告削除の購入</string>
     <string name="purchased_history">購入履歴</string>
     <string name="ad_delete">広告の削除</string>
+    <string name="cancel_purchase">購入をキャンセルしました。</string>
+    <string name="ad_deleted_already">広告は削除済みです。</string>
+    <string name="move_kumiwake_site">KUMIWAKE公式サイト</string>
+    <string name="move_kumiwake_site_discription">KUMIWAKE公式サイトへ移動します。</string>
 </resources>

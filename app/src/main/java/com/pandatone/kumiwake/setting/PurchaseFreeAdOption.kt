@@ -41,7 +41,7 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
                 override fun onBillingSetupFinished(billingResult: BillingResult) {
                     val responseCode = billingResult.responseCode
                     if (responseCode == BillingClient.BillingResponseCode.OK) {
-                        querySkuList()
+                        querySkuList() //sku初期化から購入処理
                         queryOwned()
                     } else {
                         showResponseCode(responseCode)
@@ -120,11 +120,9 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
             for (purchase in purchases) { //購入したら呼ばれる
                 val state = handlePurchase(purchase)
                 //購入したSkuの文字列と承認結果を表示する
-                val sku = purchase.sku
-                resultStr.append(sku).append("\n")
+                resultStr.append(skuToName(purchase.sku)).append("\n")
                 resultStr.append(" State=").append(state).append("\n")
-                StatusHolder.adDeleated = true
-                MainActivity.mAdView.visibility = View.GONE
+                deleteAd()
             }
             toastShow(resultStr.toString())
         } else { // Handle error codes.
@@ -173,7 +171,7 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
                 history.text = getString(R.string.nothing)
             } else {
                 for (purchase in purchases) {
-                    history.text = (purchase.sku + "\n")
+                    history.text = (skuToName(purchase.sku) + "\n")
                 }
             }
         } else {
@@ -193,8 +191,7 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
                         val purchases = purchasesResult.purchasesList
                         for (purchase in purchases) {
                             if (purchase.sku == StatusHolder.ad_free_sku) {
-                                StatusHolder.adDeleated = true
-                                MainActivity.mAdView.visibility = View.GONE
+                                deleteAd()
                             } //広告削除済みか判定
                         }
                     } else {
@@ -221,13 +218,13 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
     // サーバの応答を表示する
     fun showResponseCode(responseCode: Int) {
         when (responseCode) {
-            BillingClient.BillingResponseCode.USER_CANCELED -> toastShow("USER_CANCELED")
+            BillingClient.BillingResponseCode.USER_CANCELED -> toastShow(getString(R.string.cancel_purchase))
             BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE -> toastShow("SERVICE_UNAVAILABLE")
             BillingClient.BillingResponseCode.BILLING_UNAVAILABLE -> toastShow("BILLING_UNAVAILABLE")
             BillingClient.BillingResponseCode.ITEM_UNAVAILABLE -> toastShow("ITEM_UNAVAILABLE")
             BillingClient.BillingResponseCode.DEVELOPER_ERROR -> toastShow("DEVELOPER_ERROR")
             BillingClient.BillingResponseCode.ERROR -> toastShow("ERROR")
-            BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> toastShow("ITEM_ALREADY_OWNED")
+            BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> toastShow(getString(R.string.ad_deleted_already))
             BillingClient.BillingResponseCode.ITEM_NOT_OWNED -> toastShow("ITEM_NOT_OWNED")
             BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> toastShow("SERVICE_DISCONNECTED")
             BillingClient.BillingResponseCode.FEATURE_NOT_SUPPORTED -> toastShow("FEATURE_NOT_SUPPORTED")
@@ -235,7 +232,14 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
         finish()
     }
 
+    //トースト表示
     private fun toastShow(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+    }
+
+    //広告非表示処理
+    private fun deleteAd(){
+        StatusHolder.adDeleated = true
+        MainActivity.mAdView.visibility = View.GONE
     }
 }
