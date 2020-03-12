@@ -19,7 +19,7 @@ android {
         applicationId "com.pandatone.kumiwake"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 15
+        versionCode 16
         versionName "3.0.0" // major update +1.0.0 / add functions +0.1.0 / debug + 0.0.1
     }
     buildTypes {
@@ -34,6 +34,7 @@ android {
             release {
                 minifyEnabled true //リリースの時だけtrue
                 shrinkResources true //リリースの時だけtrue
+                debuggable false
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             }
 

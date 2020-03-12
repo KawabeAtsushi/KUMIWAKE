@@ -42,11 +42,13 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatEditText
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:id="@+id/group_no_form"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:background="@android:drawable/editbox_background_normal"
+                android:textSize="@dimen/et_textSize_big"
                 android:ems="3"
                 android:inputType="number"
                 android:padding="10dp"
@@ -61,7 +63,7 @@
                 android:layout_marginStart="@dimen/form_marginStart"
                 android:text="@string/group"
                 android:textColor="@color/hint"
-                android:textSize="@dimen/form_textSize" />
+                android:textSize="@dimen/form_textSize_large" />
 
         </LinearLayout>
 

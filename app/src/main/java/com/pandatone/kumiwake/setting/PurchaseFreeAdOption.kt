@@ -9,6 +9,8 @@ import com.android.billingclient.api.*
 import com.pandatone.kumiwake.MainActivity
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
+import com.pandatone.kumiwake.ui.dialogs.CustomDialog
+import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 
 
 /*
@@ -118,10 +120,9 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
         if (billingResultCode == BillingClient.BillingResponseCode.OK
                 && purchases != null) {
             for (purchase in purchases) { //購入したら呼ばれる
-                val state = handlePurchase(purchase)
-                //購入したSkuの文字列と承認結果を表示する
+                //ステータスをとれる　val state = handlePurchase(purchase)
                 resultStr.append(skuToName(purchase.sku)).append("\n")
-                resultStr.append(" State=").append(state).append("\n")
+                resultStr.append(getString(R.string.purchased))
                 deleteAd()
             }
             toastShow(resultStr.toString())

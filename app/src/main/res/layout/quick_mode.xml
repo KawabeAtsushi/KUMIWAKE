@@ -52,6 +52,7 @@
                     android:background="@android:drawable/editbox_background_normal"
                     android:ems="3"
                     android:inputType="number"
+                    android:textSize="@dimen/et_textSize_big"
                     android:maxLength="3"
                     android:padding="10dp"
                     android:layout_marginStart="20dp"
@@ -64,7 +65,7 @@
                     android:layout_marginStart="@dimen/form_marginStart"
                     android:text="@string/group"
                     android:textColor="@color/hint"
-                    android:textSize="@dimen/form_textSize" />
+                    android:textSize="@dimen/form_textSize_large" />
 
             </LinearLayout>
 
@@ -101,6 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:background="@android:drawable/editbox_background_normal"
+                    android:textSize="@dimen/et_textSize_big"
                     android:ems="3"
                     android:inputType="number"
                     android:padding="10dp"
@@ -115,14 +117,14 @@
                     android:layout_marginStart="@dimen/form_marginStart"
                     android:text="@string/people"
                     android:textColor="@color/hint"
-                    android:textSize="@dimen/form_textSize" />
+                    android:textSize="@dimen/form_textSize_large" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginBottom="8dp"
                 android:orientation="horizontal">
 

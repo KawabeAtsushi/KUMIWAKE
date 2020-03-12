@@ -19,4 +19,7 @@
     <dimen name="hint_icon_size">50dp</dimen>
     <dimen name="main_button_text_size">27sp</dimen>
     <dimen name="radio_button_text">20sp</dimen>
+
+    <dimen name="et_textSize_big">25sp</dimen>
+    <dimen name="form_textSize_large">18sp</dimen>
 </resources>
