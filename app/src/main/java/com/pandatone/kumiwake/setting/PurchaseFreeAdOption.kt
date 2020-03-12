@@ -32,7 +32,7 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
         billingClient = BillingClient.newBuilder(this)
                 .setListener(this).enablePendingPurchases().build()
         if (StatusHolder.adCheck) {
-            adDeleted()
+            adStatusCheck()
             StatusHolder.adCheck = false
             finish()
         } else {
@@ -64,7 +64,7 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
     // skuの初期化
     private fun querySkuList() {
         val skuList = ArrayList<String>()
-        skuList.add(StatusHolder.sku)
+        skuList.add(StatusHolder.ad_free_sku)
         val params = SkuDetailsParams.newBuilder()
         params.setSkusList(skuList).setType(BillingClient.SkuType.INAPP)
         billingClient!!.querySkuDetailsAsync(params.build()
@@ -75,7 +75,7 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
                 if (StatusHolder.cheakStatus) {
                     StatusHolder.cheakStatus = false
                 } else {
-                    startPurchase(StatusHolder.sku)  //購入
+                    startPurchase(StatusHolder.ad_free_sku)  //購入
                 }
             } else {
                 showResponseCode(responseCode)
@@ -117,12 +117,14 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
         val billingResultCode = billingResult.responseCode
         if (billingResultCode == BillingClient.BillingResponseCode.OK
                 && purchases != null) {
-            for (purchase in purchases) { //購入を承認する
+            for (purchase in purchases) { //購入したら呼ばれる
                 val state = handlePurchase(purchase)
                 //購入したSkuの文字列と承認結果を表示する
                 val sku = purchase.sku
                 resultStr.append(sku).append("\n")
                 resultStr.append(" State=").append(state).append("\n")
+                StatusHolder.adDeleated = true
+                MainActivity.mAdView.visibility = View.GONE
             }
             toastShow(resultStr.toString())
         } else { // Handle error codes.
@@ -180,7 +182,7 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
     }
 
     //広告削除は購入済みか？
-    private fun adDeleted() {
+    private fun adStatusCheck() {
         billingClient!!.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(billingResult: BillingResult) {
                 val responseCodeB = billingResult.responseCode
@@ -190,7 +192,7 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
                     if (responseCodeP == BillingClient.BillingResponseCode.OK) {
                         val purchases = purchasesResult.purchasesList
                         for (purchase in purchases) {
-                            if (purchase.sku == StatusHolder.sku) {
+                            if (purchase.sku == StatusHolder.ad_free_sku) {
                                 StatusHolder.adDeleated = true
                                 MainActivity.mAdView.visibility = View.GONE
                             } //広告削除済みか判定
@@ -206,6 +208,14 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
             override fun onBillingServiceDisconnected() { // Try to restart the connection on the next request to
             }
         })
+    }
+
+    //skuを商品名に変換
+    private fun skuToName(sku: String):String{
+        when(sku){
+            StatusHolder.ad_free_sku -> return getString(R.string.ad_delete)
+        }
+        return getString(R.string.nothing)
     }
 
     // サーバの応答を表示する

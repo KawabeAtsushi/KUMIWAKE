@@ -26,7 +26,7 @@ object StatusHolder {
     var index = "index"
 
     //Purchase sku
-    const val sku = "AD_FREE"
+    const val ad_free_sku = "ad_free_kumiwake"
 }
 
 //AddMemberのintent key
