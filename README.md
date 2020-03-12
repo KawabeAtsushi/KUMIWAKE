@@ -5,6 +5,9 @@ Created By PANDATONE.
 Store (GooglePlay):</br>
 https://play.google.com/store/apps/details?id=com.pandatone.kumiwake
 
+Official Page:
+https://peraichi.com/landing_pages/view/kumiwake
+
 Privacy Policy:
 https://gist.githubusercontent.com/KawabeAtsushi/39f3ea332b05a6b053b263784a77cd51/raw/7666e22b85561c34a95863f9482ed900482d2c8d/privacy%2520policy
 
@@ -55,6 +58,9 @@ E-mail:ganbalism@gmail.com
 
 ■ver.2.2.0<br>
 ・メンバーの追加が連続で行えるようになりました。
+
+以降は公式サイトでご確認ください。
+https://peraichi.com/landing_pages/view/kumiwake
 
 ## ToDo
 ### MVVMアーキテクチャ対応
