@@ -5,7 +5,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
-import android.util.Log
 import android.view.View
 import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
@@ -525,8 +524,6 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
                     val nextCenterX = x[point + 1] - lastX
                     val distHorizon = abs(startX - +r / 2 - nowCenterX) * dp //バルーンの先頭と今の席のの中心点の距離
                     val wantDist = (abs(nextCenterX - nowCenterX) + 10) * dp //今の席と次の席の理想とする距離
-                    Log.d("DistHorizon",distHorizon.toString())
-                    Log.d("DistWant",wantDist.toString())
                     return if (wantDist / 2 < distHorizon) { //次のバルーンと重なりそう
                         bottomY + (75 * dp - dist) //重ならない位置　+ マージン
                     } else {

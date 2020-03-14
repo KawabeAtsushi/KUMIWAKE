@@ -1,7 +1,6 @@
 package com.pandatone.kumiwake.kumiwake.function
 
 import android.app.Activity
-import android.util.Log
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member

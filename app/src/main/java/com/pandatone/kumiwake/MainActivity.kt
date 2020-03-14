@@ -67,15 +67,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     // 戻るボタンが押されたとき
-    override fun dispatchKeyEvent(e: KeyEvent): Boolean {
-        // 戻るボタンが押されたとき
-        when (e.keyCode) {
-            KeyEvent.KEYCODE_BACK -> {
-                DialogWarehouse(supportFragmentManager).decisionDialog("KUMIWAKE", getString(R.string.app_exit_confirmation)) { finish() }
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+                DialogWarehouse(supportFragmentManager).decisionDialog("KUMIWAKE", getString(R.string.app_exit_confirmation)) {
+                    finishAndRemoveTask()
+                }
                 return true
             }
-        }
-        return super.dispatchKeyEvent(e)
+        return false
     }
 
     //NavigationBarのクリックリスナー
