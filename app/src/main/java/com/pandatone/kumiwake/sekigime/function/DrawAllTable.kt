@@ -50,7 +50,7 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
                 }
             }
             "parallel" -> height = 130 * (seatsNo / 2f).roundToInt()+ 170
-            "circle" -> height = 810
+            "circle" -> height = 860
             "counter" -> height = seatsNo * 132 + 100
         }
         setMeasuredDimension(dispWidth, (height * dp).toInt())

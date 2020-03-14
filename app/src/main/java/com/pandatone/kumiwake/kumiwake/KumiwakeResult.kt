@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -36,7 +37,6 @@ class KumiwakeResult : AppCompatActivity() {
     private lateinit var manArray: ArrayList<Member>
     private lateinit var womanArray: ArrayList<Member>
     private var groupCount: Int = 0
-    private var memberSize: Int = 0
     private var evenFmRatio: Boolean = false
     private var even_age_ratio: Boolean = false
     private var v = 0
@@ -70,7 +70,6 @@ class KumiwakeResult : AppCompatActivity() {
         evenFmRatio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, false)
         even_age_ratio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_AGE_RATIO.key, false)
         groupCount = groupArray.size
-        memberSize = memberArray.size
 
         startMethod()
 
@@ -129,23 +128,28 @@ class KumiwakeResult : AppCompatActivity() {
             resultArray.add(ArrayList())
         }
 
-        if (evenFmRatio) {
-            createFmArray()    //男女それぞれの配列を作成
-        }
-
         if (evenFmRatio && even_age_ratio) {
-            evenKumiwakeSetter(manArray, womanArray, "age")
-            evenCreateGroup(manArray)
-            evenCreateGroup(womanArray)
+            createFmArray()    //男女それぞれの配列を作成
+            KumiwakeMethods.arrangeByAge(manArray)
+            KumiwakeMethods.arrangeByAge(womanArray)
+            KumiwakeMethods.setLeader(resultArray,leaderArray,leaderNoList)
+            KumiwakeMethods.evenManDistribute(memberArray.size,resultArray,manArray,groupArray,getString(R.string.man))
+            KumiwakeMethods.evenWomanDistribute(resultArray,womanArray,groupArray)
         } else if (evenFmRatio) {
-            evenKumiwakeSetter(manArray, womanArray, "")
-            evenCreateGroup(manArray)
-            evenCreateGroup(womanArray)
+            createFmArray()    //男女それぞれの配列を作成
+            KumiwakeMethods.setLeader(resultArray,leaderArray,leaderNoList)
+            KumiwakeMethods.evenManDistribute(memberArray.size,resultArray,manArray,groupArray,getString(R.string.man))
+            KumiwakeMethods.evenWomanDistribute(resultArray,womanArray,groupArray)
         } else if (even_age_ratio) {
-            evenKumiwakeSetter(memberArray, null, "age")
-            evenCreateGroup(memberArray)
+            KumiwakeMethods.arrangeByAge(memberArray)
+            KumiwakeMethods.setLeader(resultArray,leaderArray,leaderNoList)
+            KumiwakeMethods.kumiwakeAll(resultArray,memberArray,groupArray,leaderArray,leaderNoList)
         } else {
-            kumiwakeAll()
+            if (StatusHolder.normalMode) {
+                KumiwakeMethods.kumiwakeAll(resultArray, memberArray, groupArray, leaderArray, leaderNoList)
+            }else{
+                KumiwakeMethods.kumiwakeAllQuick(resultArray, memberArray, groupArray)
+            }
         }
     }
 
@@ -201,30 +205,6 @@ class KumiwakeResult : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun kumiwakeAll() {
-        setLeader(leaderArray)
-
-        var sum = 0
-
-        for (i in 0 until groupCount) {
-            val addNo = groupArray[i].belongNo - resultArray[i].size  //グループの規定人数－グループの現在数
-            resultArray[i].addAll(kumiwakeCreateGroup(memberArray, addNo, sum))
-            sum += addNo
-        }
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //　　　　　　　　　　　　　　　　　　　　　　　　各種処理メソッド                                                           ///
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private fun setLeader(array: ArrayList<Member>) {
-
-        for (leader in array) {
-            val id = leader.id
-            resultArray[leaderNoList.indexOf(id)].add(leader)
-        }
-    }
-
     private fun createFmArray() {
 
         for (member in memberArray) {
@@ -234,135 +214,6 @@ class KumiwakeResult : AppCompatActivity() {
                 womanArray.add(member)
             }
         }
-    }
-
-    private fun evenKumiwakeSetter(array1: ArrayList<Member>, array2: ArrayList<Member>?, sortCode: String) {
-
-        if (sortCode == "age") {
-            array1.shuffle()
-            Collections.sort(array1, KumiwakeComparator.AgeComparator())
-        }
-        if (sortCode == "age" && array2 != null) {
-            array2.shuffle()
-            Collections.sort(array2, KumiwakeComparator.AgeComparator())
-        }
-
-        setLeader(leaderArray)
-    }
-
-    private fun kumiwakeCreateGroup(array: ArrayList<Member>, addNo: Int, sum: Int): ArrayList<Member> {
-        val result = ArrayList<Member>()
-
-        for (i in 0 until addNo) {
-            result.add(array[sum + i])
-        }
-
-        Collections.sort(result, KumiwakeComparator.ViewComparator())
-        return result
-    }
-
-    private fun evenCreateGroup(array: ArrayList<Member>) {
-        val groupCapacity = IntArray(groupCount)
-        var addGroupNo = 0
-        var nowGroupMemberCount: Int
-
-        if (array === manArray) {
-            val groupCapacity0 = DoubleArray(groupCount)
-            var max: Double
-            var addSum = 0
-            var maxJ = 0
-
-            for (i in 0 until groupCount) {
-                groupCapacity0[i] = groupArray[i].belongNo.toDouble() / memberArray.size * array.size
-                groupCapacity[i] = groupCapacity0[i].toInt()    //型変換の際に小数点以下は切り捨てられる
-                addSum += groupCapacity[i]
-                groupCapacity0[i] = groupCapacity0[i] - groupCapacity[i]    //小数点以下の大きさの配列に直す
-            }
-
-            for (k in 0 until groupCount) {
-                while (groupCapacity[k] < resultArray[k].size) {
-                    groupCapacity[k]++  //すでにある要素数より許容格納数が小さいなら＋１する
-                    addSum++
-                }
-                if (groupCapacity[k] == 0) {
-                    groupCapacity[k]++  //許容格納数が０なら＋１する
-                    addSum++
-                }
-            }
-
-            while (addSum < array.size) {
-                max = 0.0
-                for (j in 0 until groupCount) {
-                    if (groupCapacity0[j] > max) {
-                        groupCapacity0[j] = max
-                        maxJ = j
-                    }
-                }
-                groupCapacity[maxJ]++  //小数点以下が大きい要素から順に許容格納数を＋１する
-                groupCapacity0[maxJ]-- //同じ要素を連続でとらないように-１する
-                addSum++
-            }
-        }
-
-        val fullNo = BooleanArray(groupCount)  //要素数が許容格納数に達しているグループはtrue
-        var memberSum = 0
-        nowGroupNo = 0
-        nowGroupMemberCount = resultArray[0].size
-
-        while (memberSum < array.size) {
-
-            if (array === manArray) {
-
-                var roopCount = 0
-                var min = 5000
-                var minJ = 0
-
-                while (memberSum < array.size && (groupCapacity[addGroupNo] == nowGroupMemberCount || fullNo[addGroupNo])) {
-                    nowGroupNo++
-                    addGroupNo = nowGroupNo % groupCount
-                    nowGroupMemberCount = 0
-
-                    if (!fullNo[addGroupNo]) {
-                        for (i in 0 until resultArray[addGroupNo].size) {
-                            if (resultArray[addGroupNo][i].sex == getText(R.string.man)) {
-                                nowGroupMemberCount++
-                            }
-                        }
-
-                        if (roopCount > groupCount) {  //一周してもループを抜けない場合
-                            for (j in 0 until groupCount) {
-                                if (!fullNo[j] && resultArray[j].size < min) {
-                                    min = resultArray[j].size
-                                    minJ = j
-                                }
-                            }
-                            addGroupNo = minJ  //要素数が許容格納数に達していないグループに追加（groupCapacityは達している）
-                            break             //ループを抜ける
-                        }
-                    }
-
-                    if (groupArray[addGroupNo].belongNo == resultArray[addGroupNo].size) {
-                        fullNo[addGroupNo] = true
-                    }
-                    roopCount++
-                }
-            } else {
-                while (memberSum < array.size && groupArray[addGroupNo].belongNo == nowGroupMemberCount) {
-                    nowGroupNo++
-                    addGroupNo = nowGroupNo % groupCount
-                    nowGroupMemberCount = resultArray[addGroupNo].size
-                }
-            }
-
-            if (memberSum < array.size) {
-                resultArray[addGroupNo].add(array[memberSum])
-                memberSum++
-                nowGroupNo++
-                addGroupNo = nowGroupNo % groupCount
-                nowGroupMemberCount = resultArray[addGroupNo].size
-            }
-        }
-
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -407,7 +258,7 @@ class KumiwakeResult : AppCompatActivity() {
         var R = 0
         var G = 0
         var B = 0
-        while (R < 200 && G < 200 && B < 200) {
+        while (R < 230 && G < 230 && B < 230) {
             R = ((Math.random() * 0.5 + 0.5) * 256).toInt()
             G = ((Math.random() * 0.5 + 0.5) * 256).toInt()
             B = ((Math.random() * 0.5 + 0.5) * 256).toInt()

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- ボタンが押されていない状態 -->
+    <item android:state_pressed="false">
+        <shape android:shape="oval">
+            <!-- 背景色 -->
+            <solid android:color="@color/green_unpressed"/>
+        </shape>
+    </item>
+
+    <!-- ボタンが押されている状態 -->
+    <item android:state_pressed="true">
+        <shape android:shape="oval">
+            <!-- 背景色 -->
+            <solid android:color="@color/green_pressed"/>
+        </shape>
+    </item>
+</selector>

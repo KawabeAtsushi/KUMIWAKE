@@ -19,10 +19,10 @@
     <color name="white_gray">#9ccc</color>
     <color name="thin_gray">#aaa</color>
 
-    <color name="red_pressed">#ff4334</color>
+    <color name="red_pressed">#f66</color>
     <color name="red_unpressed">#ff7777</color>
-    <color name="green_pressed">#00F74B</color>
-    <color name="green_unpressed">#78ff84</color>
+    <color name="green_unpressed">#6F6</color>
+    <color name="green_pressed">#4f4</color>
 
     <color name="text_dark">#616161</color>
 

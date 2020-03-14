@@ -63,7 +63,7 @@ class DrawTableView(context: Context) : View(context) {
                 }
             }
             "parallel" -> height = 130 * (seatsNo / 2f).roundToInt()+ 200
-            "circle" -> height = 810
+            "circle" -> height = 860
             "counter" -> height = seatsNo * 132 + 100
         }
         setMeasuredDimension(dispWidth, (height * dp).toInt())

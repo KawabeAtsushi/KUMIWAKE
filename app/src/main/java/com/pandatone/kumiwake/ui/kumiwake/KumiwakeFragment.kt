@@ -80,15 +80,6 @@ class KumiwakeFragment : Fragment() {
         return root
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        OrientationLiveData(requireContext()).observe(requireActivity(), Observer { orientation ->
-
-            if (orientation == null) return@Observer
-                PublicMethods.changeGradViewColore(context, normalButton, -orientation.roll + 0.5f, orientation.pitch + 0.9f)
-        })
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.kumiwake_menu, menu)

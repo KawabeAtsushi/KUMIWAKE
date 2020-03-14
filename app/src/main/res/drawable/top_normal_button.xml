@@ -8,9 +8,9 @@
             <gradient
                 android:centerX="0.3"
                 android:centerY="0.15"
-                android:endColor="@color/green_unpressed"
+                android:endColor="@color/red_unpressed"
                 android:gradientRadius="120dp"
-                android:startColor="#cfc"
+                android:startColor="#FFbbbb"
                 android:type="radial" />
         </shape>
     </item>
@@ -22,9 +22,9 @@
             <gradient
                 android:centerX="0.3"
                 android:centerY="0.15"
-                android:endColor="@color/green_pressed"
+                android:endColor="@color/red_pressed"
                 android:gradientRadius="120dp"
-                android:startColor="#bfb"
+                android:startColor="#FFaaaa"
                 android:type="radial" />
         </shape>
     </item>

@@ -115,36 +115,6 @@ object PublicMethods {
         }
     }
 
-    /**
-     * グラデーションがかかったビューの色の変更
-     */
-    fun changeGradViewColore(context: Context, button: Button, roll: Float,pitch: Float) {
-        val drawable: GradientDrawable = if (button.isPressed) {
-            context.getDrawable(R.drawable.top_normal_gradient_pressed) as GradientDrawable
-        } else {
-            context.getDrawable(R.drawable.top_normal_gradient) as GradientDrawable
-        }
-        drawable.setGradientCenter(roll, pitch)
-        button.background = drawable
-    }
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private fun getGradientDrawable(size: Int, ratio: Int): GradientDrawable? {
-        val drawable = GradientDrawable()
-        drawable.mutate()
-        drawable.orientation = GradientDrawable.Orientation.LEFT_RIGHT
-        val colors = IntArray(size)
-        for (i in 0 until size) {
-            colors[i] = Color.rgb(
-                    if (i < ratio) 255 / ratio * i else 255,
-                    255,
-                    if (i < ratio) 255 / ratio * i else 255
-            )
-        }
-        drawable.colors = colors
-        return drawable
-    }
-
     //webサイトへ
     fun toWebSite(context: Context, fragmentManager: FragmentManager) {
         DialogWarehouse(fragmentManager).decisionDialog(context.getString(R.string.move_kumiwake_site), context.getString(R.string.move_kumiwake_site_discription)) {
