@@ -5,6 +5,8 @@ import com.pandatone.kumiwake.R
 
 object KumiwakeMethods {
 
+
+
     //結果共有方法選択       ?関数型: () -> T を持ちます。つまり、パラメータを取らず、型 T の値を返す関数
     fun shareResult(activity: Activity, choice1: () -> Unit, choice2: () -> Unit) {
         val builder = androidx.appcompat.app.AlertDialog.Builder(activity)

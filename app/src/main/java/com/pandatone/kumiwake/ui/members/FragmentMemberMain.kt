@@ -38,7 +38,6 @@ class FragmentMemberMain : ListFragment() {
     override fun onStart() {
         super.onStart()
         loadName()
-        FragmentGroupMain().loadName()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -328,7 +327,6 @@ class FragmentMemberMain : ListFragment() {
         val dialog = builder.create()
         dialog.show()
         val newAgeET = layout.findViewById<View>(R.id.specify_age) as TextInputEditText
-        var ageValue = 0
         var method = ""
         val conditionGroup = layout.findViewById<View>(R.id.conditionGroup) as RadioGroup
         conditionGroup.setOnCheckedChangeListener { _, checkedId: Int ->

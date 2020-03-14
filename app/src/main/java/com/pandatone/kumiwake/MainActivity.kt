@@ -85,6 +85,7 @@ class MainActivity : AppCompatActivity() {
         when (menuItem.itemId) {
 
             R.id.navigation_kumiwake -> {
+                nowPage = 0
                 openFragment(KumiwakeFragment())
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Kumiwake.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.kumiwake) + "</font>")
@@ -99,6 +100,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.navigation_sekigime -> {
+                nowPage = 1
                 openFragment(SekigimeFragment())
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Sekigime.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#616161'>" + getString(R.string.sekigime) + "</font>")
@@ -113,6 +115,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.navigation_members -> {
+                nowPage = 2
                 openFragment(MembersFragment())
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Member.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.member) + "</font>")
@@ -123,6 +126,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.navigation_settings -> {
+                nowPage = 3
                 openFragment(SettingsFragment())
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Setting.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#616161'>" + getString(R.string.setting_help) + "</font>")
@@ -175,5 +179,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         lateinit var mAdView: AdView
+        var nowPage = 0
     }
 }

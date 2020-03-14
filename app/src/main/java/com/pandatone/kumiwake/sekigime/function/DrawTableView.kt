@@ -3,6 +3,7 @@ package com.pandatone.kumiwake.sekigime.function
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import com.pandatone.kumiwake.PublicMethods
@@ -55,21 +56,13 @@ class DrawTableView(context: Context) : View(context) {
         var height = 0
         when (tableType) {
             "square" -> {
-                height = if (doubleDeploy!!) {
-                    (seatsNo - squareNo * 2 + 1) * 68 + 350
+                height = if (doubleDeploy!!) { //両側
+                    360 + (130 * ((seatsNo - squareNo * 2) / 2f).roundToInt() + 50)
                 } else {
-                    (seatsNo - squareNo) * 68 + 350
-                }
-                if (seatsNo % 2 == 0) {
-                    height -= 68
+                    280 + (130 * ((seatsNo - squareNo) / 2f).roundToInt() + 50)
                 }
             }
-            "parallel" -> {
-                height = seatsNo * 68 + 200
-                if (seatsNo % 2 == 0) {
-                    height -= 68
-                }
-            }
+            "parallel" -> height = 130 * (seatsNo / 2f).roundToInt()+ 200
             "circle" -> height = 810
             "counter" -> height = seatsNo * 132 + 100
         }
@@ -145,18 +138,11 @@ class DrawTableView(context: Context) : View(context) {
     private fun drawSquareTable(canvas: Canvas) {
         val cPaint = Paint()
         val sPaint = Paint()
-        val tableHeight: Int = if (doubleDeploy!!) {
-            if ((seatsNo - squareNo * 2) % 2 == 0) {
-                130 * (seatsNo - squareNo * 2) / 2 + 235
-            } else {
-                130 * (seatsNo - squareNo * 2 + 1) / 2 + 235
-            }
+        val tableTop = 180 * dp
+        val tableHeight = if (doubleDeploy!!) { //両側
+            tableTop + (130 * ((seatsNo - squareNo * 2) / 2f).roundToInt() + 50) * dp
         } else {
-            if ((seatsNo - squareNo) % 2 == 0) {
-                130 * (seatsNo - squareNo) / 2 + 235
-            } else {
-                130 * (seatsNo - squareNo + 1) / 2 + 235
-            }
+            tableTop + (130 * ((seatsNo - squareNo) / 2f).roundToInt() + 50) * dp
         }
 
         // 机
@@ -165,10 +151,10 @@ class DrawTableView(context: Context) : View(context) {
         cPaint.isAntiAlias = true
         cPaint.style = Paint.Style.STROKE
         val rectRight = dispWidth - 180 * dp
-        canvas.drawRect(180 * dp, 180 * dp, rectRight, tableHeight * dp, cPaint)
+        canvas.drawRect(180 * dp, tableTop, rectRight, tableHeight, cPaint)
         cPaint.color = Color.parseColor(tableColor)
         cPaint.style = Paint.Style.FILL
-        canvas.drawRect(180 * dp, 180 * dp, rectRight, tableHeight * dp, cPaint)
+        canvas.drawRect(180 * dp, tableTop, rectRight, tableHeight, cPaint)
 
         //椅子
         sPaint.color = Color.parseColor(chairStrokeColor)
@@ -206,7 +192,7 @@ class DrawTableView(context: Context) : View(context) {
         canvas.translate((-transX * a), 0f)
         //底辺
         if (doubleDeploy!!) {
-            val initialY = (tableHeight + 75) * dp
+            val initialY = tableHeight + 75 * dp
             while (a < squareNo * 2) {
                 canvas.drawCircle(transX + 150 * dp, initialY, r, sPaint)
                 canvas.translate(transX, 0f)
@@ -274,11 +260,8 @@ class DrawTableView(context: Context) : View(context) {
 
         val cPaint = Paint()
         val sPaint = Paint()
-        val tableHeight = if (seatsNo % 2 == 0) {
-            ((130 * seatsNo / 2f).roundToInt() + 150) * dp
-        } else {
-            ((130 * (seatsNo + 1) / 2f).roundToInt() + 150) * dp
-        }
+        val tableTop = 100 * dp
+        val tableHeight = tableTop + (130 * (seatsNo / 2f).roundToInt() + 50) * dp //四捨五入
 
         // 机
         //val bmp = BitmapFactory.decodeResource(resources, R.drawable.mokume)
@@ -287,10 +270,10 @@ class DrawTableView(context: Context) : View(context) {
         cPaint.color = Color.parseColor(tableStrokeColor)
         cPaint.strokeWidth = 10 * dp
         cPaint.style = Paint.Style.STROKE
-        canvas.drawRect(180 * dp, 100 * dp, rectRight, tableHeight, cPaint)
+        canvas.drawRect(180 * dp, tableTop, rectRight, tableHeight, cPaint)
         cPaint.color = Color.parseColor(tableColor)
         cPaint.style = Paint.Style.FILL
-        canvas.drawRect(180 * dp, 100 * dp, rectRight, tableHeight, cPaint)
+        canvas.drawRect(180 * dp, tableTop, rectRight, tableHeight, cPaint)
 //        val rect = RectF(180 * dp, 100 * dp, rectRight, tableHeight)
 //        canvas.drawBitmap(bmp, null, rect, cPaint)
 

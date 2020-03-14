@@ -35,6 +35,7 @@ class KumiwakeCustom : AppCompatActivity() {
     private lateinit var memberArray: ArrayList<Member>
     private lateinit var groupArray: ArrayList<Group>
     private lateinit var newGroupArray: ArrayList<Group>
+    private var leaderNoList: Array<Int?> = emptyArray()
     private var screenHeight = 0
     private var nextSet = 0
 
@@ -107,6 +108,7 @@ class KumiwakeCustom : AppCompatActivity() {
             val intent = Intent(this, KumiwakeConfirmation::class.java)
             intent.putExtra(KumiwakeArrayKeys.MEMBER_LIST.key, memberArray)
             intent.putExtra(KumiwakeArrayKeys.GROUP_LIST.key, newGroupArray)
+            intent.putExtra(KumiwakeArrayKeys.LEADER_NO_LIST.key, leaderNoList)
             intent.putExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, even_fm_ratio_check.isChecked)
             intent.putExtra(KumiwakeCustomKeys.EVEN_AGE_RATIO.key, even_age_ratio_check.isChecked)
             startActivity(intent)
@@ -147,7 +149,8 @@ class KumiwakeCustom : AppCompatActivity() {
             nextSet = leaderNoList.indexOfFirst { it == null }
         }
 
-        mbAdapter?.notifyDataSetChanged()
+        mbAdapter = SmallMBListAdapter(this, memberArray, true, showLeaderNo = true,leaderNoList = leaderNoList)
+        memberListView.adapter = mbAdapter
     }
 
     //GroupArrayの作成
@@ -178,9 +181,4 @@ class KumiwakeCustom : AppCompatActivity() {
             }
         })
     }
-
-    companion object {
-        internal var leaderNoList: Array<Int?> = emptyArray()
-    }
-
 }

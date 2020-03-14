@@ -35,6 +35,7 @@ class GroupClick(val c: Activity) {
         number = view.findViewById<View>(R.id.infoMBNo) as TextView
         belongMb = view.findViewById<View>(R.id.indexMember) as TextView
         belongList = view.findViewById<View>(R.id.belongList) as ListView
+        belongList.emptyView = view.findViewById(R.id.emptyMemberList)
         okBt = view.findViewById<View>(R.id.okBt) as Button
 
         builder.setTitle(R.string.information)

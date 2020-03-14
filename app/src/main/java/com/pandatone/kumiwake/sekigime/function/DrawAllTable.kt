@@ -43,23 +43,15 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
         var height = 0
         when (tableType) {
             "square" -> {
-                height = if (doubleDeploy!!) {
-                    (seatsNo - squareNo * 2 + 1) * 68 + 400
+                height = if (doubleDeploy!!) { //両側
+                    360 + (130 * ((seatsNo - squareNo * 2) / 2f).roundToInt() + 50)
                 } else {
-                    (seatsNo - squareNo) * 68 + 400
-                }
-                if (seatsNo % 2 == 0) {
-                    height -= 68
+                    280 + (130 * ((seatsNo - squareNo) / 2f).roundToInt() + 50)
                 }
             }
-            "parallel" -> {
-                height = seatsNo * 68 + 200
-                if (seatsNo % 2 == 0) {
-                    height -= 68
-                }
-            }
-            "circle" -> height = 850
-            "counter" -> height = seatsNo * 132 + 60
+            "parallel" -> height = 130 * (seatsNo / 2f).roundToInt()+ 170
+            "circle" -> height = 810
+            "counter" -> height = seatsNo * 132 + 100
         }
         setMeasuredDimension(dispWidth, (height * dp).toInt())
     }
@@ -87,21 +79,13 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
     /////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun drawSquareTable(canvas: Canvas) {
-        val topTablePos = 180f
         val cPaint = Paint()
         val sPaint = Paint()
-        val tableHeight: Int = if (doubleDeploy!!) {
-            if ((seatsNo - squareNo * 2) % 2 == 0) {
-                130 * (seatsNo - squareNo * 2) / 2 + 235
-            } else {
-                130 * (seatsNo - squareNo * 2 + 1) / 2 + 235
-            }
+        val tableTop = 180 * dp
+        val tableHeight = if (doubleDeploy!!) { //両側
+            tableTop + (130 * ((seatsNo - squareNo * 2) / 2f).roundToInt() + 50) * dp
         } else {
-            if ((seatsNo - squareNo) % 2 == 0) {
-                130 * (seatsNo - squareNo) / 2 + 235
-            } else {
-                130 * (seatsNo - squareNo + 1) / 2 + 235
-            }
+            tableTop + (130 * ((seatsNo - squareNo) / 2f).roundToInt() + 50) * dp
         }
 
         // 机
@@ -110,10 +94,10 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
         cPaint.isAntiAlias = true
         cPaint.style = Paint.Style.STROKE
         val rectRight = dispWidth - 180 * dp
-        canvas.drawRect(180 * dp, topTablePos * dp, rectRight, tableHeight * dp, cPaint)
+        canvas.drawRect(180 * dp, tableTop, rectRight, tableHeight, cPaint)
         cPaint.color = Color.parseColor(tableColor)
         cPaint.style = Paint.Style.FILL
-        canvas.drawRect(180 * dp, topTablePos * dp, rectRight, tableHeight * dp, cPaint)
+        canvas.drawRect(180 * dp, tableTop, rectRight, tableHeight, cPaint)
 
         //椅子
         sPaint.color = Color.parseColor(chairStrokeColor)
@@ -130,7 +114,7 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
             (50 - 3 * (squareNo - 1)) * dp
         }
         var transX = 0f
-        val transY = 130f
+        val transY = 130f * dp
         if (squareNo != 0) {
             transX = (rectRight - 110 * dp) / (squareNo + 1)
         }
@@ -140,19 +124,19 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
         var b = 0
         var i = 0
         var j = 0
-        val topChairY = topTablePos - 75f
+        val topChairY = tableTop - 75f*dp
         //上辺
         while (a < squareNo) {
-            canvas.drawCircle(transX + 150 * dp, topChairY * dp, r, sPaint)
+            canvas.drawCircle(transX + 150 * dp, topChairY, r, sPaint)
             canvas.translate(transX, 0f)
             x.add(transX * (a + 1) + 150 * dp)
-            y.add(topChairY * dp)
+            y.add(topChairY)
             a++
         }
         canvas.translate((-transX * a), 0f)
         //底辺
         if (doubleDeploy!!) {
-            val initialY = (tableHeight + 75) * dp
+            val initialY = tableHeight + 75* dp
             while (a < squareNo * 2) {
                 canvas.drawCircle(transX + 150 * dp, initialY, r, sPaint)
                 canvas.translate(transX, 0f)
@@ -173,29 +157,29 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
 
         r = 50 * dp
         sPaint.strokeWidth = 7 * dp
-        val sideTopY = topTablePos + 90f
+        val sideTopY = tableTop + 90f*dp
         while (i < (seatsNo - a) / 2) {
-            canvas.drawCircle(100 * dp, sideTopY * dp, r, sPaint)
-            canvas.translate(0f, transY * dp)
+            canvas.drawCircle(100 * dp, sideTopY, r, sPaint)
+            canvas.translate(0f, transY)
             x.add(100 * dp)
-            y.add((transY * i + sideTopY) * dp)
+            y.add(transY * i + sideTopY)
             i++
         }
-        canvas.translate(0f, -transY * i * dp)
+        canvas.translate(0f, -transY * i)
         //右辺
         while (i < seatsNo - a) {
-            canvas.drawCircle(rectRight + 80 * dp, sideTopY * dp, r, sPaint)
-            canvas.translate(0f, transY * dp)
+            canvas.drawCircle(rectRight + 80 * dp, sideTopY, r, sPaint)
+            canvas.translate(0f, transY)
             x.add(rectRight + 80 * dp)
-            y.add((transY * j + sideTopY) * dp)
+            y.add(transY * j + sideTopY)
             i++
             j++
         }
         lastX = 0f
         lastY = when {
-            seatsNo == 1 -> (transY * dp)
-            (seatsNo - a) / 2 == 0 -> (transY * floor((seatsNo - a) / 2f) * dp)
-            else -> (transY * floor(((seatsNo - a + 1) / 2f)) * dp)
+            seatsNo == 1 -> (transY)
+            (seatsNo - a) / 2 == 0 -> (transY * floor((seatsNo - a) / 2f))
+            else -> transY * floor(((seatsNo - a + 1) / 2f))
         }
         setFmBackground(canvas, a, seatsNo)
     }
@@ -208,15 +192,10 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
 
     private fun drawParallelTable(canvas: Canvas) {
 
-        val topTablePos = 50f
-
         val cPaint = Paint()
         val sPaint = Paint()
-        val tableHeight = if (seatsNo % 2 == 0) {
-            ((130 * seatsNo / 2f).roundToInt() + 150) * dp
-        } else {
-            ((130 * (seatsNo + 1) / 2f).roundToInt() + 150) * dp
-        }
+        val tableTop = 70 * dp
+        val tableHeight = tableTop + (130 * (seatsNo / 2f).roundToInt() + 50) * dp //四捨五入
 
         // 机
         //val bmp = BitmapFactory.decodeResource(resources, R.drawable.mokume)
@@ -225,10 +204,10 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
         cPaint.color = Color.parseColor(tableStrokeColor)
         cPaint.strokeWidth = 10 * dp
         cPaint.style = Paint.Style.STROKE
-        canvas.drawRect(180 * dp, topTablePos * dp, rectRight, tableHeight, cPaint)
+        canvas.drawRect(180 * dp, tableTop, rectRight, tableHeight, cPaint)
         cPaint.color = Color.parseColor(tableColor)
         cPaint.style = Paint.Style.FILL
-        canvas.drawRect(180 * dp, topTablePos * dp, rectRight, tableHeight, cPaint)
+        canvas.drawRect(180 * dp, tableTop, rectRight, tableHeight, cPaint)
 //        val rect = RectF(180 * dp, 100 * dp, rectRight, tableHeight)
 //        canvas.drawBitmap(bmp, null, rect, cPaint)
 
@@ -238,34 +217,34 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
         sPaint.isAntiAlias = true
         sPaint.style = Paint.Style.STROKE
         r = 50 * dp
-        val transY = 130
+        val transY = 130 * dp
 
         //間隔
         var i = 0
         var j = 0
-        val startChairY = topTablePos + 90f
+        val startChairY = tableTop + 90f*dp
         while (i < seatsNo / 2) {
-            canvas.drawCircle(100 * dp, startChairY * dp, r, sPaint)
-            canvas.translate(0f, transY * dp)
+            canvas.drawCircle(100 * dp, startChairY, r, sPaint)
+            canvas.translate(0f, transY)
             x.add(100 * dp)
-            y.add((transY * i + startChairY) * dp)
+            y.add(transY * i + startChairY)
             i++
         }
-        canvas.translate(0f, -transY * i * dp)
+        canvas.translate(0f, -transY * i)
         while (i < seatsNo) {
-            canvas.drawCircle(rectRight + 80 * dp, startChairY * dp, r, sPaint)
-            canvas.translate(0f, transY * dp)
+            canvas.drawCircle(rectRight + 80 * dp, startChairY, r, sPaint)
+            canvas.translate(0f, transY)
             x.add(rectRight + 80 * dp)
-            y.add((transY * j + startChairY) * dp)
+            y.add(transY * j + startChairY)
             i++
             j++
         }
         lastX = 0f
-        lastY = (transY * floor(seatsNo / 2f) * dp)
+        lastY = (transY * floor(seatsNo / 2f))
         if (seatsNo == 1) {
-            lastY = (transY * dp)
+            lastY = (transY)
         } else if (y[0] - lastY != startChairY) {
-            lastY = (transY * floor((seatsNo + 1) / 2f) * dp)
+            lastY = (transY * floor((seatsNo + 1) / 2f))
         }
     }
 

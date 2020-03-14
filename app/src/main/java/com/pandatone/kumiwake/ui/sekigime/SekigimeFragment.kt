@@ -3,6 +3,7 @@ package com.pandatone.kumiwake.ui.sekigime
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -35,13 +36,13 @@ class SekigimeFragment : Fragment() {
                 ViewModelProviders.of(this).get(SekigimeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_sekigime, container, false)
 
-        val normalButton: TextView = root.findViewById(R.id.normal_mode_button)
+        val normalButton: Button = root.findViewById(R.id.normal_mode_button)
         normalButton.setOnClickListener {
             StatusHolder.normalMode = true
             StatusHolder.sekigime = true
             startActivity(Intent(activity, NormalMode::class.java))
         }
-        val quickButton: TextView = root.findViewById(R.id.quick_mode_button)
+        val quickButton: Button = root.findViewById(R.id.quick_mode_button)
         quickButton.setOnClickListener {
             StatusHolder.normalMode = false
             StatusHolder.sekigime = true

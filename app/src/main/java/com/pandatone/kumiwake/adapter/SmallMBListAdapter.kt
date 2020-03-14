@@ -11,14 +11,12 @@ import android.widget.ListView
 import android.widget.TextView
 import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.kumiwake.KumiwakeCustom
 import com.pandatone.kumiwake.member.function.Member
-import java.util.*
 
 /**
  * Created by atsushi_2 on 2016/04/16.
  */
-class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Member>, private val showStar: Boolean, showLeaderNo: Boolean) : BaseAdapter() {
+class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Member>, private val showStar: Boolean, showLeaderNo: Boolean,val leaderNoList: Array<Int?> = emptyArray()) : BaseAdapter() {
     private val inflater: LayoutInflater
     private var listElements: ArrayList<Member> = ArrayList()
     private val showLdNo = showLeaderNo
@@ -51,11 +49,13 @@ class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Mem
         val v = inflater.inflate(R.layout.mini_row_member, null)
 
         val memberIcon: ImageView = v.findViewById<View>(R.id.memberIcon) as ImageView
-        val starIcon: ImageView = v.findViewById<View>(R.id.starIcon) as ImageView
         val leaderNo: TextView = v.findViewById<View>(R.id.leaderNo) as TextView
         val nameTextView = v.findViewById<View>(R.id.memberName) as TextView
 
-        setStarIcon(memberIcon, starIcon, leaderNo, position)
+        if (showStar) {
+            val starIcon: ImageView = v.findViewById<View>(R.id.starIcon) as ImageView
+            setStarIcon(leaderNoList,memberIcon, starIcon, leaderNo, position)
+        }
         setSexIcon(memberIcon, position)
         nameTextView.text = listElements[position].name
 
@@ -78,11 +78,10 @@ class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Mem
         }
     }
 
-    private fun setStarIcon(memberIcon: ImageView, starIcon: ImageView, leaderNo: TextView, position: Int) {
-        val leaderNoList = KumiwakeCustom.leaderNoList
+    private fun setStarIcon(leaderNoList: Array<Int?>, memberIcon: ImageView, starIcon: ImageView, leaderNo: TextView, position: Int) {
         val id = listElements[position].id
 
-        if (showStar && leaderNoList.contains(id)) {
+        if (leaderNoList.contains(id)) {
             memberIcon.visibility = View.GONE
             starIcon.visibility = View.VISIBLE
             leaderNo.visibility = View.GONE
@@ -92,10 +91,6 @@ class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Mem
                 leaderNo.text = (leaderNoList.indexOf(id) + 1).toString()
             }
 
-        } else {
-            memberIcon.visibility = View.VISIBLE
-            starIcon.visibility = View.GONE
-            leaderNo.visibility = View.GONE
         }
     }
 

@@ -51,5 +51,10 @@ enum class KumiwakeCustomKeys(val key: String) {
 enum class KumiwakeArrayKeys(val key: String) {
     MEMBER_LIST("MemberList"),
     GROUP_LIST("GroupList"),
+    LEADER_NO_LIST("LEADER_NO_LIST"),
     LEADER_LIST("LEADER_LIST")
+}
+
+enum class PastelColors(val code: String){
+
 }

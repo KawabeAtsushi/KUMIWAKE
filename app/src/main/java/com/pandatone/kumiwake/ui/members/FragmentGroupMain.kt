@@ -52,8 +52,8 @@ class FragmentGroupMain : ListFragment() {
 
     override fun onStart() {
         super.onStart()
+        listAdp = GroupFragmentViewAdapter(requireContext(), groupList) //notifyDataSet..ではメンバー追加した際にグループ数が反映されなかったので
         loadName()
-        FragmentMemberMain().loadName()
     }
 
     // Viewの生成が完了した後に呼ばれる

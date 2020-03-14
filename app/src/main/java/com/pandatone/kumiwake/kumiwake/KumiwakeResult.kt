@@ -1,6 +1,5 @@
 package com.pandatone.kumiwake.kumiwake
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -14,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ShareCompat
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
+import com.pandatone.kumiwake.kumiwake.function.KumiwakeComparator
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeMethods
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
@@ -31,12 +31,14 @@ class KumiwakeResult : AppCompatActivity() {
     private lateinit var memberArray: ArrayList<Member>
     private lateinit var leaderArray: ArrayList<Member>
     private lateinit var groupArray: ArrayList<Group>
+    private lateinit var leaderNoList: Array<Int?>
     private lateinit var resultArray: ArrayList<ArrayList<Member>>
     private lateinit var manArray: ArrayList<Member>
     private lateinit var womanArray: ArrayList<Member>
     private var groupCount: Int = 0
     private var memberSize: Int = 0
     private var evenFmRatio: Boolean = false
+    private var even_age_ratio: Boolean = false
     private var v = 0
     private var nowGroupNo = 0
     private var timer: Timer? = null
@@ -57,6 +59,9 @@ class KumiwakeResult : AppCompatActivity() {
         }
         if (i.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) != null) {
             groupArray = i.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) as ArrayList<Group>
+        }
+        if (i.getSerializableExtra(KumiwakeArrayKeys.LEADER_NO_LIST.key) != null) {
+            leaderNoList = i.getSerializableExtra(KumiwakeArrayKeys.LEADER_NO_LIST.key) as Array<Int?>
         }
         if (i.getSerializableExtra(KumiwakeArrayKeys.LEADER_LIST.key) != null) {
             leaderArray = i.getSerializableExtra(KumiwakeArrayKeys.LEADER_LIST.key) as ArrayList<Member>
@@ -88,7 +93,6 @@ class KumiwakeResult : AppCompatActivity() {
 
         val scrollView = findViewById<View>(R.id.kumiwake_scroll) as ScrollView
         scrollView.post { scrollView.fullScroll(ScrollView.FOCUS_UP) }
-
 
         findViewById<Button>(R.id.re_kumiwake).setOnClickListener { onReKumiwake() }
         findViewById<Button>(R.id.share_result).setOnClickListener { shareResult() }
@@ -148,7 +152,7 @@ class KumiwakeResult : AppCompatActivity() {
 
     fun addGroupView() {
         if (v < groupCount) {
-            addView(resultArray[v], v)
+            addResultView(resultArray[v], v)
             v++
         }
         if (v == groupCount) {
@@ -214,7 +218,6 @@ class KumiwakeResult : AppCompatActivity() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun setLeader(array: ArrayList<Member>) {
-        val leaderNoList = KumiwakeCustom.leaderNoList
 
         for (leader in array) {
             val id = leader.id
@@ -237,11 +240,11 @@ class KumiwakeResult : AppCompatActivity() {
 
         if (sortCode == "age") {
             array1.shuffle()
-            Collections.sort(array1, KumiwakeAgeComparator())
+            Collections.sort(array1, KumiwakeComparator.AgeComparator())
         }
         if (sortCode == "age" && array2 != null) {
             array2.shuffle()
-            Collections.sort(array2, KumiwakeAgeComparator())
+            Collections.sort(array2, KumiwakeComparator.AgeComparator())
         }
 
         setLeader(leaderArray)
@@ -254,7 +257,7 @@ class KumiwakeResult : AppCompatActivity() {
             result.add(array[sum + i])
         }
 
-        Collections.sort(result, KumiwakeViewComparator())
+        Collections.sort(result, KumiwakeComparator.ViewComparator())
         return result
     }
 
@@ -366,8 +369,7 @@ class KumiwakeResult : AppCompatActivity() {
     ///////                                 描画メソッド                                             ////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    @SuppressLint("InflateParams")
-    private fun addView(resultArray: ArrayList<Member>, i: Int) {
+    private fun addResultView(resultArray: ArrayList<Member>, i: Int) {
         val groupName: TextView
         val arrayList: ListView
         val layout = findViewById<View>(R.id.result_layout) as LinearLayout
@@ -379,7 +381,7 @@ class KumiwakeResult : AppCompatActivity() {
         groupName = v.findViewById<View>(R.id.result_group) as TextView
         groupName.text = groupArray[i].name
         arrayList = v.findViewById<View>(R.id.result_member_listView) as ListView
-        val adapter = SmallMBListAdapter(this, resultArray, true, showLeaderNo = false)
+        val adapter = SmallMBListAdapter(this, resultArray, true, showLeaderNo = false, leaderNoList = leaderNoList)
         arrayList.adapter = adapter
         setBackGround(v)
         adapter.setRowHeight(arrayList)
@@ -416,6 +418,11 @@ class KumiwakeResult : AppCompatActivity() {
         v.background = drawable
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////                                   テキスト共有メソッド                                              ////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //テキストでシェア
     private fun share() {
         var setLeader = false
         val articleTitle = "～" + getString(R.string.kumiwake_result) + "～"
@@ -445,28 +452,18 @@ class KumiwakeResult : AppCompatActivity() {
         } else {
             "$articleTitle\n$resultTxt"
         }
-
         // builderの生成
         val builder = ShareCompat.IntentBuilder.from(this)
-
         // アプリ一覧が表示されるDialogのタイトルの設定
         builder.setChooserTitle(R.string.choose_app)
-
         // シェアするタイトル
         builder.setSubject(articleTitle)
-
         // シェアするテキスト
         builder.setText(sharedText)
-
         // シェアするタイプ（他にもいっぱいあるよ）
         builder.setType("text/plain")
-
         // Shareアプリ一覧のDialogの表示
         builder.startChooser()
-    }
-
-    companion object {
-        internal var even_age_ratio: Boolean = false
     }
 }
 
@@ -481,47 +478,5 @@ internal class MyTimerTask(private val context: Context) : TimerTask() {
         handler.post { (context as KumiwakeResult).addGroupView() }
     }
 
-}
-
-// ソート（性別→年齢→ID）
-internal class KumiwakeViewComparator : Comparator<Member> {
-    override fun compare(n1: Member, n2: Member): Int {
-        var value = comparedValue(n2.sex, n1.sex)
-        if (value == 0) {
-            value = compareValues(n2.age, n1.age)
-        }
-        if (value == 0) {
-            value = compareValues(n1.id, n2.id)
-        }
-        return value
-    }
-}
-
-internal class KumiwakeAgeComparator : Comparator<Member> {
-    override fun compare(n1: Member, n2: Member): Int {
-        return compareValues(n2.age, n1.age)
-    }
-}
-
-internal class KumiwakeLeaderComparator : Comparator<Member> {
-    override fun compare(n1: Member, n2: Member): Int {
-        return comparedValue(n1.role, n2.role)
-    }
-}
-
-//ジェネリクス（宣言時に引数の型定義ができるもの。引数の型推定もできる）
-fun <T> comparedValue(n1: T, n2: T): Int {
-    var value = 0
-    if (n1 is String && n2 is String) {
-        //n1が大きい場合には正の値、小さければ負の値
-        value = n1.compareTo(n2)
-    } else if (n1 is Int && n2 is Int) {
-        value = when {
-            n1 > n2 -> 1
-            n1 < n2 -> -1
-            else -> 0
-        }
-    }
-    return value
 }
 
