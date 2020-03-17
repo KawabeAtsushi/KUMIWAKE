@@ -171,4 +171,5 @@
     <string name="move_kumiwake_site_discription">Go to the KUMIWAKE official site.\nIs it OK? (Japanese only)</string>
     <string name="purchased">purchased!!</string>
     <string name="show_detail">Show Individual</string>
+    <string name="double_tap">Double tap to start typing.</string>
 </resources>

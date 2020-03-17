@@ -4,10 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.ListFragment
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.pandatone.kumiwake.AddMemberKeys
@@ -155,6 +157,8 @@ class FragmentMemberMain : ListFragment() {
     internal inner class CallbackMB : AbsListView.MultiChoiceModeListener {
 
         private var checkedCount = 0
+        private lateinit var listener:ViewPager.SimpleOnPageChangeListener
+        private lateinit var viewPager:ViewPager
 
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             // アクションモード初期化処理
@@ -164,6 +168,14 @@ class FragmentMemberMain : ListFragment() {
             menu.findItem(R.id.item_change_age).isVisible = true
             checkedCount = 0
             mode.title = checkedCount.toString() + getString(R.string.selected)
+            viewPager = MembersFragment.viewPager
+            listener = object : ViewPager.SimpleOnPageChangeListener() {
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                    super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                    viewPager.currentItem = 0
+                }
+            }
+            viewPager.addOnPageChangeListener(listener)
             return true
         }
 
@@ -205,8 +217,9 @@ class FragmentMemberMain : ListFragment() {
         }
 
         override fun onDestroyActionMode(mode: ActionMode) {
-            // 決定ボタン押下時
+            // アクションモード終了時
             listAdp.clearSelection()
+            viewPager.removeOnPageChangeListener(listener)
         }
 
         override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {

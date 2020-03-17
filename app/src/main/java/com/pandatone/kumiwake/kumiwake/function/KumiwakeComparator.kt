@@ -8,7 +8,10 @@ object KumiwakeComparator {
     // ソート（性別→年齢→ID）
     internal class ViewComparator : Comparator<Member> {
         override fun compare(n1: Member, n2: Member): Int {
-            var value = comparedValue(n2.sex, n1.sex)
+            var value = comparedValue(n2.role, n1.role)
+            if (value == 0) {
+                value = compareValues(n2.sex, n1.sex)
+            }
             if (value == 0) {
                 value = compareValues(n2.age, n1.age)
             }

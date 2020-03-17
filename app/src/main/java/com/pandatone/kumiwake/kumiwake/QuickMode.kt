@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake.kumiwake
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -7,24 +8,33 @@ import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.transition.Slide
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.Window
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.view.GestureDetectorCompat
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.member.function.Member
 import kotlinx.android.synthetic.main.quick_mode.*
 import java.util.*
 
+
 /**
  * Created by atsushi_2 on 2016/05/02.
  */
-class QuickMode : AppCompatActivity(), TextWatcher {
+class QuickMode : AppCompatActivity(), TextWatcher{
 
     private var memberNo: Int = 0
     private var manNo: Int = 0
     private var womanNo: Int = 0
+
+    private lateinit var mDetector: GestureDetectorCompat
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +47,19 @@ class QuickMode : AppCompatActivity(), TextWatcher {
         sex_seekBar.isEnabled = false
         member_no_form.addTextChangedListener(this)
         findViewById<Button>(R.id.quick_kumiwake_btn).setOnClickListener { onNextClicked() }
+
+        Toast.makeText(this,getText(R.string.double_tap),Toast.LENGTH_SHORT).show()
+        val groupNoInput = findViewById<EditText>(R.id.group_no_form)
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        mDetector = GestureDetectorCompat(this, MyGestureListener(imm,groupNoInput))
+        mDetector.setOnDoubleTapListener(MyGestureListener(imm,groupNoInput))
+    }
+
+    //スクロールビューの場合こっち呼ぶ
+    override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
+        super.dispatchTouchEvent(event)
+        mDetector.onTouchEvent(event)
+        return super.onTouchEvent(event)
     }
 
     override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}

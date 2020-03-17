@@ -2,18 +2,20 @@ package com.pandatone.kumiwake.kumiwake
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.transition.Slide
+import android.view.MotionEvent
 import android.view.View
 import android.view.Window
-import android.widget.Button
-import android.widget.ListView
-import android.widget.TextView
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.view.GestureDetectorCompat
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.member.AddMember
@@ -32,6 +34,7 @@ class NormalMode : AppCompatActivity() {
     private lateinit var errorGroup: TextView
     private lateinit var errorMember: TextView
     private lateinit var listView: ListView
+    private lateinit var mDetector: GestureDetectorCompat
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +51,11 @@ class NormalMode : AppCompatActivity() {
         add_group_listview.member_register_and_add_btn.setOnClickListener { moveAddMember() }
         add_group_listview.numberOfSelectedMember.text = "0${getString(R.string.people)}${getString(R.string.selected)}"
         findViewById<Button>(R.id.normal_kumiwake_btn).setOnClickListener { onNextClick() }
+
+        Toast.makeText(this,getText(R.string.double_tap), Toast.LENGTH_SHORT).show()
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        mDetector = GestureDetectorCompat(this, MyGestureListener(imm,gpNoEditText))
+        mDetector.setOnDoubleTapListener(MyGestureListener(imm, gpNoEditText))
     }
 
     //Viewの宣言
@@ -112,6 +120,11 @@ class NormalMode : AppCompatActivity() {
         adapter = SmallMBListAdapter(this, memberArray, false, showLeaderNo = false)
         listView.adapter = adapter
         add_group_listview.numberOfSelectedMember.text = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        mDetector.onTouchEvent(event)
+        return super.onTouchEvent(event)
     }
 
     companion object {

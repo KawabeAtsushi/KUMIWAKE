@@ -3,12 +3,14 @@ package com.pandatone.kumiwake.ui.members
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.*
 import android.widget.AbsListView
 import android.widget.AdapterView
 import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.ListFragment
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pandatone.kumiwake.AddGroupKeys
 import com.pandatone.kumiwake.R
@@ -150,6 +152,9 @@ class FragmentGroupMain : ListFragment() {
 
     private inner class Callback : AbsListView.MultiChoiceModeListener {
 
+        private lateinit var listener: ViewPager.SimpleOnPageChangeListener
+        private lateinit var viewPager: ViewPager
+
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             // アクションモード初期化処理
             val inflater = activity!!.menuInflater
@@ -161,6 +166,14 @@ class FragmentGroupMain : ListFragment() {
             menu.findItem(R.id.item_delete).isVisible = true
             menu.findItem(R.id.item_filter).isVisible = false
             menu.findItem(R.id.item_all_select).isVisible = true
+            viewPager = MembersFragment.viewPager
+            listener = object : ViewPager.SimpleOnPageChangeListener() {
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                    super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                    viewPager.currentItem = 1
+                }
+            }
+            viewPager.addOnPageChangeListener(listener)
             return true
         }
 
@@ -200,8 +213,9 @@ class FragmentGroupMain : ListFragment() {
         }
 
         override fun onDestroyActionMode(mode: ActionMode) {
-            // 決定ボタン押下時
+            // アクションモード終了時
             listAdp.clearSelection()
+            viewPager.removeOnPageChangeListener(listener)
         }
 
         override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {

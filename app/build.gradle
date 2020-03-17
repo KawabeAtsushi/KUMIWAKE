@@ -19,8 +19,8 @@ android {
         applicationId "com.pandatone.kumiwake"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 17
-        versionName "3.0.1" // major update +1.0.0 / add functions +0.1.0 / debug + 0.0.1
+        versionCode 18
+        versionName "3.0.2" // major update +1.0.0 / add functions +0.1.0 / debug + 0.0.1
     }
     buildTypes {
 

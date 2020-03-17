@@ -10,9 +10,13 @@ import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Build
 import android.util.TypedValue
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
@@ -122,6 +126,16 @@ object PublicMethods {
             val intent = Intent(Intent.ACTION_VIEW, uri)
             context.startActivity(intent)
         }
+    }
+}
+
+class MyGestureListener(private val imm: InputMethodManager, val et: EditText) : GestureDetector.SimpleOnGestureListener() {
+
+    //ダブルタップイベント
+    override fun onDoubleTap(event: MotionEvent): Boolean {
+        et.requestFocus()
+        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS)
+        return true
     }
 }
 

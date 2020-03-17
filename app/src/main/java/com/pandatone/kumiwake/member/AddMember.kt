@@ -1,19 +1,24 @@
 package com.pandatone.kumiwake.member
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.view.GestureDetectorCompat
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.AddMemberKeys
+import com.pandatone.kumiwake.MyGestureListener
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.GroupAdapter
@@ -28,6 +33,7 @@ import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import com.pandatone.kumiwake.ui.members.FragmentGroupMain
 import com.pandatone.kumiwake.ui.members.FragmentMemberMain
 import kotlinx.android.synthetic.main.add_member.*
+
 
 /**
  * Created by atsushi_2 on 2016/02/24.
@@ -49,6 +55,7 @@ class AddMember : AppCompatActivity() {
             return GroupAdapter(this).getAllGroups()
         }
     private var dialogShown = false
+    private lateinit var mDetector: GestureDetectorCompat
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,6 +91,18 @@ class AddMember : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         })
+
+        Toast.makeText(this,getText(R.string.double_tap),Toast.LENGTH_SHORT).show()
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        mDetector = GestureDetectorCompat(this, MyGestureListener(imm,nameEditText as EditText))
+        mDetector.setOnDoubleTapListener(MyGestureListener(imm,nameEditText as EditText))
+    }
+
+    //スクロールビューの場合こっち呼ぶ
+    override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
+        super.dispatchTouchEvent(event)
+        mDetector.onTouchEvent(event)
+        return super.onTouchEvent(event)
     }
 
     //Viewの宣言

@@ -15,7 +15,7 @@ import com.pandatone.kumiwake.ui.members.FragmentMemberMain
 /**
  * Created by atsushi_2 on 2016/02/23.
  */
-class CustomPagerAdapter(private var context: Context, fm: FragmentManager, val main: Boolean) : FragmentPagerAdapter(fm) {
+class CustomPagerAdapter(private var context: Context, fm: FragmentManager, val main: Boolean) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment {
         when (position) {

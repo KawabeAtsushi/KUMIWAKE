@@ -7,6 +7,7 @@ import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import com.pandatone.kumiwake.R
 import kotlinx.android.synthetic.main.square_custom.*
+import kotlin.math.ceil
 
 /**
  * Created by atsushi_2 on 2016/07/15.
@@ -40,7 +41,7 @@ class SquareTableCustom : AppCompatActivity() {
                     square_seek_bar.isEnabled = false
                 }
             } else {
-                square_seek_bar.max = mingroupNo / 3
+                square_seek_bar.max = ceil(mingroupNo / 3.toDouble()).toInt()
                 square_seek_bar.isEnabled = mingroupNo >= 3
             }
         }

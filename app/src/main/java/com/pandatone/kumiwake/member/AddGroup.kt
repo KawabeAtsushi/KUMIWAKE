@@ -2,18 +2,24 @@ package com.pandatone.kumiwake.member
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.view.GestureDetectorCompat
 import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.AddGroupKeys
+import com.pandatone.kumiwake.MyGestureListener
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.GroupAdapter
@@ -41,6 +47,7 @@ class AddGroup : AppCompatActivity() {
     private lateinit var groupEditText: AppCompatEditText
     private lateinit var gpAdapter: GroupAdapter
     private lateinit var mbAdapter: MemberAdapter
+    private lateinit var mDetector: GestureDetectorCompat
 
     private val groupId: Int
         get() {
@@ -63,6 +70,15 @@ class AddGroup : AppCompatActivity() {
             setItem(editId)
         }
         members = GroupMethods.searchBelong(this, editId.toString())
+        Toast.makeText(this,getText(R.string.double_tap),Toast.LENGTH_SHORT).show()
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        mDetector = GestureDetectorCompat(this, MyGestureListener(imm,groupEditText))
+        mDetector.setOnDoubleTapListener(MyGestureListener(imm,groupEditText))
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        mDetector.onTouchEvent(event)
+        return super.onTouchEvent(event)
     }
 
     //各Viewの初期化処理
