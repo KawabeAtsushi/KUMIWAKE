@@ -141,7 +141,6 @@ class KumiwakeResult : AppCompatActivity() {
             KumiwakeMethods.evenWomanDistribute(resultArray,womanArray,groupArray)
         } else if (even_age_ratio) {
             KumiwakeMethods.arrangeByAge(memberArray)
-            KumiwakeMethods.setLeader(resultArray,leaderArray,leaderNoList)
             KumiwakeMethods.kumiwakeAll(resultArray,memberArray,groupArray,leaderArray,leaderNoList)
         } else {
             if (StatusHolder.normalMode) {

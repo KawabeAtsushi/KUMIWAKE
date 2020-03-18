@@ -506,40 +506,43 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
 
     //circleのバルーンが重ならないように描画
     private fun nonOverlapCircle(bottomY: Float, startX: Float, point: Int, textPaint: Paint): Float {
-        when (point) {
-            0 -> { //一番上の席
-                val nextCenterY = y[1] - lastY
-                val dist = abs(bottomY - nextCenterY) * dp //底辺と次の席の中心点の距離
-                return if (dist < 75 * dp) { //重ならない距離90dp
-                    bottomY - (75 * dp - dist) //重ならない位置　+ マージン
-                } else {
-                    bottomY
-                }
-            }
-            seatsNo / 2 -> { //一番下の席
-                val nextCenterY = y[point + 1] - lastY
-                val dist = abs(textBottomToTopY(bottomY, textPaint) - nextCenterY) * dp //上辺と次の席の中心点の距離
-                if (y[point] - y[point + 1] == 0f) {//下の席が並んでいる場合
-                    val nowCenterX = x[point] - lastX
-                    val nextCenterX = x[point + 1] - lastX
-                    val distHorizon = abs(startX - +r / 2 - nowCenterX) * dp //バルーンの先頭と今の席のの中心点の距離
-                    val wantDist = (abs(nextCenterX - nowCenterX) + 10) * dp //今の席と次の席の理想とする距離
-                    return if (wantDist / 2 < distHorizon) { //次のバルーンと重なりそう
-                        bottomY + (75 * dp - dist) //重ならない位置　+ マージン
-                    } else {
-                        bottomY
-                    }
-                } else { //一番下の席がひとつのみの場合
-                    return if (dist <= 75 * dp) { //重ならない距離90dp
-                        bottomY + (75 * dp - dist) //重ならない位置　+ マージン
+        if(y.size > point + 1) {
+            val nextCenterY = y[point + 1] - lastY
+            when (point) {
+                0 -> { //一番上の席
+                    val dist = abs(bottomY - nextCenterY) * dp //底辺と次の席の中心点の距離
+                    return if (dist < 75 * dp) { //重ならない距離90dp
+                        bottomY - (75 * dp - dist) //重ならない位置　+ マージン
                     } else {
                         bottomY
                     }
                 }
+                seatsNo / 2 -> { //一番下の席
+                    val dist = abs(textBottomToTopY(bottomY, textPaint) - nextCenterY) * dp //上辺と次の席の中心点の距離
+                    if (y[point] - y[point + 1] == 0f) {//下の席が並んでいる場合
+                        val nowCenterX = x[point] - lastX
+                        val nextCenterX = x[point + 1] - lastX
+                        val distHorizon = abs(startX - +r / 2 - nowCenterX) * dp //バルーンの先頭と今の席のの中心点の距離
+                        val wantDist = (abs(nextCenterX - nowCenterX) + 10) * dp //今の席と次の席の理想とする距離
+                        return if (wantDist / 2 < distHorizon) { //次のバルーンと重なりそう
+                            bottomY + (75 * dp - dist) //重ならない位置　+ マージン
+                        } else {
+                            bottomY
+                        }
+                    } else { //一番下の席がひとつのみの場合
+                        return if (dist <= 75 * dp) { //重ならない距離90dp
+                            bottomY + (75 * dp - dist) //重ならない位置　+ マージン
+                        } else {
+                            bottomY
+                        }
+                    }
+                }
+                else -> {
+                    return bottomY
+                }
             }
-            else -> {
-                return bottomY
-            }
+        }else{
+            return bottomY
         }
     }
 
