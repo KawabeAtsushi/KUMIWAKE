@@ -14,16 +14,19 @@
         <item name="colorPrimary">#00897B</item>
         <!-- ステータスバーの背景色 -->
         <item name="android:colorPrimaryDark">@color/red_title</item>
+        <item name="android:textColorSecondary">@color/red_background</item>
     </style>
 
     <!-- Sekigime theme -->
     <style name="SekigimeTheme" parent="AppTheme">
         <item name="android:colorPrimaryDark">@color/green_title</item>
+        <item name="android:textColorSecondary">@color/green_background</item>
     </style>
 
     <!-- Member theme -->
     <style name="MemberTheme" parent="AppTheme">
         <item name="android:colorPrimaryDark">@color/blue_title</item>
+        <item name="android:textColorSecondary">@color/blue_background</item>
     </style>
 
     <!-- Member ChoiceMode theme. -->
@@ -52,6 +55,10 @@
     <!-- 角丸ボタン(透明) -->
     <style name="Button.Transparent.Rounded">
         <item name="cornerRadius">7dp</item>
+    </style>
+    <!-- 丸ボタン(透明) -->
+    <style name="Button.Transparent.Circle">
+        <item name="cornerRadius">100dp</item>
     </style>
     <!-- 角ボタン(Solid) -->
     <style name="Button.Solid.Rectangle">

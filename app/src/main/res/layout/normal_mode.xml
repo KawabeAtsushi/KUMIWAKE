@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/normal_img"
-    android:backgroundTint="@color/thin_white"
+    android:backgroundTint="#90FFFFFF"
     android:backgroundTintMode="src_atop">
 
     <LinearLayout
@@ -54,7 +54,8 @@
                 android:padding="10dp"
                 android:layout_marginStart="20dp"
                 android:maxLength="3"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -89,10 +90,10 @@
             android:textSize="@dimen/form_textSize" />
 
         <include
-            layout="@layout/part_review_listview"
             android:id="@+id/add_group_listview"
-            android:layout_height="wrap_content"
+            layout="@layout/part_review_listview"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/form_between_margin"
             android:layout_marginEnd="@dimen/form_between_margin" />
 

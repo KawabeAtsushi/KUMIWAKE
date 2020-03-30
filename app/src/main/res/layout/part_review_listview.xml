@@ -50,7 +50,7 @@
         android:paddingEnd="15dp"
         android:text="@string/select_member"
         android:textColor="#000000"
-        app:backgroundTint="#90ffc02e"
+        app:backgroundTint="#FFDB89"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/member_register_and_add_btn"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -58,7 +58,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/member_register_and_add_btn"
-        style="@style/Button.Transparent.Rounded"
+        style="@style/Button.Transparent.Circle"
         android:layout_width="50dp"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
@@ -67,7 +67,7 @@
         android:textColor="@android:color/white"
         android:textSize="30dp"
         android:textStyle="bold"
-        app:backgroundTint="#9000e676"
+        app:backgroundTint="#6FF1B2"
         app:layout_constraintBottom_toBottomOf="@id/member_add_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/member_add_btn"
