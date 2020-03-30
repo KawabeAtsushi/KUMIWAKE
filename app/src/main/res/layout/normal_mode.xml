@@ -21,10 +21,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/form_marginStart"
             android:layout_marginTop="20dp"
-            android:background="@drawable/request_background"
             android:text="@string/number_of_groups"
             android:textColor="@color/gray"
-            android:textSize="20sp" />
+            android:textSize="25sp"/>
+        <include layout="@layout/title_divider"/>
 
         <TextView
             android:id="@+id/error_group_no_txt"
@@ -75,10 +75,10 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/form_marginStart"
             android:layout_marginTop="25dp"
-            android:background="@drawable/request_background"
             android:text="@string/require_member_select"
             android:textColor="@color/gray"
-            android:textSize="20sp" />
+            android:textSize="25sp"/>
+        <include layout="@layout/title_divider"/>
 
         <TextView
             android:id="@+id/error_member_no_txt"

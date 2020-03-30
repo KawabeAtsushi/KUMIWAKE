@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/normal_img"
-    android:backgroundTint="@color/thin_white"
+    android:backgroundTint="#90FFFFFF"
     android:backgroundTintMode="src_atop">
 
     <ScrollView

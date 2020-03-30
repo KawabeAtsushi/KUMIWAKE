@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/quick_img"
-    android:backgroundTint="@color/thin_white"
+    android:backgroundTint="#50FFFFFF"
     android:backgroundTintMode="src_atop">
 
     <ScrollView
@@ -24,10 +24,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/form_marginStart"
-                android:background="@drawable/request_background"
+                android:layout_marginTop="20dp"
                 android:text="@string/number_of_groups"
                 android:textColor="@color/gray"
-                android:textSize="20sp" />
+                android:textSize="25sp"/>
+            <include layout="@layout/title_divider"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/error_group_no_txt"
@@ -42,6 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -49,7 +57,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:background="@android:drawable/editbox_background_normal"
+                    android:gravity="center"
+                    android:background="@drawable/edittext_outline"
                     android:ems="3"
                     android:inputType="number"
                     android:textSize="@dimen/et_textSize_big"
@@ -68,18 +77,24 @@
                     android:textSize="@dimen/form_textSize_large" />
 
             </LinearLayout>
+        </LinearLayout>
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/form_marginStart"
-                android:layout_marginTop="25dp"
-                android:background="@drawable/request_background"
+                android:layout_marginTop="20dp"
                 android:text="@string/number_of_member"
                 android:textColor="@color/gray"
-                android:textSize="20sp" />
+                android:textSize="25sp"/>
+            <include layout="@layout/title_divider"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/error_member_no_txt"
@@ -101,7 +116,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:background="@android:drawable/editbox_background_normal"
+                    android:gravity="center"
+                    android:background="@drawable/edittext_outline"
                     android:textSize="@dimen/et_textSize_big"
                     android:ems="3"
                     android:inputType="number"
@@ -178,33 +194,42 @@
                 android:id="@+id/sex_seekBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
                 android:max="100"
                 android:progress="50"
                 android:progressDrawable="@drawable/seekbar_progress"
                 android:thumb="@drawable/seekbar_control" />
+        </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="@dimen/form_marginTop"
-                android:background="@drawable/request_background"
+                android:layout_marginStart="@dimen/form_marginStart"
+                android:layout_marginTop="20dp"
                 android:text="@string/kumiwake_conditions"
-                android:textSize="20sp" />
+                android:textColor="@color/gray"
+                android:textSize="25sp"/>
+            <include layout="@layout/title_divider"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card"
+            android:orientation="vertical">
 
             <CheckBox
                 android:id="@+id/even_fm_ratio_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginBottom="35dp"
+                android:layout_marginBottom="15dp"
                 android:text="@string/even_out_male_female_ratio"
                 android:textSize="@dimen/form_textSize" />
+        </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
-
 
     <com.google.android.material.button.MaterialButton
         style="@style/Button.Solid.Rectangle"

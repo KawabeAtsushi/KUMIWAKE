@@ -2,6 +2,7 @@ package com.pandatone.kumiwake.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
@@ -52,7 +53,7 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
             v = inflater.inflate(R.layout.row_member, null)
 
             if (mSelection.get(member.id)) {
-                v?.setBackgroundColor(PublicMethods.getColor(context, R.color.checked_list))
+                v?.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(context, R.color.checked_list))
             }
 
             setSexIcon(v!!, position)

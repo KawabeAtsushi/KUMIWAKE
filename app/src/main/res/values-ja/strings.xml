@@ -22,7 +22,7 @@
     <string name="woman">女</string>
     <string name="registered">を登録しました</string>
     <string name="sex">性別</string>
-    <string name="input_required">*入力必須</string>
+    <string name="input_required">※入力必須</string>
     <string name="decide">決 定</string>
     <string name="clear">クリア</string>
     <string name="cancel">キャンセル</string>
@@ -42,7 +42,7 @@
     <string name="member_ascending">メンバー数順（少→多）</string>
     <string name="member_descending">メンバー数順（多→少）</string>
     <string name="belong_member">所属メンバー</string>
-    <string name="adviceToDecideInGroupFL">※指定したグループに所属するメンバーが選択されます</string>
+    <string name="adviceToDecideInGroupFL">※タップしたグループに所属するメンバーが選択されます</string>
     <string name="people">人</string>
     <string name="information">登録情報</string>
     <string name="edit">編集</string>
@@ -68,12 +68,12 @@
     <string name="re_kumiwake">組分けなおす</string>
     <string name="kumiwake_result">KUMIWAKE結果</string>
     <string name="sekigime_result">席決め結果</string>
-    <string name="require_member_select">メンバー登録</string>
-    <string name="error_empty_member_list">メンバーを選択してください。</string>
+    <string name="require_member_select">メンバー</string>
+    <string name="error_empty_member_list">メンバーを追加してください。</string>
     <string name="select_leader">タップして代表者を選択／解除</string>
     <string name="leader">代表者</string>
     <string name="kumiwake_conditions">組分け条件設定</string>
-    <string name="select_group_info">グループ名とメンバー数を設定できます。</string>
+    <string name="select_group_info">グループ名とメンバー数を設定</string>
     <string name="move_custom">カスタム画面へ</string>
     <string name="require_correct_No">適切な人数を入力してください</string>
     <string name="back_to_initial_mbNo">初期人数に戻す</string>
@@ -99,7 +99,7 @@
     <string name="circle_table">丸テーブル</string>
     <string name="counter_table">カウンター</string>
     <string name="go_select_seats_type">座席タイプの選択へ</string>
-    <string name="select_seats_type">座席のタイプを選択してください。</string>
+    <string name="select_seats_type">座席のタイプを選択してください</string>
     <string name="seats_type_confirmation">この座席タイプでよろしいですか？</string>
     <string name="be_custom">＊カスタムあり</string>
     <string name="run">実行する</string>
@@ -175,4 +175,5 @@
     <string name="move_kumiwake_site_discription">KUMIWAKE公式サイトへ移動します。</string>
     <string name="purchased">を購入しました！！</string>
     <string name="double_tap">ダブルタップで入力を開始</string>
+    <string name="member_create">メンバー作成</string>
 </resources>

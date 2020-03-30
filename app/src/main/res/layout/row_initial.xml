@@ -3,7 +3,7 @@
     android:tag="Index"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#7003a9f4"
+    android:background="@color/background_gray"
     android:orientation="horizontal">
 
     <TextView
@@ -14,7 +14,8 @@
         android:layout_marginStart="5dp"
         android:text="no data"
         android:textSize="15sp"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/darker_gray"
+        android:textStyle="bold"
         android:ellipsize="end"
         android:singleLine="true" />
 

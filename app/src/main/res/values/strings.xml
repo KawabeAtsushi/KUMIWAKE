@@ -117,7 +117,7 @@
     <string name="error_empty_name">Please input the member name.</string>
     <string name="error_empty_group_no">Please input the number of groups.</string>
     <string name="error_empty_member_no">Please input the number of members.</string>
-    <string name="error_empty_member_list">Please select members.</string>
+    <string name="error_empty_member_list">Please add members.</string>
     <string name="belong_member">Members who belong</string>
     <string name="group_name">Group name</string>
     <string name="adviceToDecideInGroupFL">*The members that belonging selected group are selected.</string>
@@ -172,4 +172,5 @@
     <string name="purchased">purchased!!</string>
     <string name="show_detail">Show Individual</string>
     <string name="double_tap">Double tap to start typing</string>
+    <string name="member_create">create member</string>
 </resources>

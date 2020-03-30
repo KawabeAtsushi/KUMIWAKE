@@ -16,7 +16,7 @@ import com.pandatone.kumiwake.member.function.Member
 /**
  * Created by atsushi_2 on 2016/04/16.
  */
-class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Member>, private val showStar: Boolean, showLeaderNo: Boolean,val leaderNoList: Array<Int?> = emptyArray()) : BaseAdapter() {
+class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Member>, private val showStar: Boolean, showLeaderNo: Boolean, val leaderNoList: Array<Int?> = emptyArray()) : BaseAdapter() {
     private val inflater: LayoutInflater
     private var listElements: ArrayList<Member> = ArrayList()
     private val showLdNo = showLeaderNo
@@ -54,7 +54,7 @@ class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Mem
 
         if (showStar) {
             val starIcon: ImageView = v.findViewById<View>(R.id.starIcon) as ImageView
-            setStarIcon(leaderNoList,memberIcon, starIcon, leaderNo, position)
+            setStarIcon(leaderNoList, memberIcon, starIcon, leaderNo, position)
         }
         setSexIcon(memberIcon, position)
         nameTextView.text = listElements[position].name
@@ -64,8 +64,7 @@ class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Mem
 
     private fun setSexIcon(memberIcon: ImageView, position: Int) {
 
-        val sex = listElements[position].sex
-        when (sex) {
+        when (listElements[position].sex) {
             context.getText(R.string.man) -> {
                 memberIcon.setImageResource(R.drawable.member_img)
             }
@@ -79,8 +78,18 @@ class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Mem
     }
 
     private fun setStarIcon(leaderNoList: Array<Int?>, memberIcon: ImageView, starIcon: ImageView, leaderNo: TextView, position: Int) {
-        val id = listElements[position].id
+        when (listElements[position].sex) {
+            context.getText(R.string.man) -> {
+                starIcon.setColorFilter(PublicMethods.getColor(context, R.color.man))
+            }
+            context.getText(R.string.woman) -> {
+                starIcon.setColorFilter(PublicMethods.getColor(context, R.color.woman))
+            }
+            else -> {
+            }
+        }
 
+        val id = listElements[position].id
         if (leaderNoList.contains(id)) {
             memberIcon.visibility = View.GONE
             starIcon.visibility = View.VISIBLE
@@ -90,7 +99,6 @@ class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Mem
                 leaderNo.visibility = View.VISIBLE
                 leaderNo.text = (leaderNoList.indexOf(id) + 1).toString()
             }
-
         }
     }
 

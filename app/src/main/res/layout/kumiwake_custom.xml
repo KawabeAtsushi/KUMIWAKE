@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/normal_img"
-    android:backgroundTint="@color/thin_white"
+    android:backgroundTint="#90FFFFFF"
     android:backgroundTintMode="src_atop">
 
     <ScrollView
@@ -22,22 +22,29 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/request_background"
-                android:text="@string/member"
-                android:textSize="20sp" />
 
+                android:text="@string/member"
+                android:textColor="@color/gray"
+                android:textSize="25sp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/info_margin"
-                android:layout_marginBottom="@dimen/info_margin"
                 android:layout_marginStart="10dp"
+                android:layout_gravity="bottom"
                 android:text="@string/select_leader" />
+        </LinearLayout>
+
+            <include layout="@layout/title_divider"/>
 
 
             <include
@@ -47,22 +54,28 @@
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/form_between_margin" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/request_background"
-                android:text="@string/group"
-                android:textSize="20sp" />
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/group"
+                    android:textColor="@color/gray"
+                    android:textSize="25sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="bottom"
+                    android:text="@string/select_group_info"/>
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/info_margin"
-                android:layout_marginBottom="@dimen/info_margin"
-                android:layout_marginStart="10dp"
-                android:text="@string/select_group_info" />
+            <include layout="@layout/title_divider"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -101,7 +114,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/back_to_initial_mbNo"
-                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    style="@style/Widget.MaterialComponents.Button"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -116,10 +129,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/request_background"
+                android:layout_marginTop="15dp"
                 android:text="@string/kumiwake_conditions"
-                android:textSize="20sp" />
+                android:textColor="@color/gray"
+                android:textSize="25sp"/>
+            <include layout="@layout/title_divider"/>
 
             <CheckBox
                 android:id="@+id/even_fm_ratio_check"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/normal_img"
-    android:backgroundTint="@color/thin_white"
+    android:backgroundTint="#90FFFFFF"
     android:backgroundTintMode="src_atop">
 
     <ScrollView
@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/red_text_background"
+                android:background="@drawable/gradient_text_background"
                 android:text="@string/kumiwake_result"
                 android:textSize="22sp" />
 

@@ -17,10 +17,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.GestureDetectorCompat
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.pandatone.kumiwake.AddMemberKeys
-import com.pandatone.kumiwake.MyGestureListener
-import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.StatusHolder
+import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
@@ -72,9 +69,16 @@ class AddMember : AppCompatActivity() {
         val i = intent
         val member = i.getSerializableExtra(AddMemberKeys.MEMBER.key) as Member?
         fromNormalMode = i.getBooleanExtra(AddMemberKeys.FROM_NORMAL_MODE.key, false)
-        if (member != null) {
-            setItem(member)
-            member_registration_continue_btn.visibility = View.GONE
+        val memberImg = findViewById<ImageView>(R.id.memberIcon)
+            sexGroup!!.setOnCheckedChangeListener { _, checkedId: Int ->
+                when (checkedId) {
+                    R.id.manBtn -> memberImg.setColorFilter(PublicMethods.getColor(this, R.color.man))
+                R.id.womanBtn -> memberImg.setColorFilter(PublicMethods.getColor(this, R.color.woman))
+            }
+    }
+    if (member != null) {
+                setItem(member)
+                member_registration_continue_btn.visibility = View.GONE
         }
 
         var yomigana = ""

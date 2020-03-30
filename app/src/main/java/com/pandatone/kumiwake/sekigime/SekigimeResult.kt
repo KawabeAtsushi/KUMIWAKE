@@ -143,7 +143,7 @@ class SekigimeResult : AppCompatActivity() {
         val groupNameView = TextView(this)
         groupNameView.text = groupName
         groupNameView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30.0f)
-        groupNameView.background = getDrawable(R.drawable.index_white_background)
+        groupNameView.background = getDrawable(R.drawable.table_name_background)
         groupNameView.gravity = Gravity.CENTER
         val lp = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)

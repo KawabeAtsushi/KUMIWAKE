@@ -22,9 +22,11 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
     private var doubleDeploy: Boolean? = SekigimeResult.doubleDeploy
     private var teamArray = SekigimeResult.teamArray
     private var dp: Float = 0f
-    private val tableStrokeColor = "#b78a22"
+    private val tableStrokeColor = "#b59551"
+    private val tableStrokeWidth = 15f
     private val tableColor = "#ffffe0"
     private val chairStrokeColor = "#000000"
+    private val tableRound = 20f
 
     private var r: Float = 0f //balloonのround
     private var lastX = 0f
@@ -89,14 +91,14 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
 
         // 机
         cPaint.color = Color.parseColor(tableStrokeColor)
-        cPaint.strokeWidth = 10 * dp
+        cPaint.strokeWidth = tableStrokeWidth * dp
         cPaint.isAntiAlias = true
         cPaint.style = Paint.Style.STROKE
         val rectRight = dispWidth - 180 * dp
-        canvas.drawRect(180 * dp, tableTop, rectRight, tableHeight, cPaint)
+        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight,tableRound, tableRound, cPaint)
         cPaint.color = Color.parseColor(tableColor)
         cPaint.style = Paint.Style.FILL
-        canvas.drawRect(180 * dp, tableTop, rectRight, tableHeight, cPaint)
+        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight,tableRound, tableRound, cPaint)
 
         //椅子
         sPaint.color = Color.parseColor(chairStrokeColor)
@@ -201,12 +203,12 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
         cPaint.isAntiAlias = true
         val rectRight = dispWidth - 180 * dp
         cPaint.color = Color.parseColor(tableStrokeColor)
-        cPaint.strokeWidth = 10 * dp
+        cPaint.strokeWidth = tableStrokeWidth * dp
         cPaint.style = Paint.Style.STROKE
-        canvas.drawRect(180 * dp, tableTop, rectRight, tableHeight, cPaint)
+        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight,tableRound, tableRound, cPaint)
         cPaint.color = Color.parseColor(tableColor)
         cPaint.style = Paint.Style.FILL
-        canvas.drawRect(180 * dp, tableTop, rectRight, tableHeight, cPaint)
+        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight,tableRound, tableRound, cPaint)
 //        val rect = RectF(180 * dp, 100 * dp, rectRight, tableHeight)
 //        canvas.drawBitmap(bmp, null, rect, cPaint)
 
@@ -261,7 +263,7 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
 
         // 円
         cPaint.color = Color.parseColor(tableStrokeColor)
-        cPaint.strokeWidth = 10 * dp
+        cPaint.strokeWidth = tableStrokeWidth * dp
         cPaint.isAntiAlias = true
         cPaint.style = Paint.Style.STROKE
         // (x,y,r,paint) 中心座標(x,y), 半径r

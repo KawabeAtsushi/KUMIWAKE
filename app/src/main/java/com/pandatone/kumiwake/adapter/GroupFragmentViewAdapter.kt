@@ -2,6 +2,7 @@ package com.pandatone.kumiwake.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
@@ -44,7 +45,7 @@ class GroupFragmentViewAdapter(private val context: Context, private val groupLi
         v = inflater.inflate(R.layout.row_group, null)
 
         if (gSelection.get(group.id)) {
-            v!!.setBackgroundColor(PublicMethods.getColor(context, R.color.checked_list))
+            v!!.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(context, R.color.checked_list))
         }
 
         nameTextView = v?.findViewById<View>(R.id.groupName) as TextView
