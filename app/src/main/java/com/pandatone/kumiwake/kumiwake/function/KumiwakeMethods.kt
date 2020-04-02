@@ -7,6 +7,7 @@ import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.min
 import kotlin.random.Random
 
 object KumiwakeMethods {
@@ -34,7 +35,7 @@ object KumiwakeMethods {
             val addNo = groupArray[i].belongNo  //追加する人数
             for (j in 0 until addNo) {
                 resultArray[i].add(memberArray[memberNo])
-                memberNo ++
+                memberNo++
             }
             Collections.sort(resultArray[i], KumiwakeComparator.ViewComparator())
         }
@@ -187,25 +188,35 @@ object KumiwakeMethods {
     }
 
     //結果背景の色を生成
-    fun getResultColor(ver:Int):Int{
+    fun getResultColor(ver: Int): Int {
         var R = 0
         var G = 0
         var B = 0
         var col1 = 0
         var col2 = 0
         //RGBどれかが240超えるまで再選択
-        while (R < 240 && G < 240 && B < 240) {
-            R = ((Math.random() * 0.5 + 0.5) * 256).toInt()
-            G = ((Math.random() * 0.5 + 0.5) * 256).toInt()
-            B = ((Math.random() * 0.5 + 0.5) * 256).toInt()
+        while (col1 < 160 && col2 < 160) {
+            col1 = ((Math.random() * 0.5 + 0.5) * 256).toInt()
+            col2 = ((Math.random() * 0.5 + 0.5) * 256).toInt()
         }
-        val rgb  = listOf(R,G,B)
-        //パステルカラーっぽく
-        when (rgb.min()){
-            R -> R = 170
-            B -> B = 170
-            G -> G = 170
+        //パステルカラーっぽく(小さいほうを170,大きいほうを240以上)
+        when (min(col1, col2)) {
+            col1 -> col1 = 160
+            col2 -> col2 = 160
         }
+
+        when (ver % 3) {
+            0 -> {
+                R = 255;G = col1;B = col2;
+            }
+            1 ->{
+                R = col1;G = col2;B = 255;
+            }
+            2 ->{
+                R = col2;G = 255;B = col1;
+            }
+        }
+
         return Color.argb(150, R, G, B)
     }
 }

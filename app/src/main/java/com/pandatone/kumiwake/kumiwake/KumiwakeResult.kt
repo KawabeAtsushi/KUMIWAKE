@@ -232,7 +232,7 @@ class KumiwakeResult : AppCompatActivity() {
         arrayList = v.findViewById<View>(R.id.result_member_listView) as ListView
         val adapter = SmallMBListAdapter(this, resultArray, true, showLeaderNo = false, leaderNoList = leaderNoList)
         arrayList.adapter = adapter
-        setBackGround(v)
+        setBackGround(v,i)
         adapter.setRowHeight(arrayList)
     }
 
@@ -248,12 +248,12 @@ class KumiwakeResult : AppCompatActivity() {
     }
 
 
-    private fun setBackGround(v: View) {
+    private fun setBackGround(v: View,i:Int) {
         val drawable = GradientDrawable()
         drawable.mutate()
         drawable.shape = GradientDrawable.RECTANGLE
         drawable.cornerRadius = 25f
-        drawable.setColor(KumiwakeMethods.getResultColor())
+        drawable.setColor(KumiwakeMethods.getResultColor(i))
 
         v.layoutParams = setMargin(4, 6, 4, 6)
         v.background = drawable
