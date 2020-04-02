@@ -49,7 +49,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="@dimen/form_between_margin"
-            android:background="@drawable/man_radio_button2"
+            android:background="@drawable/man_radio_button"
             android:button="@null"
             android:singleLine="true"
             android:text="－"

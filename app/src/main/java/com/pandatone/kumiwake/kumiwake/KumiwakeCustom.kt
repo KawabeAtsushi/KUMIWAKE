@@ -64,7 +64,6 @@ class KumiwakeCustom : AppCompatActivity() {
             memberListView.requestFocus()
             changeLeader(position)
         }
-        custom_scroll.post { custom_scroll.fullScroll(ScrollView.FOCUS_UP) }
         leaderNoList = arrayOfNulls(groupArray.size) //n番目にグループnのリーダーのidを格納
     }
 

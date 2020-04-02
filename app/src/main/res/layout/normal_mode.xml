@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/normal_img"
-    android:backgroundTint="#90FFFFFF"
+    android:backgroundTint="#30FFFFFF"
     android:backgroundTintMode="src_atop">
 
     <LinearLayout
@@ -26,11 +26,18 @@
             android:textSize="25sp"/>
         <include layout="@layout/title_divider"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card"
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/error_group_no_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/form_marginStart"
+            android:visibility="gone"
             android:text=""
             android:textColor="@color/red"
             android:textSize="@dimen/form_textSize" />
@@ -38,7 +45,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -47,8 +55,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:background="@android:drawable/editbox_background_normal"
+                android:background="@drawable/edittext_outline"
                 android:textSize="@dimen/et_textSize_big"
+                android:textColor="@color/gray"
                 android:ems="3"
                 android:inputType="number"
                 android:padding="10dp"
@@ -67,6 +76,7 @@
                 android:textSize="@dimen/form_textSize_large" />
 
         </LinearLayout>
+    </LinearLayout>
 
 
         <TextView
@@ -80,23 +90,31 @@
             android:textSize="25sp"/>
         <include layout="@layout/title_divider"/>
 
-        <TextView
-            android:id="@+id/error_member_no_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/form_marginStart"
-            android:text=""
-            android:textColor="@color/red"
-            android:textSize="@dimen/form_textSize" />
-
-        <include
-            android:id="@+id/add_group_listview"
-            layout="@layout/part_review_listview"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/form_between_margin"
-            android:layout_marginEnd="@dimen/form_between_margin" />
+            android:background="@drawable/card"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/error_member_no_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/form_marginStart"
+                android:visibility="gone"
+                android:text=""
+                android:textColor="@color/red"
+                android:textSize="@dimen/form_textSize" />
+
+            <include
+                android:id="@+id/add_group_listview"
+                layout="@layout/part_review_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp" />
+
+        </LinearLayout>
     </LinearLayout>
 
 

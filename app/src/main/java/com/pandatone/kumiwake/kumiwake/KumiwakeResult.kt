@@ -253,15 +253,7 @@ class KumiwakeResult : AppCompatActivity() {
         drawable.mutate()
         drawable.shape = GradientDrawable.RECTANGLE
         drawable.cornerRadius = 25f
-        var R = 0
-        var G = 0
-        var B = 0
-        while (R < 230 && G < 230 && B < 230) {
-            R = ((Math.random() * 0.5 + 0.5) * 256).toInt()
-            G = ((Math.random() * 0.5 + 0.5) * 256).toInt()
-            B = ((Math.random() * 0.5 + 0.5) * 256).toInt()
-        }
-        drawable.setColor(Color.argb(150, R, G, B))
+        drawable.setColor(KumiwakeMethods.getResultColor())
 
         v.layoutParams = setMargin(4, 6, 4, 6)
         v.background = drawable

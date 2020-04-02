@@ -2,6 +2,7 @@ package com.pandatone.kumiwake.sekigime
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
@@ -12,6 +13,7 @@ import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.MainActivity
 import com.pandatone.kumiwake.PublicMethods
@@ -93,12 +95,13 @@ class SekigimeResult : AppCompatActivity() {
         val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
         resultLayout.removeAllViews()
         val dropdown = findViewById<TextInputLayout>(R.id.group_selector)
-        val button = findViewById<Button>(R.id.show_all)
+        val button = findViewById<MaterialButton>(R.id.show_all)
         val shareButton = findViewById<Button>(R.id.share_image)
         if (drawAll) {
             dropdown.visibility = View.GONE
             shareButton.visibility = View.VISIBLE
             button.text = getString(R.string.show_detail)
+            button.icon = getDrawable(R.drawable.ic_detail_24dp)
             for (group in groupArray!!.withIndex()) {
                 val drawAll = DrawAllTable(this, group.index)
                 val groupNameView = groupTextView(group.value)
@@ -110,6 +113,7 @@ class SekigimeResult : AppCompatActivity() {
             shareButton.visibility = View.GONE
             resultLayout.addView(draw)
             button.text = getString(R.string.show_all)
+            button.icon = getDrawable(R.drawable.ic_show_all_24dp)
         }
         drawAll = !drawAll //描画モード切替
     }
@@ -142,7 +146,8 @@ class SekigimeResult : AppCompatActivity() {
     private fun groupTextView(groupName: String): TextView {
         val groupNameView = TextView(this)
         groupNameView.text = groupName
-        groupNameView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30.0f)
+        groupNameView.setTextColor(Color.DKGRAY)
+        groupNameView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20.0f)
         groupNameView.background = getDrawable(R.drawable.table_name_background)
         groupNameView.gravity = Gravity.CENTER
         val lp = LinearLayout.LayoutParams(

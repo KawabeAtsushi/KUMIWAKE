@@ -87,16 +87,22 @@ class NormalMode : AppCompatActivity() {
     private fun onNextClick() {
         val inputGroupNo = gpNoEditText.text!!.toString()
 
+        errorMember.visibility = View.GONE
+        errorGroup.visibility = View.GONE
         errorGroup.text = ""
         errorMember.text = ""
 
         if (adapter == null) {
+            errorMember.visibility = View.VISIBLE
             errorMember.setText(R.string.error_empty_member_list)
         } else if (inputGroupNo != "" && Integer.parseInt(inputGroupNo) > adapter?.count!!) {
+            errorGroup.visibility = View.VISIBLE
             errorGroup.setText(R.string.number_of_groups_is_much_too)
         } else if (TextUtils.isEmpty(inputGroupNo)) {
+            errorGroup.visibility = View.VISIBLE
             errorGroup.setText(R.string.error_empty_group_no)
         } else if (inputGroupNo == "0") {
+            errorGroup.visibility = View.VISIBLE
             errorGroup.setText(R.string.require_correct_No)
         } else {
             val groupNo = Integer.parseInt(inputGroupNo)

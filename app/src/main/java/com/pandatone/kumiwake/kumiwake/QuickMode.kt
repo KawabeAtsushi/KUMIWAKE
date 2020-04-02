@@ -8,16 +8,12 @@ import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.transition.Slide
-import android.view.GestureDetector
 import android.view.MotionEvent
+import android.view.View
 import android.view.Window
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.SeekBar
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.GestureDetectorCompat
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.member.function.Member
@@ -28,7 +24,7 @@ import java.util.*
 /**
  * Created by atsushi_2 on 2016/05/02.
  */
-class QuickMode : AppCompatActivity(), TextWatcher{
+class QuickMode : AppCompatActivity(), TextWatcher {
 
     private var memberNo: Int = 0
     private var manNo: Int = 0
@@ -48,11 +44,11 @@ class QuickMode : AppCompatActivity(), TextWatcher{
         member_no_form.addTextChangedListener(this)
         findViewById<Button>(R.id.quick_kumiwake_btn).setOnClickListener { onNextClicked() }
 
-        Toast.makeText(this,getText(R.string.double_tap),Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getText(R.string.double_tap), Toast.LENGTH_SHORT).show()
         val groupNoInput = findViewById<EditText>(R.id.group_no_form)
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        mDetector = GestureDetectorCompat(this, MyGestureListener(imm,groupNoInput))
-        mDetector.setOnDoubleTapListener(MyGestureListener(imm,groupNoInput))
+        mDetector = GestureDetectorCompat(this, MyGestureListener(imm, groupNoInput))
+        mDetector.setOnDoubleTapListener(MyGestureListener(imm, groupNoInput))
     }
 
     //スクロールビューの場合こっち呼ぶ
@@ -94,16 +90,29 @@ class QuickMode : AppCompatActivity(), TextWatcher{
     private fun onNextClicked() {
         val groupNo = group_no_form.text!!.toString()
         val memNo = member_no_form.text!!.toString()
-
-        error_member_no_txt.text = ""
-        error_group_no_txt.text = ""
+        val errorMemberNo = findViewById<TextView>(R.id.error_member_no_txt)
+        val errorGroupNo = findViewById<TextView>(R.id.error_group_no_txt)
+        errorMemberNo.visibility = View.GONE
+        errorGroupNo.visibility = View.GONE
+        errorMemberNo.text = ""
+        errorGroupNo.text = ""
 
         when {
-            TextUtils.isEmpty(memNo) -> error_member_no_txt.setText(R.string.error_empty_member_no)
-            TextUtils.isEmpty(groupNo) -> error_group_no_txt.setText(R.string.error_empty_group_no)
-            groupNo == "0" -> error_group_no_txt.setText(R.string.require_correct_No)
+            TextUtils.isEmpty(memNo) -> {
+                errorMemberNo.visibility = View.VISIBLE
+                errorMemberNo.setText(R.string.error_empty_member_no)
+            }
+            TextUtils.isEmpty(groupNo) -> {
+                errorGroupNo.visibility = View.VISIBLE
+                errorGroupNo.setText(R.string.error_empty_group_no)
+            }
+            groupNo == "0" -> {
+                errorGroupNo.visibility = View.VISIBLE
+                errorGroupNo.setText(R.string.require_correct_No)
+            }
             Integer.parseInt(groupNo) > memberNo -> {
-                error_group_no_txt.setText(R.string.number_of_groups_is_much_too)
+                errorGroupNo.visibility = View.VISIBLE
+                errorGroupNo.setText(R.string.number_of_groups_is_much_too)
             }
             else -> {
                 val memberList = createMemberList(manNo, womanNo)

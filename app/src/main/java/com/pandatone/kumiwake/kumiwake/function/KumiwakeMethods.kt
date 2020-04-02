@@ -1,6 +1,7 @@
 package com.pandatone.kumiwake.kumiwake.function
 
 import android.app.Activity
+import android.graphics.Color
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
@@ -183,5 +184,28 @@ object KumiwakeMethods {
         // back keyを使用不可に設定
         builder.setCancelable(false)
         builder.show()
+    }
+
+    //結果背景の色を生成
+    fun getResultColor(ver:Int):Int{
+        var R = 0
+        var G = 0
+        var B = 0
+        var col1 = 0
+        var col2 = 0
+        //RGBどれかが240超えるまで再選択
+        while (R < 240 && G < 240 && B < 240) {
+            R = ((Math.random() * 0.5 + 0.5) * 256).toInt()
+            G = ((Math.random() * 0.5 + 0.5) * 256).toInt()
+            B = ((Math.random() * 0.5 + 0.5) * 256).toInt()
+        }
+        val rgb  = listOf(R,G,B)
+        //パステルカラーっぽく
+        when (rgb.min()){
+            R -> R = 170
+            B -> B = 170
+            G -> G = 170
+        }
+        return Color.argb(150, R, G, B)
     }
 }

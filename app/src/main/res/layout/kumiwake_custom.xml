@@ -7,58 +7,71 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/normal_img"
-    android:backgroundTint="#90FFFFFF"
+    android:backgroundTint="#30FFFFFF"
     android:backgroundTintMode="src_atop">
 
     <ScrollView
         android:id="@+id/custom_scroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/normal_kumiwake_button">
+        app:layout_constraintBottom_toTopOf="@id/normal_kumiwake_button"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
-
-                android:text="@string/member"
-                android:textColor="@color/gray"
-                android:textSize="25sp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_gravity="bottom"
-                android:text="@string/select_leader" />
-        </LinearLayout>
-
-            <include layout="@layout/title_divider"/>
-
-
-            <include
-                android:id="@+id/add_group_listview"
-                layout="@layout/part_review_listview"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/form_between_margin" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/member"
+                    android:textColor="@color/gray"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/select_leader" />
+            </LinearLayout>
+
+            <include layout="@layout/title_divider" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/add_group_listview"
+                    layout="@layout/part_review_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/card" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -66,24 +79,23 @@
                     android:layout_marginTop="15dp"
                     android:text="@string/group"
                     android:textColor="@color/gray"
-                    android:textSize="25sp"/>
+                    android:textSize="25sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
                     android:layout_gravity="bottom"
-                    android:text="@string/select_group_info"/>
+                    android:layout_marginStart="10dp"
+                    android:text="@string/select_group_info" />
             </LinearLayout>
 
-            <include layout="@layout/title_divider"/>
+            <include layout="@layout/title_divider" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="15dp"
+                android:background="@drawable/card"
                 android:orientation="vertical">
 
                 <TextView
@@ -91,7 +103,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:layout_marginTop="@dimen/form_between_margin"
+                    android:layout_marginEnd="15dp"
                     android:background="@drawable/index_background"
                     android:textSize="15sp" />
 
@@ -100,13 +112,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/form_between_margin"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     tools:ignore="NestedScrolling" />
 
                 <TextView
                     android:id="@+id/error_member_no_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/form_marginStart"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="10dp"
                     android:text="@string/require_correct_No"
                     android:textColor="@color/red"
                     android:textSize="@dimen/form_textSize"
@@ -115,13 +130,14 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/back_to_initial_mbNo"
                     style="@style/Widget.MaterialComponents.Button"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
+                    android:layout_marginEnd="15dp"
+                    android:backgroundTint="#f5f5f5"
                     android:text="@string/back_to_initial_mbNo"
-                    android:textColor="#616161"
-                    android:backgroundTint="#f5f5f5" />
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+                    android:textColor="#616161" />
 
             </LinearLayout>
 
@@ -132,26 +148,35 @@
                 android:layout_marginTop="15dp"
                 android:text="@string/kumiwake_conditions"
                 android:textColor="@color/gray"
-                android:textSize="25sp"/>
-            <include layout="@layout/title_divider"/>
+                android:textSize="25sp" />
 
-            <CheckBox
-                android:id="@+id/even_fm_ratio_check"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:text="@string/even_out_male_female_ratio"
-                android:textSize="@dimen/form_textSize" />
+            <include layout="@layout/title_divider" />
 
-            <CheckBox
-                android:id="@+id/even_age_ratio_check"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="35dp"
-                android:text="@string/even_out_age_ratio"
-                android:textSize="@dimen/form_textSize" />
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/card"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/even_fm_ratio_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/even_out_male_female_ratio"
+                    android:textSize="@dimen/form_textSize" />
+
+                <CheckBox
+                    android:id="@+id/even_age_ratio_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/even_out_age_ratio"
+                    android:textSize="@dimen/form_textSize" />
+
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -160,18 +185,18 @@
 
 
     <com.google.android.material.button.MaterialButton
-        style="@style/Button.Solid.Rectangle"
         android:id="@+id/normal_kumiwake_button"
+        style="@style/Button.Solid.Rectangle"
         android:layout_width="0dp"
         android:layout_height="@dimen/under_button_height"
         android:drawableEnd="@drawable/ic_arrow_white"
         android:text="@string/move_confirmation"
+        android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="20sp"
-        android:textAlignment="center"
         app:backgroundTint="?android:attr/colorPrimaryDark"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

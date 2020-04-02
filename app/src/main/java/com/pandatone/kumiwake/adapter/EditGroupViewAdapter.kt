@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.function.Group
 import java.util.*
@@ -48,7 +49,11 @@ class EditGroupViewAdapter(private val context: Context, private val groupList: 
         numberOfMemberEditText = v.findViewById<View>(R.id.editTheNumberOfMember) as EditText
         leader = v.findViewById<View>(R.id.leader) as TextView
         nameEditText.setText(group.name)
+        nameEditText.isFocusable = true
+        nameEditText.isFocusableInTouchMode = true
         numberOfMemberEditText.setText(group.belongNo.toString())
+        numberOfMemberEditText.isFocusable = true
+        numberOfMemberEditText.isFocusableInTouchMode = true
         leader.text = "${context.getString(R.string.leader)} : ${context.getString(R.string.nothing)}"
         groupNameView[position] = nameEditText
         memberNoView[position] = numberOfMemberEditText
@@ -73,7 +78,7 @@ class EditGroupViewAdapter(private val context: Context, private val groupList: 
                     if (afterNo < 0) {
                         numberOfMemberEditText.setTextColor(Color.RED)
                     } else {
-                        numberOfMemberEditText.setTextColor(Color.BLACK)
+                        numberOfMemberEditText.setTextColor(PublicMethods.getColor(context,R.color.gray))
                     }
                 } else {
                     scrollView.setOnTouchListener { _, _ -> true }
@@ -104,7 +109,7 @@ class EditGroupViewAdapter(private val context: Context, private val groupList: 
         if (newNo < 0) {
             et.setTextColor(Color.RED)
         } else {
-            et.setTextColor(Color.BLACK)
+            et.setTextColor(PublicMethods.getColor(context,R.color.gray))
         }
     }
 
