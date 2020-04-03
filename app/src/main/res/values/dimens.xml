@@ -22,4 +22,6 @@
 
     <dimen name="et_textSize_big">25sp</dimen>
     <dimen name="form_textSize_large">18sp</dimen>
+
+    <dimen name="top_button_expansion">5dp</dimen>
 </resources>

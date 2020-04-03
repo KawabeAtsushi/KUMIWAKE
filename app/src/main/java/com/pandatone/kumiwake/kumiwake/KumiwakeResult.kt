@@ -2,7 +2,6 @@ package com.pandatone.kumiwake.kumiwake
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.Handler
@@ -13,7 +12,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ShareCompat
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
-import com.pandatone.kumiwake.kumiwake.function.KumiwakeComparator
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeMethods
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
@@ -131,21 +129,21 @@ class KumiwakeResult : AppCompatActivity() {
             createFmArray()    //男女それぞれの配列を作成
             KumiwakeMethods.arrangeByAge(manArray)
             KumiwakeMethods.arrangeByAge(womanArray)
-            KumiwakeMethods.setLeader(resultArray,leaderArray,leaderNoList)
-            KumiwakeMethods.evenManDistribute(memberArray.size,resultArray,manArray,groupArray,getString(R.string.man))
-            KumiwakeMethods.evenWomanDistribute(resultArray,womanArray,groupArray)
+            KumiwakeMethods.setLeader(resultArray, leaderArray, leaderNoList)
+            KumiwakeMethods.evenManDistribute(memberArray.size, resultArray, manArray, groupArray, getString(R.string.man))
+            KumiwakeMethods.evenWomanDistribute(resultArray, womanArray, groupArray)
         } else if (evenFmRatio) {
             createFmArray()    //男女それぞれの配列を作成
-            KumiwakeMethods.setLeader(resultArray,leaderArray,leaderNoList)
-            KumiwakeMethods.evenManDistribute(memberArray.size,resultArray,manArray,groupArray,getString(R.string.man))
-            KumiwakeMethods.evenWomanDistribute(resultArray,womanArray,groupArray)
+            KumiwakeMethods.setLeader(resultArray, leaderArray, leaderNoList)
+            KumiwakeMethods.evenManDistribute(memberArray.size, resultArray, manArray, groupArray, getString(R.string.man))
+            KumiwakeMethods.evenWomanDistribute(resultArray, womanArray, groupArray)
         } else if (even_age_ratio) {
             KumiwakeMethods.arrangeByAge(memberArray)
-            KumiwakeMethods.kumiwakeAll(resultArray,memberArray,groupArray,leaderArray,leaderNoList)
+            KumiwakeMethods.kumiwakeAll(resultArray, memberArray, groupArray, leaderArray, leaderNoList)
         } else {
             if (StatusHolder.normalMode) {
                 KumiwakeMethods.kumiwakeAll(resultArray, memberArray, groupArray, leaderArray, leaderNoList)
-            }else{
+            } else {
                 KumiwakeMethods.kumiwakeAllQuick(resultArray, memberArray, groupArray)
             }
         }
@@ -232,7 +230,7 @@ class KumiwakeResult : AppCompatActivity() {
         arrayList = v.findViewById<View>(R.id.result_member_listView) as ListView
         val adapter = SmallMBListAdapter(this, resultArray, true, showLeaderNo = false, leaderNoList = leaderNoList)
         arrayList.adapter = adapter
-        setBackGround(v,i)
+        setBackGround(v, i)
         adapter.setRowHeight(arrayList)
     }
 
@@ -248,12 +246,12 @@ class KumiwakeResult : AppCompatActivity() {
     }
 
 
-    private fun setBackGround(v: View,i:Int) {
+    private fun setBackGround(v: View, i: Int) {
         val drawable = GradientDrawable()
         drawable.mutate()
         drawable.shape = GradientDrawable.RECTANGLE
         drawable.cornerRadius = 25f
-        drawable.setColor(KumiwakeMethods.getResultColor(i))
+        drawable.setColor(KumiwakeMethods.getResultColor(i, groupArray.size))
 
         v.layoutParams = setMargin(4, 6, 4, 6)
         v.background = drawable

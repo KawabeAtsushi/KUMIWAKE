@@ -58,7 +58,7 @@
                 android:background="@drawable/edittext_outline"
                 android:textSize="@dimen/et_textSize_big"
                 android:textColor="@color/gray"
-                android:ems="3"
+                android:ems="2"
                 android:inputType="number"
                 android:padding="10dp"
                 android:layout_marginStart="20dp"

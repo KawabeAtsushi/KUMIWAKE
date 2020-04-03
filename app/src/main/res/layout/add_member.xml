@@ -87,7 +87,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/member_form_input_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/form_marginTop"
                 android:hint="@string/member_name"
@@ -98,7 +98,6 @@
                     android:id="@+id/input_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="20"
                     android:inputType="textPersonName"
                     android:singleLine="true" />
 
@@ -107,7 +106,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/form_marginTop"
                 android:hint="@string/member_name_read">
@@ -116,7 +115,6 @@
                     android:id="@+id/input_name_read"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="20"
                     android:inputType="textPersonName"
                     android:singleLine="true" />
 

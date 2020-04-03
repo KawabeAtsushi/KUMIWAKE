@@ -7,7 +7,6 @@ import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.math.min
 import kotlin.random.Random
 
 object KumiwakeMethods {
@@ -188,35 +187,20 @@ object KumiwakeMethods {
     }
 
     //結果背景の色を生成
-    fun getResultColor(ver: Int): Int {
-        var R = 0
-        var G = 0
-        var B = 0
-        var col1 = 0
-        var col2 = 0
-        //RGBどれかが240超えるまで再選択
-        while (col1 < 160 && col2 < 160) {
-            col1 = ((Math.random() * 0.5 + 0.5) * 256).toInt()
-            col2 = ((Math.random() * 0.5 + 0.5) * 256).toInt()
-        }
-        //パステルカラーっぽく(小さいほうを170,大きいほうを240以上)
-        when (min(col1, col2)) {
-            col1 -> col1 = 160
-            col2 -> col2 = 160
-        }
+    private val colorList = listOf<String>(
+            "ffb7b7", "ffb7db", "ffb7ff", "dbb7ff",
+            "b7b7ff", "b7dbff", "b7ffff", "b7ffdb",
+            "b7ffb7", "dbffb7", "ffffb7", "ffdbb7"
+    )
 
-        when (ver % 3) {
-            0 -> {
-                R = 255;G = col1;B = col2;
-            }
-            1 ->{
-                R = col1;G = col2;B = 255;
-            }
-            2 ->{
-                R = col2;G = 255;B = col1;
-            }
+    fun getResultColor(ver: Int, groupCount: Int): Int {
+        val colorNum = colorList.size.toFloat()
+        var skipColBias = 1f
+        if (groupCount < colorNum) {
+            skipColBias = colorNum / groupCount
         }
-
-        return Color.argb(150, R, G, B)
+        val element = (ver % colorNum) * skipColBias
+        val color = colorList[element.toInt()]
+        return Color.parseColor("#AA$color")
     }
 }

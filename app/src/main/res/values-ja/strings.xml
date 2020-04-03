@@ -117,7 +117,7 @@
     <string name="re_kumiwake_description">同じ条件でもう一度組分けを行います。</string>
     <string name="re_kumiwake_finished">再組分け完了</string>
     <string name="re_sekigime_title">再席決め</string>
-    <string name="re_sekigime_description">同じ条件でもう一度席決めを行います。</string>
+    <string name="re_sekigime_description">同じ条件でもう一度席決めを行います。（※同テーブル内での並び順のみ変更されます。）</string>
     <string name="re_sekigime_finished">再席決め完了</string>
     <string name="re_sekigime">席決めしなおす</string>
     <string name="fm_placed_alternately">男女を交互に配置する</string>

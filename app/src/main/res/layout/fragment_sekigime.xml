@@ -88,8 +88,9 @@
         android:text="@string/normal_mode"
         android:textColor="#ffffff"
         android:textSize="@dimen/main_button_text_size"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/quick_mode_button"
-        app:layout_constraintEnd_toStartOf="@id/hintForNormalMode"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toBottomOf="@id/half_guideline" />
 
@@ -97,26 +98,27 @@
         android:id="@+id/hintForNormalMode"
         android:layout_width="@dimen/hint_icon_size"
         android:layout_height="@dimen/hint_icon_size"
-        android:background="@drawable/top_normal_help_button"
         android:contentDescription="@string/hint"
-        android:padding="30dp"
         android:src="@drawable/ic_help_outline_dark_24dp"
+        android:background="@android:color/transparent"
+        android:elevation="10dp"
+        android:tint="@color/gray"
         app:layout_constraintBottom_toBottomOf="@id/normal_mode_button"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_end" />
+        app:layout_constraintEnd_toEndOf="@+id/normal_mode_button" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/quick_mode_button"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
         android:background="@drawable/top_quick_button"
         android:singleLine="true"
         android:text="@string/quick_mode"
         android:textColor="#ffffff"
         android:textSize="@dimen/main_button_text_size"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/history_button"
-        app:layout_constraintEnd_toStartOf="@id/hintForQuickMode"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
         app:layout_constraintStart_toEndOf="@id/guideline_start"
         app:layout_constraintTop_toBottomOf="@id/normal_mode_button" />
 
@@ -124,24 +126,24 @@
         android:id="@+id/hintForQuickMode"
         android:layout_width="@dimen/hint_icon_size"
         android:layout_height="@dimen/hint_icon_size"
-        android:background="@drawable/top_quick_help_button"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/hint"
-        android:padding="30dp"
+        android:elevation="10dp"
+        android:tint="@color/gray"
         android:src="@drawable/ic_help_outline_dark_24dp"
         app:layout_constraintBottom_toBottomOf="@id/quick_mode_button"
-        app:layout_constraintEnd_toStartOf="@id/guideline_end" />
+        app:layout_constraintEnd_toEndOf="@id/quick_mode_button" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/history_button"
         style="@style/Button.Outline.History"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="5dp"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
         android:singleLine="true"
         android:text="@string/history"
         android:textColor="@color/thin_gray"
         android:textSize="@dimen/main_button_text_size"
-        android:visibility="gone"
         app:backgroundTint="@color/thin_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guideline_end"

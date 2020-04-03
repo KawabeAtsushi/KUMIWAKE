@@ -3,29 +3,32 @@
 
     <!-- ボタンが押されていない状態 -->
     <item android:state_pressed="false">
-        <shape android:shape="oval">
+        <shape android:shape="rectangle">
             <!-- 背景色 -->
+            <corners android:radius="20dp"/>
+            <padding
+                android:top="@dimen/top_button_expansion"
+                android:bottom="@dimen/top_button_expansion"
+                android:left="@dimen/top_button_expansion"
+                android:right="@dimen/top_button_expansion"/>
             <gradient
-                android:centerX="0.3"
-                android:centerY="0.15"
-                android:endColor="@color/red_unpressed"
-                android:gradientRadius="120dp"
+                android:type="linear"
+                android:angle="90"
                 android:startColor="#FFbbbb"
-                android:type="radial" />
+                android:endColor="@color/red_unpressed"/>
         </shape>
     </item>
 
     <!-- ボタンが押されている状態 -->
     <item android:state_pressed="true">
-        <shape android:shape="oval">
+        <shape android:shape="rectangle">
             <!-- 背景色 -->
+            <corners android:radius="20dp"/>
             <gradient
-                android:centerX="0.3"
-                android:centerY="0.15"
-                android:endColor="@color/red_pressed"
-                android:gradientRadius="120dp"
+                android:type="linear"
+                android:angle="90"
                 android:startColor="#FFaaaa"
-                android:type="radial" />
+                android:endColor="@color/red_pressed"/>
         </shape>
     </item>
 </selector>

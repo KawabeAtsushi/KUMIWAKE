@@ -59,7 +59,7 @@
     <string name="re_kumiwake_title">Re:KUMIWAKE</string>
     <string name="re_kumiwake">try again</string>
     <string name="re_kumiwake_description">Execute KUMIWAKE(grouping) again on the same conditions.</string>
-    <string name="re_sekigime_description">Execute Seat Allocation again on the same conditions.</string>
+    <string name="re_sekigime_description">Execute Seat Allocation again on the same conditions.(* The order in the table will be changed.)</string>
     <string name="registered">registered</string>
     <string name="registration">register</string>
     <string name="registration_ascending">Registration order(ASC)</string>

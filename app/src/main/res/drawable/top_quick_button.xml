@@ -3,29 +3,27 @@
 
     <!-- ボタンが押されていない状態 -->
     <item android:state_pressed="false">
-        <shape android:shape="oval">
+        <shape android:shape="rectangle">
             <!-- 背景色 -->
+            <corners android:radius="20dp"/>
             <gradient
-                android:centerX="0.3"
-                android:centerY="0.15"
-                android:endColor="@color/green_unpressed"
-                android:gradientRadius="120dp"
+                android:type="linear"
+                android:angle="90"
                 android:startColor="#cfc"
-                android:type="radial" />
+                android:endColor="@color/green_unpressed"/>
         </shape>
     </item>
 
     <!-- ボタンが押されている状態 -->
     <item android:state_pressed="true">
-        <shape android:shape="oval">
+        <shape android:shape="rectangle">
             <!-- 背景色 -->
+            <corners android:radius="20dp"/>
             <gradient
-                android:centerX="0.3"
-                android:centerY="0.15"
-                android:endColor="@color/green_pressed"
-                android:gradientRadius="120dp"
+                android:type="linear"
+                android:angle="90"
                 android:startColor="#bfb"
-                android:type="radial" />
+                android:endColor="@color/green_pressed"/>
         </shape>
     </item>
 </selector>
