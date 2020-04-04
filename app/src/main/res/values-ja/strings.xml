@@ -90,7 +90,7 @@
     <string name="not_exist_file">バックアップファイルが存在しません。</string>
     <string name="delete_backup">バックアップファイルの削除</string>
     <string name="deleted_backup_file">バックアップファイルを削除しました。</string>
-    <string name="delete_backup_attention">バックアップファイルはアプリのアンインストール時には削除されません。\nもしバックアップファイルが不要な場合は以下より削除してください。\n\n一度ファイルを削除してしまうと復元することはできません。\n\n削除しますか？</string>
+    <string name="delete_backup_attention">バックアップファイルが不要な場合は以下より削除してください。\n\n一度ファイルを削除してしまうと復元することはできません。\n\n削除しますか？</string>
     <string name="all">全て</string>
     <string name="no_selected">選択なし</string>
     <string name="range_error">指定範囲が不適切です</string>
@@ -132,13 +132,12 @@
     <string name="about_member">メンバーについて</string>
     <string name="choose_app">アプリを選択</string>
     <string name="how_to_kumiwake">☆グループ分けを行うモードです☆\n\n「ノーマルモード」と「クイックモード」の二種類から選んで組分けを行います。</string>
-    <string name="how_to_sekigime">☆配席をランダムに決定するモードです☆\n\nホーム画面の「席決め」のボタンから席決めを行うと、選択したメンバー・グループでランダムに席が振り分けられます。\n
-                                        メンバー・グループの選択は「組分け」と同じ要領で行います。\n\n
-                                        「組分け」の結果画面のボタンから席決めを行うこともできます。\nこの場合、組分けで作成されたグループごとに配席が決められます。</string>
+    <string name="how_to_sekigime">☆配席を行うモードです☆\n\nメンバー・グループを指定して配席のみを行います。メンバー・グループの指定は「組分け」と同じ要領で行います。\n\n
+                                        「組分け」の結果画面のボタンから席決めを行うこともできます。\nこの場合、組分けで作成されたグループを使って配席が決められます。</string>
     <string name="how_to_member">☆「組分け」「席決め」に用いるメンバーを登録するモードです☆\n\n左右にスワイプすることでメンバー一覧・グループ一覧を切り替えます。\n\n
                                     それぞれの画面を表示した状態で画面右下に表示される「＋」のボタンを押すとメンバー・グループの追加ができます。\n\n
                                     グループにメンバーを登録しておくことで、「組分け」などでメンバーを選択する際にグループに所属するメンバーをまとめて選択できます。</string>
-    <string name="article_title">自動でグループ分け・席決めができるアプリ『KUMIWAKE』が登場！！\n飲み会、配車、その他グループ活動にご活用ください☆\n\n                                    ↓↓ダウンロードはこちら↓↓\n                                    （Android限定）</string>
+    <string name="article_title">自動でグループ分け・配席が決められるアプリ『KUMIWAKE』が登場！！\n飲み会、配車、その他グループ活動にご活用ください☆\n\n                                    ↓↓ダウンロードはこちら↓↓\n                                    （Android限定）</string>
     <string name="member_name_read">読み</string>
     <string name="please_permit">ストレージの使用を許可してください。</string>
     <string name="share_result">結果をシェア</string>
@@ -174,6 +173,8 @@
     <string name="move_kumiwake_site">KUMIWAKE公式サイト</string>
     <string name="move_kumiwake_site_discription">KUMIWAKE公式サイトへ移動します。</string>
     <string name="purchased">を購入しました！！</string>
-    <string name="double_tap">ダブルタップで入力を開始</string>
+    <string name="double_tap">画面をダブルタップで入力を開始</string>
     <string name="member_create">メンバー作成</string>
+    <string name="more_details">さらに詳しく</string>
+    <string name="release_note">リリースノート</string>
 </resources>

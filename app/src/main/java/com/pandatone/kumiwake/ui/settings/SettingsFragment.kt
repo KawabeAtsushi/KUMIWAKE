@@ -52,14 +52,15 @@ class SettingsFragment : Fragment() {
         howToUseList = root.findViewById(R.id.how_to_use_list)
         howToUseList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
+            val homepageLink = PublicMethods.getLinkChar(getString(R.string.url_homepage),getString(R.string.more_details))
             when (position) {
                 0 -> {
                     val message = (getString(R.string.how_to_kumiwake) + "\n\n■" + getString(R.string.normal_mode) + "■\n"
                             + getString(R.string.description_of_normal_kumiwake) + "\n\n■" + getString(R.string.quick_mode) + "■\n" + getString(R.string.description_of_quick_kumiwake))
-                    dialog.confirmationDialog(howToUseStr[0], message)
+                    dialog.confirmationDialog(howToUseStr[0], message,homepageLink)
                 }
-                1 -> dialog.confirmationDialog(howToUseStr[1], getText(R.string.how_to_member))
-                2 -> dialog.confirmationDialog(howToUseStr[2], getText(R.string.how_to_sekigime))
+                1 -> dialog.confirmationDialog(howToUseStr[1], getText(R.string.how_to_member),homepageLink)
+                2 -> dialog.confirmationDialog(howToUseStr[2], getText(R.string.how_to_sekigime),homepageLink)
                 3 -> PublicMethods.toWebSite(requireContext(),requireFragmentManager())
             }
         }
@@ -159,8 +160,8 @@ class SettingsFragment : Fragment() {
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
         }
-
-        dialog.confirmationDialog(getString(R.string.app_version), versionName)
+        val releaseNoteLink = PublicMethods.getLinkChar(getString(R.string.url_release_note),getString(R.string.release_note))
+        dialog.confirmationDialog(getString(R.string.app_version), versionName,releaseNoteLink)
     }
 
     private fun launchMailer() {

@@ -1,14 +1,12 @@
 package com.pandatone.kumiwake
 
-import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Build
+import android.text.Html
 import android.util.TypedValue
 import android.view.GestureDetector
 import android.view.MotionEvent
@@ -122,10 +120,15 @@ object PublicMethods {
     //webサイトへ
     fun toWebSite(context: Context, fragmentManager: FragmentManager) {
         DialogWarehouse(fragmentManager).decisionDialog(context.getString(R.string.move_kumiwake_site), context.getString(R.string.move_kumiwake_site_discription)) {
-            val uri = Uri.parse("https://peraichi.com/landing_pages/view/kumiwake")
+            val uri = Uri.parse(context.getString(R.string.url_homepage))
             val intent = Intent(Intent.ACTION_VIEW, uri)
             context.startActivity(intent)
         }
+    }
+
+    fun getLinkChar(url:String, text:String):CharSequence{
+        val siteCharHtml = "<a href=$url>$text</a>";
+        return Html.fromHtml(siteCharHtml)
     }
 }
 

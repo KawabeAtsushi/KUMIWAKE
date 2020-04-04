@@ -103,7 +103,7 @@
         android:background="@android:color/transparent"
         android:elevation="10dp"
         android:tint="@color/gray"
-        app:layout_constraintBottom_toBottomOf="@id/normal_mode_button"
+        app:layout_constraintTop_toTopOf="@id/normal_mode_button"
         app:layout_constraintEnd_toEndOf="@+id/normal_mode_button" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -131,7 +131,7 @@
         android:elevation="10dp"
         android:tint="@color/gray"
         android:src="@drawable/ic_help_outline_dark_24dp"
-        app:layout_constraintBottom_toBottomOf="@id/quick_mode_button"
+        app:layout_constraintTop_toTopOf="@id/quick_mode_button"
         app:layout_constraintEnd_toEndOf="@id/quick_mode_button" />
 
     <com.google.android.material.button.MaterialButton

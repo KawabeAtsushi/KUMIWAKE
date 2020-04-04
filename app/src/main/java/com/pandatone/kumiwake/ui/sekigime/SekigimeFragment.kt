@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.Guideline
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.pandatone.kumiwake.MainActivity
+import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.kumiwake.NormalMode
@@ -49,13 +50,14 @@ class SekigimeFragment : Fragment() {
             startActivity(Intent(activity, QuickMode::class.java))
         }
 
+        val homepageLink = PublicMethods.getLinkChar(getString(R.string.url_homepage),getString(R.string.more_details))
         val normalHelp: ImageButton = root.findViewById(R.id.hintForNormalMode)
         normalHelp.setOnClickListener {
-            dialog.confirmationDialog(getString(R.string.normal_mode), getString(R.string.description_of_normal_sekigime))
+            dialog.confirmationDialog(getString(R.string.normal_mode), getString(R.string.description_of_normal_sekigime),homepageLink)
         }
         val quickHelp: ImageButton = root.findViewById(R.id.hintForQuickMode)
         quickHelp.setOnClickListener {
-            dialog.confirmationDialog(getString(R.string.quick_mode), getString(R.string.description_of_quick_sekigime))
+            dialog.confirmationDialog(getString(R.string.quick_mode), getString(R.string.description_of_quick_sekigime),homepageLink)
         }
 
         val layout = root.findViewById<ConstraintLayout>(R.id.top_container)
@@ -79,8 +81,9 @@ class SekigimeFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val homepageLink = PublicMethods.getLinkChar(getString(R.string.url_homepage),getString(R.string.more_details))
         when (item.itemId) {
-            R.id.menu_help -> dialog.confirmationDialog(getString(R.string.sekigime), getString(R.string.how_to_sekigime))
+            R.id.menu_help -> dialog.confirmationDialog(getString(R.string.sekigime), getString(R.string.how_to_sekigime),homepageLink)
         }
         return true
     }
