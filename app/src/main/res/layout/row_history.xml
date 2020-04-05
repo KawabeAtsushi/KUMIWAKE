@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:tag="history"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/member_row_background"
+    tools:ignore="UseCompoundDrawables">
+
+
+    <TextView
+        android:id="@+id/historyName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/history"
+        android:textSize="20sp"
+        android:textColor="@color/gray"
+        android:ellipsize="end"
+        android:singleLine="true" />
+
+</LinearLayout>

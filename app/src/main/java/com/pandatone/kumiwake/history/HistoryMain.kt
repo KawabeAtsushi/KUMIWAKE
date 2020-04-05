@@ -25,25 +25,20 @@ class HistoryMain : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.member_main)
-        val toolbar = findViewById<View>(R.id.toolbar2) as Toolbar
+        setContentView(R.layout.history_main)
+        val toolbar = findViewById<View>(R.id.history_toolbar) as Toolbar
         setSupportActionBar(toolbar)
 
-        supportActionBar!!.title = "      0" + getString(R.string.selected)
+        supportActionBar!!.title = getString(R.string.history)
         supportActionBar!!.setDisplayShowTitleEnabled(true)
-
-        val i = intent
-        if (i.getSerializableExtra(AddGroupKeys.MEMBER_ARRAY.key) != null) {
-            memberArray = i.getSerializableExtra(AddGroupKeys.MEMBER_ARRAY.key) as ArrayList<Member>
-        }
 
         setViews()
     }
 
     //Viewの宣言・初期化
     private fun setViews() {
-        viewPager = findViewById<View>(R.id.view_pager) as ViewPager
-        val adapter = CustomPagerAdapter(this, manager, false)
+        viewPager = findViewById<View>(R.id.history_view_pager) as ViewPager
+        val adapter = HistoryPagerAdapter(this, manager)
         viewPager.adapter = adapter
         decision = findViewById<View>(R.id.decisionBt) as Button
 
@@ -64,16 +59,10 @@ class HistoryMain : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.member_menu, menu)
-        val searchIcon = menu.findItem(R.id.search_view)
-        val deleteIcon = menu.findItem(R.id.item_delete)
-        searchIcon.isVisible = false
-        deleteIcon.isVisible = false
+        menuInflater.inflate(R.menu.history_menu, menu)
         viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageScrollStateChanged(state: Int) {
                 page = viewPager.currentItem
-                val itemFilter = menu.findItem(R.id.item_filter)
-                itemFilter.isVisible = (page == 0)
                 val allSelect = menu.findItem(R.id.item_all_select)
                 allSelect.isVisible = (page == 0)
             }
@@ -85,8 +74,8 @@ class HistoryMain : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val viewPager = findViewById<View>(R.id.view_pager) as ViewPager
-        val adapter = CustomPagerAdapter(this, manager, false)
+        val viewPager = findViewById<View>(R.id.history_view_pager) as ViewPager
+        val adapter = HistoryPagerAdapter(this, manager)
         adapter.findFragmentByPosition(viewPager, page).onOptionsItemSelected(item)
 
         return false
@@ -106,7 +95,6 @@ class HistoryMain : AppCompatActivity() {
     companion object {
         lateinit var decision: Button
         lateinit var viewPager: ViewPager
-        var memberArray: ArrayList<Member> = ArrayList()
     }
 
 }

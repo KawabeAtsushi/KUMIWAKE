@@ -33,6 +33,9 @@
         <activity android:name=".kumiwake.KumiwakeConfirmation" />
         <activity android:name=".kumiwake.KumiwakeResult" />
         <activity
+            android:name=".history.HistoryMain"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
             android:name=".member.ChoiceMemberMain"
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/MemberChoiceTheme"/>

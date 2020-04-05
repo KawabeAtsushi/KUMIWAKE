@@ -7,29 +7,16 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.ArrayAdapter
-import com.pandatone.kumiwake.member.function.Group
-import java.sql.Timestamp
 
 /**
  * Created by atsushi_2 on 2016/03/20.
  */
-class HistoryAdapter(context: Context) : ArrayAdapter<Group>(context, 0) {
+class HistoryAdapter(context: Context) : ArrayAdapter<History>(context, 0) {
 
     private var dbHelper: DatabaseHelper
 
     val getDB: Cursor
         get() = db.query(TABLE_NAME, null, null, null, null, null, null)
-
-    val maxId: Int
-        @SuppressLint("Recycle")
-        get() {
-            open()
-            val c = db.rawQuery("SELECT MAX($HS_ID) FROM $TABLE_NAME", null)
-            c.moveToFirst()
-            val idMax = c.getInt(0)
-            close()
-            return idMax
-        }
 
     init {
         dbHelper = DatabaseHelper(this.context)
@@ -55,13 +42,21 @@ class HistoryAdapter(context: Context) : ArrayAdapter<Group>(context, 0) {
         dbHelper.close()
     }
 
-    //すべてのグループ取得
-    fun getAllGroups(): ArrayList<Group> {
-        val groupListList: ArrayList<Group> = ArrayList()
+    private val maxId: Int
+        @SuppressLint("Recycle")
+        get() {
+            val c = db.rawQuery("SELECT MAX($HS_ID) FROM $TABLE_NAME", null)
+            c.moveToFirst()
+            return c.getInt(0)
+        }
+
+    //すべての履歴取得
+    fun getAllHistories(): ArrayList<History> {
+        val historyList: ArrayList<History> = ArrayList()
         open()
         //getCursor(getDB, groupListList)
         close()
-        return groupListList
+        return historyList
     }
 
     //Listの情報取得
@@ -73,7 +68,8 @@ class HistoryAdapter(context: Context) : ArrayAdapter<Group>(context, 0) {
         if (c.moveToFirst()) {
             do {
                 history = History(
-                        c.getInt(c.getColumnIndex(HS_ID)),
+                        c.getInt(0),
+                        c.getString(c.getColumnIndex(HS_TIME)),
                         c.getString(c.getColumnIndex(HS_NAME)),
                         c.getString(c.getColumnIndex(HS_RESULT)),
                         c.getInt(c.getColumnIndex(HS_MODE)),
@@ -90,7 +86,6 @@ class HistoryAdapter(context: Context) : ArrayAdapter<Group>(context, 0) {
     fun saveHistory(result: String, mode: Int, parent: Int) {
         open()
         db.beginTransaction()          // トランザクション開始
-
         try {
             val values = ContentValues()
             values.put(HS_RESULT, result)
@@ -124,26 +119,27 @@ class HistoryAdapter(context: Context) : ArrayAdapter<Group>(context, 0) {
         close()
     }
 
-    //再組み分けしたときの状態を更新
-    fun changeHistory(id: Int, result: String) {
-        val millis = System.currentTimeMillis()
-        val timestamp = Timestamp(millis)
+    //再組み分けしたときに結果を更新する（古いの消して新しいの追加）
+    fun changeHistory(result: String, mode: Int, parent: Int) {
         open()
-        val values = ContentValues()
-        values.put(HS_NAME, timestamp.toString())
-        values.put(HS_RESULT, result)
+        db.beginTransaction()                      // トランザクション開始
         try {
-            db.update(TABLE_NAME, values, "$HS_ID=?", arrayOf(id.toString()))
+            db.delete(TABLE_NAME, "$HS_ID=?", arrayOf(maxId.toString()))
+            db.setTransactionSuccessful()          // トランザクションへコミット
         } catch (e: Exception) {
             e.printStackTrace()
+        } finally {
+            db.endTransaction()                    // トランザクションの終了
         }
         close()
+        saveHistory(result,mode,parent)
     }
 
     companion object {
         const val DB_VERSION = 1
         const val TABLE_NAME = "history_table"
         const val HS_ID = "_id"
+        const val HS_TIME = "hs_time"
         const val HS_NAME = "hs_name"
         const val HS_RESULT = "hs_result"
         const val HS_MODE = "hs_mode"
@@ -152,7 +148,9 @@ class HistoryAdapter(context: Context) : ArrayAdapter<Group>(context, 0) {
         lateinit var db: SQLiteDatabase
 
         const val CREATE_TABLE = ("CREATE TABLE " + TABLE_NAME + " ("
-                + HS_ID + " INTEGER PRIMARY KEY," + HS_NAME + " TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+                + HS_ID + " INTEGER PRIMARY KEY,"
+                + HS_TIME + " TIMESTAMP DEFAULT (DATETIME('now','localtime')),"
+                + HS_NAME + " TEXT NOT NULL DEFAULT (DATETIME('now','localtime')),"
                 + HS_RESULT + " TEXT," + HS_MODE + " INTEGER," + HS_KEEP + " INTEGER DEFAULT -1,"
                 + HS_PARENT + " INTEGER DEFAULT -1" + ");")
     }

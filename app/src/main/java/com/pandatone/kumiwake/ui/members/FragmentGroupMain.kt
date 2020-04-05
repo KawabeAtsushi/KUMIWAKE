@@ -3,7 +3,6 @@ package com.pandatone.kumiwake.ui.members
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import android.widget.AbsListView
 import android.widget.AdapterView

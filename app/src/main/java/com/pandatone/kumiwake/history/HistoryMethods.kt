@@ -7,7 +7,7 @@ import com.pandatone.kumiwake.member.function.Member
 
 object HistoryMethods {
 
-    fun resultArrayToString(resultArray: ArrayList<ArrayList<Member>>): String {
+    private fun resultArrayToString(resultArray: ArrayList<ArrayList<Member>>): String {
         //",/"がグループ区切りの合図
         var resultString = ","
         resultArray.forEach { group ->
@@ -44,6 +44,16 @@ object HistoryMethods {
         } ?: run {
             // memberがnullのときだけ実行
             return noMember
+        }
+    }
+
+    fun saveResultToHistory(context: Context, resultArray: ArrayList<ArrayList<Member>>, mode: Int, again: Boolean) {
+        val hsAdapter = HistoryAdapter(context)
+        val resultStr = resultArrayToString(resultArray)
+        if (!again) {
+            hsAdapter.saveHistory(resultStr, mode, 0)
+        } else {
+            hsAdapter.changeHistory(resultStr, mode, 0)
         }
     }
 }

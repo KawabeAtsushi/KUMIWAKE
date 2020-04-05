@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ShareCompat
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
+import com.pandatone.kumiwake.history.HistoryMethods
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeMethods
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
@@ -68,7 +69,7 @@ class KumiwakeResult : AppCompatActivity() {
         even_age_ratio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_AGE_RATIO.key, false)
         groupCount = groupArray.size
 
-        startMethod()
+        startMethod(false)
 
         if (!StatusHolder.sekigime) {
             timer = Timer()
@@ -114,7 +115,7 @@ class KumiwakeResult : AppCompatActivity() {
     }
 
 
-    private fun startMethod() {
+    private fun startMethod(again: Boolean) {
         memberArray.shuffle()
 
         resultArray = ArrayList(groupCount)
@@ -147,6 +148,7 @@ class KumiwakeResult : AppCompatActivity() {
                 KumiwakeMethods.kumiwakeAllQuick(resultArray, memberArray, groupArray)
             }
         }
+        HistoryMethods.saveResultToHistory(this, resultArray, 0, again)
     }
 
 
@@ -172,7 +174,7 @@ class KumiwakeResult : AppCompatActivity() {
     private fun reKumiwake() {
         val scrollView = findViewById<View>(R.id.kumiwake_scroll) as ScrollView
         scrollView.scrollTo(0, 0)
-        startMethod()
+        startMethod(true)
         timer = Timer()
         timer!!.scheduleAtFixedRate(timerTask, 100, 100)
         Toast.makeText(applicationContext, getText(R.string.re_kumiwake_finished), Toast.LENGTH_SHORT).show()
