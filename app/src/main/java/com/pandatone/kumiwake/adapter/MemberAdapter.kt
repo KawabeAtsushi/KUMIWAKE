@@ -14,8 +14,10 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.Toast
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.member.function.Member
+import com.pandatone.kumiwake.setting.RefreshData
 import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
@@ -33,27 +35,6 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
     init {
         dbHelper = DatabaseHelper(this.context)
     }
-
-    //最新のメンバーを取得
-    val newMember: Member
-        @SuppressLint("Recycle")
-        get() {
-            open()
-            val c = db.rawQuery("SELECT * FROM $TABLE_NAME" +
-                    " WHERE $MB_ID=(SELECT MAX($MB_ID) FROM $TABLE_NAME);", null)
-            c.moveToFirst()
-            val member = Member(
-                    c.getInt(0),
-                    c.getString(1),
-                    c.getString(2),
-                    c.getInt(3),
-                    c.getInt(4),
-                    c.getString(5),
-                    c.getString(6),
-                    c.getString(7))
-            close()
-            return member
-        }
 
     //全メンバー数を取得
     override fun getCount(): Int {
@@ -76,22 +57,30 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
         return null
     }
 
-
     // SQLiteOpenHelper
-    private class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
+    private class DatabaseHelper(private val context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
 
         override fun onCreate(db: SQLiteDatabase) {
             db.execSQL(CREATE_TABLE)
         }
 
         override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-            if (oldVersion == 1 && newVersion == 2) {
 
-                db.execSQL("ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + MB_READ
-                        + " TEXT DEFAULT 'ￚ no data ￚ'")
-
+            if (oldVersion < 3) {
+                //テーブル作り替え(columnをdropできないため)
+                //https://phicdy.hatenablog.com/entry/delete-android-sqlite-table
+                Toast.makeText(context, "Database Upgraded Ver.$oldVersion to $newVersion", Toast.LENGTH_LONG).show()
+                //前のテーブルからデータを取得
+                val escapeMembers = RefreshData.getOldMembers(db)
+                //前のテーブルを削除
+                db.execSQL("DROP TABLE $OLD_TABLE_NAME;")
+                //新しいテーブルを作成
+                db.execSQL(CREATE_TABLE)
+                ////前のテーブルからデータを移行
+                escapeMembers.forEach { member ->
+                    RefreshData.migrateToNew(db, member)
+                }
             }
-
         }
     }
 
@@ -105,6 +94,26 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
     fun close() {
         dbHelper.close()
     }
+
+    //最新のメンバーを取得
+    val newMember: Member
+        @SuppressLint("Recycle")
+        get() {
+            open()
+            val c = db.rawQuery("SELECT * FROM $TABLE_NAME" +
+                    " WHERE $MB_ID=(SELECT MAX($MB_ID) FROM $TABLE_NAME);", null)
+            c.moveToFirst()
+            val member = Member(
+                    c.getInt(0),
+                    c.getString(1),
+                    c.getString(2),
+                    c.getInt(3),
+                    c.getString(4),
+                    c.getString(5),
+                    -1)
+            close()
+            return member
+        }
 
     //レコードの選択削除
     fun selectDelete(position: String) {
@@ -161,7 +170,7 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
         if (c.moveToFirst()) {
             do {
                 if (addInit) {
-                    val read = c.getString(7)
+                    val read = c.getString(5)
                     //頭文字帯用要素の追加
                     member = if (read != "ￚ no data ￚ" && read.isNotEmpty()) {
                         Member(
@@ -169,20 +178,18 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
                                 null.toString(),
                                 StatusHolder.index,
                                 c.getInt(3),
-                                c.getInt(4),
                                 null.toString(),
-                                null.toString(),
-                                read.toUpperCase(Locale.getDefault())[0].toString())
+                                read.toUpperCase(Locale.getDefault())[0].toString(),
+                                -1)
                     } else {
                         Member(
                                 0,
                                 null.toString(),
                                 StatusHolder.index,
                                 c.getInt(3),
-                                c.getInt(4),
                                 null.toString(),
-                                null.toString(),
-                                "ￚ no data ￚ")
+                                "ￚ no data ￚ",
+                                -1)
                     }
                     memberList.add(member)          // 取得した要素をnameListに追加
                 }
@@ -193,12 +200,10 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
                         c.getString(1),
                         c.getString(2),
                         c.getInt(3),
-                        c.getInt(4),
+                        c.getString(4),
                         c.getString(5),
-                        c.getString(6),
-                        c.getString(7))
+                        -1)
 
-                Log.d("id",c.getInt(0).toString())
                 memberList.add(member)          // 取得した要素をnameListに追加
 
             } while (c.moveToNext())
@@ -235,18 +240,14 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
     fun saveName(name: String, sex: String, age: Int, belong: String, read: String) {
         open()
         db.beginTransaction()          // トランザクション開始
-
         try {
             val values = ContentValues()
             values.put(MB_NAME, name)
             values.put(MB_SEX, sex)
             values.put(MB_AGE, age)
-            values.put(MB_GRADE, 0) //grade column is being deprecated
             values.put(MB_BELONG, belong)
-            values.put(MB_ROLE, "") //role column is being deprecated
             if (read.isEmpty()) values.put(MB_READ, "ￚ no data ￚ") else values.put(MB_READ, read)
             db.insert(TABLE_NAME, null, values)
-
             db.setTransactionSuccessful()      // トランザクションへコミット
         } catch (e: Exception) {
             e.printStackTrace()
@@ -257,16 +258,13 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
     }
 
     fun updateMember(id: Int, name: String, sex: String, age: Int, belong: String, read: String) {
-
         open()
         try {
             val values = ContentValues()
             values.put(MB_NAME, name)
             values.put(MB_SEX, sex)
             values.put(MB_AGE, age)
-            values.put(MB_GRADE, 0)  //grade column is being deprecated
             values.put(MB_BELONG, belong)
-            values.put(MB_ROLE, "")   //role column is being deprecated
             if (read.isEmpty()) values.put(MB_READ, "ￚ no data ￚ") else values.put(MB_READ, read)
 
             db.update(TABLE_NAME, values, "$MB_ID=?", arrayOf(id.toString()))
@@ -280,24 +278,22 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
 
     companion object {
         const val DB_NAME = "kumiwake.db"
-        const val DB_VERSION = 2
-        const val TABLE_NAME = "member_info"
+        const val DB_VERSION = 3
+        const val TABLE_NAME = "member_table$DB_VERSION"
         const val MB_ID = "_id"
         const val MB_NAME = "mb_name"
         const val MB_READ = "mb_read"
         const val MB_SEX = "mb_sex"
         const val MB_AGE = "mb_age"
-        const val MB_GRADE = "mb_grade"  //deprecated
         const val MB_BELONG = "mb_belong"
-        const val MB_ROLE = "mb_role" //deprecated
         lateinit var db: SQLiteDatabase
 
+        const val OLD_TABLE_NAME = "member_info"
 
         const val CREATE_TABLE = ("CREATE TABLE " + TABLE_NAME + " ("
                 + MB_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + MB_NAME + " TEXT NOT NULL," + MB_SEX + " TEXT NOT NULL,"
-                + MB_AGE + " INTEGER," + MB_GRADE + " INTEGER," + MB_BELONG + " TEXT," + MB_ROLE + " TEXT,"
-                + MB_READ + " TEXT" + ");")
+                + MB_AGE + " INTEGER," + MB_BELONG + " TEXT," + MB_READ + " TEXT" + ");")
     }
 
     /*

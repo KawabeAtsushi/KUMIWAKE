@@ -131,16 +131,16 @@ class QuickMode : AppCompatActivity(), TextWatcher {
         val memberList = ArrayList<Member>()
         if (manNo == 0 || womanNo == 0) {
             for (i in 1..manNo + womanNo) {
-                val planeMember = Member(i, getText(R.string.member).toString() + " " + i.toString(), StatusHolder.none, 0, 0, "", "", "")
+                val planeMember = Member(i, getText(R.string.member).toString() + " " + i.toString(), StatusHolder.none, 0, "", "", -1)
                 memberList.add(planeMember)
             }
         } else {
             for (i in 1..manNo) {
-                val man = Member(i, getText(R.string.member).toString() + "♠" + i.toString(), getString(R.string.man), 0, 0, "", "", "")
+                val man = Member(i, getText(R.string.member).toString() + "♠" + i.toString(), getString(R.string.man), 0, "", "", -1)
                 memberList.add(man)
             }
             for (i in 1..womanNo) {
-                val woman = Member(i, getText(R.string.member).toString() + "♡" + i.toString(), getString(R.string.woman), 0, 0, "", "", "")
+                val woman = Member(i, getText(R.string.member).toString() + "♡" + i.toString(), getString(R.string.woman), 0, "", "", -1)
                 memberList.add(woman)
             }
         }

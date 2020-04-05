@@ -103,7 +103,7 @@ class KumiwakeConfirmation : AppCompatActivity() {
             for (member in memberArray) {
                 id = member.id
                 if (leaderNoList.contains(id)) {
-                    member.role = leaderNoList.indexOf(id).toString()
+                    member.leader = leaderNoList.indexOf(id)
                     leaderArray.add(member)
                 } else {
                     newMemberArray.add(member) //リーダーを除いたmemberArray

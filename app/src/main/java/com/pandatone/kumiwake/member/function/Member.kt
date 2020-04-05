@@ -5,7 +5,7 @@ import java.io.Serializable
 /**
  * Created by atsushi_2 on 2016/03/02.
  */
-class Member(id: Int, name: String, sex: String, age: Int, grade: Int, belong: String, role: String, read: String) : Serializable {
+class Member(id: Int, name: String, sex: String, age: Int, belong: String, read: String, leader: Int) : Serializable {
     var id: Int = 0
         private set
     var name: String
@@ -16,20 +16,18 @@ class Member(id: Int, name: String, sex: String, age: Int, grade: Int, belong: S
         private set
     var age: Int = 0
         private set
-    private var grade: Int = 0
     var belong: String
         private set
-    var role: String
+    var leader: Int
 
     init {
         this.id = id
         this.name = name
+        this.read = read
         this.sex = sex
         this.age = age
-        this.grade = grade
         this.belong = belong
-        this.role = role
-        this.read = read
+        this.leader = leader
     }
 
     override fun equals(other: Any?): Boolean {
