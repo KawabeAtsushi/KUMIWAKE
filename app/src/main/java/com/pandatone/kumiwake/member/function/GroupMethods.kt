@@ -8,6 +8,7 @@ import kotlin.collections.ArrayList
 object GroupMethods {
 
     //ID = belongIdのグループに所属するメンバーリストを返す
+    //filter:ラムダ式で指定した条件に一致する要素だけを抽出してコレクションで返す。
     fun searchBelong(context: Context, belongId: String): ArrayList<Member> {
         val memberArrayByBelong = ArrayList<Member>()
         val members = MemberAdapter(context).getAllMembers()
@@ -15,7 +16,7 @@ object GroupMethods {
             val belongText = member.belong
             val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             if (listOf(*belongArray).contains(belongId)) {
-                memberArrayByBelong.add(Member(member.id, member.name, member.sex, 0, 0, null.toString(), null.toString(), null.toString()))
+                memberArrayByBelong.add(member)
             }
         }
         return memberArrayByBelong
@@ -43,11 +44,8 @@ object GroupMethods {
         list.addAll(hs)
         if (list.contains(groupId.toString())) {
             list.remove(groupId.toString())
-            val newBelong = StringBuilder()
-            for (item in list) {
-                newBelong.append("$item,")
-            }
-            mbAdapter.updateBelong(listId.toString(), newBelong.toString())
+            val newBelong = list.joinToString(separator = ",")
+            mbAdapter.updateBelong(listId.toString(), newBelong)
         }
     }
 

@@ -10,6 +10,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -197,6 +198,7 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
                         c.getString(6),
                         c.getString(7))
 
+                Log.d("id",c.getInt(0).toString())
                 memberList.add(member)          // 取得した要素をnameListに追加
 
             } while (c.moveToNext())
@@ -292,7 +294,7 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
 
 
         const val CREATE_TABLE = ("CREATE TABLE " + TABLE_NAME + " ("
-                + MB_ID + " INTEGER PRIMARY KEY,"
+                + MB_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + MB_NAME + " TEXT NOT NULL," + MB_SEX + " TEXT NOT NULL,"
                 + MB_AGE + " INTEGER," + MB_GRADE + " INTEGER," + MB_BELONG + " TEXT," + MB_ROLE + " TEXT,"
                 + MB_READ + " TEXT" + ");")

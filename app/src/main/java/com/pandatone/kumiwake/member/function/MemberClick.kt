@@ -38,35 +38,24 @@ object MemberClick {
         name.text = member.name + " (" + member.read + ")"
         sex.text = member.sex
         age.text = member.age.toString()
-
-        if (viewBelong(member) !== "") {
-            belong.text = viewBelong(member)
+        val belongNames = viewBelong(member, FragmentGroupMain.groupList)
+        if (belongNames !== "") {
+            belong.text = belongNames
         } else {
             belong.text = c.getText(R.string.nothing)
         }
 
     }
 
-    fun viewBelong(member: Member): String {
+    fun viewBelong(member: Member, groupList: ArrayList<Group>): String {
         val result: String
         val belongText = member.belong
         val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        val newBelong = StringBuilder()
 
-        for (belongGroup in belongArray) {
-            for (group in FragmentGroupMain.groupList) {
-                val groupId = group.id.toString()
-                if (belongGroup == groupId) {
-                    val listName = group.name
-                    newBelong.append("$listName,")
-                }
-            }
-        }
-        result = if (newBelong.toString() == "") {
-            ""
-        } else {
-            newBelong.substring(0, newBelong.length - 1)
-        }
+        // groupListの中からそのidがbelongArrayに含まれているものをコレクションで返す
+        val groups = groupList.filter { belongArray.contains(it.id.toString()) }
+        // 返されたgroupsのnameを連結した文字列
+        result = groups.joinToString(separator = ", ") { it.name }
 
         return result
     }

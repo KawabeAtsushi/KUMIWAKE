@@ -40,4 +40,13 @@ object MemberMethods {
         }
     }
 
+    //グループ名をグループIDに変換
+    fun belongConvertToNo(belongText:String,groupList:ArrayList<Group>): String {
+        val belongTextArray = belongText.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        // groupListの中からそのnameがbelongTextArrayに含まれているものをコレクションで返す
+        val belongGroups = groupList.filter { belongTextArray.contains(it.name) }
+        // 返されたgroupsのidを連結した文字列
+        return belongGroups.joinToString(separator = ",") { it.id.toString() }
+    }
+
 }

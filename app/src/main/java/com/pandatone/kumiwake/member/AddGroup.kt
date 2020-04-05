@@ -184,7 +184,7 @@ class AddGroup : AppCompatActivity() {
             if (members.contains(member)) {
                 val newBelong = StringBuilder()
                 newBelong.append(member.belong)
-                newBelong.append("$groupId,")
+                newBelong.append(",$groupId")
                 mbAdapter.updateBelong(listId.toString(), newBelong.toString())
             } else {
                 deleteBelongInfo(member, groupId, listId)
@@ -203,11 +203,8 @@ class AddGroup : AppCompatActivity() {
         list.addAll(hs)
         if (list.contains(removeId.toString())) {
             list.remove(removeId.toString())
-            val newBelong = StringBuilder()
-            for (item in list) {
-                newBelong.append("$item,")
-            }
-            mbAdapter.updateBelong(listId.toString(), newBelong.toString())
+            val newBelong = list.joinToString(separator = ",")
+            mbAdapter.updateBelong(listId.toString(), newBelong)
         }
     }
 
@@ -224,11 +221,8 @@ class AddGroup : AppCompatActivity() {
             hs.addAll(list)
             list.clear()
             list.addAll(hs)
-            val newBelong = StringBuilder()
-            for (item in list) {
-                newBelong.append("$item,")
-            }
-            mbAdapter.updateBelong(listId.toString(), newBelong.toString())
+            val newBelong = list.joinToString(separator = ",")
+            mbAdapter.updateBelong(listId.toString(), newBelong)
         }
     }
 

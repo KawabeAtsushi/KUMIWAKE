@@ -130,7 +130,7 @@ class AddMember : AppCompatActivity() {
         val read = member.read
         val sex = member.sex
         val age = member.age.toString()
-        val belong = MemberClick.viewBelong(member)
+        val belong = MemberClick.viewBelong(member, FragmentGroupMain.groupList)
 
         nameEditText!!.setText(name)
         readEditText!!.setText(read)
@@ -153,7 +153,7 @@ class AddMember : AppCompatActivity() {
             dialogShown = true
             // 選択中の候補を取得
             val buttonText = belongDropdown!!.text.toString()
-            val textArray = buttonText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val textArray = buttonText.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             // 候補リスト
             val list = ArrayList<String>()
             for (group in groupList) {
@@ -179,7 +179,7 @@ class AddMember : AppCompatActivity() {
                 val buffer = StringBuilder()
                 for (i in belongArray.indices) {
                     if (checkArray[i]) {
-                        buffer.append((if (buffer.isEmpty()) "" else ",") + belongArray[i])
+                        buffer.append((if (buffer.isEmpty()) "" else ", ") + belongArray[i])
                     }
                 }
                 belongDropdown!!.setText(buffer)
@@ -215,7 +215,7 @@ class AddMember : AppCompatActivity() {
             textInputLayout!!.error = getText(R.string.error_empty_name)
         } else {
             saveItem()
-            afterBelong = belongDropdown!!.text.toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            afterBelong = belongDropdown!!.text.toString().split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             MemberMethods.updateBelongNo(this)
 
             if (fromNormalMode) {
@@ -242,7 +242,7 @@ class AddMember : AppCompatActivity() {
         val read = readEditText!!.text!!.toString()
         val sex = sexButton!!.text as String
         val age = getValue(ageEditText!!)
-        val belong = belongConvertToNo()
+        val belong = MemberMethods.belongConvertToNo(belongDropdown!!.text.toString(),groupList)
 
         mbAdapter!!.saveName(name, sex, age, belong, read)
     }
@@ -258,7 +258,7 @@ class AddMember : AppCompatActivity() {
                 textInputLayout!!.error = getText(R.string.error_empty_name)
             } else {
                 updateItem(listId)
-                afterBelong = belongDropdown!!.text.toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                afterBelong = belongDropdown!!.text.toString().split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                 MemberMethods.updateBelongNo(this)
                 Toast.makeText(applicationContext, getText(R.string.member).toString() + " \"" + name + "\" " + getText(R.string.updated), Toast.LENGTH_SHORT).show()
                 finish()
@@ -273,7 +273,7 @@ class AddMember : AppCompatActivity() {
         val read = readEditText!!.text!!.toString()
         val sex = sexButton!!.text as String
         val age = getValue(ageEditText!!)
-        val belong = belongConvertToNo()
+        val belong = MemberMethods.belongConvertToNo(belongDropdown!!.text.toString(),groupList)
 
         mbAdapter!!.updateMember(listId, name, sex, age, belong, read)
         FragmentMemberMain().loadName()
@@ -289,22 +289,6 @@ class AddMember : AppCompatActivity() {
         return a
     }
 
-    //グループ名をグループIDに変換
-    private fun belongConvertToNo(): String {
-        val belongText = belongDropdown!!.text.toString()
-        val belongTextArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        val belongNo = StringBuilder()
-
-        for (belongGroup in belongTextArray) {
-            for (group in groupList) {
-                if (belongGroup == group.name) {
-                    val groupId = group.id.toString()
-                    belongNo.append("$groupId,")
-                }
-            }
-        }
-        return belongNo.toString()
-    }
 }
 
 
