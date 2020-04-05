@@ -6,7 +6,7 @@ import com.pandatone.kumiwake.setting.FileManagerDialog
 
 class DialogWarehouse(private var fragmentManager: FragmentManager) {
 
-    fun confirmationDialog(title: String, message: CharSequence, showLink: CharSequence) {
+    fun confirmationDialog(title: String, message: CharSequence, showLink: CharSequence = "") {
         val customDialog = CustomDialog(title, message, showLink)
         customDialog.mPositiveBtnListener = null
         val ft = this.fragmentManager.beginTransaction()

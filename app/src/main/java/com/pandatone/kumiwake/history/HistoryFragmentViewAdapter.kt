@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.ImageView
 import android.widget.TextView
 import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
@@ -36,7 +37,6 @@ class HistoryFragmentViewAdapter(private val context: Context, private val histo
     @SuppressLint("InflateParams", "SetTextI18n", "ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
         val nameTextView: TextView
-        val numberOfMemberTextView: TextView
         val v: View?
         val history = getItem(position)
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -47,10 +47,20 @@ class HistoryFragmentViewAdapter(private val context: Context, private val histo
             v!!.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(context, R.color.checked_list))
         }
 
+        setModeIcon(v,position)
+
         nameTextView = v?.findViewById<View>(R.id.historyName) as TextView
         nameTextView.text = history.name
 
         return v
+    }
+
+    //アイコン描画
+    private fun setModeIcon(v: View, position: Int) {
+        val modeIcon: ImageView = v.findViewById(R.id.modeIcon)
+        if (getItem(position).mode == 1) {
+            modeIcon.setImageResource(R.drawable.ic_sekigime_24px)
+        }
     }
 
     fun setNewSelection(id: Int, value: Boolean) {

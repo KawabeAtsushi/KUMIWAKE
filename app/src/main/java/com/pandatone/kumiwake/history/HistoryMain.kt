@@ -63,8 +63,6 @@ class HistoryMain : AppCompatActivity() {
         viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageScrollStateChanged(state: Int) {
                 page = viewPager.currentItem
-                val allSelect = menu.findItem(R.id.item_all_select)
-                allSelect.isVisible = (page == 0)
             }
         })
 

@@ -10,12 +10,18 @@ import androidx.fragment.app.ListFragment
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.member.function.Sort
+import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 
 
 /**
  * Created by atsushi_2 on 2016/02/23.
  */
 class FragmentHistory : ListFragment() {
+
+    private val dialog: DialogWarehouse
+        get() {
+            return DialogWarehouse(requireFragmentManager())
+        }
 
     // 必須*
     // Fragment生成時にシステムが呼び出す
@@ -53,6 +59,7 @@ class FragmentHistory : ListFragment() {
 
         listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
+            HistoryInfo(activity!!).infoDialog(historyList[position])
         }
     }
 
@@ -60,8 +67,7 @@ class FragmentHistory : ListFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-            R.id.item_all_select -> {
-            }
+            R.id.menu_help -> dialog.confirmationDialog(getString(R.string.history), getString(R.string.how_to_history))
         }
         return false
     }

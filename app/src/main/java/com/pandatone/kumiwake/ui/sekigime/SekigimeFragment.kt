@@ -14,6 +14,7 @@ import com.pandatone.kumiwake.MainActivity
 import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
+import com.pandatone.kumiwake.history.HistoryMain
 import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.kumiwake.QuickMode
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
@@ -48,6 +49,10 @@ class SekigimeFragment : Fragment() {
             StatusHolder.normalMode = false
             StatusHolder.sekigime = true
             startActivity(Intent(activity, QuickMode::class.java))
+        }
+        val historyButton: Button = root.findViewById(R.id.history_button)
+        historyButton.setOnClickListener {
+            startActivity(Intent(activity, HistoryMain::class.java))
         }
 
         val homepageLink = PublicMethods.getLinkChar(getString(R.string.url_homepage),getString(R.string.more_details))

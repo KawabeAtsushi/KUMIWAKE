@@ -15,10 +15,8 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
-import com.pandatone.kumiwake.MainActivity
-import com.pandatone.kumiwake.PublicMethods
-import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.ShareViewImage
+import com.pandatone.kumiwake.*
+import com.pandatone.kumiwake.history.HistoryMethods
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.sekigime.function.DrawAllTable
 import com.pandatone.kumiwake.sekigime.function.DrawTableView
@@ -68,6 +66,10 @@ class SekigimeResult : AppCompatActivity() {
         findViewById<Button>(R.id.go_home).setOnClickListener { onGoHome() }
         findViewById<Button>(R.id.show_all).setOnClickListener { onShowAll() }
         findViewById<Button>(R.id.share_image).setOnClickListener { onShareImage() }
+        //履歴に保存
+        if (StatusHolder.normalMode) {
+            HistoryMethods.saveResultToHistory(this, teamArray, 0, false)
+        }
     }
 
     private fun drawView(position: Int) {

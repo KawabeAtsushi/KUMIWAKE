@@ -148,7 +148,9 @@ class KumiwakeResult : AppCompatActivity() {
                 KumiwakeMethods.kumiwakeAllQuick(resultArray, memberArray, groupArray)
             }
         }
-        HistoryMethods.saveResultToHistory(this, resultArray, 0, again)
+        if (StatusHolder.normalMode) {
+            HistoryMethods.saveResultToHistory(this, resultArray, 0, again)
+        }
     }
 
 
@@ -236,17 +238,6 @@ class KumiwakeResult : AppCompatActivity() {
         adapter.setRowHeight(arrayList)
     }
 
-    private fun setMargin(leftDp: Int, topDp: Int, rightDp: Int, bottomDp: Int): LinearLayout.LayoutParams {
-        val scale = resources.displayMetrics.density //画面のdensityを指定。
-        val left = (leftDp * scale + 0.5f).toInt()
-        val top = (topDp * scale + 0.5f).toInt()
-        val right = (rightDp * scale + 0.5f).toInt()
-        val bottom = (bottomDp * scale + 0.5f).toInt()
-        val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-        layoutParams.setMargins(left, top, right, bottom)
-        return layoutParams
-    }
-
 
     private fun setBackGround(v: View, i: Int) {
         val drawable = GradientDrawable()
@@ -255,7 +246,7 @@ class KumiwakeResult : AppCompatActivity() {
         drawable.cornerRadius = 25f
         drawable.setColor(KumiwakeMethods.getResultColor(i, groupArray.size))
 
-        v.layoutParams = setMargin(4, 6, 4, 6)
+        v.layoutParams = PublicMethods.setMargin(this,4, 6, 4, 6)
         v.background = drawable
     }
 

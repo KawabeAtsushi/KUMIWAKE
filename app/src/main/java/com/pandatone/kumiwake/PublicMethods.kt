@@ -15,6 +15,7 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
@@ -126,9 +127,21 @@ object PublicMethods {
         }
     }
 
-    fun getLinkChar(url:String, text:String):CharSequence{
+    fun getLinkChar(url: String, text: String): CharSequence {
         val siteCharHtml = "<a href=$url>$text</a>";
         return Html.fromHtml(siteCharHtml)
+    }
+
+    //Viewにマージンを設定
+    fun setMargin(c: Context, leftDp: Int, topDp: Int, rightDp: Int, bottomDp: Int): LinearLayout.LayoutParams {
+        val scale = c.resources.displayMetrics.density //画面のdensityを指定。
+        val left = (leftDp * scale + 0.5f).toInt()
+        val top = (topDp * scale + 0.5f).toInt()
+        val right = (rightDp * scale + 0.5f).toInt()
+        val bottom = (bottomDp * scale + 0.5f).toInt()
+        val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        layoutParams.setMargins(left, top, right, bottom)
+        return layoutParams
     }
 }
 

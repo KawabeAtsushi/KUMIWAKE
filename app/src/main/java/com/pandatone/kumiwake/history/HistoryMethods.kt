@@ -1,6 +1,7 @@
 package com.pandatone.kumiwake.history
 
 import android.content.Context
+import android.util.Log
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.member.function.Member
@@ -22,15 +23,15 @@ object HistoryMethods {
     fun stringToResultArray(context: Context, resultStr: String): ArrayList<ArrayList<Member>> {
         val groups = resultStr.split(",/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         groups.dropLast(1) //最後は空なので削除
-        val resultArray = ArrayList<ArrayList<Member>>(groups.size)
+        val resultArray = ArrayList<ArrayList<Member>>()
         val memberList = MemberAdapter(context).getAllMembers()
-        var groupIndex = 0
         groups.forEach { group ->
             val resultNoArray = group.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val result = ArrayList<Member>()
             resultNoArray.forEach { id ->
-                resultArray[groupIndex].add(pickMember(context, id, memberList))
+                result.add(pickMember(context, id, memberList))
             }
-            groupIndex++
+            resultArray.add(result)
         }
         return resultArray
     }

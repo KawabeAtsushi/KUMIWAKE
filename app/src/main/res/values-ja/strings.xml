@@ -179,4 +179,7 @@
     <string name="release_note">リリースノート</string>
     <string name="deleted_mamber">削除されたメンバー</string>
     <string name="kept_history">キープした履歴</string>
+    <string name="creation_date">作成日時</string>
+    <string name="title">タイトル</string>
+    <string name="how_to_history">※ノーマルモードの結果のみ保存されます。\n※表示されるのは直近50件の結果のみです。</string>
 </resources>

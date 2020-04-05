@@ -179,4 +179,7 @@
     <string name="release_note">Release Note</string>
     <string name="deleted_mamber">Deleted member</string>
     <string name="kept_history">kept history</string>
+    <string name="creation_date">Creation date</string>
+    <string name="title">Title</string>
+    <string name="how_to_history">* Only the results of normal mode are saved. \ n * Only the last 50 results are displayed.</string>
 </resources>
