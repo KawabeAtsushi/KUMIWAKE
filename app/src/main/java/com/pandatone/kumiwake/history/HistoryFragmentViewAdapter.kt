@@ -50,7 +50,7 @@ class HistoryFragmentViewAdapter(private val context: Context, private val histo
         setModeIcon(v,position)
 
         nameTextView = v?.findViewById<View>(R.id.historyName) as TextView
-        nameTextView.text = history.name
+        nameTextView.text = HistoryMethods.changeDateFormat(history.name)
 
         return v
     }

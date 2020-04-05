@@ -67,11 +67,7 @@ class SettingsFragment : Fragment() {
         backupList = root.findViewById(R.id.back_up_list)
         backupList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
-            if (position != 3) {
                 checkPermission(activity!!.baseContext, position)
-            } else {
-                onRefreshData()
-            }
         }
         otherList = root.findViewById(R.id.other_list)
         otherList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
@@ -104,7 +100,7 @@ class SettingsFragment : Fragment() {
         val context = activity!!.baseContext
 
         howToUseStr = arrayOf(getString(R.string.about_kumiwake), getString(R.string.about_member), getString(R.string.about_sekigime), getString(R.string.detail_help))
-        backupStr = arrayOf(getString(R.string.back_up_db), getString(R.string.import_db), getString(R.string.delete_backup), getString(R.string.refresh_data))
+        backupStr = arrayOf(getString(R.string.back_up_db), getString(R.string.import_db), getString(R.string.delete_backup))
         otherStr = arrayOf(getString(R.string.app_version), getString(R.string.advertise_delete), getString(R.string.contact_us), getString(R.string.share_app), getString(R.string.privacy_policy))
         howToUseAdapter = ArrayAdapter(context, android.R.layout.simple_expandable_list_item_1, howToUseStr)
         backupAdapter = ArrayAdapter(context, android.R.layout.simple_expandable_list_item_1, backupStr)
@@ -131,12 +127,6 @@ class SettingsFragment : Fragment() {
         val title = getString(R.string.delete_backup)
         val message = getString(R.string.delete_backup_attention)
         dialog.decisionDialog(title, message, this::deleteBackup)
-    }
-
-    private fun onRefreshData() {
-        val title = getString(R.string.refresh_data)
-        val message = getString(R.string.refresh_attention) + getString(R.string.run_confirmation)
-        dialog.decisionDialog(title, message) { activity?.let { it -> RefreshData.refresh(it) } }
     }
 
     private fun deleteBackup() {

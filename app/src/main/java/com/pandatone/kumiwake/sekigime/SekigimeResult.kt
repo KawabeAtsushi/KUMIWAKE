@@ -66,10 +66,6 @@ class SekigimeResult : AppCompatActivity() {
         findViewById<Button>(R.id.go_home).setOnClickListener { onGoHome() }
         findViewById<Button>(R.id.show_all).setOnClickListener { onShowAll() }
         findViewById<Button>(R.id.share_image).setOnClickListener { onShareImage() }
-        //履歴に保存
-        if (StatusHolder.normalMode) {
-            HistoryMethods.saveResultToHistory(this, teamArray, 0, false)
-        }
     }
 
     private fun drawView(position: Int) {

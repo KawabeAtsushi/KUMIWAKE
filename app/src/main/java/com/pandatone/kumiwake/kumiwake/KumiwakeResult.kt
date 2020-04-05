@@ -148,8 +148,14 @@ class KumiwakeResult : AppCompatActivity() {
                 KumiwakeMethods.kumiwakeAllQuick(resultArray, memberArray, groupArray)
             }
         }
+
+        //履歴に保存
         if (StatusHolder.normalMode) {
-            HistoryMethods.saveResultToHistory(this, resultArray, 0, again)
+            if (StatusHolder.sekigime) {
+                HistoryMethods.saveResultToHistory(this, resultArray, 1, false)
+            }else{
+                HistoryMethods.saveResultToHistory(this, resultArray, 0, again)
+            }
         }
     }
 

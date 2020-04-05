@@ -1,10 +1,14 @@
 package com.pandatone.kumiwake.history
 
 import android.content.Context
+import android.text.format.DateFormat
 import android.util.Log
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.member.function.Member
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 object HistoryMethods {
 
@@ -21,8 +25,8 @@ object HistoryMethods {
     }
 
     fun stringToResultArray(context: Context, resultStr: String): ArrayList<ArrayList<Member>> {
-        val groups = resultStr.split(",/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        groups.dropLast(1) //最後は空なので削除
+        val groups = resultStr.split(",/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray().toCollection(ArrayList())
+        groups.removeAll(){it.count() == 0} //空配列を削除
         val resultArray = ArrayList<ArrayList<Member>>()
         val memberList = MemberAdapter(context).getAllMembers()
         groups.forEach { group ->
@@ -56,5 +60,15 @@ object HistoryMethods {
         } else {
             hsAdapter.changeHistory(resultStr, mode, 0)
         }
+    }
+
+    //日付の表記を適切にローカライズ
+    fun changeDateFormat(dateStr:String):String{
+        val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val dt = df.parse(dateStr)
+        val locale = Locale.getDefault();
+        val format = DateFormat.getBestDateTimePattern(locale, "yyyyMMMdHHm")
+        val dateFormat = SimpleDateFormat(format, locale)
+        return dateFormat.format(dt)
     }
 }

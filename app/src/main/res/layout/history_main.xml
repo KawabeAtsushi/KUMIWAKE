@@ -38,20 +38,5 @@
                 android:textColor="#fff" />
         </androidx.viewpager.widget.ViewPager>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/decisionBt"
-            style="@style/Button.Transparent.Rounded"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|bottom"
-            android:layout_marginBottom="22dp"
-            android:padding="15dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="@string/decide"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            app:backgroundTint="#90ffc02e" />
-
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

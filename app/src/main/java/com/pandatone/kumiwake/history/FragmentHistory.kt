@@ -33,6 +33,7 @@ class FragmentHistory : ListFragment() {
 
     override fun onStart() {
         super.onStart()
+        activity?.actionBar?.title = activity?.actionBar?.title + historyList
         loadName()
     }
 
