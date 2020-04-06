@@ -113,7 +113,7 @@ class MembersFragment : Fragment(), SearchView.OnQueryTextListener {
         return false
     }
 
-    fun setPageChangeListener(menu: Menu){
+    fun setPageChangeListener(menu: Menu) {
         viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageScrollStateChanged(state: Int) {
                 page = viewPager.currentItem

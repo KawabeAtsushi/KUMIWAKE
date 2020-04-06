@@ -50,7 +50,7 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
                     280 + (130 * ((seatsNo - squareNo) / 2f).roundToInt() + 50)
                 }
             }
-            "parallel" -> height = 130 * (seatsNo / 2f).roundToInt()+ 170
+            "parallel" -> height = 130 * (seatsNo / 2f).roundToInt() + 170
             "circle" -> height = 860
             "counter" -> height = seatsNo * 132 + 100
         }
@@ -95,10 +95,10 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
         cPaint.isAntiAlias = true
         cPaint.style = Paint.Style.STROKE
         val rectRight = dispWidth - 180 * dp
-        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight,tableRound, tableRound, cPaint)
+        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight, tableRound, tableRound, cPaint)
         cPaint.color = Color.parseColor(tableColor)
         cPaint.style = Paint.Style.FILL
-        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight,tableRound, tableRound, cPaint)
+        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight, tableRound, tableRound, cPaint)
 
         //椅子
         sPaint.color = Color.parseColor(chairStrokeColor)
@@ -125,7 +125,7 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
         var b = 0
         var i = 0
         var j = 0
-        val topChairY = tableTop - 75f*dp
+        val topChairY = tableTop - 75f * dp
         //上辺
         while (a < squareNo) {
             canvas.drawCircle(transX + 150 * dp, topChairY, r, sPaint)
@@ -137,7 +137,7 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
         canvas.translate((-transX * a), 0f)
         //底辺
         if (doubleDeploy!!) {
-            val initialY = tableHeight + 75* dp
+            val initialY = tableHeight + 75 * dp
             while (a < squareNo * 2) {
                 canvas.drawCircle(transX + 150 * dp, initialY, r, sPaint)
                 canvas.translate(transX, 0f)
@@ -158,7 +158,7 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
 
         r = 50 * dp
         sPaint.strokeWidth = 7 * dp
-        val sideTopY = tableTop + 90f*dp
+        val sideTopY = tableTop + 90f * dp
         while (i < (seatsNo - a) / 2) {
             canvas.drawCircle(100 * dp, sideTopY, r, sPaint)
             canvas.translate(0f, transY)
@@ -205,10 +205,10 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
         cPaint.color = Color.parseColor(tableStrokeColor)
         cPaint.strokeWidth = tableStrokeWidth * dp
         cPaint.style = Paint.Style.STROKE
-        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight,tableRound, tableRound, cPaint)
+        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight, tableRound, tableRound, cPaint)
         cPaint.color = Color.parseColor(tableColor)
         cPaint.style = Paint.Style.FILL
-        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight,tableRound, tableRound, cPaint)
+        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight, tableRound, tableRound, cPaint)
 //        val rect = RectF(180 * dp, 100 * dp, rectRight, tableHeight)
 //        canvas.drawBitmap(bmp, null, rect, cPaint)
 
@@ -223,7 +223,7 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
         //間隔
         var i = 0
         var j = 0
-        val startChairY = tableTop + 90f*dp
+        val startChairY = tableTop + 90f * dp
         while (i < seatsNo / 2) {
             canvas.drawCircle(100 * dp, startChairY, r, sPaint)
             canvas.translate(0f, transY)
@@ -508,7 +508,7 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
 
     //circleのバルーンが重ならないように描画
     private fun nonOverlapCircle(bottomY: Float, startX: Float, point: Int, textPaint: Paint): Float {
-        if(y.size > point + 1) {
+        if (y.size > point + 1) {
             val nextCenterY = y[point + 1] - lastY
             when (point) {
                 0 -> { //一番上の席
@@ -543,7 +543,7 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
                     return bottomY
                 }
             }
-        }else{
+        } else {
             return bottomY
         }
     }

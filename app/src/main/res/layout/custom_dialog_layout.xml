@@ -64,7 +64,7 @@
                     android:text=""
                     android:textColor="#55f"
                     android:textSize="14sp"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/dialog_link"
@@ -74,7 +74,7 @@
                     android:layout_gravity="center_horizontal"
                     android:lineSpacingExtra="6dp"
                     android:text=""
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/copy_path_button"
@@ -83,8 +83,7 @@
                     android:layout_gravity="end"
                     android:layout_marginTop="5dp"
                     android:visibility="gone"
-                    android:text="@string/copy_path"
-                    />
+                    android:text="@string/copy_path" />
 
             </LinearLayout>
 
@@ -97,7 +96,8 @@
             android:orientation="horizontal"
             style="?android:attr/buttonBarStyle">
             <!-- OK ボタン -->
-            <com.google.android.material.button.MaterialButton style="?android:attr/buttonBarButtonStyle"
+            <com.google.android.material.button.MaterialButton
+                style="?android:attr/buttonBarButtonStyle"
                 android:id="@+id/positive_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -105,7 +105,8 @@
                 android:text="OK"
                 android:textColor="@android:color/white" />
 
-            <com.google.android.material.button.MaterialButton style="?android:attr/buttonBarButtonStyle"
+            <com.google.android.material.button.MaterialButton
+                style="?android:attr/buttonBarButtonStyle"
                 android:id="@+id/negative_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

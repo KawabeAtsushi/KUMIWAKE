@@ -69,11 +69,11 @@ class MainActivity : AppCompatActivity() {
     // 戻るボタンが押されたとき
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-                DialogWarehouse(supportFragmentManager).decisionDialog("KUMIWAKE", getString(R.string.app_exit_confirmation)) {
-                    finishAndRemoveTask()
-                }
-                return true
+            DialogWarehouse(supportFragmentManager).decisionDialog("KUMIWAKE", getString(R.string.app_exit_confirmation)) {
+                finishAndRemoveTask()
             }
+            return true
+        }
         return false
     }
 

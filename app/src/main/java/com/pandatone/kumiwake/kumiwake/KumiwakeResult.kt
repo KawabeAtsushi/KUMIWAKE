@@ -153,7 +153,7 @@ class KumiwakeResult : AppCompatActivity() {
         if (StatusHolder.normalMode) {
             if (StatusHolder.sekigime) {
                 HistoryMethods.saveResultToHistory(this, resultArray, 1, false)
-            }else{
+            } else {
                 HistoryMethods.saveResultToHistory(this, resultArray, 0, again)
             }
         }
@@ -252,7 +252,7 @@ class KumiwakeResult : AppCompatActivity() {
         drawable.cornerRadius = 25f
         drawable.setColor(KumiwakeMethods.getResultColor(i, groupArray.size))
 
-        v.layoutParams = PublicMethods.setMargin(this,4, 6, 4, 6)
+        v.layoutParams = PublicMethods.setMargin(this, 4, 6, 4, 6)
         v.background = drawable
     }
 

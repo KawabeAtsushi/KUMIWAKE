@@ -63,11 +63,11 @@ class FragmentHistory : ListFragment() {
         }
         //行をロングクリックした時の処理
         listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
-            HistoryAdapter(requireContext()).updateHistoryState(historyList[position],"",true)
+            HistoryAdapter(requireContext()).updateHistoryState(historyList[position], "", true)
             loadName()
             FragmentKeeps().loadName()
             FragmentKeeps().setToolbarTitle(requireContext())
-            HistoryMain.viewPager.setCurrentItem(1,true)
+            HistoryMain.viewPager.setCurrentItem(1, true)
             false
         }
     }

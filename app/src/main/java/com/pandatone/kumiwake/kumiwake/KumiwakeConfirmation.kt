@@ -110,7 +110,7 @@ class KumiwakeConfirmation : AppCompatActivity() {
                 }
             }
             Collections.sort(leaderArray, KumiwakeComparator.LeaderComparator())
-        }else{
+        } else {
             newMemberArray.addAll(memberArray)
         }
     }

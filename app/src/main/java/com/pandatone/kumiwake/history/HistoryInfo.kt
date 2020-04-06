@@ -94,7 +94,7 @@ class HistoryInfo(val c: Activity) {
         resultArray.forEach { result ->
             memberArray.addAll(result)
         }
-        memberArray.removeAll() { it.id == -1 }
+        memberArray.removeAll { it.id == -1 }
         NormalMode.memberArray = memberArray
         startActivity(c, Intent(c, NormalMode::class.java), null)
     }

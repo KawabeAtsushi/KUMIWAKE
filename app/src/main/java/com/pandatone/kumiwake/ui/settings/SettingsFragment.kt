@@ -18,13 +18,12 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.setting.PurchaseFreeAdOption
-import com.pandatone.kumiwake.setting.RefreshData
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import java.io.File
-import com.pandatone.kumiwake.PublicMethods
 
 
 class SettingsFragment : Fragment() {
@@ -52,22 +51,22 @@ class SettingsFragment : Fragment() {
         howToUseList = root.findViewById(R.id.how_to_use_list)
         howToUseList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
-            val homepageLink = PublicMethods.getLinkChar(getString(R.string.url_homepage),getString(R.string.more_details))
+            val homepageLink = PublicMethods.getLinkChar(getString(R.string.url_homepage), getString(R.string.more_details))
             when (position) {
                 0 -> {
                     val message = (getString(R.string.how_to_kumiwake) + "\n\n■" + getString(R.string.normal_mode) + "■\n"
                             + getString(R.string.description_of_normal_kumiwake) + "\n\n■" + getString(R.string.quick_mode) + "■\n" + getString(R.string.description_of_quick_kumiwake))
-                    dialog.confirmationDialog(howToUseStr[0], message,homepageLink)
+                    dialog.confirmationDialog(howToUseStr[0], message, homepageLink)
                 }
-                1 -> dialog.confirmationDialog(howToUseStr[1], getText(R.string.how_to_member),homepageLink)
-                2 -> dialog.confirmationDialog(howToUseStr[2], getText(R.string.how_to_sekigime),homepageLink)
-                3 -> PublicMethods.toWebSite(requireContext(),requireFragmentManager())
+                1 -> dialog.confirmationDialog(howToUseStr[1], getText(R.string.how_to_member), homepageLink)
+                2 -> dialog.confirmationDialog(howToUseStr[2], getText(R.string.how_to_sekigime), homepageLink)
+                3 -> PublicMethods.toWebSite(requireContext(), requireFragmentManager())
             }
         }
         backupList = root.findViewById(R.id.back_up_list)
         backupList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
-                checkPermission(activity!!.baseContext, position)
+            checkPermission(activity!!.baseContext, position)
         }
         otherList = root.findViewById(R.id.other_list)
         otherList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
@@ -150,8 +149,8 @@ class SettingsFragment : Fragment() {
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
         }
-        val releaseNoteLink = PublicMethods.getLinkChar(getString(R.string.url_release_note),getString(R.string.release_note))
-        dialog.confirmationDialog(getString(R.string.app_version), versionName,releaseNoteLink)
+        val releaseNoteLink = PublicMethods.getLinkChar(getString(R.string.url_release_note), getString(R.string.release_note))
+        dialog.confirmationDialog(getString(R.string.app_version), versionName, releaseNoteLink)
     }
 
     private fun launchMailer() {

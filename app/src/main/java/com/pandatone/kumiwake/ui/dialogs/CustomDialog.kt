@@ -3,7 +3,6 @@ package com.pandatone.kumiwake.ui.dialogs
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.View
 import android.view.Window
@@ -11,7 +10,6 @@ import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialog
 import androidx.fragment.app.DialogFragment
-import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 
 
@@ -19,7 +17,7 @@ import com.pandatone.kumiwake.R
  * Created by atsushi_2 on 2016/11/11.
  */
 
-class CustomDialog(private var mTitle: String, private var mMessage: CharSequence,private val linkChar: CharSequence = "") : DialogFragment() {
+class CustomDialog(private var mTitle: String, private var mMessage: CharSequence, private val linkChar: CharSequence = "") : DialogFragment() {
 
     //onClickリスナ(Positive)
     var mPositiveBtnListener: View.OnClickListener? = null
@@ -38,12 +36,12 @@ class CustomDialog(private var mTitle: String, private var mMessage: CharSequenc
         // メッセージ設定
         dialog.findViewById<TextView>(R.id.dialog_message)!!.text = mMessage
         // リンク設定
-        if(linkChar != "") {
+        if (linkChar != "") {
             val linkTextView = dialog.findViewById<TextView>(R.id.dialog_link)
             linkTextView!!.visibility = View.VISIBLE
             linkTextView.text = linkChar
-            val mMethod = LinkMovementMethod.getInstance();
-            linkTextView.movementMethod = mMethod;
+            val mMethod = LinkMovementMethod.getInstance()
+            linkTextView.movementMethod = mMethod
         }
         // OK ボタンのリスナ
         if (mPositiveBtnListener == null) {

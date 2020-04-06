@@ -6,10 +6,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.member.FragmentGroupChoiceMode
-import com.pandatone.kumiwake.member.FragmentMemberChoiceMode
-import com.pandatone.kumiwake.ui.members.FragmentGroupMain
-import com.pandatone.kumiwake.ui.members.FragmentMemberMain
 
 
 /**

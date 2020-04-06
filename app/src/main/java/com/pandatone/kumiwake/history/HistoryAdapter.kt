@@ -112,12 +112,12 @@ class HistoryAdapter(context: Context) : ArrayAdapter<History>(context, 0) {
     }
 
     //履歴画面での操作を反映
-    fun updateHistoryState(item:History, name: String = "", changeKeep: Boolean) {
+    fun updateHistoryState(item: History, name: String = "", changeKeep: Boolean) {
         var keepInt = item.keep
         if (changeKeep) {
-            keepInt = if (item.keep == -1){
+            keepInt = if (item.keep == -1) {
                 1
-            }else{
+            } else {
                 -1
             }
         }
@@ -148,7 +148,7 @@ class HistoryAdapter(context: Context) : ArrayAdapter<History>(context, 0) {
             db.endTransaction()                    // トランザクションの終了
         }
         close()
-        saveHistory(result,mode,parent)
+        saveHistory(result, mode, parent)
     }
 
     companion object {

@@ -36,7 +36,7 @@
         android:tint="@color/gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/indexName"
-        app:layout_constraintBottom_toBottomOf="@id/indexName"/>
+        app:layout_constraintBottom_toBottomOf="@id/indexName" />
 
     <TextView
         android:id="@+id/indexDate"
@@ -79,13 +79,13 @@
         app:layout_constraintBottom_toTopOf="@id/okBt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-    <LinearLayout
-        android:id="@+id/result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="@dimen/info_margin"
-        />
+
+        <LinearLayout
+            android:id="@+id/result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/info_margin" />
     </ScrollView>
 
     <com.google.android.material.button.MaterialButton

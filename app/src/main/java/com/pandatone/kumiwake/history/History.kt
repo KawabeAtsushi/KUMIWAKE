@@ -1,7 +1,6 @@
 package com.pandatone.kumiwake.history
 
 import java.io.Serializable
-import java.sql.Timestamp
 
 class History(id: Int, time: String, name: String, result: String, mode: Int, keep: Int, parent: Int) : Serializable {
     var id: Int //ID

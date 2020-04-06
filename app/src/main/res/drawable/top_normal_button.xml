@@ -5,17 +5,9 @@
     <item android:state_pressed="false">
         <shape android:shape="rectangle">
             <!-- 背景色 -->
-            <corners android:radius="20dp"/>
-            <padding
-                android:top="@dimen/top_button_expansion"
-                android:bottom="@dimen/top_button_expansion"
-                android:left="@dimen/top_button_expansion"
-                android:right="@dimen/top_button_expansion"/>
-            <gradient
-                android:type="linear"
-                android:angle="90"
-                android:startColor="#FFbbbb"
-                android:endColor="@color/red_unpressed"/>
+            <corners android:radius="20dp" />
+            <padding android:top="@dimen/top_button_expansion" android:bottom="@dimen/top_button_expansion" android:left="@dimen/top_button_expansion" android:right="@dimen/top_button_expansion" />
+            <gradient android:type="linear" android:angle="90" android:startColor="#FFbbbb" android:endColor="@color/red_unpressed" />
         </shape>
     </item>
 
@@ -23,12 +15,8 @@
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
             <!-- 背景色 -->
-            <corners android:radius="20dp"/>
-            <gradient
-                android:type="linear"
-                android:angle="90"
-                android:startColor="#FFaaaa"
-                android:endColor="@color/red_pressed"/>
+            <corners android:radius="20dp" />
+            <gradient android:type="linear" android:angle="90" android:startColor="#FFaaaa" android:endColor="@color/red_pressed" />
         </shape>
     </item>
 </selector>

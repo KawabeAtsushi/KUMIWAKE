@@ -70,15 +70,15 @@ class AddMember : AppCompatActivity() {
         val member = i.getSerializableExtra(AddMemberKeys.MEMBER.key) as Member?
         fromNormalMode = i.getBooleanExtra(AddMemberKeys.FROM_NORMAL_MODE.key, false)
         val memberImg = findViewById<ImageView>(R.id.memberIcon)
-            sexGroup!!.setOnCheckedChangeListener { _, checkedId: Int ->
-                when (checkedId) {
-                    R.id.manBtn -> memberImg.setColorFilter(PublicMethods.getColor(this, R.color.man))
+        sexGroup!!.setOnCheckedChangeListener { _, checkedId: Int ->
+            when (checkedId) {
+                R.id.manBtn -> memberImg.setColorFilter(PublicMethods.getColor(this, R.color.man))
                 R.id.womanBtn -> memberImg.setColorFilter(PublicMethods.getColor(this, R.color.woman))
             }
-    }
-    if (member != null) {
-                setItem(member)
-                member_registration_continue_btn.visibility = View.GONE
+        }
+        if (member != null) {
+            setItem(member)
+            member_registration_continue_btn.visibility = View.GONE
         }
 
         var yomigana = ""
@@ -96,10 +96,10 @@ class AddMember : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         })
 
-        Toast.makeText(this,getText(R.string.double_tap),Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getText(R.string.double_tap), Toast.LENGTH_SHORT).show()
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        mDetector = GestureDetectorCompat(this, MyGestureListener(imm,nameEditText as EditText))
-        mDetector.setOnDoubleTapListener(MyGestureListener(imm,nameEditText as EditText))
+        mDetector = GestureDetectorCompat(this, MyGestureListener(imm, nameEditText as EditText))
+        mDetector.setOnDoubleTapListener(MyGestureListener(imm, nameEditText as EditText))
     }
 
     //スクロールビューの場合こっち呼ぶ
@@ -242,7 +242,7 @@ class AddMember : AppCompatActivity() {
         val read = readEditText!!.text!!.toString()
         val sex = sexButton!!.text as String
         val age = getValue(ageEditText!!)
-        val belong = MemberMethods.belongConvertToNo(belongDropdown!!.text.toString(),groupList)
+        val belong = MemberMethods.belongConvertToNo(belongDropdown!!.text.toString(), groupList)
 
         mbAdapter!!.saveName(name, sex, age, belong, read)
     }
@@ -273,7 +273,7 @@ class AddMember : AppCompatActivity() {
         val read = readEditText!!.text!!.toString()
         val sex = sexButton!!.text as String
         val age = getValue(ageEditText!!)
-        val belong = MemberMethods.belongConvertToNo(belongDropdown!!.text.toString(),groupList)
+        val belong = MemberMethods.belongConvertToNo(belongDropdown!!.text.toString(), groupList)
 
         mbAdapter!!.updateMember(listId, name, sex, age, belong, read)
         FragmentMemberMain().loadName()

@@ -78,7 +78,7 @@ class EditGroupViewAdapter(private val context: Context, private val groupList: 
                     if (afterNo < 0) {
                         numberOfMemberEditText.setTextColor(Color.RED)
                     } else {
-                        numberOfMemberEditText.setTextColor(PublicMethods.getColor(context,R.color.gray))
+                        numberOfMemberEditText.setTextColor(PublicMethods.getColor(context, R.color.gray))
                     }
                 } else {
                     scrollView.setOnTouchListener { _, _ -> true }
@@ -109,12 +109,13 @@ class EditGroupViewAdapter(private val context: Context, private val groupList: 
         if (newNo < 0) {
             et.setTextColor(Color.RED)
         } else {
-            et.setTextColor(PublicMethods.getColor(context,R.color.gray))
+            et.setTextColor(PublicMethods.getColor(context, R.color.gray))
         }
     }
 
     @SuppressLint("UseSparseArrays")
     private val groupNameView = HashMap<Int, EditText>()
+
     @SuppressLint("UseSparseArrays")
     private val memberNoView = HashMap<Int, EditText>()
 

@@ -1,23 +1,14 @@
 package com.pandatone.kumiwake.history
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.view.*
-import android.widget.AbsListView
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.ListView
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.ListFragment
-import androidx.viewpager.widget.ViewPager
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.StatusHolder
-import com.pandatone.kumiwake.adapter.MemberAdapter
-import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter
-import com.pandatone.kumiwake.member.function.Filtering
-import com.pandatone.kumiwake.member.function.Member
-import com.pandatone.kumiwake.member.function.Sort
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 
 
@@ -71,7 +62,7 @@ class FragmentKeeps : ListFragment() {
         }
         //行をロングクリックした時の処理
         listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
-            HistoryAdapter(requireContext()).updateHistoryState(historyList[position],"",true)
+            HistoryAdapter(requireContext()).updateHistoryState(historyList[position], "", true)
             loadName()
             FragmentHistory().loadName()
             setToolbarTitle(requireContext())
@@ -103,11 +94,11 @@ class FragmentKeeps : ListFragment() {
         listAdp.notifyDataSetChanged()
     }
 
-    private fun toFavoList(){
-        historyList.removeAll(){it.keep == -1}
+    private fun toFavoList() {
+        historyList.removeAll { it.keep == -1 }
     }
 
-    fun setToolbarTitle(c:Context){
+    fun setToolbarTitle(c: Context) {
         toolbarTitle = c.getString(R.string.favorite) + " " + historyList.count().toString() + "♥s"
         HistoryMain.toolbar.title = toolbarTitle
     }

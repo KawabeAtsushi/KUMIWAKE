@@ -128,7 +128,7 @@ object PublicMethods {
     }
 
     fun getLinkChar(url: String, text: String): CharSequence {
-        val siteCharHtml = "<a href=$url>$text</a>";
+        val siteCharHtml = "<a href=$url>$text</a>"
         return Html.fromHtml(siteCharHtml)
     }
 

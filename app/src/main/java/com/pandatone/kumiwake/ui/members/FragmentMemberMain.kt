@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -157,8 +156,8 @@ class FragmentMemberMain : ListFragment() {
     internal inner class CallbackMB : AbsListView.MultiChoiceModeListener {
 
         private var checkedCount = 0
-        private lateinit var listener:ViewPager.SimpleOnPageChangeListener
-        private lateinit var viewPager:ViewPager
+        private lateinit var listener: ViewPager.SimpleOnPageChangeListener
+        private lateinit var viewPager: ViewPager
 
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             // アクションモード初期化処理

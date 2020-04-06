@@ -92,7 +92,7 @@
                 android:textColor="@android:color/white"
                 app:backgroundTint="@color/light_green"
                 app:icon="@drawable/ic_sekigime_24px"
-                app:iconTint="@android:color/white"/>
+                app:iconTint="@android:color/white" />
 
             <com.google.android.material.button.MaterialButton
                 style="@style/Button.Transparent.Rounded"
@@ -106,7 +106,7 @@
                 android:textColor="@android:color/white"
                 app:backgroundTint="@color/gray"
                 app:icon="@drawable/ic_home_24dp"
-                app:iconTint="@android:color/white"/>
+                app:iconTint="@android:color/white" />
         </LinearLayout>
     </ScrollView>
 

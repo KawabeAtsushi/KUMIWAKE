@@ -18,7 +18,7 @@
         android:tint="@color/gray"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
     <TextView
@@ -32,7 +32,7 @@
         android:singleLine="true"
         app:layout_constraintStart_toEndOf="@id/modeIcon"
         app:layout_constraintTop_toTopOf="@id/modeIcon"
-        app:layout_constraintBottom_toBottomOf="@id/modeIcon"/>
+        app:layout_constraintBottom_toBottomOf="@id/modeIcon" />
 
     <ImageView
         android:id="@+id/favoriteIcon"
@@ -43,6 +43,6 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

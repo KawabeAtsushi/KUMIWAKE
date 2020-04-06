@@ -9,8 +9,6 @@ import com.android.billingclient.api.*
 import com.pandatone.kumiwake.MainActivity
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
-import com.pandatone.kumiwake.ui.dialogs.CustomDialog
-import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 
 
 /*
@@ -209,8 +207,8 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
     }
 
     //skuを商品名に変換
-    private fun skuToName(sku: String):String{
-        when(sku){
+    private fun skuToName(sku: String): String {
+        when (sku) {
             StatusHolder.ad_free_sku -> return getString(R.string.ad_delete)
         }
         return getString(R.string.nothing)
@@ -239,7 +237,7 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
     }
 
     //広告非表示処理
-    private fun deleteAd(){
+    private fun deleteAd() {
         StatusHolder.adDeleated = true
         MainActivity.mAdView.visibility = View.GONE
     }

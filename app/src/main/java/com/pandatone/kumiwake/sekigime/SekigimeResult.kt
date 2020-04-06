@@ -15,8 +15,10 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
-import com.pandatone.kumiwake.*
-import com.pandatone.kumiwake.history.HistoryMethods
+import com.pandatone.kumiwake.MainActivity
+import com.pandatone.kumiwake.PublicMethods
+import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.ShareViewImage
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.sekigime.function.DrawAllTable
 import com.pandatone.kumiwake.sekigime.function.DrawTableView

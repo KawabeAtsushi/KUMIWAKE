@@ -12,7 +12,6 @@
         android:id="@+id/menu_help"
         android:icon="@drawable/ic_help_outline_dark_24dp"
         app:showAsAction="always"
-        android:title="@string/hint">
-    </item>
+        android:title="@string/hint"></item>
 
 </menu>
