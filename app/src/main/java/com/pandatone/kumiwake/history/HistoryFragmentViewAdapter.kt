@@ -3,7 +3,6 @@ package com.pandatone.kumiwake.history
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
-import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
@@ -48,9 +47,9 @@ class HistoryFragmentViewAdapter(private val context: Context, private val histo
             v.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(context, R.color.checked_list))
         }
 
-        setModeIcon(v,position)
+        setModeIcon(v, position)
 
-        if (history.keep != -1){
+        if (history.keep != -1) {
             val favoIcon = v.findViewById<ImageView>(R.id.favoriteIcon)
             favoIcon.visibility = View.VISIBLE
         }

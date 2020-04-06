@@ -1,6 +1,5 @@
 package com.pandatone.kumiwake.ui.kumiwake
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -10,7 +9,6 @@ import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Guideline
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.pandatone.kumiwake.MainActivity
 import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
@@ -19,7 +17,6 @@ import com.pandatone.kumiwake.history.HistoryMain
 import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.kumiwake.QuickMode
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
-import kotlin.math.abs
 
 
 class KumiwakeFragment : Fragment() {
@@ -48,6 +45,7 @@ class KumiwakeFragment : Fragment() {
         normalButton = root.findViewById(R.id.normal_mode_button)
         normalButton.setOnClickListener {
             StatusHolder.normalMode = true
+            NormalMode.memberArray = ArrayList()
             startActivity(Intent(activity, NormalMode::class.java))
         }
         quickButton = root.findViewById(R.id.quick_mode_button)
@@ -60,14 +58,14 @@ class KumiwakeFragment : Fragment() {
             startActivity(Intent(activity, HistoryMain::class.java))
         }
 
-        val homepageLink = PublicMethods.getLinkChar(getString(R.string.url_homepage),getString(R.string.more_details))
+        val homepageLink = PublicMethods.getLinkChar(getString(R.string.url_homepage), getString(R.string.more_details))
         val normalHelp: ImageButton = root.findViewById(R.id.hintForNormalMode)
         normalHelp.setOnClickListener {
-            dialog.confirmationDialog(getString(R.string.normal_mode), getString(R.string.description_of_normal_kumiwake),homepageLink)
+            dialog.confirmationDialog(getString(R.string.normal_mode), getString(R.string.description_of_normal_kumiwake), homepageLink)
         }
         val quickHelp: ImageButton = root.findViewById(R.id.hintForQuickMode)
         quickHelp.setOnClickListener {
-            dialog.confirmationDialog(getString(R.string.quick_mode), getString(R.string.description_of_quick_kumiwake),homepageLink)
+            dialog.confirmationDialog(getString(R.string.quick_mode), getString(R.string.description_of_quick_kumiwake), homepageLink)
         }
 
         val layout = root.findViewById<ConstraintLayout>(R.id.top_container)
@@ -91,9 +89,9 @@ class KumiwakeFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val homepageLink = PublicMethods.getLinkChar(getString(R.string.url_homepage),getString(R.string.more_details))
+        val homepageLink = PublicMethods.getLinkChar(getString(R.string.url_homepage), getString(R.string.more_details))
         when (item.itemId) {
-            R.id.menu_help -> dialog.confirmationDialog(getString(R.string.kumiwake), getString(R.string.how_to_kumiwake),homepageLink)
+            R.id.menu_help -> dialog.confirmationDialog(getString(R.string.kumiwake), getString(R.string.how_to_kumiwake), homepageLink)
         }
         return true
     }

@@ -69,10 +69,10 @@ class AddGroup : AppCompatActivity() {
             setItem(editId)
         }
         members = GroupMethods.searchBelong(this, editId.toString())
-        Toast.makeText(this,getText(R.string.double_tap),Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getText(R.string.double_tap), Toast.LENGTH_SHORT).show()
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        mDetector = GestureDetectorCompat(this, MyGestureListener(imm,groupEditText))
-        mDetector.setOnDoubleTapListener(MyGestureListener(imm,groupEditText))
+        mDetector = GestureDetectorCompat(this, MyGestureListener(imm, groupEditText))
+        mDetector.setOnDoubleTapListener(MyGestureListener(imm, groupEditText))
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {

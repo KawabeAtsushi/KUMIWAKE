@@ -50,7 +50,7 @@
         android:textColor="@android:color/black"
         android:singleLine="true"
         app:backgroundTint="#FFDB89"
-        app:icon="@drawable/member_img"
+        app:icon="@drawable/ic_human"
         app:iconSize="30dp"
         app:iconTint="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"

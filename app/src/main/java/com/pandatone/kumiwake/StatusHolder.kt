@@ -55,6 +55,4 @@ enum class KumiwakeArrayKeys(val key: String) {
     LEADER_LIST("LEADER_LIST")
 }
 
-enum class PastelColors(val code: String){
-
-}
+enum class PastelColors(val code: String)

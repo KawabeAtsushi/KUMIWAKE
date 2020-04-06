@@ -15,7 +15,7 @@
         android:tint="@color/gray"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/leader"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/editGroupName"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="@id/rowIconGroup"
         app:layout_constraintBottom_toBottomOf="@id/rowIconGroup"
         app:layout_constraintStart_toEndOf="@id/rowIconGroup"
-        app:layout_constraintEnd_toStartOf="@id/editTheNumberOfMember"/>
+        app:layout_constraintEnd_toStartOf="@id/editTheNumberOfMember" />
 
 
     <EditText
@@ -50,7 +50,7 @@
         android:textColor="@color/gray"
         app:layout_constraintTop_toTopOf="@id/rowIconGroup"
         app:layout_constraintBottom_toBottomOf="@id/rowIconGroup"
-        app:layout_constraintEnd_toStartOf="@id/personTex"/>
+        app:layout_constraintEnd_toStartOf="@id/personTex" />
 
     <TextView
         android:id="@+id/personTex"
@@ -61,7 +61,7 @@
         android:paddingBottom="@dimen/row_padding"
         android:text="@string/people"
         app:layout_constraintBottom_toBottomOf="@id/rowIconGroup"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/leader"
@@ -71,6 +71,6 @@
         android:layout_marginStart="@dimen/row_padding"
         android:paddingBottom="@dimen/row_padding"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

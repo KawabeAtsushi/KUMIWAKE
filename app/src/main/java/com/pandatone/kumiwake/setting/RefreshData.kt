@@ -1,17 +1,9 @@
 package com.pandatone.kumiwake.setting
 
-import android.annotation.SuppressLint
 import android.content.ContentValues
-import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import android.widget.Toast
-import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
-import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
-import com.pandatone.kumiwake.member.function.MemberClick
-import com.pandatone.kumiwake.member.function.MemberMethods
 
 
 object RefreshData {

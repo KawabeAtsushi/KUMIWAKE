@@ -40,12 +40,12 @@
                     android:id="@+id/memberIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/member_img"
+                    android:src="@drawable/ic_human"
                     tools:ignore="ContentDescription"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/sexGroup"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintBottom_toBottomOf="parent" />
 
                 <RadioGroup
                     android:id="@+id/sexGroup"

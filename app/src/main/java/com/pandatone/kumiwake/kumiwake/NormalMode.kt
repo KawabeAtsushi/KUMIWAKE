@@ -12,7 +12,10 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.Window
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.Button
+import android.widget.ListView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.GestureDetectorCompat
@@ -53,9 +56,9 @@ class NormalMode : AppCompatActivity() {
         add_group_listview.numberOfSelectedMember.text = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
         findViewById<Button>(R.id.normal_kumiwake_btn).setOnClickListener { onNextClick() }
 
-        Toast.makeText(this,getText(R.string.double_tap), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getText(R.string.double_tap), Toast.LENGTH_SHORT).show()
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        mDetector = GestureDetectorCompat(this, MyGestureListener(imm,gpNoEditText))
+        mDetector = GestureDetectorCompat(this, MyGestureListener(imm, gpNoEditText))
         mDetector.setOnDoubleTapListener(MyGestureListener(imm, gpNoEditText))
     }
 

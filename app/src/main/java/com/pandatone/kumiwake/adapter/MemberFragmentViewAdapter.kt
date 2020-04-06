@@ -73,7 +73,7 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
     private fun setSexIcon(v: View, position: Int) {
         val memberIcon: ImageView = v.findViewById<View>(R.id.memberIcon) as ImageView
         if (getItem(position).sex == context.getText(R.string.man)) {
-            memberIcon.setImageResource(R.drawable.member_img)
+            memberIcon.setColorFilter(PublicMethods.getColor(context, R.color.man))
         } else {
             memberIcon.setColorFilter(PublicMethods.getColor(context, R.color.woman))
         }

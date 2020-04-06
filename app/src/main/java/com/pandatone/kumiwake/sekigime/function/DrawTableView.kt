@@ -152,10 +152,10 @@ class DrawTableView(context: Context) : View(context) {
         cPaint.isAntiAlias = true
         cPaint.style = Paint.Style.STROKE
         val rectRight = dispWidth - 180 * dp
-        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight,tableRound, tableRound, cPaint)
+        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight, tableRound, tableRound, cPaint)
         cPaint.color = Color.parseColor(tableColor)
         cPaint.style = Paint.Style.FILL
-        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight,tableRound, tableRound, cPaint)
+        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight, tableRound, tableRound, cPaint)
 
         //椅子
         sPaint.color = Color.parseColor(chairStrokeColor)

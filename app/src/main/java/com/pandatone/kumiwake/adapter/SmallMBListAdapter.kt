@@ -66,7 +66,7 @@ class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Mem
 
         when (listElements[position].sex) {
             context.getText(R.string.man) -> {
-                memberIcon.setImageResource(R.drawable.member_img)
+                memberIcon.setColorFilter(PublicMethods.getColor(context, R.color.man))
             }
             context.getText(R.string.woman) -> {
                 memberIcon.setColorFilter(PublicMethods.getColor(context, R.color.woman))

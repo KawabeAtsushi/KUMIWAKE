@@ -26,7 +26,7 @@ object HistoryMethods {
 
     fun stringToResultArray(context: Context, resultStr: String): ArrayList<ArrayList<Member>> {
         val groups = resultStr.split(",/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray().toCollection(ArrayList())
-        groups.removeAll() { it.count() == 0 } //空配列を削除
+        groups.removeAll { it.count() == 0 } //空配列を削除
         val resultArray = ArrayList<ArrayList<Member>>()
         val memberList = MemberAdapter(context).getAllMembers()
         groups.forEach { group ->
@@ -68,7 +68,7 @@ object HistoryMethods {
         if (dateStr.length == 19) { //タイムスタンプなら
             val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
             val dt = df.parse(dateStr)
-            val locale = Locale.getDefault();
+            val locale = Locale.getDefault()
             val format = DateFormat.getBestDateTimePattern(locale, "yyyyMMMdHHm")
             val dateFormat = SimpleDateFormat(format, locale)
             name = dateFormat.format(dt)

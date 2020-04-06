@@ -32,6 +32,7 @@
         <item name="android:colorPrimaryDark">@color/blue_title</item>
         <item name="actionModeCloseButtonStyle">@style/NoCloseButtonActionModeStyle</item>
     </style>
+
     <style name="NoCloseButtonActionModeStyle">
         <item name="android:visibility">invisible</item>
     </style>
@@ -39,8 +40,11 @@
 
     <!-- Buttons -->
     <style name="Button.Solid" parent="Widget.MaterialComponents.Button" />
+
     <style name="Button.Transparent" parent="Widget.MaterialComponents.Button.TextButton" />
+
     <style name="Button.Icon" parent="Widget.MaterialComponents.Button.Icon" />
+
     <style name="Button.Outline" parent="Widget.MaterialComponents.Button.OutlinedButton" />
 
     <!-- 丸枠ボタン(透明) -->

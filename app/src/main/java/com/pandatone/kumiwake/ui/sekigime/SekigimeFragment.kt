@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Guideline
 import androidx.fragment.app.Fragment
@@ -41,6 +40,7 @@ class SekigimeFragment : Fragment() {
         val normalButton: Button = root.findViewById(R.id.normal_mode_button)
         normalButton.setOnClickListener {
             StatusHolder.normalMode = true
+            NormalMode.memberArray = ArrayList()
             startActivity(Intent(activity, NormalMode::class.java))
         }
         val quickButton: Button = root.findViewById(R.id.quick_mode_button)
@@ -53,14 +53,14 @@ class SekigimeFragment : Fragment() {
             startActivity(Intent(activity, HistoryMain::class.java))
         }
 
-        val homepageLink = PublicMethods.getLinkChar(getString(R.string.url_homepage),getString(R.string.more_details))
+        val homepageLink = PublicMethods.getLinkChar(getString(R.string.url_homepage), getString(R.string.more_details))
         val normalHelp: ImageButton = root.findViewById(R.id.hintForNormalMode)
         normalHelp.setOnClickListener {
-            dialog.confirmationDialog(getString(R.string.normal_mode), getString(R.string.description_of_normal_sekigime),homepageLink)
+            dialog.confirmationDialog(getString(R.string.normal_mode), getString(R.string.description_of_normal_sekigime), homepageLink)
         }
         val quickHelp: ImageButton = root.findViewById(R.id.hintForQuickMode)
         quickHelp.setOnClickListener {
-            dialog.confirmationDialog(getString(R.string.quick_mode), getString(R.string.description_of_quick_sekigime),homepageLink)
+            dialog.confirmationDialog(getString(R.string.quick_mode), getString(R.string.description_of_quick_sekigime), homepageLink)
         }
 
         val layout = root.findViewById<ConstraintLayout>(R.id.top_container)
@@ -84,9 +84,9 @@ class SekigimeFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val homepageLink = PublicMethods.getLinkChar(getString(R.string.url_homepage),getString(R.string.more_details))
+        val homepageLink = PublicMethods.getLinkChar(getString(R.string.url_homepage), getString(R.string.more_details))
         when (item.itemId) {
-            R.id.menu_help -> dialog.confirmationDialog(getString(R.string.sekigime), getString(R.string.how_to_sekigime),homepageLink)
+            R.id.menu_help -> dialog.confirmationDialog(getString(R.string.sekigime), getString(R.string.how_to_sekigime), homepageLink)
         }
         return true
     }
