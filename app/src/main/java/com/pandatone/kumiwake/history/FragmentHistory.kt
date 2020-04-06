@@ -33,8 +33,8 @@ class FragmentHistory : ListFragment() {
     override fun onStart() {
         super.onStart()
         loadName()
-        val title = context?.getString(R.string.history) + " " + historyList.count().toString() + "times"
-        HistoryMain.toolbar.title = title
+        toolbarTitle = context?.getString(R.string.history) + " " + historyList.count().toString() + "times"
+        HistoryMain.toolbar.title = toolbarTitle
     }
 
     // 必須*
@@ -65,6 +65,8 @@ class FragmentHistory : ListFragment() {
         listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
             HistoryAdapter(requireContext()).updateHistoryState(historyList[position],"",true)
             loadName()
+            FragmentKeeps().loadName()
+            FragmentKeeps().setToolbarTitle(requireContext())
             HistoryMain.viewPager.setCurrentItem(1,true)
             false
         }
@@ -95,6 +97,7 @@ class FragmentHistory : ListFragment() {
         private lateinit var hsAdapter: HistoryAdapter
         internal lateinit var listAdp: HistoryFragmentViewAdapter
         internal var historyList: ArrayList<History> = ArrayList()
+        internal var toolbarTitle = ""
     }
 
 }

@@ -5,15 +5,10 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
-import com.pandatone.kumiwake.AddGroupKeys
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.adapter.CustomPagerAdapter
-import com.pandatone.kumiwake.member.function.Member
 
 
 /**
@@ -31,8 +26,8 @@ class HistoryMain : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar!!.title = getString(R.string.history)
         supportActionBar!!.setDisplayShowTitleEnabled(true)
-
         setViews()
+        setPageChangeListener()
     }
 
     //Viewの宣言・初期化
@@ -47,6 +42,11 @@ class HistoryMain : AppCompatActivity() {
         viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageScrollStateChanged(state: Int) {
                 page = viewPager.currentItem
+                if (page == 0) {
+                    supportActionBar!!.title = FragmentHistory.toolbarTitle
+                } else {
+                    supportActionBar!!.title = FragmentKeeps.toolbarTitle
+                }
             }
         })
 
@@ -62,6 +62,15 @@ class HistoryMain : AppCompatActivity() {
         return false
     }
 
+    private fun setPageChangeListener() {
+        viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+            override fun onPageScrollStateChanged(state: Int) {
+                page = viewPager.currentItem
+
+            }
+        })
+    }
+
     override fun dispatchKeyEvent(e: KeyEvent): Boolean {
         // 戻るボタンが押されたとき
         when (e.keyCode) {
@@ -75,7 +84,7 @@ class HistoryMain : AppCompatActivity() {
 
     companion object {
         lateinit var viewPager: ViewPager
-        lateinit var toolbar:Toolbar
+        lateinit var toolbar: Toolbar
     }
 
 }

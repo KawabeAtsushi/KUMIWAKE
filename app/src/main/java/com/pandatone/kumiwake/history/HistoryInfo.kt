@@ -114,6 +114,7 @@ class HistoryInfo(val c: Activity) {
                         HistoryAdapter(c).updateHistoryState(item, editText.text.toString(), false)
                         history.text = newName
                         FragmentHistory().loadName()
+                        FragmentKeeps().loadName()
                     }
                 }
                 .setNegativeButton(R.string.cancel) { dialog, which ->

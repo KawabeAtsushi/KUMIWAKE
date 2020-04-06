@@ -38,7 +38,7 @@ class HistoryPagerAdapter(private var context: Context, fm: FragmentManager) : F
     override fun getPageTitle(position: Int): CharSequence? {
         when (position) {
             0 -> return context.getString(R.string.history)
-            //1 -> return context.getString(R.string.kept_history)
+            1 -> return context.getString(R.string.favorite)
         }
         return null
     }
