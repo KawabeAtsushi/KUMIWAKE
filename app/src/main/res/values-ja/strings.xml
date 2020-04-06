@@ -181,5 +181,12 @@
     <string name="kept_history">キープした履歴</string>
     <string name="creation_date">作成日時</string>
     <string name="title">タイトル</string>
-    <string name="how_to_history">※ノーマルモードの結果のみ保存されます。\n※表示されるのは直近50件の結果のみです。</string>
+    <string name="how_to_history">クリックすると組み分けの履歴を確認できます。\n詳細画面から同じメンバーで組分け/席決めができます。
+        \n行を長押しするとその履歴をお気に入りに登録/解除できます。\n※ノーマルモードの結果のみ保存されます。\n※表示されるのは直近50件の結果のみです。</string>
+    <string name="close">閉じる</string>
+    <string name="kumiwake_from_history">このメンバーで組分け</string>
+    <string name="sekigime_from_history">このメンバーで席決め</string>
+    <string name="edit_title">タイトルの変更</string>
+    <string name="change">変更</string>
+    <string name="new_title">新しいタイトル</string>
 </resources>

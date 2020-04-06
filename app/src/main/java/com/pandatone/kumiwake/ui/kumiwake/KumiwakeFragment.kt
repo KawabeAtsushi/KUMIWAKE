@@ -48,13 +48,11 @@ class KumiwakeFragment : Fragment() {
         normalButton = root.findViewById(R.id.normal_mode_button)
         normalButton.setOnClickListener {
             StatusHolder.normalMode = true
-            StatusHolder.sekigime = false
             startActivity(Intent(activity, NormalMode::class.java))
         }
         quickButton = root.findViewById(R.id.quick_mode_button)
         quickButton.setOnClickListener {
             StatusHolder.normalMode = false
-            StatusHolder.sekigime = false
             startActivity(Intent(activity, QuickMode::class.java))
         }
         historyButton = root.findViewById(R.id.history_button)

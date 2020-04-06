@@ -41,13 +41,11 @@ class SekigimeFragment : Fragment() {
         val normalButton: Button = root.findViewById(R.id.normal_mode_button)
         normalButton.setOnClickListener {
             StatusHolder.normalMode = true
-            StatusHolder.sekigime = true
             startActivity(Intent(activity, NormalMode::class.java))
         }
         val quickButton: Button = root.findViewById(R.id.quick_mode_button)
         quickButton.setOnClickListener {
             StatusHolder.normalMode = false
-            StatusHolder.sekigime = true
             startActivity(Intent(activity, QuickMode::class.java))
         }
         val historyButton: Button = root.findViewById(R.id.history_button)

@@ -1,8 +1,8 @@
 package com.pandatone.kumiwake.history
 
+import android.app.Activity
 import android.content.Context
 import android.text.format.DateFormat
-import android.util.Log
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.member.function.Member
@@ -26,7 +26,7 @@ object HistoryMethods {
 
     fun stringToResultArray(context: Context, resultStr: String): ArrayList<ArrayList<Member>> {
         val groups = resultStr.split(",/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray().toCollection(ArrayList())
-        groups.removeAll(){it.count() == 0} //空配列を削除
+        groups.removeAll() { it.count() == 0 } //空配列を削除
         val resultArray = ArrayList<ArrayList<Member>>()
         val memberList = MemberAdapter(context).getAllMembers()
         groups.forEach { group ->
@@ -63,12 +63,31 @@ object HistoryMethods {
     }
 
     //日付の表記を適切にローカライズ
-    fun changeDateFormat(dateStr:String):String{
-        val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-        val dt = df.parse(dateStr)
-        val locale = Locale.getDefault();
-        val format = DateFormat.getBestDateTimePattern(locale, "yyyyMMMdHHm")
-        val dateFormat = SimpleDateFormat(format, locale)
-        return dateFormat.format(dt)
+    fun changeDateFormat(dateStr: String): String {
+        var name = dateStr
+        if (dateStr.length == 19) { //タイムスタンプなら
+            val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            val dt = df.parse(dateStr)
+            val locale = Locale.getDefault();
+            val format = DateFormat.getBestDateTimePattern(locale, "yyyyMMMdHHm")
+            val dateFormat = SimpleDateFormat(format, locale)
+            name = dateFormat.format(dt)
+        }
+        return name
     }
+
+    //ソート
+    var sortType = "ASC"
+    fun historySort(activity: Activity, historyList: ArrayList<History>, listAdp: HistoryFragmentViewAdapter) {
+        val hsAdapter = HistoryAdapter(activity)
+        if (sortType == "ASC") {
+            sortType = "DESC"
+        } else {
+            sortType = "ASC"
+        }
+        hsAdapter.sortGroups(sortType, historyList)
+        listAdp.notifyDataSetChanged() //loadName()を呼ばない！
+    }
+
+
 }

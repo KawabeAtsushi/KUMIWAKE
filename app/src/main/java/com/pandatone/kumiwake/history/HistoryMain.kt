@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
@@ -26,9 +27,8 @@ class HistoryMain : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.history_main)
-        val toolbar = findViewById<View>(R.id.history_toolbar) as Toolbar
+        toolbar = findViewById<View>(R.id.history_toolbar) as Toolbar
         setSupportActionBar(toolbar)
-
         supportActionBar!!.title = getString(R.string.history)
         supportActionBar!!.setDisplayShowTitleEnabled(true)
 
@@ -75,6 +75,7 @@ class HistoryMain : AppCompatActivity() {
 
     companion object {
         lateinit var viewPager: ViewPager
+        lateinit var toolbar:Toolbar
     }
 
 }

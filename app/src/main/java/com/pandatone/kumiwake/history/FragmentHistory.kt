@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.ListFragment
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.StatusHolder
-import com.pandatone.kumiwake.member.function.Sort
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 
 
@@ -29,12 +27,14 @@ class FragmentHistory : ListFragment() {
         super.onCreate(savedInstanceState)
         hsAdapter = HistoryAdapter(requireContext())
         listAdp = HistoryFragmentViewAdapter(requireContext(), historyList)
+        HistoryMethods.sortType = "ASC"
     }
 
     override fun onStart() {
         super.onStart()
-        activity?.actionBar?.title = activity?.actionBar?.title + historyList
         loadName()
+        val title = context?.getString(R.string.history) + " " + historyList.count().toString() + "times"
+        HistoryMain.toolbar.title = title
     }
 
     // 必須*
@@ -57,10 +57,16 @@ class FragmentHistory : ListFragment() {
     //Activity生成後に呼ばれる
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        //行をクリックした時の処理
         listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            //行をクリックした時の処理
             HistoryInfo(activity!!).infoDialog(historyList[position])
+        }
+        //行をロングクリックした時の処理
+        listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
+            HistoryAdapter(requireContext()).updateHistoryState(historyList[position],"",true)
+            loadName()
+            HistoryMain.viewPager.setCurrentItem(1,true)
+            false
         }
     }
 
@@ -68,6 +74,7 @@ class FragmentHistory : ListFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
+            R.id.item_sort -> HistoryMethods.historySort(activity!!, historyList, listAdp)
             R.id.menu_help -> dialog.confirmationDialog(getString(R.string.history), getString(R.string.how_to_history))
         }
         return false

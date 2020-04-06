@@ -34,4 +34,15 @@
         app:layout_constraintTop_toTopOf="@id/modeIcon"
         app:layout_constraintBottom_toBottomOf="@id/modeIcon"/>
 
+    <ImageView
+        android:id="@+id/favoriteIcon"
+        android:layout_width="@dimen/member_icon_size"
+        android:layout_height="@dimen/member_icon_size"
+        android:src="@drawable/ic_favorite_24dp"
+        android:padding="@dimen/row_padding"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -181,5 +181,13 @@
     <string name="kept_history">kept history</string>
     <string name="creation_date">Creation date</string>
     <string name="title">Title</string>
-    <string name="how_to_history">* Only the results of normal mode are saved. \ n * Only the last 50 results are displayed.</string>
+    <string name="how_to_history">Click to see the grouping history.\nYou can grouping or seating with the same members from the details screen.
+         \nLong press the line to register or unregister the history as a favorite.\n
+        * Only the results of normal mode are saved. \ n * Only the last 50 results are displayed.</string>
+    <string name="close">close</string>
+    <string name="kumiwake_from_history">kumiwake with these</string>
+    <string name="sekigime_from_history">sekigime with these</string>
+    <string name="edit_title">Edit title</string>
+    <string name="change">change</string>
+    <string name="new_title">new title</string>
 </resources>

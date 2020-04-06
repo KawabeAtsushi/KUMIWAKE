@@ -27,6 +27,17 @@
         app:layout_constraintBottom_toBottomOf="@id/indexName"
         app:layout_constraintStart_toEndOf="@id/indexName" />
 
+    <ImageButton
+        android:id="@+id/edit_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/ic_edit_24dp"
+        android:tint="@color/gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/indexName"
+        app:layout_constraintBottom_toBottomOf="@id/indexName"/>
+
     <TextView
         android:id="@+id/indexDate"
         android:layout_width="wrap_content"
@@ -78,15 +89,37 @@
     </ScrollView>
 
     <com.google.android.material.button.MaterialButton
+        style="@style/Button.Transparent.Rounded"
+        android:id="@+id/goToBt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/red_pressed"
+        android:textColor="@android:color/white"
+        android:text="@string/kumiwake_from_history"
+        app:icon="@drawable/ic_kumiwake_24px"
+        app:iconTint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/okBt" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Button.Transparent.Rounded"
         android:id="@+id/okBt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
-        android:text=" OK "
+        android:backgroundTint="@color/gray"
+        android:text="@string/close"
+        android:textColor="@android:color/white"
+        app:icon="@drawable/ic_close_black_24dp"
+        app:iconTint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/goToBt"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

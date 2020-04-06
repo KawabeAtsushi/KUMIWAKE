@@ -83,6 +83,16 @@ class HistoryAdapter(context: Context) : ArrayAdapter<History>(context, 0) {
         c.close()
     }
 
+    //ソート
+    fun sortGroups(sortType: String, groupList: ArrayList<History>) {
+        open()
+        val query = "SELECT * FROM " +
+                TABLE_NAME + " ORDER BY " + HS_ID + " " + sortType + ";"
+        val c = db.rawQuery(query, null)
+        getCursor(c, groupList)
+        close()
+    }
+
     fun saveHistory(result: String, mode: Int, parent: Int) {
         open()
         db.beginTransaction()          // トランザクション開始
@@ -102,17 +112,23 @@ class HistoryAdapter(context: Context) : ArrayAdapter<History>(context, 0) {
     }
 
     //履歴画面での操作を反映
-    fun updateHistoryState(id: Int, name: String, keep: Boolean) {
-        var keepInt = -1
-        if (keep) {
-            keepInt = 1
+    fun updateHistoryState(item:History, name: String = "", changeKeep: Boolean) {
+        var keepInt = item.keep
+        if (changeKeep) {
+            keepInt = if (item.keep == -1){
+                1
+            }else{
+                -1
+            }
         }
         open()
         val values = ContentValues()
-        values.put(HS_NAME, name)
+        if (name != "") {
+            values.put(HS_NAME, name)
+        }
         values.put(HS_KEEP, keepInt)
         try {
-            db.update(TABLE_NAME, values, "$HS_ID=?", arrayOf(id.toString()))
+            db.update(TABLE_NAME, values, "$HS_ID=?", arrayOf(item.id.toString()))
         } catch (e: Exception) {
             e.printStackTrace()
         }
