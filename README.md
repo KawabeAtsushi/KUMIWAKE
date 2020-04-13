@@ -2,6 +2,8 @@
 
 Created By PANDATONE.
 
+[![](https://img.youtube.com/vi/o6aGSUSdpjw/0.jpg)](https://www.youtube.com/watch?v=o6aGSUSdpjw)
+
 Store (GooglePlay):</br>
 https://play.google.com/store/apps/details?id=com.pandatone.kumiwake
 
