@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        StatusHolder.nowTheme = R.style.AppTheme
+        PublicMethods.initialize()
         setContentView(R.layout.activity_main)
         if (StatusHolder.adCheck) {
             startActivity(Intent(this, PurchaseFreeAdOption::class.java))

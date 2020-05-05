@@ -30,6 +30,13 @@ import kotlin.math.abs
 
 object PublicMethods {
 
+    //初期状態を設定
+    fun initialize(){
+        StatusHolder.nowTheme = R.style.AppTheme
+        StatusHolder.normalMode = true
+        StatusHolder.sekigime = false
+    }
+
     //広告の表示
     fun showAd(activity: Activity) {
         val mAdView = activity.findViewById<View>(R.id.adView) as AdView

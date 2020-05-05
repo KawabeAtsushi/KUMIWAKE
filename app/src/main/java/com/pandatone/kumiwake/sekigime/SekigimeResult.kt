@@ -84,12 +84,15 @@ class SekigimeResult : AppCompatActivity() {
         DialogWarehouse(supportFragmentManager).decisionDialog(title, message, this::reSekigime)
     }
 
+    //ホームに戻る
     private fun onGoHome() {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        PublicMethods.initialize()
         startActivity(intent)
     }
 
+    //全表示
     private fun onShowAll() {
         findViewById<ScrollView>(R.id.result_scroller).fullScroll(ScrollView.FOCUS_UP)
         val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
@@ -118,7 +121,7 @@ class SekigimeResult : AppCompatActivity() {
         drawAll = !drawAll //描画モード切替
     }
 
-
+    //結果画像共有
     private fun onShareImage() {
         val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
         ShareViewImage.shareView(this, resultLayout, getString(R.string.sekigime_result))

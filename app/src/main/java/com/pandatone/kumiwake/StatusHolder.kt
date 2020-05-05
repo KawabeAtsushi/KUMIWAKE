@@ -6,16 +6,19 @@ import com.pandatone.kumiwake.adapter.MemberAdapter
 
 object StatusHolder {
 
+    //ad status
     var adDeleated = false //広告は非表示か
     var adCheck = true //広告削除購入済みかチェック
     var cheakStatus = false //購入履歴チェックモード
 
+    //mode
     var normalMode: Boolean = true //true: ノーマルモード, false: クイックモード
     var sekigime: Boolean = false //true: 席決めモード, false: 組み分けモード
 
     @StyleRes
     var nowTheme: Int = R.style.AppTheme
 
+    //Sort status
     var mbNowSort = MemberAdapter.MB_ID //ソート対象要素
     var mbSortType = "ASC" //降順・昇順
     var gpNowSort = GroupAdapter.GP_ID //ソート対象要素

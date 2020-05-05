@@ -38,9 +38,10 @@
 
                 <ImageView
                     android:id="@+id/memberIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@drawable/ic_human"
+                    android:tint="@color/man"
                     tools:ignore="ContentDescription"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/sexGroup"
