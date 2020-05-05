@@ -72,7 +72,7 @@
         android:singleLine="true"
         app:icon="@drawable/ic_add_white_24dp"
         app:iconSize="30dp"
-        app:backgroundTint="@color/blue_title"
+        app:backgroundTint="#6FF1B2"
         app:layout_constraintBottom_toBottomOf="@id/member_add_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/member_add_btn"

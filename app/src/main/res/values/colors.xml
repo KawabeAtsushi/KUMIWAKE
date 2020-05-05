@@ -16,9 +16,9 @@
     <color name="thin_man">#5033b5e5</color>
     <color name="thin_woman">#50fc7373</color>
     <color name="thin_white">#50FFFFFF</color>
-    <color name="white_gray">#9ccc</color>
+    <color name="white_gray">#5ccc</color>
     <color name="thin_gray">#aaa</color>
-    <color name="background_gray">#E0E0E0</color>
+    <color name="background_gray">#EDEDED</color>
 
     <color name="red_pressed">#f66</color>
     <color name="red_unpressed">#ff7777</color>

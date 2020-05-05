@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity() {
                 openFragment(OthersFragment())
                 tabLayout.visibility = View.GONE
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Others.primaryColor))
-                supportActionBar!!.title = Html.fromHtml("<font color='#e6b422'>" + getString(R.string.others) + "</font>")
+                supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.others) + "</font>")
                 container.background = getDrawable(Theme.Others.backgroundColor)
                 setStatusBarColor(this, Theme.Others.primaryColor)
                 if (StatusHolder.adDeleated) {

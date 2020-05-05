@@ -173,6 +173,7 @@ class AddMember : AppCompatActivity() {
             }
             // ダイアログを生成
             val dialog = AlertDialog.Builder(this)
+
             // 選択イベント
             dialog.setMultiChoiceItems(belongArray, checkArray) { _, _, _ -> }
             dialog.setPositiveButton(getText(R.string.decide)) { _, _ ->
