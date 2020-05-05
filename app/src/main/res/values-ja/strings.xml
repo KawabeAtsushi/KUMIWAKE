@@ -190,4 +190,5 @@
     <string name="change">変更</string>
     <string name="new_title">新しいタイトル</string>
     <string name="favorite">お気に入り</string>
+    <string name="others">便利機能</string>
 </resources>

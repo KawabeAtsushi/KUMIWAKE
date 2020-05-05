@@ -21,10 +21,6 @@ import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 
 class KumiwakeFragment : Fragment() {
 
-    private lateinit var normalButton: Button
-    private lateinit var quickButton: Button
-    private lateinit var historyButton: Button
-
     private val dialog: DialogWarehouse
         get() {
             return DialogWarehouse(requireFragmentManager())
@@ -42,23 +38,24 @@ class KumiwakeFragment : Fragment() {
         val kumiwakeIcon: ImageView = root.findViewById(R.id.main_icon)
         kumiwakeIcon.setOnClickListener { PublicMethods.toWebSite(requireContext(), requireFragmentManager()) }
 
-        normalButton = root.findViewById(R.id.normal_mode_button)
+        val normalButton: Button = root.findViewById(R.id.normal_mode_button)
         normalButton.setOnClickListener {
             StatusHolder.normalMode = true
             NormalMode.memberArray = ArrayList()
             startActivity(Intent(activity, NormalMode::class.java))
         }
-        quickButton = root.findViewById(R.id.quick_mode_button)
+        val quickButton: Button = root.findViewById(R.id.quick_mode_button)
         quickButton.setOnClickListener {
             StatusHolder.normalMode = false
             startActivity(Intent(activity, QuickMode::class.java))
         }
-        historyButton = root.findViewById(R.id.history_button)
-        historyButton.setOnClickListener {
-            startActivity(Intent(activity, HistoryMain::class.java))
-        }
 
+        //ヘルプボタンのクリックリスナ
         val homepageLink = PublicMethods.getLinkChar(getString(R.string.url_homepage), getString(R.string.more_details))
+        val kumiwakeHelp: ImageButton = root.findViewById(R.id.hintForKumiwake)
+        kumiwakeHelp.setOnClickListener {
+            dialog.confirmationDialog(getString(R.string.kumiwake), getString(R.string.how_to_kumiwake), homepageLink)
+        }
         val normalHelp: ImageButton = root.findViewById(R.id.hintForNormalMode)
         normalHelp.setOnClickListener {
             dialog.confirmationDialog(getString(R.string.normal_mode), getString(R.string.description_of_normal_kumiwake), homepageLink)
@@ -81,19 +78,6 @@ class KumiwakeFragment : Fragment() {
         }
 
         return root
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.kumiwake_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val homepageLink = PublicMethods.getLinkChar(getString(R.string.url_homepage), getString(R.string.more_details))
-        when (item.itemId) {
-            R.id.menu_help -> dialog.confirmationDialog(getString(R.string.kumiwake), getString(R.string.how_to_kumiwake), homepageLink)
-        }
-        return true
     }
 
     //Viewのレイアウトが完了したタイミングで呼ばれる拡張関数

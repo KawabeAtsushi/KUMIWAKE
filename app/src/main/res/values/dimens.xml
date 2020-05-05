@@ -24,4 +24,5 @@
     <dimen name="form_textSize_large">18sp</dimen>
 
     <dimen name="top_button_expansion">5dp</dimen>
+    <dimen name="others_button_height">100dp</dimen>
 </resources>

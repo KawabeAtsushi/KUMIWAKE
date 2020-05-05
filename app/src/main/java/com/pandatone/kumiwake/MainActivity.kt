@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewTreeObserver
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
@@ -20,10 +21,12 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.google.android.material.tabs.TabLayout
 import com.pandatone.kumiwake.PublicMethods.setStatusBarColor
 import com.pandatone.kumiwake.setting.PurchaseFreeAdOption
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import com.pandatone.kumiwake.ui.kumiwake.KumiwakeFragment
+import com.pandatone.kumiwake.ui.kumiwake.OthersFragment
 import com.pandatone.kumiwake.ui.members.MembersFragment
 import com.pandatone.kumiwake.ui.sekigime.SekigimeFragment
 import com.pandatone.kumiwake.ui.settings.SettingsFragment
@@ -32,10 +35,17 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var tabLayout: TabLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         PublicMethods.initialize()
         setContentView(R.layout.activity_main)
+
+        tabLayout = findViewById(R.id.tabLayout);
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.kumiwake))
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.sekigime))
+
         if (StatusHolder.adCheck) {
             startActivity(Intent(this, PurchaseFreeAdOption::class.java))
         }
@@ -52,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         val navView: AHBottomNavigation = findViewById(R.id.nav_view)
 
         navView.addItem(AHBottomNavigationItem(R.string.kumiwake, R.drawable.ic_kumiwake_24px, Theme.Kumiwake.primaryColor))
-        navView.addItem(AHBottomNavigationItem(R.string.sekigime, R.drawable.ic_sekigime_24px, Theme.Sekigime.primaryColor))
+        navView.addItem(AHBottomNavigationItem(R.string.others, R.drawable.ic_star, Theme.Others.primaryColor))
         navView.addItem(AHBottomNavigationItem(R.string.member, R.drawable.ic_members_24dp, Theme.Member.primaryColor))
         navView.addItem(AHBottomNavigationItem(R.string.setting_help, R.drawable.ic_settings_24dp, Theme.Setting.primaryColor))
 
@@ -60,6 +70,7 @@ class MainActivity : AppCompatActivity() {
 
         setUpToolbar()
         navView.setOnTabSelectedListener(mOnNavigationItemSelectedListener)
+        tabLayout.addOnTabSelectedListener(tabItemSelectedListener)
 
         // To open the first tab as default
         openFragment(KumiwakeFragment())
@@ -86,6 +97,8 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_kumiwake -> {
                 nowPage = 0
                 openFragment(KumiwakeFragment())
+                tabLayout.selectTab(tabLayout.getTabAt(0))
+                tabLayout.visibility = View.VISIBLE
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Kumiwake.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.kumiwake) + "</font>")
                 container.background = getDrawable(Theme.Kumiwake.backgroundColor)
@@ -99,14 +112,14 @@ class MainActivity : AppCompatActivity() {
                 true
             }
 
-            R.id.navigation_sekigime -> {
+            R.id.navigation_others -> {
                 nowPage = 1
-                openFragment(SekigimeFragment())
-                supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Sekigime.primaryColor))
-                supportActionBar!!.title = Html.fromHtml("<font color='#616161'>" + getString(R.string.sekigime) + "</font>")
-                container.background = getDrawable(Theme.Sekigime.backgroundColor)
-                setStatusBarColor(this, Theme.Sekigime.primaryColor)
-                StatusHolder.sekigime = true
+                openFragment(OthersFragment())
+                tabLayout.visibility = View.GONE
+                supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Others.primaryColor))
+                supportActionBar!!.title = Html.fromHtml("<font color='#e6b422'>" + getString(R.string.others) + "</font>")
+                container.background = getDrawable(Theme.Others.backgroundColor)
+                setStatusBarColor(this, Theme.Others.primaryColor)
                 if (StatusHolder.adDeleated) {
                     mAdView.visibility = View.GONE
                 } else {
@@ -117,6 +130,7 @@ class MainActivity : AppCompatActivity() {
 
             R.id.navigation_members -> {
                 nowPage = 2
+                tabLayout.visibility = View.GONE
                 openFragment(MembersFragment())
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Member.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.member) + "</font>")
@@ -129,6 +143,7 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_settings -> {
                 nowPage = 3
                 openFragment(SettingsFragment())
+                tabLayout.visibility = View.GONE
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Setting.primaryColor))
                 supportActionBar!!.title = Html.fromHtml("<font color='#616161'>" + getString(R.string.setting_help) + "</font>")
                 container.background = getDrawable(Theme.Setting.backgroundColor)
@@ -138,6 +153,33 @@ class MainActivity : AppCompatActivity() {
             }
             else -> false
         }
+    }
+
+    private val tabItemSelectedListener = object : TabLayout.OnTabSelectedListener {
+
+        override fun onTabSelected(tab: TabLayout.Tab) {
+            when (tab.position) {
+                0 -> {//組み分け
+                    openFragment(KumiwakeFragment())
+                    supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Kumiwake.primaryColor))
+                    supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.kumiwake) + "</font>")
+                    container.background = getDrawable(Theme.Kumiwake.backgroundColor)
+                    setStatusBarColor(this@MainActivity, Theme.Kumiwake.primaryColor)
+                    StatusHolder.sekigime = false
+                }
+                1 -> {//席決め
+                    openFragment(SekigimeFragment())
+                    supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Sekigime.primaryColor))
+                    supportActionBar!!.title = Html.fromHtml("<font color='#616161'>" + getString(R.string.sekigime) + "</font>")
+                    container.background = getDrawable(Theme.Sekigime.backgroundColor)
+                    setStatusBarColor(this@MainActivity, Theme.Sekigime.primaryColor)
+                    StatusHolder.sekigime = true
+                }
+            }
+        }
+
+        override fun onTabUnselected(tab: TabLayout.Tab) {}
+        override fun onTabReselected(tab: TabLayout.Tab) {}
     }
 
     //Fragment初期表示（引数のfragmentが最初に表示される）

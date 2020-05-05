@@ -2,7 +2,10 @@ package com.pandatone.kumiwake.ui.sekigime
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +23,6 @@ import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 
 class SekigimeFragment : Fragment() {
 
-    private lateinit var sekigimeViewModel: SekigimeViewModel
     private val dialog: DialogWarehouse
         get() {
             return DialogWarehouse(requireFragmentManager())
@@ -33,8 +35,6 @@ class SekigimeFragment : Fragment() {
     ): View? {
         setHasOptionsMenu(true)
 
-        sekigimeViewModel =
-                ViewModelProviders.of(this).get(SekigimeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_sekigime, container, false)
 
         val normalButton: Button = root.findViewById(R.id.normal_mode_button)
@@ -48,12 +48,13 @@ class SekigimeFragment : Fragment() {
             StatusHolder.normalMode = false
             startActivity(Intent(activity, QuickMode::class.java))
         }
-        val historyButton: Button = root.findViewById(R.id.history_button)
-        historyButton.setOnClickListener {
-            startActivity(Intent(activity, HistoryMain::class.java))
-        }
 
+        //ヘルプボタンのクリックリスナ
         val homepageLink = PublicMethods.getLinkChar(getString(R.string.url_homepage), getString(R.string.more_details))
+        val sekigimeHelp: ImageButton = root.findViewById(R.id.hintForSekigime)
+        sekigimeHelp.setOnClickListener {
+            dialog.confirmationDialog(getString(R.string.sekigime), getString(R.string.how_to_sekigime), homepageLink)
+        }
         val normalHelp: ImageButton = root.findViewById(R.id.hintForNormalMode)
         normalHelp.setOnClickListener {
             dialog.confirmationDialog(getString(R.string.normal_mode), getString(R.string.description_of_normal_sekigime), homepageLink)
@@ -76,19 +77,6 @@ class SekigimeFragment : Fragment() {
         }
 
         return root
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.sekigime_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val homepageLink = PublicMethods.getLinkChar(getString(R.string.url_homepage), getString(R.string.more_details))
-        when (item.itemId) {
-            R.id.menu_help -> dialog.confirmationDialog(getString(R.string.sekigime), getString(R.string.how_to_sekigime), homepageLink)
-        }
-        return true
     }
 
     //Viewのレイアウトが完了したタイミングで呼ばれる拡張関数

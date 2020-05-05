@@ -7,9 +7,9 @@
         android:title="@string/kumiwake" />
 
     <item
-        android:id="@+id/navigation_sekigime"
-        android:icon="@drawable/ic_sekigime_24px"
-        android:title="@string/sekigime" />
+        android:id="@+id/navigation_others"
+        android:icon="@drawable/ic_star"
+        android:title="@string/others" />
 
     <item
         android:id="@+id/navigation_members"

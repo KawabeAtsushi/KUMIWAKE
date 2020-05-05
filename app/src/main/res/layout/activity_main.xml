@@ -15,6 +15,22 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent"
+        android:layout_margin="10dp"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabSelectedTextColor="@android:color/black"
+        app:tabPaddingStart="16dp"
+        app:tabPaddingEnd="16dp"
+        app:tabIndicatorHeight="0dp"
+        app:tabRippleColor="@null"
+        app:layout_constraintTop_toTopOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <FrameLayout
         android:id="@+id/fragment_layout"
         android:layout_width="0dp"

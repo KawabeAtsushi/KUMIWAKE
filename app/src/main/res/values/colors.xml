@@ -28,7 +28,7 @@
     <color name="text_dark">#616161</color>
 
     <!-- theme colors -->
-    <color name="blue_background">#84ffff</color>
+    <color name="blue_background">#f5f5f5</color>
     <color name="blue_title">#03a9f4</color>
     <color name="theme_blue_text">@android:color/white</color>
 

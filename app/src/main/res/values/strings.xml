@@ -30,7 +30,7 @@
     <string name="import_db">Import data</string>
     <string name="import_completed">Import was completed.</string>
     <string name="kumiwake">Grouping</string>
-    <string name="sekigime">Seat Allocation</string>
+    <string name="sekigime">Seating</string>
     <string name="share_app">Share App</string>
     <string name="share_result">Share Result</string>
     <string name="sex">Gender</string>
@@ -191,4 +191,5 @@
     <string name="change">change</string>
     <string name="new_title">new title</string>
     <string name="favorite">favorite</string>
+    <string name="others">others</string>
 </resources>

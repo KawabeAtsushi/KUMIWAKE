@@ -181,6 +181,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:text="@string/cancel"
+        android:textColor="@color/blue_title"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/member_registration_finish_btn" />
@@ -190,6 +191,7 @@
         style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/blue_title"
         android:text="@string/registration"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
         app:layout_constraintBottom_toBottomOf="parent"
