@@ -52,7 +52,7 @@ class KumiwakeCustom : AppCompatActivity() {
             groupArray = intent.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) as ArrayList<Group>
         }
         findViews()
-        mbAdapter = SmallMBListAdapter(this, memberArray, true, showLeaderNo = true)
+        mbAdapter = SmallMBListAdapter(this, memberArray, showLeaderNo = true)
         editGPAdapter = EditGroupViewAdapter(this, groupArray, custom_scroll, groupListView)
         setViews()
         memberListView.adapter = mbAdapter
@@ -148,7 +148,7 @@ class KumiwakeCustom : AppCompatActivity() {
             nextSet = leaderNoList.indexOfFirst { it == null }
         }
 
-        mbAdapter = SmallMBListAdapter(this, memberArray, true, showLeaderNo = true, leaderNoList = leaderNoList)
+        mbAdapter = SmallMBListAdapter(this, memberArray, leaderNoList = leaderNoList, showLeaderNo = true)
         memberListView.adapter = mbAdapter
     }
 

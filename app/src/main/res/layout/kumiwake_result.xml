@@ -31,6 +31,20 @@
                 android:text="@string/kumiwake_result"
                 android:textSize="22sp" />
 
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="end"
+                android:background="@drawable/tab_background"
+                android:layout_margin="10dp"
+                app:tabBackground="@drawable/tab_selector"
+                app:tabSelectedTextColor="@android:color/black"
+                app:tabPaddingStart="10dp"
+                app:tabPaddingEnd="10dp"
+                app:tabIndicatorHeight="0dp"
+                app:tabRippleColor="@null"/>
+
             <LinearLayout
                 android:id="@+id/result_layout"
                 android:layout_width="match_parent"

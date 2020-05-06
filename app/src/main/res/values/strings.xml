@@ -192,4 +192,7 @@
     <string name="new_title">new title</string>
     <string name="favorite">favorite</string>
     <string name="others">others</string>
+    <string name="by_member">by member</string>
+    <string name="by_group">by group</string>
+    <string name="kumiwake_order_annotation">(The order is according to age by gender)</string>
 </resources>

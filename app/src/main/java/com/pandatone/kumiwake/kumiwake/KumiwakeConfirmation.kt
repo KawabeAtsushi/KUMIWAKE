@@ -121,7 +121,7 @@ class KumiwakeConfirmation : AppCompatActivity() {
         memberArray.clear()
         memberArray.addAll(leaderArray)
         memberArray.addAll(newMemberArray)
-        val mbAdapter = SmallMBListAdapter(this, memberArray, true, showLeaderNo = true, leaderNoList = leaderNoList)
+        val mbAdapter = SmallMBListAdapter(this, memberArray, leaderNoList = leaderNoList, showLeaderNo = true)
         val gpAdapter = SmallGPListAdapter(this, groupArray)
         kumiwake_member_listView.adapter = mbAdapter
         groupListView.adapter = gpAdapter

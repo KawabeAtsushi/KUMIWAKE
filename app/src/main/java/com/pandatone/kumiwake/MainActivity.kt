@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewTreeObserver
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.text.HtmlCompat
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -100,7 +101,7 @@ class MainActivity : AppCompatActivity() {
                 tabLayout.selectTab(tabLayout.getTabAt(0))
                 tabLayout.visibility = View.VISIBLE
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Kumiwake.primaryColor))
-                supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.kumiwake) + "</font>")
+                supportActionBar!!.title = HtmlCompat.fromHtml("<font color='#FFFFFF'>" + getString(R.string.kumiwake) + "</font>", HtmlCompat.FROM_HTML_MODE_COMPACT)
                 container.background = getDrawable(Theme.Kumiwake.backgroundColor)
                 setStatusBarColor(this, Theme.Kumiwake.primaryColor)
                 StatusHolder.sekigime = false
@@ -117,7 +118,7 @@ class MainActivity : AppCompatActivity() {
                 openFragment(OthersFragment())
                 tabLayout.visibility = View.GONE
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Others.primaryColor))
-                supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.others) + "</font>")
+                supportActionBar!!.title = HtmlCompat.fromHtml("<font color='#FFFFFF'>" + getString(R.string.others) + "</font>", HtmlCompat.FROM_HTML_MODE_COMPACT)
                 container.background = getDrawable(Theme.Others.backgroundColor)
                 setStatusBarColor(this, Theme.Others.primaryColor)
                 if (StatusHolder.adDeleated) {
@@ -133,7 +134,7 @@ class MainActivity : AppCompatActivity() {
                 tabLayout.visibility = View.GONE
                 openFragment(MembersFragment())
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Member.primaryColor))
-                supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.member) + "</font>")
+                supportActionBar!!.title = HtmlCompat.fromHtml("<font color='#FFFFFF'>" + getString(R.string.member) + "</font>", HtmlCompat.FROM_HTML_MODE_COMPACT)
                 container.background = ColorDrawable(Theme.Member.backgroundColor)
                 setStatusBarColor(this, Theme.Member.primaryColor)
                 mAdView.visibility = View.GONE
@@ -145,7 +146,7 @@ class MainActivity : AppCompatActivity() {
                 openFragment(SettingsFragment())
                 tabLayout.visibility = View.GONE
                 supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Setting.primaryColor))
-                supportActionBar!!.title = Html.fromHtml("<font color='#616161'>" + getString(R.string.setting_help) + "</font>")
+                supportActionBar!!.title = HtmlCompat.fromHtml("<font color='#616161'>" + getString(R.string.setting_help) + "</font>", HtmlCompat.FROM_HTML_MODE_COMPACT)
                 container.background = getDrawable(Theme.Setting.backgroundColor)
                 setStatusBarColor(this, Theme.Setting.primaryColor)
                 mAdView.visibility = View.GONE
@@ -162,7 +163,7 @@ class MainActivity : AppCompatActivity() {
                 0 -> {//組み分け
                     openFragment(KumiwakeFragment())
                     supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Kumiwake.primaryColor))
-                    supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.kumiwake) + "</font>")
+                    supportActionBar!!.title = HtmlCompat.fromHtml("<font color='#FFFFFF'>" + getString(R.string.kumiwake) + "</font>", HtmlCompat.FROM_HTML_MODE_COMPACT)
                     container.background = getDrawable(Theme.Kumiwake.backgroundColor)
                     setStatusBarColor(this@MainActivity, Theme.Kumiwake.primaryColor)
                     StatusHolder.sekigime = false
@@ -170,7 +171,7 @@ class MainActivity : AppCompatActivity() {
                 1 -> {//席決め
                     openFragment(SekigimeFragment())
                     supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Sekigime.primaryColor))
-                    supportActionBar!!.title = Html.fromHtml("<font color='#616161'>" + getString(R.string.sekigime) + "</font>")
+                    supportActionBar!!.title = HtmlCompat.fromHtml("<font color='#616161'>" + getString(R.string.sekigime) + "</font>", HtmlCompat.FROM_HTML_MODE_COMPACT)
                     container.background = getDrawable(Theme.Sekigime.backgroundColor)
                     setStatusBarColor(this@MainActivity, Theme.Sekigime.primaryColor)
                     StatusHolder.sekigime = true
@@ -196,7 +197,7 @@ class MainActivity : AppCompatActivity() {
     private fun setUpToolbar() {
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
-        supportActionBar!!.title = Html.fromHtml("<font color='#FFFFFF'>" + getString(R.string.kumiwake) + "</font>")
+        supportActionBar!!.title = HtmlCompat.fromHtml("<font color='#FFFFFF'>" + getString(R.string.kumiwake) + "</font>", HtmlCompat.FROM_HTML_MODE_COMPACT)
     }
 
     //キーボードによるレイアウト崩れを防ぐ

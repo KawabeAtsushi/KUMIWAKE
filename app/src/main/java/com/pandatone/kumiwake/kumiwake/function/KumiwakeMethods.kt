@@ -187,20 +187,20 @@ object KumiwakeMethods {
     }
 
     //結果背景の色を生成
-    private val colorList = listOf<String>(
+    val colorList = listOf<String>(
             "ffb7b7", "ffb7db", "ffb7ff", "dbb7ff",
             "b7b7ff", "b7dbff", "b7ffff", "b7ffdb",
             "b7ffb7", "dbffb7", "ffffb7", "ffdbb7"
     )
 
-    fun getResultColor(ver: Int, groupCount: Int): Int {
+    //組み分け結果背景用に色変換
+    fun getResultColorStr(ver: Int, groupCount: Int): String {
         val colorNum = colorList.size.toFloat()
         var skipColBias = 1f
         if (groupCount < colorNum) {
             skipColBias = colorNum / groupCount
         }
         val element = (ver % colorNum) * skipColBias
-        val color = colorList[element.toInt()]
-        return Color.parseColor("#AA$color")
+        return colorList[element.toInt()]
     }
 }

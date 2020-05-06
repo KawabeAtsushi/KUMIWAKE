@@ -51,7 +51,7 @@ class NormalMode : AppCompatActivity() {
         findViews()
         add_group_listview.member_add_btn.setOnClickListener { moveMemberMain() }
         add_group_listview.member_register_and_add_btn.setOnClickListener { moveAddMember() }
-        adapter = SmallMBListAdapter(this, memberArray, false, showLeaderNo = false)
+        adapter = SmallMBListAdapter(this, memberArray)
         listView.adapter = adapter
         add_group_listview.numberOfSelectedMember.text = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
         findViewById<Button>(R.id.normal_kumiwake_btn).setOnClickListener { onNextClick() }
@@ -127,7 +127,7 @@ class NormalMode : AppCompatActivity() {
             memberArray = i!!.getSerializableExtra(AddGroupKeys.MEMBER_ARRAY.key) as ArrayList<Member>
         }
 
-        adapter = SmallMBListAdapter(this, memberArray, false, showLeaderNo = false)
+        adapter = SmallMBListAdapter(this, memberArray)
         listView.adapter = adapter
         add_group_listview.numberOfSelectedMember.text = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
     }

@@ -2,6 +2,7 @@ package com.pandatone.kumiwake.kumiwake
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.Handler
@@ -10,9 +11,11 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ShareCompat
+import com.google.android.material.tabs.TabLayout
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.history.HistoryMethods
+import com.pandatone.kumiwake.kumiwake.function.KumiwakeComparator
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeMethods
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
@@ -36,15 +39,20 @@ class KumiwakeResult : AppCompatActivity() {
     private lateinit var womanArray: ArrayList<Member>
     private var groupCount: Int = 0
     private var evenFmRatio: Boolean = false
-    private var even_age_ratio: Boolean = false
+    private var evenAgeRatio: Boolean = false
     private var v = 0
-    private var nowGroupNo = 0
-    private var timer: Timer? = null
-    private lateinit var timerTask: TimerTask
+    private lateinit var tabLayout: TabLayout
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kumiwake_result)
+
+        tabLayout = findViewById(R.id.tabLayout);
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.by_group))
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.by_member))
+        tabLayout.addOnTabSelectedListener(tabItemSelectedListener)
+
         if (!StatusHolder.normalMode) {
             val layout = findViewById<ConstraintLayout>(R.id.result_view)
             layout.background = getDrawable(R.drawable.quick_img)
@@ -66,15 +74,14 @@ class KumiwakeResult : AppCompatActivity() {
         }
 
         evenFmRatio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, false)
-        even_age_ratio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_AGE_RATIO.key, false)
+        evenAgeRatio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_AGE_RATIO.key, false)
         groupCount = groupArray.size
 
         startMethod(false)
 
         if (!StatusHolder.sekigime) {
-            timer = Timer()
-            timerTask = MyTimerTask(this)
-            timer!!.scheduleAtFixedRate(timerTask, 100, 100)
+            //描画を別スレッドで行う
+            Thread(DrawTask(this, groupCount)).start()
         } else {
             val groupNameArray = ArrayList<String>(groupCount)
             for (j in 0 until groupCount) {
@@ -116,6 +123,8 @@ class KumiwakeResult : AppCompatActivity() {
 
 
     private fun startMethod(again: Boolean) {
+        tabLayout.selectTab(tabLayout.getTabAt(0))
+
         memberArray.shuffle()
 
         resultArray = ArrayList(groupCount)
@@ -126,7 +135,7 @@ class KumiwakeResult : AppCompatActivity() {
             resultArray.add(ArrayList())
         }
 
-        if (evenFmRatio && even_age_ratio) {
+        if (evenFmRatio && evenAgeRatio) {
             createFmArray()    //男女それぞれの配列を作成
             KumiwakeMethods.arrangeByAge(manArray)
             KumiwakeMethods.arrangeByAge(womanArray)
@@ -138,7 +147,7 @@ class KumiwakeResult : AppCompatActivity() {
             KumiwakeMethods.setLeader(resultArray, leaderArray, leaderNoList)
             KumiwakeMethods.evenManDistribute(memberArray.size, resultArray, manArray, groupArray, getString(R.string.man))
             KumiwakeMethods.evenWomanDistribute(resultArray, womanArray, groupArray)
-        } else if (even_age_ratio) {
+        } else if (evenAgeRatio) {
             KumiwakeMethods.arrangeByAge(memberArray)
             KumiwakeMethods.kumiwakeAll(resultArray, memberArray, groupArray, leaderArray, leaderNoList)
         } else {
@@ -159,21 +168,40 @@ class KumiwakeResult : AppCompatActivity() {
         }
     }
 
-
-    fun addGroupView() {
-        if (v < groupCount) {
-            addResultView(resultArray[v], v)
-            v++
-        }
-        if (v == groupCount) {
-            timer!!.cancel()
+    //男女配列作成
+    private fun createFmArray() {
+        for (member in memberArray) {
+            if (member.sex == getText(R.string.man)) {
+                manArray.add(member)
+            } else {
+                womanArray.add(member)
+            }
         }
     }
 
+    //表示形式切り替え
+    private val tabItemSelectedListener = object : TabLayout.OnTabSelectedListener {
+
+        override fun onTabSelected(tab: TabLayout.Tab) {
+            when (tab.position) {
+                0 -> {//グループごと
+                    v = 0
+                    Thread(DrawTask(this@KumiwakeResult, groupCount)).start()
+                }
+                1 -> {//メンバーごと
+                    addResultViewByMember()
+                }
+            }
+        }
+
+        override fun onTabUnselected(tab: TabLayout.Tab) {}
+        override fun onTabReselected(tab: TabLayout.Tab) {}
+    }
+
+    //以下、ボタンの処理
+
     private fun onReKumiwake() {
         v = 0
-        nowGroupNo = 0
-        timerTask = MyTimerTask(this)
         val title = getString(R.string.re_kumiwake_title)
         val message = getString(R.string.re_kumiwake_description) + getString(R.string.run_confirmation)
         DialogWarehouse(supportFragmentManager).decisionDialog(title, message, this::reKumiwake)
@@ -183,8 +211,7 @@ class KumiwakeResult : AppCompatActivity() {
         val scrollView = findViewById<View>(R.id.kumiwake_scroll) as ScrollView
         scrollView.scrollTo(0, 0)
         startMethod(true)
-        timer = Timer()
-        timer!!.scheduleAtFixedRate(timerTask, 100, 100)
+        Thread(DrawTask(this, groupCount)).start()
         Toast.makeText(applicationContext, getText(R.string.re_kumiwake_finished), Toast.LENGTH_SHORT).show()
     }
 
@@ -212,22 +239,11 @@ class KumiwakeResult : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun createFmArray() {
-
-        for (member in memberArray) {
-            if (member.sex == getText(R.string.man)) {
-                manArray.add(member)
-            } else {
-                womanArray.add(member)
-            }
-        }
-    }
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////                                 描画メソッド                                             ////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private fun addResultView(resultArray: ArrayList<Member>, i: Int) {
+    fun addResultView(i: Int) {
         val groupName: TextView
         val arrayList: ListView
         val layout = findViewById<View>(R.id.result_layout) as LinearLayout
@@ -239,22 +255,67 @@ class KumiwakeResult : AppCompatActivity() {
         groupName = v.findViewById<View>(R.id.result_group) as TextView
         groupName.text = groupArray[i].name
         arrayList = v.findViewById<View>(R.id.result_member_listView) as ListView
-        val adapter = SmallMBListAdapter(this, resultArray, true, showLeaderNo = false, leaderNoList = leaderNoList)
+        val adapter = SmallMBListAdapter(this, resultArray[i], leaderNoList = leaderNoList)
         arrayList.adapter = adapter
         setBackGround(v, i)
         adapter.setRowHeight(arrayList)
     }
 
-
+    //背景
     private fun setBackGround(v: View, i: Int) {
         val drawable = GradientDrawable()
         drawable.mutate()
         drawable.shape = GradientDrawable.RECTANGLE
         drawable.cornerRadius = 25f
-        drawable.setColor(KumiwakeMethods.getResultColor(i, groupArray.size))
-
+        if (i < 0) {//メンバー毎表示
+            drawable.setColor(Color.parseColor("#AAFFFFFF"))
+        } else {//グループごと表示
+            val colorStr = KumiwakeMethods.getResultColorStr(i, groupArray.size)
+            drawable.setColor(Color.parseColor("#AA$colorStr"))
+        }
         v.layoutParams = PublicMethods.setMargin(this, 4, 6, 4, 6)
         v.background = drawable
+    }
+
+    //メンバーごとの結果描画
+    private fun addResultViewByMember() {
+        val arrayList: ListView
+        val resultArrayByMember: ArrayList<Member> = ArrayList()
+        memberArray.forEach {
+            resultArrayByMember.add(memberIncludeGroups(it))
+        }
+        leaderArray.forEach {
+            resultArrayByMember.add(memberIncludeGroups(it))
+        }
+        Collections.sort(resultArrayByMember, KumiwakeComparator.ViewComparator())
+        val layout = findViewById<View>(R.id.result_layout) as LinearLayout
+        layout.removeAllViews()
+        val v = layoutInflater.inflate(R.layout.result_parts, null)
+        layout.addView(v)
+        val annotation = v.findViewById<View>(R.id.result_group) as TextView
+        annotation.text = getText(R.string.kumiwake_order_annotation)
+        annotation.textSize = 15F
+        arrayList = v.findViewById<View>(R.id.result_member_listView) as ListView
+        val adapter = SmallMBListAdapter(this, resultArrayByMember, leaderNoList = leaderNoList, nameIsSpanned = true)
+        arrayList.adapter = adapter
+        setBackGround(v, -1)
+        adapter.setRowHeight(arrayList)
+        val scrollView = findViewById<View>(R.id.kumiwake_scroll) as ScrollView
+        scrollView.post { scrollView.fullScroll(ScrollView.FOCUS_UP) }
+    }
+
+    //グループも含んだMemberArrayを作成
+    private fun memberIncludeGroups(member: Member): Member {
+        var groupNo = 0
+        for ((i, result) in resultArray.withIndex()) {
+            if (result.contains(member)) {
+                groupNo = i
+                break
+            }
+        }
+        val colorStr = KumiwakeMethods.getResultColorStr(groupNo, groupArray.size)
+        val newName = member.name + " → <strong><font color='#" + colorStr + "'>" + groupArray[groupNo].name + "</font></strong>"
+        return Member(member.id, newName, member.sex, member.age, member.belong, member.read, member.leader)
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -310,11 +371,16 @@ class KumiwakeResult : AppCompatActivity() {
 ////                                   補助処理メソッド                                              ////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-internal class MyTimerTask(private val context: Context) : TimerTask() {
+
+internal class DrawTask(private val context: Context, private val groupCount: Int) : Runnable {
     private val handler: Handler = Handler()
 
     override fun run() {
-        handler.post { (context as KumiwakeResult).addGroupView() }
+        handler.post {
+            for (v in 0 until groupCount) {
+                (context as KumiwakeResult).addResultView(v)
+            }
+        }
     }
 
 }

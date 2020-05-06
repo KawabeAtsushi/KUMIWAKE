@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Build
-import android.text.Html
 import android.util.TypedValue
 import android.view.GestureDetector
 import android.view.MotionEvent
@@ -19,6 +18,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.FragmentManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
@@ -136,7 +136,7 @@ object PublicMethods {
 
     fun getLinkChar(url: String, text: String): CharSequence {
         val siteCharHtml = "<a href=$url>$text</a>"
-        return Html.fromHtml(siteCharHtml)
+        return HtmlCompat.fromHtml(siteCharHtml, HtmlCompat.FROM_HTML_MODE_COMPACT)
     }
 
     //Viewにマージンを設定

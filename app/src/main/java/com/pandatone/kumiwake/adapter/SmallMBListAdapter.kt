@@ -9,6 +9,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
+import androidx.core.text.HtmlCompat
 import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.function.Member
@@ -16,10 +17,9 @@ import com.pandatone.kumiwake.member.function.Member
 /**
  * Created by atsushi_2 on 2016/04/16.
  */
-class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Member>, private val showStar: Boolean, showLeaderNo: Boolean, val leaderNoList: Array<Int?> = emptyArray()) : BaseAdapter() {
+class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Member>, val leaderNoList: Array<Int?> = emptyArray(), val showLeaderNo: Boolean = false, val nameIsSpanned: Boolean = false) : BaseAdapter() {
     private val inflater: LayoutInflater
     private var listElements: ArrayList<Member> = ArrayList()
-    private val showLdNo = showLeaderNo
 
     init {
         listElements = memberList
@@ -40,7 +40,7 @@ class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Mem
     }
 
     override fun isEnabled(position: Int): Boolean {
-        return showLdNo
+        return showLeaderNo
     }
 
     @SuppressLint("InflateParams", "ViewHolder")
@@ -52,12 +52,16 @@ class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Mem
         val leaderNo: TextView = v.findViewById<View>(R.id.leaderNo) as TextView
         val nameTextView = v.findViewById<View>(R.id.memberName) as TextView
 
-        if (showStar) {
+        if (leaderNoList.isNotEmpty()) {
             val starIcon: ImageView = v.findViewById<View>(R.id.starIcon) as ImageView
             setStarIcon(leaderNoList, memberIcon, starIcon, leaderNo, position)
         }
         setSexIcon(memberIcon, position)
-        nameTextView.text = listElements[position].name
+        if (nameIsSpanned) {
+            nameTextView.text = HtmlCompat.fromHtml(listElements[position].name, HtmlCompat.FROM_HTML_MODE_COMPACT)
+        } else {
+            nameTextView.text = listElements[position].name
+        }
 
         return v
     }
@@ -95,7 +99,7 @@ class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Mem
             starIcon.visibility = View.VISIBLE
             leaderNo.visibility = View.GONE
 
-            if (showLdNo) {
+            if (showLeaderNo) {
                 leaderNo.visibility = View.VISIBLE
                 leaderNo.text = (leaderNoList.indexOf(id) + 1).toString()
             }

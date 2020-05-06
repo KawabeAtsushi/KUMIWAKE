@@ -67,12 +67,12 @@ class HistoryInfo(val c: Activity) {
         date.text = HistoryMethods.changeDateFormat(item.time)
         resultArray = HistoryMethods.stringToResultArray(c, item.result)
         //setView
-        for ((i, result) in resultArray.withIndex()) {
-            addResultView(result, i)
+        for (i in 0 until resultArray.size) {
+            addResultView(i)
         }
     }
 
-    private fun addResultView(resultArray: ArrayList<Member>, i: Int) {
+    private fun addResultView(i: Int) {
         val groupName: TextView
         val arrayList: ListView
         val v = c.layoutInflater.inflate(R.layout.result_parts, null)
@@ -81,7 +81,7 @@ class HistoryInfo(val c: Activity) {
         val text = c.getString(R.string.group) + (i + 1).toString()
         groupName.text = text
         arrayList = v.findViewById<View>(R.id.result_member_listView) as ListView
-        val adapter = SmallMBListAdapter(c, resultArray, false, showLeaderNo = false)
+        val adapter = SmallMBListAdapter(c, resultArray[i])
         arrayList.adapter = adapter
         v.layoutParams = PublicMethods.setMargin(c, 4, 6, 4, 6)
         v.background = c.getDrawable(R.drawable.group_review_layout)

@@ -95,7 +95,7 @@ class AddGroup : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     public override fun onStart() {
         super.onStart()
-        adapter = SmallMBListAdapter(this@AddGroup, members, false, showLeaderNo = false)
+        adapter = SmallMBListAdapter(this@AddGroup, members)
         listView.adapter = adapter
         numberOfSelectedMember.text = adapter.count.toString() + getString(R.string.people) + getString(R.string.selected)
     }
@@ -232,7 +232,7 @@ class AddGroup : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
             members = i!!.getSerializableExtra(AddGroupKeys.MEMBER_ARRAY.key) as ArrayList<Member>
         }
-        adapter = SmallMBListAdapter(this@AddGroup, members, false, showLeaderNo = false)
+        adapter = SmallMBListAdapter(this@AddGroup, members)
         listView.adapter = adapter
         numberOfSelectedMember.text = adapter.count.toString() + getString(R.string.people) + getString(R.string.selected)
     }

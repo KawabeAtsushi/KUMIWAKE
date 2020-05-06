@@ -191,4 +191,7 @@
     <string name="new_title">新しいタイトル</string>
     <string name="favorite">お気に入り</string>
     <string name="others">便利機能</string>
+    <string name="by_member">メンバーごと</string>
+    <string name="by_group">グループごと</string>
+    <string name="kumiwake_order_annotation">（並びは男女ごとの年齢順です）</string>
 </resources>

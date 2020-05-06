@@ -5,15 +5,18 @@ import java.util.*
 
 object KumiwakeComparator {
 
-    // ソート（性別→年齢→ID）
+    // ソート（リーダ→性別→年齢→名前→ID）
     internal class ViewComparator : Comparator<Member> {
         override fun compare(n1: Member, n2: Member): Int {
-            var value = comparedValue(n2.leader, n1.leader)
+            var value = comparedValue(n1.leader, n2.leader)
             if (value == 0) {
                 value = compareValues(n2.sex, n1.sex)
             }
             if (value == 0) {
                 value = compareValues(n2.age, n1.age)
+            }
+            if (value == 0) {
+                value = compareValues(n1.read, n2.read)
             }
             if (value == 0) {
                 value = compareValues(n1.id, n2.id)
@@ -42,6 +45,9 @@ object KumiwakeComparator {
             value = n1.compareTo(n2)
         } else if (n1 is Int && n2 is Int) {
             value = when {
+                //負の場合は必ず後ろにする
+                n1 < 0 && n2 >= 0 -> 1
+                n1 >= 0 && n2 < 0 -> -1
                 n1 > n2 -> 1
                 n1 < n2 -> -1
                 else -> 0

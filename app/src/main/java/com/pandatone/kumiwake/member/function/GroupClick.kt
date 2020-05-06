@@ -48,7 +48,7 @@ class GroupClick(val c: Activity) {
 
     @SuppressLint("SetTextI18n")
     fun setInfo(item: Group, memberByBelong: ArrayList<Member>) {
-        val adapter = SmallMBListAdapter(c, memberByBelong, false, showLeaderNo = false)
+        val adapter = SmallMBListAdapter(c, memberByBelong)
 
         group.text = item.name
         number.text = "${adapter.count}${c.getString(R.string.people)}"
