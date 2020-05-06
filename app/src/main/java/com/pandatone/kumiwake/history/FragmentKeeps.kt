@@ -58,7 +58,7 @@ class FragmentKeeps : ListFragment() {
         super.onActivityCreated(savedInstanceState)
         //行をクリックした時の処理
         listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            HistoryInfo(activity!!).infoDialog(historyList[position])
+            HistoryInfo(requireActivity()).infoDialog(historyList[position])
         }
         //行をロングクリックした時の処理
         listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
@@ -66,7 +66,7 @@ class FragmentKeeps : ListFragment() {
             loadName()
             FragmentHistory().loadName()
             setToolbarTitle(requireContext())
-            false
+            true
         }
     }
 
@@ -75,7 +75,7 @@ class FragmentKeeps : ListFragment() {
 
         when (item.itemId) {
             R.id.item_sort -> {
-                HistoryMethods.historySort(activity!!, historyList, listAdp)
+                HistoryMethods.historySort(requireActivity(), historyList, listAdp)
                 toFavoList()
             }
             R.id.menu_help -> dialog.confirmationDialog(getString(R.string.history), getString(R.string.how_to_history))

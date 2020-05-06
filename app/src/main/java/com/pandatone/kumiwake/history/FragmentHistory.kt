@@ -59,7 +59,7 @@ class FragmentHistory : ListFragment() {
         super.onActivityCreated(savedInstanceState)
         //行をクリックした時の処理
         listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            HistoryInfo(activity!!).infoDialog(historyList[position])
+            HistoryInfo(requireActivity()).infoDialog(historyList[position])
         }
         //行をロングクリックした時の処理
         listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
@@ -67,8 +67,7 @@ class FragmentHistory : ListFragment() {
             loadName()
             FragmentKeeps().loadName()
             FragmentKeeps().setToolbarTitle(requireContext())
-            HistoryMain.viewPager.setCurrentItem(1, true)
-            false
+            true //trueにするとイベントが消費される falseだと次のonClickも呼ばれる
         }
     }
 
@@ -76,7 +75,7 @@ class FragmentHistory : ListFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-            R.id.item_sort -> HistoryMethods.historySort(activity!!, historyList, listAdp)
+            R.id.item_sort -> HistoryMethods.historySort(requireActivity(), historyList, listAdp)
             R.id.menu_help -> dialog.confirmationDialog(getString(R.string.history), getString(R.string.how_to_history))
         }
         return false
