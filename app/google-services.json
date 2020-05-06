@@ -1,39 +1,37 @@
 {
   "project_info": {
-    "project_number": "105403755458",
-    "firebase_url": "https://admob-app-id-1560987130.firebaseio.com",
-    "project_id": "admob-app-id-1560987130",
-    "storage_bucket": "admob-app-id-1560987130.appspot.com"
+    "project_number": "547709298072",
+    "firebase_url": "https://kumiwake-92d14.firebaseio.com",
+    "project_id": "kumiwake-92d14",
+    "storage_bucket": "kumiwake-92d14.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:105403755458:android:d2b0007dc70b9013",
+        "mobilesdk_app_id": "1:547709298072:android:f91a9343b291e235c6f7ed",
         "android_client_info": {
           "package_name": "com.pandatone.kumiwake"
         }
       },
       "oauth_client": [
         {
-          "client_id": "105403755458-6h8h0o5haigeni1r499dp8v76hqopl7b.apps.googleusercontent.com",
+          "client_id": "547709298072-jusudoqrmbpmmvf0gp9dhiq6g0ahm0lq.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCV-P0Ovhn5MfkP3xQijdVO1plJWqR__FI"
+          "current_key": "AIzaSyD9eJG4PJUFz56dfBFcFxcqkUfRB2_Ea8s"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "547709298072-jusudoqrmbpmmvf0gp9dhiq6g0ahm0lq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
