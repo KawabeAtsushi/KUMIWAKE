@@ -22,6 +22,20 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_gravity="end"
+                android:background="@drawable/tab_background"
+                android:layout_margin="10dp"
+                app:tabBackground="@drawable/tab_selector"
+                app:tabSelectedTextColor="@android:color/black"
+                app:tabPaddingStart="10dp"
+                app:tabPaddingEnd="10dp"
+                app:tabIndicatorHeight="0dp"
+                app:tabRippleColor="@null"/>
+
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 android:id="@+id/group_selector"
@@ -88,21 +102,6 @@
                     android:visibility="gone"
                     app:backgroundTint="#81d4fa"
                     app:icon="@drawable/ic_send_24dp"
-                    app:iconTint="@android:color/white"
-                    app:layout_constraintEnd_toStartOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/show_all"
-                    style="@style/Button.Transparent.Rounded"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:padding="12dp"
-                    android:text="@string/show_all"
-                    android:textColor="@android:color/white"
-                    app:backgroundTint="@color/orange"
-                    app:icon="@drawable/ic_show_all_24dp"
                     app:iconTint="@android:color/white"
                     app:layout_constraintEnd_toStartOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />

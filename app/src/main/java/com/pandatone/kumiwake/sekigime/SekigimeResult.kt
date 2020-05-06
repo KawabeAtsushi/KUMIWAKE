@@ -14,6 +14,7 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.MainActivity
 import com.pandatone.kumiwake.PublicMethods
@@ -32,13 +33,19 @@ class SekigimeResult : AppCompatActivity() {
 
     private lateinit var draw: DrawTableView
     private var groupNo: Int = 0
-    private var drawAll = true
     private var teamArrayMan: ArrayList<ArrayList<Member>> = ArrayList()
     private var teamArrayWoman: ArrayList<ArrayList<Member>> = ArrayList()
+    private lateinit var tabLayout: TabLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.sekigime_result)
+
+        tabLayout = findViewById(R.id.tabLayout);
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.show_detail))
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.show_all))
+        tabLayout.addOnTabSelectedListener(tabItemSelectedListener)
+
         PublicMethods.showAd(this)
         DrawTableView.tableNo = 0 //表示するテーブル番号
 
@@ -62,14 +69,13 @@ class SekigimeResult : AppCompatActivity() {
         groupDropdown.hint = list[0]
         groupDropdown.onItemClickListener = OnItemClickListener { _, _, position, _ ->
             drawView(position)
-            //draw.reDraw()
         }
         findViewById<Button>(R.id.re_sekigime).setOnClickListener { onReSekigime() }
         findViewById<Button>(R.id.go_home).setOnClickListener { onGoHome() }
-        findViewById<Button>(R.id.show_all).setOnClickListener { onShowAll() }
         findViewById<Button>(R.id.share_image).setOnClickListener { onShareImage() }
     }
 
+    //選択表示描画
     private fun drawView(position: Int) {
         DrawTableView.tableNo = position
         draw = DrawTableView(this)
@@ -78,6 +84,46 @@ class SekigimeResult : AppCompatActivity() {
         resultLayout.addView(draw)
     }
 
+    //全表示
+    private fun drawAll(resultLayout:LinearLayout){
+        for (group in groupArray!!.withIndex()) {
+            val drawAll = DrawAllTable(this@SekigimeResult, group.index)
+            val groupNameView = groupTextView(group.value, group.index)
+            resultLayout.addView(groupNameView)
+            resultLayout.addView(drawAll)
+        }
+    }
+
+    //表示形式切り替え
+    private val tabItemSelectedListener = object : TabLayout.OnTabSelectedListener {
+
+        override fun onTabSelected(tab: TabLayout.Tab) {
+            findViewById<ScrollView>(R.id.result_scroller).fullScroll(ScrollView.FOCUS_UP)
+            val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
+            resultLayout.removeAllViews()
+            val dropdown = findViewById<TextInputLayout>(R.id.group_selector)
+            val shareButton = findViewById<Button>(R.id.share_image)
+
+            when (tab.position) {
+                0 -> {//テーブルごと
+                    dropdown.visibility = View.VISIBLE
+                    shareButton.visibility = View.GONE
+                    resultLayout.addView(draw)
+                }
+                1 -> {//全表示
+                    dropdown.visibility = View.GONE
+                    shareButton.visibility = View.VISIBLE
+                    drawAll(resultLayout)
+                }
+            }
+        }
+
+        override fun onTabUnselected(tab: TabLayout.Tab) {}
+        override fun onTabReselected(tab: TabLayout.Tab) {}
+    }
+
+    //ボタンの処理
+    //再席決め
     private fun onReSekigime() {
         val message = getString(R.string.re_sekigime_description) + getString(R.string.run_confirmation)
         val title = getString(R.string.re_sekigime_title)
@@ -92,42 +138,13 @@ class SekigimeResult : AppCompatActivity() {
         startActivity(intent)
     }
 
-    //全表示
-    private fun onShowAll() {
-        findViewById<ScrollView>(R.id.result_scroller).fullScroll(ScrollView.FOCUS_UP)
-        val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
-        resultLayout.removeAllViews()
-        val dropdown = findViewById<TextInputLayout>(R.id.group_selector)
-        val button = findViewById<MaterialButton>(R.id.show_all)
-        val shareButton = findViewById<Button>(R.id.share_image)
-        if (drawAll) {
-            dropdown.visibility = View.GONE
-            shareButton.visibility = View.VISIBLE
-            button.text = getString(R.string.show_detail)
-            button.icon = getDrawable(R.drawable.ic_detail_24dp)
-            for (group in groupArray!!.withIndex()) {
-                val drawAll = DrawAllTable(this, group.index)
-                val groupNameView = groupTextView(group.value)
-                resultLayout.addView(groupNameView)
-                resultLayout.addView(drawAll)
-            }
-        } else {
-            dropdown.visibility = View.VISIBLE
-            shareButton.visibility = View.GONE
-            resultLayout.addView(draw)
-            button.text = getString(R.string.show_all)
-            button.icon = getDrawable(R.drawable.ic_show_all_24dp)
-        }
-        drawAll = !drawAll //描画モード切替
-    }
-
     //結果画像共有
     private fun onShareImage() {
         val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
         ShareViewImage.shareView(this, resultLayout, getString(R.string.sekigime_result))
     }
 
-    //再席決め
+    //再席決め処理
     private fun reSekigime() {
         for (i in 0 until groupNo) {
             teamArray[i].shuffle()
@@ -135,10 +152,12 @@ class SekigimeResult : AppCompatActivity() {
         if (fmDeploy) {
             convertAlternatelyFmArray()
         }
-        if (!drawAll) {
-            drawAll = true
-            onShowAll()
-        } else {
+        if (tabLayout.selectedTabPosition == 1) {//全表示状態
+            findViewById<ScrollView>(R.id.result_scroller).fullScroll(ScrollView.FOCUS_UP)
+            val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
+            resultLayout.removeAllViews()
+            drawAll(resultLayout)
+        } else {//選択表示状態
             DrawTableView.point = 0
             draw.reDraw()
         }
@@ -146,7 +165,7 @@ class SekigimeResult : AppCompatActivity() {
     }
 
     //グループ名前のTextView生成
-    private fun groupTextView(groupName: String): TextView {
+    private fun groupTextView(groupName: String, i:Int): TextView {
         val groupNameView = TextView(this)
         groupNameView.text = groupName
         groupNameView.setTextColor(Color.DKGRAY)
@@ -156,7 +175,11 @@ class SekigimeResult : AppCompatActivity() {
         val lp = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         val mlp = lp as MarginLayoutParams
-        mlp.setMargins(70, 140, 70, 0)
+        if (i == 0) {//最初だけTopマージンなし
+            mlp.setMargins(70, 30, 70, 0)
+        }else{
+            mlp.setMargins(70, 140, 70, 0)
+        }
         groupNameView.layoutParams = mlp
         return groupNameView
     }
