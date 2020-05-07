@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="?attr/actionBarSize"
-    android:background="@android:color/transparent">
+    android:background="#1AAA">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/history_button"
-            style="@style/Button.Outline.History"
+            style="@style/Button.Outline.Others"
             android:layout_width="match_parent"
             android:layout_height="@dimen/others_button_height"
             android:layout_marginTop="20dp"
@@ -24,13 +24,10 @@
             android:textColor="@color/thin_gray"
             android:textSize="@dimen/main_button_text_size"
             android:textStyle="bold"
-            app:icon="@drawable/ic_history_black_24dp"
-            app:iconSize="@dimen/others_button_icon_size"
-            app:iconTint="@color/thin_gray"
-            app:iconGravity="textStart"/>
+            app:icon="@drawable/ic_history_black_24dp"/>
 
         <com.google.android.material.button.MaterialButton
-            style="@style/Button.Outline.History"
+            style="@style/Button.Outline.Others"
             android:id="@+id/order_button"
             android:layout_width="match_parent"
             android:layout_height="@dimen/others_button_height"
@@ -40,13 +37,10 @@
             android:textColor="@color/thin_gray"
             android:textSize="@dimen/main_button_text_size"
             android:textStyle="bold"
-            app:icon="@drawable/ic_order"
-            app:iconSize="@dimen/others_button_icon_size"
-            app:iconTint="@color/thin_gray"
-            app:iconGravity="textStart"/>
+            app:icon="@drawable/ic_order"/>
 
         <com.google.android.material.button.MaterialButton
-            style="@style/Button.Outline.History"
+            style="@style/Button.Outline.Others"
             android:id="@+id/role_button"
             android:layout_width="match_parent"
             android:layout_height="@dimen/others_button_height"
@@ -56,13 +50,10 @@
             android:textColor="@color/thin_gray"
             android:textSize="@dimen/main_button_text_size"
             android:textStyle="bold"
-            app:icon="@drawable/ic_role"
-            app:iconSize="@dimen/others_button_icon_size"
-            app:iconTint="@color/thin_gray"
-            app:iconGravity="textStart"/>
+            app:icon="@drawable/ic_role"/>
 
         <com.google.android.material.button.MaterialButton
-            style="@style/Button.Outline.History"
+            style="@style/Button.Outline.Others"
             android:id="@+id/drawing_button"
             android:layout_width="match_parent"
             android:layout_height="@dimen/others_button_height"
@@ -72,10 +63,7 @@
             android:textColor="@color/thin_gray"
             android:textSize="@dimen/main_button_text_size"
             android:textStyle="bold"
-            app:icon="@drawable/ic_drawing"
-            app:iconSize="@dimen/others_button_icon_size"
-            app:iconTint="@color/thin_gray"
-            app:iconGravity="textStart"/>
+            app:icon="@drawable/ic_drawing"/>
 
     </LinearLayout>
 </ScrollView>

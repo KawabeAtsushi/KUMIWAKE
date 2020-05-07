@@ -61,7 +61,7 @@ class FragmentMemberChoiceMode : ListFragment() {
         super.onStart()
         loadName()
         FragmentGroupChoiceMode().loadName()
-        val toolbar = activity!!.findViewById<View>(R.id.toolbar2) as Toolbar
+        val toolbar = requireActivity().findViewById<View>(R.id.toolbar2) as Toolbar
         toolbar.startActionMode(CallbackMB())
         //初期の選択済みのメンバーをチェックする
         for (member in memberArray) {
@@ -80,7 +80,7 @@ class FragmentMemberChoiceMode : ListFragment() {
 
         // アクションアイテム選択時
         when (item.itemId) {
-            android.R.id.home -> activity!!.finish()
+            android.R.id.home -> requireActivity().finish()
 
             R.id.item_all_select -> {
                 var i = 1
@@ -135,7 +135,7 @@ class FragmentMemberChoiceMode : ListFragment() {
 
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             // アクションモード初期化処理
-            val inflater = activity!!.menuInflater
+            val inflater = requireActivity().menuInflater
             inflater.inflate(R.menu.member_menu, menu)
             val searchIcon = menu.findItem(R.id.search_view)
             val deleteIcon = menu.findItem(R.id.item_delete)
@@ -190,7 +190,7 @@ class FragmentMemberChoiceMode : ListFragment() {
 
                 R.id.item_filter -> {
                     clearSelection(mode)
-                    Filtering(activity!!, memberList).showFilterDialog(requireActivity(), listAdp)
+                    Filtering(requireActivity(), memberList).showFilterDialog(requireActivity(), listAdp)
                 }
             }
             return false

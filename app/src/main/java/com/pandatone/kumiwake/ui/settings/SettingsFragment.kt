@@ -66,13 +66,13 @@ class SettingsFragment : Fragment() {
         backupList = root.findViewById(R.id.back_up_list)
         backupList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
-            checkPermission(activity!!.baseContext, position)
+            checkPermission(requireActivity().baseContext, position)
         }
         otherList = root.findViewById(R.id.other_list)
         otherList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
             when (position) {
-                0 -> showVersionName(activity!!.baseContext)
+                0 -> showVersionName(requireActivity().baseContext)
                 1 -> startActivity(Intent(activity, PurchaseFreeAdOption::class.java))
                 2 -> launchMailer()
                 3 -> shareApp()
@@ -96,7 +96,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setViews() {
-        val context = activity!!.baseContext
+        val context = requireActivity().baseContext
 
         howToUseStr = arrayOf(getString(R.string.about_kumiwake), getString(R.string.about_member), getString(R.string.about_sekigime), getString(R.string.detail_help))
         backupStr = arrayOf(getString(R.string.back_up_db), getString(R.string.import_db), getString(R.string.delete_backup))
@@ -169,7 +169,7 @@ class SettingsFragment : Fragment() {
         val sharedText = "$articleTitle\n$articleURL"
 
         // builderの生成　ShareCompat.IntentBuilder.from(Context context);
-        val builder = ShareCompat.IntentBuilder.from(activity!!)
+        val builder = ShareCompat.IntentBuilder.from(requireActivity())
 
         // アプリ一覧が表示されるDialogのタイトルの設定
         builder.setChooserTitle(R.string.choose_app)
@@ -189,7 +189,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun toPrivacyPolicy() {
-        val uri = Uri.parse("https://gist.githubusercontent.com/KawabeAtsushi/39f3ea332b05a6b053b263784a77cd51/raw/7666e22b85561c34a95863f9482ed900482d2c8d/privacy%2520policy")
+        val uri = Uri.parse("https://gist.githubusercontent.com/KawabeAtsushi/39f3ea332b05a6b053b263784a77cd51/raw")
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
     }
@@ -213,7 +213,7 @@ class SettingsFragment : Fragment() {
             }
         } else {
             // 拒否していた場合,許可を求める
-            ActivityCompat.requestPermissions(activity!!,
+            ActivityCompat.requestPermissions(requireActivity(),
                     arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
                     PERMISSION)
         }
@@ -233,7 +233,7 @@ class SettingsFragment : Fragment() {
 
             } else {
                 // それでも拒否された時の対応
-                val toast = Toast.makeText(activity!!.baseContext,
+                val toast = Toast.makeText(requireActivity().baseContext,
                         getText(R.string.please_permit), Toast.LENGTH_SHORT)
                 toast.show()
             }

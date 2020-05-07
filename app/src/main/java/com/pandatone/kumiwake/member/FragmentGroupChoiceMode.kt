@@ -75,7 +75,7 @@ class FragmentGroupChoiceMode : ListFragment() {
 
         when (item.itemId) {
             R.id.item_sort -> {
-                Sort.groupSort(activity!!, groupList, listAdp)
+                Sort.groupSort(requireActivity(), groupList, listAdp)
             }
         }
         return false

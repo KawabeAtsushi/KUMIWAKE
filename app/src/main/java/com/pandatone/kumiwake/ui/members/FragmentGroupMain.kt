@@ -64,7 +64,7 @@ class FragmentGroupMain : ListFragment() {
 
         listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
-            val builder = AlertDialog.Builder(activity!!)
+            val builder = AlertDialog.Builder(requireActivity())
             val groupName = groupList[position].name
             if (MembersFragment.searchView.isActivated)
                 MembersFragment.searchView.onActionViewCollapsed()
@@ -75,7 +75,7 @@ class FragmentGroupMain : ListFragment() {
             builder.setItems(items) { _, which ->
                 when (which) {
                     0 -> {
-                        GroupClick(activity!!).infoDialog(groupList[position], GroupMethods.searchBelong(requireContext(), groupList[position].id.toString()))
+                        GroupClick(requireActivity()).infoDialog(groupList[position], GroupMethods.searchBelong(requireContext(), groupList[position].id.toString()))
                     }
                     1 -> {
                         val i = Intent(activity, AddGroup::class.java)
@@ -103,7 +103,7 @@ class FragmentGroupMain : ListFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-            android.R.id.home -> activity!!.finish()
+            android.R.id.home -> requireActivity().finish()
 
             R.id.item_all_select -> {
                 for (i in 0 until listAdp.count) {
@@ -112,7 +112,7 @@ class FragmentGroupMain : ListFragment() {
             }
 
             R.id.item_sort -> {
-                Sort.groupSort(activity!!, groupList, listAdp)
+                Sort.groupSort(requireActivity(), groupList, listAdp)
             }
         }
 
@@ -127,7 +127,7 @@ class FragmentGroupMain : ListFragment() {
 
     //１つグループ削除
     private fun deleteSingleGroup(position: Int, group: String) {
-        val builder = AlertDialog.Builder(activity!!)
+        val builder = AlertDialog.Builder(requireActivity())
         builder.setTitle(group)
         builder.setMessage(R.string.Do_delete)
         // OKの時の処理
@@ -156,7 +156,7 @@ class FragmentGroupMain : ListFragment() {
 
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             // アクションモード初期化処理
-            val inflater = activity!!.menuInflater
+            val inflater = requireActivity().menuInflater
             inflater.inflate(R.menu.member_menu, menu)
             menu.getItem(2).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
             menu.getItem(3).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
@@ -197,7 +197,7 @@ class FragmentGroupMain : ListFragment() {
                     listView.clearChoices()
                     listAdp.clearSelection()
                     mode.title = "0" + getString(R.string.selected)
-                    Sort.groupSort(activity!!, groupList, listAdp)
+                    Sort.groupSort(requireActivity(), groupList, listAdp)
                 }
             }
             return false
@@ -243,7 +243,7 @@ class FragmentGroupMain : ListFragment() {
     fun deleteMultiGroup(mode: ActionMode) {
 
         // アラートダイアログ表示
-        val builder = AlertDialog.Builder(activity!!)
+        val builder = AlertDialog.Builder(requireActivity())
         builder.setTitle(checkedCount.toString() + " " + getString(R.string.group) + getString(R.string.delete))
         builder.setMessage(R.string.Do_delete)
         // OKの時の処理

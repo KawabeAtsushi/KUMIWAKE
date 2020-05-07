@@ -64,10 +64,10 @@ class FragmentMemberMain : ListFragment() {
         lv.isFastScrollEnabled = true
         lv.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
-            val builder = AlertDialog.Builder(activity!!)
-            val builder2 = AlertDialog.Builder(activity!!)
-            val inflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val view2 = inflater.inflate(R.layout.member_info, activity!!.findViewById<View>(R.id.info_layout) as ViewGroup?)
+            val builder = AlertDialog.Builder(requireActivity())
+            val builder2 = AlertDialog.Builder(requireActivity())
+            val inflater = requireActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val view2 = inflater.inflate(R.layout.member_info, requireActivity().findViewById<View>(R.id.info_layout) as ViewGroup?)
             val memberName = memberList[position].name
             FragmentGroupMain().loadName()
 
@@ -107,7 +107,7 @@ class FragmentMemberMain : ListFragment() {
 
         // アクションアイテム選択時
         when (item.itemId) {
-            android.R.id.home -> activity!!.finish()
+            android.R.id.home -> requireActivity().finish()
 
             R.id.item_all_select -> {
                 var i = 1
@@ -131,7 +131,7 @@ class FragmentMemberMain : ListFragment() {
 
     //単一メンバー削除
     private fun deleteSingleMember(position: Int, name: String) {
-        val builder = AlertDialog.Builder(activity!!)
+        val builder = AlertDialog.Builder(requireActivity())
         builder.setTitle(name)
         builder.setMessage(R.string.Do_delete)
         // OKの時の処理
@@ -161,7 +161,7 @@ class FragmentMemberMain : ListFragment() {
 
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             // アクションモード初期化処理
-            val inflater = activity!!.menuInflater
+            val inflater = requireActivity().menuInflater
             inflater.inflate(R.menu.member_menu, menu)
             menu.findItem(R.id.search_view).isVisible = false
             menu.findItem(R.id.item_change_age).isVisible = true
@@ -205,7 +205,7 @@ class FragmentMemberMain : ListFragment() {
 
                 R.id.item_filter -> {
                     clearSelection(mode)
-                    Filtering(activity!!, memberList).showFilterDialog(requireActivity(), listAdp)
+                    Filtering(requireActivity(), memberList).showFilterDialog(requireActivity(), listAdp)
                 }
 
                 R.id.item_change_age -> {
@@ -257,7 +257,7 @@ class FragmentMemberMain : ListFragment() {
         //複数メンバー削除
         private fun deleteMultiMember(mode: ActionMode) {
             // アラートダイアログ表示
-            val builder = AlertDialog.Builder(activity!!)
+            val builder = AlertDialog.Builder(requireActivity())
             builder.setTitle(checkedCount.toString() + " " + getString(R.string.member) + getString(R.string.delete))
             builder.setMessage(R.string.Do_delete)
             // OKの時の処理

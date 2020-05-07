@@ -111,7 +111,7 @@ class FileManagerDialog(private var mTitle: String, private var mMessage: CharSe
 //        val inflater = activity?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 //        val layout = inflater.inflate(R.layout.change_age_dialog, activity?.findViewById<View>(R.id.filter_member) as? ViewGroup)
 //        val pathInputBox = layout.findViewById<View>(R.id.path_input) as TextInputEditText
-//        val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
+//        val builder = androidx.appcompat.app.AlertDialog.Builder(requireActivity())
 //        builder.setTitle(activity?.getText(R.string.specify_path))
 //        builder.setView(layout)
 //        builder.setPositiveButton("OK", null)

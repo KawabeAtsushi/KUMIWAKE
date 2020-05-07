@@ -141,7 +141,7 @@
     <string name="member_name_read">読み</string>
     <string name="please_permit">ストレージの使用を許可してください。</string>
     <string name="share_result">結果をシェア</string>
-    <string name="privacy_policy">プライバシーポリシー</string>
+    <string name="privacy_policy">プライバシーポリシー &amp; クレジット</string>
     <string name="refresh_data">データのリフレッシュ</string>
     <string name="refresh_completed">データのリフレッシュが完了しました。</string>
     <string name="refresh_attention">データに不具合がみられる場合に、データベースをリフレッシュすることで改善することがあります。\n</string>
