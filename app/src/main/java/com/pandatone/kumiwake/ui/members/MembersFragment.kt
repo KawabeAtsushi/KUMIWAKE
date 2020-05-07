@@ -33,7 +33,7 @@ class MembersFragment : Fragment(), SearchView.OnQueryTextListener {
     //Viewの宣言・初期化
     private fun setViews(root: View) {
         viewPager = root.findViewById<View>(R.id.view_pager) as ViewPager
-        val adapter = CustomPagerAdapter(context!!, childFragmentManager, true)
+        val adapter = CustomPagerAdapter(requireContext(), childFragmentManager, true)
         viewPager.adapter = adapter
     }
 
@@ -90,7 +90,7 @@ class MembersFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val adapter = CustomPagerAdapter(context!!, childFragmentManager, true)
+        val adapter = CustomPagerAdapter(requireContext(), childFragmentManager, true)
         adapter.findFragmentByPosition(viewPager, page).onOptionsItemSelected(item)
         return false
     }

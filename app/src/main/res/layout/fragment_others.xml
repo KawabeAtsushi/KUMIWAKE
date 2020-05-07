@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/top_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,30 +14,6 @@
         android:orientation="vertical">
 
         <com.google.android.material.button.MaterialButton
-            style="@style/Button.Outline.History"
-            android:id="@+id/normal_mode_button"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/others_button_height"
-            android:layout_marginTop="10dp"
-            android:singleLine="true"
-            android:text="@string/normal_mode"
-            android:textColor="@color/thin_gray"
-            android:textSize="@dimen/main_button_text_size"
-            android:textStyle="bold" />
-
-        <com.google.android.material.button.MaterialButton
-            style="@style/Button.Outline.History"
-            android:id="@+id/quick_mode_button"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/others_button_height"
-            android:layout_marginTop="20dp"
-            android:singleLine="true"
-            android:text="@string/quick_mode"
-            android:textColor="@color/thin_gray"
-            android:textSize="@dimen/main_button_text_size" />
-
-
-        <com.google.android.material.button.MaterialButton
             android:id="@+id/history_button"
             style="@style/Button.Outline.History"
             android:layout_width="match_parent"
@@ -45,7 +22,60 @@
             android:singleLine="true"
             android:text="@string/history"
             android:textColor="@color/thin_gray"
-            android:textSize="@dimen/main_button_text_size" />
+            android:textSize="@dimen/main_button_text_size"
+            android:textStyle="bold"
+            app:icon="@drawable/ic_history_black_24dp"
+            app:iconSize="@dimen/others_button_icon_size"
+            app:iconTint="@color/thin_gray"
+            app:iconGravity="textStart"/>
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Button.Outline.History"
+            android:id="@+id/order_button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/others_button_height"
+            android:layout_marginTop="10dp"
+            android:singleLine="true"
+            android:text="@string/order"
+            android:textColor="@color/thin_gray"
+            android:textSize="@dimen/main_button_text_size"
+            android:textStyle="bold"
+            app:icon="@drawable/ic_order"
+            app:iconSize="@dimen/others_button_icon_size"
+            app:iconTint="@color/thin_gray"
+            app:iconGravity="textStart"/>
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Button.Outline.History"
+            android:id="@+id/role_button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/others_button_height"
+            android:layout_marginTop="20dp"
+            android:singleLine="true"
+            android:text="@string/role"
+            android:textColor="@color/thin_gray"
+            android:textSize="@dimen/main_button_text_size"
+            android:textStyle="bold"
+            app:icon="@drawable/ic_role"
+            app:iconSize="@dimen/others_button_icon_size"
+            app:iconTint="@color/thin_gray"
+            app:iconGravity="textStart"/>
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Button.Outline.History"
+            android:id="@+id/drawing_button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/others_button_height"
+            android:layout_marginTop="20dp"
+            android:singleLine="true"
+            android:text="@string/drawing"
+            android:textColor="@color/thin_gray"
+            android:textSize="@dimen/main_button_text_size"
+            android:textStyle="bold"
+            app:icon="@drawable/ic_drawing"
+            app:iconSize="@dimen/others_button_icon_size"
+            app:iconTint="@color/thin_gray"
+            app:iconGravity="textStart"/>
 
     </LinearLayout>
 </ScrollView>

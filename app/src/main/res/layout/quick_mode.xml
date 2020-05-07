@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/quick_img"
+    android:background="@drawable/img_quick_img"
     android:backgroundTint="#50FFFFFF"
     android:backgroundTintMode="src_atop">
 

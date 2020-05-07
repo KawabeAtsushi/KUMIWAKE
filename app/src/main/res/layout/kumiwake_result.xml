@@ -4,7 +4,7 @@
     android:id="@+id/result_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/normal_img"
+    android:background="@drawable/img_normal_img"
     android:backgroundTint="#90FFFFFF"
     android:backgroundTintMode="src_atop">
 

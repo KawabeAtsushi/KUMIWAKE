@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="?attr/actionBarSize"
-    android:background="@drawable/kumiwake_top">
+    android:background="@drawable/img_kumiwake_top">
 
     <ImageButton
         android:id="@+id/hintForKumiwake"
@@ -72,7 +72,7 @@
         android:layout_marginEnd="80dp"
         android:layout_marginBottom="20dp"
         android:contentDescription="@string/kumiwake"
-        android:src="@drawable/kumiwake_icon"
+        android:src="@drawable/img_kumiwake_icon"
         app:layout_constraintBottom_toTopOf="@id/half_guideline"
         app:layout_constraintEnd_toStartOf="@+id/guideline_end"
         app:layout_constraintStart_toStartOf="@id/guideline_start"

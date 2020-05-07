@@ -25,4 +25,5 @@
 
     <dimen name="top_button_expansion">5dp</dimen>
     <dimen name="others_button_height">100dp</dimen>
+    <dimen name="others_button_icon_size">40dp</dimen>
 </resources>

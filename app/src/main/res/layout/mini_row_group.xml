@@ -8,7 +8,7 @@
         android:layout_width="@dimen/mini_icon_size"
         android:layout_height="@dimen/mini_icon_size"
         android:padding="@dimen/mini_row_padding"
-        android:src="@drawable/user_group"
+        android:src="@drawable/img_user_group"
         android:tint="@color/gray" />
 
     <TextView

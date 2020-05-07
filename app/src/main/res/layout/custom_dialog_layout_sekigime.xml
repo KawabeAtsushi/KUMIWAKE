@@ -50,7 +50,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:scaleType="centerCrop"
-        android:src="@drawable/circle_table" />
+        android:src="@drawable/img_circle_table" />
 
 
     <CheckBox

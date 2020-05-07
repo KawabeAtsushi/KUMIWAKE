@@ -55,7 +55,7 @@ class KumiwakeResult : AppCompatActivity() {
 
         if (!StatusHolder.normalMode) {
             val layout = findViewById<ConstraintLayout>(R.id.result_view)
-            layout.background = getDrawable(R.drawable.quick_img)
+            layout.background = getDrawable(R.drawable.img_quick_img)
         }
 
         PublicMethods.showAd(this)

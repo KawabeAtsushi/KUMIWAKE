@@ -194,4 +194,7 @@
     <string name="by_group">グループごと</string>
     <string name="kumiwake_order_annotation">（並びは男女ごとの年齢順です）</string>
     <string name="mode_selection">機能選択</string>
+    <string name="drawing">くじ引き</string>
+    <string name="role">役割決め</string>
+    <string name="order">順番決め</string>
 </resources>

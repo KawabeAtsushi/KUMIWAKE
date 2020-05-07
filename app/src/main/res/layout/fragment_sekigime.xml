@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="?attr/actionBarSize"
-    android:background="@drawable/sekigime_top"
+    android:background="@drawable/img_sekigime_top"
     android:backgroundTint="@color/thin_white"
     android:backgroundTintMode="src_atop">
 
@@ -74,7 +74,7 @@
         android:layout_marginEnd="70dp"
         android:layout_marginBottom="20dp"
         android:contentDescription="@string/sekigime"
-        android:src="@drawable/sekigime_icon"
+        android:src="@drawable/img_sekigime_icon"
         app:layout_constraintBottom_toTopOf="@id/half_guideline"
         app:layout_constraintEnd_toStartOf="@+id/guideline_end"
         app:layout_constraintStart_toStartOf="@id/guideline_start"

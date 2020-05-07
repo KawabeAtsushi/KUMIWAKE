@@ -5,7 +5,7 @@
     android:id="@+id/confirmation_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/normal_img"
+    android:background="@drawable/img_normal_img"
     android:backgroundTint="#90FFFFFF"
     android:backgroundTintMode="src_atop">
 
@@ -92,7 +92,7 @@
                     android:layout_height="30dp"
                     android:layout_marginBottom="15dp"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/arrows"
+                    android:background="@drawable/img_arrows"
                     android:backgroundTint="@color/orange" />
 
                 <TextView
@@ -110,7 +110,7 @@
                     android:layout_height="30dp"
                     android:layout_marginBottom="15dp"
                     android:layout_marginStart="10dp"
-                    android:background="@drawable/arrows"
+                    android:background="@drawable/img_arrows"
                     android:backgroundTint="@color/orange" />
 
             </LinearLayout>

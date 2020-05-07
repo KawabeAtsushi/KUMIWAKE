@@ -76,22 +76,22 @@ class CustomDialogSekigime : DialogFragment() {
         var heightDp = 0
         when (mPosition) {
             1 -> {
-                iv!!.setImageResource(R.drawable.square_table)
+                iv!!.setImageResource(R.drawable.img_square_table)
                 widthDp = 180
                 heightDp = 250
             }
             2 -> {
-                iv!!.setImageResource(R.drawable.parallel_table)
+                iv!!.setImageResource(R.drawable.img_parallel_table)
                 widthDp = 180
                 heightDp = 250
             }
             3 -> {
-                iv!!.setImageResource(R.drawable.circle_table)
+                iv!!.setImageResource(R.drawable.img_circle_table)
                 widthDp = 200
                 heightDp = 200
             }
             4 -> {
-                iv!!.setImageResource(R.drawable.counter_table)
+                iv!!.setImageResource(R.drawable.img_counter_table)
                 widthDp = 80
                 heightDp = 210
             }

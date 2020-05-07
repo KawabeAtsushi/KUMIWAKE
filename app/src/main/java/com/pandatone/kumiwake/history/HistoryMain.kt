@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 
 
 /**
@@ -21,6 +22,7 @@ class HistoryMain : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.history_main)
         toolbar = findViewById<View>(R.id.history_toolbar) as Toolbar
         setSupportActionBar(toolbar)

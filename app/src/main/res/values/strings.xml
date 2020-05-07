@@ -195,4 +195,7 @@
     <string name="by_group">by group</string>
     <string name="kumiwake_order_annotation">(The order is according to age by gender)</string>
     <string name="mode_selection">Function selection</string>
+    <string name="drawing">Drawing</string>
+    <string name="role">Role</string>
+    <string name="order">Order</string>
 </resources>
