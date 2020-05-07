@@ -96,11 +96,9 @@
         android:padding="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/red_pressed"
+        android:backgroundTint="@color/orange"
         android:textColor="@android:color/white"
-        android:text="@string/kumiwake_from_history"
-        app:icon="@drawable/ic_kumiwake_24px"
-        app:iconTint="@android:color/white"
+        android:text="@string/use_these_member"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/okBt" />

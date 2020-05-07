@@ -22,6 +22,11 @@
         <item name="android:colorPrimaryDark">@color/green_title</item>
     </style>
 
+    <!-- Others theme -->
+    <style name="OthersTheme" parent="AppTheme">
+        <item name="android:colorPrimaryDark">@color/gray</item>
+    </style>
+
     <!-- Member theme -->
     <style name="MemberTheme" parent="AppTheme">
         <item name="android:colorPrimaryDark">@color/blue_title</item>

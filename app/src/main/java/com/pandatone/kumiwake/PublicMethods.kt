@@ -60,6 +60,7 @@ object PublicMethods {
         when (colorId) {
             Theme.Kumiwake.primaryColor -> StatusHolder.nowTheme = R.style.AppTheme
             Theme.Sekigime.primaryColor -> StatusHolder.nowTheme = R.style.SekigimeTheme
+            Theme.Others.primaryColor -> StatusHolder.nowTheme = R.style.OthersTheme
             Theme.Member.primaryColor -> StatusHolder.nowTheme = R.style.MemberTheme
         }
     }
@@ -134,6 +135,7 @@ object PublicMethods {
         }
     }
 
+    //Link設定
     fun getLinkChar(url: String, text: String): CharSequence {
         val siteCharHtml = "<a href=$url>$text</a>"
         return HtmlCompat.fromHtml(siteCharHtml, HtmlCompat.FROM_HTML_MODE_COMPACT)

@@ -184,8 +184,7 @@
     <string name="how_to_history">クリックすると組み分けの履歴を確認できます。\n詳細画面から同じメンバーで組分け/席決めができます。
         \n行を長押しするとその履歴をお気に入りに登録/解除できます。\n※ノーマルモードの結果のみ保存されます。</string>
     <string name="close">閉じる</string>
-    <string name="kumiwake_from_history">このメンバーで組分け</string>
-    <string name="sekigime_from_history">このメンバーで席決め</string>
+    <string name="use_these_member">このメンバーを使う</string>
     <string name="edit_title">タイトルの変更</string>
     <string name="change">変更</string>
     <string name="new_title">新しいタイトル</string>
@@ -194,4 +193,5 @@
     <string name="by_member">メンバーごと</string>
     <string name="by_group">グループごと</string>
     <string name="kumiwake_order_annotation">（並びは男女ごとの年齢順です）</string>
+    <string name="mode_selection">機能選択</string>
 </resources>

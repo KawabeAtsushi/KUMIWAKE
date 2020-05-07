@@ -185,8 +185,7 @@
          \nLong press the line to register or unregister the history as a favorite.\n
         * Only the results of normal mode are saved.</string>
     <string name="close">close</string>
-    <string name="kumiwake_from_history">kumiwake with these</string>
-    <string name="sekigime_from_history">sekigime with these</string>
+    <string name="use_these_member">use these members</string>
     <string name="edit_title">Edit title</string>
     <string name="change">change</string>
     <string name="new_title">new title</string>
@@ -195,4 +194,5 @@
     <string name="by_member">by member</string>
     <string name="by_group">by group</string>
     <string name="kumiwake_order_annotation">(The order is according to age by gender)</string>
+    <string name="mode_selection">Function selection</string>
 </resources>

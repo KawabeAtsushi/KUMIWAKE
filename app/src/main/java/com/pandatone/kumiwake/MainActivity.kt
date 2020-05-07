@@ -163,20 +163,20 @@ class MainActivity : AppCompatActivity() {
         override fun onTabSelected(tab: TabLayout.Tab) {
             when (tab.position) {
                 0 -> {//組み分け
+                    StatusHolder.sekigime = false
                     openFragment(KumiwakeFragment())
                     supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Kumiwake.primaryColor))
                     supportActionBar!!.title = HtmlCompat.fromHtml("<font color='#FFFFFF'>" + getString(R.string.kumiwake) + "</font>", HtmlCompat.FROM_HTML_MODE_COMPACT)
                     container.background = getDrawable(Theme.Kumiwake.backgroundColor)
                     setStatusBarColor(this@MainActivity, Theme.Kumiwake.primaryColor)
-                    StatusHolder.sekigime = false
                 }
                 1 -> {//席決め
+                    StatusHolder.sekigime = true
                     openFragment(SekigimeFragment())
                     supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Sekigime.primaryColor))
                     supportActionBar!!.title = HtmlCompat.fromHtml("<font color='#616161'>" + getString(R.string.sekigime) + "</font>", HtmlCompat.FROM_HTML_MODE_COMPACT)
                     container.background = getDrawable(Theme.Sekigime.backgroundColor)
                     setStatusBarColor(this@MainActivity, Theme.Sekigime.primaryColor)
-                    StatusHolder.sekigime = true
                 }
             }
         }

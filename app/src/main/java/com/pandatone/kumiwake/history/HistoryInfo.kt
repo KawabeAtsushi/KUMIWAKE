@@ -14,6 +14,7 @@ import com.google.android.material.button.MaterialButton
 import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
+import com.pandatone.kumiwake.Theme
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.member.function.Member
@@ -32,6 +33,7 @@ class HistoryInfo(val c: Activity) {
     private lateinit var editNameBt: ImageButton
     private var resultArray: ArrayList<ArrayList<Member>> = ArrayList()
 
+    //履歴クリック時の情報表示ダイアログ
     fun infoDialog(item: History) {
         val builder = AlertDialog.Builder(c)
         val inflater = c.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -44,12 +46,6 @@ class HistoryInfo(val c: Activity) {
         goToBt = view.findViewById<MaterialButton>(R.id.goToBt)
         editNameBt = view.findViewById<ImageButton>(R.id.edit_name)
 
-        if (StatusHolder.sekigime) {
-            goToBt.text = c.getString(R.string.sekigime_from_history)
-            goToBt.icon = c.getDrawable(R.drawable.ic_sekigime_24px)
-            goToBt.setBackgroundColor(PublicMethods.getColor(c, R.color.green_title))
-        }
-
         builder.setTitle(R.string.history)
         builder.setView(view)
 
@@ -57,7 +53,7 @@ class HistoryInfo(val c: Activity) {
         val dialog = builder.create()
         dialog.show()
         okBt.setOnClickListener { dialog.dismiss() }
-        goToBt.setOnClickListener { goTo() }
+        goToBt.setOnClickListener { selectModeDialog() }
         editNameBt.setOnClickListener { editTextDialog(item) }
     }
 
@@ -72,6 +68,7 @@ class HistoryInfo(val c: Activity) {
         }
     }
 
+    //結果表示
     private fun addResultView(i: Int) {
         val groupName: TextView
         val arrayList: ListView
@@ -88,6 +85,7 @@ class HistoryInfo(val c: Activity) {
         adapter.setRowHeight(arrayList)
     }
 
+    //メンバーを利用して組み分け/席決め
     private fun goTo() {
         StatusHolder.normalMode = true
         val memberArray = ArrayList<Member>()
@@ -99,6 +97,34 @@ class HistoryInfo(val c: Activity) {
         startActivity(c, Intent(c, NormalMode::class.java), null)
     }
 
+    //メンバーを利用選択ダイアログ
+    private fun selectModeDialog() {
+        val builder = AlertDialog.Builder(c)
+        val inflater = c.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.select_mode_dialog_layout, c.findViewById<View>(R.id.info_layout) as ViewGroup?)
+
+        val kumiwakeButton = view.findViewById<Button>(R.id.kumiwake_select_button)
+        kumiwakeButton.setOnClickListener {
+            StatusHolder.sekigime = false
+            PublicMethods.setStatusBarColor(this.c, Theme.Kumiwake.primaryColor)
+            goTo()
+        }
+        val sekigimeButton = view.findViewById<Button>(R.id.sekigime_select_button)
+        sekigimeButton.setOnClickListener {
+            StatusHolder.sekigime = true
+            PublicMethods.setStatusBarColor(this.c, Theme.Sekigime.primaryColor)
+            goTo()
+        }
+        builder.setTitle(R.string.mode_selection)
+                .setView(view)
+                .setNegativeButton(R.string.cancel) { dialog, which ->
+                    dialog.dismiss()
+                }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    //名前変更ダイアログ
     private fun editTextDialog(item: History) {
         val builder = AlertDialog.Builder(c)
         val inflater = c.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater

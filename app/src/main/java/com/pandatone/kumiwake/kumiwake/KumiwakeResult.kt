@@ -281,12 +281,14 @@ class KumiwakeResult : AppCompatActivity() {
     private fun addResultViewByMember() {
         val arrayList: ListView
         val resultArrayByMember: ArrayList<Member> = ArrayList()
+        //すべてのメンバーをグループ込みの名前に変更
         memberArray.forEach {
             resultArrayByMember.add(memberIncludeGroups(it))
         }
         leaderArray.forEach {
             resultArrayByMember.add(memberIncludeGroups(it))
         }
+        //描画
         Collections.sort(resultArrayByMember, KumiwakeComparator.ViewComparator())
         val layout = findViewById<View>(R.id.result_layout) as LinearLayout
         layout.removeAllViews()
