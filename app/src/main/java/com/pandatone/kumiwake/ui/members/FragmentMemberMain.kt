@@ -77,7 +77,7 @@ class FragmentMemberMain : ListFragment() {
                 when (which) {
                     0 -> {
                         MemberClick.memberInfoDialog(view2, builder2)
-                        MemberClick.setInfo(context!!, memberList[position])
+                        MemberClick.setInfo(requireContext(), memberList[position])
                         val dialog2 = builder2.create()
                         dialog2.show()
                         MemberClick.okBt.setOnClickListener { dialog2.dismiss() }

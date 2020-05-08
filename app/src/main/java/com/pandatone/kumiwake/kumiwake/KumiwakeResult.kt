@@ -55,7 +55,7 @@ class KumiwakeResult : AppCompatActivity() {
 
         if (!StatusHolder.normalMode) {
             val layout = findViewById<ConstraintLayout>(R.id.result_view)
-            layout.background = getDrawable(R.drawable.img_quick_img)
+            layout.background = getDrawable(R.drawable.img_quick_background)
         }
 
         PublicMethods.showAd(this)
@@ -202,7 +202,7 @@ class KumiwakeResult : AppCompatActivity() {
 
     private fun onReKumiwake() {
         v = 0
-        val title = getString(R.string.re_kumiwake_title)
+        val title = getString(R.string.retry_title)
         val message = getString(R.string.re_kumiwake_description) + getString(R.string.run_confirmation)
         DialogWarehouse(supportFragmentManager).decisionDialog(title, message, this::reKumiwake)
     }

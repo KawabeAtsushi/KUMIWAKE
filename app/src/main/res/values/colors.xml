@@ -7,18 +7,20 @@
     <color name="red">#ff0000</color>
     <color name="yellow">#fff000</color>
     <color name="pink">#ff94aa</color>
+    <color name="gold">#ffd700</color>
     <color name="checked_list">#DFF6FE</color>
     <color name="light_green">#78ff84</color>
-    <color name="man">#33b5e5</color>
-    <color name="woman">#fc7373</color>
     <color name="thin_green">#5078ff84</color>
     <color name="thin_orange">#50ffc02e</color>
-    <color name="thin_man">#5033b5e5</color>
-    <color name="thin_woman">#50fc7373</color>
     <color name="thin_white">#50FFFFFF</color>
     <color name="white_gray">#5ccc</color>
     <color name="thin_gray">#aaa</color>
     <color name="background_gray">#EDEDED</color>
+
+    <color name="man">#33b5e5</color>
+    <color name="woman">#fc7373</color>
+    <color name="thin_man">#5033b5e5</color>
+    <color name="thin_woman">#50fc7373</color>
 
     <color name="red_pressed">#f66</color>
     <color name="red_unpressed">#ff7777</color>

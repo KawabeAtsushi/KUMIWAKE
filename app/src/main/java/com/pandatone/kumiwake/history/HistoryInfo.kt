@@ -117,7 +117,7 @@ class HistoryInfo(val c: Activity) {
         }
         builder.setTitle(R.string.mode_selection)
                 .setView(view)
-                .setNegativeButton(R.string.cancel) { dialog, which ->
+                .setNegativeButton(R.string.cancel) { dialog, _ ->
                     dialog.dismiss()
                 }
         val dialog = builder.create()
@@ -134,7 +134,7 @@ class HistoryInfo(val c: Activity) {
         editText.hint = HistoryMethods.changeDateFormat(item.name)
         builder.setTitle(R.string.edit_title)
                 .setView(view)
-                .setPositiveButton(R.string.change) { dialog, which ->
+                .setPositiveButton(R.string.change) { _, _ ->
                     val newName = editText.text.toString()
                     if (newName != "") {
                         HistoryAdapter(c).updateHistoryState(item, editText.text.toString(), false)
@@ -143,7 +143,7 @@ class HistoryInfo(val c: Activity) {
                         FragmentKeeps().loadName()
                     }
                 }
-                .setNegativeButton(R.string.cancel) { dialog, which ->
+                .setNegativeButton(R.string.cancel) { dialog, _ ->
                     dialog.dismiss()
                 }
         val dialog = builder.create()

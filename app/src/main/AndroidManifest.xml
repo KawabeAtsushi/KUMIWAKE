@@ -48,6 +48,10 @@
         <activity
             android:name=".sekigime.SekigimeResult"
             android:theme="@style/SekigimeTheme"/>
+        <activity android:name=".order.OrderSelectMember"
+            android:theme="@style/OthersTheme"/>
+        <activity android:name=".order.OrderResult"
+            android:theme="@style/OthersTheme"/>
         <activity
             android:name=".member.AddMember" />
         <activity

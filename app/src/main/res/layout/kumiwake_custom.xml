@@ -6,7 +6,7 @@
     android:id="@+id/custom_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/img_normal_img"
+    android:background="@drawable/img_normal_background"
     android:backgroundTint="#30FFFFFF"
     android:backgroundTintMode="src_atop">
 

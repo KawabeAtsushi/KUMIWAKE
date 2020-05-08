@@ -38,7 +38,7 @@ class FileManagerDialog(private var mTitle: String, private var mMessage: CharSe
         (dialog.findViewById<View>(R.id.dialog_message) as TextView).text = mMessage
         // OK ボタンのリスナ
         (dialog.findViewById<View>(R.id.positive_button) as TextView).setOnClickListener {
-            val path = context!!.getExternalFilesDir(null).toString() + "/KUMIWAKE_Backup"
+            val path = requireContext().getExternalFilesDir(null).toString() + "/KUMIWAKE_Backup"
             if (backup) {
                 setMkdirErrorView(dialog, path)
             } else {

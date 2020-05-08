@@ -56,10 +56,12 @@
     <string name="nothing">Nothing</string>
     <string name="people">ppl</string>
     <string name="quick_mode">Quick mode</string>
-    <string name="re_kumiwake_title">Re:KUMIWAKE</string>
-    <string name="re_kumiwake">try again</string>
+    <string name="retry_title">Try Again</string>
+    <string name="retry">try again</string>
     <string name="re_kumiwake_description">Execute KUMIWAKE(grouping) again on the same conditions.</string>
     <string name="re_sekigime_description">Execute Seat Allocation again on the same conditions.(* The order in the table will be changed.)</string>
+    <string name="re_order_description">Execute order deciding again on the same conditions.</string>
+    <string name="retry_finished">Retry finished</string>
     <string name="registered">registered</string>
     <string name="registration">register</string>
     <string name="registration_ascending">Registration order(ASC)</string>
@@ -111,8 +113,6 @@
     <string name="seats_type_confirmation">Execute as the following table type.</string>
     <string name="require_correct_No">Please input a correct number.</string>
     <string name="number_of_groups_is_much_too">The number of groups exceeds the number of members</string>
-    <string name="re_sekigime">try again</string>
-    <string name="re_sekigime_title">Re:Seat Allocation</string>
     <string name="error_empty_group">Please input the group name.</string>
     <string name="error_empty_name">Please input the member name.</string>
     <string name="error_empty_group_no">Please input the number of groups.</string>
@@ -198,4 +198,5 @@
     <string name="drawing">Drawing</string>
     <string name="role">Role</string>
     <string name="order">Order</string>
+    <string name="result">result</string>
 </resources>

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/normal_select_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/img_normal_img"
+    android:background="@drawable/img_normal_background"
     android:backgroundTint="#30FFFFFF"
     android:backgroundTintMode="src_atop">
 
@@ -13,69 +14,76 @@
         android:layout_height="0dp"
         android:layout_marginBottom="20dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/normal_kumiwake_btn">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/form_marginStart"
-            android:layout_marginTop="20dp"
-            android:text="@string/number_of_groups"
-            android:textColor="@color/gray"
-            android:textSize="25sp" />
-
-        <include layout="@layout/title_divider" />
+        app:layout_constraintBottom_toTopOf="@id/normal_kumiwake_btn"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/layout_group_no"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/card"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/error_group_no_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/form_marginStart"
-                android:visibility="gone"
-                android:text=""
-                android:textColor="@color/red"
-                android:textSize="@dimen/form_textSize" />
+                android:layout_marginTop="20dp"
+                android:text="@string/number_of_groups"
+                android:textColor="@color/gray"
+                android:textSize="25sp" />
+
+            <include layout="@layout/title_divider" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:orientation="horizontal">
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                    android:id="@+id/group_no_form"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/edittext_outline"
-                    android:textSize="@dimen/et_textSize_big"
-                    android:textColor="@color/gray"
-                    android:ems="2"
-                    android:inputType="number"
-                    android:padding="10dp"
-                    android:layout_marginStart="20dp"
-                    android:maxLength="3"
-                    android:singleLine="true"
-                    android:gravity="center" />
+                android:background="@drawable/card"
+                android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/error_group_no_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/form_marginStart"
-                    android:text="@string/group"
-                    android:textColor="@color/hint"
-                    android:textSize="@dimen/form_textSize_large" />
+                    android:text=""
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/form_textSize"
+                    android:visibility="gone" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/group_no_form"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="20dp"
+                        android:background="@drawable/edittext_outline"
+                        android:ems="2"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="3"
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/et_textSize_big" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/form_marginStart"
+                        android:text="@string/group"
+                        android:textColor="@color/hint"
+                        android:textSize="@dimen/form_textSize_large" />
+
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
@@ -103,10 +111,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/form_marginStart"
-                android:visibility="gone"
                 android:text=""
                 android:textColor="@color/red"
-                android:textSize="@dimen/form_textSize" />
+                android:textSize="@dimen/form_textSize"
+                android:visibility="gone" />
 
             <include
                 android:id="@+id/add_group_listview"
@@ -121,18 +129,18 @@
 
 
     <com.google.android.material.button.MaterialButton
-        style="@style/Button.Solid.Rectangle"
         android:id="@+id/normal_kumiwake_btn"
+        style="@style/Button.Solid.Rectangle"
         android:layout_width="0dp"
         android:layout_height="@dimen/under_button_height"
         android:drawableEnd="@drawable/ic_arrow_white"
         android:text="@string/move_custom"
+        android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="20sp"
-        android:textAlignment="center"
         app:backgroundTint="?android:attr/colorPrimaryDark"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

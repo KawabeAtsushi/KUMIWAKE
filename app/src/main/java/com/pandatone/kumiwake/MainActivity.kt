@@ -26,7 +26,7 @@ import com.pandatone.kumiwake.PublicMethods.setStatusBarColor
 import com.pandatone.kumiwake.setting.PurchaseFreeAdOption
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import com.pandatone.kumiwake.ui.kumiwake.KumiwakeFragment
-import com.pandatone.kumiwake.ui.kumiwake.OthersFragment
+import com.pandatone.kumiwake.ui.others.OthersFragment
 import com.pandatone.kumiwake.ui.members.MembersFragment
 import com.pandatone.kumiwake.ui.sekigime.SekigimeFragment
 import com.pandatone.kumiwake.ui.settings.SettingsFragment

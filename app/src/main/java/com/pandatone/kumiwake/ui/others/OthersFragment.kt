@@ -1,27 +1,16 @@
-package com.pandatone.kumiwake.ui.kumiwake
+package com.pandatone.kumiwake.ui.others
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.Guideline
 import androidx.fragment.app.Fragment
-import com.pandatone.kumiwake.MainActivity
-import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.history.HistoryMain
-import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
+import com.pandatone.kumiwake.order.OrderSelectMember
 
 
 class OthersFragment : Fragment() {
-
-    private val dialog: DialogWarehouse
-        get() {
-            return DialogWarehouse(requireFragmentManager())
-        }
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -35,6 +24,11 @@ class OthersFragment : Fragment() {
         val historyButton: Button = root.findViewById(R.id.history_button)
         historyButton.setOnClickListener {
             startActivity(Intent(activity, HistoryMain::class.java))
+        }
+
+        val orderButton: Button = root.findViewById(R.id.order_button)
+        orderButton.setOnClickListener {
+            startActivity(Intent(activity, OrderSelectMember::class.java))
         }
 
         return root
