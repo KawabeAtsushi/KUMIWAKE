@@ -1,4 +1,4 @@
-package com.pandatone.kumiwake.order
+package com.pandatone.kumiwake.others.order
 
 import android.content.Context
 import android.content.Intent
@@ -76,7 +76,7 @@ class OrderResult : AppCompatActivity() {
 
     private fun shareResult() {
         val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
-        KumiwakeMethods.shareResult(this, this::share) { ShareViewImage.shareView(this, resultLayout, getString(R.string.kumiwake_result)) }
+        KumiwakeMethods.shareResult(this, this::share) { ShareViewImage.shareView(this, resultLayout, getString(R.string.order)) }
     }
 
     private fun onGoHome() {

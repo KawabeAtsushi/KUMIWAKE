@@ -6,8 +6,9 @@ import android.view.*
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.history.HistoryMain
-import com.pandatone.kumiwake.order.OrderSelectMember
+import com.pandatone.kumiwake.others.SelectMember
 
 
 class OthersFragment : Fragment() {
@@ -28,7 +29,14 @@ class OthersFragment : Fragment() {
 
         val orderButton: Button = root.findViewById(R.id.order_button)
         orderButton.setOnClickListener {
-            startActivity(Intent(activity, OrderSelectMember::class.java))
+            StatusHolder.order = true
+            startActivity(Intent(activity, SelectMember()::class.java))
+        }
+
+        val roleButton: Button = root.findViewById(R.id.role_button)
+        roleButton.setOnClickListener {
+            StatusHolder.order = false
+            startActivity(Intent(activity, SelectMember()::class.java))
         }
 
         return root

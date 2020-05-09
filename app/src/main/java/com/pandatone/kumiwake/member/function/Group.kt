@@ -6,10 +6,8 @@ class Group(id: Int, name: String, read: String, belong_no: Int) : Serializable 
     var id: Int
         private set
     var name: String
-        private set
     private var read: String
     var belongNo: Int
-        private set
 
     init {
         this.id = id

@@ -14,6 +14,7 @@ object StatusHolder {
     //mode
     var normalMode: Boolean = true //true: ノーマルモード, false: クイックモード
     var sekigime: Boolean = false //true: 席決めモード, false: 組み分けモード
+    var order: Boolean = true //true: 順番, false: 役割
 
     @StyleRes
     var nowTheme: Int = R.style.AppTheme
@@ -35,7 +36,7 @@ object StatusHolder {
 //AddMemberのintent key
 enum class AddMemberKeys(val key: String) {
     MEMBER("tableNo"),
-    FROM_NORMAL_MODE("fromNormalMode")
+    FROM_MODE("fromMode")
 }
 
 //AddGroupのintent key

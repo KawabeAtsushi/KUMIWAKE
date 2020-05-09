@@ -73,7 +73,11 @@
     </style>
     <!-- 丸ボタン(透明) -->
     <style name="Button.Transparent.Circle">
-        <item name="cornerRadius">100dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="cornerRadius">50dp</item>
     </style>
     <!-- 角ボタン(Solid) -->
     <style name="Button.Solid.Rectangle">

@@ -1,41 +1,35 @@
-package com.pandatone.kumiwake.order
+package com.pandatone.kumiwake.others
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
-import android.text.TextUtils
 import android.transition.Slide
-import android.view.MotionEvent
 import android.view.View
 import android.view.Window
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.GestureDetectorCompat
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.member.AddMember
 import com.pandatone.kumiwake.member.ChoiceMemberMain
 import com.pandatone.kumiwake.member.function.Member
+import com.pandatone.kumiwake.others.order.OrderResult
+import com.pandatone.kumiwake.others.role.RoleDefine
 import kotlinx.android.synthetic.main.normal_mode.*
 import kotlinx.android.synthetic.main.part_review_listview.view.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 /**
  * Created by atsushi_2 on 2016/05/02.
  */
-class OrderSelectMember : AppCompatActivity() {
+class SelectMember : AppCompatActivity() {
     private var adapter: SmallMBListAdapter? = null
     private lateinit var errorMember: TextView
     private lateinit var listView: ListView
-    private var memberArray = ArrayList<Member>()
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +40,7 @@ class OrderSelectMember : AppCompatActivity() {
         }
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.normal_mode)
+        memberArray = ArrayList()
         val layout = findViewById<ConstraintLayout>(R.id.normal_select_layout)
         layout.background = getDrawable(R.drawable.img_others_background)
         findViews()
@@ -56,10 +51,14 @@ class OrderSelectMember : AppCompatActivity() {
         listView.adapter = adapter
         add_group_listview.numberOfSelectedMember.text = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
         val nextBtn = findViewById<Button>(R.id.normal_kumiwake_btn)
-        nextBtn.text = "${getText(R.string.order)}!!"
-        nextBtn.setTextColor(PublicMethods.getColor(this,R.color.gold))
-        nextBtn.textSize = 26F
-        nextBtn.setTypeface(Typeface.DEFAULT_BOLD)
+        if (StatusHolder.order) {
+            nextBtn.text = "${getText(R.string.order)}!!"
+            nextBtn.setTextColor(PublicMethods.getColor(this, R.color.gold))
+            nextBtn.textSize = 26F
+            nextBtn.typeface = Typeface.DEFAULT_BOLD
+        }else{
+            nextBtn.text = getText(R.string.move_role_definition)
+        }
         nextBtn.setOnClickListener { onNextClick() }
     }
 
@@ -82,7 +81,7 @@ class OrderSelectMember : AppCompatActivity() {
     private fun moveAddMember() {
         errorMember.text = ""
         val intent = Intent(this, AddMember::class.java)
-        intent.putExtra(AddMemberKeys.FROM_NORMAL_MODE.key, true)
+        intent.putExtra(AddMemberKeys.FROM_MODE.key, "others")
         startActivityForResult(intent, 0) //これで呼ぶとActivityが終わった時にonActivityResultが呼ばれる。
     }
 
@@ -91,12 +90,15 @@ class OrderSelectMember : AppCompatActivity() {
         errorMember.visibility = View.GONE
         errorMember.text = ""
 
-        if (adapter == null) {
+        if (memberArray.isEmpty()) {
             errorMember.visibility = View.VISIBLE
             errorMember.setText(R.string.error_empty_member_list)
         } else {
-
-            val intent = Intent(this, OrderResult::class.java)
+            val intent = if (StatusHolder.order) {
+                Intent(this, OrderResult::class.java)
+            }else{
+                Intent(this, RoleDefine::class.java)
+            }
             intent.putExtra(KumiwakeArrayKeys.MEMBER_LIST.key, memberArray)
             startActivity(intent)
             overridePendingTransition(R.anim.in_right, R.anim.out_left)
@@ -113,6 +115,10 @@ class OrderSelectMember : AppCompatActivity() {
         adapter = SmallMBListAdapter(this, memberArray)
         listView.adapter = adapter
         add_group_listview.numberOfSelectedMember.text = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
+    }
+
+    companion object {
+        internal var memberArray: java.util.ArrayList<Member> = java.util.ArrayList()
     }
 
 }

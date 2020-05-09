@@ -13,9 +13,9 @@ object FirebaseAnalyticsEvents {
     //どの機能がよく使われているか？
     fun functionSelectEvent(func: String, mode: String) {
         val bundle = Bundle()
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, func)
+        bundle.putString("function", func)
         bundle.putString("mode", mode)
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM, bundle)
+        firebaseAnalytics.logEvent("function_select", bundle)
     }
 
     //メンバー数・グループ数
@@ -23,9 +23,9 @@ object FirebaseAnalyticsEvents {
         val bundle = Bundle()
         bundle.putString("member_no", memberNo.toString())
         bundle.putString("group_no", groupNo.toString())
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, func)
+        bundle.putString("function", func)
         bundle.putString("mode", mode)
-        firebaseAnalytics.logEvent("number_count", bundle)
+        firebaseAnalytics.logEvent("set_number", bundle)
     }
 
     //メンバー情報
@@ -35,7 +35,7 @@ object FirebaseAnalyticsEvents {
         bundle.putString("name", member.name)
         bundle.putString("sex", member.sex)
         bundle.putString("age", member.age.toString())
-        firebaseAnalytics.logEvent("registered_member", bundle)
+        firebaseAnalytics.logEvent("new_member", bundle)
     }
 
     //グループ情報
@@ -44,6 +44,6 @@ object FirebaseAnalyticsEvents {
         bundle.putString("id", group.id.toString())
         bundle.putString("name", group.name)
         bundle.putString("belong_no", group.belongNo.toString())
-        firebaseAnalytics.logEvent("registered_group", bundle)
+        firebaseAnalytics.logEvent("new_group", bundle)
     }
 }

@@ -61,6 +61,7 @@
     <string name="re_kumiwake_description">Execute KUMIWAKE(grouping) again on the same conditions.</string>
     <string name="re_sekigime_description">Execute Seat Allocation again on the same conditions.(* The order in the table will be changed.)</string>
     <string name="re_order_description">Execute order deciding again on the same conditions.</string>
+    <string name="re_assign_description">Execute the assignment again on the same conditions.</string>
     <string name="retry_finished">Retry finished</string>
     <string name="registered">registered</string>
     <string name="registration">register</string>
@@ -126,7 +127,7 @@
     <string name="require_member_select">Add members</string>
     <string name="run_confirmation">\nMay you proceed?</string>
     <string name="kumiwake_conditions">Grouping conditions</string>
-    <string name="select_group_info">You can set the group names and the number of the belong members for each group.</string>
+    <string name="select_group_info">Set group names and number of the belong members.</string>
     <string name="how_to_kumiwake">☆It is the mode of grouping☆\n\nSelect from "Normal mode" or "Quick mode" and execute grouping.</string>
     <string name="how_to_member">☆It is the mode of register members for \"KUMIWAKE\" and \"SEKIGIME\"☆\n\nSwitch member list or group list by swiping.\n\nOn each screen, you click the \'+\' button which is displayed by the screen lower right, and you can add new member or new group.\n\nBy registering members to the group, you can select all members which belong the group at once when you do "KUMIWAKE" and so on.</string>
     <string name="how_to_sekigime">☆It is the mode of seat allocation☆  Assign seats by specifying members and groups. Procedure of selecting members and groups are the same as KUMIWAKE.  You can also do SEKIGIME from KUMIWAKE result page. In this case, the seating is performed in groups in each group created by KUMIWAKE.</string>
@@ -140,9 +141,6 @@
     <string name="member_name_read">Read</string>
     <string name="please_permit">Please permit the use of storage.</string>
     <string name="privacy_policy">Privacy policy &amp; Credits</string>
-    <string name="refresh_data">Refresh data</string>
-    <string name="refresh_completed">Refresh was completed.</string>
-    <string name="refresh_attention">If there is a problem with the data, it may be improved by refreshing the database.\n</string>
     <string name="continue_register">Continue</string>
     <string name="error">Error</string>
     <string name="nothing_file">Backed-up file doesn\'t exist in</string>
@@ -181,8 +179,8 @@
     <string name="kept_history">kept history</string>
     <string name="creation_date">Creation date</string>
     <string name="title">Title</string>
-    <string name="how_to_history">Click to see the grouping history.\nYou can grouping or seating with the same members from the details screen.
-         \nLong press the line to register or unregister the history as a favorite.\n
+    <string name="how_to_history">・Click to see the grouping history.\n・You can grouping or seating with the same members from the details screen.
+         \n・Long press the line to register or unregister the history as a favorite.\n
         * Only the results of normal mode are saved.</string>
     <string name="close">close</string>
     <string name="use_these_member">use these members</string>
@@ -196,7 +194,16 @@
     <string name="kumiwake_order_annotation">(The order is according to age by gender)</string>
     <string name="mode_selection">Function selection</string>
     <string name="drawing">Drawing</string>
-    <string name="role">Role</string>
+    <string name="role_decision">Role</string>
     <string name="order">Order</string>
     <string name="result">result</string>
+    <string name="move_role_definition">move to role definition</string>
+    <string name="assign">ASSIGN</string>
+    <string name="assign_conditions">Assign conditions</string>
+    <string name="add_role_description">Add roles</string>
+    <string name="no_favorite_comment">Long click the history and add favorite.</string>
+    <string name="role">Role</string>
+    <string name="assigned">assigned: </string>
+    <string name="no_assigned">No assigned</string>
+    <string name="execute_role_confirm">Execute role decision as the following contents.</string>
 </resources>

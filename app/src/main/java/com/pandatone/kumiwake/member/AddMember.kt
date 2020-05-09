@@ -26,6 +26,7 @@ import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.member.function.MemberClick
 import com.pandatone.kumiwake.member.function.MemberMethods
+import com.pandatone.kumiwake.others.SelectMember
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import com.pandatone.kumiwake.ui.members.FragmentGroupMain
 import com.pandatone.kumiwake.ui.members.FragmentMemberMain
@@ -46,7 +47,7 @@ class AddMember : AppCompatActivity() {
     private var ageEditText: EditText? = null
     private var belongDropdown: AutoCompleteTextView? = null
     private var mbAdapter: MemberAdapter? = null
-    private var fromNormalMode = false
+    private var fromMode = "member"
     private val groupList: ArrayList<Group>
         get() {
             return GroupAdapter(this).getAllGroups()
@@ -68,7 +69,7 @@ class AddMember : AppCompatActivity() {
         ageEditText!!.setText("")
         val i = intent
         val member = i.getSerializableExtra(AddMemberKeys.MEMBER.key) as Member?
-        fromNormalMode = i.getBooleanExtra(AddMemberKeys.FROM_NORMAL_MODE.key, false)
+        fromMode = i.getStringExtra(AddMemberKeys.FROM_MODE.key) as String
         val memberImg = findViewById<ImageView>(R.id.memberIcon)
         sexGroup!!.setOnCheckedChangeListener { _, checkedId: Int ->
             when (checkedId) {
@@ -219,8 +220,9 @@ class AddMember : AppCompatActivity() {
             afterBelong = belongDropdown!!.text.toString().split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             MemberMethods.updateBelongNo(this)
 
-            if (fromNormalMode) {
-                NormalMode.memberArray.add(MemberAdapter(this).newMember)
+            when (fromMode) {
+                "normal" -> NormalMode.memberArray.add(MemberAdapter(this).newMember)
+                "others" -> SelectMember.memberArray.add(MemberAdapter(this).newMember)
             }
 
             Toast.makeText(this, getText(R.string.member).toString() + " \"" + name + "\" " + getText(R.string.registered), Toast.LENGTH_SHORT).show()

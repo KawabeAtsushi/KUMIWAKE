@@ -48,9 +48,15 @@
         <activity
             android:name=".sekigime.SekigimeResult"
             android:theme="@style/SekigimeTheme"/>
-        <activity android:name=".order.OrderSelectMember"
+        <activity android:name=".others.SelectMember"
             android:theme="@style/OthersTheme"/>
-        <activity android:name=".order.OrderResult"
+        <activity android:name=".others.order.OrderResult"
+            android:theme="@style/OthersTheme"/>
+        <activity android:name=".others.role.RoleDefine"
+            android:theme="@style/OthersTheme"/>
+        <activity android:name=".others.role.RoleConfirmation"
+            android:theme="@style/OthersTheme"/>
+        <activity android:name=".others.role.RoleResult"
             android:theme="@style/OthersTheme"/>
         <activity
             android:name=".member.AddMember" />

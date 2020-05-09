@@ -3,7 +3,10 @@ package com.pandatone.kumiwake.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.text.Editable
 import android.text.InputFilter
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,14 +14,18 @@ import android.widget.*
 import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.function.Group
+import com.pandatone.kumiwake.others.role.RoleDefine
 import java.util.*
 
 /**
  * Created by atsushi_2 on 2016/03/20.
  */
-class EditGroupViewAdapter(private val context: Context, private val groupList: List<Group>, private val scrollView: ScrollView, private val groupListView: ListView) : BaseAdapter() {
+class EditGroupViewAdapter(val context: Context, val groupList: List<Group>, private val scrollView: ScrollView, private val groupListView: ListView, private val roleMode: Boolean = false) : BaseAdapter() {
     private var beforeNo: Int = 0
     private var afterNo: Int = 0
+    private var autoChange: Boolean = false
+    private var setFocus = 0
+    private var outFocus = 0
 
     override fun getCount(): Int {
         return groupList.size
@@ -36,7 +43,7 @@ class EditGroupViewAdapter(private val context: Context, private val groupList: 
     @SuppressLint("ClickableViewAccessibility", "SetTextI18n", "InflateParams")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
         val nameEditText: EditText
-        val numberOfMemberEditText: EditText
+        val belongNoEditText: EditText
         val leader: TextView
         var v = convertView
         val group = groupList[position]
@@ -46,46 +53,78 @@ class EditGroupViewAdapter(private val context: Context, private val groupList: 
         }
 
         nameEditText = v!!.findViewById<View>(R.id.editGroupName) as EditText
-        numberOfMemberEditText = v.findViewById<View>(R.id.editTheNumberOfMember) as EditText
+        belongNoEditText = v.findViewById<View>(R.id.editTheNumberOfMember) as EditText
         leader = v.findViewById<View>(R.id.leader) as TextView
         nameEditText.setText(group.name)
         nameEditText.isFocusable = true
         nameEditText.isFocusableInTouchMode = true
-        numberOfMemberEditText.setText(group.belongNo.toString())
-        numberOfMemberEditText.isFocusable = true
-        numberOfMemberEditText.isFocusableInTouchMode = true
-        leader.text = "${context.getString(R.string.leader)} : ${context.getString(R.string.nothing)}"
-        groupNameView[position] = nameEditText
-        memberNoView[position] = numberOfMemberEditText
-        numberOfMemberEditText.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+        belongNoEditText.setText(group.belongNo.toString())
+        belongNoEditText.isFocusable = true
+        belongNoEditText.isFocusableInTouchMode = true
+        if (roleMode) {
+            leader.visibility = View.GONE
+            v.findViewById<ImageView>(R.id.rowIconGroup).setImageResource(R.drawable.ic_star_circle_24dp)
+        } else {
+            leader.text = "${context.getString(R.string.leader)} : ${context.getString(R.string.nothing)}"
+        }
+        nameEditTextList[position] = nameEditText
+        belongEditTextList[position] = belongNoEditText
+
+        belongNoEditText.setOnFocusChangeListener { _, hasFocus ->
+            //hasFocus: 入力開始 -> true,移動 -> false
             if (hasFocus) {
-                if (numberOfMemberEditText.text.toString() != "" && numberOfMemberEditText.text.toString() != "-") {
-                    scrollView.setOnTouchListener { _, _ -> false }
-                    beforeNo = Integer.parseInt(numberOfMemberEditText.text.toString())
-                } else {
-                    scrollView.setOnTouchListener { _, _ -> true }
-                }
-                numberOfMemberEditText.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(2))
-            } else {
-
-                if (numberOfMemberEditText.text.toString() != "" && numberOfMemberEditText.text.toString() != "-") {
-                    scrollView.setOnTouchListener { _, _ -> false }
-
-                    afterNo = Integer.parseInt(numberOfMemberEditText.text.toString())
-
-                    val addNo = beforeNo - afterNo
-                    changeBelongNo(position, addNo)
-                    if (afterNo < 0) {
-                        numberOfMemberEditText.setTextColor(Color.RED)
-                    } else {
-                        numberOfMemberEditText.setTextColor(PublicMethods.getColor(context, R.color.gray))
-                    }
-                } else {
-                    scrollView.setOnTouchListener { _, _ -> true }
-                    afterNo = 0
+                setFocus = position
+            }else{
+                outFocus = position
+            }
+            if (setFocus != outFocus){//別のところにフォーカスが移ったら
+                val beforeEditText = belongEditTextList[outFocus]
+                if (beforeEditText?.text.toString() == "" || beforeEditText?.text.toString() == "-"){
+                    beforeEditText?.setText("0")
                 }
             }
         }
+
+        //所属人数の入力変更の際に呼ばれる処理
+        belongNoEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                beforeNo = if (text.toString() != "" && text.toString() != "-") {
+                    Integer.parseInt(text.toString())
+                } else {
+                    0
+                }
+            }
+
+            override fun afterTextChanged(text: Editable?) {
+                if (text.toString() != "" && text.toString() != "-") {
+                    afterNo = Integer.parseInt(text.toString())
+
+                    if (afterNo < 0) {
+                        belongNoEditText.setTextColor(Color.RED)
+                    } else {
+                        belongNoEditText.setTextColor(PublicMethods.getColor(context, R.color.gray))
+                    }
+                }else{
+                    afterNo = 0
+                }
+
+                val addNo = beforeNo - afterNo
+
+                if (roleMode) {
+                    val totalStr = context.getString(R.string.assigned) + countTotal().toString() + context.getString(R.string.people)
+                    RoleDefine.totalAssinedTextView.text = totalStr
+                } else {
+                    if (!autoChange) {//changeBelongNo()での変更によって呼ばれないようにする
+                        autoChange = true
+                        changeBelongNo(position, addNo)
+                        autoChange = false
+                    }
+                }
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        }
+        )
 
         return v
     }
@@ -113,24 +152,35 @@ class EditGroupViewAdapter(private val context: Context, private val groupList: 
         }
     }
 
-    @SuppressLint("UseSparseArrays")
-    private val groupNameView = HashMap<Int, EditText>()
+    //countTotalAssignedMember
+    private fun countTotal():Int{
+        var totalNo = 0
+        for (i in 0 until belongEditTextList.size){
+            totalNo += getMemberNo(i)
+        }
+        return totalNo
+    }
 
+    //ListViewのEditTextのマップ
     @SuppressLint("UseSparseArrays")
-    private val memberNoView = HashMap<Int, EditText>()
+    private val nameEditTextList = HashMap<Int, EditText>()
+    @SuppressLint("UseSparseArrays")
+    private val belongEditTextList = HashMap<Int, EditText>()
 
+    //i番目のグループ名を取得
     fun getGroupName(position: Int): String {
         var groupName = R.string.nothing.toString()
-        val groupNameEditText = groupNameView[position]
+        val groupNameEditText = nameEditTextList[position]
         if (groupNameEditText!!.text != null) {
             groupName = groupNameEditText.text.toString()
         }
         return groupName
     }
 
+    //i番目のグループの所属人数を取得
     fun getMemberNo(position: Int): Int {
         var memberNo = 0
-        val memberNoEditText = memberNoView[position]
+        val memberNoEditText = belongEditTextList[position]
         if (memberNoEditText!!.text.toString().isNotEmpty()) {
             memberNo = Integer.parseInt(memberNoEditText.text.toString())
         }

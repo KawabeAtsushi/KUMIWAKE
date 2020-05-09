@@ -35,7 +35,6 @@ class NormalMode : AppCompatActivity() {
     private var adapter: SmallMBListAdapter? = null
     private lateinit var gpNoEditText: AppCompatEditText
     private lateinit var errorGroup: TextView
-    private lateinit var errorMember: TextView
     private lateinit var listView: ListView
     private lateinit var mDetector: GestureDetectorCompat
 
@@ -68,12 +67,10 @@ class NormalMode : AppCompatActivity() {
         listView.emptyView = findViewById<View>(R.id.add_group_listview).findViewById(R.id.emptyMemberList)
         gpNoEditText = findViewById<View>(R.id.group_no_form) as AppCompatEditText
         errorGroup = findViewById<View>(R.id.error_group_no_txt) as TextView
-        errorMember = findViewById<View>(R.id.error_member_no_txt) as TextView
     }
 
     //MemberMainに遷移
     private fun moveMemberMain() {
-        errorMember.text = ""
         val intent = Intent(this, ChoiceMemberMain::class.java)
         intent.putExtra(AddGroupKeys.MEMBER_ARRAY.key, memberArray)
         startActivityForResult(intent, 0)
@@ -81,9 +78,8 @@ class NormalMode : AppCompatActivity() {
 
     //AddMemberに遷移
     private fun moveAddMember() {
-        errorMember.text = ""
         val intent = Intent(this, AddMember::class.java)
-        intent.putExtra(AddMemberKeys.FROM_NORMAL_MODE.key, true)
+        intent.putExtra(AddMemberKeys.FROM_MODE.key, "normal")
         startActivityForResult(intent, 0) //これで呼ぶとActivityが終わった時にonActivityResultが呼ばれる。
     }
 
@@ -91,15 +87,10 @@ class NormalMode : AppCompatActivity() {
     private fun onNextClick() {
         val inputGroupNo = gpNoEditText.text!!.toString()
 
-        errorMember.visibility = View.GONE
         errorGroup.visibility = View.GONE
         errorGroup.text = ""
-        errorMember.text = ""
 
-        if (adapter == null) {
-            errorMember.visibility = View.VISIBLE
-            errorMember.setText(R.string.error_empty_member_list)
-        } else if (inputGroupNo != "" && Integer.parseInt(inputGroupNo) > adapter?.count!!) {
+        if (inputGroupNo != "" && Integer.parseInt(inputGroupNo) > adapter?.count!!) {
             errorGroup.visibility = View.VISIBLE
             errorGroup.setText(R.string.number_of_groups_is_much_too)
         } else if (TextUtils.isEmpty(inputGroupNo)) {
@@ -111,7 +102,6 @@ class NormalMode : AppCompatActivity() {
         } else {
             val groupNo = Integer.parseInt(inputGroupNo)
             val groupArray = PublicMethods.initialGroupArray(this, groupNo, memberArray.size)
-
             val intent = Intent(this, KumiwakeCustom::class.java)
             intent.putExtra(KumiwakeArrayKeys.MEMBER_LIST.key, memberArray)
             intent.putExtra(KumiwakeArrayKeys.GROUP_LIST.key, groupArray)

@@ -119,6 +119,7 @@
     <string name="re_sekigime_description">同じ条件でもう一度席決めを行います。（※同テーブル内での並び順のみ変更されます。）</string>
     <string name="re_sekigime_finished">再席決め完了</string>
     <string name="re_order_description">もう一度順番を決めなおします。</string>
+    <string name="re_assign_description">もう一度役割を割り当てなおします。</string>
     <string name="retry_finished">やり直し完了</string>
     <string name="fm_placed_alternately">男女を交互に配置する</string>
     <string name="how_to_use">使い方</string>
@@ -142,9 +143,6 @@
     <string name="please_permit">ストレージの使用を許可してください。</string>
     <string name="share_result">結果をシェア</string>
     <string name="privacy_policy">プライバシーポリシー &amp; クレジット</string>
-    <string name="refresh_data">データのリフレッシュ</string>
-    <string name="refresh_completed">データのリフレッシュが完了しました。</string>
-    <string name="refresh_attention">データに不具合がみられる場合に、データベースをリフレッシュすることで改善することがあります。\n</string>
     <string name="continue_register">続けて登録</string>
     <string name="hint">ヒント</string>
     <string name="error_has_occurred">エラーが発生しました。</string>
@@ -181,8 +179,8 @@
     <string name="kept_history">キープした履歴</string>
     <string name="creation_date">作成日時</string>
     <string name="title">タイトル</string>
-    <string name="how_to_history">クリックすると組み分けの履歴を確認できます。\n詳細画面から同じメンバーで組分け/席決めができます。
-        \n行を長押しするとその履歴をお気に入りに登録/解除できます。\n※ノーマルモードの結果のみ保存されます。</string>
+    <string name="how_to_history">・クリックすると組み分けの履歴を確認できます。\n・詳細画面から同じメンバーを使って組分け/席決めができます。
+        \n・行を長押しするとその履歴をお気に入りに登録/解除できます。\n※ノーマルモードの結果のみ保存されます。</string>
     <string name="close">閉じる</string>
     <string name="use_these_member">このメンバーを使う</string>
     <string name="edit_title">タイトルの変更</string>
@@ -195,7 +193,16 @@
     <string name="kumiwake_order_annotation">（並びは男女ごとの年齢順です）</string>
     <string name="mode_selection">機能選択</string>
     <string name="drawing">くじ引き</string>
-    <string name="role">役割決め</string>
+    <string name="role_decision">役割決め</string>
     <string name="order">順番決め</string>
     <string name="result">結果</string>
+    <string name="move_role_definition">役割設定画面へ</string>
+    <string name="assign">割り当てる</string>
+    <string name="assign_conditions">割り当て条件</string>
+    <string name="add_role_description">役割を追加</string>
+    <string name="no_favorite_comment">履歴を長押ししてお気に入りに登録できます。</string>
+    <string name="role">役割</string>
+    <string name="assigned">割り当て済: </string>
+    <string name="no_assigned">割り当てなし</string>
+    <string name="execute_role_confirm">以下の内容で役割を割り当てます。</string>
 </resources>
