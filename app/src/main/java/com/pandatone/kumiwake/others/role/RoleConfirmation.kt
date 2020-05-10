@@ -65,7 +65,11 @@ class RoleConfirmation : AppCompatActivity() {
         member_no_txt.text = (memberArray.size.toString() + " " + getText(R.string.people)
                 + "(" + getText(R.string.man) + ":" + countManNo().toString() + getText(R.string.people)
                 + "," + getText(R.string.woman) + ":" + (memberArray.size - countManNo()).toString() + getText(R.string.people) + ")")
-        group_no_txt.text = groupArray.size.toString() + " " + getText(R.string.group)
+        if(groupArray.last().id == 1) {//割り当てなしがある場合
+            group_no_txt.text = "${groupArray.size-1} ${getText(R.string.kinds)} + ${getText(R.string.other)}"
+        }else{
+            group_no_txt.text = "${groupArray.size} ${getText(R.string.kinds)}"
+        }
     }
 
     //Manの数
@@ -84,7 +88,7 @@ class RoleConfirmation : AppCompatActivity() {
     private fun setViews() {
         Collections.sort(memberArray, KumiwakeComparator.ViewComparator())
         val mbAdapter = SmallMBListAdapter(this, memberArray)
-        val gpAdapter = SmallGPListAdapter(this, groupArray)
+        val gpAdapter = SmallGPListAdapter(this, groupArray,true)
         kumiwake_member_listView.adapter = mbAdapter
         groupListView.adapter = gpAdapter
 

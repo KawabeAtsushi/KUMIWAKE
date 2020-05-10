@@ -206,4 +206,5 @@
     <string name="assigned">assigned: </string>
     <string name="no_assigned">No assigned</string>
     <string name="execute_role_confirm">Execute role decision as the following contents.</string>
+    <string name="kinds">kinds</string>
 </resources>

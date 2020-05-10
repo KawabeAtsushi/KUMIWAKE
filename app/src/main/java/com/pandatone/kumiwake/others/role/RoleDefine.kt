@@ -129,7 +129,7 @@ class RoleDefine : AppCompatActivity() {
             }
         }
         if (total < memberArray.size) {
-            nextRoleArray.add(Group(0, getString(R.string.no_assigned), "", memberArray.size - total))
+            nextRoleArray.add(Group(1, getString(R.string.no_assigned), "", memberArray.size - total))
         }
         return nextRoleArray
     }

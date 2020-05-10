@@ -205,4 +205,5 @@
     <string name="assigned">割り当て済: </string>
     <string name="no_assigned">割り当てなし</string>
     <string name="execute_role_confirm">以下の内容で役割を割り当てます。</string>
+    <string name="kinds">種類</string>
 </resources>

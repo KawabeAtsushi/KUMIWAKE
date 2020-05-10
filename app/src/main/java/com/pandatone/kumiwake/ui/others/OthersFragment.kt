@@ -9,6 +9,7 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.history.HistoryMain
 import com.pandatone.kumiwake.others.SelectMember
+import com.pandatone.kumiwake.others.drawing.DrawingResult
 
 
 class OthersFragment : Fragment() {
@@ -37,6 +38,11 @@ class OthersFragment : Fragment() {
         roleButton.setOnClickListener {
             StatusHolder.order = false
             startActivity(Intent(activity, SelectMember()::class.java))
+        }
+
+        val drawingButton: Button = root.findViewById(R.id.drawing_button)
+        drawingButton.setOnClickListener {
+            startActivity(Intent(activity, DrawingResult()::class.java))
         }
 
         return root

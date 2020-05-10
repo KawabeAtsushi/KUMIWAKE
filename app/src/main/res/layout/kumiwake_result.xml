@@ -75,10 +75,7 @@
                     android:textColor="@android:color/white"
                     app:backgroundTint="#ff6666"
                     app:icon="@drawable/ic_redo_24dp"
-                    app:iconTint="@android:color/white"
-                    app:layout_constraintHorizontal_chainStyle="spread"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="parent" />
+                    app:iconTint="@android:color/white"/>
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/Button.Transparent.Rounded"
@@ -91,9 +88,7 @@
                     android:textColor="@android:color/white"
                     app:backgroundTint="#81d4fa"
                     app:icon="@drawable/ic_send_24dp"
-                    app:iconTint="@android:color/white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="parent" />
+                    app:iconTint="@android:color/white" />
             </LinearLayout>
 
             <com.google.android.material.button.MaterialButton

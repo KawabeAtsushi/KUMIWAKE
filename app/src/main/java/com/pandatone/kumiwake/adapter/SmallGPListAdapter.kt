@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 import com.pandatone.kumiwake.R
@@ -15,7 +16,7 @@ import java.util.*
 /**
  * Created by atsushi_2 on 2016/04/16.
  */
-class SmallGPListAdapter(private val context: Context, val groupList: ArrayList<Group>) : BaseAdapter() {
+class SmallGPListAdapter(private val context: Context, val groupList: ArrayList<Group>, private val roleMode: Boolean = false) : BaseAdapter() {
 
     override fun getCount(): Int {
         return groupList.size
@@ -38,6 +39,14 @@ class SmallGPListAdapter(private val context: Context, val groupList: ArrayList<
 
         if (v == null) {
             v = inflater.inflate(R.layout.mini_row_group, null)
+        }
+
+        if(roleMode){
+            val icon = v?.findViewById<ImageView>(R.id.mini_group_icon)
+            icon?.setImageResource(R.drawable.ic_star_circle_24dp)
+            if (groupList[position].id == 1){
+                icon?.visibility = View.GONE
+            }
         }
 
         nameTextView = v!!.findViewById<View>(R.id.groupName) as TextView
