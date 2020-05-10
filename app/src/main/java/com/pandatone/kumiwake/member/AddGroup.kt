@@ -17,10 +17,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.GestureDetectorCompat
 import com.google.android.material.textfield.TextInputLayout
-import com.pandatone.kumiwake.AddGroupKeys
-import com.pandatone.kumiwake.MyGestureListener
-import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.StatusHolder
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
@@ -59,6 +57,7 @@ class AddGroup : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.add_group)
         gpAdapter = GroupAdapter(this)
@@ -132,6 +131,7 @@ class AddGroup : AppCompatActivity() {
             saveItem()
             cleanUpBelong()
             Toast.makeText(this, getString(R.string.group) + " \"" + group + "\" " + getString(R.string.registered), Toast.LENGTH_SHORT).show()
+            FirebaseAnalyticsEvents.groupRegisterEvent(group, adapter.count)
             finish()
         }
     }

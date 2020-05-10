@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.member.function.Member
 import kotlinx.android.synthetic.main.quick_mode.*
@@ -38,6 +39,7 @@ class QuickMode : AppCompatActivity(), TextWatcher {
             window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
             window.exitTransition = Slide()
         }
+        FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.quick_mode)
         sex_seekBar.isEnabled = false
@@ -123,6 +125,12 @@ class QuickMode : AppCompatActivity(), TextWatcher {
                 intent.putExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, even_fm_ratio_check.isChecked)
                 startActivity(intent)
                 overridePendingTransition(R.anim.in_right, R.anim.out_left)
+                //Add Firebase
+                if (StatusHolder.sekigime) {
+                    FirebaseAnalyticsEvents.countEvent(memberNo, Integer.parseInt(groupNo), "sekigime", "quick")
+                } else {
+                    FirebaseAnalyticsEvents.countEvent(memberNo, Integer.parseInt(groupNo), "kumiwake", "quick")
+                }
             }
         }
     }

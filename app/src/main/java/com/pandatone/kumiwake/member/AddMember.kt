@@ -17,6 +17,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.GestureDetectorCompat
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
@@ -47,7 +48,7 @@ class AddMember : AppCompatActivity() {
     private var ageEditText: EditText? = null
     private var belongDropdown: AutoCompleteTextView? = null
     private var mbAdapter: MemberAdapter? = null
-    private var fromMode = "member"
+    private var fromMode:String? = "member"
     private val groupList: ArrayList<Group>
         get() {
             return GroupAdapter(this).getAllGroups()
@@ -57,9 +58,9 @@ class AddMember : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.add_member)
-
         mbAdapter = MemberAdapter(this)
         FragmentGroupMain.gpAdapter = GroupAdapter(this)
         FragmentGroupMain.listAdp = GroupFragmentViewAdapter(this, groupList)
@@ -69,7 +70,7 @@ class AddMember : AppCompatActivity() {
         ageEditText!!.setText("")
         val i = intent
         val member = i.getSerializableExtra(AddMemberKeys.MEMBER.key) as Member?
-        fromMode = i.getStringExtra(AddMemberKeys.FROM_MODE.key) as String
+        fromMode = i.getStringExtra(AddMemberKeys.FROM_MODE.key) as String?
         val memberImg = findViewById<ImageView>(R.id.memberIcon)
         sexGroup!!.setOnCheckedChangeListener { _, checkedId: Int ->
             when (checkedId) {
@@ -219,13 +220,15 @@ class AddMember : AppCompatActivity() {
             saveItem()
             afterBelong = belongDropdown!!.text.toString().split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             MemberMethods.updateBelongNo(this)
+            val newMember = MemberAdapter(this).newMember
 
             when (fromMode) {
-                "normal" -> NormalMode.memberArray.add(MemberAdapter(this).newMember)
-                "others" -> SelectMember.memberArray.add(MemberAdapter(this).newMember)
+                "normal" -> NormalMode.memberArray.add(newMember)
+                "others" -> SelectMember.memberArray.add(newMember)
             }
 
             Toast.makeText(this, getText(R.string.member).toString() + " \"" + name + "\" " + getText(R.string.registered), Toast.LENGTH_SHORT).show()
+            FirebaseAnalyticsEvents.memberRegisterEvent(newMember)
 
             if (finish) {
                 finish()

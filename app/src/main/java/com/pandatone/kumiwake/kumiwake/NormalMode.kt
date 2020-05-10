@@ -19,6 +19,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.GestureDetectorCompat
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.member.AddMember
@@ -45,6 +46,7 @@ class NormalMode : AppCompatActivity() {
             window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
             window.exitTransition = Slide()
         }
+        FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.normal_mode)
         findViews()
@@ -107,6 +109,12 @@ class NormalMode : AppCompatActivity() {
             intent.putExtra(KumiwakeArrayKeys.GROUP_LIST.key, groupArray)
             startActivity(intent)
             overridePendingTransition(R.anim.in_right, R.anim.out_left)
+            //Add Firebase
+            if(StatusHolder.sekigime) {
+                FirebaseAnalyticsEvents.countEvent(memberArray.size,groupNo,"sekigime","normal")
+            }else{
+                FirebaseAnalyticsEvents.countEvent(memberArray.size,groupNo,"kumiwake","normal")
+            }
         }
     }
 
