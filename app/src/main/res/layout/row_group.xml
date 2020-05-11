@@ -13,7 +13,7 @@
         android:layout_width="@dimen/group_icon_size"
         android:layout_height="@dimen/group_icon_size"
         android:padding="@dimen/row_padding"
-        android:src="@drawable/img_user_group"
+        android:src="@drawable/ic_user_group"
         android:tint="@color/gray"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

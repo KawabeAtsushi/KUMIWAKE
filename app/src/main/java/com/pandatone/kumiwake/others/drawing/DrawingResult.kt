@@ -29,11 +29,18 @@ class DrawingResult : AppCompatActivity() {
     private var v = 0
     private lateinit var shakeAnimator: Animator
     private lateinit var ticketAnimator: Animator
-
+    private lateinit var tickets: ArrayList<String>
+    private var pickCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.drawing_result)
+
+        val i = intent
+        if (i.getSerializableExtra("tickets") != null) {
+            tickets = i.getSerializableExtra("tickets") as ArrayList<String>
+        }
+        tickets.shuffle()
 
         val ticket = findViewById<TextView>(R.id.ticket)
         val drawingAnim = findViewById<LottieAnimationView>(R.id.drawing_anim)
@@ -41,15 +48,16 @@ class DrawingResult : AppCompatActivity() {
         //progress:0(start)~1(end)
         drawingAnim.setMinProgress(0.5f)
         setUpAnimators(drawingAnim, ticket)
-        shakeAnimation(pleaseTap)
+        shakeAnimation(drawingAnim,pleaseTap)
 
         drawingAnim.setOnClickListener {
             if (!prepared) {//振動開始
                 ticket.visibility = View.INVISIBLE
                 drawingAnim.progress = 0.5f
-                shakeAnimation(pleaseTap)
+                shakeAnimation(drawingAnim,pleaseTap)
                 prepared = true
             } else if (!drawingAnim.isAnimating) {//pickup開始
+                pick(ticket)
                 ticket.visibility = View.VISIBLE
                 pleaseTap.visibility = View.INVISIBLE
                 pleaseTap.cancelAnimation()
@@ -74,6 +82,7 @@ class DrawingResult : AppCompatActivity() {
         findViewById<Button>(R.id.go_home).setOnClickListener { onGoHome() }
     }
 
+    //アニメーター初期化
     private fun setUpAnimators(boxView: LottieAnimationView, ticketView: View) {
         shakeAnimator = AnimatorInflater.loadAnimator(this, R.animator.box_shake_anim)
         shakeAnimator.setTarget(boxView)
@@ -82,17 +91,21 @@ class DrawingResult : AppCompatActivity() {
         ticketAnimator.doOnEnd { prepared = false }
     }
 
-    private fun shakeAnimation(pleaseTap:LottieAnimationView) {
+    //待機状態のアニメーション
+    private fun shakeAnimation(drawingAnim: LottieAnimationView,pleaseTap:LottieAnimationView) {
         //振動
         shakeAnimator.doOnEnd { shakeAnimator.start() }
         shakeAnimator.start()
         //3秒待って進まなかったらタップを促す
         Handler().postDelayed(Runnable {
-            pleaseTap.visibility = View.VISIBLE
-            pleaseTap.playAnimation()
+            if(!drawingAnim.isAnimating) {
+                pleaseTap.visibility = View.VISIBLE
+                pleaseTap.playAnimation()
+            }
         }, 3000)
     }
 
+    //くじ引き開始
     private fun drawingAnimation() {
         //初期状態に戻す
         shakeAnimator.start()
@@ -100,16 +113,28 @@ class DrawingResult : AppCompatActivity() {
         ticketAnimator.start()
     }
 
+    //アニメーションの途中から結果までスキップ
     private fun skipAnimation(drawingAnim: LottieAnimationView) {
         drawingAnim.progress = 1.0f
         ticketAnimator.end()
+    }
+
+    //以下、くじ引き処理
+    private fun pick(ticketTextView: TextView){
+        ticketTextView.text = tickets[pickCount]
+        pickCount ++
+        if (pickCount >= tickets.size){
+            tickets.shuffle()
+            pickCount = 0
+        }
+        Toast.makeText(this, "Count : $pickCount",Toast.LENGTH_SHORT).show()
     }
 
     //以下、ボタンの処理
     private fun onRetry() {
         v = 0
         val title = getString(R.string.retry_title)
-        val message = getString(R.string.re_order_description) + getString(R.string.run_confirmation)
+        val message = getString(R.string.re_drawing_description) + getString(R.string.run_confirmation)
         DialogWarehouse(supportFragmentManager).decisionDialog(title, message, this::retry)
     }
 

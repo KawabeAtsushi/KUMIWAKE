@@ -20,7 +20,7 @@ import java.util.*
 /**
  * Created by atsushi_2 on 2016/03/20.
  */
-class EditGroupViewAdapter(val context: Context, val groupList: List<Group>, private val scrollView: ScrollView, private val groupListView: ListView, private val roleMode: Boolean = false) : BaseAdapter() {
+class EditGroupViewAdapter(val context: Context, val groupList: List<Group>, private val scrollView: ScrollView, private val groupListView: ListView, private val totalCountTextView: TextView? = null) : BaseAdapter() {
     private var beforeNo: Int = 0
     private var afterNo: Int = 0
     private var autoChange: Boolean = false
@@ -61,7 +61,7 @@ class EditGroupViewAdapter(val context: Context, val groupList: List<Group>, pri
         belongNoEditText.setText(group.belongNo.toString())
         belongNoEditText.isFocusable = true
         belongNoEditText.isFocusableInTouchMode = true
-        if (roleMode) {
+        if (totalCountTextView != null) {
             leader.visibility = View.GONE
             v.findViewById<ImageView>(R.id.rowIconGroup).setImageResource(R.drawable.ic_star_circle_24dp)
         } else {
@@ -110,9 +110,9 @@ class EditGroupViewAdapter(val context: Context, val groupList: List<Group>, pri
 
                 val addNo = beforeNo - afterNo
 
-                if (roleMode) {
+                if (totalCountTextView != null) {
                     val totalStr = context.getString(R.string.assigned) + countTotal().toString() + context.getString(R.string.people)
-                    RoleDefine.totalAssinedTextView.text = totalStr
+                    totalCountTextView.text = totalStr
                 } else {
                     if (!autoChange) {//changeBelongNo()での変更によって呼ばれないようにする
                         autoChange = true

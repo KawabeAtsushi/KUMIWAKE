@@ -62,6 +62,7 @@
     <string name="re_sekigime_description">Execute Seat Allocation again on the same conditions.(* The order in the table will be changed.)</string>
     <string name="re_order_description">Execute order deciding again on the same conditions.</string>
     <string name="re_assign_description">Execute the assignment again on the same conditions.</string>
+    <string name="re_drawing_description">Restart the drawing from the beginning.</string>
     <string name="retry_finished">Retry finished</string>
     <string name="registered">registered</string>
     <string name="registration">register</string>

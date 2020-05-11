@@ -10,6 +10,7 @@ import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.history.HistoryMain
 import com.pandatone.kumiwake.others.SelectMember
 import com.pandatone.kumiwake.others.drawing.DrawingResult
+import com.pandatone.kumiwake.others.drawing.TicketDefine
 
 
 class OthersFragment : Fragment() {
@@ -42,7 +43,7 @@ class OthersFragment : Fragment() {
 
         val drawingButton: Button = root.findViewById(R.id.drawing_button)
         drawingButton.setOnClickListener {
-            startActivity(Intent(activity, DrawingResult()::class.java))
+            startActivity(Intent(activity, TicketDefine()::class.java))
         }
 
         return root

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/custom_root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_others_background"
+    android:backgroundTint="#30FFFFFF"
+    android:backgroundTintMode="src_atop">
+
+    <LinearLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="@string/role_decision"
+            android:textColor="@color/gray"
+            android:textSize="25sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="10dp"
+            android:text="@string/add_role_description" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/custom_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/drawing_result_button"
+        app:layout_constraintTop_toBottomOf="@id/title">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/card"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/title">
+
+            <TextView
+                android:id="@+id/total_ticket_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/index_background"
+                android:textSize="15sp" />
+
+            <ListView
+                android:id="@+id/ticketListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="@dimen/form_between_margin"
+                android:layout_marginEnd="10dp" />
+
+            <TextView
+                android:id="@+id/error_zero_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/require_correct_No"
+                android:textColor="@color/red"
+                android:textSize="@dimen/form_textSize"
+                android:visibility="gone" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/add_ticket"
+                style="@style/Button.Transparent.Circle"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="15dp"
+                android:backgroundTint="@color/orange"
+                app:icon="@drawable/ic_add_white_24dp"
+                app:iconTint="@android:color/white" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/drawing_result_button"
+        style="@style/Button.Solid.Rectangle"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/under_button_height"
+        android:drawableEnd="@drawable/ic_arrow_white"
+        android:text="@string/drawing"
+        android:textAlignment="center"
+        android:textColor="@color/gold"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:backgroundTint="?android:attr/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -76,24 +76,24 @@ class CustomDialogSekigime : DialogFragment() {
         var heightDp = 0
         when (mPosition) {
             1 -> {
-                iv!!.setImageResource(R.drawable.img_square_table)
+                iv!!.setImageResource(R.drawable.img_table_square)
                 widthDp = 180
                 heightDp = 250
             }
             2 -> {
-                iv!!.setImageResource(R.drawable.img_parallel_table)
-                widthDp = 180
-                heightDp = 250
+                iv!!.setImageResource(R.drawable.img_table_parallel)
+                widthDp = 150
+                heightDp = 180
             }
             3 -> {
-                iv!!.setImageResource(R.drawable.img_circle_table)
+                iv!!.setImageResource(R.drawable.img_table_circle)
                 widthDp = 200
                 heightDp = 200
             }
             4 -> {
-                iv!!.setImageResource(R.drawable.img_counter_table)
-                widthDp = 80
-                heightDp = 210
+                iv!!.setImageResource(R.drawable.img_table_counter)
+                widthDp = 60
+                heightDp = 160
             }
         }
         val scale = resources.displayMetrics.density //画面のdensityを指定。

@@ -58,6 +58,8 @@
             android:theme="@style/OthersTheme"/>
         <activity android:name=".others.role.RoleResult"
             android:theme="@style/OthersTheme"/>
+        <activity android:name=".others.drawing.TicketDefine"
+            android:theme="@style/OthersTheme"/>
         <activity android:name=".others.drawing.DrawingResult"
             android:theme="@style/OthersTheme"/>
         <activity

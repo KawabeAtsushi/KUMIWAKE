@@ -3,6 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/img_sekigime_img"
+    android:backgroundTint="#80FFFFFF"
+    android:backgroundTintMode="src_atop"
     android:orientation="vertical">
 
     <LinearLayout

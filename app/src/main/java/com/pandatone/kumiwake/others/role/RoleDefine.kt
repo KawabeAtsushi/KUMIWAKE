@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.kumiwake_custom.*
  */
 class RoleDefine : AppCompatActivity() {
     private lateinit var roleListView: ListView
+    private lateinit var totalAssinedTextView: TextView
     private var editRoleAdapter: EditGroupViewAdapter? = null
     private lateinit var memberArray: ArrayList<Member>
     private var roleArray: ArrayList<Group> = ArrayList()
@@ -43,7 +44,7 @@ class RoleDefine : AppCompatActivity() {
         }
         findViews()
         onAddRole()
-        editRoleAdapter = EditGroupViewAdapter(this, roleArray, custom_scroll, roleListView, true)
+        editRoleAdapter = EditGroupViewAdapter(this, roleArray, custom_scroll, roleListView, totalAssinedTextView)
         setViews()
         roleListView.adapter = editRoleAdapter
 
@@ -54,8 +55,8 @@ class RoleDefine : AppCompatActivity() {
     private fun findViews() {
         val title = getString(R.string.member) + " " + memberArray.size + getString(R.string.people)
         findViewById<TextView>(R.id.member_no_txt).text = title
-        roleListView = findViewById(R.id.roleListView)
-        totalAssinedTextView = findViewById<TextView>(R.id.total_member_no)
+        roleListView = findViewById(R.id.ticketListView)
+        totalAssinedTextView = findViewById<TextView>(R.id.total_ticket_no)
         val totalStr = getString(R.string.assigned) + "0" + getString(R.string.people)
         totalAssinedTextView.text = totalStr
     }
@@ -67,7 +68,7 @@ class RoleDefine : AppCompatActivity() {
         windowManager.defaultDisplay.getSize(size)
         screenHeight = size.y
         findViewById<Button>(R.id.normal_kumiwake_button).setOnClickListener { onNextClicked() }
-        findViewById<Button>(R.id.add_role).setOnClickListener { onAddRole() }
+        findViewById<Button>(R.id.add_ticket).setOnClickListener { onAddRole() }
     }
 
 
@@ -151,9 +152,5 @@ class RoleDefine : AppCompatActivity() {
                 }
             }
         })
-    }
-
-    companion object {
-        lateinit var totalAssinedTextView: TextView
     }
 }
