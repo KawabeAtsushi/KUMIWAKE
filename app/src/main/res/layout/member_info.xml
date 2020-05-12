@@ -84,12 +84,14 @@
 
     <TextView
         android:id="@+id/infoBelong"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/info_margin"
+        android:layout_marginEnd="@dimen/info_margin"
         app:layout_constraintTop_toTopOf="@id/indexBelong"
         app:layout_constraintBottom_toBottomOf="@id/indexBelong"
-        app:layout_constraintStart_toEndOf="@id/indexBelong" />
+        app:layout_constraintStart_toEndOf="@id/indexBelong"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/okBt"

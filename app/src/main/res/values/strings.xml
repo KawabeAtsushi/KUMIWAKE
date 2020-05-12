@@ -208,4 +208,6 @@
     <string name="no_assigned">No assigned</string>
     <string name="execute_role_confirm">Execute role decision as the following contents.</string>
     <string name="kinds">kinds</string>
+    <string name="remain">Remaining</string>
+    <string name="picked">Picked</string>
 </resources>

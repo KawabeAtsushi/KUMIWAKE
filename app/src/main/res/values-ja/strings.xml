@@ -207,4 +207,6 @@
     <string name="no_assigned">割り当てなし</string>
     <string name="execute_role_confirm">以下の内容で役割を割り当てます。</string>
     <string name="kinds">種類</string>
+    <string name="remain">残り</string>
+    <string name="picked">引いた枚数</string>
 </resources>
