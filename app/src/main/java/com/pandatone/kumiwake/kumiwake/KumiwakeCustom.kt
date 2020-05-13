@@ -53,7 +53,7 @@ class KumiwakeCustom : AppCompatActivity() {
         }
         findViews()
         mbAdapter = SmallMBListAdapter(this, memberArray, showLeaderNo = true)
-        editGPAdapter = EditGroupViewAdapter(this, groupArray, custom_scroll, groupListView)
+        editGPAdapter = EditGroupViewAdapter(this, groupArray, groupListView)
         setViews()
         memberListView.adapter = mbAdapter
         groupListView.adapter = editGPAdapter

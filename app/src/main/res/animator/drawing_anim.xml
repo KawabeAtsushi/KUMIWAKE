@@ -4,18 +4,18 @@
     <set
         android:ordering="together">
     <objectAnimator
-        android:duration="1700"
+        android:duration="1000"
         android:propertyName="scaleX"
         android:valueFrom="0"
-        android:valueTo="0.3" />
+        android:valueTo="0.2" />
     <objectAnimator
-        android:duration="1700"
+        android:duration="1000"
         android:propertyName="scaleY"
         android:valueFrom="0"
-        android:valueTo="0.3" />
+        android:valueTo="0.2" />
     <objectAnimator
         android:interpolator="@android:anim/decelerate_interpolator"
-        android:duration="1700"
+        android:duration="1000"
         android:propertyName="translationY"
         android:valueFrom="300.0"
         android:valueTo="-300.0" />
@@ -28,16 +28,19 @@
     <set
         android:ordering="together">
         <objectAnimator
+            android:startOffset="200"
             android:duration="800"
             android:propertyName="scaleX"
-            android:valueFrom="0.3"
+            android:valueFrom="0.2"
             android:valueTo="1.0" />
         <objectAnimator
+            android:startOffset="200"
             android:duration="800"
             android:propertyName="scaleY"
-            android:valueFrom="0.3"
+            android:valueFrom="0.2"
             android:valueTo="1.0" />
         <objectAnimator
+            android:startOffset="200"
             android:interpolator="@android:anim/decelerate_interpolator"
             android:duration="800"
             android:propertyName="translationY"

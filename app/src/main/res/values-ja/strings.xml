@@ -208,5 +208,11 @@
     <string name="execute_role_confirm">以下の内容で役割を割り当てます。</string>
     <string name="kinds">種類</string>
     <string name="remain">残り</string>
-    <string name="picked">引いた枚数</string>
+    <string name="picked">既出</string>
+    <string name="ticket">くじ</string>
+    <string name="ticket_number">くじ枚数:</string>
+    <string name="add_ticket">くじを追加</string>
+    <string name="ticket_unit">枚</string>
+    <string name="drawing_empty_description">引いたくじが表示されます</string>
+    <string name="th_time">回目</string>
 </resources>

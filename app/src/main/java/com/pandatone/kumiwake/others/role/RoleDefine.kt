@@ -16,7 +16,7 @@ import com.pandatone.kumiwake.KumiwakeArrayKeys
 import com.pandatone.kumiwake.KumiwakeCustomKeys
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
-import com.pandatone.kumiwake.adapter.EditGroupViewAdapter
+import com.pandatone.kumiwake.adapter.EditOthersViewAdapter
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
 import kotlinx.android.synthetic.main.kumiwake_custom.*
@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.kumiwake_custom.*
 class RoleDefine : AppCompatActivity() {
     private lateinit var roleListView: ListView
     private lateinit var totalAssinedTextView: TextView
-    private var editRoleAdapter: EditGroupViewAdapter? = null
+    private var editRoleAdapter: EditOthersViewAdapter? = null
     private lateinit var memberArray: ArrayList<Member>
     private var roleArray: ArrayList<Group> = ArrayList()
     private var screenHeight = 0
@@ -44,7 +44,7 @@ class RoleDefine : AppCompatActivity() {
         }
         findViews()
         onAddRole()
-        editRoleAdapter = EditGroupViewAdapter(this, roleArray, custom_scroll, roleListView, totalAssinedTextView)
+        editRoleAdapter = EditOthersViewAdapter(this, roleArray, totalAssinedTextView, getString(R.string.assigned), getString(R.string.people))
         setViews()
         roleListView.adapter = editRoleAdapter
 
@@ -56,7 +56,7 @@ class RoleDefine : AppCompatActivity() {
         val title = getString(R.string.member) + " " + memberArray.size + getString(R.string.people)
         findViewById<TextView>(R.id.member_no_txt).text = title
         roleListView = findViewById(R.id.ticketListView)
-        totalAssinedTextView = findViewById<TextView>(R.id.total_ticket_no)
+        totalAssinedTextView = findViewById(R.id.total_ticket_no)
         val totalStr = getString(R.string.assigned) + "0" + getString(R.string.people)
         totalAssinedTextView.text = totalStr
     }
@@ -77,7 +77,7 @@ class RoleDefine : AppCompatActivity() {
         var memberSum = 0
         var allowToNext: Boolean = true
         for (i in 0 until roleListView.count) {
-            val memberNo = editRoleAdapter!!.getMemberNo(i)
+            val memberNo = editRoleAdapter!!.getNumber(i)
             memberSum += memberNo
             if (memberNo < 0 || memberSum > memberArray.size) {
                 allowToNext = false
@@ -110,8 +110,8 @@ class RoleDefine : AppCompatActivity() {
     //roleArrayの内容更新
     private fun updateRoleArray() {
         for (i in 0 until roleListView.count) {
-            val roleName = editRoleAdapter!!.getGroupName(i)
-            val memberNo = editRoleAdapter!!.getMemberNo(i)
+            val roleName = editRoleAdapter!!.getName(i)
+            val memberNo = editRoleAdapter!!.getNumber(i)
             val role = roleArray[i]
             role.name = roleName
             role.belongNo = memberNo
@@ -122,8 +122,8 @@ class RoleDefine : AppCompatActivity() {
         val nextRoleArray: ArrayList<Group> = ArrayList()
         var total = 0
         for (i in 0 until roleListView.count) {
-            val roleName = editRoleAdapter!!.getGroupName(i)
-            val memberNo = editRoleAdapter!!.getMemberNo(i)
+            val roleName = editRoleAdapter!!.getName(i)
+            val memberNo = editRoleAdapter!!.getNumber(i)
             total += memberNo
             if (memberNo != 0) {
                 nextRoleArray.add(Group(0, roleName, "", memberNo))

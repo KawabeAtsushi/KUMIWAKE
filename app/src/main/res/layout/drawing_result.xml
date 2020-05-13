@@ -8,13 +8,29 @@
     android:backgroundTint="#90FFFFFF"
     android:backgroundTintMode="src_atop">
 
+    <TextView
+        android:id="@+id/countTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="@string/picked"
+        android:textSize="20sp"
+        android:textColor="@color/red"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/drawing_history"
+        app:layout_constraintEnd_toEndOf="@id/drawing_history"/>
+
+
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/drawing_history"
         style="@style/Button.Transparent.Rounded"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:padding="12dp"
         android:text="@string/history"
         android:textColor="@android:color/white"
@@ -22,7 +38,46 @@
         app:icon="@drawable/ic_history_black_24dp"
         app:iconTint="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/countTextView" />
+
+    <ListView
+        android:id="@+id/history_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/listview_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/drawing_history"
+        app:layout_constraintTop_toTopOf="@id/countTextView"
+        app:layout_constraintBottom_toBottomOf="@id/drawing_history"/>
+
+    <TextView
+        android:id="@+id/emptyHistoryList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:text="@string/drawing_empty_description"
+        android:textSize="20sp"
+        android:textColor="@color/thin_gray"
+        android:background="@drawable/listview_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/drawing_history"
+        app:layout_constraintTop_toTopOf="@id/countTextView"
+        app:layout_constraintBottom_toBottomOf="@id/drawing_history" />
+
+    <TextView
+        android:id="@+id/remainTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:gravity="center"
+        android:text="@string/remain"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/drawing_history"
+        app:layout_constraintStart_toStartOf="parent"/>
 
 
     <com.airbnb.lottie.LottieAnimationView
@@ -64,7 +119,7 @@
         android:background="@drawable/ticket"
         android:gravity="center"
         android:padding="20dp"
-        android:text="くじ結果"
+        android:text="@string/ticket"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@id/drawing_anim"
         app:layout_constraintEnd_toEndOf="parent"

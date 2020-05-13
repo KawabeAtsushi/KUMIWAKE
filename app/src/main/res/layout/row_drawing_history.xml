@@ -6,7 +6,7 @@
     android:orientation="horizontal">
 
     <ImageView
-        android:id="@+id/icon"
+        android:id="@+id/drawing_row_icon"
         android:layout_width="@dimen/mini_icon_size"
         android:layout_height="@dimen/mini_icon_size"
         android:padding="@dimen/mini_row_padding"
@@ -21,34 +21,55 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/mini_row_padding"
-        android:text="TextView"
+
+        android:text="@string/kinds"
         android:textSize="18sp"
         android:ellipsize="end"
         android:singleLine="true"
-        app:layout_constraintStart_toEndOf="@id/icon"
+        app:layout_constraintStart_toEndOf="@id/drawing_row_icon"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <TextView
-        android:id="@+id/pickedNo"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.6" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <TextView
+        android:id="@+id/pickedNo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:padding="@dimen/mini_row_padding"
-        android:text="picked"
+        android:gravity="center"
+        android:text="@string/picked"
         android:textSize="18sp"
-        android:singleLine="true"
-        app:layout_constraintEnd_toStartOf="@id/remainNo"
+        android:singleLine="false"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
         android:id="@+id/remainNo"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="@dimen/mini_row_padding"
-        android:text="remain"
+        android:gravity="center"
+        android:text="@string/remain"
         android:textSize="18sp"
-        android:singleLine="true"
+        android:singleLine="false"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintStart_toEndOf="@id/guideline_end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>

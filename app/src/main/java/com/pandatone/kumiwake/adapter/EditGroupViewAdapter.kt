@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +13,12 @@ import android.widget.*
 import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.function.Group
-import com.pandatone.kumiwake.others.role.RoleDefine
 import java.util.*
 
 /**
  * Created by atsushi_2 on 2016/03/20.
  */
-class EditGroupViewAdapter(val context: Context, val groupList: List<Group>, private val scrollView: ScrollView, private val groupListView: ListView, private val totalCountTextView: TextView? = null) : BaseAdapter() {
+class EditGroupViewAdapter(val context: Context, val groupList: List<Group>, private val groupListView: ListView) : BaseAdapter() {
     private var beforeNo: Int = 0
     private var afterNo: Int = 0
     private var autoChange: Boolean = false
@@ -53,20 +51,15 @@ class EditGroupViewAdapter(val context: Context, val groupList: List<Group>, pri
         }
 
         nameEditText = v!!.findViewById<View>(R.id.editGroupName) as EditText
-        belongNoEditText = v.findViewById<View>(R.id.editTheNumberOfMember) as EditText
-        leader = v.findViewById<View>(R.id.leader) as TextView
-        nameEditText.setText(group.name)
         nameEditText.isFocusable = true
         nameEditText.isFocusableInTouchMode = true
-        belongNoEditText.setText(group.belongNo.toString())
+        belongNoEditText = v.findViewById<View>(R.id.editTheNumberOfMember) as EditText
         belongNoEditText.isFocusable = true
         belongNoEditText.isFocusableInTouchMode = true
-        if (totalCountTextView != null) {
-            leader.visibility = View.GONE
-            v.findViewById<ImageView>(R.id.rowIconGroup).setImageResource(R.drawable.ic_star_circle_24dp)
-        } else {
-            leader.text = "${context.getString(R.string.leader)} : ${context.getString(R.string.nothing)}"
-        }
+        leader = v.findViewById<View>(R.id.leader) as TextView
+        nameEditText.setText(group.name)
+        belongNoEditText.setText(group.belongNo.toString())
+        leader.text = "${context.getString(R.string.leader)} : ${context.getString(R.string.nothing)}"
         nameEditTextList[position] = nameEditText
         belongEditTextList[position] = belongNoEditText
 
@@ -74,12 +67,12 @@ class EditGroupViewAdapter(val context: Context, val groupList: List<Group>, pri
             //hasFocus: 入力開始 -> true,移動 -> false
             if (hasFocus) {
                 setFocus = position
-            }else{
+            } else {
                 outFocus = position
             }
-            if (setFocus != outFocus){//別のところにフォーカスが移ったら
+            if (setFocus != outFocus) {//別のところにフォーカスが移ったら
                 val beforeEditText = belongEditTextList[outFocus]
-                if (beforeEditText?.text.toString() == "" || beforeEditText?.text.toString() == "-"){
+                if (beforeEditText?.text.toString() == "" || beforeEditText?.text.toString() == "-") {
                     beforeEditText?.setText("0")
                 }
             }
@@ -104,21 +97,16 @@ class EditGroupViewAdapter(val context: Context, val groupList: List<Group>, pri
                     } else {
                         belongNoEditText.setTextColor(PublicMethods.getColor(context, R.color.gray))
                     }
-                }else{
+                } else {
                     afterNo = 0
                 }
 
                 val addNo = beforeNo - afterNo
 
-                if (totalCountTextView != null) {
-                    val totalStr = context.getString(R.string.assigned) + countTotal().toString() + context.getString(R.string.people)
-                    totalCountTextView.text = totalStr
-                } else {
-                    if (!autoChange) {//changeBelongNo()での変更によって呼ばれないようにする
-                        autoChange = true
-                        changeBelongNo(position, addNo)
-                        autoChange = false
-                    }
+                if (!autoChange) {//changeBelongNo()での変更によって呼ばれないようにする
+                    autoChange = true
+                    changeBelongNo(position, addNo)
+                    autoChange = false
                 }
             }
 
@@ -152,18 +140,10 @@ class EditGroupViewAdapter(val context: Context, val groupList: List<Group>, pri
         }
     }
 
-    //countTotalAssignedMember
-    private fun countTotal():Int{
-        var totalNo = 0
-        for (i in 0 until belongEditTextList.size){
-            totalNo += getMemberNo(i)
-        }
-        return totalNo
-    }
-
     //ListViewのEditTextのマップ
     @SuppressLint("UseSparseArrays")
     private val nameEditTextList = HashMap<Int, EditText>()
+
     @SuppressLint("UseSparseArrays")
     private val belongEditTextList = HashMap<Int, EditText>()
 

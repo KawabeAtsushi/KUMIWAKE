@@ -208,6 +208,12 @@
     <string name="no_assigned">No assigned</string>
     <string name="execute_role_confirm">Execute role decision as the following contents.</string>
     <string name="kinds">kinds</string>
-    <string name="remain">Remaining</string>
+    <string name="remain">Remain</string>
     <string name="picked">Picked</string>
+    <string name="ticket">Ticket</string>
+    <string name="ticket_number">Num of tickets:</string>
+    <string name="add_ticket">Add tickets of the drawing</string>
+    <string name="ticket_unit">tickets</string>
+    <string name="drawing_empty_description">The drawn tickets will be displayed</string>
+    <string name="th_time">th time</string>
 </resources>

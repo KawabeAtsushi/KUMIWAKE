@@ -14,7 +14,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
-import com.pandatone.kumiwake.adapter.EditGroupViewAdapter
+import com.pandatone.kumiwake.adapter.EditOthersViewAdapter
 import com.pandatone.kumiwake.member.function.Group
 import kotlinx.android.synthetic.main.kumiwake_custom.*
 
@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.kumiwake_custom.*
 class TicketDefine : AppCompatActivity() {
     private lateinit var ticketListView: ListView
     lateinit var totalAssinedTextView: TextView
-    private var editTicketAdapter: EditGroupViewAdapter? = null
+    private var editTicketAdapter: EditOthersViewAdapter? = null
     private var roleArray: ArrayList<Group> = ArrayList()
     private var screenHeight = 0
 
@@ -37,7 +37,7 @@ class TicketDefine : AppCompatActivity() {
 
         findViews()
         onAddTicket()
-        editTicketAdapter = EditGroupViewAdapter(this, roleArray, custom_scroll, ticketListView, totalAssinedTextView)
+        editTicketAdapter = EditOthersViewAdapter(this, roleArray, totalAssinedTextView, getString(R.string.ticket_number),getString(R.string.ticket_unit))
         setViews()
         ticketListView.adapter = editTicketAdapter
 
@@ -47,8 +47,8 @@ class TicketDefine : AppCompatActivity() {
     //View宣言
     private fun findViews() {
         ticketListView = findViewById(R.id.ticketListView)
-        totalAssinedTextView = findViewById<TextView>(R.id.total_ticket_no)
-        val totalStr = getString(R.string.assigned) + "0"
+        totalAssinedTextView = findViewById(R.id.total_ticket_no)
+        val totalStr = getString(R.string.ticket_number) + "0"
         totalAssinedTextView.text = totalStr
     }
 
@@ -66,9 +66,9 @@ class TicketDefine : AppCompatActivity() {
     //組み分け確認画面に遷移ボタン
     private fun onNextClicked() {
         var ticketSum = 0
-        var allowToNext: Boolean = true
+        var allowToNext = true
         for (i in 0 until ticketListView.count) {
-            val ticketNo = editTicketAdapter!!.getMemberNo(i)
+            val ticketNo = editTicketAdapter!!.getNumber(i)
             ticketSum += ticketNo
             if (ticketSum <= 0) {
                 allowToNext = false
@@ -88,7 +88,7 @@ class TicketDefine : AppCompatActivity() {
     //役職追加
     private fun onAddTicket() {
         val ticketNo = roleArray.size
-        val ticketName = getString(R.string.role) + " " + (ticketNo + 1).toString()
+        val ticketName = getString(R.string.ticket) + " " + (ticketNo + 1).toString()
         updateRoleArray()
         roleArray.add(Group(ticketNo, ticketName, "", 1))
         editTicketAdapter?.notifyDataSetChanged()
@@ -98,8 +98,8 @@ class TicketDefine : AppCompatActivity() {
     //roleArrayの内容更新
     private fun updateRoleArray() {
         for (i in 0 until ticketListView.count) {
-            val ticketName = editTicketAdapter!!.getGroupName(i)
-            val ticketNo = editTicketAdapter!!.getMemberNo(i)
+            val ticketName = editTicketAdapter!!.getName(i)
+            val ticketNo = editTicketAdapter!!.getNumber(i)
             val tickets = roleArray[i]
             tickets.name = ticketName
             tickets.belongNo = ticketNo
@@ -110,12 +110,12 @@ class TicketDefine : AppCompatActivity() {
         val ticketArray: ArrayList<String> = ArrayList()
         var total = 0
         for (i in 0 until ticketListView.count) {
-            val ticketName = editTicketAdapter!!.getGroupName(i)
-            val ticketNo = editTicketAdapter!!.getMemberNo(i)
+            val ticketName = editTicketAdapter!!.getName(i)
+            val ticketNo = editTicketAdapter!!.getNumber(i)
             total += ticketNo
             if (ticketNo != 0) {
-                for(t in 0 until ticketNo)
-                ticketArray.add(ticketName)
+                for (t in 0 until ticketNo)
+                    ticketArray.add(ticketName)
             }
         }
         return ticketArray
