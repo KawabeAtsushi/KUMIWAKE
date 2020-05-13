@@ -2,9 +2,11 @@ package com.pandatone.kumiwake.others.drawing
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Point
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.WindowManager
@@ -34,13 +36,12 @@ class TicketDefine : AppCompatActivity() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.ticket_difinition)
-
         findViews()
         onAddTicket()
-        editTicketAdapter = EditOthersViewAdapter(this, roleArray, totalAssinedTextView, getString(R.string.ticket_number),getString(R.string.ticket_unit))
+        editTicketAdapter = EditOthersViewAdapter(this, roleArray, totalAssinedTextView, true)
         setViews()
         ticketListView.adapter = editTicketAdapter
-
+        ticketColors.add(Color.parseColor("#6b6b6b"))
         setKeyboardListener()
     }
 
@@ -89,6 +90,7 @@ class TicketDefine : AppCompatActivity() {
     private fun onAddTicket() {
         val ticketNo = roleArray.size
         val ticketName = getString(R.string.ticket) + " " + (ticketNo + 1).toString()
+        ticketColors.add(Color.parseColor("#6b6b6b"))
         updateRoleArray()
         roleArray.add(Group(ticketNo, ticketName, "", 1))
         editTicketAdapter?.notifyDataSetChanged()
@@ -116,6 +118,8 @@ class TicketDefine : AppCompatActivity() {
             if (ticketNo != 0) {
                 for (t in 0 until ticketNo)
                     ticketArray.add(ticketName)
+            }else{
+                ticketColors.removeAt(i)
             }
         }
         return ticketArray
@@ -138,5 +142,9 @@ class TicketDefine : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    companion object{
+        var ticketColors:ArrayList<Int> = ArrayList()
     }
 }

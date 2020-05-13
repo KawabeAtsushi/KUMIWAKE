@@ -44,7 +44,7 @@ class RoleDefine : AppCompatActivity() {
         }
         findViews()
         onAddRole()
-        editRoleAdapter = EditOthersViewAdapter(this, roleArray, totalAssinedTextView, getString(R.string.assigned), getString(R.string.people))
+        editRoleAdapter = EditOthersViewAdapter(this, roleArray, totalAssinedTextView, false)
         setViews()
         roleListView.adapter = editRoleAdapter
 

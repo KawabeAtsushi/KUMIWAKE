@@ -15,12 +15,11 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="@string/picked"
-        android:textSize="20sp"
         android:textColor="@color/red"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/drawing_history"
         app:layout_constraintStart_toStartOf="@id/drawing_history"
-        app:layout_constraintEnd_toEndOf="@id/drawing_history"/>
-
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <com.google.android.material.button.MaterialButton
@@ -29,8 +28,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:padding="12dp"
         android:text="@string/history"
         android:textColor="@android:color/white"
@@ -38,110 +37,120 @@
         app:icon="@drawable/ic_history_black_24dp"
         app:iconTint="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/countTextView" />
+        app:layout_constraintBottom_toTopOf="@id/animation_views"/>
 
     <ListView
         android:id="@+id/history_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_margin="10dp"
         android:background="@drawable/listview_background"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/animation_views"
         app:layout_constraintEnd_toStartOf="@id/drawing_history"
-        app:layout_constraintTop_toTopOf="@id/countTextView"
-        app:layout_constraintBottom_toBottomOf="@id/drawing_history"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/emptyHistoryList"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/listview_background"
         android:gravity="center"
         android:text="@string/drawing_empty_description"
-        android:textSize="20sp"
         android:textColor="@color/thin_gray"
-        android:background="@drawable/listview_background"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/drawing_history"
-        app:layout_constraintTop_toTopOf="@id/countTextView"
-        app:layout_constraintBottom_toBottomOf="@id/drawing_history" />
-
-    <TextView
-        android:id="@+id/remainTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:gravity="center"
-        android:text="@string/remain"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@id/drawing_history"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@id/animation_views"
+        app:layout_constraintEnd_toStartOf="@id/drawing_history"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/drawing_anim"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/animation_views"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="20dp"
-        android:adjustViewBounds="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/drawing_history"
-        app:lottie_autoPlay="false"
-        app:lottie_loop="false"
-        app:lottie_rawRes="@raw/drawing" />
+        app:layout_constraintBottom_toTopOf="@id/retry_button">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/tap"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        android:adjustViewBounds="true"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/drawing_anim"
-        app:layout_constraintEnd_toEndOf="@id/drawing_anim"
-        app:layout_constraintStart_toStartOf="@id/drawing_anim"
-        app:layout_constraintTop_toTopOf="@id/drawing_anim"
-        app:lottie_autoPlay="false"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/please_tap" />
+        <TextView
+            android:id="@+id/remainTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:gravity="center"
+            android:text="@string/remain"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/animation_views" />
 
-    <TextView
-        android:id="@+id/ticket"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:autoSizeTextType="uniform"
-        android:background="@drawable/ticket"
-        android:gravity="center"
-        android:padding="20dp"
-        android:text="@string/ticket"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/drawing_anim"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/drawing_anim" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/drawing_anim"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:adjustViewBounds="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="false"
+            app:lottie_rawRes="@raw/drawing" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/tap"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/drawing_anim"
+            app:layout_constraintEnd_toEndOf="@id/drawing_anim"
+            app:layout_constraintStart_toStartOf="@id/drawing_anim"
+            app:layout_constraintTop_toTopOf="@id/drawing_anim"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/please_tap" />
+
+        <TextView
+            android:id="@+id/ticket"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:autoSizeTextType="uniform"
+            android:background="@drawable/ticket"
+            android:backgroundTintMode="src_atop"
+            android:gravity="center"
+            android:padding="20dp"
+            android:text="@string/ticket"
+            android:textSize="50sp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/drawing_anim"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/drawing_anim" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/show_result"
+        android:id="@+id/retry_button"
         style="@style/Button.Transparent.Rounded"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:padding="12dp"
-        android:text="@string/show_all"
+        android:text="@string/retry"
         android:textColor="@android:color/white"
         app:backgroundTint="#ff6666"
         app:icon="@drawable/ic_redo_24dp"
         app:iconTint="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@id/go_home"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/drawing_anim" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/go_home"
@@ -149,16 +158,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="10dp"
         android:padding="12dp"
         android:text="@string/go_home"
         android:textColor="@android:color/white"
         app:backgroundTint="@color/gray"
         app:icon="@drawable/ic_home_24dp"
         app:iconTint="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@id/adView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/show_result" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"

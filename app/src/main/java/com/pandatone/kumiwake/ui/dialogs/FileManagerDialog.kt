@@ -1,4 +1,4 @@
-package com.pandatone.kumiwake.setting
+package com.pandatone.kumiwake.ui.dialogs
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialog
 import androidx.fragment.app.DialogFragment
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.setting.DBBackup
 
 
 /**

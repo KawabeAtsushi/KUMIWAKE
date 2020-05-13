@@ -211,9 +211,11 @@
     <string name="remain">Remain</string>
     <string name="picked">Picked</string>
     <string name="ticket">Ticket</string>
-    <string name="ticket_number">Num of tickets:</string>
+    <string name="ticket_number">Sum:</string>
     <string name="add_ticket">Add tickets of the drawing</string>
     <string name="ticket_unit">tickets</string>
     <string name="drawing_empty_description">The drawn tickets will be displayed</string>
     <string name="th_time">th time</string>
+    <string name="change_color">Click icon to choose ticket color</string>
+    <string name="choose_color">Choose color</string>
 </resources>

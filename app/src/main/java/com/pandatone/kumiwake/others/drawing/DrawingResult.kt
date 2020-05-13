@@ -3,6 +3,8 @@ package com.pandatone.kumiwake.others.drawing
 import android.animation.Animator
 import android.animation.AnimatorInflater
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.SoundPool
 import android.os.Bundle
@@ -10,7 +12,10 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.ListView
+import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
@@ -19,7 +24,10 @@ import com.pandatone.kumiwake.MainActivity
 import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.DrawingHistoryListAdapter
+import com.pandatone.kumiwake.adapter.SmallDrawingHistoryListAdapter
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
+import kotlinx.android.synthetic.main.drawing_result.*
+import kotlin.math.roundToInt
 
 
 /**
@@ -30,20 +38,23 @@ class DrawingResult : AppCompatActivity() {
     private lateinit var soundPool: SoundPool
     private lateinit var tapHandler: Handler
     private lateinit var historyListView: ListView
-    private lateinit var historyListViewAdapter: ArrayAdapter<String>
+    private lateinit var historyListViewAdapter: SmallDrawingHistoryListAdapter
     private var soundShake = 0
     private var soundDraw = 0
-    private var prepared = true
+    private var shaking = true
     private var v = 0
     private lateinit var shakeAnimator: Animator
     private lateinit var ticketAnimator: Animator
     private lateinit var tickets: ArrayList<String>
     private var pickedTickets: ArrayList<String> = ArrayList()
     private lateinit var ticketKinds: ArrayList<String>
-    private var pickCount = 0
     private var historyArray: ArrayList<String> = ArrayList()
     private lateinit var countTextView: TextView
     private lateinit var remainTextView: TextView
+    private lateinit var drawingAnim:LottieAnimationView
+    private lateinit var pleaseTap:LottieAnimationView
+    private lateinit var ticket:TextView
+    private var pickCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,25 +65,23 @@ class DrawingResult : AppCompatActivity() {
             tickets = i.getSerializableExtra("tickets") as ArrayList<String>
         }
         ticketKinds = ArrayList(tickets.distinct())
-        tickets.shuffle()
 
         setUpViews()
-        updateViews()
 
-        val ticket = findViewById<TextView>(R.id.ticket)
-        val drawingAnim = findViewById<LottieAnimationView>(R.id.drawing_anim)
-        val pleaseTap = findViewById<LottieAnimationView>(R.id.tap)
-        //progress:0(start)~1(end)
-        drawingAnim.setMinProgress(0.5f)
         setUpAnimators(drawingAnim, ticket)
-        shakeAnimation(pleaseTap)
+
+        initializeViews()
 
         drawingAnim.setOnClickListener {
-            if (!prepared) {//振動開始
-                ticket.visibility = View.INVISIBLE
-                drawingAnim.progress = 0.5f
-                shakeAnimation(pleaseTap)
-                prepared = true
+            if (!shaking) {//振動開始
+                if (pickCount >= tickets.size) {//最終結果
+                        animation_views.visibility = View.GONE
+                        countTextView.text = getString(R.string.result)
+                }else {
+                    val countStr = "${pickCount + 1}${getString(R.string.th_time)}"
+                    countTextView.text = countStr
+                    shakeAnimation(pleaseTap)
+                }
             } else if (!drawingAnim.isAnimating) {//pickup開始
                 pick(ticket)
                 ticket.visibility = View.VISIBLE
@@ -89,20 +98,40 @@ class DrawingResult : AppCompatActivity() {
 
         val historyButton = findViewById<Button>(R.id.drawing_history)
         historyButton.setOnClickListener { onHistory() }
-        val showResultButton = findViewById<Button>(R.id.show_result)
+        val showResultButton = findViewById<Button>(R.id.retry_button)
         showResultButton.text = getString(R.string.retry)
-        showResultButton.setOnClickListener { onRetry() }
+        showResultButton.setOnClickListener { onRetry(drawingAnim) }
         findViewById<Button>(R.id.go_home).setOnClickListener { onGoHome() }
     }
 
-    //ビューの初期化
+    //ビュー定義
     private fun setUpViews() {
+        drawingAnim = findViewById(R.id.drawing_anim)
+        pleaseTap = findViewById(R.id.tap)
+        ticket = findViewById(R.id.ticket)
+        //progress:0(start)~1(end)
+        drawingAnim.setMinProgress(0.5f)
         historyListView = findViewById(R.id.history_list)
-        historyListViewAdapter = ArrayAdapter(this, R.layout.row_simple_drawing_history, historyArray)
+        historyListViewAdapter = SmallDrawingHistoryListAdapter(this, historyArray)
         historyListView.adapter = historyListViewAdapter
         historyListView.emptyView = findViewById(R.id.emptyHistoryList)
         countTextView = findViewById(R.id.countTextView)
         remainTextView = findViewById(R.id.remainTextView)
+    }
+
+    //ビューの初期化
+    private fun initializeViews(){
+        animation_views.visibility = View.VISIBLE
+        val countStr = "1${getString(R.string.th_time)}"
+        countTextView.text = countStr
+        val remainStr = "${getString(R.string.remain)} ${tickets.size}${getString(R.string.ticket_unit)}"
+        remainTextView.text = remainStr
+        historyArray.clear()
+        historyListViewAdapter.notifyDataSetChanged()
+        pickedTickets.clear()
+        tickets.shuffle()
+        pickCount = 0
+        shakeAnimation(pleaseTap)
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -139,11 +168,15 @@ class DrawingResult : AppCompatActivity() {
         shakeAnimator.setTarget(boxView)
         ticketAnimator = AnimatorInflater.loadAnimator(this, R.animator.drawing_anim)
         ticketAnimator.setTarget(ticketView)
-        ticketAnimator.doOnEnd { prepared = false }
+        ticketAnimator.doOnEnd { shaking = false }
     }
 
     //待機状態のアニメーション
     private fun shakeAnimation(pleaseTap: LottieAnimationView) {
+        ticket.visibility = View.INVISIBLE
+        drawingAnim.progress = 0.5f
+        shaking = true
+
         //繰り返し
         shakeAnimator.doOnEnd {
             shakeAnimator.start()
@@ -189,24 +222,42 @@ class DrawingResult : AppCompatActivity() {
 
     //以下、くじ引き処理
     private fun pick(ticketTextView: TextView) {
-        val picked = tickets[pickCount]
-        ticketTextView.text = picked
-        pickedTickets.add(picked)
-        pickCount++
-        historyArray.add(0, "${pickCount}.${picked}")
-        historyListViewAdapter.notifyDataSetChanged()
-        updateViews()
-        if (pickCount >= tickets.size) {
-            tickets.shuffle()
-            pickCount = 0
-        }
+            val picked = tickets[pickCount]
+            ticketTextView.text = picked
+            val ticketCol = getTicketColorInt(picked)
+            ticketTextView.setTextColor(ticketCol)
+            ticketTextView.backgroundTintList = ColorStateList.valueOf(adjustAlpha(ticketCol,0.1f))
+            pickedTickets.add(picked)
+            pickCount++
+            historyArray.add(0, "<font color='${getTicketColorHex(picked)}'>${picked}</font>")
+            historyListViewAdapter.notifyDataSetChanged()
+            val remainStr = "${getString(R.string.remain)} ${tickets.size - pickCount}${getString(R.string.ticket_unit)}"
+            remainTextView.text = remainStr
     }
 
-    private fun updateViews() {
-        val countStr = "${pickCount + 1}${getString(R.string.th_time)}"
-        countTextView.text = countStr
-        val remainStr = "${getString(R.string.remain)} ${tickets.size - pickCount}${getString(R.string.ticket_unit)}"
-        remainTextView.text = remainStr
+    //チケットの色取得(Int)
+    private fun getTicketColorInt(ticket:String):Int{
+        val colorList = TicketDefine.ticketColors
+        val index = ticketKinds.indexOf(ticket)
+        return colorList[index]
+    }
+
+    //チケットの色取得(Hex)
+    private fun getTicketColorHex(ticket:String):String{
+        val colorList = TicketDefine.ticketColors
+        val index = ticketKinds.indexOf(ticket)
+        val intColor = colorList[index]
+        return String.format("#%06X", 0xFFFFFF and intColor)
+    }
+
+    //色にアルファ値設定
+    @ColorInt
+    private fun adjustAlpha(@ColorInt color: Int, factor: Float): Int {
+        val alpha = (Color.alpha(color) * factor).roundToInt()
+        val red = Color.red(color)
+        val green = Color.green(color)
+        val blue = Color.blue(color)
+        return Color.argb(alpha, red, green, blue)
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -234,15 +285,11 @@ class DrawingResult : AppCompatActivity() {
     }
 
     //初めから
-    private fun onRetry() {
+    private fun onRetry(drawingAnim: LottieAnimationView) {
         v = 0
         val title = getString(R.string.retry_title)
         val message = getString(R.string.re_drawing_description) + getString(R.string.run_confirmation)
-        DialogWarehouse(supportFragmentManager).decisionDialog(title, message, this::retry)
-    }
-
-    private fun retry() {
-        Toast.makeText(applicationContext, getText(R.string.retry_finished), Toast.LENGTH_SHORT).show()
+        DialogWarehouse(supportFragmentManager).decisionDialog(title, message, this::initializeViews)
     }
 
     //ホームに戻る

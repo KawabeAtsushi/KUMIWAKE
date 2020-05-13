@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.others.drawing.TicketDefine
 import java.util.*
 
 /**
@@ -41,8 +42,10 @@ class DrawingHistoryListAdapter(private val context: Context, private val kinds:
             v = inflater.inflate(R.layout.row_drawing_history, null)
         }
 
+        val icon = v!!.findViewById<ImageView>(R.id.drawing_row_icon)
+        icon.setColorFilter(TicketDefine.ticketColors[position])
         val ticket = kinds[position]
-        nameTextView = v!!.findViewById<View>(R.id.ticketName) as TextView
+        nameTextView = v.findViewById<View>(R.id.ticketName) as TextView
         pickedNoTextView = v.findViewById<View>(R.id.pickedNo) as TextView
         remainNoTextView = v.findViewById<View>(R.id.remainNo) as TextView
         nameTextView.text = ticket
