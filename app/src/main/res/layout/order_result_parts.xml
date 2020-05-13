@@ -16,6 +16,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:autoSizeTextType="uniform"
+        android:maxLines="1"
         android:textColor="@android:color/white" />
 
     <TextView

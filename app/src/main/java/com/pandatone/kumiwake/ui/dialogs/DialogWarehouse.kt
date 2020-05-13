@@ -53,7 +53,7 @@ class DialogWarehouse(private var fragmentManager: FragmentManager?) {
                 .lightnessSliderOnly()
                 .initialColor(initialColor)
                 .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
-                .density(5)
+                .density(6)
                 .setPositiveButton("OK") { _, selectedColor, _ ->
                     TicketDefine.ticketColors[position] = selectedColor
                     icon.setColorFilter(selectedColor)

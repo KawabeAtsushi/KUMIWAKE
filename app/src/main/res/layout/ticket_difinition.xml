@@ -33,11 +33,56 @@
             android:text="@string/add_ticket" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/indexes_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="13dp"
+        android:padding="5dp"
+        android:orientation="horizontal"
+        android:background="#bfff"
+        app:layout_constraintTop_toBottomOf="@id/title">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="24dp"
+            android:text="↓"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_marginStart="10dp"
+            android:text="@string/change_color"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/total_ticket_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:text="@string/ticket_number"
+            android:background="@drawable/index_background"
+            android:textSize="15sp" />
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="15dp"
         app:layout_constraintBottom_toTopOf="@id/drawing_result_button"
-        app:layout_constraintTop_toBottomOf="@id/title">
+        app:layout_constraintTop_toBottomOf="@id/indexes_layout">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,49 +92,11 @@
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/title">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginStart="32dp"
-                android:text="↓"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:layout_marginStart="10dp"
-                android:text="@string/change_color"
-                android:textSize="12sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_gravity="center_horizontal"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/total_ticket_no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginEnd="15dp"
-                android:text="@string/ticket_number"
-                android:background="@drawable/index_background"
-                android:textSize="15sp" />
-        </LinearLayout>
-
             <ListView
                 android:id="@+id/ticketListView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="@dimen/form_between_margin"
                 android:layout_marginEnd="10dp" />
 
             <TextView
