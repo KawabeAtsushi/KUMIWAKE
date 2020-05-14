@@ -40,13 +40,13 @@ class KumiwakeFragment : Fragment() {
             StatusHolder.normalMode = true
             NormalMode.memberArray = ArrayList()
             startActivity(Intent(activity, NormalMode::class.java))
-            FirebaseAnalyticsEvents.functionSelectEvent("kumiwake","normal")
+            FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.KumiwakeNormal.key)
         }
         val quickButton: Button = root.findViewById(R.id.quick_mode_button)
         quickButton.setOnClickListener {
             StatusHolder.normalMode = false
             startActivity(Intent(activity, QuickMode::class.java))
-            FirebaseAnalyticsEvents.functionSelectEvent("kumiwake","quick")
+            FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.KumiwakeQuick.key)
         }
 
         //ヘルプボタンのクリックリスナ

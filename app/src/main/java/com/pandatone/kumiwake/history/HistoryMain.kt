@@ -8,6 +8,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.pandatone.kumiwake.FirebaseAnalyticsEvents
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 
@@ -30,6 +32,7 @@ class HistoryMain : AppCompatActivity() {
         supportActionBar!!.setDisplayShowTitleEnabled(true)
         setViews()
         setPageChangeListener()
+        FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
     }
 
     //Viewの宣言・初期化

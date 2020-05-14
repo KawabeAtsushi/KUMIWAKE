@@ -11,10 +11,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.startActivity
 import com.google.android.material.button.MaterialButton
-import com.pandatone.kumiwake.PublicMethods
-import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.StatusHolder
-import com.pandatone.kumiwake.Theme
+import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.member.function.Member
@@ -108,12 +105,14 @@ class HistoryInfo(val c: Activity) {
             StatusHolder.sekigime = false
             PublicMethods.setStatusBarColor(this.c, Theme.Kumiwake.primaryColor)
             goTo()
+            FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.KumiwakeHistory.key)
         }
         val sekigimeButton = view.findViewById<Button>(R.id.sekigime_select_button)
         sekigimeButton.setOnClickListener {
             StatusHolder.sekigime = true
             PublicMethods.setStatusBarColor(this.c, Theme.Sekigime.primaryColor)
             goTo()
+            FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.SekigimeHistory.key)
         }
         builder.setTitle(R.string.mode_selection)
                 .setView(view)

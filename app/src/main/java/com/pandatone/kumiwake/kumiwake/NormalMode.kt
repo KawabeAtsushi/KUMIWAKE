@@ -111,9 +111,9 @@ class NormalMode : AppCompatActivity() {
             overridePendingTransition(R.anim.in_right, R.anim.out_left)
             //Add Firebase
             if(StatusHolder.sekigime) {
-                FirebaseAnalyticsEvents.countEvent(memberArray.size,groupNo,"sekigime","normal")
+                FirebaseAnalyticsEvents.countEvent(memberArray.size,groupNo,FirebaseAnalyticsEvents.FunctionKeys.SekigimeNormal.key)
             }else{
-                FirebaseAnalyticsEvents.countEvent(memberArray.size,groupNo,"kumiwake","normal")
+                FirebaseAnalyticsEvents.countEvent(memberArray.size,groupNo,FirebaseAnalyticsEvents.FunctionKeys.KumiwakeNormal.key)
             }
         }
     }

@@ -6,25 +6,38 @@ import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
 
 object FirebaseAnalyticsEvents {
+
+    //機能選択のキー
+    enum class FunctionKeys(val key: String) {
+        KumiwakeNormal("KumiwakeNormal"),
+        KumiwakeQuick("KumiwakeQuick"),
+        KumiwakeHistory("KumiwakeHistory"),
+        SekigimeNormal("SekigimeNormal"),
+        SekigimeQuick("SekigimeQuick"),
+        SekigimeHistory("SekigimeHistory"),
+        History("History"),
+        Order("Order"),
+        Role("Role"),
+        Drawing("Drawing")
+    }
+
     //@onCreate()
     //FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
     lateinit var firebaseAnalytics: FirebaseAnalytics
 
     //どの機能がよく使われているか？
-    fun functionSelectEvent(func: String, mode: String) {
+    fun functionSelectEvent(func: String) {
         val bundle = Bundle()
         bundle.putString("function", func)
-        bundle.putString("mode", mode)
         firebaseAnalytics.logEvent("function_select", bundle)
     }
 
     //メンバー数・グループ数
-    fun countEvent(memberNo:Int,groupNo:Int,func: String, mode: String) {
+    fun countEvent(memberNo:Int,groupNo:Int,func: String) {
         val bundle = Bundle()
         bundle.putString("member_no", memberNo.toString())
         bundle.putString("group_no", groupNo.toString())
         bundle.putString("function", func)
-        bundle.putString("mode", mode)
         firebaseAnalytics.logEvent("number_define", bundle)
     }
 

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.pandatone.kumiwake.FirebaseAnalyticsEvents
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.history.HistoryMain
@@ -27,23 +28,27 @@ class OthersFragment : Fragment() {
         val historyButton: Button = root.findViewById(R.id.history_button)
         historyButton.setOnClickListener {
             startActivity(Intent(activity, HistoryMain::class.java))
+            FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.History.key)
         }
 
         val orderButton: Button = root.findViewById(R.id.order_button)
         orderButton.setOnClickListener {
             StatusHolder.order = true
             startActivity(Intent(activity, SelectMember()::class.java))
+            FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.Order.key)
         }
 
         val roleButton: Button = root.findViewById(R.id.role_button)
         roleButton.setOnClickListener {
             StatusHolder.order = false
             startActivity(Intent(activity, SelectMember()::class.java))
+            FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.Role.key)
         }
 
         val drawingButton: Button = root.findViewById(R.id.drawing_button)
         drawingButton.setOnClickListener {
             startActivity(Intent(activity, TicketDefine()::class.java))
+            FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.Drawing.key)
         }
 
         return root

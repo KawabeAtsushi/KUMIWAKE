@@ -187,7 +187,7 @@ object KumiwakeMethods {
     }
 
     //結果背景の色を生成
-    val colorList = listOf<String>(
+    private val colorList = listOf<String>(
             "ffb7b7", "ffb7db", "ffb7ff", "dbb7ff",
             "b7b7ff", "b7dbff", "b7ffff", "b7ffdb",
             "b7ffb7", "dbffb7", "ffffb7", "ffdbb7"

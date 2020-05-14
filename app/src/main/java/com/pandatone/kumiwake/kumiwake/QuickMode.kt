@@ -127,9 +127,9 @@ class QuickMode : AppCompatActivity(), TextWatcher {
                 overridePendingTransition(R.anim.in_right, R.anim.out_left)
                 //Add Firebase
                 if (StatusHolder.sekigime) {
-                    FirebaseAnalyticsEvents.countEvent(memberNo, Integer.parseInt(groupNo), "sekigime", "quick")
+                    FirebaseAnalyticsEvents.countEvent(memberNo, Integer.parseInt(groupNo), FirebaseAnalyticsEvents.FunctionKeys.SekigimeQuick.key)
                 } else {
-                    FirebaseAnalyticsEvents.countEvent(memberNo, Integer.parseInt(groupNo), "kumiwake", "quick")
+                    FirebaseAnalyticsEvents.countEvent(memberNo, Integer.parseInt(groupNo), FirebaseAnalyticsEvents.FunctionKeys.KumiwakeQuick.key)
                 }
             }
         }
