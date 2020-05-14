@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.pandatone.kumiwake">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -12,63 +13,95 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="LockedOrientationActivity">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".kumiwake.QuickMode"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".kumiwake.NormalMode"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".kumiwake.KumiwakeCustom" />
-        <activity android:name=".kumiwake.KumiwakeConfirmation" />
-        <activity android:name=".kumiwake.KumiwakeResult" />
+            android:name=".kumiwake.KumiwakeCustom"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".kumiwake.KumiwakeConfirmation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".kumiwake.KumiwakeResult"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".history.HistoryMain"
-            android:windowSoftInputMode="adjustPan"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".member.ChoiceMemberMain"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/MemberChoiceTheme"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/MemberChoiceTheme"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".sekigime.SelectTableType"
-            android:theme="@style/SekigimeTheme"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/SekigimeTheme" />
         <activity
             android:name=".sekigime.SquareTableCustom"
-            android:theme="@style/SekigimeTheme"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/SekigimeTheme" />
         <activity
             android:name=".sekigime.SekigimeResult"
-            android:theme="@style/SekigimeTheme"/>
-        <activity android:name=".others.SelectMember"
-            android:theme="@style/OthersTheme"/>
-        <activity android:name=".others.order.OrderResult"
-            android:theme="@style/OthersTheme"/>
-        <activity android:name=".others.role.RoleDefine"
-            android:theme="@style/OthersTheme"/>
-        <activity android:name=".others.role.RoleConfirmation"
-            android:theme="@style/OthersTheme"/>
-        <activity android:name=".others.role.RoleResult"
-            android:theme="@style/OthersTheme"/>
-        <activity android:name=".others.drawing.TicketDefine"
-            android:theme="@style/OthersTheme"/>
-        <activity android:name=".others.drawing.DrawingResult"
-            android:theme="@style/OthersTheme"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/SekigimeTheme" />
         <activity
-            android:name=".member.AddMember" />
+            android:name=".others.SelectMember"
+            android:screenOrientation="portrait"
+            android:theme="@style/OthersTheme" />
+        <activity
+            android:name=".others.order.OrderResult"
+            android:screenOrientation="portrait"
+            android:theme="@style/OthersTheme" />
+        <activity
+            android:name=".others.role.RoleDefine"
+            android:screenOrientation="portrait"
+            android:theme="@style/OthersTheme" />
+        <activity
+            android:name=".others.role.RoleConfirmation"
+            android:screenOrientation="portrait"
+            android:theme="@style/OthersTheme" />
+        <activity
+            android:name=".others.role.RoleResult"
+            android:screenOrientation="portrait"
+            android:theme="@style/OthersTheme" />
+        <activity
+            android:name=".others.drawing.TicketDefine"
+            android:screenOrientation="portrait"
+            android:theme="@style/OthersTheme" />
+        <activity
+            android:name=".others.drawing.DrawingResult"
+            android:screenOrientation="portrait"
+            android:theme="@style/OthersTheme" />
+        <activity
+            android:name=".member.AddMember"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".member.AddGroup"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".setting.PurchaseFreeAdOption"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
         <meta-data

@@ -17,6 +17,6 @@
         android:textColor="@android:color/darker_gray"
         android:textStyle="bold"
         android:ellipsize="end"
-        android:singleLine="true" />
+        android:maxLines = "1" />
 
 </LinearLayout>

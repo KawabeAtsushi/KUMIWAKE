@@ -100,7 +100,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:singleLine="true" />
+                    android:maxLines = "1" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -117,7 +117,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:singleLine="true" />
+                    android:maxLines = "1" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -136,7 +136,7 @@
                     android:ems="4"
                     android:inputType="number"
                     android:maxLength="2"
-                    android:singleLine="true" />
+                    android:maxLines = "1" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -156,7 +156,7 @@
                     android:ellipsize="end"
                     android:focusable="false"
                     android:padding="20dp"
-                    android:singleLine="true" />
+                    android:maxLines = "1" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
@@ -168,7 +168,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/orange"
-        android:singleLine="true"
+        android:maxLines = "1"
         android:text="@string/continue_register"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:ems="20"
                 android:inputType="textPersonName"
-                android:singleLine="true" />
+                android:maxLines = "1" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

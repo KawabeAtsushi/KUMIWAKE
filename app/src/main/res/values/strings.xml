@@ -4,10 +4,10 @@
     <string name="decide">Decide</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
-    <string name="do_kumiwake">Do kumiwake!</string>
+    <string name="do_kumiwake">kumiwake!</string>
     <string name="Do_delete">Are you sure to delete?</string>
     <string name="about_kumiwake">About KUMIWAKE</string>
-    <string name="select_member">select member</string>
+    <string name="select_member">select</string>
     <string name="about_sekigime">About seat allocation</string>
     <string name="about_member">About member</string>
     <string name="advertise_delete">Delete advertisement</string>
@@ -82,7 +82,7 @@
     <string name="even_out_age_ratio">To equalize the age ratio</string>
     <string name="even_out_male_female_ratio">To equalize the gender ratio</string>
     <string name="go_home">back to home</string>
-    <string name="go_sekigime">do sekigime with these groups</string>
+    <string name="go_sekigime">sekigime with these groups</string>
     <string name="fm_placed_alternately">Arrange men and women alternately</string>
     <string name="group">Group</string>
     <string name="counter_table">Counter table</string>
@@ -171,7 +171,7 @@
     <string name="purchased">purchased!!</string>
     <string name="show_detail">Show Individual</string>
     <string name="double_tap">Double tap display to start typing</string>
-    <string name="member_create">create member</string>
+    <string name="member_create">create</string>
     <string name="more_details">More details</string>
     <string name="url_homepage" translatable="false">https://peraichi.com/landing_pages/view/kumiwake</string>
     <string name="url_release_note" translatable="false">https://peraichi.com/landing_pages/view/kumiwake/#section-34</string>
@@ -189,11 +189,11 @@
     <string name="change">change</string>
     <string name="new_title">new title</string>
     <string name="favorite">favorite</string>
-    <string name="others">others</string>
+    <string name="others">Others</string>
     <string name="by_member">by member</string>
     <string name="by_group">by group</string>
     <string name="kumiwake_order_annotation">(The order is according to age by gender)</string>
-    <string name="mode_selection">Function selection</string>
+    <string name="mode_selection">Select function</string>
     <string name="drawing">Drawing</string>
     <string name="role_decision">Role</string>
     <string name="order">Order</string>
@@ -207,7 +207,7 @@
     <string name="assigned">assigned: </string>
     <string name="no_assigned">No assigned</string>
     <string name="execute_role_confirm">Execute role decision as the following contents.</string>
-    <string name="kinds">kinds</string>
+    <string name="kinds">Kinds</string>
     <string name="remain">Remain</string>
     <string name="picked">Picked</string>
     <string name="ticket">Ticket</string>
