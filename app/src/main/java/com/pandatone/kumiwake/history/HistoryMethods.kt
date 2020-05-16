@@ -108,7 +108,7 @@ object HistoryMethods {
         var extraMemberCount = arraySubtraction(duplicateNo, needNoArray)
 
         this.forEach { arrayList ->
-            Log.d("Group",arrayList.map{it.name}.toString())
+            Log.d("Group", arrayList.map { it.name }.toString())
         }
 
         extraMemberCount.forEach {
@@ -122,12 +122,13 @@ object HistoryMethods {
                 extraNoArray.add(extraNo)
             }
             var min = extraNoArray.min()
-            while (min!! < 0) {
+            var max = extraNoArray.max()
+            while (min!! < 0 || max!! - min >= 2) {
                 Log.d("-", "----------------------------------------------------------")
                 Log.d("min", min.toString())
                 extraNoArray.let { it ->
                     val minIndex = it.indexOf(min?.toInt())
-                    val maxIndex = it.indexOf(it.max())
+                    val maxIndex = it.indexOf(max?.toInt())
                     extraMemberCount[minIndex].let { minExtraList ->
                         //足りないグループの一番余っているグループナンバー
                         val minIndexExtraNo = minExtraList.indexOf(minExtraList.max())
@@ -147,13 +148,14 @@ object HistoryMethods {
                     extraNoArray.add(extraNo)
                 }
                 this.forEach { arrayList ->
-                    Log.d("Group",arrayList.map{it.name}.toString())
+                    Log.d("Group", arrayList.map { it.name }.toString())
                 }
 
                 extraMemberCount.forEach {
                     Log.d("EXTRA", it.toString())
                 }
                 min = extraNoArray.min()
+                max = extraNoArray.max()
             }
         }
     }

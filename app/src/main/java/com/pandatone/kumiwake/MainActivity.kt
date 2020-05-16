@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
         // Obtain the FirebaseAnalytics instance.
         FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
-        PublicMethods.initialize()
         setContentView(R.layout.activity_main)
 
         tabLayout = findViewById(R.id.tabLayout);
@@ -78,6 +77,11 @@ class MainActivity : AppCompatActivity() {
         // To open the first tab as default
         openFragment(KumiwakeFragment())
         setKeyboardListener(navView)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        PublicMethods.initialize()
     }
 
     // 戻るボタンが押されたとき

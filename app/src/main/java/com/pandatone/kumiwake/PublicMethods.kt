@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import android.util.TypedValue
 import android.view.GestureDetector
 import android.view.MotionEvent
