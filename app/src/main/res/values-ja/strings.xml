@@ -217,5 +217,5 @@
     <string name="th_time">回目</string>
     <string name="change_color">アイコンをクリックしてくじの色を変更</string>
     <string name="choose_color">色を選択</string>
-    <string name="avoid_duplication">この結果となるべく被らないようにする</string>
+    <string name="avoid_duplication">履歴の結果となるべく被らないようにする</string>
 </resources>

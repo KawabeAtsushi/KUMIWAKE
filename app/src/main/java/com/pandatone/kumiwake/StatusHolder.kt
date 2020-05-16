@@ -15,6 +15,7 @@ object StatusHolder {
     var normalMode: Boolean = true //true: ノーマルモード, false: クイックモード
     var sekigime: Boolean = false //true: 席決めモード, false: 組み分けモード
     var order: Boolean = true //true: 順番, false: 役割
+    var notDuplicate: Boolean = false //true: 重複なし, false: 普通
 
     @StyleRes
     var nowTheme: Int = R.style.AppTheme

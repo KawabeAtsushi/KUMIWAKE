@@ -218,5 +218,5 @@
     <string name="th_time">th time</string>
     <string name="change_color">Click icon to choose ticket color</string>
     <string name="choose_color">Choose color</string>
-    <string name="avoid_duplication">Avoid duplication with this result</string>
+    <string name="avoid_duplication">Avoid duplication with this history result</string>
 </resources>

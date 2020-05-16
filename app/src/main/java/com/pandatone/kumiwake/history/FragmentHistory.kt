@@ -66,7 +66,6 @@ class FragmentHistory : ListFragment() {
             HistoryAdapter(requireContext()).updateHistoryState(historyList[position], "", true)
             loadName()
             FragmentKeeps().loadName()
-            FragmentKeeps().setToolbarTitle(requireContext())
             true //trueにするとイベントが消費される falseだと次のonClickも呼ばれる
         }
     }

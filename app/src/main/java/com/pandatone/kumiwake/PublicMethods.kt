@@ -35,6 +35,7 @@ object PublicMethods {
         StatusHolder.nowTheme = R.style.AppTheme
         StatusHolder.normalMode = true
         StatusHolder.sekigime = false
+        StatusHolder.notDuplicate = false
     }
 
     //広告の表示

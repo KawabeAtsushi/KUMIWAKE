@@ -15,6 +15,7 @@ import com.google.android.material.tabs.TabLayout
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.history.HistoryMethods
+import com.pandatone.kumiwake.history.HistoryMethods.avoidDuplicate
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeComparator
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeMethods
 import com.pandatone.kumiwake.member.function.Group
@@ -156,6 +157,10 @@ class KumiwakeResult : AppCompatActivity() {
             } else {
                 KumiwakeMethods.kumiwakeAllQuick(resultArray, memberArray, groupArray)
             }
+        }
+
+        if (StatusHolder.notDuplicate){
+            resultArray.avoidDuplicate(memberArray.size.toFloat())
         }
 
         //履歴に保存

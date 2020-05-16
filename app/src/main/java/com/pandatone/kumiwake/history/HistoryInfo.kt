@@ -83,7 +83,7 @@ class HistoryInfo(val c: Activity) {
     }
 
     //メンバーを利用して組み分け/席決め
-    private fun goTo() {
+    private fun goTo(notDuplicate:Boolean) {
         StatusHolder.normalMode = true
         val memberArray = ArrayList<Member>()
         resultArray.forEach { result ->
@@ -92,6 +92,10 @@ class HistoryInfo(val c: Activity) {
         memberArray.removeAll { it.id == -1 }
         NormalMode.memberArray = memberArray
         startActivity(c, Intent(c, NormalMode::class.java), null)
+        StatusHolder.notDuplicate = notDuplicate
+        if (notDuplicate){
+            HistoryMethods.historyResultArray = resultArray
+        }
     }
 
     //メンバーを利用選択ダイアログ
@@ -101,17 +105,18 @@ class HistoryInfo(val c: Activity) {
         val view = inflater.inflate(R.layout.select_mode_dialog_layout, c.findViewById<View>(R.id.info_layout) as ViewGroup?)
 
         val kumiwakeButton = view.findViewById<Button>(R.id.kumiwake_select_button)
+        val duplicateCheckBox = view.findViewById<CheckBox>(R.id.duplicate_check)
         kumiwakeButton.setOnClickListener {
             StatusHolder.sekigime = false
             PublicMethods.setStatusBarColor(this.c, Theme.Kumiwake.primaryColor)
-            goTo()
+            goTo(duplicateCheckBox.isChecked)
             FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.KumiwakeHistory.key)
         }
         val sekigimeButton = view.findViewById<Button>(R.id.sekigime_select_button)
         sekigimeButton.setOnClickListener {
             StatusHolder.sekigime = true
             PublicMethods.setStatusBarColor(this.c, Theme.Sekigime.primaryColor)
-            goTo()
+            goTo(duplicateCheckBox.isChecked)
             FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.SekigimeHistory.key)
         }
         builder.setTitle(R.string.mode_selection)

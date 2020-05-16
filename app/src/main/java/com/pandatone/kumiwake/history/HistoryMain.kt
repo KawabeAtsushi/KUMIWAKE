@@ -48,8 +48,10 @@ class HistoryMain : AppCompatActivity() {
             override fun onPageScrollStateChanged(state: Int) {
                 page = viewPager.currentItem
                 if (page == 0) {
+                    FragmentHistory.toolbarTitle = getString(R.string.history) + " " + FragmentHistory.historyList.count().toString() + "times"
                     supportActionBar!!.title = FragmentHistory.toolbarTitle
                 } else {
+                    FragmentKeeps.toolbarTitle = getString(R.string.favorite) + " " + FragmentKeeps.historyList.count().toString() + "♥s"
                     supportActionBar!!.title = FragmentKeeps.toolbarTitle
                 }
             }
