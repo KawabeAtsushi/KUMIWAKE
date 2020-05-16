@@ -51,9 +51,9 @@ class DrawingResult : AppCompatActivity() {
     private var historyArray: ArrayList<String> = ArrayList()
     private lateinit var countTextView: TextView
     private lateinit var remainTextView: TextView
-    private lateinit var drawingAnim:LottieAnimationView
-    private lateinit var pleaseTap:LottieAnimationView
-    private lateinit var ticket:TextView
+    private lateinit var drawingAnim: LottieAnimationView
+    private lateinit var pleaseTap: LottieAnimationView
+    private lateinit var ticket: TextView
     private var pickCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,9 +75,9 @@ class DrawingResult : AppCompatActivity() {
         drawingAnim.setOnClickListener {
             if (!shaking) {//振動開始
                 if (pickCount >= tickets.size) {//最終結果
-                        animation_views.visibility = View.GONE
-                        countTextView.text = getString(R.string.result)
-                }else {
+                    animation_views.visibility = View.GONE
+                    countTextView.text = getString(R.string.result)
+                } else {
                     val countStr = "${pickCount + 1}${getString(R.string.th_time)}"
                     countTextView.text = countStr
                     shakeAnimation(pleaseTap)
@@ -120,7 +120,7 @@ class DrawingResult : AppCompatActivity() {
     }
 
     //ビューの初期化
-    private fun initializeViews(){
+    private fun initializeViews() {
         animation_views.visibility = View.VISIBLE
         val countStr = "1${getString(R.string.th_time)}"
         countTextView.text = countStr
@@ -222,28 +222,28 @@ class DrawingResult : AppCompatActivity() {
 
     //以下、くじ引き処理
     private fun pick(ticketTextView: TextView) {
-            val picked = tickets[pickCount]
-            ticketTextView.text = picked
-            val ticketCol = getTicketColorInt(picked)
-            ticketTextView.setTextColor(ticketCol)
-            ticketTextView.backgroundTintList = ColorStateList.valueOf(adjustAlpha(ticketCol,0.1f))
-            pickedTickets.add(picked)
-            pickCount++
-            historyArray.add(0, "<font color='${getTicketColorHex(picked)}'>${picked}</font>")
-            historyListViewAdapter.notifyDataSetChanged()
-            val remainStr = "${getString(R.string.remain)} ${tickets.size - pickCount}${getString(R.string.ticket_unit)}"
-            remainTextView.text = remainStr
+        val picked = tickets[pickCount]
+        ticketTextView.text = picked
+        val ticketCol = getTicketColorInt(picked)
+        ticketTextView.setTextColor(ticketCol)
+        ticketTextView.backgroundTintList = ColorStateList.valueOf(adjustAlpha(ticketCol, 0.1f))
+        pickedTickets.add(picked)
+        pickCount++
+        historyArray.add(0, "<font color='${getTicketColorHex(picked)}'>${picked}</font>")
+        historyListViewAdapter.notifyDataSetChanged()
+        val remainStr = "${getString(R.string.remain)} ${tickets.size - pickCount}${getString(R.string.ticket_unit)}"
+        remainTextView.text = remainStr
     }
 
     //チケットの色取得(Int)
-    private fun getTicketColorInt(ticket:String):Int{
+    private fun getTicketColorInt(ticket: String): Int {
         val colorList = TicketDefine.ticketColors
         val index = ticketKinds.indexOf(ticket)
         return colorList[index]
     }
 
     //チケットの色取得(Hex)
-    private fun getTicketColorHex(ticket:String):String{
+    private fun getTicketColorHex(ticket: String): String {
         val colorList = TicketDefine.ticketColors
         val index = ticketKinds.indexOf(ticket)
         val intColor = colorList[index]

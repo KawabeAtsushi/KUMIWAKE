@@ -75,7 +75,7 @@ class RoleDefine : AppCompatActivity() {
     //組み分け確認画面に遷移ボタン
     private fun onNextClicked() {
         var memberSum = 0
-        var allowToNext: Boolean = true
+        var allowToNext = true
         for (i in 0 until roleListView.count) {
             val memberNo = editRoleAdapter!!.getNumber(i)
             memberSum += memberNo

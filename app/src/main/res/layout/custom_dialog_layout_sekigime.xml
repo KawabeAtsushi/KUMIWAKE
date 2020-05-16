@@ -31,17 +31,17 @@
         android:layout_height="wrap_content"
         android:layout_margin="7dp"
         android:text="@string/seats_type_confirmation"
-        android:textSize="17dp" />
+        android:textSize="17sp" />
 
     <TextView
         android:id="@+id/be_custom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:layout_marginStart="10dp"
         android:text="@string/be_custom"
         android:textColor="@color/red"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:visibility="gone" />
 
     <ImageView

@@ -14,13 +14,10 @@ import androidx.core.app.ShareCompat
 import com.google.android.material.tabs.TabLayout
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
-import com.pandatone.kumiwake.history.HistoryMethods
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeComparator
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeMethods
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
-import com.pandatone.kumiwake.sekigime.SekigimeResult
-import com.pandatone.kumiwake.sekigime.SelectTableType
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import java.util.*
 import kotlin.collections.ArrayList
@@ -46,10 +43,10 @@ class RoleResult : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kumiwake_result)
 
-        val resultTitle = getString(R.string.role_decision)+getString(R.string.result)
+        val resultTitle = getString(R.string.role_decision) + getString(R.string.result)
         findViewById<TextView>(R.id.result_title).text = resultTitle
 
-        tabLayout = findViewById(R.id.tabLayout);
+        tabLayout = findViewById(R.id.tabLayout)
         tabLayout.addTab(tabLayout.newTab().setText(R.string.by_group))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.by_member))
         tabLayout.addOnTabSelectedListener(tabItemSelectedListener)
@@ -130,7 +127,7 @@ class RoleResult : AppCompatActivity() {
             KumiwakeMethods.arrangeByAge(memberArray)
             KumiwakeMethods.kumiwakeAll(resultArray, memberArray, groupArray, ArrayList(), emptyArray())
         } else {
-                KumiwakeMethods.kumiwakeAll(resultArray, memberArray, groupArray, ArrayList(), emptyArray())
+            KumiwakeMethods.kumiwakeAll(resultArray, memberArray, groupArray, ArrayList(), emptyArray())
         }
 
         Thread(DrawTask(this, groupCount)).start()
@@ -287,8 +284,8 @@ class RoleResult : AppCompatActivity() {
             resultTxt.append("《${groupArray[i].name}》\n")
 
             for (member in array) {
-                when {
-                    member.sex == getString(R.string.man) -> resultTxt.append("♠")
+                when (member.sex) {
+                    getString(R.string.man) -> resultTxt.append("♠")
                     else -> resultTxt.append("♡")
                 }
                 resultTxt.append("${member.name}\n")

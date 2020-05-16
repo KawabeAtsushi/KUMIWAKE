@@ -48,7 +48,7 @@ class AddMember : AppCompatActivity() {
     private var ageEditText: EditText? = null
     private var belongDropdown: AutoCompleteTextView? = null
     private var mbAdapter: MemberAdapter? = null
-    private var fromMode:String? = "member"
+    private var fromMode: String? = "member"
     private val groupList: ArrayList<Group>
         get() {
             return GroupAdapter(this).getAllGroups()
@@ -70,7 +70,7 @@ class AddMember : AppCompatActivity() {
         ageEditText!!.setText("")
         val i = intent
         val member = i.getSerializableExtra(AddMemberKeys.MEMBER.key) as Member?
-        fromMode = i.getStringExtra(AddMemberKeys.FROM_MODE.key) as String?
+        fromMode = i.getStringExtra(AddMemberKeys.FROM_MODE.key)
         val memberImg = findViewById<ImageView>(R.id.memberIcon)
         sexGroup!!.setOnCheckedChangeListener { _, checkedId: Int ->
             when (checkedId) {

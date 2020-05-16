@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Build
-import android.util.Log
 import android.util.TypedValue
 import android.view.GestureDetector
 import android.view.MotionEvent
@@ -32,7 +31,7 @@ import kotlin.math.abs
 object PublicMethods {
 
     //初期状態を設定
-    fun initialize(){
+    fun initialize() {
         StatusHolder.nowTheme = R.style.AppTheme
         StatusHolder.normalMode = true
         StatusHolder.sekigime = false
@@ -81,44 +80,6 @@ object PublicMethods {
         return groupArray
     }
 
-    // view(TextView or Button)に合わせて文字が収まるようにリサイズ
-    fun View.resizeText(setText: String = "") {
-        val MIN_TEXT_SIZE = 10f //最小サイズを決める
-        var text = setText
-        if (text == "") {
-            if (this is TextView) {
-                text = this.text.toString()
-            } else if (this is Button) {
-                text = this.text.toString()
-            }
-        }
-        val padding: Int = this.paddingLeft
-        val paint = Paint()
-        val viewWidth: Int = this.width - padding * 2 //Viewのコンテンツ領域を取得
-        val viewHeight: Int = this.height - padding * 2 //パディングは上下左右同じとして
-        var textSize = 200f //テキストサイズの初期値を適当に決める
-        paint.textSize = textSize //テキストサイズをセット
-        var fm: Paint.FontMetrics = paint.fontMetrics
-        var textHeight: Float = abs(fm.top) + abs(fm.descent) //テキストの高さを取得
-        var textWidth: Float = paint.measureText(text) //テキストの幅を取得
-        while (viewWidth < textWidth || viewHeight < textHeight) { //ボタンに収まるまでループ
-            if (MIN_TEXT_SIZE >= textSize) { //最小サイズを下回ったら最小サイズに設定
-                textSize = MIN_TEXT_SIZE
-                break
-            }
-            textSize -= 8f //テキストサイズをデクリメント（間隔は適当に）
-            paint.textSize = textSize
-            fm = paint.fontMetrics
-            textHeight = abs(fm.top) + abs(fm.descent)
-            textWidth = paint.measureText(text) //テキストの縦横サイズを再取得
-        }
-        if (this is TextView) {
-            this.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize) //収まるサイズに設定
-        } else if (this is Button) {
-            this.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize) //収まるサイズに設定
-        }
-    }
-
     //getColor
     fun getColor(context: Context, @ColorRes colorId: Int): Int {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -156,7 +117,7 @@ object PublicMethods {
     }
 }
 
-class MyGestureListener(private val imm: InputMethodManager, val et: EditText) : GestureDetector.SimpleOnGestureListener() {
+class MyGestureListener(private val imm: InputMethodManager, private val et: EditText) : GestureDetector.SimpleOnGestureListener() {
 
     //ダブルタップイベント
     override fun onDoubleTap(event: MotionEvent): Boolean {

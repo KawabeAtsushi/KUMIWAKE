@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.graphics.Point
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.WindowManager
@@ -26,7 +25,7 @@ import kotlinx.android.synthetic.main.kumiwake_custom.*
  */
 class TicketDefine : AppCompatActivity() {
     private lateinit var ticketListView: ListView
-    lateinit var totalAssinedTextView: TextView
+    private lateinit var totalAssinedTextView: TextView
     private var editTicketAdapter: EditOthersViewAdapter? = null
     private var roleArray: ArrayList<Group> = ArrayList()
     private var screenHeight = 0
@@ -118,7 +117,7 @@ class TicketDefine : AppCompatActivity() {
             if (ticketNo != 0) {
                 for (t in 0 until ticketNo)
                     ticketArray.add(ticketName)
-            }else{
+            } else {
                 ticketColors.removeAt(i)
             }
         }
@@ -144,7 +143,7 @@ class TicketDefine : AppCompatActivity() {
         })
     }
 
-    companion object{
-        var ticketColors:ArrayList<Int> = ArrayList()
+    companion object {
+        var ticketColors: ArrayList<Int> = ArrayList()
     }
 }

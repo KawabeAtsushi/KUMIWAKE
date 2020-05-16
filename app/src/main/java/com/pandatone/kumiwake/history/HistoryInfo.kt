@@ -36,12 +36,12 @@ class HistoryInfo(val c: Activity) {
         val inflater = c.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(R.layout.history_info, c.findViewById<View>(R.id.info_layout) as ViewGroup?)
 
-        history = view.findViewById<TextView>(R.id.infoName)
-        date = view.findViewById<TextView>(R.id.infoDate)
+        history = view.findViewById(R.id.infoName)
+        date = view.findViewById(R.id.infoDate)
         result = view.findViewById<View>(R.id.result) as LinearLayout
-        okBt = view.findViewById<Button>(R.id.okBt)
-        goToBt = view.findViewById<MaterialButton>(R.id.goToBt)
-        editNameBt = view.findViewById<ImageButton>(R.id.edit_name)
+        okBt = view.findViewById(R.id.okBt)
+        goToBt = view.findViewById(R.id.goToBt)
+        editNameBt = view.findViewById(R.id.edit_name)
 
         builder.setTitle(R.string.history)
         builder.setView(view)
@@ -83,7 +83,7 @@ class HistoryInfo(val c: Activity) {
     }
 
     //メンバーを利用して組み分け/席決め
-    private fun goTo(notDuplicate:Boolean) {
+    private fun goTo(notDuplicate: Boolean) {
         StatusHolder.normalMode = true
         val memberArray = ArrayList<Member>()
         resultArray.forEach { result ->
@@ -93,7 +93,7 @@ class HistoryInfo(val c: Activity) {
         NormalMode.memberArray = memberArray
         startActivity(c, Intent(c, NormalMode::class.java), null)
         StatusHolder.notDuplicate = notDuplicate
-        if (notDuplicate){
+        if (notDuplicate) {
             HistoryMethods.historyResultArray = resultArray
         }
     }

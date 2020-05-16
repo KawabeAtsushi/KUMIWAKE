@@ -2,7 +2,6 @@ package com.pandatone.kumiwake
 
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
 
 object FirebaseAnalyticsEvents {
@@ -33,7 +32,7 @@ object FirebaseAnalyticsEvents {
     }
 
     //メンバー数・グループ数
-    fun countEvent(memberNo:Int,groupNo:Int,func: String) {
+    fun countEvent(memberNo: Int, groupNo: Int, func: String) {
         val bundle = Bundle()
         bundle.putString("member_no", memberNo.toString())
         bundle.putString("group_no", groupNo.toString())
@@ -52,7 +51,7 @@ object FirebaseAnalyticsEvents {
     }
 
     //グループ情報
-    fun groupRegisterEvent(groupName:String,belongNo:Int) {
+    fun groupRegisterEvent(groupName: String, belongNo: Int) {
         val bundle = Bundle()
         bundle.putString("name", groupName)
         bundle.putString("belong_no", belongNo.toString())

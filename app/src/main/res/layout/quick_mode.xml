@@ -66,7 +66,7 @@
                         android:maxLength="3"
                         android:padding="10dp"
                         android:layout_marginStart="20dp"
-                        android:maxLines = "1" />
+                        android:maxLines="1" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -128,7 +128,7 @@
                         android:padding="10dp"
                         android:layout_marginStart="20dp"
                         android:maxLength="3"
-                        android:maxLines = "1" />
+                        android:maxLines="1" />
 
                     <TextView
                         android:layout_width="wrap_content"

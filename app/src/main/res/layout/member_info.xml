@@ -91,7 +91,7 @@
         app:layout_constraintTop_toTopOf="@id/indexBelong"
         app:layout_constraintBottom_toBottomOf="@id/indexBelong"
         app:layout_constraintStart_toEndOf="@id/indexBelong"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/okBt"

@@ -50,15 +50,6 @@ class HistoryAdapter(context: Context) : ArrayAdapter<History>(context, 0) {
             return c.getInt(0)
         }
 
-    //すべての履歴取得
-    fun getAllHistories(): ArrayList<History> {
-        val historyList: ArrayList<History> = ArrayList()
-        open()
-        //getCursor(getDB, groupListList)
-        close()
-        return historyList
-    }
-
     //Listの情報取得
     fun getCursor(c: Cursor, historyList: ArrayList<History>) {
         var history: History

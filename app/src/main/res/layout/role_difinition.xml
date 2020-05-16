@@ -44,7 +44,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/ic_arrow"/>
+                    android:background="@drawable/ic_arrow" />
 
                 <TextView
                     android:id="@+id/between_arrows_txt"
@@ -60,7 +60,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginStart="10dp"
-                    android:background="@drawable/ic_arrow"/>
+                    android:background="@drawable/ic_arrow" />
 
             </LinearLayout>
 
@@ -124,27 +124,27 @@
                     android:textSize="@dimen/form_textSize"
                     android:visibility="gone" />
 
-<!--                    <com.google.android.material.button.MaterialButton-->
-<!--                        android:id="@+id/remove_role"-->
-<!--                        style="@style/Button.Transparent.Circle"-->
-<!--                        android:layout_width="40dp"-->
-<!--                        android:layout_height="40dp"-->
-<!--                        android:layout_gravity="start"-->
-<!--                        android:layout_marginStart="15dp"-->
-<!--                        android:backgroundTint="@color/thin_man"-->
-<!--                        app:icon="@drawable/ic_add_white_24dp"-->
-<!--                        app:iconTint="@android:color/white"/>-->
+                <!--                    <com.google.android.material.button.MaterialButton-->
+                <!--                        android:id="@+id/remove_role"-->
+                <!--                        style="@style/Button.Transparent.Circle"-->
+                <!--                        android:layout_width="40dp"-->
+                <!--                        android:layout_height="40dp"-->
+                <!--                        android:layout_gravity="start"-->
+                <!--                        android:layout_marginStart="15dp"-->
+                <!--                        android:backgroundTint="@color/thin_man"-->
+                <!--                        app:icon="@drawable/ic_add_white_24dp"-->
+                <!--                        app:iconTint="@android:color/white"/>-->
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/add_ticket"
-                        style="@style/Button.Transparent.Circle"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="end"
-                        android:layout_marginEnd="15dp"
-                        android:backgroundTint="@color/orange"
-                        app:icon="@drawable/ic_add_white_24dp"
-                        app:iconTint="@android:color/white" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/add_ticket"
+                    style="@style/Button.Transparent.Circle"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="15dp"
+                    android:backgroundTint="@color/orange"
+                    app:icon="@drawable/ic_add_white_24dp"
+                    app:iconTint="@android:color/white" />
 
             </LinearLayout>
 

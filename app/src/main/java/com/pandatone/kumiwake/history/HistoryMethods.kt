@@ -3,7 +3,6 @@ package com.pandatone.kumiwake.history
 import android.app.Activity
 import android.content.Context
 import android.text.format.DateFormat
-import android.util.Log
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.member.function.Member
@@ -81,10 +80,10 @@ object HistoryMethods {
     var sortType = "ASC"
     fun historySort(activity: Activity, historyList: ArrayList<History>, listAdp: HistoryFragmentViewAdapter) {
         val hsAdapter = HistoryAdapter(activity)
-        if (sortType == "ASC") {
-            sortType = "DESC"
+        sortType = if (sortType == "ASC") {
+            "DESC"
         } else {
-            sortType = "ASC"
+            "ASC"
         }
         hsAdapter.sortGroups(sortType, historyList)
         listAdp.notifyDataSetChanged() //loadName()を呼ばない！
@@ -96,66 +95,51 @@ object HistoryMethods {
     //履歴の結果とかぶらないようにする
     lateinit var historyResultArray: ArrayList<ArrayList<Member>>
 
-    //重複解除処理
+    //重複解除処理 グループごとに足りない数を補充する形でメンバー入れ替え
     fun ArrayList<ArrayList<Member>>.avoidDuplicate(memberNo: Float) {
         //resultArrayの(メンバー,元のグループ番号)のペア
         var oldGroups = getOldGroups(this)
         //グループごとのかぶりの数　例：[0, 2, 1] →　履歴のグループ２からは二人いる
         var duplicateNo = getDuplicatedNos(oldGroups)
-        //グループごとの必要最低数　例：[1, 1, 1] →　履歴のそれぞれのグループから一人ずつ必要
+        //グループごとの必要最低数　例：[1, 1, 1] →　履歴のそれぞれのグループから一人ずつ必要 ((一定))
         val needNoArray = needNos(this, memberNo)
         //グループごとの余分にいる数　例：[1, -1, 0] →　履歴のグループ１は１人抜けても大丈夫。逆にグループ２は一人足りない。
         var extraMemberCount = arraySubtraction(duplicateNo, needNoArray)
 
-        this.forEach { arrayList ->
-            Log.d("Group", arrayList.map { it.name }.toString())
-        }
+        var min = 0
+        var max = 0
+        val extraNoArray = ArrayList<Int>()
 
-        extraMemberCount.forEach {
-            Log.d("EXTRA", it.toString())
-        }
-
-        for (oldGroupNo in 0 until historyResultArray.size) {
-            val extraNoArray = ArrayList<Int>()
+        //不足メンバー数集計
+        fun checkExtras(oldGroupNo: Int) {
+            extraNoArray.clear()
             for (i in 0 until extraMemberCount.size) {
                 val extraNo = extraMemberCount[i][oldGroupNo]
                 extraNoArray.add(extraNo)
             }
-            var min = extraNoArray.min()
-            var max = extraNoArray.max()
-            while (min!! < 0 || max!! - min >= 2) {
-                Log.d("-", "----------------------------------------------------------")
-                Log.d("min", min.toString())
-                extraNoArray.let { it ->
-                    val minIndex = it.indexOf(min?.toInt())
-                    val maxIndex = it.indexOf(max?.toInt())
+            min = extraNoArray.min()!!
+            max = extraNoArray.max()!!
+        }
+
+        for (oldGroupNo in 0 until historyResultArray.size) {
+            checkExtras(oldGroupNo)
+            while (min < 0 || max - min >= 2) {
+                extraNoArray.let {
+                    val minIndex = it.indexOf(min)
+                    val maxIndex = it.indexOf(max)
                     extraMemberCount[minIndex].let { minExtraList ->
-                        //足りないグループの一番余っているグループナンバー
+                        //足りていないグループのなかで一番余っているグループ番号
                         val minIndexExtraNo = minExtraList.indexOf(minExtraList.max())
-                        //Swap
-                        Log.d("minIndex", minIndex.toString())
-                        Log.d("maxIndex", maxIndex.toString())
-                        Log.d("minIndexExtraNo", minIndexExtraNo.toString())
+                        //Swap　(1)一番足りているグループ→(2)足りないグループ、　(2)の一番余っているメンバー→(1)
                         this.swapMaxAndMin(oldGroupNo, minIndex, maxIndex, oldGroups, minIndexExtraNo)
                     }
                 }
+
                 oldGroups = getOldGroups(this)
                 duplicateNo = getDuplicatedNos(oldGroups)
                 extraMemberCount = arraySubtraction(duplicateNo, needNoArray)
-                extraNoArray.clear()
-                for (i in 0 until extraMemberCount.size) {
-                    val extraNo = extraMemberCount[i][oldGroupNo]
-                    extraNoArray.add(extraNo)
-                }
-                this.forEach { arrayList ->
-                    Log.d("Group", arrayList.map { it.name }.toString())
-                }
-
-                extraMemberCount.forEach {
-                    Log.d("EXTRA", it.toString())
-                }
-                min = extraNoArray.min()
-                max = extraNoArray.max()
+                //再集計
+                checkExtras(oldGroupNo)
             }
         }
     }
@@ -163,14 +147,12 @@ object HistoryMethods {
     //足りないところに補充するようにメンバーを入れ替え
     private fun ArrayList<ArrayList<Member>>.swapMaxAndMin(oldGroupNo: Int, minIndex: Int, maxIndex: Int, oldGroups: ArrayList<ArrayList<Pair<Member, Int>>>, extraGroupNo: Int) {
         val maxSwapMember = oldGroups[maxIndex].find { it.second == oldGroupNo }?.first
-        //余っているやつと交換
+        //一番余っているメンバー
         val minSwapMember = oldGroups[minIndex].find { it.second == extraGroupNo }?.first
-        Log.d("minSwapMember", minSwapMember!!.name)
-        Log.d("maxSwapMember", maxSwapMember!!.name)
         this.swap(minSwapMember!!, maxSwapMember!!)
     }
 
-    //array同士の減算
+    //ArrayList同士の減算
     private fun arraySubtraction(before: ArrayList<ArrayList<Int>>, after: ArrayList<ArrayList<Int>>): ArrayList<ArrayList<Int>> {
         val needNoArray = ArrayList(before)
         for (i in 0 until before.size) {
@@ -181,7 +163,7 @@ object HistoryMethods {
         return needNoArray
     }
 
-    //メンバーの入れ替え Extension
+    //メンバーの入れ替え(Extension)
     private fun ArrayList<ArrayList<Member>>.swap(mem1: Member, mem2: Member) {
         var mem1Index = 0
         var mem2Index = 0
@@ -246,6 +228,3 @@ object HistoryMethods {
         return needNoArray
     }
 }
-
-//leaderでない　→　かぶりカウント　→　かぶりが一番多い人　→　元の所属が最も少ないグループに移動（かぶりが一番多いやつとスワップ）　
-// →　かぶりカウント　→　繰り返し

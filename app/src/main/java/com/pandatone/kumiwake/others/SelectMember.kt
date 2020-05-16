@@ -9,7 +9,10 @@ import android.os.Bundle
 import android.transition.Slide
 import android.view.View
 import android.view.Window
-import android.widget.*
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.pandatone.kumiwake.*
@@ -21,7 +24,6 @@ import com.pandatone.kumiwake.others.order.OrderResult
 import com.pandatone.kumiwake.others.role.RoleDefine
 import kotlinx.android.synthetic.main.normal_mode.*
 import kotlinx.android.synthetic.main.part_review_listview.view.*
-import kotlin.collections.ArrayList
 
 /**
  * Created by atsushi_2 on 2016/05/02.
@@ -45,18 +47,18 @@ class SelectMember : AppCompatActivity() {
         layout.background = getDrawable(R.drawable.img_others_background)
         findViews()
         findViewById<LinearLayout>(R.id.layout_group_no).visibility = View.GONE
-        add_group_listview.member_add_btn.setOnClickListener { moveMemberMain() }
-        add_group_listview.member_register_and_add_btn.setOnClickListener { moveAddMember() }
+        add_group_listView.member_add_btn.setOnClickListener { moveMemberMain() }
+        add_group_listView.member_register_and_add_btn.setOnClickListener { moveAddMember() }
         adapter = SmallMBListAdapter(this, memberArray)
         listView.adapter = adapter
-        add_group_listview.numberOfSelectedMember.text = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
+        add_group_listView.numberOfSelectedMember.text = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
         val nextBtn = findViewById<Button>(R.id.normal_kumiwake_btn)
         if (StatusHolder.order) {
             nextBtn.text = "${getText(R.string.order)}!!"
             nextBtn.setTextColor(PublicMethods.getColor(this, R.color.gold))
             nextBtn.textSize = 26F
             nextBtn.typeface = Typeface.DEFAULT_BOLD
-        }else{
+        } else {
             nextBtn.text = getText(R.string.move_role_definition)
         }
         nextBtn.setOnClickListener { onNextClick() }
@@ -64,8 +66,8 @@ class SelectMember : AppCompatActivity() {
 
     //Viewの宣言
     private fun findViews() {
-        listView = findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.memberListView) as ListView
-        listView.emptyView = findViewById<View>(R.id.add_group_listview).findViewById(R.id.emptyMemberList)
+        listView = findViewById<View>(R.id.add_group_listView).findViewById<View>(R.id.memberListView) as ListView
+        listView.emptyView = findViewById<View>(R.id.add_group_listView).findViewById(R.id.emptyMemberList)
         errorMember = findViewById<View>(R.id.error_member_no_txt) as TextView
     }
 
@@ -96,7 +98,7 @@ class SelectMember : AppCompatActivity() {
         } else {
             val intent = if (StatusHolder.order) {
                 Intent(this, OrderResult::class.java)
-            }else{
+            } else {
                 Intent(this, RoleDefine::class.java)
             }
             intent.putExtra(KumiwakeArrayKeys.MEMBER_LIST.key, memberArray)
@@ -114,7 +116,8 @@ class SelectMember : AppCompatActivity() {
 
         adapter = SmallMBListAdapter(this, memberArray)
         listView.adapter = adapter
-        add_group_listview.numberOfSelectedMember.text = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
+        val selectedTxt = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
+        add_group_listView.numberOfSelectedMember.text = selectedTxt
     }
 
     companion object {

@@ -13,7 +13,6 @@ import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.MainActivity
@@ -41,7 +40,7 @@ class SekigimeResult : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.sekigime_result)
 
-        tabLayout = findViewById(R.id.tabLayout);
+        tabLayout = findViewById(R.id.tabLayout)
         tabLayout.addTab(tabLayout.newTab().setText(R.string.show_detail))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.show_all))
         tabLayout.addOnTabSelectedListener(tabItemSelectedListener)
@@ -85,7 +84,7 @@ class SekigimeResult : AppCompatActivity() {
     }
 
     //全表示
-    private fun drawAll(resultLayout:LinearLayout){
+    private fun drawAll(resultLayout: LinearLayout) {
         for (group in groupArray!!.withIndex()) {
             val drawAll = DrawAllTable(this@SekigimeResult, group.index)
             val groupNameView = groupTextView(group.value, group.index)
@@ -164,7 +163,7 @@ class SekigimeResult : AppCompatActivity() {
     }
 
     //グループ名前のTextView生成
-    private fun groupTextView(groupName: String, i:Int): TextView {
+    private fun groupTextView(groupName: String, i: Int): TextView {
         val groupNameView = TextView(this)
         groupNameView.text = groupName
         groupNameView.setTextColor(Color.DKGRAY)
@@ -176,7 +175,7 @@ class SekigimeResult : AppCompatActivity() {
         val mlp = lp as MarginLayoutParams
         if (i == 0) {//最初だけTopマージンなし
             mlp.setMargins(70, 30, 70, 0)
-        }else{
+        } else {
             mlp.setMargins(70, 140, 70, 0)
         }
         groupNameView.layoutParams = mlp
@@ -191,7 +190,7 @@ class SekigimeResult : AppCompatActivity() {
         var smaller: Float
         var addNo: Float
         var remainder: Float
-        var i: Int = 0
+        var i = 0
         var j: Int
         var k: Int
         var a: Int

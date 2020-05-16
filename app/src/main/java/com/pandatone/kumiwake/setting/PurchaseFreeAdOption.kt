@@ -129,27 +129,6 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
         }
     }
 
-    // 購入を承認する
-    private fun handlePurchase(purchase: Purchase): String {
-        var stateStr = "error"
-        val purchaseState = purchase.purchaseState
-        if (purchaseState == Purchase.PurchaseState.PURCHASED) { // Grant entitlement to the user.
-            stateStr = "purchased"
-            // Acknowledge the purchase if it hasn't already been acknowledged.
-            if (!purchase.isAcknowledged) {
-                val acknowledgePurchaseParams = AcknowledgePurchaseParams.newBuilder()
-                        .setPurchaseToken(purchase.purchaseToken)
-                        .build()
-                billingClient!!.acknowledgePurchase(acknowledgePurchaseParams, this)
-            }
-        } else if (purchaseState == Purchase.PurchaseState.PENDING) {
-            stateStr = "pending"
-        } else if (purchaseState == Purchase.PurchaseState.UNSPECIFIED_STATE) {
-            stateStr = "unspecified state"
-        }
-        return stateStr
-    }
-
     // 購入承認の結果が戻る
     override fun onAcknowledgePurchaseResponse(billingResult: BillingResult) {
         val responseCode = billingResult.responseCode

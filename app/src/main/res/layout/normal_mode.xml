@@ -70,7 +70,7 @@
                         android:inputType="number"
                         android:maxLength="3"
                         android:padding="10dp"
-                        android:maxLines = "1"
+                        android:maxLines="1"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/et_textSize_big" />
 
@@ -117,7 +117,7 @@
                 android:visibility="gone" />
 
             <include
-                android:id="@+id/add_group_listview"
+                android:id="@+id/add_group_listView"
                 layout="@layout/part_review_listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

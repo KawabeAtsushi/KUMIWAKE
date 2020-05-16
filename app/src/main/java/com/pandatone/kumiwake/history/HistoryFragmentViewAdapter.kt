@@ -68,23 +68,4 @@ class HistoryFragmentViewAdapter(private val context: Context, private val histo
         }
     }
 
-    fun setNewSelection(id: Int, value: Boolean) {
-        gSelection.append(id, value)
-        notifyDataSetChanged()
-    }
-
-    fun removeSelection(id: Int) {
-        gSelection.delete(id)
-        notifyDataSetChanged()
-    }
-
-    fun clearSelection() {
-        gSelection.clear()
-        notifyDataSetChanged()
-    }
-
-    fun isPositionChecked(id: Int): Boolean {
-        return gSelection.get(id)
-    }
-
 }

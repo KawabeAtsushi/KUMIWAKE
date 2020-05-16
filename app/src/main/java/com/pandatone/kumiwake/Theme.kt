@@ -16,7 +16,6 @@
 
 package com.pandatone.kumiwake
 
-import android.graphics.Color
 import androidx.annotation.ColorRes
 
 /**
@@ -28,11 +27,10 @@ import androidx.annotation.ColorRes
 enum class Theme(@get:ColorRes
                  val primaryColor: Int,
                  @get:ColorRes
-                 val backgroundColor: Int, @get:ColorRes
-                 val textPrimaryColor: Int) {
-    Kumiwake(R.color.red_title, R.color.red_background, R.color.theme_red_text),
-    Sekigime(R.color.green_title, R.color.green_background, R.color.theme_green_text),
-    Others(R.color.gray, R.color.background_gray, android.R.color.white),
-    Member(R.color.blue_title, R.color.blue_background, R.color.theme_blue_text),
-    Setting(R.color.yellow_title, R.color.yellow_background, R.color.theme_yellow_text)
+                 val backgroundColor: Int) {
+    Kumiwake(R.color.red_title, R.color.red_background),
+    Sekigime(R.color.green_title, R.color.green_background),
+    Others(R.color.gray, R.color.background_gray),
+    Member(R.color.blue_title, R.color.blue_background),
+    Setting(R.color.yellow_title, R.color.yellow_background)
 }

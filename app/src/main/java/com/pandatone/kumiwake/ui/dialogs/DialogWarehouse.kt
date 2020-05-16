@@ -2,7 +2,6 @@ package com.pandatone.kumiwake.ui.dialogs
 
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.FragmentManager
@@ -43,7 +42,7 @@ class DialogWarehouse(private var fragmentManager: FragmentManager?) {
         var initialColor = Color.WHITE
         TicketDefine.ticketColors[position].let {
             //変更済みの場合はそれを初期色に
-            if (it != Color.parseColor("#6b6b6b")){
+            if (it != Color.parseColor("#6b6b6b")) {
                 initialColor = it
             }
         }

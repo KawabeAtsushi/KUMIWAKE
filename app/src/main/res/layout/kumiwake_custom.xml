@@ -54,7 +54,7 @@
                 android:orientation="vertical">
 
                 <include
-                    android:id="@+id/add_group_listview"
+                    android:id="@+id/add_group_listView"
                     layout="@layout/part_review_listview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

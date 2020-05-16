@@ -41,10 +41,10 @@ class SmallGPListAdapter(private val context: Context, val groupList: ArrayList<
             v = inflater.inflate(R.layout.mini_row_group, null)
         }
 
-        if(roleMode){
+        if (roleMode) {
             val icon = v?.findViewById<ImageView>(R.id.mini_group_icon)
             icon?.setImageResource(R.drawable.ic_star_circle_24dp)
-            if (groupList[position].id == 1){
+            if (groupList[position].id == 1) {
                 icon?.visibility = View.GONE
             }
         }

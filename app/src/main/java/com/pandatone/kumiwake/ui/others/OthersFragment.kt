@@ -2,7 +2,9 @@ package com.pandatone.kumiwake.ui.others
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.pandatone.kumiwake.FirebaseAnalyticsEvents
@@ -10,7 +12,6 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.history.HistoryMain
 import com.pandatone.kumiwake.others.SelectMember
-import com.pandatone.kumiwake.others.drawing.DrawingResult
 import com.pandatone.kumiwake.others.drawing.TicketDefine
 
 

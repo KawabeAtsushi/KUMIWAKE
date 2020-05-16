@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
-import android.widget.ListView
 import android.widget.TextView
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.others.drawing.TicketDefine
@@ -55,11 +54,11 @@ class DrawingHistoryListAdapter(private val context: Context, private val kinds:
         return v
     }
 
-    private fun pickedNo(ticket:String):Int{
+    private fun pickedNo(ticket: String): Int {
         return picked.count { it == ticket }
     }
 
-    private fun remainNo(ticket:String):Int{
+    private fun remainNo(ticket: String): Int {
         val pickedNo = picked.count { it == ticket }
         val allNo = tickets.count { it == ticket }
         return allNo - pickedNo

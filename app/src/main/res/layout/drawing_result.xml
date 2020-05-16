@@ -37,7 +37,7 @@
         app:icon="@drawable/ic_history_black_24dp"
         app:iconTint="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/animation_views"/>
+        app:layout_constraintBottom_toTopOf="@id/animation_views" />
 
     <ListView
         android:id="@+id/history_list"

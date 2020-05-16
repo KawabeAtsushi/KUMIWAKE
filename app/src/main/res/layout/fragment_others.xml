@@ -13,7 +13,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="70dp"
+        android:paddingBottom="70dp"
         android:orientation="vertical">
 
         <com.google.android.material.button.MaterialButton
@@ -22,12 +22,12 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/others_button_height"
             android:layout_marginTop="20dp"
-            android:maxLines = "1"
+            android:maxLines="1"
             android:text="@string/history"
             android:textColor="@color/thin_gray"
             android:textSize="@dimen/main_button_text_size"
             android:textStyle="bold"
-            app:icon="@drawable/ic_history_black_24dp"/>
+            app:icon="@drawable/ic_history_black_24dp" />
 
         <com.google.android.material.button.MaterialButton
             style="@style/Button.Outline.Others"
@@ -35,12 +35,12 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/others_button_height"
             android:layout_marginTop="10dp"
-            android:maxLines = "1"
+            android:maxLines="1"
             android:text="@string/order"
             android:textColor="@color/thin_gray"
             android:textSize="@dimen/main_button_text_size"
             android:textStyle="bold"
-            app:icon="@drawable/ic_order"/>
+            app:icon="@drawable/ic_order" />
 
         <com.google.android.material.button.MaterialButton
             style="@style/Button.Outline.Others"
@@ -48,12 +48,12 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/others_button_height"
             android:layout_marginTop="20dp"
-            android:maxLines = "1"
+            android:maxLines="1"
             android:text="@string/role_decision"
             android:textColor="@color/thin_gray"
             android:textSize="@dimen/main_button_text_size"
             android:textStyle="bold"
-            app:icon="@drawable/ic_role"/>
+            app:icon="@drawable/ic_role" />
 
         <com.google.android.material.button.MaterialButton
             style="@style/Button.Outline.Others"
@@ -61,12 +61,12 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/others_button_height"
             android:layout_marginTop="20dp"
-            android:maxLines = "1"
+            android:maxLines="1"
             android:text="@string/drawing"
             android:textColor="@color/thin_gray"
             android:textSize="@dimen/main_button_text_size"
             android:textStyle="bold"
-            app:icon="@drawable/ic_drawing"/>
+            app:icon="@drawable/ic_drawing" />
 
     </LinearLayout>
 </ScrollView>

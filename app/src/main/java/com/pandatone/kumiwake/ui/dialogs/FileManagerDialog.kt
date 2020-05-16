@@ -78,8 +78,8 @@ class FileManagerDialog(private var mTitle: String, private var mMessage: CharSe
         val messageTextView = mDialog.findViewById<View>(R.id.dialog_message) as TextView
         val pathTextView = mDialog.findViewById<View>(R.id.dialog_path) as TextView
         pathTextView.visibility = View.VISIBLE
-        messageTextView.text = getString(R.string.nothing_file) + "\n" + DBBackup.dir_path +
-                "\n\n" + getString(R.string.failed_import)
+        val warningTxt = getString(R.string.nothing_file) + "\n" + DBBackup.dir_path + "\n\n" + getString(R.string.failed_import)
+        messageTextView.text = warningTxt
         pathTextView.text = path
 
         //コピーパスボタン設定

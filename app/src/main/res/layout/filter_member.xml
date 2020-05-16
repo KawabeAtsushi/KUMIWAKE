@@ -34,7 +34,7 @@
             android:layout_margin="@dimen/form_between_margin"
             android:background="@drawable/noselect_radio_button2"
             android:button="@null"
-            android:maxLines = "1"
+            android:maxLines="1"
             android:text="@string/all"
             android:textAlignment="center" />
 
@@ -44,7 +44,7 @@
             android:layout_margin="@dimen/form_between_margin"
             android:background="@drawable/man_radio_button"
             android:button="@null"
-            android:maxLines = "1"
+            android:maxLines="1"
             android:text="@string/man"
             android:textAlignment="center" />
 
@@ -54,7 +54,7 @@
             android:layout_margin="@dimen/form_between_margin"
             android:background="@drawable/woman_radio_button"
             android:button="@null"
-            android:maxLines = "1"
+            android:maxLines="1"
             android:text="@string/woman"
             android:textAlignment="center" />
 
@@ -95,7 +95,7 @@
                 android:ems="3"
                 android:inputType="number"
                 android:maxLength="3"
-                android:maxLines = "1" />
+                android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -138,7 +138,7 @@
                 android:ems="3"
                 android:inputType="number"
                 android:maxLength="3"
-                android:maxLines = "1" />
+                android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>

@@ -113,16 +113,6 @@ class MembersFragment : Fragment(), SearchView.OnQueryTextListener {
         return false
     }
 
-    fun setPageChangeListener(menu: Menu) {
-        viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
-            override fun onPageScrollStateChanged(state: Int) {
-                page = viewPager.currentItem
-                val itemFilter = menu.findItem(R.id.item_filter)
-                itemFilter.isVisible = page != 1
-            }
-        })
-    }
-
     companion object {
         lateinit var searchView: SearchView
         lateinit var viewPager: ViewPager

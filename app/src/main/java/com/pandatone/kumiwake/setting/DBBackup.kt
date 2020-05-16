@@ -100,7 +100,7 @@ object DBBackup {
 
     //ファイルのコピー（チャネルを使用）
     private fun fileCopy(src_path: String, dest_path: String, c: Context): Int {
-        var err: Int = 0
+        var err = 0
 
         val src = File(src_path)
         val dest = File(dest_path)

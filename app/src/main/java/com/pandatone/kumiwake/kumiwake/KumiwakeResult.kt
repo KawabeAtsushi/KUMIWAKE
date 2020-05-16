@@ -49,7 +49,7 @@ class KumiwakeResult : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kumiwake_result)
 
-        tabLayout = findViewById(R.id.tabLayout);
+        tabLayout = findViewById(R.id.tabLayout)
         tabLayout.addTab(tabLayout.newTab().setText(R.string.by_group))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.by_member))
         tabLayout.addOnTabSelectedListener(tabItemSelectedListener)
@@ -159,8 +159,14 @@ class KumiwakeResult : AppCompatActivity() {
             }
         }
 
-        if (StatusHolder.notDuplicate){
+        //かぶりが出ないように調整
+        if (StatusHolder.notDuplicate) {
             resultArray.avoidDuplicate(memberArray.size.toFloat())
+        }
+
+        //並べ替え
+        resultArray.forEach {
+            Collections.sort(it, KumiwakeComparator.ViewComparator())
         }
 
         //履歴に保存

@@ -196,7 +196,7 @@ class SettingsFragment : Fragment() {
 
     /////////////////////////パーミッション/////////////////////////////////////////////////
 
-    private val PERMISSION = 1000
+    private val permission = 1000
     private var position = 0
 
     // ストレージ許可の確認
@@ -215,14 +215,14 @@ class SettingsFragment : Fragment() {
             // 拒否していた場合,許可を求める
             ActivityCompat.requestPermissions(requireActivity(),
                     arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    PERMISSION)
+                    permission)
         }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<String>,
                                             grantResults: IntArray) {
-        if (requestCode == PERMISSION) {
+        if (requestCode == permission) {
             // 使用が許可された
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 when (position) {

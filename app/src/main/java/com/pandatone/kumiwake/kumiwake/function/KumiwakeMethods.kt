@@ -1,7 +1,6 @@
 package com.pandatone.kumiwake.kumiwake.function
 
 import android.app.Activity
-import android.graphics.Color
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
@@ -36,7 +35,6 @@ object KumiwakeMethods {
                 resultArray[i].add(memberArray[memberNo])
                 memberNo++
             }
-            Collections.sort(resultArray[i], KumiwakeComparator.ViewComparator())
         }
 
     }
@@ -68,7 +66,6 @@ object KumiwakeMethods {
         //追加したメンバー削除 & escape
         escapeArray.addAll(result)
         array.removeAll(result)
-        Collections.sort(result, KumiwakeComparator.ViewComparator())
         return result
     }
 
@@ -101,9 +98,6 @@ object KumiwakeMethods {
         //順番に追加していく
         while (0 < manArray.size) {
             val addGroupNo = groupCapacity.max()?.let { groupCapacity.indexOf(it) } //最大許容数のGroupNoを取得
-//            if (preAddGroupNo == addGroupNo) {
-//                replace(manArray)
-//            }
             val member = manArray[0]
             resultArray[addGroupNo!!].add(member) //メンバー追加
             escapeArray.add(member)
@@ -112,11 +106,6 @@ object KumiwakeMethods {
         }
 
         manArray.addAll(escapeArray)
-
-        //整列
-        for (i in 0 until groupCount) {
-            Collections.sort(resultArray[i], KumiwakeComparator.ViewComparator())
-        }
     }
 
     //womanArrayを残り全てのresultArrayに追加
@@ -150,15 +139,6 @@ object KumiwakeMethods {
         return pickIndexes
     }
 
-    //課題： even_age && even_sex && 男の数がグループ間で極端な場合、男性の年齢が偏る
-    //→連続した場合、次の要素と最後の要素を入れ替える
-    private fun replace(manArray: ArrayList<Member>) {
-        val nextMan = manArray[0]
-        val lastMan = manArray.last()
-        manArray[0] = lastMan
-        manArray[manArray.lastIndex] = nextMan
-    }
-
     //結果共有方法選択       ?関数型: () -> T を持ちます。つまり、パラメータを取らず、型 T の値を返す関数
     fun shareResult(activity: Activity, choice1: () -> Unit, choice2: () -> Unit) {
         val builder = androidx.appcompat.app.AlertDialog.Builder(activity)
@@ -185,7 +165,7 @@ object KumiwakeMethods {
     }
 
     //結果背景の色を生成
-    private val colorList = listOf<String>(
+    private val colorList = listOf(
             "ffb7b7", "ffb7db", "ffb7ff", "dbb7ff",
             "b7b7ff", "b7dbff", "b7ffff", "b7ffdb",
             "b7ffb7", "dbffb7", "ffffb7", "ffdbb7"

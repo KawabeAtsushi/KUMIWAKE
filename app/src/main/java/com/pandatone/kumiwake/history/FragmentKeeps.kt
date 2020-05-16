@@ -98,7 +98,7 @@ class FragmentKeeps : ListFragment() {
         historyList.removeAll { it.keep == -1 }
     }
 
-    fun setToolbarTitle(c: Context) {
+    private fun setToolbarTitle(c: Context) {
         toolbarTitle = c.getString(R.string.favorite) + " " + historyList.count().toString() + "♥s"
         HistoryMain.toolbar.title = toolbarTitle
     }

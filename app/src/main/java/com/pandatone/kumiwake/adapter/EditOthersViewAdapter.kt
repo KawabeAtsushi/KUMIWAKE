@@ -18,7 +18,7 @@ import java.util.*
 /**
  * Created by atsushi_2 on 2016/03/20.
  */
-class EditOthersViewAdapter(val context: Context, val groupList: List<Group>, private val totalCountTextView: TextView, private val drawingMode:Boolean) : BaseAdapter() {
+class EditOthersViewAdapter(val context: Context, val groupList: List<Group>, private val totalCountTextView: TextView, private val drawingMode: Boolean) : BaseAdapter() {
     private var setFocus = 0
     private var outFocus = 0
 
@@ -57,12 +57,12 @@ class EditOthersViewAdapter(val context: Context, val groupList: List<Group>, pr
         v.findViewById<View>(R.id.leader).visibility = View.GONE
         val icon = v.findViewById<ImageView>(R.id.rowIconGroup)
         icon.setImageResource(R.drawable.ic_star_circle_24dp)
-        if (drawingMode){
-            icon.setOnClickListener { DialogWarehouse(null).colorPickerDialog(context,position,icon) }
+        if (drawingMode) {
+            icon.setOnClickListener { DialogWarehouse(null).colorPickerDialog(context, position, icon) }
         }
-        val totalStrUnit = if (drawingMode){
+        val totalStrUnit = if (drawingMode) {
             context.getString(R.string.ticket_unit)
-        }else{
+        } else {
             context.getString(R.string.people)
         }
         v.findViewById<TextView>(R.id.personTex).text = totalStrUnit
@@ -100,9 +100,9 @@ class EditOthersViewAdapter(val context: Context, val groupList: List<Group>, pr
                     } else {
                         numberEditText.setTextColor(PublicMethods.getColor(context, R.color.gray))
                     }
-                    val totalStrInit = if (drawingMode){
+                    val totalStrInit = if (drawingMode) {
                         context.getString(R.string.ticket_number)
-                    } else{
+                    } else {
                         context.getString(R.string.assigned)
                     }
                     val totalStr = "$totalStrInit ${countTotal()}${totalStrUnit}"

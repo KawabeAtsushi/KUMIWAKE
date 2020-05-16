@@ -18,17 +18,16 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
-            android:id="@+id/ticketNameIndex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:background="@drawable/index_background"
             android:text="@string/kinds"
             android:textSize="15sp"
-            android:maxLines = "1"
+            android:maxLines="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_start"
@@ -45,7 +44,6 @@
             app:layout_constraintGuide_percent="0.8" />
 
         <TextView
-            android:id="@+id/pickedNoIndex"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/index_background"
@@ -60,10 +58,9 @@
             app:layout_constraintStart_toEndOf="@id/guideline_start"
             app:layout_constraintEnd_toStartOf="@id/guideline_end"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
-            android:id="@+id/remainNoIndex"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/index_background"
@@ -78,8 +75,7 @@
             app:layout_constraintStart_toEndOf="@id/guideline_end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
+            app:layout_constraintBottom_toBottomOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

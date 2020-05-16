@@ -83,10 +83,10 @@ class AddGroup : AppCompatActivity() {
     private fun findViews() {
         groupEditText = findViewById<View>(R.id.input_group) as AppCompatEditText
         textInputLayout = findViewById<View>(R.id.group_form_input_layout) as TextInputLayout
-        listView = findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.memberListView) as ListView
-        listView.emptyView = findViewById<View>(R.id.add_group_listview).findViewById(R.id.emptyMemberList)
+        listView = findViewById<View>(R.id.add_group_listView).findViewById<View>(R.id.memberListView) as ListView
+        listView.emptyView = findViewById<View>(R.id.add_group_listView).findViewById(R.id.emptyMemberList)
         member_register_and_add_btn.visibility = View.GONE
-        findViewById<View>(R.id.add_group_listview).findViewById<View>(R.id.member_add_btn).setOnClickListener { moveMemberMain() }
+        findViewById<View>(R.id.add_group_listView).findViewById<View>(R.id.member_add_btn).setOnClickListener { moveMemberMain() }
         findViewById<View>(R.id.group_registration_btn).setOnClickListener { register() } //登録ボタンの処理
         findViewById<View>(R.id.group_cancel_btn).setOnClickListener { finish() } //cancelボタンの処理
     }
@@ -234,7 +234,8 @@ class AddGroup : AppCompatActivity() {
         }
         adapter = SmallMBListAdapter(this@AddGroup, members)
         listView.adapter = adapter
-        numberOfSelectedMember.text = adapter.count.toString() + getString(R.string.people) + getString(R.string.selected)
+        val selectedTxt = adapter.count.toString() + getString(R.string.people) + getString(R.string.selected)
+        numberOfSelectedMember.text = selectedTxt
     }
 
 }

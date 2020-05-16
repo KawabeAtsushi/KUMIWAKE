@@ -34,7 +34,7 @@
                 app:tabPaddingStart="10dp"
                 app:tabPaddingEnd="10dp"
                 app:tabIndicatorHeight="0dp"
-                app:tabRippleColor="@null"/>
+                app:tabRippleColor="@null" />
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"

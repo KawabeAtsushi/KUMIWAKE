@@ -27,7 +27,7 @@ class OrderResult : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kumiwake_result)
 
-        val resultTitle = getString(R.string.order)+getString(R.string.result)
+        val resultTitle = getString(R.string.order) + getString(R.string.result)
         findViewById<TextView>(R.id.result_title).text = resultTitle
         findViewById<View>(R.id.tabLayout).visibility = View.GONE
         val layout = findViewById<ConstraintLayout>(R.id.result_view)
