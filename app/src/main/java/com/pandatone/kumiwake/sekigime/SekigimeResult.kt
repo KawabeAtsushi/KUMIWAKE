@@ -184,79 +184,62 @@ class SekigimeResult : AppCompatActivity() {
 
     //男女が交互になるように配列を変換
     private fun convertAlternatelyFmArray() {
-        var manArrayNo: Float
-        var womanArrayNo: Float
-        var bigger: Float
-        var smaller: Float
-        var addNo: Float
-        var remainder: Float
-        var i = 0
-        var j: Int
-        var k: Int
-        var a: Int
-        var memberSum: Int
         createFmArray()
         var smallerArray: ArrayList<ArrayList<Member>>
         var biggerArray: ArrayList<ArrayList<Member>>
-        teamArray = ArrayList(groupNo)
-        for (g in 0 until groupNo) {
-            teamArray.add(ArrayList())
-        }
-        while (i < groupNo) {
-            manArrayNo = teamArrayMan[i].size.toFloat()
-            womanArrayNo = teamArrayWoman[i].size.toFloat()
-            if (manArrayNo < womanArrayNo) {
-                bigger = womanArrayNo
-                smaller = manArrayNo
+        teamArray = ArrayList()
+
+        for (i in 0 until groupNo) {
+            val seatArray: ArrayList<Member> = ArrayList()
+
+            //多い性別と少ない性別を判断
+            if (teamArrayMan[i].size < teamArrayWoman[i].size) {
                 biggerArray = teamArrayWoman
                 smallerArray = teamArrayMan
             } else {
-                bigger = manArrayNo
-                smaller = womanArrayNo
                 biggerArray = teamArrayMan
                 smallerArray = teamArrayWoman
             }
-            if (smaller != 0f) {
-                addNo = bigger / smaller
-                remainder = bigger % smaller - 1
-                memberSum = 0
-                a = 0
-                while (a < addNo / 2) {
-                    teamArray[i].add(biggerArray[i][memberSum])
+            val bigger = biggerArray.size.toFloat()
+            val smaller = smallerArray.size.toFloat()
+
+            if (smaller == 0f) {//一方の性別のみの場合
+                for (k in 0 until bigger.toInt()) {
+                    seatArray.add(biggerArray[i][k])
+                }
+            } else {
+                val ratio = bigger / smaller //多い方：少ない方　の比
+                var remainder = bigger % smaller - 1
+                var memberSum = 0
+                var a = 0
+                while (a < ratio / 2) {
+                    seatArray.add(biggerArray[i][memberSum])
                     memberSum++
                     a++
                 }
-                teamArray[i].add(smallerArray[i][0])
-                j = 1
-                while (j < smaller) {
-                    k = 0
-                    while (k < addNo - 1) {
-                        teamArray[i].add(biggerArray[i][memberSum])
+                seatArray.add(smallerArray[i][0])
+
+                for (j in 1 until smaller.toInt()) {
+
+                    for (k in 0 until (ratio - 1).toInt()) {
+                        seatArray.add(biggerArray[i][memberSum])
                         memberSum++
-                        k++
                     }
                     if (remainder != 0f) {
-                        teamArray[i].add(biggerArray[i][memberSum])
+                        seatArray.add(biggerArray[i][memberSum])
                         memberSum++
                         remainder--
                     }
-                    teamArray[i].add(smallerArray[i][j])
-                    j++
+                    seatArray.add(smallerArray[i][j])
                 }
-                while (a < addNo) {
-                    teamArray[i].add(biggerArray[i][memberSum])
+                while (a < ratio) {
+                    seatArray.add(biggerArray[i][memberSum])
                     memberSum++
                     a++
                 }
-            } else {
-                k = 0
-                while (k < bigger) {
-                    teamArray[i].add(biggerArray[i][k])
-                    k++
-                }
             }
-            i++
 
+            teamArray.add(seatArray)
         }
     }
 
@@ -269,7 +252,7 @@ class SekigimeResult : AppCompatActivity() {
             teamArrayWoman.add(ArrayList())
         }
         for (i in teamArray.indices) {
-            for (j in 0 until teamArray[i].size) {
+            for (j in teamArray[i].indices) {
                 item = teamArray[i][j]
                 if (item.sex == getText(R.string.man)) {
                     teamArrayMan[i].add(item)

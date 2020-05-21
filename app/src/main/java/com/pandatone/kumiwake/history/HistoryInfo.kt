@@ -60,7 +60,7 @@ class HistoryInfo(val c: Activity) {
         date.text = HistoryMethods.changeDateFormat(item.time)
         resultArray = HistoryMethods.stringToResultArray(c, item.result)
         //setView
-        for (i in 0 until resultArray.size) {
+        for (i in resultArray.indices) {
             addResultView(i)
         }
     }

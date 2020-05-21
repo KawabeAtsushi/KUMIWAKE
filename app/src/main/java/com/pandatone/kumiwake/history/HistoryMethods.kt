@@ -113,7 +113,7 @@ object HistoryMethods {
         //不足メンバー数集計
         fun checkExtras(oldGroupNo: Int) {
             extraNoArray.clear()
-            for (i in 0 until extraMemberCount.size) {
+            for (i in extraMemberCount.indices) {
                 val extraNo = extraMemberCount[i][oldGroupNo]
                 extraNoArray.add(extraNo)
             }
@@ -121,7 +121,7 @@ object HistoryMethods {
             max = extraNoArray.max()!!
         }
 
-        for (oldGroupNo in 0 until historyResultArray.size) {
+        for (oldGroupNo in historyResultArray.indices) {
             checkExtras(oldGroupNo)
             while (min < 0 || max - min >= 2) {
                 extraNoArray.let {
@@ -155,8 +155,8 @@ object HistoryMethods {
     //ArrayList同士の減算
     private fun arraySubtraction(before: ArrayList<ArrayList<Int>>, after: ArrayList<ArrayList<Int>>): ArrayList<ArrayList<Int>> {
         val needNoArray = ArrayList(before)
-        for (i in 0 until before.size) {
-            for (j in 0 until before[i].size) {
+        for (i in before.indices) {
+            for (j in before[i].indices) {
                 needNoArray[i][j] = before[i][j] - after[i][j]
             }
         }
@@ -188,7 +188,7 @@ object HistoryMethods {
         val notDuplicatedGroups: ArrayList<ArrayList<Int>> = ArrayList()
         historyNoArray.forEach { list ->
             val mDupNoArr: ArrayList<Int> = ArrayList()
-            for (i in 0 until historyResultArray.size) {
+            for (i in historyResultArray.indices) {
                 mDupNoArr.add(list.count { it.second == i })
             }
             notDuplicatedGroups.add(mDupNoArr)
