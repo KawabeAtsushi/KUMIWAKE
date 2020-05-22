@@ -23,6 +23,7 @@ import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.sekigime.function.DrawAllTable
 import com.pandatone.kumiwake.sekigime.function.DrawTableView
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
+import kotlin.math.ceil
 
 
 /**
@@ -185,8 +186,8 @@ class SekigimeResult : AppCompatActivity() {
     //男女が交互になるように配列を変換
     private fun convertAlternatelyFmArray() {
         createFmArray()
-        var smallerArray: ArrayList<ArrayList<Member>>
-        var biggerArray: ArrayList<ArrayList<Member>>
+        var smallerArray: ArrayList<Member>
+        var biggerArray: ArrayList<Member>
         teamArray = ArrayList()
 
         for (i in 0 until groupNo) {
@@ -194,49 +195,39 @@ class SekigimeResult : AppCompatActivity() {
 
             //多い性別と少ない性別を判断
             if (teamArrayMan[i].size < teamArrayWoman[i].size) {
-                biggerArray = teamArrayWoman
-                smallerArray = teamArrayMan
+                biggerArray = teamArrayWoman[i]
+                smallerArray = teamArrayMan[i]
             } else {
-                biggerArray = teamArrayMan
-                smallerArray = teamArrayWoman
+                biggerArray = teamArrayMan[i]
+                smallerArray = teamArrayWoman[i]
             }
             val bigger = biggerArray.size.toFloat()
             val smaller = smallerArray.size.toFloat()
 
-            if (smaller == 0f) {//一方の性別のみの場合
-                for (k in 0 until bigger.toInt()) {
-                    seatArray.add(biggerArray[i][k])
-                }
-            } else {
+            seatArray.addAll(biggerArray)
+
+            if (smaller != 0f) {//両方の性別がいる場合
+                //多いほうの間に入れていく
                 val ratio = bigger / smaller //多い方：少ない方　の比
-                var remainder = bigger % smaller - 1
-                var memberSum = 0
-                var a = 0
-                while (a < ratio / 2) {
-                    seatArray.add(biggerArray[i][memberSum])
-                    memberSum++
-                    a++
-                }
-                seatArray.add(smallerArray[i][0])
+                var loop = 1 //何週目か
+                var countInLoop = 1 //その周で何回目の追加か
+                var smallerSum = 0 //追加した合計人数
+                val skip = ceil(ratio).toInt()
+                //一人目を追加しておく
+                seatArray.add(1, smallerArray[smallerSum])
+                smallerSum++
 
-                for (j in 1 until smaller.toInt()) {
+                while (smallerSum < smaller) {
+                    var index = (skip + loop) * (countInLoop-1) + countInLoop
+                    if (index > seatArray.size + 1) {//一周回ったら
+                        loop++
+                        countInLoop = 1
+                        index = 
+                    }
+                    seatArray.add(index, smallerArray[smallerSum])
+                    smallerSum++
+                }
 
-                    for (k in 0 until (ratio - 1).toInt()) {
-                        seatArray.add(biggerArray[i][memberSum])
-                        memberSum++
-                    }
-                    if (remainder != 0f) {
-                        seatArray.add(biggerArray[i][memberSum])
-                        memberSum++
-                        remainder--
-                    }
-                    seatArray.add(smallerArray[i][j])
-                }
-                while (a < ratio) {
-                    seatArray.add(biggerArray[i][memberSum])
-                    memberSum++
-                    a++
-                }
             }
 
             teamArray.add(seatArray)
