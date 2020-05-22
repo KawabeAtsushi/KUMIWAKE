@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/info_layout"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="10dp">
 
     <TextView
@@ -12,8 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/info_margin"
-        android:text="@string/group_name"
         android:background="@drawable/index_background"
+        android:text="@string/group_name"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,17 +23,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/info_margin"
-        app:layout_constraintTop_toTopOf="@id/indexName"
         app:layout_constraintBottom_toBottomOf="@id/indexName"
-        app:layout_constraintStart_toEndOf="@id/indexName" />
+        app:layout_constraintStart_toEndOf="@id/indexName"
+        app:layout_constraintTop_toTopOf="@id/indexName" />
 
     <TextView
         android:id="@+id/indexMBNo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/info_margin"
-        android:text="@string/number_of_member"
         android:background="@drawable/index_background"
+        android:text="@string/number_of_member"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/indexName" />
@@ -43,16 +43,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/info_margin"
-        app:layout_constraintTop_toTopOf="@id/indexMBNo"
         app:layout_constraintBottom_toBottomOf="@id/indexMBNo"
-        app:layout_constraintStart_toEndOf="@id/indexMBNo" />
+        app:layout_constraintStart_toEndOf="@id/indexMBNo"
+        app:layout_constraintTop_toTopOf="@id/indexMBNo" />
 
     <TextView
         android:id="@+id/indexMember"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginStart="@dimen/info_margin"
+        android:layout_marginTop="10dp"
         android:background="@drawable/index_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/indexMBNo" />
@@ -64,39 +64,39 @@
         android:layout_margin="@dimen/info_margin"
         android:background="@drawable/listview_background"
         app:layout_constrainedHeight="true"
-        app:layout_constraintTop_toBottomOf="@id/indexMember"
         app:layout_constraintBottom_toTopOf="@id/okBt"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/indexMember" />
 
     <TextView
         android:id="@+id/emptyMemberList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
-        android:padding="25dp"
         android:background="@drawable/listview_background"
         android:gravity="center"
+        android:padding="25dp"
         android:text="@string/no_member"
-        android:textSize="18sp"
         android:textColor="#80ff0000"
+        android:textSize="18sp"
         app:layout_constrainedHeight="true"
-        app:layout_constraintTop_toBottomOf="@id/indexMember"
         app:layout_constraintBottom_toTopOf="@id/okBt"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/indexMember" />
 
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/okBt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
+        android:padding="10dp"
         android:text=" OK "
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

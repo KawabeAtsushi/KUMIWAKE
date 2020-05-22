@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
     android:layout_margin="2dp"
-    android:background="@drawable/member_row_background">
+    android:background="@drawable/member_row_background"
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/group_icon"
@@ -15,24 +15,24 @@
         android:padding="@dimen/row_padding"
         android:src="@drawable/ic_user_group"
         android:tint="@color/gray"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/groupName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/row_padding"
-        android:paddingEnd="@dimen/row_padding"
         android:layout_marginStart="10dp"
-        android:textSize="25sp"
         android:ellipsize="end"
         android:maxLines="1"
-        app:layout_constraintTop_toTopOf="parent"
+        android:paddingStart="@dimen/row_padding"
+        android:paddingEnd="@dimen/row_padding"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/group_icon" />
+        app:layout_constraintStart_toEndOf="@id/group_icon"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
@@ -43,8 +43,8 @@
         android:background="@drawable/radius_orange_background"
         android:maxLines="1"
         android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

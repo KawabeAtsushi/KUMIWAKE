@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/info_layout"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="10dp">
 
     <TextView
@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/info_margin"
         android:layout_marginTop="15dp"
-        android:text="@string/member_name"
         android:background="@drawable/index_background"
+        android:text="@string/member_name"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,9 +24,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/info_margin"
-        app:layout_constraintTop_toTopOf="@id/indexName"
         app:layout_constraintBottom_toBottomOf="@id/indexName"
-        app:layout_constraintStart_toEndOf="@id/indexName" />
+        app:layout_constraintStart_toEndOf="@id/indexName"
+        app:layout_constraintTop_toTopOf="@id/indexName" />
 
     <TextView
         android:id="@+id/indexSex"
@@ -34,8 +34,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/info_margin"
         android:layout_marginTop="15dp"
-        android:text="@string/sex"
         android:background="@drawable/index_background"
+        android:text="@string/sex"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/indexName" />
@@ -45,9 +45,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/info_margin"
-        app:layout_constraintTop_toTopOf="@id/indexSex"
         app:layout_constraintBottom_toBottomOf="@id/indexSex"
-        app:layout_constraintStart_toEndOf="@id/indexSex" />
+        app:layout_constraintStart_toEndOf="@id/indexSex"
+        app:layout_constraintTop_toTopOf="@id/indexSex" />
 
     <TextView
         android:id="@+id/indexAge"
@@ -55,8 +55,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/info_margin"
         android:layout_marginTop="15dp"
-        android:text="@string/age"
         android:background="@drawable/index_background"
+        android:text="@string/age"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/indexSex" />
@@ -66,9 +66,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/info_margin"
-        app:layout_constraintTop_toTopOf="@id/indexAge"
         app:layout_constraintBottom_toBottomOf="@id/indexAge"
-        app:layout_constraintStart_toEndOf="@id/indexAge" />
+        app:layout_constraintStart_toEndOf="@id/indexAge"
+        app:layout_constraintTop_toTopOf="@id/indexAge" />
 
     <TextView
         android:id="@+id/indexBelong"
@@ -76,8 +76,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/info_margin"
         android:layout_marginTop="15dp"
-        android:text="@string/belong"
         android:background="@drawable/index_background"
+        android:text="@string/belong"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/indexAge" />
@@ -88,21 +88,21 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/info_margin"
         android:layout_marginEnd="@dimen/info_margin"
-        app:layout_constraintTop_toTopOf="@id/indexBelong"
         app:layout_constraintBottom_toBottomOf="@id/indexBelong"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/indexBelong"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/indexBelong" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/okBt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
         android:layout_margin="15dp"
+        android:padding="10dp"
         android:text=" OK "
-        app:layout_constraintTop_toBottomOf="@id/indexBelong"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/indexBelong" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

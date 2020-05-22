@@ -5,19 +5,19 @@
     android:id="@+id/filter_member"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="30dp"
     android:orientation="vertical"
+    android:padding="30dp"
     android:parentActivityName=".MemberMain">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
+        android:background="@drawable/index_background"
         android:text="@string/sex"
         android:textColor="@color/hint"
         android:textSize="@dimen/form_textSize"
-        android:textStyle="bold"
-        android:background="@drawable/index_background" />
+        android:textStyle="bold" />
 
     <RadioGroup
         android:id="@+id/sexGroup"
@@ -66,11 +66,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginTop="@dimen/form_marginTop"
+        android:background="@drawable/index_background"
         android:text="@string/age"
         android:textColor="@color/hint"
         android:textSize="@dimen/form_textSize"
-        android:textStyle="bold"
-        android:background="@drawable/index_background" />
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -91,11 +91,11 @@
                 android:id="@+id/min_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
                 android:ems="3"
                 android:inputType="number"
                 android:maxLength="3"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textAlignment="center" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -134,11 +134,11 @@
                 android:id="@+id/max_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
                 android:ems="3"
                 android:inputType="number"
                 android:maxLength="3"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textAlignment="center" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
@@ -156,8 +156,8 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_gravity="center"
+        android:layout_marginTop="20dp"
         android:hint="@string/group">
 
         <AutoCompleteTextView

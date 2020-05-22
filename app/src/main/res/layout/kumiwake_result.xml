@@ -12,10 +12,10 @@
         android:id="@+id/kumiwake_scroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,35 +40,35 @@
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/tab_background"
                 app:tabBackground="@drawable/tab_selector"
-                app:tabSelectedTextColor="@android:color/black"
-                app:tabPaddingStart="10dp"
-                app:tabPaddingEnd="10dp"
                 app:tabIndicatorHeight="0dp"
-                app:tabRippleColor="@null" />
+                app:tabPaddingEnd="10dp"
+                app:tabPaddingStart="10dp"
+                app:tabRippleColor="@null"
+                app:tabSelectedTextColor="@android:color/black" />
 
             <LinearLayout
                 android:id="@+id/result_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:padding="6dp"
-                android:orientation="vertical" />
+                android:orientation="vertical"
+                android:padding="6dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="5dp"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
-                    style="@style/Button.Transparent.Rounded"
                     android:id="@+id/re_kumiwake"
+                    style="@style/Button.Transparent.Rounded"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="15dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginEnd="15dp"
                     android:layout_marginBottom="10dp"
                     android:padding="12dp"
                     android:text="@string/retry"
@@ -78,8 +78,8 @@
                     app:iconTint="@android:color/white" />
 
                 <com.google.android.material.button.MaterialButton
-                    style="@style/Button.Transparent.Rounded"
                     android:id="@+id/share_result"
+                    style="@style/Button.Transparent.Rounded"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -92,8 +92,8 @@
             </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
-                style="@style/Button.Transparent.Rounded"
                 android:id="@+id/go_sekigime"
+                style="@style/Button.Transparent.Rounded"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -106,8 +106,8 @@
                 app:iconTint="@android:color/white" />
 
             <com.google.android.material.button.MaterialButton
-                style="@style/Button.Transparent.Rounded"
                 android:id="@+id/go_home"
+                style="@style/Button.Transparent.Rounded"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -131,7 +131,7 @@
         app:adSize="BANNER"
         app:adUnitId="@string/adUnit_id"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

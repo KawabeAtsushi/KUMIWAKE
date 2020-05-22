@@ -19,8 +19,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="80dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="80dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -42,11 +42,11 @@
                     android:layout_height="50dp"
                     android:src="@drawable/ic_human"
                     android:tint="@color/man"
-                    tools:ignore="ContentDescription"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/sexGroup"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    tools:ignore="ContentDescription" />
 
                 <RadioGroup
                     android:id="@+id/sexGroup"
@@ -54,10 +54,10 @@
                     android:layout_height="wrap_content"
                     android:checkedButton="@+id/manBtn"
                     android:orientation="horizontal"
-                    app:layout_constraintStart_toEndOf="@id/memberIcon"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent">
+                    app:layout_constraintStart_toEndOf="@id/memberIcon"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <RadioButton
                         android:id="@+id/manBtn"
@@ -155,8 +155,8 @@
                     android:clickable="false"
                     android:ellipsize="end"
                     android:focusable="false"
-                    android:padding="20dp"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:padding="20dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
@@ -181,8 +181,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:text="@string/cancel"
-        android:textColor="@color/blue_title"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        android:textColor="@color/blue_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/member_registration_finish_btn" />
 

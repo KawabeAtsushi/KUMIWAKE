@@ -16,22 +16,22 @@
         android:id="@+id/groupName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/mini_row_padding"
         android:layout_gravity="center_vertical"
-        android:text="TextView"
-        android:textSize="18sp"
         android:ellipsize="end"
-        android:maxLines="1" />
+        android:maxLines="1"
+        android:padding="@dimen/mini_row_padding"
+        android:text="TextView"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/memberNo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/mini_row_padding"
-        android:gravity="end"
-        android:textSize="18sp"
         android:ellipsize="end"
+        android:gravity="end"
         android:maxLines="1"
+        android:padding="@dimen/mini_row_padding"
+        android:textSize="18sp"
         android:visibility="gone" />
 
 </LinearLayout>

@@ -7,7 +7,7 @@
 
     <item android:id="@android:id/progress">
         <scale
-            android:scaleWidth="100%"
-            android:drawable="@drawable/man_scrubber_primary_holo" />
+            android:drawable="@drawable/man_scrubber_primary_holo"
+            android:scaleWidth="100%" />
     </item>
 </layer-list>

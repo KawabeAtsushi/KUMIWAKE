@@ -36,8 +36,8 @@
         app:backgroundTint="#81d4fa"
         app:icon="@drawable/ic_history_black_24dp"
         app:iconTint="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/animation_views" />
+        app:layout_constraintBottom_toTopOf="@id/animation_views"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ListView
         android:id="@+id/history_list"
@@ -69,9 +69,9 @@
         android:id="@+id/animation_views"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/retry_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/retry_button">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/remainTextView"
@@ -119,15 +119,15 @@
             android:layout_height="200dp"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
-            app:autoSizeTextType="uniform"
-            android:maxLines="1"
             android:background="@drawable/ticket"
             android:backgroundTintMode="src_atop"
             android:gravity="center"
+            android:maxLines="1"
             android:padding="20dp"
             android:text="@string/ticket"
             android:textSize="50sp"
             android:visibility="invisible"
+            app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toBottomOf="@id/drawing_anim"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

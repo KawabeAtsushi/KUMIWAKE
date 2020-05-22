@@ -3,7 +3,6 @@ package com.pandatone.kumiwake.others.drawing
 import android.animation.Animator
 import android.animation.AnimatorInflater
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.media.AudioAttributes
@@ -16,7 +15,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
-import androidx.annotation.ColorInt
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
@@ -29,7 +27,6 @@ import com.pandatone.kumiwake.adapter.DrawingHistoryListAdapter
 import com.pandatone.kumiwake.adapter.SmallDrawingHistoryListAdapter
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import kotlinx.android.synthetic.main.drawing_result.*
-import kotlin.math.roundToInt
 
 
 /**
@@ -228,7 +225,7 @@ class DrawingResult : AppCompatActivity() {
         ticketTextView.text = picked
         val ticketCol = getTicketColorInt(picked)
         ticketTextView.setTextColor(ticketCol)
-        gradViewColor(ticketTextView,blendCol(ticketCol, 0f),blendCol(ticketCol, 0.6f))
+        gradViewColor(ticketTextView, blendCol(ticketCol, 0f), blendCol(ticketCol, 0.6f))
         pickedTickets.add(picked)
         pickCount++
         historyArray.add(0, "<font color='${getTicketColorHex(picked)}'>${picked}</font>")
@@ -252,14 +249,14 @@ class DrawingResult : AppCompatActivity() {
         return String.format("#%06X", 0xFFFFFF and intColor)
     }
 
-    private fun blendCol(ticketCol:Int,ratio:Float):Int{
+    private fun blendCol(ticketCol: Int, ratio: Float): Int {
         //A blend ratio of 0.0 will result in color1, 0.5 will give an even blend, 1.0 will result in color2.
-        return ColorUtils.blendARGB(Color.WHITE,ticketCol,ratio)
+        return ColorUtils.blendARGB(Color.WHITE, ticketCol, ratio)
     }
 
     private fun gradViewColor(textView: TextView, startColor: Int, endColor: Int) {
         val drawable: GradientDrawable = getDrawable(R.drawable.ticket) as GradientDrawable
-        drawable.colors = intArrayOf(startColor,endColor)
+        drawable.colors = intArrayOf(startColor, endColor)
         textView.background = drawable
     }
 

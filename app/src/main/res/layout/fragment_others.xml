@@ -10,11 +10,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:paddingBottom="70dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="70dp">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/history_button"
@@ -27,8 +27,8 @@
             app:icon="@drawable/ic_history_black_24dp" />
 
         <com.google.android.material.button.MaterialButton
-            style="@style/Button.Outline.Others"
             android:id="@+id/order_button"
+            style="@style/Button.Outline.Others"
             android:layout_width="match_parent"
             android:layout_height="@dimen/others_button_height"
             android:layout_marginTop="10dp"
@@ -37,8 +37,8 @@
             app:icon="@drawable/ic_order" />
 
         <com.google.android.material.button.MaterialButton
-            style="@style/Button.Outline.Others"
             android:id="@+id/role_button"
+            style="@style/Button.Outline.Others"
             android:layout_width="match_parent"
             android:layout_height="@dimen/others_button_height"
             android:layout_marginTop="10dp"
@@ -47,8 +47,8 @@
             app:icon="@drawable/ic_role" />
 
         <com.google.android.material.button.MaterialButton
-            style="@style/Button.Outline.Others"
             android:id="@+id/drawing_button"
+            style="@style/Button.Outline.Others"
             android:layout_width="match_parent"
             android:layout_height="@dimen/others_button_height"
             android:layout_marginTop="10dp"

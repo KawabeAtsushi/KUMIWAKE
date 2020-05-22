@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <ImageView
@@ -13,25 +13,25 @@
         android:paddingBottom="@dimen/row_padding"
         android:src="@drawable/ic_user_group"
         android:tint="@color/gray"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/leader"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editGroupName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:background="@drawable/edittext_outline"
         android:layout_marginEnd="10dp"
+        android:background="@drawable/edittext_outline"
         android:focusable="false"
         android:inputType="textPersonName"
         android:maxLines="1"
         android:textColor="@color/gray"
-        app:layout_constraintTop_toTopOf="@id/rowIconGroup"
         app:layout_constraintBottom_toBottomOf="@id/rowIconGroup"
+        app:layout_constraintEnd_toStartOf="@id/editTheNumberOfMember"
         app:layout_constraintStart_toEndOf="@id/rowIconGroup"
-        app:layout_constraintEnd_toStartOf="@id/editTheNumberOfMember" />
+        app:layout_constraintTop_toTopOf="@id/rowIconGroup" />
 
 
     <EditText
@@ -47,16 +47,16 @@
         android:maxLength="3"
         android:maxLines="1"
         android:textColor="@color/gray"
-        app:layout_constraintTop_toTopOf="@id/rowIconGroup"
         app:layout_constraintBottom_toBottomOf="@id/rowIconGroup"
-        app:layout_constraintEnd_toStartOf="@id/personTex" />
+        app:layout_constraintEnd_toStartOf="@id/personTex"
+        app:layout_constraintTop_toTopOf="@id/rowIconGroup" />
 
     <TextView
         android:id="@+id/personTex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/row_padding"
         android:layout_marginEnd="@dimen/row_padding"
+        android:paddingTop="@dimen/row_padding"
         android:paddingBottom="@dimen/row_padding"
         android:text="@string/people"
         app:layout_constraintBottom_toBottomOf="@id/rowIconGroup"
@@ -66,9 +66,9 @@
         android:id="@+id/leader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Leader:"
         android:layout_marginStart="@dimen/row_padding"
         android:paddingBottom="@dimen/row_padding"
+        android:text="Leader:"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

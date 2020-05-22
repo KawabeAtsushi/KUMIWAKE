@@ -11,12 +11,12 @@
         android:id="@+id/hintForKumiwake"
         android:layout_width="@dimen/hint_icon_size"
         android:layout_height="@dimen/hint_icon_size"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/hint"
         android:src="@drawable/ic_help_outline_dark_24dp"
-        android:background="@android:color/transparent"
         android:tint="@color/gray"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_start"
@@ -92,15 +92,15 @@
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
+        android:background="@drawable/top_normal_button"
+        android:maxLines="1"
         android:paddingStart="30dp"
         android:paddingEnd="30dp"
-        android:background="@drawable/top_normal_button"
         android:text="@string/normal_mode"
         android:textColor="#ffffff"
         android:textSize="@dimen/main_button_text_size"
         android:textStyle="bold"
         app:autoSizeTextType="uniform"
-        android:maxLines="1"
         app:layout_constraintBottom_toTopOf="@id/quick_mode_button"
         app:layout_constraintEnd_toStartOf="@id/guideline_end"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
@@ -110,13 +110,13 @@
         android:id="@+id/hintForNormalMode"
         android:layout_width="@dimen/hint_icon_size"
         android:layout_height="@dimen/hint_icon_size"
-        android:contentDescription="@string/hint"
-        android:src="@drawable/ic_help_outline_dark_24dp"
         android:background="@android:color/transparent"
+        android:contentDescription="@string/hint"
         android:elevation="10dp"
+        android:src="@drawable/ic_help_outline_dark_24dp"
         android:tint="@color/gray"
-        app:layout_constraintTop_toTopOf="@id/normal_mode_button"
-        app:layout_constraintEnd_toEndOf="@+id/normal_mode_button" />
+        app:layout_constraintEnd_toEndOf="@+id/normal_mode_button"
+        app:layout_constraintTop_toTopOf="@id/normal_mode_button" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/quick_mode_button"
@@ -124,15 +124,15 @@
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="15dp"
+        android:background="@drawable/top_quick_button"
+        android:maxLines="1"
         android:paddingStart="30dp"
         android:paddingEnd="30dp"
-        android:background="@drawable/top_quick_button"
         android:text="@string/quick_mode"
         android:textColor="#ffffff"
         android:textSize="@dimen/main_button_text_size"
         android:textStyle="bold"
         app:autoSizeTextType="uniform"
-        android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guideline_end"
         app:layout_constraintStart_toEndOf="@id/guideline_start"
@@ -147,8 +147,8 @@
         android:elevation="10dp"
         android:src="@drawable/ic_help_outline_dark_24dp"
         android:tint="@color/gray"
-        app:layout_constraintTop_toTopOf="@id/quick_mode_button"
-        app:layout_constraintEnd_toEndOf="@id/quick_mode_button" />
+        app:layout_constraintEnd_toEndOf="@id/quick_mode_button"
+        app:layout_constraintTop_toTopOf="@id/quick_mode_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

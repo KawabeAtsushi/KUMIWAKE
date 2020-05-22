@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:tag="history"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:background="@drawable/member_row_background"
+    android:orientation="horizontal"
+    android:tag="history"
     tools:ignore="UseCompoundDrawables">
 
     <ImageView
@@ -16,33 +16,33 @@
         android:padding="@dimen/row_padding"
         android:src="@drawable/ic_kumiwake_24px"
         android:tint="@color/gray"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
         android:id="@+id/historyName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/history"
-        android:textSize="20sp"
-        android:textColor="@color/gray"
         android:ellipsize="end"
         android:maxLines="1"
+        android:text="@string/history"
+        android:textColor="@color/gray"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/modeIcon"
         app:layout_constraintStart_toEndOf="@id/modeIcon"
-        app:layout_constraintTop_toTopOf="@id/modeIcon"
-        app:layout_constraintBottom_toBottomOf="@id/modeIcon" />
+        app:layout_constraintTop_toTopOf="@id/modeIcon" />
 
     <ImageView
         android:id="@+id/favoriteIcon"
         android:layout_width="@dimen/member_icon_size"
         android:layout_height="@dimen/member_icon_size"
-        android:src="@drawable/ic_favorite_24dp"
         android:padding="@dimen/row_padding"
+        android:src="@drawable/ic_favorite_24dp"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

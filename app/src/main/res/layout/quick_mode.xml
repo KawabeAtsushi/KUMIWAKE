@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/img_quick_background">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/quick_kumiwake_btn">
+        app:layout_constraintBottom_toTopOf="@id/quick_kumiwake_btn"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,10 +40,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/form_marginStart"
-                    android:visibility="gone"
                     android:text=""
                     android:textColor="@color/red"
-                    android:textSize="@dimen/form_textSize" />
+                    android:textSize="@dimen/form_textSize"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -57,16 +57,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:gravity="center"
+                        android:layout_marginStart="20dp"
                         android:background="@drawable/edittext_outline"
                         android:ems="2"
+                        android:gravity="center"
                         android:inputType="number"
-                        android:textSize="@dimen/et_textSize_big"
-                        android:textColor="@color/gray"
                         android:maxLength="3"
+                        android:maxLines="1"
                         android:padding="10dp"
-                        android:layout_marginStart="20dp"
-                        android:maxLines="1" />
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/et_textSize_big" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -103,10 +103,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/form_marginStart"
-                    android:visibility="gone"
                     android:text=""
                     android:textColor="@color/red"
-                    android:textSize="@dimen/form_textSize" />
+                    android:textSize="@dimen/form_textSize"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -119,16 +119,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:gravity="center"
-                        android:background="@drawable/edittext_outline"
-                        android:textSize="@dimen/et_textSize_big"
-                        android:textColor="@color/gray"
-                        android:ems="2"
-                        android:inputType="number"
-                        android:padding="10dp"
                         android:layout_marginStart="20dp"
+                        android:background="@drawable/edittext_outline"
+                        android:ems="2"
+                        android:gravity="center"
+                        android:inputType="number"
                         android:maxLength="3"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:padding="10dp"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/et_textSize_big" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -227,8 +227,8 @@
                     android:id="@+id/even_fm_ratio_check"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:text="@string/even_out_male_female_ratio"
                     android:textSize="@dimen/form_textSize" />
@@ -238,19 +238,19 @@
     </ScrollView>
 
     <com.google.android.material.button.MaterialButton
-        style="@style/Button.Solid.Rectangle"
         android:id="@+id/quick_kumiwake_btn"
+        style="@style/Button.Solid.Rectangle"
         android:layout_width="0dp"
         android:layout_height="@dimen/under_button_height"
         android:drawableEnd="@drawable/ic_arrow_white"
         android:text="@string/move_confirmation"
+        android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="20sp"
-        android:textAlignment="center"
         app:backgroundTint="?android:attr/colorPrimaryDark"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

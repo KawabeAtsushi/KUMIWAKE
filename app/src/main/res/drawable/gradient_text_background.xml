@@ -5,8 +5,8 @@
         <shape android:shape="rectangle">
             <corners android:radius="5dp" />
             <gradient
-                android:startColor="#7AFFC5"
-                android:endColor="#8BE4FF" />
+                android:endColor="#8BE4FF"
+                android:startColor="#7AFFC5" />
         </shape>
     </item>
     <item
@@ -17,10 +17,10 @@
         <shape android:shape="rectangle">
             <corners android:radius="5dp" />
             <padding
+                android:bottom="10dp"
                 android:left="13dp"
-                android:top="10dp"
                 android:right="13dp"
-                android:bottom="10dp" />
+                android:top="10dp" />
             <solid android:color="#fff" />
         </shape>
     </item>

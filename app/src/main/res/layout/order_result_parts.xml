@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:padding="5dp">
 
@@ -11,14 +11,14 @@
         android:id="@+id/order_number_textView"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:padding="10dp"
-        android:gravity="center"
         android:background="@drawable/circle_background"
+        android:gravity="center"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:textColor="@android:color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:autoSizeTextType="uniform"
-        android:maxLines="1"
-        android:textColor="@android:color/white" />
+        app:autoSizeTextType="uniform" />
 
     <TextView
         android:id="@+id/order_name_textView"

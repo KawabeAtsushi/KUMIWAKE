@@ -2,9 +2,9 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:ordering="sequentially">
     <objectAnimator
-        android:startOffset="500"
         android:duration="100"
         android:propertyName="translationX"
+        android:startOffset="500"
         android:valueTo="10" />
     <objectAnimator
         android:duration="100"

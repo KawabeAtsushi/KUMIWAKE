@@ -7,11 +7,11 @@
         android:color="#FFF" />
 
     <gradient
-        android:type="radial"
         android:centerX="0"
         android:centerY="0"
+        android:endColor="#DDD"
         android:gradientRadius="1800"
         android:startColor="@android:color/white"
-        android:endColor="#DDD" />
+        android:type="radial" />
 
 </shape>

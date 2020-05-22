@@ -59,14 +59,14 @@ object FirebaseAnalyticsEvents {
     }
 
     //役割
-    fun roleNames(role:String){
+    fun roleNames(role: String) {
         val bundle = Bundle()
         bundle.putString("role", role)
         firebaseAnalytics.logEvent("role_name", bundle)
     }
 
     //くじ
-    fun ticketNames(ticket:String){
+    fun ticketNames(ticket: String) {
         val bundle = Bundle()
         bundle.putString("ticket", ticket)
         firebaseAnalytics.logEvent("ticket_name", bundle)

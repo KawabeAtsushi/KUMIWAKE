@@ -10,10 +10,10 @@
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         android:background="@android:color/white"
-        app:titleTextColor="@android:color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@android:color/black" />
 
     <FrameLayout
         android:layout_width="0dp"
@@ -33,8 +33,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:background="@color/gray"
-                android:paddingBottom="4dp"
                 android:paddingTop="4dp"
+                android:paddingBottom="4dp"
                 android:textColor="#fff" />
         </androidx.viewpager.widget.ViewPager>
 

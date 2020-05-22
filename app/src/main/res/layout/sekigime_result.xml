@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/result_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -27,37 +28,37 @@
                 android:layout_width="150dp"
                 android:layout_height="40dp"
                 android:layout_gravity="end"
-                android:background="@drawable/tab_background"
                 android:layout_margin="10dp"
+                android:background="@drawable/tab_background"
                 app:tabBackground="@drawable/tab_selector"
-                app:tabSelectedTextColor="@android:color/black"
-                app:tabPaddingStart="10dp"
-                app:tabPaddingEnd="10dp"
                 app:tabIndicatorHeight="0dp"
-                app:tabRippleColor="@null" />
+                app:tabPaddingEnd="10dp"
+                app:tabPaddingStart="10dp"
+                app:tabRippleColor="@null"
+                app:tabSelectedTextColor="@android:color/black" />
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 android:id="@+id/group_selector"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="20dp"
                 android:hint="@string/group"
-                app:hintEnabled="false"
-                app:boxBackgroundColor="@android:color/white">
+                app:boxBackgroundColor="@android:color/white"
+                app:hintEnabled="false">
 
                 <AutoCompleteTextView
                     android:id="@+id/group_dropdown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/table_name_background"
                     android:layout_marginStart="10dp"
-                    android:paddingStart="40dp"
-                    android:textSize="20sp"
-                    android:gravity="center"
+                    android:background="@drawable/table_name_background"
                     android:focusable="false"
-                    android:textColorHint="@android:color/black" />
+                    android:gravity="center"
+                    android:paddingStart="40dp"
+                    android:textColorHint="@android:color/black"
+                    android:textSize="20sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal">
 
     <ImageView
@@ -12,23 +12,23 @@
         android:padding="@dimen/mini_row_padding"
         android:src="@drawable/ic_star_circle_24dp"
         android:tint="@color/gray"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/ticketName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/mini_row_padding"
+        android:ellipsize="end"
 
+        android:maxLines="1"
+        android:padding="@dimen/mini_row_padding"
         android:text="@string/kinds"
         android:textSize="18sp"
-        android:ellipsize="end"
-        android:maxLines="1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/drawing_row_icon"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_start"
@@ -48,29 +48,29 @@
         android:id="@+id/pickedNo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="@dimen/mini_row_padding"
         android:gravity="center"
+        android:maxLines="1"
+        android:padding="@dimen/mini_row_padding"
         android:text="@string/picked"
         app:autoSizeTextType="uniform"
-        android:maxLines="1"
-        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guideline_end"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/remainNo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="@dimen/mini_row_padding"
         android:gravity="center"
-        android:text="@string/remain"
         android:maxLines="1"
+        android:padding="@dimen/mini_row_padding"
+        android:text="@string/remain"
         app:autoSizeMinTextSize="4sp"
         app:autoSizeTextType="uniform"
-        app:layout_constraintStart_toEndOf="@id/guideline_end"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/guideline_end"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="6dp"
-        android:layout_marginEnd="6dp"
         android:layout_marginTop="6dp"
+        android:layout_marginEnd="6dp"
         android:layout_marginBottom="6dp"
         android:background="@drawable/dialog_appearance"
         android:gravity="center_horizontal"
@@ -70,8 +70,8 @@
                     android:id="@+id/dialog_link"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
                     android:lineSpacingExtra="6dp"
                     android:text=""
                     android:visibility="gone" />
@@ -82,23 +82,23 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginTop="5dp"
-                    android:visibility="gone"
-                    android:text="@string/copy_path" />
+                    android:text="@string/copy_path"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
         </ScrollView>
 
         <LinearLayout
+            style="?android:attr/buttonBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="26dp"
-            android:orientation="horizontal"
-            style="?android:attr/buttonBarStyle">
+            android:orientation="horizontal">
             <!-- OK ボタン -->
             <com.google.android.material.button.MaterialButton
-                style="?android:attr/buttonBarButtonStyle"
                 android:id="@+id/positive_button"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@android:color/holo_green_light"
@@ -106,8 +106,8 @@
                 android:textColor="@android:color/white" />
 
             <com.google.android.material.button.MaterialButton
-                style="?android:attr/buttonBarButtonStyle"
                 android:id="@+id/negative_button"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"

@@ -8,10 +8,10 @@
                 android:bottomLeftRadius="5dp"
                 android:bottomRightRadius="5dp" />
             <padding
+                android:bottom="10dp"
                 android:left="10dp"
-                android:top="10dp"
                 android:right="10dp"
-                android:bottom="10dp" />
+                android:top="10dp" />
             <solid android:color="#bfff" />
         </shape>
     </item>

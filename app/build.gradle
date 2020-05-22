@@ -20,7 +20,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 22
-        versionName "4.0.1.debug"
+        versionName "4.0.1"
         // major update +1.0.0 / add functions +0.1.0 / debug + 0.0.1 //developing += .debug
     }
     buildTypes {

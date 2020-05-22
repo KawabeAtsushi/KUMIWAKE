@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/img_sekigime_img"
     android:backgroundTint="#50FFFFFF"
     android:backgroundTintMode="src_atop"
@@ -14,10 +14,10 @@
         android:text="@string/select_seats_type"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline_top"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/guideline_top" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_top"
@@ -45,16 +45,16 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="10dp"
-        android:src="@drawable/img_table_square"
         android:background="@drawable/table_select_background"
-        android:scaleType="fitCenter"
-        android:padding="25dp"
-        android:text="@string/square_table"
         android:contentDescription="@string/square_table"
-        app:layout_constraintStart_toStartOf="parent"
+        android:padding="25dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/img_table_square"
+        android:text="@string/square_table"
+        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
         app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/guideline_top"
-        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline_top" />
 
 
     <ImageButton
@@ -62,32 +62,32 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="10dp"
-        android:src="@drawable/img_table_parallel"
         android:background="@drawable/table_select_background"
-        android:scaleType="fitCenter"
-        android:padding="25dp"
-        android:text="@string/parallel_table"
         android:contentDescription="@string/parallel_table"
+        android:padding="25dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/img_table_parallel"
+        android:text="@string/parallel_table"
+        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/guideline_top"
-        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal" />
+        app:layout_constraintTop_toBottomOf="@id/guideline_top" />
 
     <ImageButton
         android:id="@+id/circle_table"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="10dp"
-        android:src="@drawable/img_table_circle"
         android:background="@drawable/table_select_background"
-        android:scaleType="fitCenter"
-        android:padding="15dp"
-        android:text="@string/circle_table"
         android:contentDescription="@string/circle_table"
-        app:layout_constraintStart_toStartOf="parent"
+        android:padding="15dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/img_table_circle"
+        android:text="@string/circle_table"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal" />
 
 
     <ImageButton
@@ -95,15 +95,15 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="10dp"
-        android:src="@drawable/img_table_counter"
         android:background="@drawable/table_select_background"
-        android:scaleType="fitCenter"
+        android:contentDescription="@string/counter_table"
         android:paddingTop="80dp"
         android:paddingBottom="80dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/img_table_counter"
         android:text="@string/counter_table"
-        android:contentDescription="@string/counter_table"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal" />
 </androidx.constraintlayout.widget.ConstraintLayout>
