@@ -148,7 +148,7 @@ class QuickMode : AppCompatActivity(), TextWatcher {
                 memberList.add(man)
             }
             for (i in 1..womanNo) {
-                val woman = Member(i + manNo, getText(R.string.member).toString() + "♡" + i.toString(), getString(R.string.woman), 0, "", "", -1)
+                val woman = Member(i + 1000, getText(R.string.member).toString() + "♡" + i.toString(), getString(R.string.woman), 0, "", "", -1)
                 memberList.add(woman)
             }
         }

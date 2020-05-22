@@ -414,7 +414,12 @@ class DrawTableView(context: Context) : View(context) {
         val nameInitial: String = if (StatusHolder.normalMode) {
             teamArray[tableNo][i].name[0].toString()
         } else {
-            teamArray[tableNo][i].id.toString()   //QuickMode命名規則：メンバー + id
+            val member = teamArray[tableNo][i]
+            if (member.sex == context.getString(R.string.woman)) {
+                (member.id - 1000).toString()   //QuickMode id規則：女メンバー = id+1000
+            } else {
+                member.id.toString()             //QuickMode id規則：メンバー = id
+            }
         }
         val textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         textPaint.textSize = r

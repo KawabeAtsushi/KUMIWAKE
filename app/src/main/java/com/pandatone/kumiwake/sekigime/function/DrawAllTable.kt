@@ -351,7 +351,12 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
         val nameInitial: String = if (StatusHolder.normalMode) {
             teamArray[drawTableNo][i].name[0].toString()
         } else {
-            teamArray[drawTableNo][i].id.toString()   //QuickMode命名規則：メンバー + id
+            val member = teamArray[DrawTableView.tableNo][i]
+            if (member.sex == context.getString(R.string.woman)) {
+                (member.id - 1000).toString()   //QuickMode id規則：女メンバー = id+1000
+            } else {
+                member.id.toString()             //QuickMode id規則：メンバー = id
+            }
         }
         val textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         textPaint.textSize = r

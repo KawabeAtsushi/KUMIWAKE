@@ -13,6 +13,8 @@ import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.pandatone.kumiwake.FirebaseAnalyticsEvents
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.EditOthersViewAdapter
@@ -32,6 +34,7 @@ class TicketDefine : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.ticket_difinition)
@@ -40,6 +43,7 @@ class TicketDefine : AppCompatActivity() {
         editTicketAdapter = EditOthersViewAdapter(this, roleArray, totalAssinedTextView, true)
         setViews()
         ticketListView.adapter = editTicketAdapter
+        ticketColors.clear()
         ticketColors.add(Color.parseColor("#6b6b6b"))
         setKeyboardListener()
     }
@@ -120,6 +124,7 @@ class TicketDefine : AppCompatActivity() {
             } else {
                 ticketColors.removeAt(i)
             }
+            FirebaseAnalyticsEvents.ticketNames(ticketName)
         }
         return ticketArray
     }

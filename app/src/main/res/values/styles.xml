@@ -59,14 +59,16 @@
 
     <!-- Othersのボタン(透明) -->
     <style name="Button.Outline.Others">
-        <item name="cornerRadius">28dp</item>
-        <item name="strokeWidth">3dp</item>
-        <item name="strokeColor">@color/thin_gray</item>
+        <item name="cornerRadius">50dp</item>
         <item name="iconSize">@dimen/others_button_icon_size</item>
-        <item name="iconTint">@color/thin_gray</item>
-        <item name="iconGravity">textStart</item>
+        <item name="iconTint">#888</item>
+        <item name="android:paddingStart">30dp</item>
+        <item name="android:paddingEnd">50dp</item>
+        <item name="android:textColor">#888</item>
+        <item name="android:textSize">27sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="backgroundTint">@android:color/white</item>
-        <item name="rippleColor">#2000</item>
+        <item name="rippleColor">#CFF5FF</item>
     </style>
     <!-- 角丸ボタン(透明) -->
     <style name="Button.Transparent.Rounded">

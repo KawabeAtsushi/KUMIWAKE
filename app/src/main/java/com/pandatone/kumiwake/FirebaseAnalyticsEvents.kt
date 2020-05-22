@@ -57,4 +57,18 @@ object FirebaseAnalyticsEvents {
         bundle.putString("belong_no", belongNo.toString())
         firebaseAnalytics.logEvent("new_group", bundle)
     }
+
+    //役割
+    fun roleNames(role:String){
+        val bundle = Bundle()
+        bundle.putString("role", role)
+        firebaseAnalytics.logEvent("role_name", bundle)
+    }
+
+    //くじ
+    fun ticketNames(ticket:String){
+        val bundle = Bundle()
+        bundle.putString("ticket", ticket)
+        firebaseAnalytics.logEvent("ticket_name", bundle)
+    }
 }

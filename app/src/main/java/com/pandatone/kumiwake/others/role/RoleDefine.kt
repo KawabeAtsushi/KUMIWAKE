@@ -12,10 +12,8 @@ import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.pandatone.kumiwake.KumiwakeArrayKeys
-import com.pandatone.kumiwake.KumiwakeCustomKeys
-import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.StatusHolder
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.EditOthersViewAdapter
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
@@ -35,6 +33,7 @@ class RoleDefine : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.role_difinition)
@@ -128,6 +127,7 @@ class RoleDefine : AppCompatActivity() {
             if (memberNo != 0) {
                 nextRoleArray.add(Group(0, roleName, "", memberNo))
             }
+            FirebaseAnalyticsEvents.roleNames(roleName)
         }
         if (total < memberArray.size) {
             nextRoleArray.add(Group(1, getString(R.string.no_assigned), "", memberArray.size - total))

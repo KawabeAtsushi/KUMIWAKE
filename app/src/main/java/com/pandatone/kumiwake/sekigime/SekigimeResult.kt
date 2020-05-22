@@ -23,7 +23,7 @@ import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.sekigime.function.DrawAllTable
 import com.pandatone.kumiwake.sekigime.function.DrawTableView
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
-import kotlin.math.ceil
+import kotlin.math.round
 
 
 /**
@@ -204,30 +204,21 @@ class SekigimeResult : AppCompatActivity() {
             val bigger = biggerArray.size.toFloat()
             val smaller = smallerArray.size.toFloat()
 
-            seatArray.addAll(biggerArray)
-
             if (smaller != 0f) {//両方の性別がいる場合
-                //多いほうの間に入れていく
-                val ratio = bigger / smaller //多い方：少ない方　の比
-                var loop = 1 //何週目か
-                var countInLoop = 1 //その周で何回目の追加か
-                var smallerSum = 0 //追加した合計人数
-                val skip = ceil(ratio).toInt()
-                //一人目を追加しておく
-                seatArray.add(1, smallerArray[smallerSum])
-                smallerSum++
-
-                while (smallerSum < smaller) {
-                    var index = (skip + loop) * (countInLoop-1) + countInLoop
-                    if (index > seatArray.size + 1) {//一周回ったら
-                        loop++
-                        countInLoop = 1
-                        index = 
-                    }
-                    seatArray.add(index, smallerArray[smallerSum])
-                    smallerSum++
+                val tempMember = Member(0, "temp", "temp", 0, "", "", -1)
+                biggerArray.forEach {
+                    seatArray.add(tempMember)
+                    seatArray.add(it)
                 }
 
+                val ratio = bigger / smaller //多い方：少ない方　の比
+                for (j in 0 until smaller.toInt()) {
+                    val index = round(ratio * j).toInt() * 2
+                    seatArray[index] = smallerArray[j]
+                }
+                seatArray.removeAll { it.sex == "temp" }
+            } else {
+                seatArray.addAll(biggerArray)
             }
 
             teamArray.add(seatArray)
