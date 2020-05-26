@@ -119,8 +119,9 @@ class TicketDefine : AppCompatActivity() {
             val ticketNo = editTicketAdapter!!.getNumber(i)
             total += ticketNo
             if (ticketNo != 0) {
-                for (t in 0 until ticketNo)
+                for (t in 0 until ticketNo) {
                     ticketArray.add(ticketName)
+                }
             } else {
                 ticketColors.removeAt(i)
             }
