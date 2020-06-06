@@ -10,6 +10,9 @@ https://play.google.com/store/apps/details?id=com.pandatone.kumiwake
 Official Page:</br>
 https://peraichi.com/landing_pages/view/kumiwake
 
+How To Use:</br>
+https://panda-tone.jimdosite.com/
+
 Privacy Policy:</br>
 https://gist.githubusercontent.com/KawabeAtsushi/39f3ea332b05a6b053b263784a77cd51/raw/7666e22b85561c34a95863f9482ed900482d2c8d/privacy%2520policy
 
