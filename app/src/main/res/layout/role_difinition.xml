@@ -135,16 +135,16 @@
                 <!--                        app:icon="@drawable/ic_add_white_24dp"-->
                 <!--                        app:iconTint="@android:color/white"/>-->
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/add_ticket"
-                    style="@style/Button.Transparent.Circle"
+                <ImageButton
+                    android:id="@+id/add_role"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="end"
                     android:layout_marginEnd="15dp"
                     android:backgroundTint="@color/orange"
-                    app:icon="@drawable/ic_add_white_24dp"
-                    app:iconTint="@android:color/white" />
+                    android:background="@drawable/circle_background"
+                    android:src="@drawable/ic_add_white_24dp"
+                    android:contentDescription="@string/add_role_description"/>
 
             </LinearLayout>
 

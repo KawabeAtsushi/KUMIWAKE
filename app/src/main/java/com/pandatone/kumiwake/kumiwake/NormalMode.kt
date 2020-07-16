@@ -42,14 +42,13 @@ class NormalMode : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
-            window.exitTransition = Slide()
-        }
+        window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
+        window.exitTransition = Slide()
         FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.normal_mode)
         findViews()
+        setStatus()
         add_group_listView.member_add_btn.setOnClickListener { moveMemberMain() }
         add_group_listView.member_register_and_add_btn.setOnClickListener { moveAddMember() }
         adapter = SmallMBListAdapter(this, memberArray)
@@ -69,6 +68,10 @@ class NormalMode : AppCompatActivity() {
         listView.emptyView = findViewById<View>(R.id.add_group_listView).findViewById(R.id.emptyMemberList)
         gpNoEditText = findViewById<View>(R.id.group_no_form) as AppCompatEditText
         errorGroup = findViewById<View>(R.id.error_group_no_txt) as TextView
+    }
+
+    private fun setStatus(){
+        PublicMethods.setStatusBarColor(this, Theme.Kumiwake.primaryColor)
     }
 
     //MemberMainに遷移

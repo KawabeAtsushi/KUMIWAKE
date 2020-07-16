@@ -66,8 +66,8 @@ class FragmentGroupMain : ListFragment() {
             //行をクリックした時の処理
             val builder = AlertDialog.Builder(requireActivity())
             val groupName = groupList[position].name
-            if (MembersFragment.searchView.isActivated)
-                MembersFragment.searchView.onActionViewCollapsed()
+            if (MembersMain.searchView.isActivated)
+                MembersMain.searchView.onActionViewCollapsed()
             FragmentMemberMain().loadName()
 
             val items = arrayOf(getString(R.string.information), getString(R.string.edit), getString(R.string.delete))
@@ -165,7 +165,7 @@ class FragmentGroupMain : ListFragment() {
             menu.findItem(R.id.item_delete).isVisible = true
             menu.findItem(R.id.item_filter).isVisible = false
             menu.findItem(R.id.item_all_select).isVisible = true
-            viewPager = MembersFragment.viewPager
+            viewPager = MembersMain.viewPager
             listener = object : ViewPager.SimpleOnPageChangeListener() {
                 override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                     super.onPageScrolled(position, positionOffset, positionOffsetPixels)

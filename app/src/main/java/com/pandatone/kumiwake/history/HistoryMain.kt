@@ -9,9 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.pandatone.kumiwake.FirebaseAnalyticsEvents
-import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.StatusHolder
+import com.pandatone.kumiwake.*
 
 
 /**
@@ -26,10 +24,7 @@ class HistoryMain : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.history_main)
-        toolbar = findViewById<View>(R.id.history_toolbar) as Toolbar
-        setSupportActionBar(toolbar)
-        supportActionBar!!.title = getString(R.string.history)
-        supportActionBar!!.setDisplayShowTitleEnabled(true)
+        setStatus()
         setViews()
         setPageChangeListener()
         FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
@@ -40,6 +35,15 @@ class HistoryMain : AppCompatActivity() {
         viewPager = findViewById<View>(R.id.history_view_pager) as ViewPager
         val adapter = HistoryPagerAdapter(this, manager)
         viewPager.adapter = adapter
+    }
+
+    private fun setStatus(){
+        toolbar = findViewById<View>(R.id.history_toolbar) as Toolbar
+        setSupportActionBar(toolbar)
+        supportActionBar!!.title = getString(R.string.history)
+        supportActionBar!!.setDisplayShowTitleEnabled(true)
+        supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Others.primaryColor))
+        PublicMethods.setStatusBarColor(this, Theme.Others.primaryColor)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

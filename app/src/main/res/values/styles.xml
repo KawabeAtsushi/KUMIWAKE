@@ -16,8 +16,13 @@
         <!-- プライマリカラー -->
         <item name="colorPrimary">#00897B</item>
         <!-- ステータスバーの背景色 -->
-        <item name="android:colorPrimaryDark">@color/red_title</item>
+        <item name="android:colorPrimaryDark">@color/thin_white</item>
         <item name="android:fontFamily">@font/mplus</item>
+    </style>
+
+    <!-- Sekigime theme -->
+    <style name="KumiwakeTheme" parent="AppTheme">
+        <item name="android:colorPrimaryDark">@color/red_title</item>
     </style>
 
     <!-- Sekigime theme -->
@@ -83,7 +88,7 @@
         <item name="android:paddingBottom">10dp</item>
         <item name="iconSize">30dp</item>
     </style>
-    <!-- 丸ボタン(透明) -->
+    <!-- 丸ボタン(透過) -->
     <style name="Button.Transparent.Circle">
         <item name="android:insetLeft">0dp</item>
         <item name="android:insetRight">0dp</item>
@@ -107,6 +112,15 @@
 
     <!-- Divider -->
     <style name="divider">
+        <item name="android:background">@drawable/main_gradient</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginStart">13dp</item>
+        <item name="android:layout_marginEnd">13dp</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_height">2dp</item>
+    </style>
+
+    <style name="topDivider">
         <item name="android:background">@drawable/main_gradient</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_marginStart">13dp</item>

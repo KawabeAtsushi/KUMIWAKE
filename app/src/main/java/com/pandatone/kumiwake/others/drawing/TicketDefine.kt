@@ -14,9 +14,7 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.pandatone.kumiwake.FirebaseAnalyticsEvents
-import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.StatusHolder
+import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.EditOthersViewAdapter
 import com.pandatone.kumiwake.member.function.Group
 import kotlinx.android.synthetic.main.kumiwake_custom.*
@@ -39,6 +37,7 @@ class TicketDefine : AppCompatActivity() {
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.ticket_difinition)
         findViews()
+        setStatus()
         onAddTicket()
         editTicketAdapter = EditOthersViewAdapter(this, roleArray, totalAssinedTextView, true)
         setViews()
@@ -54,6 +53,11 @@ class TicketDefine : AppCompatActivity() {
         totalAssinedTextView = findViewById(R.id.total_ticket_no)
         val totalStr = getString(R.string.ticket_number) + "0"
         totalAssinedTextView.text = totalStr
+    }
+
+    private fun setStatus(){
+        supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Others.primaryColor))
+        PublicMethods.setStatusBarColor(this, Theme.Others.primaryColor)
     }
 
     //View初期化

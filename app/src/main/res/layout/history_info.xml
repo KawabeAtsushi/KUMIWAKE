@@ -34,6 +34,7 @@
         android:layout_marginEnd="10dp"
         android:src="@drawable/ic_edit_24dp"
         android:tint="@color/gray"
+        android:contentDescription="@string/edit_title"
         app:layout_constraintBottom_toBottomOf="@id/indexName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/indexName" />

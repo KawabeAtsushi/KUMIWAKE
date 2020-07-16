@@ -54,7 +54,7 @@ object PublicMethods {
             window.statusBarColor = getColor(this, colorId)
         }
         when (colorId) {
-            Theme.Kumiwake.primaryColor -> StatusHolder.nowTheme = R.style.AppTheme
+            Theme.Kumiwake.primaryColor -> StatusHolder.nowTheme = R.style.KumiwakeTheme
             Theme.Sekigime.primaryColor -> StatusHolder.nowTheme = R.style.SekigimeTheme
             Theme.Others.primaryColor -> StatusHolder.nowTheme = R.style.OthersTheme
             Theme.Member.primaryColor -> StatusHolder.nowTheme = R.style.MemberTheme

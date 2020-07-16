@@ -35,12 +35,10 @@ class QuickMode : AppCompatActivity(), TextWatcher {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
-            window.exitTransition = Slide()
-        }
+        window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
+        window.exitTransition = Slide()
         FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        setTheme(StatusHolder.nowTheme)
+        setStatus()
         setContentView(R.layout.quick_mode)
         sex_seekBar.isEnabled = false
         member_no_form.addTextChangedListener(this)
@@ -51,6 +49,11 @@ class QuickMode : AppCompatActivity(), TextWatcher {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         mDetector = GestureDetectorCompat(this, MyGestureListener(imm, groupNoInput))
         mDetector.setOnDoubleTapListener(MyGestureListener(imm, groupNoInput))
+    }
+
+    private fun setStatus(){
+        setTheme(StatusHolder.nowTheme)
+        PublicMethods.setStatusBarColor(this, Theme.Kumiwake.primaryColor)
     }
 
     //スクロールビューの場合こっち呼ぶ

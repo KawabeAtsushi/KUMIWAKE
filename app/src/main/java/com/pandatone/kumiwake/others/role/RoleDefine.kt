@@ -67,7 +67,7 @@ class RoleDefine : AppCompatActivity() {
         windowManager.defaultDisplay.getSize(size)
         screenHeight = size.y
         findViewById<Button>(R.id.normal_kumiwake_button).setOnClickListener { onNextClicked() }
-        findViewById<Button>(R.id.add_ticket).setOnClickListener { onAddRole() }
+        findViewById<Button>(R.id.add_role).setOnClickListener { onAddRole() }
     }
 
 

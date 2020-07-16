@@ -167,7 +167,7 @@ class FragmentMemberMain : ListFragment() {
             menu.findItem(R.id.item_change_age).isVisible = true
             checkedCount = 0
             mode.title = checkedCount.toString() + getString(R.string.selected)
-            viewPager = MembersFragment.viewPager
+            viewPager = MembersMain.viewPager
             listener = object : ViewPager.SimpleOnPageChangeListener() {
                 override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                     super.onPageScrolled(position, positionOffset, positionOffsetPixels)

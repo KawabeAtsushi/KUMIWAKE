@@ -218,4 +218,6 @@
     <string name="change_color">Click icon to choose ticket color</string>
     <string name="choose_color">Choose color</string>
     <string name="avoid_duplication">Avoid duplication with this history result</string>
+    <string name="add_member">Add member</string>
+    <string name="add_group">Add group</string>
 </resources>
