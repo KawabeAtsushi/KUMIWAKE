@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -35,7 +36,6 @@ class RoleDefine : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.role_difinition)
 
         if (intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) != null) {
@@ -67,7 +67,7 @@ class RoleDefine : AppCompatActivity() {
         windowManager.defaultDisplay.getSize(size)
         screenHeight = size.y
         findViewById<Button>(R.id.normal_kumiwake_button).setOnClickListener { onNextClicked() }
-        findViewById<Button>(R.id.add_role).setOnClickListener { onAddRole() }
+        findViewById<ImageButton>(R.id.add_role).setOnClickListener { onAddRole() }
     }
 
 

@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/thin_white"
+        android:background="@drawable/main_toolbar_gradient"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,21 +20,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="5dp"
-        android:src="@drawable/mini_kumiwake_circle"
+        android:src="@drawable/ic_launcher_foreground_big"
         android:contentDescription="@string/kumiwake"
         app:layout_constraintBottom_toBottomOf="@id/toolbar"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/toolbar" />
-
-    <ImageButton
-        android:id="@+id/settings_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:contentDescription="@string/setting_help"
-        android:src="@drawable/ic_help_outline_dark_24dp"
-        app:layout_constraintBottom_toBottomOf="@id/toolbar"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/toolbar" />
 
@@ -60,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="15dp"
                 android:text="@string/kumiwake"
                 android:textColor="@color/gray"
                 android:textSize="22sp" />
@@ -71,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp">
 
                 <include
@@ -101,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/sekigime"
                 android:textColor="@color/gray"
                 android:textSize="22sp" />
@@ -112,7 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp">
 
                 <include
@@ -142,7 +131,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/others"
                 android:textColor="@color/gray"
                 android:textSize="22sp" />
@@ -153,7 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp">
 
                 <include
@@ -170,7 +159,7 @@
                     layout="@layout/top_button_unit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toStartOf="@id/role_unit"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/history_unit"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -179,30 +168,32 @@
                     layout="@layout/top_button_unit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@id/order_unit"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/drawing_unit"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@id/history_unit" />
 
                 <include
                     android:id="@+id/drawing_unit"
                     layout="@layout/top_button_unit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/role_unit"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@id/order_unit" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!--            member section-->
+            <!--            settings/help section-->
 
             <TextView
-                android:id="@+id/member_title"
+                android:id="@+id/settings_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
-                android:text="@string/member"
+                android:layout_marginTop="20dp"
+                android:text="@string/setting_help"
                 android:textColor="@color/gray"
                 android:textSize="22sp" />
 
@@ -212,62 +203,84 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp">
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="70dp">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/member_button"
-                    style="@style/Button.Transparent.Rounded"
-                    android:layout_width="0dp"
+                <include
+                    android:id="@+id/help_unit"
+                    layout="@layout/top_button_unit"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="12dp"
-                    android:text="@string/member"
-                    android:textColor="@android:color/white"
-                    app:backgroundTint="@color/blue_title"
-                    app:icon="@drawable/ic_members_24dp"
-                    app:iconTint="@android:color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/settings_unit"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/member_add_button"
-                    style="@style/Button.Transparent.Rounded"
-                    android:layout_width="0dp"
+                <include
+                    android:id="@+id/settings_unit"
+                    layout="@layout/top_button_unit"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="10dp"
-                    android:padding="12dp"
-                    android:text="@string/add_member"
-                    android:textColor="@android:color/white"
-                    app:backgroundTint="@color/green"
-                    app:icon="@drawable/ic_add_white_24dp"
-                    app:iconTint="@android:color/white"
-                    app:layout_constraintEnd_toStartOf="@id/group_add_button"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/member_button" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/group_add_button"
-                    style="@style/Button.Transparent.Rounded"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:padding="12dp"
-                    android:text="@string/add_group"
-                    android:textColor="@android:color/white"
-                    app:backgroundTint="@color/orange"
-                    app:icon="@drawable/ic_add_white_24dp"
-                    app:iconTint="@android:color/white"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/member_add_button"
-                    app:layout_constraintTop_toBottomOf="@id/member_button" />
+                    app:layout_constraintStart_toEndOf="@id/help_unit"
+                    app:layout_constraintTop_toTopOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
     </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/dimmer_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#BBFFFFFF"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"/>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/multiple_member_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fab_addButtonColorNormal="@color/blue_title"
+        app:fab_addButtonColorPressed="#0398DC"
+        app:fab_labelStyle="@style/menu_labels_style"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@id/adView"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/member_list_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/blue_title"
+            app:fab_colorPressed="#0398DC"
+            app:fab_title="@string/member_list"
+            app:fab_icon="@drawable/ic_members_24" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/member_add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/green"
+            app:fab_colorPressed="#2FBF46"
+            app:fab_title="@string/add_member"
+            app:fab_icon="@drawable/ic_add_member_24"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/group_add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/orange"
+            app:fab_colorPressed="#DDA82C"
+            app:fab_title="@string/add_group"
+            app:fab_icon="@drawable/ic_add_group_24"/>
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 
     <com.google.android.gms.ads.AdView

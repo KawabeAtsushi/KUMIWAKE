@@ -26,8 +26,8 @@ import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 object PublicMethods {
 
     //初期状態を設定
-    fun initialize() {
-        StatusHolder.nowTheme = R.style.AppTheme
+    fun initialize(activity: Activity) {
+        setStatus(activity,Theme.Default.primaryColor)
         StatusHolder.normalMode = true
         StatusHolder.sekigime = false
         StatusHolder.notDuplicate = false
@@ -47,18 +47,20 @@ object PublicMethods {
     }
 
     //ステータスバーの色変更
-    fun setStatusBarColor(activity: Activity, @ColorRes colorId: Int) {
+    fun setStatus(activity: Activity, @ColorRes colorId: Int) {
         activity.apply {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.statusBarColor = getColor(this, colorId)
         }
         when (colorId) {
-            Theme.Kumiwake.primaryColor -> StatusHolder.nowTheme = R.style.KumiwakeTheme
-            Theme.Sekigime.primaryColor -> StatusHolder.nowTheme = R.style.SekigimeTheme
+            Theme.Default.primaryColor -> StatusHolder.nowTheme = R.style.AppTheme
+            Theme.Normal.primaryColor -> StatusHolder.nowTheme = R.style.KumiwakeTheme
+            Theme.Quick.primaryColor -> StatusHolder.nowTheme = R.style.SekigimeTheme
             Theme.Others.primaryColor -> StatusHolder.nowTheme = R.style.OthersTheme
             Theme.Member.primaryColor -> StatusHolder.nowTheme = R.style.MemberTheme
         }
+        activity.setTheme(StatusHolder.nowTheme)
     }
 
     //Kumiwake 初期グループ生成（人数均等）

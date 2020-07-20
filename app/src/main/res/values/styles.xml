@@ -16,7 +16,7 @@
         <!-- プライマリカラー -->
         <item name="colorPrimary">#00897B</item>
         <!-- ステータスバーの背景色 -->
-        <item name="android:colorPrimaryDark">@color/thin_white</item>
+        <item name="android:colorPrimaryDark">@color/top_primary</item>
         <item name="android:fontFamily">@font/mplus</item>
     </style>
 
@@ -44,6 +44,15 @@
     <style name="MemberChoiceTheme" parent="AppTheme">
         <item name="android:colorPrimaryDark">@color/blue_title</item>
         <item name="actionModeCloseButtonStyle">@style/NoCloseButtonActionModeStyle</item>
+    </style>
+
+    <!-- Member ChoiceMode theme. -->
+    <style name="SettingsTheme" parent="Theme.AppCompat.Light">
+        <item name="android:colorPrimaryDark">@color/yellow_title</item>
+        <item name="actionBarStyle">@style/SettingsActionBarStyle</item>
+    </style>
+    <style name="SettingsActionBarStyle" parent="Widget.AppCompat.ActionBar.Solid">
+        <item name="android:background">@color/yellow_title</item>
     </style>
 
     <style name="NoCloseButtonActionModeStyle">
@@ -120,15 +129,6 @@
         <item name="android:layout_height">2dp</item>
     </style>
 
-    <style name="topDivider">
-        <item name="android:background">@drawable/main_gradient</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginStart">13dp</item>
-        <item name="android:layout_marginEnd">13dp</item>
-        <item name="android:layout_marginTop">2dp</item>
-        <item name="android:layout_height">2dp</item>
-    </style>
-
     <!--
      テキストスタイル
      -->
@@ -139,6 +139,12 @@
         <item name="paddingEnd">16dp</item>
         <item name="autoSizeTextType">uniform</item>
         <item name="android:maxLines">1</item>
+    </style>
+
+    <!-- fabのテキストスタイル -->
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/fab_label_background</item>
+        <item name="android:textColor">@color/gray</item>
     </style>
 
 </resources>

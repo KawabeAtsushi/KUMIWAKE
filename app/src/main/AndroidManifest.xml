@@ -50,7 +50,7 @@
         <activity
             android:name=".ui.members.MembersMain"
             android:screenOrientation="portrait"
-            android:theme="@style/MemberChoiceTheme"
+            android:theme="@style/MemberTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".member.ChoiceMemberMain"
@@ -102,6 +102,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".member.AddGroup"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".setting.Help"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".setting.Settings"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity

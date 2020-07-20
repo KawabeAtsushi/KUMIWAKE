@@ -22,7 +22,6 @@ class HistoryMain : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.history_main)
         setStatus()
         setViews()
@@ -42,8 +41,8 @@ class HistoryMain : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar!!.title = getString(R.string.history)
         supportActionBar!!.setDisplayShowTitleEnabled(true)
-        supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Others.primaryColor))
-        PublicMethods.setStatusBarColor(this, Theme.Others.primaryColor)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        PublicMethods.setStatus(this, Theme.Others.primaryColor)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -60,7 +59,6 @@ class HistoryMain : AppCompatActivity() {
                 }
             }
         })
-
 
         return true
     }

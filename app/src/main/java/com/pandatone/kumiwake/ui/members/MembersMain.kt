@@ -6,7 +6,6 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ImageSpan
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
@@ -15,13 +14,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.text.HtmlCompat
 import androidx.viewpager.widget.ViewPager
-import com.pandatone.kumiwake.PublicMethods.setStatusBarColor
+import com.pandatone.kumiwake.PublicMethods.setStatus
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.Theme
 import com.pandatone.kumiwake.adapter.CustomPagerAdapter
-import com.pandatone.kumiwake.member.ChoiceMemberMain
 import java.io.IOException
 
 class MembersMain : AppCompatActivity(), SearchView.OnQueryTextListener {
@@ -34,10 +31,11 @@ class MembersMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         val toolbar = findViewById<View>(R.id.toolbar2) as Toolbar
         setSupportActionBar(toolbar)
         supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Member.primaryColor))
-        setStatusBarColor(this, Theme.Member.primaryColor)
+        setStatus(this, Theme.Member.primaryColor)
 
-        supportActionBar!!.title = getString(R.string.member)
+        supportActionBar!!.title = getString(R.string.member_list)
         supportActionBar!!.setDisplayShowTitleEnabled(true)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         setViews()
     }

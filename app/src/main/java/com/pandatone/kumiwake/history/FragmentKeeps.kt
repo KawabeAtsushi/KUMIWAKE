@@ -74,6 +74,7 @@ class FragmentKeeps : ListFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
+            android.R.id.home -> requireActivity().finish()
             R.id.item_sort -> {
                 HistoryMethods.historySort(requireActivity(), historyList, listAdp)
                 toFavoList()

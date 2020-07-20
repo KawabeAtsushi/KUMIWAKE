@@ -74,6 +74,7 @@ class FragmentHistory : ListFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
+            android.R.id.home -> requireActivity().finish()
             R.id.item_sort -> HistoryMethods.historySort(requireActivity(), historyList, listAdp)
             R.id.menu_help -> dialog.confirmationDialog(getString(R.string.history), getString(R.string.how_to_history))
         }

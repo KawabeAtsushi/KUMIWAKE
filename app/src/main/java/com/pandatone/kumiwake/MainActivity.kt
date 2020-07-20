@@ -11,33 +11,26 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.text.HtmlCompat
 import androidx.core.view.updatePadding
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
+import com.getbase.floatingactionbutton.FloatingActionsMenu
+import com.getbase.floatingactionbutton.FloatingActionsMenu.OnFloatingActionsMenuUpdateListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.pandatone.kumiwake.PublicMethods.setStatusBarColor
 import com.pandatone.kumiwake.history.HistoryMain
 import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.kumiwake.QuickMode
 import com.pandatone.kumiwake.others.SelectMember
 import com.pandatone.kumiwake.others.drawing.TicketDefine
+import com.pandatone.kumiwake.setting.Help
 import com.pandatone.kumiwake.setting.PurchaseFreeAdOption
+import com.pandatone.kumiwake.setting.Settings
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import com.pandatone.kumiwake.ui.members.MembersMain
-import com.pandatone.kumiwake.ui.settings.SettingsFragment
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
-
-    private val dialog: DialogWarehouse
-        get() {
-            return DialogWarehouse(supportFragmentManager)
-        }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
         setClickListeners()
+        memberFabSetting()
 
         if (StatusHolder.adCheck) {
             startActivity(Intent(this, PurchaseFreeAdOption::class.java))
@@ -66,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        PublicMethods.initialize()
+        PublicMethods.initialize(this)
     }
 
     // 戻るボタンが押されたとき
@@ -80,20 +74,26 @@ class MainActivity : AppCompatActivity() {
         return false
     }
 
+    private fun memberFabSetting() {
+        val actionA = findViewById<View>(R.id.member_list_button)
+        actionA.setOnClickListener { startActivity(Intent(this, MembersMain::class.java)) }
+        val menuMultipleActions = findViewById<View>(R.id.multiple_member_fab) as FloatingActionsMenu
+        val dimmer = findViewById<View>(R.id.dimmer_layout)
+        menuMultipleActions.setOnFloatingActionsMenuUpdateListener(object : OnFloatingActionsMenuUpdateListener {
+            override fun onMenuExpanded() {
+                dimmer.visibility = View.VISIBLE
+            }
+
+            override fun onMenuCollapsed() {
+                dimmer.visibility = View.GONE
+            }
+        })
+    }
+
     private fun setClickListeners() {
         //toHomepage
         val kumiwakeIcon: ImageView = findViewById(R.id.kumiwake_icon)
         kumiwakeIcon.setOnClickListener { PublicMethods.toWebSite(this, supportFragmentManager) }
-
-        //settings/help
-        val settingsIcon: ImageButton = findViewById(R.id.settings_button)
-        settingsIcon.setOnClickListener {
-            openFragment(SettingsFragment())
-            supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Setting.primaryColor))
-            supportActionBar!!.title = HtmlCompat.fromHtml("<font color='#616161'>" + getString(R.string.setting_help) + "</font>", HtmlCompat.FROM_HTML_MODE_COMPACT)
-            container.background = getDrawable(Theme.Setting.backgroundColor)
-            setStatusBarColor(this, Theme.Setting.primaryColor)
-        }
 
         //組分けボタン
         val kNormalUnit: View = findViewById(R.id.kumiwake_normal_unit)
@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
         (kNormalUnit.findViewById(R.id.button_text) as TextView).setText(R.string.normal_mode)
         kNormalButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.red_unpressed))
         kNormalButton.setImageResource(R.drawable.ic_kumiwake_24px)
-        kNormalButton.updatePadding(top = 23, bottom = 32)
+        kNormalButton.updatePadding(top = 46, bottom = 61)
         kNormalButton.setOnClickListener {
             StatusHolder.sekigime = false
             StatusHolder.normalMode = true
@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity() {
         (kQuickUnit.findViewById(R.id.button_text) as TextView).setText(R.string.quick_mode)
         kQuickButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.green_title))
         kQuickButton.setImageResource(R.drawable.ic_kumiwake_24px)
-        kQuickButton.updatePadding(top = 23, bottom = 32)
+        kQuickButton.updatePadding(top = 46, bottom = 61)
         kQuickButton.setOnClickListener {
             StatusHolder.sekigime = false
             StatusHolder.normalMode = false
@@ -188,22 +188,25 @@ class MainActivity : AppCompatActivity() {
             FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.Drawing.key)
         }
 
-        //メンバー
-        val memberButton: Button = findViewById(R.id.member_button)
-        memberButton.setOnClickListener {
-            startActivity(Intent(this, MembersMain()::class.java))
+        //設定・ヘルプ
+        val helpUnit: View = findViewById(R.id.help_unit)
+        val helpButton: ImageButton = helpUnit.findViewById(R.id.icon_button)
+        (helpUnit.findViewById(R.id.button_text) as TextView).setText(R.string.help)
+        helpButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.yellow_title))
+        helpButton.setImageResource(R.drawable.ic_help_outline_dark_24dp)
+        helpButton.setOnClickListener {
+            startActivity(Intent(this, Help::class.java))
         }
 
-    }
+        val settingsUnit: View = findViewById(R.id.settings_unit)
+        val settingsButton: ImageButton = settingsUnit.findViewById(R.id.icon_button)
+        (settingsUnit.findViewById(R.id.button_text) as TextView).setText(R.string.settings)
+        settingsButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.yellow_title))
+        settingsButton.setImageResource(R.drawable.ic_settings_24dp)
+        settingsButton.setOnClickListener {
+            startActivity(Intent(this, Settings::class.java))
+        }
 
-    //Fragment初期表示（引数のfragmentが最初に表示される）
-    private fun openFragment(fragment: Fragment) {
-        // アニメーション無しでバックスタックを消去
-        supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.main_layout, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
     }
 
     //ツールバー初期表示

@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -34,10 +35,9 @@ class TicketDefine : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        setTheme(StatusHolder.nowTheme)
+        PublicMethods.setStatus(this, Theme.Others.primaryColor)
         setContentView(R.layout.ticket_difinition)
         findViews()
-        setStatus()
         onAddTicket()
         editTicketAdapter = EditOthersViewAdapter(this, roleArray, totalAssinedTextView, true)
         setViews()
@@ -55,11 +55,6 @@ class TicketDefine : AppCompatActivity() {
         totalAssinedTextView.text = totalStr
     }
 
-    private fun setStatus(){
-        supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Others.primaryColor))
-        PublicMethods.setStatusBarColor(this, Theme.Others.primaryColor)
-    }
-
     //View初期化
     @SuppressLint("SetTextI18n")
     fun setViews() {
@@ -67,7 +62,7 @@ class TicketDefine : AppCompatActivity() {
         windowManager.defaultDisplay.getSize(size)
         screenHeight = size.y
         findViewById<Button>(R.id.drawing_result_button).setOnClickListener { onNextClicked() }
-        findViewById<Button>(R.id.add_ticket).setOnClickListener { onAddTicket() }
+        findViewById<ImageButton>(R.id.add_ticket).setOnClickListener { onAddTicket() }
     }
 
 

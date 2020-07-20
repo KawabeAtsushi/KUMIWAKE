@@ -145,7 +145,7 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
         val responseCode = purchasesResult.responseCode
         if (responseCode == BillingClient.BillingResponseCode.OK) {
             val purchases = purchasesResult.purchasesList
-            if (purchases.isEmpty()) {
+            if (purchases!!.isEmpty()) {
                 history.text = getString(R.string.nothing)
             } else {
                 for (purchase in purchases) {
@@ -167,7 +167,7 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
                     val responseCodeP = purchasesResult.responseCode
                     if (responseCodeP == BillingClient.BillingResponseCode.OK) {
                         val purchases = purchasesResult.purchasesList
-                        for (purchase in purchases) {
+                        for (purchase in purchases!!) {
                             if (purchase.sku == StatusHolder.ad_free_sku) {
                                 deleteAd()
                             } //広告削除済みか判定

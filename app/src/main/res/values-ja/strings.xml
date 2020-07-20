@@ -219,4 +219,7 @@
     <string name="avoid_duplication">履歴の結果となるべく被らないようにする</string>
     <string name="add_member">メンバー追加</string>
     <string name="add_group">グループ追加</string>
+    <string name="settings">その他設定</string>
+    <string name="help">ヘルプ</string>
+    <string name="member_list">メンバー一覧</string>
 </resources>

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Typeface
-import android.os.Build
 import android.os.Bundle
 import android.transition.Slide
 import android.view.View
@@ -14,11 +13,9 @@ import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
-import com.pandatone.kumiwake.history.HistoryMain
 import com.pandatone.kumiwake.member.AddMember
 import com.pandatone.kumiwake.member.ChoiceMemberMain
 import com.pandatone.kumiwake.member.function.Member
@@ -40,9 +37,8 @@ class SelectMember : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
         window.exitTransition = Slide()
-        setTheme(StatusHolder.nowTheme)
+        PublicMethods.setStatus(this, Theme.Others.primaryColor)
         setContentView(R.layout.normal_mode)
-        setStatus()
         memberArray = ArrayList()
         val layout = findViewById<ConstraintLayout>(R.id.normal_select_layout)
         layout.background = getDrawable(R.drawable.img_others_background)
@@ -70,11 +66,6 @@ class SelectMember : AppCompatActivity() {
         listView = findViewById<View>(R.id.add_group_listView).findViewById<View>(R.id.memberListView) as ListView
         listView.emptyView = findViewById<View>(R.id.add_group_listView).findViewById(R.id.emptyMemberList)
         errorMember = findViewById<View>(R.id.error_member_no_txt) as TextView
-    }
-
-    private fun setStatus(){
-        supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Others.primaryColor))
-        PublicMethods.setStatusBarColor(this, Theme.Others.primaryColor)
     }
 
     //MemberMainに遷移
