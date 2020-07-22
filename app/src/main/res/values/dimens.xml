@@ -16,14 +16,9 @@
     <dimen name="under_button_height">63dp</dimen>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="hint_icon_size">50dp</dimen>
-    <dimen name="main_button_text_size">27sp</dimen>
     <dimen name="radio_button_text">20sp</dimen>
 
     <dimen name="et_textSize_big">25sp</dimen>
     <dimen name="form_textSize_large">18sp</dimen>
 
-    <dimen name="top_button_expansion">5dp</dimen>
-    <dimen name="others_button_height">100dp</dimen>
-    <dimen name="others_button_icon_size">40dp</dimen>
 </resources>

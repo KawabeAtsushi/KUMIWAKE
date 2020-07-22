@@ -34,14 +34,12 @@ class Help : AppCompatActivity() {
             //行をクリックした時の処理
             val homepageLink = PublicMethods.getLinkChar(getString(R.string.url_homepage), getString(R.string.more_details))
             when (position) {
-                0 -> {
-                    val message = (getString(R.string.how_to_kumiwake) + "\n\n■" + getString(R.string.normal_mode) + "■\n"
-                            + getString(R.string.description_of_normal_kumiwake) + "\n\n■" + getString(R.string.quick_mode) + "■\n" + getString(R.string.description_of_quick_kumiwake))
-                    dialog.confirmationDialog(howToUseStr[0], message, homepageLink)
-                }
-                1 -> dialog.confirmationDialog(howToUseStr[1], getText(R.string.how_to_member), homepageLink)
-                2 -> dialog.confirmationDialog(howToUseStr[2], getText(R.string.how_to_sekigime), homepageLink)
-                3 -> PublicMethods.toWebSite(this, supportFragmentManager)
+                0 -> dialog.confirmationDialog(howToUseStr[0], getString(R.string.how_to_kumiwake), homepageLink)
+                1 -> dialog.confirmationDialog(howToUseStr[1], getText(R.string.how_to_sekigime), homepageLink)
+                2 -> dialog.confirmationDialog(howToUseStr[2], getText(R.string.description_of_normal), homepageLink)
+                3 -> dialog.confirmationDialog(howToUseStr[3], getText(R.string.description_of_quick), homepageLink)
+                4 -> dialog.confirmationDialog(howToUseStr[4], getText(R.string.how_to_member), homepageLink)
+                5 -> PublicMethods.toWebSite(this, supportFragmentManager)
             }
         }
 
@@ -50,7 +48,7 @@ class Help : AppCompatActivity() {
 
     private fun setViews() {
 
-        howToUseStr = arrayOf(getString(R.string.about_kumiwake), getString(R.string.about_member), getString(R.string.about_sekigime), getString(R.string.detail_help))
+        howToUseStr = arrayOf(getString(R.string.about_kumiwake), getString(R.string.about_sekigime), getString(R.string.normal_mode), getString(R.string.quick_mode), getString(R.string.about_member), getString(R.string.detail_help))
         howToUseAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, howToUseStr)
 
         howToUseList.adapter = howToUseAdapter

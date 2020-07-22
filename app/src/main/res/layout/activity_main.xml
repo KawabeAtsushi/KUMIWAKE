@@ -28,7 +28,6 @@
         app:layout_constraintTop_toTopOf="@id/toolbar" />
 
     <ScrollView
-        android:id="@+id/main_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -45,7 +44,6 @@
             <!--            kumiwake section-->
 
             <TextView
-                android:id="@+id/kumiwake_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -86,7 +84,6 @@
             <!--            sekigime section-->
 
             <TextView
-                android:id="@+id/sekigime_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -127,7 +124,6 @@
             <!--            others section-->
 
             <TextView
-                android:id="@+id/others_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -188,7 +184,6 @@
             <!--            settings/help section-->
 
             <TextView
-                android:id="@+id/settings_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"

@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity() {
         val kNormalUnit: View = findViewById(R.id.kumiwake_normal_unit)
         val kNormalButton: ImageButton = kNormalUnit.findViewById(R.id.icon_button)
         (kNormalUnit.findViewById(R.id.button_text) as TextView).setText(R.string.normal_mode)
-        kNormalButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.red_unpressed))
+        kNormalButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.theme_red))
         kNormalButton.setImageResource(R.drawable.ic_kumiwake_24px)
         kNormalButton.updatePadding(top = 46, bottom = 61)
         kNormalButton.setOnClickListener {
@@ -148,7 +148,7 @@ class MainActivity : AppCompatActivity() {
         val sNormalUnit: View = findViewById(R.id.sekigime_normal_unit)
         val sNormalButton: ImageButton = sNormalUnit.findViewById(R.id.icon_button)
         (sNormalUnit.findViewById(R.id.button_text) as TextView).setText(R.string.normal_mode)
-        sNormalButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.red_unpressed))
+        sNormalButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.theme_red))
         sNormalButton.setImageResource(R.drawable.ic_sekigime_24px)
         sNormalButton.setOnClickListener {
             StatusHolder.sekigime = true

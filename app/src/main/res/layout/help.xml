@@ -23,7 +23,7 @@
             <ListView
                 android:id="@+id/how_to_use_list"
                 android:layout_width="match_parent"
-                android:layout_height="270dp"
+                android:layout_height="400dp"
                 tools:ignore="NestedScrolling" />
 
         </LinearLayout>

@@ -53,10 +53,8 @@
     <string name="number_of_member">メンバー数</string>
     <string name="normal_mode">ノーマルモード</string>
     <string name="quick_mode">クイックモード</string>
-    <string name="description_of_normal_kumiwake">登録したメンバーを選択して組分けを行うモードです。\nグループごとの名前や人数の設定などの詳細なカスタマイズが行えます。</string>
-    <string name="description_of_quick_kumiwake">人数とグループ数を指定して組分けを行うモードです。\nメンバーの登録が不要なので手軽に組分けを行えます。</string>
-    <string name="description_of_normal_sekigime">登録したメンバーを選択して席決めを行うモードです。\nグループごとの名前や人数の設定などの詳細なカスタマイズが行えます。</string>
-    <string name="description_of_quick_sekigime">人数とグループ数を指定して席決めを行うモードです。\nメンバーの登録が不要なので手軽に席決めを行えます。</string>
+    <string name="description_of_normal">登録したメンバーを選択してKUMIWAKEを行うモードです。\nグループごとの名前や人数の設定などの詳細なカスタマイズが行えます。</string>
+    <string name="description_of_quick">人数とグループ数を指定してKUMIWAKEを行うモードです。\nメンバーの登録が不要なので手軽に組分けを行えます。</string>
     <string name="number_of_groups">グループ数</string>
     <string name="do_kumiwake">組分けする！</string>
     <string name="move_confirmation">確認画面へ</string>
