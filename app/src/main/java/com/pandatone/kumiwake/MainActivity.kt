@@ -5,7 +5,6 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -18,16 +17,20 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.history.HistoryMain
 import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.kumiwake.QuickMode
+import com.pandatone.kumiwake.member.AddGroup
+import com.pandatone.kumiwake.member.AddMember
+import com.pandatone.kumiwake.member.members.FragmentGroupMain
 import com.pandatone.kumiwake.others.SelectMember
 import com.pandatone.kumiwake.others.drawing.TicketDefine
 import com.pandatone.kumiwake.setting.Help
 import com.pandatone.kumiwake.setting.PurchaseFreeAdOption
 import com.pandatone.kumiwake.setting.Settings
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
-import com.pandatone.kumiwake.ui.members.MembersMain
+import com.pandatone.kumiwake.member.members.MembersMain
 
 
 class MainActivity : AppCompatActivity() {
@@ -74,11 +77,29 @@ class MainActivity : AppCompatActivity() {
         return false
     }
 
+    //メンバーのFABの処理
     private fun memberFabSetting() {
-        val actionA = findViewById<View>(R.id.member_list_button)
-        actionA.setOnClickListener { startActivity(Intent(this, MembersMain::class.java)) }
         val menuMultipleActions = findViewById<View>(R.id.multiple_member_fab) as FloatingActionsMenu
+        val actionMemberList = findViewById<View>(R.id.member_list_button)
+        actionMemberList.setOnClickListener {
+            startActivity(Intent(this, MembersMain::class.java))
+            menuMultipleActions.collapse()
+        }
+        val actionAddMember = findViewById<View>(R.id.member_add_button)
+        actionAddMember.setOnClickListener {
+            startActivity(Intent(this, AddMember::class.java))
+            menuMultipleActions.collapse()
+        }
+        val actionAddGroup = findViewById<View>(R.id.group_add_button)
+        actionAddGroup.setOnClickListener {
+            FragmentGroupMain.gpAdapter = GroupAdapter(this)
+            startActivity(Intent(this, AddGroup::class.java))
+            menuMultipleActions.collapse()
+        }
         val dimmer = findViewById<View>(R.id.dimmer_layout)
+        dimmer.setOnClickListener {
+            menuMultipleActions.collapse()
+        }
         menuMultipleActions.setOnFloatingActionsMenuUpdateListener(object : OnFloatingActionsMenuUpdateListener {
             override fun onMenuExpanded() {
                 dimmer.visibility = View.VISIBLE

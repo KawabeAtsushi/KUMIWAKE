@@ -42,6 +42,8 @@ class RoleResult : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kumiwake_result)
+        val layout = findViewById<ConstraintLayout>(R.id.result_view)
+        layout.background = getDrawable(R.drawable.img_others_background)
 
         val resultTitle = getString(R.string.role_decision) + getString(R.string.result)
         findViewById<TextView>(R.id.result_title).text = resultTitle
@@ -50,11 +52,6 @@ class RoleResult : AppCompatActivity() {
         tabLayout.addTab(tabLayout.newTab().setText(R.string.by_group))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.by_member))
         tabLayout.addOnTabSelectedListener(tabItemSelectedListener)
-
-        if (!StatusHolder.normalMode) {
-            val layout = findViewById<ConstraintLayout>(R.id.result_view)
-            layout.background = getDrawable(R.drawable.img_quick_background)
-        }
 
         PublicMethods.showAd(this)
         val i = intent

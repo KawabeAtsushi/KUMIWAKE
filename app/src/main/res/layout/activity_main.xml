@@ -4,7 +4,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@drawable/top_background">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -257,6 +257,7 @@
             android:id="@+id/member_list_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:fab_size="normal"
             app:fab_colorNormal="@color/blue_title"
             app:fab_colorPressed="#0398DC"
             app:fab_title="@string/member_list"
@@ -266,6 +267,7 @@
             android:id="@+id/member_add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:fab_size="mini"
             app:fab_colorNormal="@color/green"
             app:fab_colorPressed="#2FBF46"
             app:fab_title="@string/add_member"
@@ -275,6 +277,7 @@
             android:id="@+id/group_add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:fab_size="mini"
             app:fab_colorNormal="@color/orange"
             app:fab_colorPressed="#DDA82C"
             app:fab_title="@string/add_group"

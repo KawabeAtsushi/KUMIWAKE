@@ -1,4 +1,4 @@
-package com.pandatone.kumiwake.ui.members
+package com.pandatone.kumiwake.member.members
 
 import android.graphics.Color
 import android.os.Bundle
@@ -59,6 +59,11 @@ class MembersMain : AppCompatActivity(), SearchView.OnQueryTextListener {
                 page = viewPager.currentItem
                 val itemFilter = menu.findItem(R.id.item_filter)
                 itemFilter.isVisible = page != 1
+                if (page == 0){
+                    supportActionBar!!.title = getString(R.string.member_list)
+                }else{
+                    supportActionBar!!.title = getString(R.string.group_list)
+                }
             }
         })
 

@@ -108,14 +108,14 @@ class HistoryInfo(val c: Activity) {
         val duplicateCheckBox = view.findViewById<CheckBox>(R.id.duplicate_check)
         kumiwakeButton.setOnClickListener {
             StatusHolder.sekigime = false
-            PublicMethods.setStatus(this.c, Theme.Normal.primaryColor)
+            PublicMethods.setStatus(this.c, Theme.Kumiwake.primaryColor)
             goTo(duplicateCheckBox.isChecked)
             FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.KumiwakeHistory.key)
         }
         val sekigimeButton = view.findViewById<Button>(R.id.sekigime_select_button)
         sekigimeButton.setOnClickListener {
             StatusHolder.sekigime = true
-            PublicMethods.setStatus(this.c, Theme.Quick.primaryColor)
+            PublicMethods.setStatus(this.c, Theme.Sekigime.primaryColor)
             goTo(duplicateCheckBox.isChecked)
             FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.SekigimeHistory.key)
         }

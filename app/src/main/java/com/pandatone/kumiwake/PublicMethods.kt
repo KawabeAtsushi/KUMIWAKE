@@ -55,8 +55,8 @@ object PublicMethods {
         }
         when (colorId) {
             Theme.Default.primaryColor -> StatusHolder.nowTheme = R.style.AppTheme
-            Theme.Normal.primaryColor -> StatusHolder.nowTheme = R.style.KumiwakeTheme
-            Theme.Quick.primaryColor -> StatusHolder.nowTheme = R.style.SekigimeTheme
+            Theme.Kumiwake.primaryColor -> StatusHolder.nowTheme = R.style.KumiwakeTheme
+            Theme.Sekigime.primaryColor -> StatusHolder.nowTheme = R.style.SekigimeTheme
             Theme.Others.primaryColor -> StatusHolder.nowTheme = R.style.OthersTheme
             Theme.Member.primaryColor -> StatusHolder.nowTheme = R.style.MemberTheme
         }

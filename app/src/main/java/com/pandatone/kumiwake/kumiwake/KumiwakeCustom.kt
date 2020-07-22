@@ -11,6 +11,7 @@ import android.view.ViewTreeObserver
 import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.pandatone.kumiwake.KumiwakeArrayKeys
 import com.pandatone.kumiwake.KumiwakeCustomKeys
 import com.pandatone.kumiwake.R
@@ -44,6 +45,10 @@ class KumiwakeCustom : AppCompatActivity() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.kumiwake_custom)
+        if (StatusHolder.sekigime) {
+            val layout = findViewById<ConstraintLayout>(R.id.custom_root_layout)
+            layout.background = getDrawable(R.drawable.img_sekigime_background)
+        }
 
         if (intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) != null) {
             memberArray = intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>

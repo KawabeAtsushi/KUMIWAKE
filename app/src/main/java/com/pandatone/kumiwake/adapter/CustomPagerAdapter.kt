@@ -8,8 +8,8 @@ import androidx.viewpager.widget.ViewPager
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.FragmentGroupChoiceMode
 import com.pandatone.kumiwake.member.FragmentMemberChoiceMode
-import com.pandatone.kumiwake.ui.members.FragmentGroupMain
-import com.pandatone.kumiwake.ui.members.FragmentMemberMain
+import com.pandatone.kumiwake.member.members.FragmentGroupMain
+import com.pandatone.kumiwake.member.members.FragmentMemberMain
 
 
 /**

@@ -17,6 +17,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GestureDetectorCompat
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.pandatone.kumiwake.*
@@ -44,8 +45,17 @@ class NormalMode : AppCompatActivity() {
         window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
         window.exitTransition = Slide()
         FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        PublicMethods.setStatus(this, Theme.Normal.primaryColor)
+        //テーマを設定
+        if (StatusHolder.sekigime) {
+            PublicMethods.setStatus(this, Theme.Sekigime.primaryColor)
+        }else {
+            PublicMethods.setStatus(this, Theme.Kumiwake.primaryColor)
+        }
         setContentView(R.layout.normal_mode)
+        if (StatusHolder.sekigime) {
+            val layout = findViewById<ConstraintLayout>(R.id.normal_select_layout)
+            layout.background = getDrawable(R.drawable.img_sekigime_background)
+        }
         findViews()
         add_group_listView.member_add_btn.setOnClickListener { moveMemberMain() }
         add_group_listView.member_register_and_add_btn.setOnClickListener { moveAddMember() }

@@ -47,17 +47,17 @@ class KumiwakeResult : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.kumiwake_result)
+        if (StatusHolder.sekigime) {
+            val layout = findViewById<ConstraintLayout>(R.id.result_view)
+            layout.background = getDrawable(R.drawable.img_sekigime_background)
+        }
 
         tabLayout = findViewById(R.id.tabLayout)
         tabLayout.addTab(tabLayout.newTab().setText(R.string.by_group))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.by_member))
         tabLayout.addOnTabSelectedListener(tabItemSelectedListener)
-
-        if (!StatusHolder.normalMode) {
-            val layout = findViewById<ConstraintLayout>(R.id.result_view)
-            layout.background = getDrawable(R.drawable.img_quick_background)
-        }
 
         PublicMethods.showAd(this)
         val i = intent

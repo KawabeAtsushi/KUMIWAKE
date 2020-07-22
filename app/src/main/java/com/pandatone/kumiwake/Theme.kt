@@ -29,8 +29,8 @@ enum class Theme(@get:ColorRes
                  @get:ColorRes
                  val backgroundColor: Int) {
     Default(R.color.top_primary, android.R.color.white),
-    Normal(R.color.red_title, R.color.red_background),
-    Quick(R.color.green_title, R.color.green_background),
+    Kumiwake(R.color.red_title, R.color.red_background),
+    Sekigime(R.color.green_title, R.color.green_background),
     Others(R.color.gray, R.color.background_gray),
     Member(R.color.blue_title, R.color.blue_background),
     Setting(R.color.yellow_title, R.color.yellow_background)

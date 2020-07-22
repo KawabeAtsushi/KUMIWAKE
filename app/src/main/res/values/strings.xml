@@ -223,4 +223,5 @@
     <string name="settings">Setting</string>
     <string name="help">Help</string>
     <string name="member_list">MemberList</string>
+    <string name="group_list">GroupList</string>
 </resources>

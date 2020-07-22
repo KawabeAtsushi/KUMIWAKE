@@ -3,7 +3,7 @@ package com.pandatone.kumiwake.member.function
 import android.content.Context
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
-import com.pandatone.kumiwake.ui.members.FragmentGroupMain
+import com.pandatone.kumiwake.member.members.FragmentGroupMain
 
 object MemberMethods {
 

@@ -29,8 +29,8 @@ import com.pandatone.kumiwake.member.function.MemberClick
 import com.pandatone.kumiwake.member.function.MemberMethods
 import com.pandatone.kumiwake.others.SelectMember
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
-import com.pandatone.kumiwake.ui.members.FragmentGroupMain
-import com.pandatone.kumiwake.ui.members.FragmentMemberMain
+import com.pandatone.kumiwake.member.members.FragmentGroupMain
+import com.pandatone.kumiwake.member.members.FragmentMemberMain
 import kotlinx.android.synthetic.main.add_member.*
 
 

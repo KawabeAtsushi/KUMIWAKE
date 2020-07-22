@@ -222,4 +222,5 @@
     <string name="settings">その他設定</string>
     <string name="help">ヘルプ</string>
     <string name="member_list">メンバー一覧</string>
+    <string name="group_list">グループ一覧</string>
 </resources>

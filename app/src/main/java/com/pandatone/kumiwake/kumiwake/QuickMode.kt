@@ -13,6 +13,7 @@ import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GestureDetectorCompat
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.pandatone.kumiwake.*
@@ -37,8 +38,17 @@ class QuickMode : AppCompatActivity(), TextWatcher {
         window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
         window.exitTransition = Slide()
         FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        PublicMethods.setStatus(this, Theme.Quick.primaryColor)
+        //テーマを設定
+        if (StatusHolder.sekigime) {
+            PublicMethods.setStatus(this, Theme.Sekigime.primaryColor)
+        }else {
+            PublicMethods.setStatus(this, Theme.Kumiwake.primaryColor)
+        }
         setContentView(R.layout.quick_mode)
+        if (StatusHolder.sekigime) {
+            val layout = findViewById<ConstraintLayout>(R.id.quick_layout)
+            layout.background = getDrawable(R.drawable.img_sekigime_background)
+        }
         sex_seekBar.isEnabled = false
         member_no_form.addTextChangedListener(this)
         findViewById<Button>(R.id.quick_kumiwake_btn).setOnClickListener { onNextClicked() }

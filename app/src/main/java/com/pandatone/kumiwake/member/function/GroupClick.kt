@@ -13,7 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
-import com.pandatone.kumiwake.ui.members.FragmentGroupMain
+import com.pandatone.kumiwake.member.members.FragmentGroupMain
 
 /**
  * Created by atsushi_2 on 2016/04/17.

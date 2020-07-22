@@ -100,6 +100,8 @@
         android:padding="10dp"
         android:text="@string/use_these_member"
         android:textColor="@android:color/white"
+        app:icon="@drawable/ic_check_24"
+        app:iconTint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/okBt"
         app:layout_constraintStart_toStartOf="parent" />
