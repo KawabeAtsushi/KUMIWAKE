@@ -26,7 +26,7 @@ object MemberClick {
         sex = view.findViewById<View>(R.id.infoSex) as TextView
         age = view.findViewById<View>(R.id.infoAge) as TextView
         belong = view.findViewById<View>(R.id.infoBelong) as TextView
-        okBt = view.findViewById<View>(R.id.okBt) as Button
+        okBt = view.findViewById<View>(R.id.closeBt) as Button
 
         builder.setTitle(R.string.information)
         builder.setView(view)

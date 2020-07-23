@@ -92,7 +92,8 @@
                     android:layout_height="30dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="15dp"
-                    android:background="@drawable/ic_arrow" />
+                    android:background="@drawable/ic_arrow"
+                    android:contentDescription="@null"/>
 
                 <TextView
                     android:id="@+id/between_arrows_txt"
@@ -109,7 +110,8 @@
                     android:layout_height="30dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginBottom="15dp"
-                    android:background="@drawable/ic_arrow" />
+                    android:background="@drawable/ic_arrow"
+                    android:contentDescription="@null"/>
 
             </LinearLayout>
 

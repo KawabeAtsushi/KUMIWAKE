@@ -16,6 +16,7 @@
         android:padding="@dimen/row_padding"
         android:src="@drawable/ic_kumiwake_24px"
         android:tint="@color/gray"
+        android:contentDescription="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,6 +42,7 @@
         android:padding="@dimen/row_padding"
         android:src="@drawable/ic_favorite_24dp"
         android:visibility="gone"
+        android:contentDescription="@string/favorite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

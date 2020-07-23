@@ -39,7 +39,7 @@ class HistoryInfo(val c: Activity) {
         history = view.findViewById(R.id.infoName)
         date = view.findViewById(R.id.infoDate)
         result = view.findViewById<View>(R.id.result) as LinearLayout
-        okBt = view.findViewById(R.id.okBt)
+        okBt = view.findViewById(R.id.closeBt)
         goToBt = view.findViewById(R.id.goToBt)
         editNameBt = view.findViewById(R.id.edit_name)
 

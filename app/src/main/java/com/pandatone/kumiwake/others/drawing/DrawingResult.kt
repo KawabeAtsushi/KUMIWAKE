@@ -271,7 +271,7 @@ class DrawingResult : AppCompatActivity() {
         val view = inflater.inflate(R.layout.drawing_history, findViewById<View>(R.id.info_layout) as ViewGroup?)
 
         val historyList = view.findViewById<View>(R.id.historyList) as ListView
-        val okBt = view.findViewById<View>(R.id.okBt) as Button
+        val okBt = view.findViewById<View>(R.id.closeBt) as Button
 
         builder.setTitle(R.string.history)
         builder.setView(view)

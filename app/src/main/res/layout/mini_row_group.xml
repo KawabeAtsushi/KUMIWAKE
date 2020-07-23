@@ -10,7 +10,8 @@
         android:layout_height="@dimen/mini_icon_size"
         android:padding="@dimen/mini_row_padding"
         android:src="@drawable/ic_user_group"
-        android:tint="@color/gray" />
+        android:tint="@color/gray"
+        android:contentDescription="@null"/>
 
     <TextView
         android:id="@+id/groupName"

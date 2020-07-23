@@ -13,6 +13,7 @@
         android:paddingBottom="@dimen/row_padding"
         android:src="@drawable/ic_user_group"
         android:tint="@color/gray"
+        android:contentDescription="@null"
         app:layout_constraintBottom_toTopOf="@id/leader"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
