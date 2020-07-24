@@ -222,4 +222,6 @@
     <string name="help">Help</string>
     <string name="member_list">MemberList</string>
     <string name="group_list">GroupList</string>
+    <string name="continuously_button">in bulk</string>
+    <string name="one_by_one_button">1 by 1</string>
 </resources>

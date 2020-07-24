@@ -221,4 +221,6 @@
     <string name="help">ヘルプ</string>
     <string name="member_list">メンバー一覧</string>
     <string name="group_list">グループ一覧</string>
+    <string name="continuously_button">まとめて追加</string>
+    <string name="one_by_one_button">一人ずつ追加</string>
 </resources>

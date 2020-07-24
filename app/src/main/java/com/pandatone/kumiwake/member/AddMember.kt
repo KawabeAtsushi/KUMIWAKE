@@ -2,6 +2,7 @@ package com.pandatone.kumiwake.member
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -32,6 +33,9 @@ import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import com.pandatone.kumiwake.member.members.FragmentGroupMain
 import com.pandatone.kumiwake.member.members.FragmentMemberMain
 import kotlinx.android.synthetic.main.add_member.*
+import kotlinx.android.synthetic.main.add_member.member_registration_continue_btn
+import kotlinx.android.synthetic.main.add_member.switch_continuously_mode
+import kotlinx.android.synthetic.main.add_member_in_bulk.*
 
 
 /**
@@ -79,6 +83,7 @@ class AddMember : AppCompatActivity() {
             }
         }
         if (member != null) {
+            switch_continuously_mode.visibility = View.GONE
             setItem(member)
             member_registration_continue_btn.visibility = View.GONE
         }
@@ -123,6 +128,12 @@ class AddMember : AppCompatActivity() {
         findViewById<Button>(R.id.member_registration_finish_btn).setOnClickListener { register(true) }
         findViewById<Button>(R.id.member_registration_continue_btn).setOnClickListener { register(false) }
         findViewById<Button>(R.id.member_cancel_btn).setOnClickListener { finish() }
+        findViewById<Button>(R.id.switch_continuously_mode).setOnClickListener {
+            val intent = Intent(this, AddMemberInBulk::class.java)
+            intent.putExtra(AddMemberKeys.FROM_MODE.key, fromMode)
+            finish()
+            startActivity(intent)
+        }
     }
 
     //Updateの場合の初期アイテム表示
