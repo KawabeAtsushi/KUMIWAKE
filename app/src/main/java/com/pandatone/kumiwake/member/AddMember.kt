@@ -93,7 +93,7 @@ class AddMember : AppCompatActivity() {
         nameEditText?.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(s: Editable) {
-                if (s.matches("^[a-zA-Z0-9ぁ-ん]+$".toRegex()) || s.toString() == "") {
+                if (s.matches("^[a-zA-Z0-9ぁ-ん\\s]+$".toRegex()) || s.toString() == "") {
                     yomigana = s.toString()
                 }
                 readEditText?.setText(yomigana)

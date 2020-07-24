@@ -2,9 +2,10 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/custom_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/form_marginStart"
+    android:paddingTop="5dp"
     android:parentActivityName=".MemberMain">
 
     <TextView
@@ -14,8 +15,8 @@
         android:layout_gravity="center"
         android:layout_marginStart="10dp"
         android:text="@string/continuously_button"
-        android:textSize="12sp"
         android:textColor="#70DF79"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@id/add_member_title"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,14 +30,13 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@id/switch_single_mode"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_member_subtitle"/>
+        app:layout_constraintTop_toBottomOf="@id/add_member_subtitle" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/switch_single_mode"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#5070DF79"
+        android:backgroundTint="#9BE6A1"
         android:maxLines="1"
         android:text="@string/one_by_one_button"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
@@ -48,20 +48,19 @@
         android:id="@+id/indexes_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="7dp"
-        android:background="#bfff"
+        android:layout_marginTop="15dp"
+        android:background="#95AAAAAA"
         android:orientation="horizontal"
         android:padding="5dp"
-        app:layout_constraintTop_toBottomOf="@id/add_member_title"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/add_member_title">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="27dp"
             android:text="↓"
             android:textSize="20sp" />
 
@@ -70,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
-            android:text="@string/change_color"
+            android:text="@string/change_sex"
             android:textSize="12sp" />
 
     </LinearLayout>
@@ -78,15 +77,14 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@id/member_registration_finish_btn"
+        app:layout_constraintBottom_toTopOf="@id/button_unit"
         app:layout_constraintTop_toBottomOf="@id/indexes_layout">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:background="@drawable/card"
+            android:background="#2FCCCCCC"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/title">
 
@@ -94,6 +92,7 @@
                 android:id="@+id/addMemberListView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp" />
 
@@ -113,6 +112,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="end"
                 android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
                 android:background="@drawable/circle_background"
                 android:backgroundTint="@color/orange"
                 android:contentDescription="@string/add_ticket"
@@ -122,38 +122,49 @@
 
     </ScrollView>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/member_registration_continue_btn"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/button_unit"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/orange"
-        android:maxLines="1"
-        android:text="@string/continue_register"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/member_cancel_btn"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:text="@string/cancel"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-        android:textColor="@color/blue_title"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/member_registration_finish_btn" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/member_registration_continue_btn"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/orange"
+            android:maxLines="1"
+            android:text="@string/continue_register"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/member_registration_finish_btn"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/blue_title"
-        android:text="@string/registration"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/member_cancel_btn"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/cancel"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+            android:textColor="@color/blue_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/member_registration_finish_btn" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/member_registration_finish_btn"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue_title"
+            android:text="@string/registration"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

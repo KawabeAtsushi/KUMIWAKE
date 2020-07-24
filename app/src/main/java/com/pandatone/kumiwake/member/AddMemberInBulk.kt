@@ -2,25 +2,28 @@ package com.pandatone.kumiwake.member
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.Point
 import android.graphics.Rect
 import android.os.Bundle
-import android.text.TextUtils
-import android.view.*
-import android.widget.*
+import android.view.KeyEvent
+import android.view.View
+import android.view.ViewTreeObserver
+import android.view.WindowManager
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ListView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.pandatone.kumiwake.*
-import com.pandatone.kumiwake.adapter.*
+import com.pandatone.kumiwake.AddMemberKeys
+import com.pandatone.kumiwake.FirebaseAnalyticsEvents
+import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.adapter.AddInBulkViewAdapter
+import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.kumiwake.NormalMode
-import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.others.SelectMember
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
-import com.pandatone.kumiwake.others.drawing.TicketDefine
 
 
 /**
@@ -56,7 +59,7 @@ class AddMemberInBulk : AppCompatActivity() {
         val size = Point()
         windowManager.defaultDisplay.getSize(size)
         screenHeight = size.y
-        findViewById<ImageButton>(R.id.add_ticket).setOnClickListener { onAddMember() }
+        findViewById<ImageButton>(R.id.add_member).setOnClickListener { onAddMember() }
         findViewById<Button>(R.id.member_registration_finish_btn).setOnClickListener { registerMembers(true) }
         findViewById<Button>(R.id.member_registration_continue_btn).setOnClickListener { registerMembers(false) }
         findViewById<Button>(R.id.member_cancel_btn).setOnClickListener { finish() }
@@ -70,10 +73,9 @@ class AddMemberInBulk : AppCompatActivity() {
 
     //メンバー追加
     private fun onAddMember() {
-        val memberNo = memberArray.size
-        val name = getString(R.string.member) + " " + (memberNo + 1).toString()
+        val memberNo = memberArray.size + 1
         updateMemberArray()
-        memberArray.add(Member(memberNo, name, getString(R.string.man), 0,"","",-1))
+        memberArray.add(Member(memberNo, "", getString(R.string.man), -1, "", getString(R.string.hira_member) + " " + memberNo, -1))
         editViewAdapter?.notifyDataSetChanged()
         editViewAdapter?.setRowHeight(memberListView)
     }
@@ -82,19 +84,19 @@ class AddMemberInBulk : AppCompatActivity() {
     private fun updateMemberArray() {
         memberArray.clear()
         for (i in 0 until memberListView.count) {
-            val name = editViewAdapter!!.getName(i)
+            val name = editViewAdapter!!.getName(i, true)
             val sex = editViewAdapter!!.getSex(i)
-            val age = editViewAdapter!!.getAge(i)
+            val age = editViewAdapter!!.getAge(i, true)
             val read = editViewAdapter!!.getRead(i)
-            memberArray.add(Member(i, name, sex, age,"",read,-1))
+            memberArray.add(Member(i, name, sex, age, "", read, -1))
         }
     }
 
-    private fun registerMembers(finish:Boolean) {
+    private fun registerMembers(finish: Boolean) {
         for (i in 0 until memberListView.count) {
-            val name = editViewAdapter!!.getName(i)
+            val name = editViewAdapter!!.getName(i, false)
             val sex = editViewAdapter!!.getSex(i)
-            val age = editViewAdapter!!.getAge(i)
+            val age = editViewAdapter!!.getAge(i, false)
             val read = editViewAdapter!!.getRead(i)
 
             mbAdapter!!.saveName(name, sex, age, "", read)
@@ -134,7 +136,7 @@ class AddMemberInBulk : AppCompatActivity() {
     //キーボードによるレイアウト崩れを防ぐ
     private fun setKeyboardListener() {
         val activityRootView = findViewById<View>(R.id.custom_root_layout)
-        val view = findViewById<View>(R.id.drawing_result_button)
+        val view = findViewById<View>(R.id.button_unit)
         activityRootView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             private val r = Rect()
 

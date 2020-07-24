@@ -224,4 +224,8 @@
     <string name="group_list">GroupList</string>
     <string name="continuously_button">in bulk</string>
     <string name="one_by_one_button">1 by 1</string>
+    <string name="age_unit">y/o</string>
+    <string name="change_sex">Click icon to switch gender(man/woman)</string>
+    <string name="hira_member">Member</string>
+    <string name="hira_group">Group</string>
 </resources>

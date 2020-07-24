@@ -223,4 +223,8 @@
     <string name="group_list">グループ一覧</string>
     <string name="continuously_button">まとめて追加</string>
     <string name="one_by_one_button">一人ずつ追加</string>
+    <string name="age_unit">歳</string>
+    <string name="change_sex">アイコンをクリックして性別(男・女)を変更</string>
+    <string name="hira_member">めんばー</string>
+    <string name="hira_group">ぐるーぷ</string>
 </resources>

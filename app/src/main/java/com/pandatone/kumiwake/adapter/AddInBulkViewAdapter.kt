@@ -2,7 +2,6 @@ package com.pandatone.kumiwake.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -18,8 +17,6 @@ import java.util.*
  * Created by atsushi_2 on 2016/03/20.
  */
 class AddInBulkViewAdapter(val context: Context, val memberList: List<Member>) : BaseAdapter() {
-    private var setFocus = 0
-    private var outFocus = 0
 
     //ListViewのEditTextのマップ
     @SuppressLint("UseSparseArrays")
@@ -48,16 +45,25 @@ class AddInBulkViewAdapter(val context: Context, val memberList: List<Member>) :
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         if (v == null) {
             v = inflater.inflate(R.layout.row_edit_group, null)
+            v.findViewById<TextView>(R.id.personTex).text = context.getString(R.string.age_unit)
         }
 
         val nameEditText = v!!.findViewById<View>(R.id.editGroupName) as EditText
+        nameEditText.hint = context.getString(R.string.member)+ " " + (position+1).toString()
         nameEditText.isFocusable = true
         nameEditText.isFocusableInTouchMode = true
         val ageEditText = v.findViewById<View>(R.id.editTheNumberOfMember) as EditText
         ageEditText.isFocusable = true
         ageEditText.isFocusableInTouchMode = true
-        nameEditText.setText(member.name)
-        ageEditText.setText(member.age.toString())
+        ageEditText.hint = "0"
+
+        if (member.name != "") {
+            nameEditText.setText(member.name)
+        }
+        if (member.age >= 0) {
+            ageEditText.setText(member.age.toString())
+        }
+
         val readText = v.findViewById<TextView>(R.id.leader)
         readText.text = member.read
         val icon = v.findViewById<ImageView>(R.id.rowIconGroup)
@@ -79,35 +85,20 @@ class AddInBulkViewAdapter(val context: Context, val memberList: List<Member>) :
             }
         }
 
-        v.findViewById<TextView>(R.id.personTex).text = context.getString(R.string.age)
-
         nameEditTextList[position] = nameEditText
         ageEditTextList[position] = ageEditText
         readTextViewList[position] = readText
         sexIconList[position] = icon
-
-        ageEditText.setOnFocusChangeListener { _, hasFocus ->
-            //hasFocus: 入力開始 -> true,移動 -> false
-            if (hasFocus) {
-                setFocus = position
-            } else {
-                outFocus = position
-            }
-            if (setFocus != outFocus) {//別のところにフォーカスが移ったら
-                val beforeEditText = ageEditTextList[outFocus]
-                if (beforeEditText?.text.toString() == "" || beforeEditText?.text.toString() == "-") {
-                    beforeEditText?.setText("0")
-                }
-            }
-        }
 
         var yomigana = ""
         //読み仮名の自動入力
         nameEditText.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(s: Editable) {
-                if (s.matches("^[a-zA-Z0-9ぁ-ん]+$".toRegex()) || s.toString() == "") {
+                if (s.matches("^[a-zA-Z0-9ぁ-ん\\s]+$".toRegex())) {
                     yomigana = s.toString()
+                } else if (s.toString() == "") {
+                    yomigana = context.getString(R.string.hira_member)+ " " + (position+1).toString()
                 }
                 readText.text = yomigana
             }
@@ -116,35 +107,14 @@ class AddInBulkViewAdapter(val context: Context, val memberList: List<Member>) :
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         })
 
-        //数の入力変更の際に呼ばれる処理
-        ageEditText.addTextChangedListener(object : TextWatcher {
-
-            override fun afterTextChanged(text: Editable?) {
-
-                if (text.toString() != "" && text.toString() != "-") {
-                    val afterNo = Integer.parseInt(text.toString())
-
-                    if (afterNo < 0) {
-                        ageEditText.setTextColor(Color.RED)
-                    } else {
-                        ageEditText.setTextColor(PublicMethods.getColor(context, R.color.gray))
-                    }
-                }
-            }
-
-            override fun beforeTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-        }
-        )
-
         return v
     }
 
     //i番目の名前を取得
-    fun getName(position: Int): String {
-        var name = R.string.nothing.toString()
+    fun getName(position: Int, allowEmpty: Boolean): String {
+        var name = if (allowEmpty) "" else context.getString(R.string.member)+ " " + (position + 1).toString()
         val nameEditText = nameEditTextList[position]
-        if (nameEditText!!.text != null) {
+        if (nameEditText!!.text.isNotEmpty()) {
             name = nameEditText.text.toString()
         }
         return name
@@ -157,8 +127,8 @@ class AddInBulkViewAdapter(val context: Context, val memberList: List<Member>) :
     }
 
     //i番目の年齢を取得
-    fun getAge(position: Int): Int {
-        var age = 0
+    fun getAge(position: Int, allowEmpty: Boolean): Int {
+        var age = if (allowEmpty) -1 else 0
         val ageEditText = ageEditTextList[position]
         if (ageEditText!!.text.toString().isNotEmpty()) {
             age = Integer.parseInt(ageEditText.text.toString())
@@ -168,7 +138,7 @@ class AddInBulkViewAdapter(val context: Context, val memberList: List<Member>) :
 
     //i番目の読み仮名を取得
     fun getRead(position: Int): String {
-        var read = ""
+        var read = context.getString(R.string.hira_member)+ " " + (position + 1).toString()
         val readTextView = readTextViewList[position]
         if (readTextView!!.text != null) {
             read = readTextView.text.toString()

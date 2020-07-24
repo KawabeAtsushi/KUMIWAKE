@@ -54,13 +54,16 @@ class EditGroupViewAdapter(val context: Context, val groupList: List<Group>, pri
         }
 
         nameEditText = v!!.findViewById<View>(R.id.editGroupName) as EditText
+        nameEditText.hint = context.getString(R.string.group) + " " + (position + 1).toString()
         nameEditText.isFocusable = true
         nameEditText.isFocusableInTouchMode = true
         belongNoEditText = v.findViewById<View>(R.id.editTheNumberOfMember) as EditText
         belongNoEditText.isFocusable = true
         belongNoEditText.isFocusableInTouchMode = true
         leader = v.findViewById<View>(R.id.leader) as TextView
-        nameEditText.setText(group.name)
+        if (group.name != "") {
+            nameEditText.setText(group.name)
+        }
         belongNoEditText.setText(group.belongNo.toString())
         leader.text = "${context.getString(R.string.leader)} : ${context.getString(R.string.nothing)}"
         nameEditTextList[position] = nameEditText
@@ -152,9 +155,9 @@ class EditGroupViewAdapter(val context: Context, val groupList: List<Group>, pri
 
     //i番目のグループ名を取得
     fun getGroupName(position: Int): String {
-        var groupName = R.string.nothing.toString()
+        var groupName = context.getString(R.string.group) + " " + (position + 1).toString()
         val groupNameEditText = nameEditTextList[position]
-        if (groupNameEditText!!.text != null) {
+        if (groupNameEditText!!.text.isNotEmpty()) {
             groupName = groupNameEditText.text.toString()
         }
         return groupName

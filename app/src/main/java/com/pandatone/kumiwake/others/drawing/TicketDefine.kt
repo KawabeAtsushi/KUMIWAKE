@@ -28,7 +28,7 @@ class TicketDefine : AppCompatActivity() {
     private lateinit var ticketListView: ListView
     private lateinit var totalAssinedTextView: TextView
     private var editTicketAdapter: EditOthersViewAdapter? = null
-    private var roleArray: ArrayList<Group> = ArrayList()
+    private var ticketArray: ArrayList<Group> = ArrayList()
     private var screenHeight = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,8 +38,8 @@ class TicketDefine : AppCompatActivity() {
         PublicMethods.setStatus(this, Theme.Others.primaryColor)
         setContentView(R.layout.ticket_difinition)
         findViews()
+        editTicketAdapter = EditOthersViewAdapter(this, ticketArray, totalAssinedTextView, true)
         onAddTicket()
-        editTicketAdapter = EditOthersViewAdapter(this, roleArray, totalAssinedTextView, true)
         setViews()
         ticketListView.adapter = editTicketAdapter
         ticketColors.clear()
@@ -71,7 +71,7 @@ class TicketDefine : AppCompatActivity() {
         var ticketSum = 0
         var allowToNext = true
         for (i in 0 until ticketListView.count) {
-            val ticketNo = editTicketAdapter!!.getNumber(i)
+            val ticketNo = editTicketAdapter!!.getNumber(i,false)
             ticketSum += ticketNo
             if (ticketSum <= 0) {
                 allowToNext = false
@@ -88,23 +88,23 @@ class TicketDefine : AppCompatActivity() {
         }
     }
 
-    //役職追加
+    //くじ追加
     private fun onAddTicket() {
-        val ticketNo = roleArray.size
-        val ticketName = getString(R.string.ticket) + " " + (ticketNo + 1).toString()
+        val ticketNo = ticketArray.size
         ticketColors.add(Color.parseColor("#6b6b6b"))
-        updateRoleArray()
-        roleArray.add(Group(ticketNo, ticketName, "", 1))
+        updateTicketArray()
+        ticketArray.add(Group(ticketNo, "", "", -1))
         editTicketAdapter?.notifyDataSetChanged()
         editTicketAdapter?.setRowHeight(ticketListView)
+        editTicketAdapter?.setTotalCount()
     }
 
-    //roleArrayの内容更新
-    private fun updateRoleArray() {
+    //ticketArrayの内容更新
+    private fun updateTicketArray() {
         for (i in 0 until ticketListView.count) {
-            val ticketName = editTicketAdapter!!.getName(i)
-            val ticketNo = editTicketAdapter!!.getNumber(i)
-            val tickets = roleArray[i]
+            val ticketName = editTicketAdapter!!.getName(i,true)
+            val ticketNo = editTicketAdapter!!.getNumber(i,true)
+            val tickets = ticketArray[i]
             tickets.name = ticketName
             tickets.belongNo = ticketNo
         }
@@ -114,8 +114,8 @@ class TicketDefine : AppCompatActivity() {
         val ticketArray: ArrayList<String> = ArrayList()
         var total = 0
         for (i in 0 until ticketListView.count) {
-            val ticketName = editTicketAdapter!!.getName(i)
-            val ticketNo = editTicketAdapter!!.getNumber(i)
+            val ticketName = editTicketAdapter!!.getName(i,false)
+            val ticketNo = editTicketAdapter!!.getNumber(i,false)
             total += ticketNo
             if (ticketNo != 0) {
                 for (t in 0 until ticketNo) {

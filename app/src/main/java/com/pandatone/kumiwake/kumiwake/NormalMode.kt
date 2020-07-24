@@ -110,7 +110,7 @@ class NormalMode : AppCompatActivity() {
             errorGroup.setText(R.string.require_correct_No)
         } else {
             val groupNo = Integer.parseInt(inputGroupNo)
-            val groupArray = PublicMethods.initialGroupArray(this, groupNo, memberArray.size)
+            val groupArray = PublicMethods.initialGroupArray(this, groupNo, memberArray.size,true)
             val intent = Intent(this, KumiwakeCustom::class.java)
             intent.putExtra(KumiwakeArrayKeys.MEMBER_LIST.key, memberArray)
             intent.putExtra(KumiwakeArrayKeys.GROUP_LIST.key, groupArray)

@@ -42,8 +42,8 @@ class RoleDefine : AppCompatActivity() {
             memberArray = intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>
         }
         findViews()
-        onAddRole()
         editRoleAdapter = EditOthersViewAdapter(this, roleArray, totalAssinedTextView, false)
+        onAddRole()
         setViews()
         roleListView.adapter = editRoleAdapter
 
@@ -76,7 +76,7 @@ class RoleDefine : AppCompatActivity() {
         var memberSum = 0
         var allowToNext = true
         for (i in 0 until roleListView.count) {
-            val memberNo = editRoleAdapter!!.getNumber(i)
+            val memberNo = editRoleAdapter!!.getNumber(i,false)
             memberSum += memberNo
             if (memberNo < 0 || memberSum > memberArray.size) {
                 allowToNext = false
@@ -99,18 +99,18 @@ class RoleDefine : AppCompatActivity() {
     //役職追加
     private fun onAddRole() {
         val roleNo = roleArray.size
-        val roleHint = getString(R.string.role) + " " + (roleNo + 1).toString()
         updateRoleArray()
-        roleArray.add(Group(roleNo, roleHint, "", 1))
+        roleArray.add(Group(roleNo, "", "", -1))
         editRoleAdapter?.notifyDataSetChanged()
         editRoleAdapter?.setRowHeight(roleListView)
+        editRoleAdapter?.setTotalCount()
     }
 
     //roleArrayの内容更新
     private fun updateRoleArray() {
         for (i in 0 until roleListView.count) {
-            val roleName = editRoleAdapter!!.getName(i)
-            val memberNo = editRoleAdapter!!.getNumber(i)
+            val roleName = editRoleAdapter!!.getName(i,true)
+            val memberNo = editRoleAdapter!!.getNumber(i,true)
             val role = roleArray[i]
             role.name = roleName
             role.belongNo = memberNo
@@ -121,8 +121,8 @@ class RoleDefine : AppCompatActivity() {
         val nextRoleArray: ArrayList<Group> = ArrayList()
         var total = 0
         for (i in 0 until roleListView.count) {
-            val roleName = editRoleAdapter!!.getName(i)
-            val memberNo = editRoleAdapter!!.getNumber(i)
+            val roleName = editRoleAdapter!!.getName(i,false)
+            val memberNo = editRoleAdapter!!.getNumber(i,false)
             total += memberNo
             if (memberNo != 0) {
                 nextRoleArray.add(Group(0, roleName, "", memberNo))

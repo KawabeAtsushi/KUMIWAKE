@@ -27,7 +27,7 @@ object PublicMethods {
 
     //初期状態を設定
     fun initialize(activity: Activity) {
-        setStatus(activity,Theme.Default.primaryColor)
+        setStatus(activity, Theme.Default.primaryColor)
         StatusHolder.normalMode = true
         StatusHolder.sekigime = false
         StatusHolder.notDuplicate = false
@@ -64,15 +64,17 @@ object PublicMethods {
     }
 
     //Kumiwake 初期グループ生成（人数均等）
-    fun initialGroupArray(context: Context, groupNo: Int, memberNo: Int): ArrayList<Group> {
+    fun initialGroupArray(context: Context, groupNo: Int, memberNo: Int, normalMode: Boolean): ArrayList<Group> {
         val groupArray = ArrayList<Group>()
         val eachMemberNo = memberNo / groupNo
         val remain = memberNo % groupNo
         for (i in 0 until remain) {
-            groupArray.add(Group(i, context.getText(R.string.group).toString() + " " + (i + 1).toString(), "", eachMemberNo + 1))
+            val group = if (normalMode) "" else context.getText(R.string.group).toString() + " " + (i + 1).toString()
+            groupArray.add(Group(i, group, "", eachMemberNo + 1))
         }
         for (i in remain until groupNo) {
-            groupArray.add(Group(i, context.getText(R.string.group).toString() + " " + (i + 1).toString(), "", eachMemberNo))
+            val group = if (normalMode) "" else context.getText(R.string.group).toString() + " " + (i + 1).toString()
+            groupArray.add(Group(i, group, "", eachMemberNo))
         }
         return groupArray
     }
