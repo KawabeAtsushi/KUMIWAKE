@@ -39,7 +39,7 @@ object PublicMethods {
         if (StatusHolder.adDeleated) {
             mAdView.visibility = View.GONE
         } else {
-            MobileAds.initialize(activity, activity.getString(R.string.adApp_id))
+            MobileAds.initialize(activity)
             val adRequest = AdRequest.Builder()
                     .addTestDevice(activity.getString(R.string.device_id)).build()
             mAdView.loadAd(adRequest)
@@ -113,6 +113,11 @@ object PublicMethods {
         val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         layoutParams.setMargins(left, top, right, bottom)
         return layoutParams
+    }
+
+    fun setByDp(dp:Float,context: Context):Int{
+        val scale = context.resources.displayMetrics.density
+        return (dp*scale + 0.5f).toInt()
     }
 }
 

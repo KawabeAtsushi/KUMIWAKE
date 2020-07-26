@@ -23,8 +23,20 @@
         android:src="@drawable/ic_launcher_foreground_big"
         android:contentDescription="@string/kumiwake"
         app:layout_constraintBottom_toBottomOf="@id/toolbar"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/toolbar" />
+
+    <ImageView
+        android:id="@+id/care_icon"
+        android:layout_width="30dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="15dp"
+        android:src="@drawable/ic_care"
+        android:contentDescription="@string/kumiwake"
+        android:tint="@color/thin_white"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/toolbar" />
 
     <ScrollView
@@ -279,6 +291,35 @@
             app:fab_icon="@drawable/ic_add_group_24"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading_anim"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:visibility="gone"
+        app:lottie_rawRes="@raw/loading_rings"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/thanks_anim"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:visibility="gone"
+        app:lottie_rawRes="@raw/lottie_thank_you"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="false"
+        app:lottie_speed="1.5"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 
     <com.google.android.gms.ads.AdView

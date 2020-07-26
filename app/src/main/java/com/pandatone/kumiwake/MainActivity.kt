@@ -1,8 +1,11 @@
 package com.pandatone.kumiwake
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.os.Handler
 import android.view.KeyEvent
 import android.view.View
 import android.widget.ImageButton
@@ -11,11 +14,14 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.updatePadding
+import com.airbnb.lottie.LottieAnimationView
 import com.getbase.floatingactionbutton.FloatingActionsMenu
 import com.getbase.floatingactionbutton.FloatingActionsMenu.OnFloatingActionsMenuUpdateListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.reward.RewardedVideoAd
+import com.google.android.gms.ads.reward.RewardedVideoAdListener
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.history.HistoryMain
@@ -24,17 +30,26 @@ import com.pandatone.kumiwake.kumiwake.QuickMode
 import com.pandatone.kumiwake.member.AddGroup
 import com.pandatone.kumiwake.member.AddMember
 import com.pandatone.kumiwake.member.members.FragmentGroupMain
+import com.pandatone.kumiwake.member.members.MembersMain
 import com.pandatone.kumiwake.others.SelectMember
 import com.pandatone.kumiwake.others.drawing.TicketDefine
 import com.pandatone.kumiwake.setting.Help
 import com.pandatone.kumiwake.setting.PurchaseFreeAdOption
 import com.pandatone.kumiwake.setting.Settings
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
-import com.pandatone.kumiwake.member.members.MembersMain
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), RewardedVideoAdListener {
 
+    private lateinit var dimmer: View
+    private lateinit var mRewardedVideoAd: RewardedVideoAd
+    private lateinit var loadingAnim: LottieAnimationView
+    private var rewarder = false
+
+    private val dialog: DialogWarehouse
+        get() {
+            return DialogWarehouse(supportFragmentManager)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +68,7 @@ class MainActivity : AppCompatActivity() {
         if (StatusHolder.adDeleated) {
             mAdView.visibility = View.GONE
         } else {
-            MobileAds.initialize(this, getString(R.string.adApp_id))
+            MobileAds.initialize(this)
             val adRequest = AdRequest.Builder()
                     .addTestDevice(getString(R.string.device_id)).build()
             mAdView.loadAd(adRequest)
@@ -96,7 +111,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, AddGroup::class.java))
             menuMultipleActions.collapse()
         }
-        val dimmer = findViewById<View>(R.id.dimmer_layout)
+        dimmer = findViewById<View>(R.id.dimmer_layout)
         dimmer.setOnClickListener {
             menuMultipleActions.collapse()
         }
@@ -116,13 +131,29 @@ class MainActivity : AppCompatActivity() {
         val kumiwakeIcon: ImageView = findViewById(R.id.kumiwake_icon)
         kumiwakeIcon.setOnClickListener { PublicMethods.toWebSite(this, supportFragmentManager) }
 
+        //Care
+        val careIcon: ImageView = findViewById(R.id.care_icon)
+        careIcon.setOnClickListener {
+            dialog.decisionDialog("Care", "Please care") {
+                dimmer.visibility = View.VISIBLE
+                loadingAnim = findViewById(R.id.loading_anim)
+                loadingAnim.visibility = View.VISIBLE
+                loadingAnim.playAnimation()
+                mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this)
+                mRewardedVideoAd.rewardedVideoAdListener = this
+                mRewardedVideoAd.loadAd(getString(R.string.adVideoUnit_id),
+                        AdRequest.Builder().addTestDevice(getString(R.string.device_id)).build())
+            }
+        }
+
+        val scale = resources.displayMetrics.density
         //組分けボタン
         val kNormalUnit: View = findViewById(R.id.kumiwake_normal_unit)
         val kNormalButton: ImageButton = kNormalUnit.findViewById(R.id.icon_button)
         (kNormalUnit.findViewById(R.id.button_text) as TextView).setText(R.string.normal_mode)
         kNormalButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.theme_red))
         kNormalButton.setImageResource(R.drawable.ic_kumiwake_24px)
-        kNormalButton.updatePadding(top = 46, bottom = 61)
+        kNormalButton.updatePadding(top = PublicMethods.setByDp(17.0f, this), bottom = PublicMethods.setByDp(22.0f, this))
         kNormalButton.setOnClickListener {
             StatusHolder.sekigime = false
             StatusHolder.normalMode = true
@@ -136,7 +167,7 @@ class MainActivity : AppCompatActivity() {
         (kQuickUnit.findViewById(R.id.button_text) as TextView).setText(R.string.quick_mode)
         kQuickButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.green_title))
         kQuickButton.setImageResource(R.drawable.ic_kumiwake_24px)
-        kQuickButton.updatePadding(top = 46, bottom = 61)
+        kQuickButton.updatePadding(top = PublicMethods.setByDp(17.0f, this), bottom = PublicMethods.setByDp(22.0f, this))
         kQuickButton.setOnClickListener {
             StatusHolder.sekigime = false
             StatusHolder.normalMode = false
@@ -236,6 +267,43 @@ class MainActivity : AppCompatActivity() {
         toolbar.title = ""
         setSupportActionBar(toolbar)
     }
+
+    //リワード広告のオーバーライド
+
+    // 広告の準備が完了したとき
+    override fun onRewardedVideoAdLoaded() {
+        mRewardedVideoAd.show()
+        loadingAnim.visibility = View.GONE
+        loadingAnim.cancelAnimation()
+    }
+
+    //報酬対象になったとき
+    override fun onRewarded(p0: com.google.android.gms.ads.reward.RewardItem?) {
+        rewarder = true
+    }
+
+    //広告が閉じられたとき
+    override fun onRewardedVideoAdClosed() {
+        val thanks = findViewById<LottieAnimationView>(R.id.thanks_anim)
+        Handler().postDelayed({
+            thanks.visibility = View.VISIBLE
+            thanks.playAnimation()
+        }, 500)
+        thanks.addAnimatorListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+                super.onAnimationEnd(animation)
+                thanks.visibility = View.GONE
+                dimmer.visibility = View.GONE
+            }
+        })
+        rewarder = false
+    }
+
+    override fun onRewardedVideoAdOpened() {}
+    override fun onRewardedVideoStarted() {}
+    override fun onRewardedVideoAdLeftApplication() {}
+    override fun onRewardedVideoAdFailedToLoad(errorCode: Int) {}
+    override fun onRewardedVideoCompleted() {}
 
     companion object {
         lateinit var mAdView: AdView

@@ -144,9 +144,10 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_check_24" />
-                            <entry key="sourceFile" value="C:\Users\KAWABE\OneDrive\KUMIWAKE resource\Resources\top_background.svg" />
+                            <entry key="outputName" value="ic_care" />
+                            <entry key="sourceFile" value="C:\Users\Surface3-1\OneDrive\KUMIWAKE resource\Resources\care.svg" />
                           </map>
                         </option>
                       </PersistentState>
