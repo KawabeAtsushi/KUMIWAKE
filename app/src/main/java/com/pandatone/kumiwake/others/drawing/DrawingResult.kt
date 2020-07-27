@@ -99,7 +99,7 @@ class DrawingResult : AppCompatActivity() {
         historyButton.setOnClickListener { onHistory() }
         val showResultButton = findViewById<Button>(R.id.retry_button)
         showResultButton.text = getString(R.string.retry)
-        showResultButton.setOnClickListener { onRetry(drawingAnim) }
+        showResultButton.setOnClickListener { onRetry() }
         findViewById<Button>(R.id.go_home).setOnClickListener { onGoHome() }
     }
 
@@ -285,7 +285,7 @@ class DrawingResult : AppCompatActivity() {
     }
 
     //初めから
-    private fun onRetry(drawingAnim: LottieAnimationView) {
+    private fun onRetry() {
         v = 0
         val title = getString(R.string.retry_title)
         val message = getString(R.string.re_drawing_description) + getString(R.string.run_confirmation)

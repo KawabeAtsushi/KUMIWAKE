@@ -2,7 +2,8 @@
 <resources>
     <string name="adApp_id" translatable="false">"ca-app-pub-2315101868638564~1560987130"</string>
     <string name="adUnit_id" translatable="false">"ca-app-pub-2315101868638564/8665451539"</string>
-    <string name="device_id" translatable="false">"0EBEB22816119D6E46E0EF63A1547403"</string>
+    <string name="adVideoUnit_id" translatable="false">ca-app-pub-2315101868638564/6308313002</string>
+    <string name="device_id" translatable="false">"22B04B5FB0CABF82EA6C2A7A431ED725"</string>
     <!-- laptop 22B04B5FB0CABF82EA6C2A7A431ED725 --><!-- Xperia D8BB21DB056C7A03528C6939BDDA9984 -->
     <!-- desktop 0EBEB22816119D6E46E0EF63A1547403 -->
 </resources>
