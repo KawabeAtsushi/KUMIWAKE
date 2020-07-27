@@ -15,7 +15,10 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.pandatone.kumiwake.*
+import com.pandatone.kumiwake.FirebaseAnalyticsEvents
+import com.pandatone.kumiwake.PublicMethods
+import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.Theme
 import com.pandatone.kumiwake.adapter.EditOthersViewAdapter
 import com.pandatone.kumiwake.member.function.Group
 import kotlinx.android.synthetic.main.kumiwake_custom.*
@@ -71,7 +74,7 @@ class TicketDefine : AppCompatActivity() {
         var ticketSum = 0
         var allowToNext = true
         for (i in 0 until ticketListView.count) {
-            val ticketNo = editTicketAdapter!!.getNumber(i,false)
+            val ticketNo = editTicketAdapter!!.getNumber(i, false)
             ticketSum += ticketNo
             if (ticketSum <= 0) {
                 allowToNext = false
@@ -102,8 +105,8 @@ class TicketDefine : AppCompatActivity() {
     //ticketArrayの内容更新
     private fun updateTicketArray() {
         for (i in 0 until ticketListView.count) {
-            val ticketName = editTicketAdapter!!.getName(i,true)
-            val ticketNo = editTicketAdapter!!.getNumber(i,true)
+            val ticketName = editTicketAdapter!!.getName(i, true)
+            val ticketNo = editTicketAdapter!!.getNumber(i, true)
             val tickets = ticketArray[i]
             tickets.name = ticketName
             tickets.belongNo = ticketNo
@@ -114,8 +117,8 @@ class TicketDefine : AppCompatActivity() {
         val ticketArray: ArrayList<String> = ArrayList()
         var total = 0
         for (i in 0 until ticketListView.count) {
-            val ticketName = editTicketAdapter!!.getName(i,false)
-            val ticketNo = editTicketAdapter!!.getNumber(i,false)
+            val ticketName = editTicketAdapter!!.getName(i, false)
+            val ticketNo = editTicketAdapter!!.getNumber(i, false)
             total += ticketNo
             if (ticketNo != 0) {
                 for (t in 0 until ticketNo) {

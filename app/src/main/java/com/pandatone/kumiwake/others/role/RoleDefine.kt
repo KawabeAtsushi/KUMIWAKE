@@ -14,7 +14,10 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.pandatone.kumiwake.*
+import com.pandatone.kumiwake.FirebaseAnalyticsEvents
+import com.pandatone.kumiwake.KumiwakeArrayKeys
+import com.pandatone.kumiwake.KumiwakeCustomKeys
+import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.EditOthersViewAdapter
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
@@ -76,7 +79,7 @@ class RoleDefine : AppCompatActivity() {
         var memberSum = 0
         var allowToNext = true
         for (i in 0 until roleListView.count) {
-            val memberNo = editRoleAdapter!!.getNumber(i,false)
+            val memberNo = editRoleAdapter!!.getNumber(i, false)
             memberSum += memberNo
             if (memberNo < 0 || memberSum > memberArray.size) {
                 allowToNext = false
@@ -109,8 +112,8 @@ class RoleDefine : AppCompatActivity() {
     //roleArrayの内容更新
     private fun updateRoleArray() {
         for (i in 0 until roleListView.count) {
-            val roleName = editRoleAdapter!!.getName(i,true)
-            val memberNo = editRoleAdapter!!.getNumber(i,true)
+            val roleName = editRoleAdapter!!.getName(i, true)
+            val memberNo = editRoleAdapter!!.getNumber(i, true)
             val role = roleArray[i]
             role.name = roleName
             role.belongNo = memberNo
@@ -121,8 +124,8 @@ class RoleDefine : AppCompatActivity() {
         val nextRoleArray: ArrayList<Group> = ArrayList()
         var total = 0
         for (i in 0 until roleListView.count) {
-            val roleName = editRoleAdapter!!.getName(i,false)
-            val memberNo = editRoleAdapter!!.getNumber(i,false)
+            val roleName = editRoleAdapter!!.getName(i, false)
+            val memberNo = editRoleAdapter!!.getNumber(i, false)
             total += memberNo
             if (memberNo != 0) {
                 nextRoleArray.add(Group(0, roleName, "", memberNo))

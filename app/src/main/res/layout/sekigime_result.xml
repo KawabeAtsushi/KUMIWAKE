@@ -58,7 +58,8 @@
                     android:gravity="center"
                     android:paddingStart="40dp"
                     android:textColorHint="@android:color/black"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:hint="@null"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout

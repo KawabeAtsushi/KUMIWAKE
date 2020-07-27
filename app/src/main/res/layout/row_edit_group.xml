@@ -50,6 +50,7 @@
         android:maxLength="3"
         android:maxLines="1"
         android:textColor="@color/gray"
+        android:hint="@null"
         app:layout_constraintBottom_toBottomOf="@id/rowIconGroup"
         app:layout_constraintEnd_toStartOf="@id/personTex"
         app:layout_constraintTop_toTopOf="@id/rowIconGroup"

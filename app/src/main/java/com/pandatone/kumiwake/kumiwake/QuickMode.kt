@@ -41,7 +41,7 @@ class QuickMode : AppCompatActivity(), TextWatcher {
         //テーマを設定
         if (StatusHolder.sekigime) {
             PublicMethods.setStatus(this, Theme.Sekigime.primaryColor)
-        }else {
+        } else {
             PublicMethods.setStatus(this, Theme.Kumiwake.primaryColor)
         }
         setContentView(R.layout.quick_mode)
@@ -125,7 +125,7 @@ class QuickMode : AppCompatActivity(), TextWatcher {
             }
             else -> {
                 val memberList = createMemberList(manNo, womanNo)
-                val groupList = PublicMethods.initialGroupArray(this, Integer.parseInt(groupNo), memberList.size,false)
+                val groupList = PublicMethods.initialGroupArray(this, Integer.parseInt(groupNo), memberList.size, false)
                 val intent = Intent(this, KumiwakeConfirmation::class.java)
                 intent.putExtra(KumiwakeArrayKeys.MEMBER_LIST.key, memberList)
                 intent.putExtra(KumiwakeArrayKeys.GROUP_LIST.key, groupList)

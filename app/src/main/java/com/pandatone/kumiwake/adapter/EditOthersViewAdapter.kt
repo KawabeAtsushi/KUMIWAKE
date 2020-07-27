@@ -2,14 +2,12 @@ package com.pandatone.kumiwake.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
@@ -87,6 +85,7 @@ class EditOthersViewAdapter(val context: Context, val groupList: List<Group>, pr
             override fun afterTextChanged(text: Editable?) {
                 setTotalCount()
             }
+
             override fun beforeTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
         }
@@ -95,7 +94,7 @@ class EditOthersViewAdapter(val context: Context, val groupList: List<Group>, pr
         return v
     }
 
-    fun setTotalCount(){
+    fun setTotalCount() {
         val totalStr = "$totalStrInit ${countTotal()}${totalStrUnit}"
         totalCountTextView.text = totalStr
     }

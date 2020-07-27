@@ -28,14 +28,11 @@ import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.member.function.MemberClick
 import com.pandatone.kumiwake.member.function.MemberMethods
-import com.pandatone.kumiwake.others.SelectMember
-import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import com.pandatone.kumiwake.member.members.FragmentGroupMain
 import com.pandatone.kumiwake.member.members.FragmentMemberMain
+import com.pandatone.kumiwake.others.SelectMember
+import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import kotlinx.android.synthetic.main.add_member.*
-import kotlinx.android.synthetic.main.add_member.member_registration_continue_btn
-import kotlinx.android.synthetic.main.add_member.switch_continuously_mode
-import kotlinx.android.synthetic.main.add_member_in_bulk.*
 
 
 /**

@@ -48,7 +48,7 @@ class NormalMode : AppCompatActivity() {
         //テーマを設定
         if (StatusHolder.sekigime) {
             PublicMethods.setStatus(this, Theme.Sekigime.primaryColor)
-        }else {
+        } else {
             PublicMethods.setStatus(this, Theme.Kumiwake.primaryColor)
         }
         setContentView(R.layout.normal_mode)
@@ -110,7 +110,7 @@ class NormalMode : AppCompatActivity() {
             errorGroup.setText(R.string.require_correct_No)
         } else {
             val groupNo = Integer.parseInt(inputGroupNo)
-            val groupArray = PublicMethods.initialGroupArray(this, groupNo, memberArray.size,true)
+            val groupArray = PublicMethods.initialGroupArray(this, groupNo, memberArray.size, true)
             val intent = Intent(this, KumiwakeCustom::class.java)
             intent.putExtra(KumiwakeArrayKeys.MEMBER_LIST.key, memberArray)
             intent.putExtra(KumiwakeArrayKeys.GROUP_LIST.key, groupArray)

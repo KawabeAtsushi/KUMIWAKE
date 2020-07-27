@@ -9,7 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.pandatone.kumiwake.*
+import com.pandatone.kumiwake.FirebaseAnalyticsEvents
+import com.pandatone.kumiwake.PublicMethods
+import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.Theme
 
 
 /**
@@ -36,7 +39,7 @@ class HistoryMain : AppCompatActivity() {
         viewPager.adapter = adapter
     }
 
-    private fun setStatus(){
+    private fun setStatus() {
         toolbar = findViewById<View>(R.id.history_toolbar) as Toolbar
         setSupportActionBar(toolbar)
         supportActionBar!!.title = getString(R.string.history)

@@ -24,8 +24,8 @@ import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.member.function.GroupMethods
 import com.pandatone.kumiwake.member.function.Member
-import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import com.pandatone.kumiwake.member.members.FragmentGroupMain
+import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import kotlinx.android.synthetic.main.part_review_listview.*
 import java.util.*
 import kotlin.collections.ArrayList

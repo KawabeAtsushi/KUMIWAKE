@@ -49,7 +49,7 @@ class AddInBulkViewAdapter(val context: Context, val memberList: List<Member>) :
         }
 
         val nameEditText = v!!.findViewById<View>(R.id.editGroupName) as EditText
-        nameEditText.hint = context.getString(R.string.member)+ " " + (position+1).toString()
+        nameEditText.hint = context.getString(R.string.member) + " " + (position + 1).toString()
         nameEditText.isFocusable = true
         nameEditText.isFocusableInTouchMode = true
         val ageEditText = v.findViewById<View>(R.id.editTheNumberOfMember) as EditText
@@ -98,7 +98,7 @@ class AddInBulkViewAdapter(val context: Context, val memberList: List<Member>) :
                 if (s.matches("^[a-zA-Z0-9ぁ-ん\\s]+$".toRegex())) {
                     yomigana = s.toString()
                 } else if (s.toString() == "") {
-                    yomigana = context.getString(R.string.hira_member)+ " " + (position+1).toString()
+                    yomigana = context.getString(R.string.hira_member) + " " + (position + 1).toString()
                 }
                 readText.text = yomigana
             }
@@ -112,7 +112,7 @@ class AddInBulkViewAdapter(val context: Context, val memberList: List<Member>) :
 
     //i番目の名前を取得
     fun getName(position: Int, allowEmpty: Boolean): String {
-        var name = if (allowEmpty) "" else context.getString(R.string.member)+ " " + (position + 1).toString()
+        var name = if (allowEmpty) "" else context.getString(R.string.member) + " " + (position + 1).toString()
         val nameEditText = nameEditTextList[position]
         if (nameEditText!!.text.isNotEmpty()) {
             name = nameEditText.text.toString()
@@ -138,7 +138,7 @@ class AddInBulkViewAdapter(val context: Context, val memberList: List<Member>) :
 
     //i番目の読み仮名を取得
     fun getRead(position: Int): String {
-        var read = context.getString(R.string.hira_member)+ " " + (position + 1).toString()
+        var read = context.getString(R.string.hira_member) + " " + (position + 1).toString()
         val readTextView = readTextViewList[position]
         if (readTextView!!.text != null) {
             read = readTextView.text.toString()
