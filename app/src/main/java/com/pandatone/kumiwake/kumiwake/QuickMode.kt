@@ -58,6 +58,7 @@ class QuickMode : AppCompatActivity(), TextWatcher {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         mDetector = GestureDetectorCompat(this, MyGestureListener(imm, groupNoInput))
         mDetector.setOnDoubleTapListener(MyGestureListener(imm, groupNoInput))
+        setupSeekBar()
     }
 
     //スクロールビューの場合こっち呼ぶ
@@ -81,13 +82,19 @@ class QuickMode : AppCompatActivity(), TextWatcher {
         }
         sex_seekBar.max = memberNo
         sex_seekBar.progress = memberNo
+        manNo = memberNo
+        womanNo = 0
+        man_number_txt.text = manNo.toString()
+        woman_number_txt.text = womanNo.toString()
+    }
 
+    private fun setupSeekBar() {
         sex_seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onStartTrackingTouch(sex_seekbar: SeekBar) {}
 
             override fun onProgressChanged(sex_seekbar: SeekBar, progress: Int, fromTouch: Boolean) {
                 manNo = progress
-                womanNo = memberNo - progress
+                womanNo = memberNo - manNo
                 man_number_txt.text = manNo.toString()
                 woman_number_txt.text = womanNo.toString()
             }
@@ -124,7 +131,7 @@ class QuickMode : AppCompatActivity(), TextWatcher {
                 errorGroupNo.setText(R.string.number_of_groups_is_much_too)
             }
             else -> {
-                val memberList = createMemberList(manNo, womanNo)
+                val memberList = createMemberList(manNo, memberNo - manNo)
                 val groupList = PublicMethods.initialGroupArray(this, Integer.parseInt(groupNo), memberList.size, false)
                 val intent = Intent(this, KumiwakeConfirmation::class.java)
                 intent.putExtra(KumiwakeArrayKeys.MEMBER_LIST.key, memberList)

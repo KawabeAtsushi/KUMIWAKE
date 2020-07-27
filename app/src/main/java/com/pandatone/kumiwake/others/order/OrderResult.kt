@@ -64,7 +64,7 @@ class OrderResult : AppCompatActivity() {
         v = 0
         val title = getString(R.string.retry_title)
         val message = getString(R.string.re_order_description) + getString(R.string.run_confirmation)
-        DialogWarehouse(supportFragmentManager).decisionDialog(title, message, this::retry)
+        DialogWarehouse(supportFragmentManager).decisionDialog(title, message, function = this::retry)
     }
 
     private fun retry() {

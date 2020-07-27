@@ -119,7 +119,7 @@
                 android:backgroundTint="@color/orange"
                 android:background="@drawable/circle_background"
                 android:src="@drawable/ic_add_white_24dp"
-                android:contentDescription="@string/add_ticket"/>
+                android:contentDescription="@string/add_ticket" />
 
         </LinearLayout>
 

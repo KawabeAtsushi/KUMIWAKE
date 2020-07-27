@@ -20,8 +20,20 @@ class DialogWarehouse(private var fragmentManager: FragmentManager?) {
         ft.commitAllowingStateLoss()
     }
 
-    fun decisionDialog(title: String, message: CharSequence, function: () -> Unit) {
+    fun decisionDialog(title: String, message: CharSequence, positiveTxt: String = "", negativeTxt: String = "", positiveIconId: Int = 0, negativeIconId: Int = 0, function: () -> Unit) {
         val customDialog = CustomDialog(title, message)
+        if (positiveTxt != "") {
+            customDialog.positiveTxt = positiveTxt
+        }
+        if (negativeTxt != "") {
+            customDialog.negativeTxt = negativeTxt
+        }
+        if (positiveIconId != 0) {
+            customDialog.positiveIconId = positiveIconId
+        }
+        if (negativeIconId != 0) {
+            customDialog.negativeIconId = negativeIconId
+        }
         customDialog.mPositiveBtnListener = View.OnClickListener {
             function()
             customDialog.dismiss()

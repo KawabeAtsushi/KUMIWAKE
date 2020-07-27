@@ -289,7 +289,7 @@ class DrawingResult : AppCompatActivity() {
         v = 0
         val title = getString(R.string.retry_title)
         val message = getString(R.string.re_drawing_description) + getString(R.string.run_confirmation)
-        DialogWarehouse(supportFragmentManager).decisionDialog(title, message, this::initializeViews)
+        DialogWarehouse(supportFragmentManager).decisionDialog(title, message, function = this::initializeViews)
     }
 
     //ホームに戻る

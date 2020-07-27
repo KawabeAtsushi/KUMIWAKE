@@ -127,7 +127,7 @@ class SekigimeResult : AppCompatActivity() {
     private fun onReSekigime() {
         val message = getString(R.string.re_sekigime_description) + getString(R.string.run_confirmation)
         val title = getString(R.string.retry_title)
-        DialogWarehouse(supportFragmentManager).decisionDialog(title, message, this::reSekigime)
+        DialogWarehouse(supportFragmentManager).decisionDialog(title, message, function = this::reSekigime)
     }
 
     //ホームに戻る

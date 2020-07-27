@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity(), RewardedVideoAdListener {
     private lateinit var dimmer: View
     private lateinit var mRewardedVideoAd: RewardedVideoAd
     private lateinit var loadingAnim: LottieAnimationView
-    private var rewarder = false
+    private var rewarded = false
 
     private val dialog: DialogWarehouse
         get() {
@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity(), RewardedVideoAdListener {
         //Care
         val careIcon: ImageView = findViewById(R.id.care_icon)
         careIcon.setOnClickListener {
-            dialog.decisionDialog("Care", "Please care") {
+            dialog.decisionDialog(getString(R.string.support_title), getString(R.string.support_description), getString(R.string.support), getString(R.string.close), R.drawable.ic_care, R.drawable.ic_close_black_24dp) {
                 dimmer.visibility = View.VISIBLE
                 loadingAnim = findViewById(R.id.loading_anim)
                 loadingAnim.visibility = View.VISIBLE
@@ -144,9 +144,9 @@ class MainActivity : AppCompatActivity(), RewardedVideoAdListener {
                 mRewardedVideoAd.loadAd(getString(R.string.adVideoUnit_id),
                         AdRequest.Builder().addTestDevice(getString(R.string.device_id)).build())
             }
+            FirebaseAnalyticsEvents.support("CLICKED")
         }
 
-        val scale = resources.displayMetrics.density
         //組分けボタン
         val kNormalUnit: View = findViewById(R.id.kumiwake_normal_unit)
         val kNormalButton: ImageButton = kNormalUnit.findViewById(R.id.icon_button)
@@ -279,24 +279,29 @@ class MainActivity : AppCompatActivity(), RewardedVideoAdListener {
 
     //報酬対象になったとき
     override fun onRewarded(p0: com.google.android.gms.ads.reward.RewardItem?) {
-        rewarder = true
+        rewarded = true
     }
 
     //広告が閉じられたとき
     override fun onRewardedVideoAdClosed() {
-        val thanks = findViewById<LottieAnimationView>(R.id.thanks_anim)
-        Handler().postDelayed({
-            thanks.visibility = View.VISIBLE
-            thanks.playAnimation()
-        }, 500)
-        thanks.addAnimatorListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator?) {
-                super.onAnimationEnd(animation)
-                thanks.visibility = View.GONE
-                dimmer.visibility = View.GONE
-            }
-        })
-        rewarder = false
+        if (rewarded) {
+            val thanks = findViewById<LottieAnimationView>(R.id.thanks_anim)
+            Handler().postDelayed({
+                thanks.visibility = View.VISIBLE
+                thanks.playAnimation()
+            }, 500)
+            thanks.addAnimatorListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator?) {
+                    super.onAnimationEnd(animation)
+                    thanks.visibility = View.GONE
+                    dimmer.visibility = View.GONE
+                }
+            })
+            rewarded = false
+            FirebaseAnalyticsEvents.support("REWARDED")
+        } else {
+            dimmer.visibility = View.GONE
+        }
     }
 
     override fun onRewardedVideoAdOpened() {}

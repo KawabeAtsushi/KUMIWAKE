@@ -29,9 +29,9 @@
 
     <ImageView
         android:id="@+id/care_icon"
-        android:layout_width="30dp"
+        android:layout_width="60dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="15dp"
+        android:padding="15dp"
         android:src="@drawable/ic_care"
         android:contentDescription="@string/kumiwake"
         android:tint="@color/thin_white"
@@ -160,7 +160,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toStartOf="@id/order_unit"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <include
                     android:id="@+id/order_unit"
@@ -246,7 +246,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"/>
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/multiple_member_fab"
@@ -278,7 +278,7 @@
             app:fab_colorNormal="@color/green"
             app:fab_colorPressed="#2FBF46"
             app:fab_title="@string/add_member"
-            app:fab_icon="@drawable/ic_add_member_24"/>
+            app:fab_icon="@drawable/ic_add_member_24" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/group_add_button"
@@ -288,7 +288,7 @@
             app:fab_colorNormal="@color/orange"
             app:fab_colorPressed="#DDA82C"
             app:fab_title="@string/add_group"
-            app:fab_icon="@drawable/ic_add_group_24"/>
+            app:fab_icon="@drawable/ic_add_group_24" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
@@ -304,7 +304,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/thanks_anim"
@@ -312,14 +312,14 @@
         android:layout_height="0dp"
         android:adjustViewBounds="true"
         android:visibility="gone"
-        app:lottie_rawRes="@raw/lottie_thank_you"
+        app:lottie_rawRes="@raw/thank_you"
         app:lottie_autoPlay="false"
         app:lottie_loop="false"
         app:lottie_speed="1.5"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
     <com.google.android.gms.ads.AdView

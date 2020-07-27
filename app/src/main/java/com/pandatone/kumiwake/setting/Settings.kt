@@ -99,7 +99,7 @@ class Settings : AppCompatActivity() {
     private fun onDeleteBackup() {
         val title = getString(R.string.delete_backup)
         val message = getString(R.string.delete_backup_attention)
-        dialog.decisionDialog(title, message, this::deleteBackup)
+        dialog.decisionDialog(title, message, function = this::deleteBackup)
     }
 
     private fun deleteBackup() {

@@ -26,29 +26,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/add_member_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@drawable/request_background"
-                android:text="@string/add_member_title"
-                android:textSize="20sp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/switch_continuously_mode" />
+                <TextView
+                    android:id="@+id/add_member_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/request_background"
+                    android:text="@string/add_member_title"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/switch_continuously_mode" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/switch_continuously_mode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#9BE6A1"
-                android:maxLines="1"
-                android:text="@string/continuously_button"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/add_member_title"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/switch_continuously_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#9BE6A1"
+                    android:maxLines="1"
+                    android:text="@string/continuously_button"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/add_member_title"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -123,7 +123,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:maxLines="1"
-                    android:importantForAutofill="no"/>
+                    android:importantForAutofill="no" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -141,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:maxLines="1"
-                    android:importantForAutofill="no"/>
+                    android:importantForAutofill="no" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -161,7 +161,7 @@
                     android:inputType="number"
                     android:maxLength="2"
                     android:maxLines="1"
-                    android:importantForAutofill="no"/>
+                    android:importantForAutofill="no" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -182,7 +182,7 @@
                     android:focusable="false"
                     android:maxLines="1"
                     android:padding="20dp"
-                    android:hint="@null"/>
+                    android:hint="@null" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>

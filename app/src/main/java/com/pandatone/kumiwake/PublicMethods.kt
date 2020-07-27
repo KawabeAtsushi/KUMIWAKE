@@ -115,9 +115,9 @@ object PublicMethods {
         return layoutParams
     }
 
-    fun setByDp(dp:Float,context: Context):Int{
+    fun setByDp(dp: Float, context: Context): Int {
         val scale = context.resources.displayMetrics.density
-        return (dp*scale + 0.5f).toInt()
+        return (dp * scale + 0.5f).toInt()
     }
 }
 

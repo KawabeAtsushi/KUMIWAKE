@@ -71,4 +71,11 @@ object FirebaseAnalyticsEvents {
         bundle.putString("ticket", ticket)
         firebaseAnalytics.logEvent("ticket_name", bundle)
     }
+
+    //広告視聴(応援)
+    fun support(supported: String) {
+        val bundle = Bundle()
+        bundle.putString("supported", supported)
+        firebaseAnalytics.logEvent("supported", bundle)
+    }
 }

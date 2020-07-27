@@ -226,5 +226,7 @@
     <string name="age_unit">歳</string>
     <string name="change_sex">アイコンをクリックして性別(男・女)を変更</string>
     <string name="hira_member">めんばー</string>
-    <string name="hira_group">ぐるーぷ</string>
+    <string name="support_title">開発者を応援</string>
+    <string name="support_description">ユーザーの皆様\nKUMIWAKEを使っていただきありがとうございます。これからもKUMIWAKEは全ての機能を無料で提供できるようにと考えております。皆様の貴重なお時間を少しいただいてCM視聴による応援をいただけますと幸いです。</string>
+    <string name="support">応援する</string>
 </resources>

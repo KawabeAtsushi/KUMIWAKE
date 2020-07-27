@@ -215,7 +215,7 @@ class KumiwakeResult : AppCompatActivity() {
         v = 0
         val title = getString(R.string.retry_title)
         val message = getString(R.string.re_kumiwake_description) + getString(R.string.run_confirmation)
-        DialogWarehouse(supportFragmentManager).decisionDialog(title, message, this::reKumiwake)
+        DialogWarehouse(supportFragmentManager).decisionDialog(title, message, function = this::reKumiwake)
     }
 
     private fun reKumiwake() {

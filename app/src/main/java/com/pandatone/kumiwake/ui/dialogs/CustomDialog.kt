@@ -1,5 +1,6 @@
 package com.pandatone.kumiwake.ui.dialogs
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialog
 import androidx.fragment.app.DialogFragment
+import com.google.android.material.button.MaterialButton
 import com.pandatone.kumiwake.R
 
 
@@ -21,6 +23,10 @@ class CustomDialog(private var mTitle: String, private var mMessage: CharSequenc
 
     //onClickリスナ(Positive)
     var mPositiveBtnListener: View.OnClickListener? = null
+    var positiveTxt = ""
+    var negativeTxt = ""
+    var positiveIconId = 0
+    var negativeIconId = 0
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AppCompatDialog {
         val dialog = activity?.let { AppCompatDialog(it) }
@@ -43,14 +49,31 @@ class CustomDialog(private var mTitle: String, private var mMessage: CharSequenc
             val mMethod = LinkMovementMethod.getInstance()
             linkTextView.movementMethod = mMethod
         }
+        // ボタンの設定
+        val positiveButton = dialog.findViewById<MaterialButton>(R.id.positive_button)!!
+        val negativeButton = dialog.findViewById<MaterialButton>(R.id.negative_button)!!
+        if (positiveTxt != "") {
+            positiveButton.text = positiveTxt
+        }
+        if (negativeTxt != "") {
+            negativeButton.text = negativeTxt
+        }
+        if (positiveIconId != 0) {
+            positiveButton.setIconResource(positiveIconId)
+            positiveButton.iconTint = ColorStateList.valueOf(Color.WHITE)
+        }
+        if (negativeIconId != 0) {
+            negativeButton.setIconResource(negativeIconId)
+            positiveButton.iconTint = ColorStateList.valueOf(Color.WHITE)
+        }
         // OK ボタンのリスナ
         if (mPositiveBtnListener == null) {
-            dialog.findViewById<View>(R.id.negative_button)!!.visibility = View.GONE
-            dialog.findViewById<View>(R.id.positive_button)!!.setOnClickListener { dismiss() }
+            negativeButton.visibility = View.GONE
+            positiveButton.setOnClickListener { dismiss() }
         } else {
-            dialog.findViewById<View>(R.id.positive_button)!!.setOnClickListener(mPositiveBtnListener)
+            positiveButton.setOnClickListener(mPositiveBtnListener)
             // いいえボタンのリスナ
-            dialog.findViewById<View>(R.id.negative_button)!!.setOnClickListener { dismiss() }
+            negativeButton.setOnClickListener { dismiss() }
         }
 
         return dialog

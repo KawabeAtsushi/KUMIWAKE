@@ -227,5 +227,7 @@
     <string name="age_unit">y/o</string>
     <string name="change_sex">Click icon to switch gender(man/woman)</string>
     <string name="hira_member">Member</string>
-    <string name="hira_group">Group</string>
+    <string name="support_title">Support developer</string>
+    <string name="support_description">Dear users, \nThank you for using KUMIWAKE. KUMIWAKE will continue to provide all functions free of charge. We hope that you will spend your precious time and support us by watch CM.</string>
+    <string name="support">Support</string>
 </resources>
