@@ -60,11 +60,12 @@ class MainActivity : AppCompatActivity(), RewardedVideoAdListener {
         setClickListeners()
         memberFabSetting()
 
+        mAdView = findViewById<View>(R.id.adView) as AdView
+
         if (StatusHolder.adCheck) {
             startActivity(Intent(this, PurchaseFreeAdOption::class.java))
         }
 
-        val mAdView = findViewById<View>(R.id.adView) as AdView
         if (StatusHolder.adDeleated) {
             mAdView.visibility = View.GONE
         } else {
