@@ -116,7 +116,7 @@
                     tools:ignore="NestedScrolling" />
 
                 <TextView
-                    android:id="@+id/error_member_no_txt"
+                    android:id="@+id/error_incorrect_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
@@ -126,27 +126,16 @@
                     android:textSize="@dimen/form_textSize"
                     android:visibility="gone" />
 
-                <!--                    <com.google.android.material.button.MaterialButton-->
-                <!--                        android:id="@+id/remove_role"-->
-                <!--                        style="@style/Button.Transparent.Circle"-->
-                <!--                        android:layout_width="40dp"-->
-                <!--                        android:layout_height="40dp"-->
-                <!--                        android:layout_gravity="start"-->
-                <!--                        android:layout_marginStart="15dp"-->
-                <!--                        android:backgroundTint="@color/thin_man"-->
-                <!--                        app:icon="@drawable/ic_add_white_24dp"-->
-                <!--                        app:iconTint="@android:color/white"/>-->
-
                 <ImageButton
                     android:id="@+id/add_role"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="end"
                     android:layout_marginEnd="15dp"
-                    android:backgroundTint="@color/orange"
                     android:background="@drawable/circle_background"
-                    android:src="@drawable/ic_add_white_24dp"
-                    android:contentDescription="@string/add_role_description" />
+                    android:backgroundTint="@color/orange"
+                    android:contentDescription="@string/add_role_description"
+                    android:src="@drawable/ic_add_white_24dp" />
 
             </LinearLayout>
 

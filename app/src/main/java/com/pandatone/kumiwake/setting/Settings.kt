@@ -1,12 +1,16 @@
 package com.pandatone.kumiwake.setting
 
 import android.Manifest
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
+import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
@@ -15,21 +19,30 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
-import com.pandatone.kumiwake.PublicMethods
+import com.airbnb.lottie.LottieAnimationView
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.reward.RewardedVideoAd
+import com.google.android.gms.ads.reward.RewardedVideoAdListener
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.PublicMethods.setStatus
-import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.StatusHolder
-import com.pandatone.kumiwake.Theme
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import java.io.File
 
 
-class Settings : AppCompatActivity() {
+class Settings : AppCompatActivity(), RewardedVideoAdListener {
 
     private lateinit var backupAdapter: ArrayAdapter<String>
     private lateinit var otherAdapter: ArrayAdapter<String>
     private lateinit var backupStr: Array<String>
     private lateinit var otherStr: Array<String>
+
+    private lateinit var dimmer: View
+    private lateinit var mRewardedVideoAd: RewardedVideoAd
+    private lateinit var loadingAnim: LottieAnimationView
+    private var rewarded = false
+
     val dialog: DialogWarehouse
         get() {
             return DialogWarehouse(supportFragmentManager)
@@ -39,6 +52,9 @@ class Settings : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Obtain the FirebaseAnalytics instance.
+        FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+
         setTheme(R.style.SettingsTheme)
         setContentView(R.layout.settings)
         setStatus(this, Theme.Setting.primaryColor)
@@ -57,7 +73,8 @@ class Settings : AppCompatActivity() {
                 1 -> startActivity(Intent(this, PurchaseFreeAdOption::class.java))
                 2 -> launchMailer()
                 3 -> shareApp()
-                4 -> toPrivacyPolicy()
+                4 -> careDeveloper()
+                5 -> toPrivacyPolicy()
             }
             otherList.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, pos, _ ->
                 //行をクリックした時の処理
@@ -76,7 +93,7 @@ class Settings : AppCompatActivity() {
 
     private fun setViews() {
         backupStr = arrayOf(getString(R.string.back_up_db), getString(R.string.import_db), getString(R.string.delete_backup))
-        otherStr = arrayOf(getString(R.string.app_version), getString(R.string.advertise_delete), getString(R.string.contact_us), getString(R.string.share_app), getString(R.string.privacy_policy))
+        otherStr = arrayOf(getString(R.string.app_version), getString(R.string.advertise_delete), getString(R.string.contact_us), getString(R.string.share_app), getString(R.string.support_title), getString(R.string.privacy_policy))
         backupAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, backupStr)
         otherAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, otherStr)
 
@@ -161,11 +178,69 @@ class Settings : AppCompatActivity() {
 
     }
 
+    private fun careDeveloper() {
+
+        dialog.decisionDialog(getString(R.string.support_title), getString(R.string.support_description), getString(R.string.support), getString(R.string.close), R.drawable.ic_care, R.drawable.ic_close_black_24dp) {
+            dimmer = findViewById<View>(R.id.dimmer_layout)
+            dimmer.visibility = View.VISIBLE
+            loadingAnim = findViewById(R.id.loading_anim)
+            loadingAnim.visibility = View.VISIBLE
+            loadingAnim.playAnimation()
+            mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this)
+            mRewardedVideoAd.rewardedVideoAdListener = this
+            mRewardedVideoAd.loadAd(getString(R.string.adVideoUnit_id),
+                    AdRequest.Builder().addTestDevice(getString(R.string.device_id)).build())
+            FirebaseAnalyticsEvents.support("CLICKED")
+        }
+    }
+
     private fun toPrivacyPolicy() {
         val uri = Uri.parse("https://gist.githubusercontent.com/KawabeAtsushi/39f3ea332b05a6b053b263784a77cd51/raw")
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
     }
+
+    ////////////////////リワード広告のオーバーライド////////////////////////////////////////////
+
+    // 広告の準備が完了したとき
+    override fun onRewardedVideoAdLoaded() {
+        mRewardedVideoAd.show()
+        loadingAnim.visibility = View.GONE
+        loadingAnim.cancelAnimation()
+    }
+
+    //報酬対象になったとき
+    override fun onRewarded(p0: com.google.android.gms.ads.reward.RewardItem?) {
+        rewarded = true
+    }
+
+    //広告が閉じられたとき
+    override fun onRewardedVideoAdClosed() {
+        if (rewarded) {
+            val thanks = findViewById<LottieAnimationView>(R.id.thanks_anim)
+            Handler().postDelayed({
+                thanks.visibility = View.VISIBLE
+                thanks.playAnimation()
+            }, 500)
+            thanks.addAnimatorListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator?) {
+                    super.onAnimationEnd(animation)
+                    thanks.visibility = View.GONE
+                    dimmer.visibility = View.GONE
+                }
+            })
+            rewarded = false
+            FirebaseAnalyticsEvents.support("REWARDED")
+        } else {
+            dimmer.visibility = View.GONE
+        }
+    }
+
+    override fun onRewardedVideoAdOpened() {}
+    override fun onRewardedVideoStarted() {}
+    override fun onRewardedVideoAdLeftApplication() {}
+    override fun onRewardedVideoAdFailedToLoad(errorCode: Int) {}
+    override fun onRewardedVideoCompleted() {}
 
     /////////////////////////パーミッション/////////////////////////////////////////////////
 

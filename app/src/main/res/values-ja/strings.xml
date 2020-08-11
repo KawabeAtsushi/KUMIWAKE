@@ -229,4 +229,5 @@
     <string name="support_title">開発者を応援</string>
     <string name="support_description">ユーザーの皆様\nKUMIWAKEを使っていただきありがとうございます。これからもKUMIWAKEは全ての機能を無料で提供できるようにと考えております。皆様の貴重なお時間を少しいただいてCM視聴による応援をいただけますと幸いです。</string>
     <string name="support">応援する</string>
+    <string name="error_empty_no">エラー：数を入力してください</string>
 </resources>

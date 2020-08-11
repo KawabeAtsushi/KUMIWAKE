@@ -22,6 +22,7 @@ import com.pandatone.kumiwake.adapter.EditOthersViewAdapter
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
 import kotlinx.android.synthetic.main.kumiwake_custom.*
+import kotlinx.android.synthetic.main.ticket_difinition.*
 
 
 /**
@@ -95,7 +96,7 @@ class RoleDefine : AppCompatActivity() {
             startActivity(intent)
             overridePendingTransition(R.anim.in_right, R.anim.out_left)
         } else {
-            error_member_no_txt.visibility = View.VISIBLE
+            error_incorrect_number.visibility = View.VISIBLE
         }
     }
 

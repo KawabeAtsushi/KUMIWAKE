@@ -21,7 +21,7 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.Theme
 import com.pandatone.kumiwake.adapter.EditOthersViewAdapter
 import com.pandatone.kumiwake.member.function.Group
-import kotlinx.android.synthetic.main.kumiwake_custom.*
+import kotlinx.android.synthetic.main.ticket_difinition.*
 
 
 /**
@@ -76,18 +76,18 @@ class TicketDefine : AppCompatActivity() {
         for (i in 0 until ticketListView.count) {
             val ticketNo = editTicketAdapter!!.getNumber(i, false)
             ticketSum += ticketNo
-            if (ticketSum <= 0) {
-                allowToNext = false
-            }
+        }
+        if (ticketSum <= 0) {
+            allowToNext = false
         }
 
         if (allowToNext) {
             val intent = Intent(this, DrawingResult::class.java)
-            intent.putExtra("tickets", createTicketsArray())
+            intent.putExtra("tickets", createResultTicketsArray())
             startActivity(intent)
             overridePendingTransition(R.anim.in_right, R.anim.out_left)
         } else {
-            error_member_no_txt.visibility = View.VISIBLE
+            error_incorrect_number.visibility = View.VISIBLE
         }
     }
 
@@ -113,23 +113,19 @@ class TicketDefine : AppCompatActivity() {
         }
     }
 
-    private fun createTicketsArray(): ArrayList<String> {
-        val ticketArray: ArrayList<String> = ArrayList()
-        var total = 0
+    private fun createResultTicketsArray(): ArrayList<Ticket> {
+        val resultTicketArray: ArrayList<Ticket> = ArrayList()
         for (i in 0 until ticketListView.count) {
             val ticketName = editTicketAdapter!!.getName(i, false)
             val ticketNo = editTicketAdapter!!.getNumber(i, false)
-            total += ticketNo
-            if (ticketNo != 0) {
-                for (t in 0 until ticketNo) {
-                    ticketArray.add(ticketName)
-                }
-            } else {
-                ticketColors.removeAt(i)
+            val intColor = ticketColors[i]
+            val ticket = Ticket(i, ticketName, intColor)
+            for (t in 0 until ticketNo) {
+                resultTicketArray.add(ticket)
             }
             FirebaseAnalyticsEvents.ticketNames(ticketName)
         }
-        return ticketArray
+        return resultTicketArray
     }
 
     //キーボードによるレイアウト崩れを防ぐ
@@ -152,6 +148,6 @@ class TicketDefine : AppCompatActivity() {
     }
 
     companion object {
-        var ticketColors: ArrayList<Int> = ArrayList()
+        var ticketColors: ArrayList<Int> = ArrayList() //チケットの種類の数だけ
     }
 }

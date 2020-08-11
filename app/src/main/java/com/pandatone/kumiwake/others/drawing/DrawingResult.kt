@@ -44,10 +44,8 @@ class DrawingResult : AppCompatActivity() {
     private var v = 0
     private lateinit var shakeAnimator: Animator
     private lateinit var ticketAnimator: Animator
-    private lateinit var tickets: ArrayList<String>
-    private var pickedTickets: ArrayList<String> = ArrayList()
-    private lateinit var ticketKinds: ArrayList<String>
-    private var historyArray: ArrayList<String> = ArrayList()
+    private lateinit var tickets: ArrayList<Ticket>
+    private var pickedTickets: ArrayList<Ticket> = ArrayList()
     private lateinit var countTextView: TextView
     private lateinit var remainTextView: TextView
     private lateinit var drawingAnim: LottieAnimationView
@@ -61,9 +59,10 @@ class DrawingResult : AppCompatActivity() {
 
         val i = intent
         if (i.getSerializableExtra("tickets") != null) {
-            tickets = i.getSerializableExtra("tickets") as ArrayList<String>
+            tickets = i.getSerializableExtra("tickets") as ArrayList<Ticket>
         }
-        ticketKinds = ArrayList(tickets.distinct())
+
+        val kinds = tickets.distinctBy { it.id }
 
         setUpViews()
 
@@ -96,7 +95,7 @@ class DrawingResult : AppCompatActivity() {
         PublicMethods.showAd(this)
 
         val historyButton = findViewById<Button>(R.id.drawing_history)
-        historyButton.setOnClickListener { onHistory() }
+        historyButton.setOnClickListener { onHistory(kinds) }
         val showResultButton = findViewById<Button>(R.id.retry_button)
         showResultButton.text = getString(R.string.retry)
         showResultButton.setOnClickListener { onRetry() }
@@ -111,7 +110,7 @@ class DrawingResult : AppCompatActivity() {
         //progress:0(start)~1(end)
         drawingAnim.setMinProgress(0.5f)
         historyListView = findViewById(R.id.history_list)
-        historyListViewAdapter = SmallDrawingHistoryListAdapter(this, historyArray)
+        historyListViewAdapter = SmallDrawingHistoryListAdapter(this, pickedTickets.asReversed())
         historyListView.adapter = historyListViewAdapter
         historyListView.emptyView = findViewById(R.id.emptyHistoryList)
         countTextView = findViewById(R.id.countTextView)
@@ -125,7 +124,6 @@ class DrawingResult : AppCompatActivity() {
         countTextView.text = countStr
         val remainStr = "${getString(R.string.remain)} ${tickets.size}${getString(R.string.ticket_unit)}"
         remainTextView.text = remainStr
-        historyArray.clear()
         historyListViewAdapter.notifyDataSetChanged()
         pickedTickets.clear()
         tickets.shuffle()
@@ -222,31 +220,15 @@ class DrawingResult : AppCompatActivity() {
     //以下、くじ引き処理
     private fun pick(ticketTextView: TextView) {
         val picked = tickets[pickCount]
-        ticketTextView.text = picked
-        val ticketCol = getTicketColorInt(picked)
+        ticketTextView.text = picked.name
+        val ticketCol = picked.color
         ticketTextView.setTextColor(ticketCol)
         gradViewColor(ticketTextView, blendCol(ticketCol, 0f), blendCol(ticketCol, 0.6f))
         pickedTickets.add(picked)
         pickCount++
-        historyArray.add(0, "<font color='${getTicketColorHex(picked)}'>${picked}</font>")
         historyListViewAdapter.notifyDataSetChanged()
         val remainStr = "${getString(R.string.remain)} ${tickets.size - pickCount}${getString(R.string.ticket_unit)}"
         remainTextView.text = remainStr
-    }
-
-    //チケットの色取得(Int)
-    private fun getTicketColorInt(ticket: String): Int {
-        val colorList = TicketDefine.ticketColors
-        val index = ticketKinds.indexOf(ticket)
-        return colorList[index]
-    }
-
-    //チケットの色取得(Hex)
-    private fun getTicketColorHex(ticket: String): String {
-        val colorList = TicketDefine.ticketColors
-        val index = ticketKinds.indexOf(ticket)
-        val intColor = colorList[index]
-        return String.format("#%06X", 0xFFFFFF and intColor)
     }
 
     private fun blendCol(ticketCol: Int, ratio: Float): Int {
@@ -265,7 +247,7 @@ class DrawingResult : AppCompatActivity() {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     //履歴確認ボタン
-    private fun onHistory() {
+    private fun onHistory(kinds: List<Ticket>) {
         val builder = AlertDialog.Builder(this)
         val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(R.layout.drawing_history, findViewById<View>(R.id.info_layout) as ViewGroup?)
@@ -276,7 +258,7 @@ class DrawingResult : AppCompatActivity() {
         builder.setTitle(R.string.history)
         builder.setView(view)
 
-        val adapter = DrawingHistoryListAdapter(this, ticketKinds, tickets, pickedTickets)
+        val adapter = DrawingHistoryListAdapter(this, kinds, tickets, pickedTickets)
         historyList.adapter = adapter
 
         val dialog = builder.create()

@@ -350,12 +350,16 @@ class FragmentMemberMain : ListFragment() {
         }
         val okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
         okButton.setOnClickListener {
-            val newAge = Integer.parseInt(method + newAgeET.text.toString())
-            val conditionButton = layout.findViewById<View>(conditionGroup.checkedRadioButtonId) as RadioButton
-            val define = (conditionButton.id == R.id.define)
-            MemberMethods.updateAge(requireContext(), checkedMemberList(), newAge, define)     // 年齢更新
-            loadName()
-            dialog.dismiss()
+            if (newAgeET.text!!.isNotEmpty()) {
+                val newAge = Integer.parseInt(method + newAgeET.text.toString())
+                val conditionButton = layout.findViewById<View>(conditionGroup.checkedRadioButtonId) as RadioButton
+                val define = (conditionButton.id == R.id.define)
+                MemberMethods.updateAge(requireContext(), checkedMemberList(), newAge, define)     // 年齢更新
+                loadName()
+                dialog.dismiss()
+            } else {
+                Toast.makeText(context, getText(R.string.error_empty_no), Toast.LENGTH_LONG).show()
+            }
         }
     }
 

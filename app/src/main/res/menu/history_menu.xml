@@ -11,8 +11,8 @@
     <item
         android:id="@+id/menu_help"
         android:icon="@drawable/ic_help_outline_dark_24dp"
-        android:title="@string/hint"
         android:iconTint="@android:color/black"
+        android:title="@string/hint"
         app:showAsAction="always" />
 
 </menu>

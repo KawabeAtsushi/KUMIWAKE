@@ -9,11 +9,11 @@
         android:id="@+id/rowIconGroup"
         android:layout_width="@dimen/group_icon_size"
         android:layout_height="@dimen/group_icon_size"
+        android:contentDescription="@null"
         android:paddingTop="@dimen/row_padding"
         android:paddingBottom="@dimen/row_padding"
         android:src="@drawable/ic_user_group"
         android:tint="@color/gray"
-        android:contentDescription="@null"
         app:layout_constraintBottom_toTopOf="@id/leader"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,15 +26,15 @@
         android:layout_marginEnd="10dp"
         android:background="@drawable/edittext_outline"
         android:focusable="false"
+        android:hint="@null"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:maxLines="1"
-        android:hint="@null"
         android:textColor="@color/gray"
         app:layout_constraintBottom_toBottomOf="@id/rowIconGroup"
         app:layout_constraintEnd_toStartOf="@id/editTheNumberOfMember"
         app:layout_constraintStart_toEndOf="@id/rowIconGroup"
-        app:layout_constraintTop_toTopOf="@id/rowIconGroup"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toTopOf="@id/rowIconGroup" />
 
 
     <EditText
@@ -46,15 +46,15 @@
         android:ems="2"
         android:focusable="false"
         android:gravity="center"
+        android:hint="@null"
+        android:importantForAutofill="no"
         android:inputType="number"
         android:maxLength="3"
         android:maxLines="1"
         android:textColor="@color/gray"
-        android:hint="@null"
         app:layout_constraintBottom_toBottomOf="@id/rowIconGroup"
         app:layout_constraintEnd_toStartOf="@id/personTex"
-        app:layout_constraintTop_toTopOf="@id/rowIconGroup"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toTopOf="@id/rowIconGroup" />
 
     <TextView
         android:id="@+id/personTex"

@@ -20,23 +20,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="5dp"
+        android:contentDescription="@string/kumiwake"
         android:src="@drawable/ic_launcher_foreground_big"
-        android:contentDescription="@string/kumiwake"
         app:layout_constraintBottom_toBottomOf="@id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/toolbar" />
-
-    <ImageView
-        android:id="@+id/care_icon"
-        android:layout_width="60dp"
-        android:layout_height="0dp"
-        android:padding="15dp"
-        android:src="@drawable/ic_care"
-        android:contentDescription="@string/kumiwake"
-        android:tint="@color/thin_white"
-        app:layout_constraintBottom_toBottomOf="@id/toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/toolbar" />
 
     <ScrollView
@@ -177,8 +165,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/drawing_unit"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/history_unit" />
 
                 <include
@@ -252,11 +240,11 @@
         android:id="@+id/multiple_member_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         app:fab_addButtonColorNormal="@color/blue_title"
         app:fab_addButtonColorPressed="#0398DC"
         app:fab_labelStyle="@style/menu_labels_style"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toTopOf="@id/adView"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -264,62 +252,33 @@
             android:id="@+id/member_list_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_size="normal"
             app:fab_colorNormal="@color/blue_title"
             app:fab_colorPressed="#0398DC"
-            app:fab_title="@string/member_list"
-            app:fab_icon="@drawable/ic_members_24" />
+            app:fab_icon="@drawable/ic_members_24"
+            app:fab_size="normal"
+            app:fab_title="@string/member_list" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/member_add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_size="mini"
             app:fab_colorNormal="@color/green"
             app:fab_colorPressed="#2FBF46"
-            app:fab_title="@string/add_member"
-            app:fab_icon="@drawable/ic_add_member_24" />
+            app:fab_icon="@drawable/ic_add_member_24"
+            app:fab_size="mini"
+            app:fab_title="@string/add_member" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/group_add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_size="mini"
             app:fab_colorNormal="@color/orange"
             app:fab_colorPressed="#DDA82C"
-            app:fab_title="@string/add_group"
-            app:fab_icon="@drawable/ic_add_group_24" />
+            app:fab_icon="@drawable/ic_add_group_24"
+            app:fab_size="mini"
+            app:fab_title="@string/add_group" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/loading_anim"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:adjustViewBounds="true"
-        android:visibility="gone"
-        app:lottie_rawRes="@raw/loading_rings"
-        app:lottie_autoPlay="false"
-        app:lottie_loop="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/thanks_anim"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:adjustViewBounds="true"
-        android:visibility="gone"
-        app:lottie_rawRes="@raw/thank_you"
-        app:lottie_autoPlay="false"
-        app:lottie_loop="false"
-        app:lottie_speed="1.5"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
 
     <com.google.android.gms.ads.AdView

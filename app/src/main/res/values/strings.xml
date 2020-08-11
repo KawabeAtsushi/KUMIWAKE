@@ -230,4 +230,5 @@
     <string name="support_title">Support developer</string>
     <string name="support_description">Dear users, \nThank you for using KUMIWAKE. KUMIWAKE will continue to provide all functions free of charge. We hope that you will spend your precious time and support us by watch CM.</string>
     <string name="support">Support</string>
+    <string name="error_empty_no">Error:Please input number</string>
 </resources>
