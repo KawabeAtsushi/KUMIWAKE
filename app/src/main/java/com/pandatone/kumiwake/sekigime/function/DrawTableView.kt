@@ -35,7 +35,7 @@ class DrawTableView(context: Context) : View(context) {
     private var xCoordinate = 0f
     private var yCoordinate = 0f
     private var dp: Float = 0f
-    private val tableStrokeColor = "#b59551"
+    private val tableStrokeColor = "#ccad8f"
     private val tableStrokeWidth = 15f
     private val tableColor = "#ffffe0"
     private val chairStrokeColor = "#000000"

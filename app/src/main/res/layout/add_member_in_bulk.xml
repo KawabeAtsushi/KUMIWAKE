@@ -84,7 +84,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:background="#2FCCCCCC"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/title">
 
@@ -94,7 +93,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp" />
+                android:layout_marginEnd="10dp"
+                android:divider="@android:drawable/divider_horizontal_bright"
+                android:dividerHeight="1dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -106,17 +107,37 @@
                 android:textSize="@dimen/form_textSize"
                 android:visibility="gone" />
 
-            <ImageButton
-                android:id="@+id/add_member"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="end"
-                android:layout_marginEnd="15dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/circle_background"
-                android:backgroundTint="@color/orange"
-                android:contentDescription="@string/add_ticket"
-                android:src="@drawable/ic_add_white_24dp" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/list_input_btn"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/thin_gray"
+                    android:text="@string/list_input"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/add_member"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="end"
+                    android:background="@drawable/circle_background"
+                    android:backgroundTint="@color/orange"
+                    android:contentDescription="@string/add_ticket"
+                    android:src="@drawable/ic_add_white_24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 

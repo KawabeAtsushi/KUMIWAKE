@@ -1,18 +1,14 @@
 package com.pandatone.kumiwake.member
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.graphics.Point
 import android.graphics.Rect
 import android.os.Bundle
-import android.view.KeyEvent
-import android.view.View
-import android.view.ViewTreeObserver
-import android.view.WindowManager
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ListView
-import android.widget.Toast
+import android.view.*
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.pandatone.kumiwake.AddMemberKeys
@@ -60,6 +56,7 @@ class AddMemberInBulk : AppCompatActivity() {
         windowManager.defaultDisplay.getSize(size)
         screenHeight = size.y
         findViewById<ImageButton>(R.id.add_member).setOnClickListener { onAddMember() }
+        findViewById<Button>(R.id.list_input_btn).setOnClickListener { listInputDialog() }
         findViewById<Button>(R.id.member_registration_finish_btn).setOnClickListener { registerMembers(true) }
         findViewById<Button>(R.id.member_registration_continue_btn).setOnClickListener { registerMembers(false) }
         findViewById<Button>(R.id.member_cancel_btn).setOnClickListener { finish() }
@@ -72,10 +69,14 @@ class AddMemberInBulk : AppCompatActivity() {
     }
 
     //メンバー追加
-    private fun onAddMember() {
+    private fun onAddMember(name: String = "") {
         val memberNo = memberArray.size + 1
         updateMemberArray()
-        memberArray.add(Member(memberNo, "", getString(R.string.man), -1, "", getString(R.string.hira_member) + " " + memberNo, -1))
+        var read = ""
+        if (name == "") {
+            read = getString(R.string.hira_member) + " " + memberNo
+        }
+        memberArray.add(Member(memberNo, name, getString(R.string.man), -1, "", read, -1))
         editViewAdapter?.notifyDataSetChanged()
         editViewAdapter?.setRowHeight(memberListView)
     }
@@ -120,6 +121,36 @@ class AddMemberInBulk : AppCompatActivity() {
             intent.putExtra(AddMemberKeys.FROM_MODE.key, fromMode)
             finish()
             startActivity(intent)
+        }
+    }
+
+    //リスト入力ダイアログ
+    private fun listInputDialog() {
+        val builder = AlertDialog.Builder(this)
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.list_input_dialog_layout, findViewById<View>(R.id.info_layout) as ViewGroup?)
+
+        val listEditText = view.findViewById<EditText>(R.id.name_list)
+
+        builder.setTitle(R.string.list_input)
+                .setView(view)
+                .setPositiveButton(R.string.add_member) { _, _ ->
+                    val listText = listEditText.text.toString()
+                    addByListInput(listText)
+                }
+                .setNegativeButton(R.string.cancel) { dialog, _ ->
+                    dialog.dismiss()
+                }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    //リスト入力メソッド
+    private fun addByListInput(listText: String) {
+        val memberNames = listText.split("\n")
+        val memberNotEmpty = memberNames.filter { it != "" }
+        memberNotEmpty.forEach {
+            onAddMember(it)
         }
     }
 

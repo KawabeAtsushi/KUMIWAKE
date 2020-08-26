@@ -47,7 +47,7 @@ class QuickMode : AppCompatActivity(), TextWatcher {
         setContentView(R.layout.quick_mode)
         if (StatusHolder.sekigime) {
             val layout = findViewById<ConstraintLayout>(R.id.quick_layout)
-            layout.background = getDrawable(R.drawable.img_sekigime_background)
+            layout.background = getDrawable(R.drawable.sekigime_background)
         }
         sex_seekBar.isEnabled = false
         member_no_form.addTextChangedListener(this)

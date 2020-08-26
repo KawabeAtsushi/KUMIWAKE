@@ -54,7 +54,7 @@ class NormalMode : AppCompatActivity() {
         setContentView(R.layout.normal_mode)
         if (StatusHolder.sekigime) {
             val layout = findViewById<ConstraintLayout>(R.id.normal_select_layout)
-            layout.background = getDrawable(R.drawable.img_sekigime_background)
+            layout.background = getDrawable(R.drawable.sekigime_background)
         }
         findViews()
         add_group_listView.member_add_btn.setOnClickListener { moveMemberMain() }

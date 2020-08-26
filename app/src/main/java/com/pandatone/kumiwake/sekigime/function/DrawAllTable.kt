@@ -22,7 +22,7 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
     private var doubleDeploy: Boolean? = SekigimeResult.doubleDeploy
     private var teamArray = SekigimeResult.teamArray
     private var dp: Float = 0f
-    private val tableStrokeColor = "#b59551"
+    private val tableStrokeColor = "#ccad8f"
     private val tableStrokeWidth = 15f
     private val tableColor = "#ffffe0"
     private val chairStrokeColor = "#000000"

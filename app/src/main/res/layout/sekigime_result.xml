@@ -4,9 +4,7 @@
     android:id="@+id/result_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/img_sekigime_background"
-    android:backgroundTint="#50FFFFFF"
-    android:backgroundTintMode="src_atop">
+    android:background="@drawable/sekigime_background">
 
     <ScrollView
         android:id="@+id/result_scroller"

@@ -4,7 +4,7 @@
     android:id="@+id/result_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/img_others_background"
+    android:background="@drawable/top_background"
     android:backgroundTint="#90FFFFFF"
     android:backgroundTintMode="src_atop">
 
@@ -17,6 +17,7 @@
         android:text="@string/picked"
         android:textColor="@color/red"
         android:textSize="20sp"
+        android:background="@drawable/count_outline"
         app:layout_constraintEnd_toEndOf="@id/drawing_history"
         app:layout_constraintStart_toStartOf="@id/drawing_history"
         app:layout_constraintTop_toTopOf="parent" />

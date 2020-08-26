@@ -10,7 +10,7 @@
     <string name="select_member">select</string>
     <string name="about_sekigime">About seat allocation</string>
     <string name="about_member">About member</string>
-    <string name="advertise_delete">Delete advertisement</string>
+    <string name="advertise_delete">Delete advertisement(purchase)</string>
     <string name="app_version">App version</string>
     <string name="back_up_db">Backup data</string>
     <string name="cancel">Cancel</string>
@@ -132,7 +132,7 @@
     <string name="how_to_kumiwake">☆It is the mode of grouping☆\n\nSelect from "Normal mode" or "Quick mode" and execute grouping.</string>
     <string name="how_to_member">☆It is the mode of register members for \"KUMIWAKE\" and \"SEKIGIME\"☆\n\nSwitch member list or group list by swiping.\n\nOn each screen, you click the \'+\' button which is displayed by the screen lower right, and you can add new member or new group.\n\nBy registering members to the group, you can select all members which belong the group at once when you do "KUMIWAKE" and so on.</string>
     <string name="how_to_sekigime">☆It is the mode of seat allocation☆  Assign seats by specifying members and groups. Procedure of selecting members and groups are the same as KUMIWAKE.  You can also do SEKIGIME from KUMIWAKE result page. In this case, the seating is performed in groups in each group created by KUMIWAKE.</string>
-    <string name="article_title">☆KUMIWAKE☆\nApplication of auto-grouping and seat positioning can be!\nVery useful for group activities!!\n↓↓Click here for download↓↓\n(Android only)</string>
+    <string name="article_title">\"Easy,Convenient and Fair\"\n☆KUMIWAKE is coming up!!☆\nApplication of auto-grouping and seat positioning can be!\nVery useful for group activities!!\n↓↓Click here for download↓↓\n(Android only)</string>
     <string name="back_up_attention">Data of members and groups will be backed up.\n\nIf you proceed backup, current backed-up data will be deleted and overwritten with the new data.*Data is written to the SD card.\n</string>
     <string name="import_attention">Data of members and groups are imported.\n\nIf you proceed import data, current member data and group data are deleted and overwritten with the new data.\n</string>
     <string name="description_of_normal">This is a mode by selecting from registered members.\nYou can set the group name and the number of the belong members for each group.</string>
@@ -227,8 +227,11 @@
     <string name="age_unit">y/o</string>
     <string name="change_sex">Click icon to switch gender(man/woman)</string>
     <string name="hira_member">Member</string>
-    <string name="support_title">Support developer</string>
-    <string name="support_description">Dear users, \nThank you for using KUMIWAKE. KUMIWAKE will continue to provide all functions free of charge. We hope that you will spend your precious time and support us by watch CM.</string>
-    <string name="support">Support</string>
+    <string name="delete_ad_temporary">Remove ads temporary(watch short ad)</string>
+    <string name="delete_ad_temporary_description">By watching a CM, you can remove the advertisement for the entire KUMIWAKE until the next startup.</string>
+    <string name="watch_ad">Watch CM</string>
     <string name="error_empty_no">Error:Please input number</string>
+    <string name="ads_removed_temporarily">Ads removed temporarily!</string>
+    <string name="list_input">list input</string>
+    <string name="list_input_description">Please enter the member names one per line.</string>
 </resources>

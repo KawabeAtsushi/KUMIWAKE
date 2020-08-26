@@ -14,10 +14,10 @@
         android:layout_height="@dimen/group_icon_size"
         android:padding="@dimen/row_padding"
         android:src="@drawable/ic_user_group"
-        android:tint="@color/gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/gray"
         tools:ignore="ContentDescription" />
 
     <TextView

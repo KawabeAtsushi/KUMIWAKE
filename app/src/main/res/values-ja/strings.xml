@@ -124,7 +124,7 @@
     <string name="how_to_use">使い方</string>
     <string name="other">その他</string>
     <string name="app_version">アプリのバージョン</string>
-    <string name="advertise_delete">広告の非表示</string>
+    <string name="advertise_delete">広告の非表示(購入)</string>
     <string name="share_app">アプリをシェア</string>
     <string name="contact_us">お問い合わせ</string>
     <string name="about_kumiwake">組分けについて</string>
@@ -137,7 +137,7 @@
     <string name="how_to_member">☆「組分け」「席決め」に用いるメンバーを登録するモードです☆\n\n左右にスワイプすることでメンバー一覧・グループ一覧を切り替えます。\n\n
                                     それぞれの画面を表示した状態で画面右下に表示される「＋」のボタンを押すとメンバー・グループの追加ができます。\n\n
                                     グループにメンバーを登録しておくことで、「組分け」などでメンバーを選択する際にグループに所属するメンバーをまとめて選択できます。</string>
-    <string name="article_title">自動でグループ分け・配席が決められるアプリ『KUMIWAKE』が登場！！\n飲み会、配車、その他グループ活動にご活用ください☆\n\n                                    ↓↓ダウンロードはこちら↓↓\n                                    （Android限定）</string>
+    <string name="article_title">『手軽に・便利に・公平に』\n自動でグループ分け・配席ができるアプリ『KUMIWAKE』が登場！！\n会議、飲み会、その他グループ活動にご活用ください☆\n\n                                    ↓↓ダウンロードはこちら↓↓\n                                    （Android限定）</string>
     <string name="member_name_read">読み</string>
     <string name="please_permit">ストレージの使用を許可してください。</string>
     <string name="share_result">結果をシェア</string>
@@ -226,8 +226,11 @@
     <string name="age_unit">歳</string>
     <string name="change_sex">アイコンをクリックして性別(男・女)を変更</string>
     <string name="hira_member">めんばー</string>
-    <string name="support_title">開発者を応援</string>
-    <string name="support_description">ユーザーの皆様\nKUMIWAKEを使っていただきありがとうございます。これからもKUMIWAKEは全ての機能を無料で提供できるようにと考えております。皆様の貴重なお時間を少しいただいてCM視聴による応援をいただけますと幸いです。</string>
-    <string name="support">応援する</string>
+    <string name="delete_ad_temporary">一時的に広告を削除(広告を視聴)</string>
+    <string name="delete_ad_temporary_description">短い動画CMを視聴することで次回の起動時までKUMIWAKE全体の広告を非表示にできます。</string>
+    <string name="watch_ad">CMをみる</string>
     <string name="error_empty_no">エラー：数を入力してください</string>
+    <string name="ads_removed_temporarily">広告が一時的に削除されました！</string>
+    <string name="list_input">リスト入力</string>
+    <string name="list_input_description">1行に1人ずつメンバーの名前を入力してください。</string>
 </resources>

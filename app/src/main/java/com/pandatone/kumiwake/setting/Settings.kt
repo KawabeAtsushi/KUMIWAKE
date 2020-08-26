@@ -1,15 +1,12 @@
 package com.pandatone.kumiwake.setting
 
 import android.Manifest
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.os.Handler
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -71,9 +68,9 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
             when (position) {
                 0 -> showVersionName()
                 1 -> startActivity(Intent(this, PurchaseFreeAdOption::class.java))
-                2 -> launchMailer()
-                3 -> shareApp()
-                4 -> careDeveloper()
+                2 -> removeAdsTemp()
+                3 -> launchMailer()
+                4 -> shareApp()
                 5 -> toPrivacyPolicy()
             }
             otherList.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, pos, _ ->
@@ -93,7 +90,7 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
 
     private fun setViews() {
         backupStr = arrayOf(getString(R.string.back_up_db), getString(R.string.import_db), getString(R.string.delete_backup))
-        otherStr = arrayOf(getString(R.string.app_version), getString(R.string.advertise_delete), getString(R.string.contact_us), getString(R.string.share_app), getString(R.string.support_title), getString(R.string.privacy_policy))
+        otherStr = arrayOf(getString(R.string.app_version), getString(R.string.advertise_delete), getString(R.string.delete_ad_temporary), getString(R.string.contact_us), getString(R.string.share_app), getString(R.string.privacy_policy))
         backupAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, backupStr)
         otherAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, otherStr)
 
@@ -178,9 +175,9 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
 
     }
 
-    private fun careDeveloper() {
+    private fun removeAdsTemp() {
 
-        dialog.decisionDialog(getString(R.string.support_title), getString(R.string.support_description), getString(R.string.support), getString(R.string.close), R.drawable.ic_care, R.drawable.ic_close_black_24dp) {
+        dialog.decisionDialog(getString(R.string.delete_ad_temporary), getString(R.string.delete_ad_temporary_description), getString(R.string.watch_ad), getString(R.string.close)) {
             dimmer = findViewById<View>(R.id.dimmer_layout)
             dimmer.visibility = View.VISIBLE
             loadingAnim = findViewById(R.id.loading_anim)
@@ -212,27 +209,18 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
     //報酬対象になったとき
     override fun onRewarded(p0: com.google.android.gms.ads.reward.RewardItem?) {
         rewarded = true
+        StatusHolder.adDeleated = true
+        MainActivity.mAdView.visibility = View.GONE
     }
 
     //広告が閉じられたとき
     override fun onRewardedVideoAdClosed() {
+        dimmer.visibility = View.GONE
+
         if (rewarded) {
-            val thanks = findViewById<LottieAnimationView>(R.id.thanks_anim)
-            Handler().postDelayed({
-                thanks.visibility = View.VISIBLE
-                thanks.playAnimation()
-            }, 500)
-            thanks.addAnimatorListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator?) {
-                    super.onAnimationEnd(animation)
-                    thanks.visibility = View.GONE
-                    dimmer.visibility = View.GONE
-                }
-            })
+            Toast.makeText(this, getString(R.string.ads_removed_temporarily), Toast.LENGTH_LONG).show()
             rewarded = false
             FirebaseAnalyticsEvents.support("REWARDED")
-        } else {
-            dimmer.visibility = View.GONE
         }
     }
 

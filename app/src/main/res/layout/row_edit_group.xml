@@ -13,10 +13,10 @@
         android:paddingTop="@dimen/row_padding"
         android:paddingBottom="@dimen/row_padding"
         android:src="@drawable/ic_user_group"
-        android:tint="@color/gray"
         app:layout_constraintBottom_toTopOf="@id/leader"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/gray" />
 
     <EditText
         android:id="@+id/editGroupName"

@@ -41,7 +41,7 @@ class SelectMember : AppCompatActivity() {
         setContentView(R.layout.normal_mode)
         memberArray = ArrayList()
         val layout = findViewById<ConstraintLayout>(R.id.normal_select_layout)
-        layout.background = getDrawable(R.drawable.img_others_background)
+        layout.background = getDrawable(R.drawable.top_background)
         findViews()
         findViewById<LinearLayout>(R.id.layout_group_no).visibility = View.GONE
         add_group_listView.member_add_btn.setOnClickListener { moveMemberMain() }

@@ -47,7 +47,7 @@ class KumiwakeCustom : AppCompatActivity() {
         setContentView(R.layout.kumiwake_custom)
         if (StatusHolder.sekigime) {
             val layout = findViewById<ConstraintLayout>(R.id.custom_root_layout)
-            layout.background = getDrawable(R.drawable.img_sekigime_background)
+            layout.background = getDrawable(R.drawable.sekigime_background)
         }
 
         if (intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) != null) {

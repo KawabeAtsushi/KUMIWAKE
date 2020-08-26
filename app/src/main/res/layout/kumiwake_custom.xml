@@ -6,9 +6,7 @@
     android:id="@+id/custom_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/img_kumiwake_background"
-    android:backgroundTint="#30FFFFFF"
-    android:backgroundTintMode="src_atop">
+    android:background="@drawable/kumiwake_background">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -45,7 +43,6 @@
             </LinearLayout>
 
             <include layout="@layout/title_divider" />
-
 
             <LinearLayout
                 android:layout_width="match_parent"

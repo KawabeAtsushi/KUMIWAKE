@@ -43,7 +43,7 @@ class RoleResult : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kumiwake_result)
         val layout = findViewById<ConstraintLayout>(R.id.result_view)
-        layout.background = getDrawable(R.drawable.img_others_background)
+        layout.background = getDrawable(R.drawable.top_background)
 
         val resultTitle = getString(R.string.role_decision) + getString(R.string.result)
         findViewById<TextView>(R.id.result_title).text = resultTitle
