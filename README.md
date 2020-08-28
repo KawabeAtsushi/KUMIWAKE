@@ -2,7 +2,7 @@
 
 Created By PANDATONE.
 
-[![KUMIWAKE DEMO VIDEO](https://img.youtube.com/vi/o6aGSUSdpjw/0.jpg)](https://www.youtube.com/watch?v=o6aGSUSdpjw)
+[![KUMIWAKE DEMO VIDEO](https://img.youtube.com/vi/BkRs_8h3_sM/0.jpg)](https://www.youtube.com/watch?v=BkRs_8h3_sM)
 
 Store (GooglePlay):</br>
 https://play.google.com/store/apps/details?id=com.pandatone.kumiwake
