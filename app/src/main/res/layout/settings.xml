@@ -68,19 +68,4 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/loading_rings" />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/thanks_anim"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:adjustViewBounds="true"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:lottie_autoPlay="false"
-        app:lottie_loop="false"
-        app:lottie_rawRes="@raw/thank_you"
-        app:lottie_speed="1.5" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
