@@ -2,7 +2,7 @@ package com.pandatone.kumiwake.history
 
 import java.io.Serializable
 
-class History(id: Int, time: String, name: String, result: String,resultGp: String, mode: Int, keep: Int, parent: Int) : Serializable {
+class History(id: Int, time: String, name: String, result: String, resultGp: String, mode: Int, keep: Int, parent: Int) : Serializable {
     var id: Int //ID
         private set
     var time: String //作成日時

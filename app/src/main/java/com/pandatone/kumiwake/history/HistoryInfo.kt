@@ -62,9 +62,9 @@ class HistoryInfo(val c: Activity) {
         val groupNameArray = HistoryMethods.stringToResultGroupArray(item.resultGp)
         //setView
         for (i in resultArray.indices) {
-            try{
+            try {
                 addResultView(i, groupNameArray[i])
-            }catch(e:ArrayIndexOutOfBoundsException){ //前のバージョンだとグループ名ないので
+            } catch (e: ArrayIndexOutOfBoundsException) { //前のバージョンだとグループ名ないので
                 addResultView(i, c.getString(R.string.group) + (i + 1).toString())
             }
         }
