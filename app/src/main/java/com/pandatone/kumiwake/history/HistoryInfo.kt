@@ -59,21 +59,25 @@ class HistoryInfo(val c: Activity) {
         history.text = HistoryMethods.changeDateFormat(item.name)
         date.text = HistoryMethods.changeDateFormat(item.time)
         resultArray = HistoryMethods.stringToResultArray(c, item.result)
+        val groupNameArray = HistoryMethods.stringToResultGroupArray(item.resultGp)
         //setView
         for (i in resultArray.indices) {
-            addResultView(i)
+            try{
+                addResultView(i, groupNameArray[i])
+            }catch(e:ArrayIndexOutOfBoundsException){ //前のバージョンだとグループ名ないので
+                addResultView(i, c.getString(R.string.group) + (i + 1).toString())
+            }
         }
     }
 
     //結果表示
-    private fun addResultView(i: Int) {
-        val groupName: TextView
+    private fun addResultView(i: Int, groupName: String) {
+        val groupTextView: TextView
         val arrayList: ListView
         val v = c.layoutInflater.inflate(R.layout.result_parts, null)
         result.addView(v)
-        groupName = v.findViewById<View>(R.id.result_group) as TextView
-        val text = c.getString(R.string.group) + (i + 1).toString()
-        groupName.text = text
+        groupTextView = v.findViewById<View>(R.id.result_group) as TextView
+        groupTextView.text = groupName
         arrayList = v.findViewById<View>(R.id.result_member_listView) as ListView
         val adapter = SmallMBListAdapter(c, resultArray[i])
         arrayList.adapter = adapter

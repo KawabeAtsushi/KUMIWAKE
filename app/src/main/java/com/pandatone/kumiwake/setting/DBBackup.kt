@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatDialog
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
+import com.pandatone.kumiwake.history.HistoryAdapter
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -39,6 +40,15 @@ object DBBackup {
             }
             return GroupAdapter.db.path   //DBのディレクトリとファイル名
         }
+    private val hs_db_file: String
+        get() {
+            HistoryAdapter(context).also {
+                it.open()
+                it.getDB
+                it.close()
+            }
+            return HistoryAdapter.db.path   //DBのディレクトリとファイル名
+        }
     private lateinit var context: Context
     private var b: Boolean = false
 
@@ -60,7 +70,8 @@ object DBBackup {
 
         var err = 0
         err += fileCopy(mb_db_file, "$path/mb.db", c)
-        err += fileCopy(gp_db_file, "$path/gp.db", c)//DBのファイルをSDにコピー
+        err += fileCopy(gp_db_file, "$path/gp.db", c)
+        err += fileCopy(hs_db_file, "$path/hs.db", c)//DBのファイルをSDにコピー
 
         if (err == 0) {
             Toast.makeText(c, c.getString(R.string.back_up_completed), Toast.LENGTH_SHORT).show()
@@ -84,7 +95,8 @@ object DBBackup {
         }
 
         err += fileCopy("$path/mb.db", mb_db_file, c)
-        err += fileCopy("$path/gp.db", gp_db_file, c) //DBのファイルをインポート
+        err += fileCopy("$path/gp.db", gp_db_file, c)
+        err += fileCopy("$path/hs.db", hs_db_file, c)//DBのファイルをインポート
 
         if (err == 0) {
             dialog.dismiss()

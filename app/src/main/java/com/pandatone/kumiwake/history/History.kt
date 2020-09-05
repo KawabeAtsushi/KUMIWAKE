@@ -2,7 +2,7 @@ package com.pandatone.kumiwake.history
 
 import java.io.Serializable
 
-class History(id: Int, time: String, name: String, result: String, mode: Int, keep: Int, parent: Int) : Serializable {
+class History(id: Int, time: String, name: String, result: String,resultGp: String, mode: Int, keep: Int, parent: Int) : Serializable {
     var id: Int //ID
         private set
     var time: String //作成日時
@@ -10,6 +10,8 @@ class History(id: Int, time: String, name: String, result: String, mode: Int, ke
     var name: String //履歴名（デフォルトは日時にする）
         private set
     var result: String //（組分け結果）
+        private set
+    var resultGp: String //（組分け結果のグループ名）
         private set
     var mode: Int //kumiwake(0) or sekigime(1)
         private set
@@ -23,6 +25,7 @@ class History(id: Int, time: String, name: String, result: String, mode: Int, ke
         this.time = time
         this.name = name
         this.result = result
+        this.resultGp = resultGp
         this.mode = mode
         this.keep = keep
         this.parent = parent

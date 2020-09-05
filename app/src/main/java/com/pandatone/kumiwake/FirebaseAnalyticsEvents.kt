@@ -40,7 +40,15 @@ object FirebaseAnalyticsEvents {
         firebaseAnalytics.logEvent("number_define", bundle)
     }
 
-    //メンバー情報
+    //グループ・座席名
+    fun groupCreateEvent(groupName: String, seatName: String) {
+        val bundle = Bundle()
+        bundle.putString("group_name", groupName)
+        bundle.putString("seat_name", seatName)
+        firebaseAnalytics.logEvent("group_create", bundle)
+    }
+
+    //メンバー登録イベント
     fun memberRegisterEvent(member: Member) {
         val bundle = Bundle()
         bundle.putString("id", member.id.toString())
@@ -50,7 +58,7 @@ object FirebaseAnalyticsEvents {
         firebaseAnalytics.logEvent("new_member", bundle)
     }
 
-    //グループ情報
+    //グループ登録イベント
     fun groupRegisterEvent(groupName: String, belongNo: Int) {
         val bundle = Bundle()
         bundle.putString("name", groupName)

@@ -5,6 +5,7 @@ import android.content.Context
 import android.text.format.DateFormat
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.MemberAdapter
+import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
 import java.text.SimpleDateFormat
 import java.util.*
@@ -12,8 +13,9 @@ import kotlin.collections.ArrayList
 
 object HistoryMethods {
 
+    //結果配列を文字列に
     private fun resultArrayToString(resultArray: ArrayList<ArrayList<Member>>): String {
-        //",/"がグループ区切りの合図
+        //  ",/"がグループ区切りの合図
         var resultString = ","
         resultArray.forEach { group ->
             resultString += "/"
@@ -24,6 +26,7 @@ object HistoryMethods {
         return resultString
     }
 
+    //文字列を結果配列に
     fun stringToResultArray(context: Context, resultStr: String): ArrayList<ArrayList<Member>> {
         val groups = resultStr.split(",/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray().toCollection(ArrayList())
         groups.removeAll { it.count() == 0 } //空配列を削除
@@ -40,6 +43,22 @@ object HistoryMethods {
         return resultArray
     }
 
+    //グループ名結果配列を文字列に
+    private fun resultGroupArrayToString(groupArray: ArrayList<Group>): String {
+        //  ","がグループ区切りの合図
+        var resultString = ""
+        groupArray.forEach { group ->
+            resultString += (group.name + ",")
+        }
+        return resultString
+    }
+
+    //文字列をグループ名結果配列に
+    fun stringToResultGroupArray(groupStr: String): Array<String> {
+        return groupStr.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+    }
+
+    //メンバーリストからメンバーを検索
     private fun pickMember(context: Context, id: String, memberList: ArrayList<Member>): Member {
         val noMember = Member(-1, context.getString(R.string.deleted_mamber), "none", -1, "", "", -1)
         val member = memberList.find { it.id.toString() == id }
@@ -52,13 +71,15 @@ object HistoryMethods {
         }
     }
 
-    fun saveResultToHistory(context: Context, resultArray: ArrayList<ArrayList<Member>>, mode: Int, again: Boolean) {
+    //kumiwake結果を履歴に保存
+    fun saveResultToHistory(context: Context, resultArray: ArrayList<ArrayList<Member>>, groupArray: ArrayList<Group>, mode: Int, again: Boolean) {
         val hsAdapter = HistoryAdapter(context)
         val resultStr = resultArrayToString(resultArray)
+        val groupStr = resultGroupArrayToString(groupArray)
         if (!again) {
-            hsAdapter.saveHistory(resultStr, mode, 0)
+            hsAdapter.saveHistory(resultStr, groupStr, mode, 0)
         } else {
-            hsAdapter.changeHistory(resultStr, mode, 0)
+            hsAdapter.changeHistory(resultStr, groupStr, mode, 0)
         }
     }
 

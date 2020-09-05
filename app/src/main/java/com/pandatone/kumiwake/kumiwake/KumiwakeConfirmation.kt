@@ -8,6 +8,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallGPListAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
@@ -32,6 +33,7 @@ class KumiwakeConfirmation : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.kumiwake_confirmation)
         if (StatusHolder.sekigime) {
@@ -140,6 +142,16 @@ class KumiwakeConfirmation : AppCompatActivity() {
 
     //組み分け実行
     private fun doKumiwake() {
+        //Add Firebase Analytics
+        if (StatusHolder.sekigime) {
+            groupArray.forEach { it ->
+                FirebaseAnalyticsEvents.groupCreateEvent("SEKIGIME", it.name)
+            }
+        } else {
+            groupArray.forEach { it ->
+                FirebaseAnalyticsEvents.groupCreateEvent(it.name, "KUMIWAKE")
+            }
+        }
         val intent = Intent(this, KumiwakeResult::class.java)
         intent.putExtra(KumiwakeArrayKeys.MEMBER_LIST.key, newMemberArray)
         intent.putExtra(KumiwakeArrayKeys.GROUP_LIST.key, groupArray)

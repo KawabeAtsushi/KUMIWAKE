@@ -172,9 +172,9 @@ class KumiwakeResult : AppCompatActivity() {
         //履歴に保存
         if (StatusHolder.normalMode) {
             if (StatusHolder.sekigime) {
-                HistoryMethods.saveResultToHistory(this, resultArray, 1, false)
+                HistoryMethods.saveResultToHistory(this, resultArray, groupArray, 1, false)
             } else {
-                HistoryMethods.saveResultToHistory(this, resultArray, 0, again)
+                HistoryMethods.saveResultToHistory(this, resultArray, groupArray, 0, again)
             }
         }
     }

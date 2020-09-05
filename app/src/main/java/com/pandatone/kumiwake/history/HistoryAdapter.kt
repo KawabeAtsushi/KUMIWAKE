@@ -7,6 +7,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.ArrayAdapter
+import android.widget.Toast
 
 /**
  * Created by atsushi_2 on 2016/03/20.
@@ -23,13 +24,17 @@ class HistoryAdapter(context: Context) : ArrayAdapter<History>(context, 0) {
     }
 
 
-    private class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, TABLE_NAME, null, DB_VERSION) {
+    private class DatabaseHelper(private val context: Context) : SQLiteOpenHelper(context, TABLE_NAME, null, DB_VERSION) {
 
         override fun onCreate(db: SQLiteDatabase) {
             db.execSQL(CREATE_TABLE)
         }
 
         override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+            if (oldVersion < 2) {
+                Toast.makeText(context, "Database Upgraded Ver.$oldVersion to $newVersion", Toast.LENGTH_LONG).show()
+                db.execSQL("ALTER TABLE $TABLE_NAME ADD COLUMN $HS_RESULT_GP TEXT DEFAULT \"\";");
+            }
         }
     }
 
@@ -63,6 +68,7 @@ class HistoryAdapter(context: Context) : ArrayAdapter<History>(context, 0) {
                         c.getString(c.getColumnIndex(HS_TIME)),
                         c.getString(c.getColumnIndex(HS_NAME)),
                         c.getString(c.getColumnIndex(HS_RESULT)),
+                        c.getString(c.getColumnIndex(HS_RESULT_GP)),
                         c.getInt(c.getColumnIndex(HS_MODE)),
                         c.getInt(c.getColumnIndex(HS_KEEP)),
                         c.getInt(c.getColumnIndex(HS_PARENT))
@@ -84,12 +90,14 @@ class HistoryAdapter(context: Context) : ArrayAdapter<History>(context, 0) {
         close()
     }
 
-    fun saveHistory(result: String, mode: Int, parent: Int) {
+    //履歴をデータベースに保存
+    fun saveHistory(result: String, resultGp: String, mode: Int, parent: Int) {
         open()
         db.beginTransaction()          // トランザクション開始
         try {
             val values = ContentValues()
             values.put(HS_RESULT, result)
+            values.put(HS_RESULT_GP, resultGp)
             values.put(HS_MODE, mode)
             values.put(HS_PARENT, parent)
             db.insert(TABLE_NAME, null, values)
@@ -127,7 +135,7 @@ class HistoryAdapter(context: Context) : ArrayAdapter<History>(context, 0) {
     }
 
     //再組み分けしたときに結果を更新する（古いの消して新しいの追加）
-    fun changeHistory(result: String, mode: Int, parent: Int) {
+    fun changeHistory(result: String, resultGp: String, mode: Int, parent: Int) {
         open()
         db.beginTransaction()                      // トランザクション開始
         try {
@@ -139,16 +147,17 @@ class HistoryAdapter(context: Context) : ArrayAdapter<History>(context, 0) {
             db.endTransaction()                    // トランザクションの終了
         }
         close()
-        saveHistory(result, mode, parent)
+        saveHistory(result, resultGp, mode, parent)
     }
 
     companion object {
-        const val DB_VERSION = 1
+        const val DB_VERSION = 2
         const val TABLE_NAME = "history_table"
         const val HS_ID = "_id"
         const val HS_TIME = "hs_time"
         const val HS_NAME = "hs_name"
         const val HS_RESULT = "hs_result"
+        const val HS_RESULT_GP = "hs_result_group"
         const val HS_MODE = "hs_mode"
         const val HS_KEEP = "hs_keep"
         const val HS_PARENT = "hs_parent"
@@ -159,6 +168,6 @@ class HistoryAdapter(context: Context) : ArrayAdapter<History>(context, 0) {
                 + HS_TIME + " TIMESTAMP DEFAULT (DATETIME('now','localtime')),"
                 + HS_NAME + " TEXT NOT NULL DEFAULT (DATETIME('now','localtime')),"
                 + HS_RESULT + " TEXT," + HS_MODE + " INTEGER," + HS_KEEP + " INTEGER DEFAULT -1,"
-                + HS_PARENT + " INTEGER DEFAULT -1" + ");")
+                + HS_PARENT + " INTEGER DEFAULT -1," + HS_RESULT_GP + " TEXT" + ");")
     }
 }
