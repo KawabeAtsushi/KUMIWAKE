@@ -2,7 +2,7 @@
 
 Created By PANDATONE.
 
-[![KUMIWAKE DEMO VIDEO](https://img.youtube.com/vi/o6aGSUSdpjw/0.jpg)](https://www.youtube.com/watch?v=o6aGSUSdpjw)
+[![KUMIWAKE DEMO VIDEO](https://img.youtube.com/vi/BkRs_8h3_sM/0.jpg)](https://www.youtube.com/watch?v=BkRs_8h3_sM)
 
 Store (GooglePlay):</br>
 https://play.google.com/store/apps/details?id=com.pandatone.kumiwake
@@ -12,9 +12,6 @@ https://peraichi.com/landing_pages/view/kumiwake
 
 How To Use:</br>
 https://panda-tone.jimdosite.com/
-
-Privacy Policy:</br>
-https://gist.githubusercontent.com/KawabeAtsushi/39f3ea332b05a6b053b263784a77cd51/raw/7666e22b85561c34a95863f9482ed900482d2c8d/privacy%2520policy
 
 ## Easy grouping in favorite conditions!
 ## You can also determined seats allocation!
@@ -35,7 +32,7 @@ By pre-registered members, can perform the grouping by personal name, it is very
 
 Also,you will find it easier to do "KUMIWAKE" the usual group that you registered in the "group" members.
 
-### ◆ seat allocation
+### ◆ Seating
 
 You can decide the seat to each group at random.
 
@@ -43,6 +40,11 @@ You can decide the seat as "men and women alternately" also, can also be carried
 
 You can seats decided from four types according to the table type of the place.
 
+### ◆ Others
+
+- Order decision
+- Role decisiton
+- Drawing (pick up)
 
 Please use at the time of group activities by all means! !
 
@@ -51,18 +53,22 @@ E-mail:ganbalism@gmail.com
 
 *This app support English and Japanese.*
 
-## バージョン履歴
-■ver.1.0.0（major update）<br>
-・KUMIWAKEリリース！
+## バージョン履歴(major update)
+■ver.1.0.0<br>
+- KUMIWAKEリリース！
 
-■ver.2.0.0（major update）<br>
-・結果シェア機能の実装
+■ver.2.0.0<br>
+- 結果シェア機能の実装 等
 
-■ver.2.1.0<br>
-・KUMIWAKEのメンバー選択画面でメンバーの追加が可能に。
+■ver.3.0.0<br>
+- 席決め結果の一覧表示機能の実装
+- 結果画像のシェア機能の実装
+- 広告削除機能の実装（課金コンテンツ）　等
 
-■ver.2.2.0<br>
-・メンバーの追加が連続で行えるようになりました。
+■ver.4.0.0<br>
+- 「順番決め」「役割決め」「くじ引き」機能の実装
+- 組み分け結果の表示切替機能
+- 履歴から被りなく組み分けできる機能の実装　等
 
-以降は公式サイトでご確認ください。</br>
+詳細は公式サイトでご確認ください。</br>
 https://peraichi.com/landing_pages/view/kumiwake
