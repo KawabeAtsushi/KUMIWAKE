@@ -63,9 +63,9 @@ class FragmentHistory : ListFragment() {
         }
         //行をロングクリックした時の処理
         listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
-            HistoryAdapter(requireContext()).updateHistoryState(historyList[position], "", true)
-            loadName()
-            FragmentKeeps().loadName()
+            val history = historyList[position]
+            //行をロングクリックした時の処理
+            HistoryMethods.onLongClick(history, requireActivity(), hsAdapter, false)
             true //trueにするとイベントが消費される falseだと次のonClickも呼ばれる
         }
     }

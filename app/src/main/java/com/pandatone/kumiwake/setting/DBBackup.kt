@@ -95,8 +95,7 @@ object DBBackup {
         }
 
         err += fileCopy("$path/mb.db", mb_db_file, c)
-        err += fileCopy("$path/gp.db", gp_db_file, c)
-        err += fileCopy("$path/hs.db", hs_db_file, c)//DBのファイルをインポート
+        err += fileCopy("$path/gp.db", gp_db_file, c)//DBのファイルをインポート
 
         if (err == 0) {
             dialog.dismiss()

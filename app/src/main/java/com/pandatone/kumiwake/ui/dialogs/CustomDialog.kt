@@ -25,8 +25,6 @@ class CustomDialog(private var mTitle: String, private var mMessage: CharSequenc
     var mPositiveBtnListener: View.OnClickListener? = null
     var positiveTxt = ""
     var negativeTxt = ""
-    var positiveIconId = 0
-    var negativeIconId = 0
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AppCompatDialog {
         val dialog = activity?.let { AppCompatDialog(it) }
@@ -57,14 +55,6 @@ class CustomDialog(private var mTitle: String, private var mMessage: CharSequenc
         }
         if (negativeTxt != "") {
             negativeButton.text = negativeTxt
-        }
-        if (positiveIconId != 0) {
-            positiveButton.setIconResource(positiveIconId)
-            positiveButton.iconTint = ColorStateList.valueOf(Color.WHITE)
-        }
-        if (negativeIconId != 0) {
-            negativeButton.setIconResource(negativeIconId)
-            positiveButton.iconTint = ColorStateList.valueOf(Color.WHITE)
         }
         // OK ボタンのリスナ
         if (mPositiveBtnListener == null) {

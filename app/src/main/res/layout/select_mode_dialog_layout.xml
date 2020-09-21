@@ -29,10 +29,11 @@
     <ImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="35dp"
         android:contentDescription="@string/kumiwake"
-        android:src="@drawable/img_kumiwake_icon"
+        android:src="@drawable/ic_kumiwake_24px"
+        app:tint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="@id/kumiwake_select_button"
         app:layout_constraintEnd_toEndOf="@id/kumiwake_select_button"
         app:layout_constraintStart_toStartOf="@id/kumiwake_select_button"
@@ -58,12 +59,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="30dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="35dp"
         android:contentDescription="@string/sekigime"
-        android:src="@drawable/img_sekigime_icon"
+        android:src="@drawable/ic_sekigime_24px"
+        app:tint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="@id/sekigime_select_button"
         app:layout_constraintEnd_toEndOf="@id/sekigime_select_button"
         app:layout_constraintStart_toStartOf="@id/sekigime_select_button"

@@ -177,8 +177,10 @@
     <string name="deleted_mamber">削除されたメンバー</string>
     <string name="creation_date">作成日時</string>
     <string name="title">タイトル</string>
-    <string name="how_to_history">・クリックすると組み分けの履歴を確認できます。\n・詳細画面から同じメンバーを使って組分け/席決めができます。
-        \n・行を長押しするとその履歴をお気に入りに登録/解除できます。\n※ノーマルモードの結果のみ保存されます。</string>
+    <string name="how_to_history">・クリックすると組み分けの履歴を確認できます。
+        \n・行を長押しするとメニューが開きます。
+        \n・詳細画面から同じメンバーを使って組分け/席決めができます。
+        \n※ノーマルモードの結果のみ保存されます。</string>
     <string name="close">閉じる</string>
     <string name="use_these_member">このメンバーを使う</string>
     <string name="edit_title">タイトルの変更</string>
@@ -233,4 +235,6 @@
     <string name="ads_removed_temporarily">広告が一時的に削除されました！</string>
     <string name="list_input">リスト入力</string>
     <string name="list_input_description">1行に1人ずつメンバーの名前を入力してください。</string>
+    <string name="add_favorite">お気に入り登録</string>
+    <string name="remove_favorite">お気に入り解除</string>
 </resources>

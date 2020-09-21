@@ -3,6 +3,7 @@ package com.pandatone.kumiwake.history
 import android.app.Activity
 import android.content.Context
 import android.text.format.DateFormat
+import androidx.appcompat.app.AlertDialog
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.member.function.Group
@@ -247,5 +248,60 @@ object HistoryMethods {
             needNoArray.add(needNoRow)
         }
         return needNoArray
+    }
+
+    //行のロングクリックの処理
+    fun onLongClick(history: History, activity: Activity, hsAdapter: HistoryAdapter, pageIsKeeps: Boolean) {
+        val builder = AlertDialog.Builder(activity)
+        val favoriteText = if (history.keep == -1) {
+            activity.getText(R.string.add_favorite)
+        } else {
+            activity.getText(R.string.remove_favorite)
+        }
+        val items = arrayOf(activity.getText(R.string.edit_title), favoriteText, activity.getText(R.string.delete))
+        builder.setTitle(changeDateFormat(history.name))
+        builder.setItems(items) { _, which ->
+            when (which) {
+                0 -> HistoryInfo(activity).editTextDialog(history)
+                1 -> {
+                    hsAdapter.updateHistoryState(history, "", true)
+                    FragmentHistory().loadName()
+                    FragmentKeeps().loadName()
+                    if (pageIsKeeps) {
+                        FragmentKeeps.toolbarTitle = activity.getString(R.string.favorite) + " " + FragmentKeeps.historyList.count().toString() + "♥s"
+                        HistoryMain.toolbar.title = FragmentKeeps.toolbarTitle
+                    }
+                }
+                2 -> {
+                    deleteHistory(history, activity, hsAdapter, pageIsKeeps)
+                }
+            }
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    //履歴削除
+    private fun deleteHistory(history: History, activity: Activity, hsAdapter: HistoryAdapter, pageIsKeeps: Boolean) {
+        val builder = AlertDialog.Builder(activity)
+        builder.setTitle(changeDateFormat(history.name))
+        builder.setMessage(R.string.Do_delete)
+        // OKの時の処理
+        builder.setPositiveButton("OK") { _, _ ->
+            val listId = history.id
+            hsAdapter.selectDelete(listId.toString())
+            FragmentHistory().loadName()
+            FragmentKeeps().loadName()
+            FragmentHistory.toolbarTitle = activity.getString(R.string.history) + " " + FragmentHistory.historyList.count().toString() + "times"
+            FragmentKeeps.toolbarTitle = activity.getString(R.string.favorite) + " " + FragmentKeeps.historyList.count().toString() + "♥s"
+            if (pageIsKeeps) {
+                HistoryMain.toolbar.title = FragmentKeeps.toolbarTitle
+            } else {
+                HistoryMain.toolbar.title = FragmentHistory.toolbarTitle
+            }
+        }
+        builder.setNegativeButton(R.string.cancel) { _, _ -> }
+        val dialog = builder.create()
+        dialog.show()
     }
 }

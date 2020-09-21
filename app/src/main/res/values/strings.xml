@@ -177,9 +177,10 @@
     <string name="deleted_mamber">Deleted member</string>
     <string name="creation_date">Creation date</string>
     <string name="title">Title</string>
-    <string name="how_to_history">・Click to see the grouping history.\n・You can grouping or seating with the same members from the details screen.
-         \n・Long press the line to register or unregister the history as a favorite.\n
-        * Only the results of normal mode are saved.</string>
+    <string name="how_to_history">・Click to see the grouping history.
+         \n・Long press the line to open menu.
+        \n・You can grouping or seating with the same members from the details screen.
+        \n* Only the results of normal mode are saved.</string>
     <string name="close">close</string>
     <string name="use_these_member">use these members</string>
     <string name="edit_title">Edit title</string>
@@ -234,4 +235,6 @@
     <string name="ads_removed_temporarily">Ads removed temporarily!</string>
     <string name="list_input">list input</string>
     <string name="list_input_description">Please enter the member names one per line.</string>
+    <string name="add_favorite">favorite</string>
+    <string name="remove_favorite">unfavorite</string>
 </resources>

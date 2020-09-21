@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.ListFragment
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
@@ -62,11 +63,10 @@ class FragmentKeeps : ListFragment() {
         }
         //行をロングクリックした時の処理
         listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
-            HistoryAdapter(requireContext()).updateHistoryState(historyList[position], "", true)
-            loadName()
-            FragmentHistory().loadName()
-            setToolbarTitle(requireContext())
-            true
+            val history = historyList[position]
+            //行をロングクリックした時の処理
+            HistoryMethods.onLongClick(history,requireActivity(), hsAdapter,true)
+            true //trueにするとイベントが消費される falseだと次のonClickも呼ばれる
         }
     }
 
@@ -97,11 +97,6 @@ class FragmentKeeps : ListFragment() {
 
     private fun toFavoList() {
         historyList.removeAll { it.keep == -1 }
-    }
-
-    private fun setToolbarTitle(c: Context) {
-        toolbarTitle = c.getString(R.string.favorite) + " " + historyList.count().toString() + "♥s"
-        HistoryMain.toolbar.title = toolbarTitle
     }
 
     companion object {

@@ -133,7 +133,7 @@ class HistoryInfo(val c: Activity) {
     }
 
     //名前変更ダイアログ
-    private fun editTextDialog(item: History) {
+    fun editTextDialog(item: History) {
         val builder = AlertDialog.Builder(c)
         val inflater = c.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(R.layout.edittext_dialog_layout, c.findViewById<View>(R.id.info_layout) as ViewGroup?)
@@ -146,7 +146,9 @@ class HistoryInfo(val c: Activity) {
                     val newName = editText.text.toString()
                     if (newName != "") {
                         HistoryAdapter(c).updateHistoryState(item, editText.text.toString(), false)
-                        history.text = newName
+                        if(::history.isInitialized) {
+                            history.text = newName
+                        }
                         FragmentHistory().loadName()
                         FragmentKeeps().loadName()
                     }

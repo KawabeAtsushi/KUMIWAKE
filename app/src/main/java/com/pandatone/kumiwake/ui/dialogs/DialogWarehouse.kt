@@ -12,6 +12,7 @@ import com.pandatone.kumiwake.others.drawing.TicketDefine
 
 class DialogWarehouse(private var fragmentManager: FragmentManager?) {
 
+    //OKのみのダイアログ
     fun confirmationDialog(title: String, message: CharSequence, showLink: CharSequence = "") {
         val customDialog = CustomDialog(title, message, showLink)
         customDialog.mPositiveBtnListener = null
@@ -20,19 +21,14 @@ class DialogWarehouse(private var fragmentManager: FragmentManager?) {
         ft.commitAllowingStateLoss()
     }
 
-    fun decisionDialog(title: String, message: CharSequence, positiveTxt: String = "", negativeTxt: String = "", positiveIconId: Int = 0, negativeIconId: Int = 0, function: () -> Unit) {
+    //positive, negativeのダイアログ
+    fun decisionDialog(title: String, message: CharSequence, positiveTxt: String = "", negativeTxt: String = "", function: () -> Unit) {
         val customDialog = CustomDialog(title, message)
         if (positiveTxt != "") {
             customDialog.positiveTxt = positiveTxt
         }
         if (negativeTxt != "") {
             customDialog.negativeTxt = negativeTxt
-        }
-        if (positiveIconId != 0) {
-            customDialog.positiveIconId = positiveIconId
-        }
-        if (negativeIconId != 0) {
-            customDialog.negativeIconId = negativeIconId
         }
         customDialog.mPositiveBtnListener = View.OnClickListener {
             function()
@@ -43,6 +39,7 @@ class DialogWarehouse(private var fragmentManager: FragmentManager?) {
         ft.commitAllowingStateLoss()
     }
 
+    //backup機能のダイアログ
     fun fmDialog(title: String, message: CharSequence, backup: Boolean) {
         val customDialog = FileManagerDialog(title, message, backup)
         val ft = fragmentManager!!.beginTransaction()
@@ -50,6 +47,7 @@ class DialogWarehouse(private var fragmentManager: FragmentManager?) {
         ft.commitAllowingStateLoss()
     }
 
+    //カラーピッカー用のダイアログ
     fun colorPickerDialog(context: Context, position: Int, icon: ImageView) {
         var initialColor = Color.WHITE
         TicketDefine.ticketColors[position].let {

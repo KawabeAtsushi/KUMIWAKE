@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import com.pandatone.kumiwake.adapter.MemberAdapter
 
 /**
  * Created by atsushi_2 on 2016/03/20.
@@ -149,6 +150,22 @@ class HistoryAdapter(context: Context) : ArrayAdapter<History>(context, 0) {
         close()
         saveHistory(result, resultGp, mode, parent)
     }
+
+    //レコードの選択削除
+    fun selectDelete(position: String) {
+        open()
+        db.beginTransaction()                      // トランザクション開始
+        try {
+            db.delete(TABLE_NAME, "${HS_ID}=?", arrayOf(position))
+            db.setTransactionSuccessful()          // トランザクションへコミット
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            db.endTransaction()                    // トランザクションの終了
+        }
+        close()
+    }
+
 
     companion object {
         const val DB_VERSION = 2
