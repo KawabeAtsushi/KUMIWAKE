@@ -6,7 +6,9 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.opengl.Visibility
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import java.io.File
@@ -18,7 +20,8 @@ import java.io.IOException
 object ShareViewImage {
 
     fun shareView(context: Context, view: View, message: String) {
-        writeBitmapExtarnalStorage(context, view)
+
+        writeBitmapExternalStorage(context, view)
 
         // ファイル保存先 (SDカード)
         val fileFullPath = getShareImageFilePath(context)
@@ -49,7 +52,7 @@ object ShareViewImage {
     /**
      * SDカードにbitmapを保存する
      */
-    private fun writeBitmapExtarnalStorage(context: Context, view: View) {
+    private fun writeBitmapExternalStorage(context: Context, view: View) {
         // ファイル保存先 (SD)
         val fileFullPath = getShareImageFilePath(context)
         val out = FileOutputStream(fileFullPath)

@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.pandatone.kumiwake.adapter.MemberAdapter
+import com.pandatone.kumiwake.member.function.Member
 
 /**
  * Created by atsushi_2 on 2016/03/20.
@@ -23,6 +24,28 @@ class HistoryAdapter(context: Context) : ArrayAdapter<History>(context, 0) {
     init {
         dbHelper = DatabaseHelper(this.context)
     }
+
+    //最新のメンバーを取得
+    val latestHistory: History
+        @SuppressLint("Recycle")
+        get() {
+            open()
+            val c = db.rawQuery("SELECT * FROM ${TABLE_NAME}" +
+                    " WHERE ${HS_ID}=(SELECT MAX(${HS_ID}) FROM ${TABLE_NAME});", null)
+            c.moveToFirst()
+            val history = History(
+                    c.getInt(0),
+                    c.getString(c.getColumnIndex(HS_TIME)),
+                    c.getString(c.getColumnIndex(HS_NAME)),
+                    c.getString(c.getColumnIndex(HS_RESULT)),
+                    c.getString(c.getColumnIndex(HS_RESULT_GP)),
+                    c.getInt(c.getColumnIndex(HS_MODE)),
+                    c.getInt(c.getColumnIndex(HS_KEEP)),
+                    c.getInt(c.getColumnIndex(HS_PARENT))
+            )
+            close()
+            return history
+        }
 
 
     private class DatabaseHelper(private val context: Context) : SQLiteOpenHelper(context, TABLE_NAME, null, DB_VERSION) {

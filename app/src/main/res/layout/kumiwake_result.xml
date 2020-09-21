@@ -17,28 +17,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="70dp">
 
             <TextView
                 android:id="@+id/result_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:background="@drawable/gradient_text_background"
                 android:text="@string/kumiwake_result"
-                android:textSize="22sp" />
+                android:textSize="22sp"
+                android:textColor="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/edit_result_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/circle_button_background"
+                android:contentDescription="@string/edit_title"
+                android:src="@drawable/ic_edit_24dp"
+                android:tint="@color/gray"
+                app:layout_constraintBottom_toBottomOf="@id/result_title"
+                app:layout_constraintStart_toEndOf="@id/result_title"
+                app:layout_constraintTop_toTopOf="@id/result_title" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_gravity="end"
-                android:layout_marginEnd="10dp"
+                android:layout_margin="10dp"
                 android:background="@drawable/tab_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/result_title"
                 app:tabBackground="@drawable/tab_selector"
                 app:tabIndicatorHeight="0dp"
                 app:tabPaddingEnd="10dp"
@@ -47,78 +65,108 @@
                 app:tabSelectedTextColor="@android:color/black" />
 
             <LinearLayout
-                android:id="@+id/result_layout"
+                android:id="@+id/whole_result_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:orientation="vertical"
-                android:padding="6dp" />
+                app:layout_constraintTop_toBottomOf="@id/tabLayout">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="5dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/re_kumiwake"
-                    style="@style/Button.Transparent.Rounded"
+                <TextView
+                    android:id="@+id/inner_result_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginBottom="10dp"
-                    android:padding="12dp"
-                    android:text="@string/retry"
-                    android:textColor="@android:color/white"
-                    app:backgroundTint="#ff6666"
-                    app:icon="@drawable/ic_redo_24dp"
-                    app:iconTint="@android:color/white" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/share_result"
-                    style="@style/Button.Transparent.Rounded"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_margin="10dp"
-                    android:padding="12dp"
-                    android:text="@string/share_result"
-                    android:textColor="@android:color/white"
-                    app:backgroundTint="#81d4fa"
-                    app:icon="@drawable/ic_send_24dp"
-                    app:iconTint="@android:color/white" />
+                    android:background="@drawable/gradient_text_background"
+                    android:text="@string/kumiwake_result"
+                    android:textSize="22sp"
+                    android:textColor="@color/gray"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/comment_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/comment_background"
+                    android:text="@string/comment"
+                    android:textSize="18sp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/result_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="6dp" />
             </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/re_kumiwake"
+                style="@style/Button.Transparent.Rounded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="12dp"
+                android:text="@string/retry"
+                android:textColor="@android:color/white"
+                app:backgroundTint="#ff6666"
+                app:icon="@drawable/ic_redo_24dp"
+                app:iconTint="@android:color/white"
+                app:layout_constraintEnd_toStartOf="@id/share_result"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/whole_result_layout" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/share_result"
+                style="@style/Button.Transparent.Rounded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:text="@string/share_result"
+                android:textColor="@android:color/white"
+                app:backgroundTint="#81d4fa"
+                app:icon="@drawable/ic_send_24dp"
+                app:iconTint="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="@id/re_kumiwake"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/re_kumiwake"
+                app:layout_constraintTop_toTopOf="@id/re_kumiwake" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/go_sekigime"
                 style="@style/Button.Transparent.Rounded"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="15dp"
+                android:layout_margin="15dp"
                 android:padding="12dp"
                 android:text="@string/go_sekigime"
                 android:textColor="@android:color/white"
                 app:backgroundTint="@color/light_green"
                 app:icon="@drawable/ic_sekigime_24px"
-                app:iconTint="@android:color/white" />
+                app:iconTint="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/re_kumiwake" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/go_home"
                 style="@style/Button.Transparent.Rounded"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="70dp"
+                android:layout_margin="15dp"
                 android:padding="12dp"
                 android:text="@string/go_home"
                 android:textColor="@android:color/white"
                 app:backgroundTint="@color/gray"
                 app:icon="@drawable/ic_home_24dp"
-                app:iconTint="@android:color/white" />
-        </LinearLayout>
+                app:iconTint="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/go_sekigime" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
     <com.google.android.gms.ads.AdView

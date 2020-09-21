@@ -237,4 +237,8 @@
     <string name="list_input_description">Please enter the member names one per line.</string>
     <string name="add_favorite">favorite</string>
     <string name="remove_favorite">unfavorite</string>
+    <string name="comment">comment</string>
+    <string name="include_title">include title</string>
+    <string name="include_comment">include comment</string>
+    <string name="share_option">share options</string>
 </resources>

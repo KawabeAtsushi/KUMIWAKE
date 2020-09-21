@@ -95,7 +95,7 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
     }
 
     //最新のメンバーを取得
-    val newMember: Member
+    val latestMember: Member
         @SuppressLint("Recycle")
         get() {
             open()

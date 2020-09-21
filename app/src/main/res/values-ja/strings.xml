@@ -237,4 +237,8 @@
     <string name="list_input_description">1行に1人ずつメンバーの名前を入力してください。</string>
     <string name="add_favorite">お気に入り登録</string>
     <string name="remove_favorite">お気に入り解除</string>
+    <string name="comment">コメント</string>
+    <string name="include_title">タイトルを含める</string>
+    <string name="include_comment">コメントを含める</string>
+    <string name="share_option">シェアオプション</string>
 </resources>

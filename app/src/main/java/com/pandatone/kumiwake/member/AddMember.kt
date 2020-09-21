@@ -228,7 +228,7 @@ class AddMember : AppCompatActivity() {
             saveItem()
             afterBelong = belongDropdown!!.text.toString().split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             MemberMethods.updateBelongNo(this)
-            val newMember = MemberAdapter(this).newMember
+            val newMember = MemberAdapter(this).latestMember
 
             when (fromMode) {
                 "normal" -> NormalMode.memberArray.add(newMember)
