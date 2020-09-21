@@ -1,6 +1,8 @@
 package com.pandatone.kumiwake.kumiwake.function
 
 import android.app.Activity
+import android.view.View
+import android.widget.TextView
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
@@ -140,7 +142,7 @@ object KumiwakeMethods {
     }
 
     //結果共有方法選択       ?関数型: () -> T を持ちます。つまり、パラメータを取らず、型 T の値を返す関数
-    fun shareResult(activity: Activity, choice1: () -> Unit, choice2: () -> Unit) {
+    fun shareResult(activity: Activity, titleView: View, commentView: TextView, choice1: () -> Unit, choice2: () -> Unit) {
         val builder = androidx.appcompat.app.AlertDialog.Builder(activity)
         val items = arrayOf(
                 activity.getString(R.string.share_with_text),
@@ -155,9 +157,16 @@ object KumiwakeMethods {
                 0 -> choice1()
                 1 -> choice2()
             }
+            titleView.visibility = View.GONE
+            if (commentView.text != "") {
+                commentView.visibility = View.VISIBLE
+            }
         }
         // アラートダイアログのボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
-        builder.setNegativeButton(R.string.cancel) { _, _ -> }
+        builder.setNegativeButton(R.string.cancel) { _, _ ->
+            titleView.visibility = View.GONE
+            commentView.visibility = View.VISIBLE
+        }
 
         // back keyを使用不可に設定
         builder.setCancelable(false)

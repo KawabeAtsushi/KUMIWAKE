@@ -76,7 +76,7 @@ class OrderResult : AppCompatActivity() {
 
     private fun shareResult() {
         val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
-        KumiwakeMethods.shareResult(this, this::share) { ShareViewImage.shareView(this, resultLayout, getString(R.string.order)) }
+        //KumiwakeMethods.shareResult(this, this::share) { ShareViewImage.shareView(this, resultLayout, getString(R.string.order)) }
     }
 
     private fun onGoHome() {

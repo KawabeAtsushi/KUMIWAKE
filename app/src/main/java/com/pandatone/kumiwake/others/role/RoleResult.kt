@@ -179,7 +179,7 @@ class RoleResult : AppCompatActivity() {
 
     private fun shareResult() {
         val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
-        KumiwakeMethods.shareResult(this, this::share) { ShareViewImage.shareView(this, resultLayout, getString(R.string.role)) }
+        //KumiwakeMethods.shareResult(this, this::share) { ShareViewImage.shareView(this, resultLayout, getString(R.string.role)) }
     }
 
     private fun onGoHome() {

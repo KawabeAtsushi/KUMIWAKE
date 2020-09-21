@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ShareCompat
-import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.tabs.TabLayout
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
@@ -53,6 +51,8 @@ class KumiwakeResult : AppCompatActivity() {
     //結果タイトル&コメント
     private var title = ""
     private var comment = ""
+    private var includeTitle = false
+    private var includeComment = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -239,7 +239,7 @@ class KumiwakeResult : AppCompatActivity() {
     }
 
     private fun shareResult() {
-        KumiwakeMethods.shareResult(this, this::shareText, this::shareImage)
+        shareOptionDialog()
     }
 
     private fun onGoSekigime() {
@@ -354,10 +354,6 @@ class KumiwakeResult : AppCompatActivity() {
                 .setView(view)
                 .setPositiveButton(R.string.change) { _, _ ->
                     changeInfo(etTitle.text.toString(), etComment.text.toString())
-                    if (StatusHolder.normalMode && title != "") {
-                        val hsAdapter = HistoryAdapter(this)
-                        hsAdapter.updateHistoryState(hsAdapter.latestHistory, title, false)
-                    }
                 }
                 .setNegativeButton(R.string.cancel) { dialog, _ ->
                     dialog.dismiss()
@@ -372,6 +368,10 @@ class KumiwakeResult : AppCompatActivity() {
         if (title != "") {
             findViewById<TextView>(R.id.result_title).text = title
             findViewById<TextView>(R.id.inner_result_title).text = title
+            if (StatusHolder.normalMode) {
+                val hsAdapter = HistoryAdapter(this)
+                hsAdapter.updateHistoryState(hsAdapter.latestHistory, title, false)
+            }
         } else {
             findViewById<TextView>(R.id.result_title).text = getString(R.string.kumiwake_result)
             findViewById<TextView>(R.id.inner_result_title).text = getString(R.string.kumiwake_result)
@@ -383,22 +383,92 @@ class KumiwakeResult : AppCompatActivity() {
             tvComment.text = comment
         } else {
             tvComment.visibility = View.GONE
+            tvComment.text = ""
         }
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////                                   テキスト共有メソッド                                              ////
+    ////                                   結果共有メソッド                                              ////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //option設定ダイアログ
+    private fun shareOptionDialog() {
+        val builder = AlertDialog.Builder(this)
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.edit_result_dialog_layout, findViewById<View>(R.id.info_layout) as ViewGroup?)
+        val indexTitle = view.findViewById<TextView>(R.id.title_index)
+        val etTitle = view.findViewById<EditText>(R.id.edit_title)
+        indexTitle.visibility = View.GONE
+        etTitle.visibility = View.GONE
+        if (title != "") etTitle.setText(this.title)
+        val indexComment = view.findViewById<TextView>(R.id.comment_index)
+        val etComment = view.findViewById<EditText>(R.id.edit_comment)
+        indexComment.visibility = View.GONE
+        etComment.visibility = View.GONE
+        if (comment != "") etComment.setText(this.comment)
+
+        val includeTitleCheck = view.findViewById<CheckBox>(R.id.include_title_check)
+        val includeCommentCheck = view.findViewById<CheckBox>(R.id.include_comment_check)
+
+        includeTitleCheck.setOnCheckedChangeListener { _, checked ->
+            if (checked) {
+                indexTitle.visibility = View.VISIBLE
+                etTitle.visibility = View.VISIBLE
+            } else {
+                indexTitle.visibility = View.GONE
+                etTitle.visibility = View.GONE
+            }
+        }
+        includeCommentCheck.setOnCheckedChangeListener { _, checked ->
+            if (checked) {
+                indexComment.visibility = View.VISIBLE
+                etComment.visibility = View.VISIBLE
+            } else {
+                indexComment.visibility = View.GONE
+                etComment.visibility = View.GONE
+            }
+        }
+
+        builder.setTitle(getString(R.string.share_option))
+                .setView(view)
+                .setPositiveButton(R.string.share) { _, _ ->
+                    changeInfo(etTitle.text.toString(), etComment.text.toString())
+                    val tvTitle = findViewById<TextView>(R.id.inner_result_title)
+                    val tvComment = findViewById<TextView>(R.id.comment_view)
+                    includeTitle = includeTitleCheck.isChecked
+                    includeComment = includeCommentCheck.isChecked
+                    if (includeTitle) {
+                        tvTitle.visibility = View.VISIBLE
+                    } else {
+                        tvTitle.visibility = View.GONE
+                    }
+                    if (includeComment && comment != "") {
+                        tvComment.visibility = View.VISIBLE
+                    } else {
+                        tvComment.visibility = View.GONE
+                    }
+                    KumiwakeMethods.shareResult(this, tvTitle, tvComment, this::shareText, this::shareImage)
+                }
+                .setNegativeButton(R.string.cancel) { dialog, _ ->
+                    dialog.dismiss()
+                }
+        val dialog = builder.create()
+        dialog.show()
+    }
 
     //テキストでシェア
     private fun shareText() {
         var setLeader = false
-        val articleTitle = if (title != "") {
-            title
+        val articleTitle = if (includeTitle) {
+            if (title != "") {
+                "～$title～"
+            } else {
+                "～${getString(R.string.kumiwake_result)}～"
+            }
         } else {
-            getString(R.string.kumiwake_result)
+            ""
         }
-        val articleComment = if (comment != "") {
+        val articleComment = if (includeComment && comment != "") {
             "\n$comment"
         } else {
             ""
@@ -425,9 +495,9 @@ class KumiwakeResult : AppCompatActivity() {
         }
 
         sharedText = if (setLeader) {
-            "～$articleTitle～$articleComment\n$descriptionLeader$resultTxt"
+            "$articleTitle$articleComment\n$descriptionLeader$resultTxt"
         } else {
-            "～$articleTitle～$articleComment\n$resultTxt"
+            "$articleTitle$articleComment\n$resultTxt"
         }
         // builderの生成
         val builder = ShareCompat.IntentBuilder.from(this)
@@ -445,62 +515,8 @@ class KumiwakeResult : AppCompatActivity() {
 
     //画像でシェア
     private fun shareImage() {
-        val builder = AlertDialog.Builder(this)
-        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.edit_result_dialog_layout, findViewById<View>(R.id.info_layout) as ViewGroup?)
-        val indexTitle = view.findViewById<TextView>(R.id.title_index)
-        val etTitle = view.findViewById<EditText>(R.id.edit_title)
-        if (title != "") etTitle.setText(this.title)
-        val indexComment = view.findViewById<TextView>(R.id.comment_index)
-        val etComment = view.findViewById<EditText>(R.id.edit_comment)
-        if (comment != "") etComment.setText(this.comment)
-        indexTitle.visibility = View.GONE
-        etTitle.visibility = View.GONE
-        indexComment.visibility = View.GONE
-        etComment.visibility = View.GONE
-        val includeTitleCheck = view.findViewById<CheckBox>(R.id.include_title_check)
-        val includeCommentCheck = view.findViewById<CheckBox>(R.id.include_comment_check)
-        val tvTitle = findViewById<TextView>(R.id.inner_result_title)
-        val tvComment = findViewById<TextView>(R.id.comment_view)
-        tvTitle.visibility = View.GONE
-        tvComment.visibility = View.GONE
-        includeTitleCheck.setOnCheckedChangeListener { _, checked ->
-            if (checked) {
-                indexTitle.visibility = View.VISIBLE
-                etTitle.visibility = View.VISIBLE
-                tvTitle.visibility = View.VISIBLE
-            } else {
-                indexTitle.visibility = View.GONE
-                etTitle.visibility = View.GONE
-                tvTitle.visibility = View.GONE
-            }
-        }
-        includeCommentCheck.setOnCheckedChangeListener { _, checked ->
-            if (checked) {
-                indexComment.visibility = View.VISIBLE
-                etComment.visibility = View.VISIBLE
-                tvComment.visibility = View.VISIBLE
-            } else {
-                indexComment.visibility = View.GONE
-                etComment.visibility = View.GONE
-                tvComment.visibility = View.GONE
-            }
-        }
-        etTitle.doAfterTextChanged { _ -> changeInfo(etTitle.text.toString(), etComment.text.toString()) }
-        etComment.doAfterTextChanged { _ -> changeInfo(etTitle.text.toString(), etComment.text.toString()) }
-        builder.setTitle(getString(R.string.share_option))
-                .setView(view)
-                .setPositiveButton(R.string.share) { _, _ ->
-                    val shareLayout = findViewById<LinearLayout>(R.id.whole_result_layout)
-                    ShareViewImage.shareView(this, shareLayout, getString(R.string.kumiwake_result))
-                    tvTitle.visibility = View.GONE
-                    tvComment.visibility = View.VISIBLE
-                }
-                .setNegativeButton(R.string.cancel) { dialog, _ ->
-                    dialog.dismiss()
-                }
-        val dialog = builder.create()
-        dialog.show()
+        val shareLayout = findViewById<LinearLayout>(R.id.whole_result_layout)
+        ShareViewImage.shareView(this, shareLayout, getString(R.string.kumiwake_result))
     }
 }
 
