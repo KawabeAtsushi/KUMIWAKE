@@ -241,4 +241,6 @@
     <string name="include_title">タイトルを含める</string>
     <string name="include_comment">コメントを含める</string>
     <string name="share_option">シェアオプション</string>
+    <string name="input_comment">コメントを入力</string>
+    <string name="add_info">情報の追加</string>
 </resources>

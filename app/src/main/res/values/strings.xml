@@ -241,4 +241,6 @@
     <string name="include_title">include title</string>
     <string name="include_comment">include comment</string>
     <string name="share_option">share options</string>
+    <string name="input_comment">Input comment</string>
+    <string name="add_info">Add info</string>
 </resources>

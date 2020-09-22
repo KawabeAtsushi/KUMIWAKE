@@ -6,19 +6,23 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.LinearLayout
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ShareCompat
+import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputLayout
-import com.pandatone.kumiwake.MainActivity
-import com.pandatone.kumiwake.PublicMethods
-import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.ShareViewImage
+import com.pandatone.kumiwake.*
+import com.pandatone.kumiwake.history.HistoryAdapter
+import com.pandatone.kumiwake.kumiwake.function.KumiwakeMethods
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.sekigime.function.DrawAllTable
 import com.pandatone.kumiwake.sekigime.function.DrawTableView
@@ -36,6 +40,9 @@ class SekigimeResult : AppCompatActivity() {
     private var teamArrayMan: ArrayList<ArrayList<Member>> = ArrayList()
     private var teamArrayWoman: ArrayList<ArrayList<Member>> = ArrayList()
     private lateinit var tabLayout: TabLayout
+    //結果タイトル&コメント
+    private var title = ""
+    private var comment = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +77,8 @@ class SekigimeResult : AppCompatActivity() {
         groupDropdown.onItemClickListener = OnItemClickListener { _, _, position, _ ->
             drawView(position)
         }
+
+        findViewById<ImageButton>(R.id.edit_result_title).setOnClickListener { editInfoDialog() }
         findViewById<Button>(R.id.re_sekigime).setOnClickListener { onReSekigime() }
         findViewById<Button>(R.id.go_home).setOnClickListener { onGoHome() }
         findViewById<Button>(R.id.share_image).setOnClickListener { onShareImage() }
@@ -122,6 +131,65 @@ class SekigimeResult : AppCompatActivity() {
         override fun onTabReselected(tab: TabLayout.Tab) {}
     }
 
+    //情報変更ダイアログ
+    private fun editInfoDialog() {
+        val builder = AlertDialog.Builder(this)
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.edit_result_dialog_layout, findViewById<View>(R.id.info_layout) as ViewGroup?)
+        val etTitle = view.findViewById<EditText>(R.id.edit_title)
+        etTitle.hint = getString(R.string.sekigime_result)
+        if (title != "") etTitle.setText(this.title)
+        val etComment = view.findViewById<EditText>(R.id.edit_comment)
+        if (comment != "") etComment.setText(this.comment)
+        view.findViewById<CheckBox>(R.id.include_title_check).visibility = View.GONE
+        view.findViewById<CheckBox>(R.id.include_comment_check).visibility = View.GONE
+        builder.setTitle(getString(R.string.add_info))
+                .setView(view)
+                .setPositiveButton(R.string.change) { _, _ ->
+                    changeInfo(etTitle.text.toString(), etComment.text.toString())
+                    val tvTitle = findViewById<TextView>(R.id.inner_result_title)
+                    if (title != "") {
+                        tvTitle.visibility = View.VISIBLE
+                        if (StatusHolder.normalMode) {
+                            val hsAdapter = HistoryAdapter(this)
+                            hsAdapter.updateHistoryState(hsAdapter.latestHistory, title, false)
+                        }
+                    } else {
+                        tvTitle.visibility = View.GONE
+                    }
+                    val tvComment = findViewById<TextView>(R.id.comment_view)
+                    if (comment != "") {
+                        tvComment.visibility = View.VISIBLE
+                    } else {
+                        tvComment.visibility = View.GONE
+                    }
+                }
+                .setNegativeButton(R.string.cancel) { dialog, _ ->
+                    dialog.dismiss()
+                }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    //情報変更
+    private fun changeInfo(newTitle: String, newComment: String) {
+        title = newTitle
+        val tvTitle = findViewById<TextView>(R.id.inner_result_title)
+        if (title != "") {
+            tvTitle.text = title
+        } else {
+            tvTitle.text = getString(R.string.sekigime_result)
+        }
+        comment = newComment
+        val tvComment = findViewById<TextView>(R.id.comment_view)
+        if (comment != "") {
+            tvComment.text = comment
+            tvComment.visibility = View.VISIBLE
+        } else {
+            tvComment.visibility = View.GONE
+        }
+    }
+
     //ボタンの処理
     //再席決め
     private fun onReSekigime() {
@@ -139,8 +207,87 @@ class SekigimeResult : AppCompatActivity() {
 
     //結果画像共有
     private fun onShareImage() {
-        val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
-        ShareViewImage.shareView(this, resultLayout, getString(R.string.sekigime_result))
+        shareOptionDialog()
+    }
+
+    //option設定ダイアログ
+    private fun shareOptionDialog() {
+        val builder = AlertDialog.Builder(this)
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.edit_result_dialog_layout, findViewById<View>(R.id.info_layout) as ViewGroup?)
+        val indexTitle = view.findViewById<TextView>(R.id.title_index)
+        val etTitle = view.findViewById<EditText>(R.id.edit_title)
+        indexTitle.visibility = View.GONE
+        etTitle.visibility = View.GONE
+        etTitle.hint = getString(R.string.sekigime_result)
+        if (title != "") etTitle.setText(this.title)
+        val indexComment = view.findViewById<TextView>(R.id.comment_index)
+        val etComment = view.findViewById<EditText>(R.id.edit_comment)
+        indexComment.visibility = View.GONE
+        etComment.visibility = View.GONE
+        if (comment != "") etComment.setText(this.comment)
+
+        val includeTitleCheck = view.findViewById<CheckBox>(R.id.include_title_check)
+        val includeCommentCheck = view.findViewById<CheckBox>(R.id.include_comment_check)
+        val tvTitle = findViewById<TextView>(R.id.inner_result_title)
+        tvTitle.visibility = View.GONE
+        val tvComment = findViewById<TextView>(R.id.comment_view)
+        tvComment.visibility = View.GONE
+
+        includeTitleCheck.setOnCheckedChangeListener { _, checked ->
+            if (checked) {
+                indexTitle.visibility = View.VISIBLE
+                etTitle.visibility = View.VISIBLE
+                tvTitle.visibility = View.VISIBLE
+            } else {
+                indexTitle.visibility = View.GONE
+                etTitle.visibility = View.GONE
+                tvTitle.visibility = View.GONE
+            }
+        }
+        includeCommentCheck.setOnCheckedChangeListener { _, checked ->
+
+            if (checked) {
+                indexComment.visibility = View.VISIBLE
+                etComment.visibility = View.VISIBLE
+                if (tvComment.text != "") {
+                    tvComment.visibility = View.VISIBLE
+                }
+
+            } else {
+                indexComment.visibility = View.GONE
+                etComment.visibility = View.GONE
+                tvComment.visibility = View.GONE
+            }
+        }
+
+        etTitle.doAfterTextChanged { changeInfo(etTitle.text.toString(), etComment.text.toString()) }
+        etComment.doAfterTextChanged { changeInfo(etTitle.text.toString(), etComment.text.toString()) }
+
+        builder.setTitle(getString(R.string.share_option))
+                .setView(view)
+                .setPositiveButton(R.string.share) { _, _ ->
+                    if (StatusHolder.normalMode) {
+                        val hsAdapter = HistoryAdapter(this)
+                        hsAdapter.updateHistoryState(hsAdapter.latestHistory, title, false)
+                    }
+                    shareImage()
+                }
+                .setNegativeButton(R.string.cancel) { dialog, _ ->
+                    tvTitle.visibility = View.GONE
+                    if (tvComment.text != "") {
+                        tvComment.visibility = View.VISIBLE
+                    }
+                    dialog.dismiss()
+                }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    //画像でシェア
+    private fun shareImage() {
+        val shareLayout = findViewById<LinearLayout>(R.id.whole_result_layout)
+        ShareViewImage.shareView(this, shareLayout, getString(R.string.sekigime_result))
     }
 
     //再席決め処理

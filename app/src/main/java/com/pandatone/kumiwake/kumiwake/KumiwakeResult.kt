@@ -221,6 +221,54 @@ class KumiwakeResult : AppCompatActivity() {
         override fun onTabReselected(tab: TabLayout.Tab) {}
     }
 
+    //情報変更ダイアログ
+    private fun editInfoDialog() {
+        val builder = AlertDialog.Builder(this)
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.edit_result_dialog_layout, findViewById<View>(R.id.info_layout) as ViewGroup?)
+        val etTitle = view.findViewById<EditText>(R.id.edit_title)
+        if (title != "") etTitle.setText(this.title)
+        val etComment = view.findViewById<EditText>(R.id.edit_comment)
+        if (comment != "") etComment.setText(this.comment)
+        view.findViewById<CheckBox>(R.id.include_title_check).visibility = View.GONE
+        view.findViewById<CheckBox>(R.id.include_comment_check).visibility = View.GONE
+        builder.setTitle(getString(R.string.add_info))
+                .setView(view)
+                .setPositiveButton(R.string.change) { _, _ ->
+                    changeInfo(etTitle.text.toString(), etComment.text.toString())
+                }
+                .setNegativeButton(R.string.cancel) { dialog, _ ->
+                    dialog.dismiss()
+                }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    //情報変更
+    private fun changeInfo(newTitle: String, newComment: String) {
+        title = newTitle
+        if (title != "") {
+            findViewById<TextView>(R.id.result_title).text = title
+            findViewById<TextView>(R.id.inner_result_title).text = title
+            if (StatusHolder.normalMode) {
+                val hsAdapter = HistoryAdapter(this)
+                hsAdapter.updateHistoryState(hsAdapter.latestHistory, title, false)
+            }
+        } else {
+            findViewById<TextView>(R.id.result_title).text = getString(R.string.kumiwake_result)
+            findViewById<TextView>(R.id.inner_result_title).text = getString(R.string.kumiwake_result)
+        }
+        comment = newComment
+        val tvComment = findViewById<TextView>(R.id.comment_view)
+        if (comment != "") {
+            tvComment.visibility = View.VISIBLE
+            tvComment.text = comment
+        } else {
+            tvComment.visibility = View.GONE
+            tvComment.text = ""
+        }
+    }
+
     //以下、ボタンの処理
 
     private fun onReKumiwake() {
@@ -337,54 +385,6 @@ class KumiwakeResult : AppCompatActivity() {
         val colorStr = KumiwakeMethods.getResultColorStr(groupNo, groupArray.size)
         val newName = member.name + " → <strong><font color='#" + colorStr + "'>" + groupArray[groupNo].name + "</font></strong>"
         return Member(member.id, newName, member.sex, member.age, member.belong, member.read, member.leader)
-    }
-
-    //情報変更ダイアログ
-    private fun editInfoDialog() {
-        val builder = AlertDialog.Builder(this)
-        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.edit_result_dialog_layout, findViewById<View>(R.id.info_layout) as ViewGroup?)
-        val etTitle = view.findViewById<EditText>(R.id.edit_title)
-        if (title != "") etTitle.setText(this.title)
-        val etComment = view.findViewById<EditText>(R.id.edit_comment)
-        if (comment != "") etComment.setText(this.comment)
-        view.findViewById<CheckBox>(R.id.include_title_check).visibility = View.GONE
-        view.findViewById<CheckBox>(R.id.include_comment_check).visibility = View.GONE
-        builder.setTitle(getString(R.string.edit_title))
-                .setView(view)
-                .setPositiveButton(R.string.change) { _, _ ->
-                    changeInfo(etTitle.text.toString(), etComment.text.toString())
-                }
-                .setNegativeButton(R.string.cancel) { dialog, _ ->
-                    dialog.dismiss()
-                }
-        val dialog = builder.create()
-        dialog.show()
-    }
-
-    //情報変更
-    private fun changeInfo(newTitle: String, newComment: String) {
-        title = newTitle
-        if (title != "") {
-            findViewById<TextView>(R.id.result_title).text = title
-            findViewById<TextView>(R.id.inner_result_title).text = title
-            if (StatusHolder.normalMode) {
-                val hsAdapter = HistoryAdapter(this)
-                hsAdapter.updateHistoryState(hsAdapter.latestHistory, title, false)
-            }
-        } else {
-            findViewById<TextView>(R.id.result_title).text = getString(R.string.kumiwake_result)
-            findViewById<TextView>(R.id.inner_result_title).text = getString(R.string.kumiwake_result)
-        }
-        comment = newComment
-        val tvComment = findViewById<TextView>(R.id.comment_view)
-        if (comment != "") {
-            tvComment.visibility = View.VISIBLE
-            tvComment.text = comment
-        } else {
-            tvComment.visibility = View.GONE
-            tvComment.text = ""
-        }
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////

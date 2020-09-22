@@ -4,12 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ShareCompat
 import com.pandatone.kumiwake.*
+import com.pandatone.kumiwake.history.HistoryAdapter
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeMethods
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
@@ -21,13 +25,20 @@ class OrderResult : AppCompatActivity() {
 
     private lateinit var memberArray: ArrayList<Member>
     private var v = 0
+    private var resultTitle: String = ""
+
+    //結果タイトル&コメント
+    private var title = ""
+    private var comment = ""
+    private var includeTitle = false
+    private var includeComment = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kumiwake_result)
 
-        val resultTitle = getString(R.string.order) + getString(R.string.result)
+        resultTitle = getString(R.string.order) + getString(R.string.result)
         findViewById<TextView>(R.id.result_title).text = resultTitle
         findViewById<View>(R.id.tabLayout).visibility = View.GONE
         val layout = findViewById<ConstraintLayout>(R.id.result_view)
@@ -48,6 +59,7 @@ class OrderResult : AppCompatActivity() {
         val retryButton = findViewById<Button>(R.id.re_kumiwake)
         retryButton.text = getString(R.string.retry)
         retryButton.setOnClickListener { onRetry() }
+        findViewById<ImageButton>(R.id.edit_result_title).setOnClickListener { editInfoDialog() }
         findViewById<Button>(R.id.share_result).setOnClickListener { shareResult() }
         findViewById<Button>(R.id.go_sekigime).visibility = View.GONE
         findViewById<Button>(R.id.go_home).setOnClickListener { onGoHome() }
@@ -57,6 +69,51 @@ class OrderResult : AppCompatActivity() {
         memberArray.shuffle()
         //描画を別スレッドで行う
         Thread(DrawTask(this, memberArray.size)).start()
+    }
+
+    //情報変更ダイアログ
+    private fun editInfoDialog() {
+        val builder = AlertDialog.Builder(this)
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.edit_result_dialog_layout, findViewById<View>(R.id.info_layout) as ViewGroup?)
+        val etTitle = view.findViewById<EditText>(R.id.edit_title)
+        etTitle.hint = resultTitle
+        if (title != "") etTitle.setText(this.title)
+        val etComment = view.findViewById<EditText>(R.id.edit_comment)
+        if (comment != "") etComment.setText(this.comment)
+        view.findViewById<CheckBox>(R.id.include_title_check).visibility = View.GONE
+        view.findViewById<CheckBox>(R.id.include_comment_check).visibility = View.GONE
+        builder.setTitle(getString(R.string.add_info))
+                .setView(view)
+                .setPositiveButton(R.string.change) { _, _ ->
+                    changeInfo(etTitle.text.toString(), etComment.text.toString())
+                }
+                .setNegativeButton(R.string.cancel) { dialog, _ ->
+                    dialog.dismiss()
+                }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    //情報変更
+    private fun changeInfo(newTitle: String, newComment: String) {
+        title = newTitle
+        if (title != "") {
+            findViewById<TextView>(R.id.result_title).text = title
+            findViewById<TextView>(R.id.inner_result_title).text = title
+        } else {
+            findViewById<TextView>(R.id.result_title).text = resultTitle
+            findViewById<TextView>(R.id.inner_result_title).text = resultTitle
+        }
+        comment = newComment
+        val tvComment = findViewById<TextView>(R.id.comment_view)
+        if (comment != "") {
+            tvComment.visibility = View.VISIBLE
+            tvComment.text = comment
+        } else {
+            tvComment.visibility = View.GONE
+            tvComment.text = ""
+        }
     }
 
     //以下、ボタンの処理
@@ -75,8 +132,7 @@ class OrderResult : AppCompatActivity() {
     }
 
     private fun shareResult() {
-        val resultLayout = findViewById<LinearLayout>(R.id.result_layout)
-        //KumiwakeMethods.shareResult(this, this::share) { ShareViewImage.shareView(this, resultLayout, getString(R.string.order)) }
+        shareOptionDialog()
     }
 
     private fun onGoHome() {
@@ -108,9 +164,88 @@ class OrderResult : AppCompatActivity() {
     ////                                   テキスト共有メソッド                                              ////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    //option設定ダイアログ
+    private fun shareOptionDialog() {
+        val builder = AlertDialog.Builder(this)
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.edit_result_dialog_layout, findViewById<View>(R.id.info_layout) as ViewGroup?)
+        val indexTitle = view.findViewById<TextView>(R.id.title_index)
+        val etTitle = view.findViewById<EditText>(R.id.edit_title)
+        etTitle.hint = resultTitle
+        indexTitle.visibility = View.GONE
+        etTitle.visibility = View.GONE
+        if (title != "") etTitle.setText(this.title)
+        val indexComment = view.findViewById<TextView>(R.id.comment_index)
+        val etComment = view.findViewById<EditText>(R.id.edit_comment)
+        indexComment.visibility = View.GONE
+        etComment.visibility = View.GONE
+        if (comment != "") etComment.setText(this.comment)
+
+        val includeTitleCheck = view.findViewById<CheckBox>(R.id.include_title_check)
+        val includeCommentCheck = view.findViewById<CheckBox>(R.id.include_comment_check)
+
+        includeTitleCheck.setOnCheckedChangeListener { _, checked ->
+            if (checked) {
+                indexTitle.visibility = View.VISIBLE
+                etTitle.visibility = View.VISIBLE
+            } else {
+                indexTitle.visibility = View.GONE
+                etTitle.visibility = View.GONE
+            }
+        }
+        includeCommentCheck.setOnCheckedChangeListener { _, checked ->
+            if (checked) {
+                indexComment.visibility = View.VISIBLE
+                etComment.visibility = View.VISIBLE
+            } else {
+                indexComment.visibility = View.GONE
+                etComment.visibility = View.GONE
+            }
+        }
+
+        builder.setTitle(getString(R.string.share_option))
+                .setView(view)
+                .setPositiveButton(R.string.share) { _, _ ->
+                    changeInfo(etTitle.text.toString(), etComment.text.toString())
+                    val tvTitle = findViewById<TextView>(R.id.inner_result_title)
+                    val tvComment = findViewById<TextView>(R.id.comment_view)
+                    includeTitle = includeTitleCheck.isChecked
+                    includeComment = includeCommentCheck.isChecked
+                    if (includeTitle) {
+                        tvTitle.visibility = View.VISIBLE
+                    } else {
+                        tvTitle.visibility = View.GONE
+                    }
+                    if (includeComment && comment != "") {
+                        tvComment.visibility = View.VISIBLE
+                    } else {
+                        tvComment.visibility = View.GONE
+                    }
+                    KumiwakeMethods.shareResult(this, tvTitle, tvComment, this::shareText, this::shareImage)
+                }
+                .setNegativeButton(R.string.cancel) { dialog, _ ->
+                    dialog.dismiss()
+                }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
     //テキストでシェア
-    private fun share() {
-        val articleTitle = "～" + getString(R.string.order) + "～"
+    private fun shareText() {
+        val articleTitle = if (includeTitle) {
+            if (title != "") {
+                "～$title～"
+            } else {
+                "～${getString(R.string.order)}～"
+            }
+        } else {
+            ""
+        }
+        val articleComment = if (includeComment && comment != "") {
+            "\n$comment"
+        } else {
+            ""
+        }
         var sharedText = ""
         val resultTxt = StringBuilder()
 
@@ -119,7 +254,7 @@ class OrderResult : AppCompatActivity() {
             resultTxt.append(" ${member.name}")
         }
 
-        sharedText = "$articleTitle$resultTxt"
+        sharedText = "$articleTitle$articleComment\n$resultTxt"
         // builderの生成
         val builder = ShareCompat.IntentBuilder.from(this)
         // アプリ一覧が表示されるDialogのタイトルの設定
@@ -132,6 +267,12 @@ class OrderResult : AppCompatActivity() {
         builder.setType("text/plain")
         // Shareアプリ一覧のDialogの表示
         builder.startChooser()
+    }
+
+    //画像でシェア
+    private fun shareImage() {
+        val shareLayout = findViewById<LinearLayout>(R.id.whole_result_layout)
+        ShareViewImage.shareView(this, shareLayout, getString(R.string.order))
     }
 }
 

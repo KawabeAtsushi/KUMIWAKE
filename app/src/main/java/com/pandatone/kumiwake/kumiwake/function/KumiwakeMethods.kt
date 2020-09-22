@@ -165,7 +165,9 @@ object KumiwakeMethods {
         // アラートダイアログのボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
         builder.setNegativeButton(R.string.cancel) { _, _ ->
             titleView.visibility = View.GONE
-            commentView.visibility = View.VISIBLE
+            if (commentView.text != "") {
+                commentView.visibility = View.VISIBLE
+            }
         }
 
         // back keyを使用不可に設定
