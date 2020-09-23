@@ -98,6 +98,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/OthersTheme" />
         <activity
+            android:name=".others.classroom.ClassroomCustom"
+            android:screenOrientation="portrait"
+            android:theme="@style/OthersTheme" />
+        <activity
+            android:name=".others.classroom.ClassroomResult"
+            android:screenOrientation="portrait"
+            android:theme="@style/OthersTheme" />
+        <activity
             android:name=".member.AddMember"
             android:screenOrientation="portrait" />
         <activity

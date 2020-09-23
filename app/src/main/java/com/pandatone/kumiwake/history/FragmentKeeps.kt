@@ -1,13 +1,11 @@
 package com.pandatone.kumiwake.history
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.ListFragment
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
@@ -65,7 +63,7 @@ class FragmentKeeps : ListFragment() {
         listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
             val history = historyList[position]
             //行をロングクリックした時の処理
-            HistoryMethods.onLongClick(history,requireActivity(), hsAdapter,true)
+            HistoryMethods.onLongClick(history, requireActivity(), hsAdapter, true)
             true //trueにするとイベントが消費される falseだと次のonClickも呼ばれる
         }
     }

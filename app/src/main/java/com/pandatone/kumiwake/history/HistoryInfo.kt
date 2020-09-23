@@ -111,14 +111,14 @@ class HistoryInfo(val c: Activity) {
         val kumiwakeButton = view.findViewById<Button>(R.id.kumiwake_select_button)
         val duplicateCheckBox = view.findViewById<CheckBox>(R.id.duplicate_check)
         kumiwakeButton.setOnClickListener {
-            StatusHolder.sekigime = false
+            StatusHolder.mode = ModeKeys.Kumiwake.key
             PublicMethods.setStatus(this.c, Theme.Kumiwake.primaryColor)
             goTo(duplicateCheckBox.isChecked)
             FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.KumiwakeHistory.key)
         }
         val sekigimeButton = view.findViewById<Button>(R.id.sekigime_select_button)
         sekigimeButton.setOnClickListener {
-            StatusHolder.sekigime = true
+            StatusHolder.mode = ModeKeys.Sekigime.key
             PublicMethods.setStatus(this.c, Theme.Sekigime.primaryColor)
             goTo(duplicateCheckBox.isChecked)
             FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.SekigimeHistory.key)
@@ -146,7 +146,7 @@ class HistoryInfo(val c: Activity) {
                     val newName = editText.text.toString()
                     if (newName != "") {
                         HistoryAdapter(c).updateHistoryState(item, editText.text.toString(), false)
-                        if(::history.isInitialized) {
+                        if (::history.isInitialized) {
                             history.text = newName
                         }
                         FragmentHistory().loadName()

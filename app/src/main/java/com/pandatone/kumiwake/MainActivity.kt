@@ -26,7 +26,6 @@ import com.pandatone.kumiwake.member.AddMember
 import com.pandatone.kumiwake.member.members.FragmentGroupMain
 import com.pandatone.kumiwake.member.members.MembersMain
 import com.pandatone.kumiwake.others.SelectMember
-import com.pandatone.kumiwake.others.drawing.TicketDefine
 import com.pandatone.kumiwake.setting.Help
 import com.pandatone.kumiwake.setting.PurchaseFreeAdOption
 import com.pandatone.kumiwake.setting.Settings
@@ -125,7 +124,7 @@ class MainActivity : AppCompatActivity() {
         kNormalButton.setImageResource(R.drawable.ic_kumiwake_24px)
         kNormalButton.updatePadding(top = PublicMethods.setByDp(17.0f, this), bottom = PublicMethods.setByDp(22.0f, this))
         kNormalButton.setOnClickListener {
-            StatusHolder.sekigime = false
+            StatusHolder.mode = ModeKeys.Kumiwake.key
             StatusHolder.normalMode = true
             NormalMode.memberArray = ArrayList()
             startActivity(Intent(this, NormalMode::class.java))
@@ -139,7 +138,7 @@ class MainActivity : AppCompatActivity() {
         kQuickButton.setImageResource(R.drawable.ic_kumiwake_24px)
         kQuickButton.updatePadding(top = PublicMethods.setByDp(17.0f, this), bottom = PublicMethods.setByDp(22.0f, this))
         kQuickButton.setOnClickListener {
-            StatusHolder.sekigime = false
+            StatusHolder.mode = ModeKeys.Kumiwake.key
             StatusHolder.normalMode = false
             startActivity(Intent(this, QuickMode::class.java))
             FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.KumiwakeQuick.key)
@@ -152,7 +151,7 @@ class MainActivity : AppCompatActivity() {
         sNormalButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.theme_red))
         sNormalButton.setImageResource(R.drawable.ic_sekigime_24px)
         sNormalButton.setOnClickListener {
-            StatusHolder.sekigime = true
+            StatusHolder.mode = ModeKeys.Sekigime.key
             StatusHolder.normalMode = true
             NormalMode.memberArray = ArrayList()
             startActivity(Intent(this, NormalMode::class.java))
@@ -165,13 +164,15 @@ class MainActivity : AppCompatActivity() {
         sQuickButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.green_title))
         sQuickButton.setImageResource(R.drawable.ic_sekigime_24px)
         sQuickButton.setOnClickListener {
-            StatusHolder.sekigime = true
+            StatusHolder.mode = ModeKeys.Sekigime.key
             StatusHolder.normalMode = false
             startActivity(Intent(this, QuickMode::class.java))
             FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.SekigimeQuick.key)
         }
 
         //その他機能
+
+        //履歴
         val historyUnit: View = findViewById(R.id.history_unit)
         val historyButton: ImageButton = historyUnit.findViewById(R.id.icon_button)
         (historyUnit.findViewById(R.id.button_text) as TextView).setText(R.string.history)
@@ -181,33 +182,48 @@ class MainActivity : AppCompatActivity() {
             FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.History.key)
         }
 
+        //順番決め
         val orderUnit: View = findViewById(R.id.order_unit)
         val orderButton: ImageButton = orderUnit.findViewById(R.id.icon_button)
         (orderUnit.findViewById(R.id.button_text) as TextView).setText(R.string.order)
         orderButton.setImageResource(R.drawable.ic_order)
         orderButton.setOnClickListener {
-            StatusHolder.order = true
+            StatusHolder.mode = ModeKeys.Order.key
             startActivity(Intent(this, SelectMember()::class.java))
             FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.Order.key)
         }
 
+        //役割決め
         val roleUnit: View = findViewById(R.id.role_unit)
         val roleButton: ImageButton = roleUnit.findViewById(R.id.icon_button)
         (roleUnit.findViewById(R.id.button_text) as TextView).setText(R.string.role)
         roleButton.setImageResource(R.drawable.ic_role)
         roleButton.setOnClickListener {
-            StatusHolder.order = false
+            StatusHolder.mode = ModeKeys.Role.key
             startActivity(Intent(this, SelectMember()::class.java))
             FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.Role.key)
         }
 
+        //くじ引き
         val drawingUnit: View = findViewById(R.id.drawing_unit)
         val drawingButton: ImageButton = drawingUnit.findViewById(R.id.icon_button)
         (drawingUnit.findViewById(R.id.button_text) as TextView).setText(R.string.drawing)
         drawingButton.setImageResource(R.drawable.ic_drawing)
         drawingButton.setOnClickListener {
-            startActivity(Intent(this, TicketDefine()::class.java))
+            StatusHolder.mode = ModeKeys.Drawing.key
+            startActivity(Intent(this, SelectMember()::class.java))
             FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.Drawing.key)
+        }
+
+        //クラスルーム
+        val classroomUnit: View = findViewById(R.id.classroom_unit)
+        val classroomButton: ImageButton = classroomUnit.findViewById(R.id.icon_button)
+        (classroomUnit.findViewById(R.id.button_text) as TextView).setText(R.string.classroom)
+        classroomButton.setImageResource(R.drawable.ic_school)
+        classroomButton.setOnClickListener {
+            StatusHolder.mode = ModeKeys.Classroom.key
+            startActivity(Intent(this, SelectMember()::class.java))
+            FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.Classroom.key)
         }
 
         //設定・ヘルプ

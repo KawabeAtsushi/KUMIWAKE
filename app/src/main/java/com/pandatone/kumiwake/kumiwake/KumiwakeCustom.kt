@@ -12,10 +12,7 @@ import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.pandatone.kumiwake.KumiwakeArrayKeys
-import com.pandatone.kumiwake.KumiwakeCustomKeys
-import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.StatusHolder
+import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.EditGroupViewAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.member.function.Group
@@ -45,7 +42,7 @@ class KumiwakeCustom : AppCompatActivity() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.kumiwake_custom)
-        if (StatusHolder.sekigime) {
+        if (StatusHolder.mode == ModeKeys.Sekigime.key) {
             val layout = findViewById<ConstraintLayout>(R.id.custom_root_layout)
             layout.background = getDrawable(R.drawable.sekigime_background)
         }

@@ -59,7 +59,7 @@ class KumiwakeResult : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.kumiwake_result)
-        if (StatusHolder.sekigime) {
+        if (StatusHolder.mode == ModeKeys.Sekigime.key) {
             val layout = findViewById<ConstraintLayout>(R.id.result_view)
             layout.background = getDrawable(R.drawable.sekigime_background)
         }
@@ -90,7 +90,7 @@ class KumiwakeResult : AppCompatActivity() {
 
         startMethod(false)
 
-        if (!StatusHolder.sekigime) {
+        if (StatusHolder.mode != ModeKeys.Sekigime.key) {
             //描画を別スレッドで行う
             Thread(DrawTask(this, groupCount)).start()
             val scrollView = findViewById<View>(R.id.kumiwake_scroll) as ScrollView
@@ -181,7 +181,7 @@ class KumiwakeResult : AppCompatActivity() {
 
         //履歴に保存
         if (StatusHolder.normalMode) {
-            if (StatusHolder.sekigime) {
+            if (StatusHolder.mode == ModeKeys.Sekigime.key) {
                 HistoryMethods.saveResultToHistory(this, resultArray, groupArray, 1, false)
             } else {
                 HistoryMethods.saveResultToHistory(this, resultArray, groupArray, 0, again)

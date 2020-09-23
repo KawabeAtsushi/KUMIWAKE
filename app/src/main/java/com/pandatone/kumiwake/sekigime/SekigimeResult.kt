@@ -16,13 +16,11 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ShareCompat
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputLayout
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.history.HistoryAdapter
-import com.pandatone.kumiwake.kumiwake.function.KumiwakeMethods
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.sekigime.function.DrawAllTable
 import com.pandatone.kumiwake.sekigime.function.DrawTableView
@@ -40,6 +38,7 @@ class SekigimeResult : AppCompatActivity() {
     private var teamArrayMan: ArrayList<ArrayList<Member>> = ArrayList()
     private var teamArrayWoman: ArrayList<ArrayList<Member>> = ArrayList()
     private lateinit var tabLayout: TabLayout
+
     //結果タイトル&コメント
     private var title = ""
     private var comment = ""

@@ -8,8 +8,6 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import com.pandatone.kumiwake.adapter.MemberAdapter
-import com.pandatone.kumiwake.member.function.Member
 
 /**
  * Created by atsushi_2 on 2016/03/20.

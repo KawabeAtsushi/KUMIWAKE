@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ShareCompat
 import com.pandatone.kumiwake.*
-import com.pandatone.kumiwake.history.HistoryAdapter
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeMethods
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse

@@ -134,7 +134,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/check/baseline_check_24.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/school/baseline_school_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -146,8 +146,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ribbon" />
-                            <entry key="sourceFile" value="C:\Users\Surface3-1\Downloads\ribbon.svg" />
+                            <entry key="outputName" value="desk" />
+                            <entry key="sourceFile" value="C:\Users\Surface3-1\Downloads\266063_m-removebg-preview.svg" />
                           </map>
                         </option>
                       </PersistentState>

@@ -33,11 +33,11 @@
         android:layout_marginBottom="35dp"
         android:contentDescription="@string/kumiwake"
         android:src="@drawable/ic_kumiwake_24px"
-        app:tint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="@id/kumiwake_select_button"
         app:layout_constraintEnd_toEndOf="@id/kumiwake_select_button"
         app:layout_constraintStart_toStartOf="@id/kumiwake_select_button"
-        app:layout_constraintTop_toTopOf="@id/kumiwake_select_button" />
+        app:layout_constraintTop_toTopOf="@id/kumiwake_select_button"
+        app:tint="@android:color/white" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/sekigime_select_button"
@@ -65,11 +65,11 @@
         android:layout_marginBottom="35dp"
         android:contentDescription="@string/sekigime"
         android:src="@drawable/ic_sekigime_24px"
-        app:tint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="@id/sekigime_select_button"
         app:layout_constraintEnd_toEndOf="@id/sekigime_select_button"
         app:layout_constraintStart_toStartOf="@id/sekigime_select_button"
-        app:layout_constraintTop_toTopOf="@id/sekigime_select_button" />
+        app:layout_constraintTop_toTopOf="@id/sekigime_select_button"
+        app:tint="@android:color/white" />
 
     <CheckBox
         android:id="@+id/duplicate_check"

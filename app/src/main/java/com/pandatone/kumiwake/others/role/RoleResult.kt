@@ -17,7 +17,6 @@ import androidx.core.app.ShareCompat
 import com.google.android.material.tabs.TabLayout
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
-import com.pandatone.kumiwake.history.HistoryAdapter
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeComparator
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeMethods
 import com.pandatone.kumiwake.member.function.Group

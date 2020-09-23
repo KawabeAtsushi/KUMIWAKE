@@ -13,8 +13,7 @@ object StatusHolder {
 
     //mode
     var normalMode: Boolean = true //true: ノーマルモード, false: クイックモード
-    var sekigime: Boolean = false //true: 席決めモード, false: 組み分けモード
-    var order: Boolean = true //true: 順番, false: 役割
+    var mode: String = ModeKeys.Kumiwake.key
     var notDuplicate: Boolean = false //true: 重複なし, false: 普通
 
     @StyleRes
@@ -34,6 +33,17 @@ object StatusHolder {
     const val ad_free_sku = "ad_free_kumiwake"
 }
 
+//機能選択のキー
+enum class ModeKeys(val key: String) {
+    Kumiwake("Kumiwake"),
+    Sekigime("Sekigime"),
+    History("History"),
+    Order("Order"),
+    Role("Role"),
+    Drawing("Drawing"),
+    Classroom("Classroom")
+}
+
 //AddMemberのintent key
 enum class AddMemberKeys(val key: String) {
     MEMBER("tableNo"),
@@ -50,6 +60,12 @@ enum class AddGroupKeys(val key: String) {
 enum class KumiwakeCustomKeys(val key: String) {
     EVEN_FM_RATIO("even_fm_ratio"),
     EVEN_AGE_RATIO("even_age_ratio")
+}
+
+//クラスルーム条件のkey
+enum class ClassroomCustomKeys(val key: String) {
+    ALTER_FM_SEAT("alter_fm_seat"),
+    ATTACH_SEAT("attach_seats")
 }
 
 //kumiwake arrayのintent key

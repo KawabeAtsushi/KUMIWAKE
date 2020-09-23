@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/top_background">
+
+    <LinearLayout
+        android:id="@+id/root_seats_preview_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/card"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/custom_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <GridLayout
+            android:id="@+id/seats_preview_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/preview"
+        app:layout_constraintStart_toStartOf="@id/root_seats_preview_layout"
+        app:layout_constraintTop_toTopOf="@id/root_seats_preview_layout" />
+
+    <LinearLayout
+        android:id="@+id/custom_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/move_result"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/form_marginStart"
+            android:text="@string/arrangement"
+            android:textColor="@color/gray"
+            android:textSize="25sp" />
+
+        <include layout="@layout/title_divider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:text="@string/column_count"
+                    android:textSize="@dimen/ratio_text_size" />
+
+                <TextView
+                    android:id="@+id/row_seat_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/ratio_margin_size"
+                    android:text="0"
+                    android:textColor="@color/man"
+                    android:textSize="@dimen/ratio_text_size" />
+
+
+            </LinearLayout>
+
+            <SeekBar
+                android:id="@+id/row_seat_seek_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:max="0"
+                android:progress="25"
+                android:thumb="@drawable/seekbar_control" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/form_marginStart"
+            android:layout_marginTop="20dp"
+            android:text="@string/arrangement_conditions"
+            android:textColor="@color/gray"
+            android:textSize="25sp" />
+
+        <include layout="@layout/title_divider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/card"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/alter_fm_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/fm_placed_next_seats"
+                android:textSize="@dimen/form_textSize" />
+
+            <CheckBox
+                android:id="@+id/attach_seat_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/attach_in_pair"
+                android:textSize="@dimen/form_textSize" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/move_result"
+        style="@style/Button.Solid.Rectangle"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/under_button_height"
+        android:drawableEnd="@drawable/ic_arrow_white"
+        android:text="@string/go_classroom"
+        android:textAlignment="center"
+        android:textColor="@color/yellow"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:backgroundTint="?android:attr/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

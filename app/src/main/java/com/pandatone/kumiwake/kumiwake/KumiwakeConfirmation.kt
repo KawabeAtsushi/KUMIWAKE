@@ -36,7 +36,7 @@ class KumiwakeConfirmation : AppCompatActivity() {
         FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.kumiwake_confirmation)
-        if (StatusHolder.sekigime) {
+        if (StatusHolder.mode == ModeKeys.Sekigime.key) {
             val layout = findViewById<ConstraintLayout>(R.id.confirmation_view)
             layout.background = getDrawable(R.drawable.sekigime_background)
         }
@@ -69,7 +69,7 @@ class KumiwakeConfirmation : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun findViews() {
 
-        if (StatusHolder.sekigime) {
+        if (StatusHolder.mode == ModeKeys.Sekigime.key) {
             val button = findViewById<Button>(R.id.kumiwake_btn)
             confirmation_title_txt.setText(R.string.sekigime_confirm)
             between_arrows_txt.text = getText(R.string.sekigime)
@@ -143,7 +143,7 @@ class KumiwakeConfirmation : AppCompatActivity() {
     //組み分け実行
     private fun doKumiwake() {
         //Add Firebase Analytics
-        if (StatusHolder.sekigime) {
+        if (StatusHolder.mode == ModeKeys.Sekigime.key) {
             groupArray.forEach { it ->
                 FirebaseAnalyticsEvents.groupCreateEvent("SEKIGIME", it.name)
             }

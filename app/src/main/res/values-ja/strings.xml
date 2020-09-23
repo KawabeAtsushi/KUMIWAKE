@@ -119,6 +119,7 @@
     <string name="re_order_description">もう一度順番を決めなおします。</string>
     <string name="re_assign_description">もう一度役割を割り当てなおします。</string>
     <string name="re_drawing_description">くじ引きを初めからやりなおします。</string>
+    <string name="re_classroom_description">同じ条件でもう一度席替えをします。</string>
     <string name="retry_finished">やり直し完了</string>
     <string name="fm_placed_alternately">男女を交互に配置する</string>
     <string name="how_to_use">使い方</string>
@@ -243,4 +244,15 @@
     <string name="share_option">シェアオプション</string>
     <string name="input_comment">コメントを入力</string>
     <string name="add_info">情報の追加</string>
+    <string name="classroom">クラスルーム</string>
+    <string name="classroom_result">教室座席結果</string>
+    <string name="classroom_hint">〇年〇組の座席</string>
+    <string name="go_classroom">登校する！</string>
+    <string name="column_count">1列の席数</string>
+    <string name="arrangement">配置</string>
+    <string name="arrangement_conditions">配席の条件</string>
+    <string name="fm_placed_next_seats">男女をとなりの席にする</string>
+    <string name="attach_in_pair">２人１組で座席をくっつける</string>
+    <string name="preview">プレビュー（※画面からはみ出る場合は確認できません。）</string>
+    <string name="classroom_annotation">一度に全体を見る場合には下のボタンから「結果をシェア」してください。</string>
 </resources>

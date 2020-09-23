@@ -22,8 +22,8 @@
         android:layout_height="0dp"
         android:layout_margin="5dp"
         android:contentDescription="@string/kumiwake"
-        android:src="@drawable/ic_launcher_foreground_big"
         android:elevation="10dp"
+        android:src="@drawable/ic_launcher_foreground_big"
         app:layout_constraintBottom_toBottomOf="@id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -180,6 +180,16 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/role_unit"
                     app:layout_constraintTop_toBottomOf="@id/order_unit" />
+
+                <include
+                    android:id="@+id/classroom_unit"
+                    layout="@layout/top_button_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintEnd_toStartOf="@id/drawing_unit"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/role_unit" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

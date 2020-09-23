@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/result_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/flooring"
+    android:backgroundTint="#30FFFFFF"
+    android:backgroundTintMode="src_atop">
+
+    <ScrollView
+        android:id="@+id/classroom_scroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="70dp">
+
+            <TextView
+                android:id="@+id/annotation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="#D3FFFFFF"
+                android:layout_margin="10dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="5dp"
+                android:text="@string/classroom_annotation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@null"
+                android:scaleType="fitXY"
+                android:src="@drawable/ribbon"
+                app:layout_constraintBottom_toBottomOf="@id/result_title"
+                app:layout_constraintEnd_toEndOf="@id/result_title"
+                app:layout_constraintStart_toStartOf="@id/result_title"
+                app:layout_constraintTop_toTopOf="@id/result_title" />
+
+            <TextView
+                android:id="@+id/result_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:paddingHorizontal="34dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="15dp"
+                android:text="@string/classroom_result"
+                android:textColor="@android:color/white"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/annotation" />
+
+            <TextView
+                android:id="@+id/comment_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="@drawable/comment_background"
+                android:textSize="18sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/result_title" />
+
+            <ImageButton
+                android:id="@+id/edit_result_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle_button_background"
+                android:contentDescription="@string/edit_title"
+                android:src="@drawable/ic_edit_24dp"
+                android:tint="@color/gray"
+                app:layout_constraintBottom_toBottomOf="@id/result_title"
+                app:layout_constraintStart_toEndOf="@id/result_title"
+                app:layout_constraintTop_toTopOf="@id/result_title" />
+
+            <HorizontalScrollView
+                android:id="@+id/classroom_horizontal_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/comment_view">
+
+                <LinearLayout
+                    android:id="@+id/whole_result_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:contentDescription="@null"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ribbon"
+                            app:layout_constraintBottom_toBottomOf="@id/inner_result_title"
+                            app:layout_constraintEnd_toEndOf="@id/inner_result_title"
+                            app:layout_constraintStart_toStartOf="@id/inner_result_title"
+                            app:layout_constraintTop_toTopOf="@id/inner_result_title" />
+
+                        <TextView
+                            android:id="@+id/inner_result_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:paddingHorizontal="30dp"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="14dp"
+                            android:text="@string/classroom_result"
+                            android:textColor="@android:color/white"
+                            android:textSize="22sp"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/inner_comment_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/comment_background"
+                        android:textSize="18sp"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/result_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="6dp" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/re_kumiwake"
+                style="@style/Button.Transparent.Rounded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="12dp"
+                android:text="@string/retry"
+                android:textColor="@android:color/white"
+                app:backgroundTint="#ff6666"
+                app:icon="@drawable/ic_redo_24dp"
+                app:iconTint="@android:color/white"
+                app:layout_constraintEnd_toStartOf="@id/share_result"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/classroom_horizontal_scroll" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/share_result"
+                style="@style/Button.Transparent.Rounded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:text="@string/share_result"
+                android:textColor="@android:color/white"
+                app:backgroundTint="#81d4fa"
+                app:icon="@drawable/ic_send_24dp"
+                app:iconTint="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="@id/re_kumiwake"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/re_kumiwake"
+                app:layout_constraintTop_toTopOf="@id/re_kumiwake" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/go_home"
+                style="@style/Button.Transparent.Rounded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:padding="12dp"
+                android:text="@string/go_home"
+                android:textColor="@android:color/white"
+                app:backgroundTint="@color/gray"
+                app:icon="@drawable/ic_home_24dp"
+                app:iconTint="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/re_kumiwake" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="10dp"
+        app:adSize="BANNER"
+        app:adUnitId="@string/adUnit_id"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

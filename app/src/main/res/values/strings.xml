@@ -59,10 +59,11 @@
     <string name="retry_title">Try Again</string>
     <string name="retry">try again</string>
     <string name="re_kumiwake_description">Execute KUMIWAKE(grouping) again on the same conditions.</string>
-    <string name="re_sekigime_description">Execute Seat Allocation again on the same conditions.(* The order in the table will be changed.)</string>
+    <string name="re_sekigime_description">Execute Seat Allocation again on the same conditions.(* Only the order in the table will be changed.)</string>
     <string name="re_order_description">Execute order deciding again on the same conditions.</string>
     <string name="re_assign_description">Execute the assignment again on the same conditions.</string>
     <string name="re_drawing_description">Restart the drawing from the beginning.</string>
+    <string name="re_classroom_description">Execute changing seats again on the same conditions.</string>
     <string name="retry_finished">Retry finished</string>
     <string name="registered">registered</string>
     <string name="registration">register</string>
@@ -243,4 +244,15 @@
     <string name="share_option">share options</string>
     <string name="input_comment">Input comment</string>
     <string name="add_info">Add info</string>
+    <string name="classroom">classroom</string>
+    <string name="classroom_result">Classroom seats</string>
+    <string name="classroom_hint">Class-〇\'s seats</string>
+    <string name="go_classroom">Go classroom!</string>
+    <string name="column_count">seats in a row</string>
+    <string name="arrangement">Arrangement</string>
+    <string name="arrangement_conditions">Arrangement conditions</string>
+    <string name="attach_in_pair">Attach the seats in pairs</string>
+    <string name="fm_placed_next_seats">Put men and women in the next seat</string>
+    <string name="preview">preview *If it goes off the screen, it cannot be confirmed.</string>
+    <string name="classroom_annotation">If you want to see the whole at once, please "share result" from the button below.</string>
 </resources>

@@ -39,13 +39,13 @@ class QuickMode : AppCompatActivity(), TextWatcher {
         window.exitTransition = Slide()
         FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         //テーマを設定
-        if (StatusHolder.sekigime) {
+        if (StatusHolder.mode == ModeKeys.Sekigime.key) {
             PublicMethods.setStatus(this, Theme.Sekigime.primaryColor)
         } else {
             PublicMethods.setStatus(this, Theme.Kumiwake.primaryColor)
         }
         setContentView(R.layout.quick_mode)
-        if (StatusHolder.sekigime) {
+        if (StatusHolder.mode == ModeKeys.Sekigime.key) {
             val layout = findViewById<ConstraintLayout>(R.id.quick_layout)
             layout.background = getDrawable(R.drawable.sekigime_background)
         }
@@ -140,7 +140,7 @@ class QuickMode : AppCompatActivity(), TextWatcher {
                 startActivity(intent)
                 overridePendingTransition(R.anim.in_right, R.anim.out_left)
                 //Add Firebase
-                if (StatusHolder.sekigime) {
+                if (StatusHolder.mode == ModeKeys.Sekigime.key) {
                     FirebaseAnalyticsEvents.countEvent(memberNo, Integer.parseInt(groupNo), FirebaseAnalyticsEvents.FunctionKeys.SekigimeQuick.key)
                 } else {
                     FirebaseAnalyticsEvents.countEvent(memberNo, Integer.parseInt(groupNo), FirebaseAnalyticsEvents.FunctionKeys.KumiwakeQuick.key)

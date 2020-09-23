@@ -17,7 +17,8 @@ object FirebaseAnalyticsEvents {
         History("History"),
         Order("Order"),
         Role("Role"),
-        Drawing("Drawing")
+        Drawing("Drawing"),
+        Classroom("Classroom")
     }
 
     //@onCreate()

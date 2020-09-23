@@ -29,7 +29,7 @@ object PublicMethods {
     fun initialize(activity: Activity) {
         setStatus(activity, Theme.Default.primaryColor)
         StatusHolder.normalMode = true
-        StatusHolder.sekigime = false
+        StatusHolder.mode = ModeKeys.Kumiwake.key
         StatusHolder.notDuplicate = false
     }
 

@@ -46,13 +46,13 @@ class NormalMode : AppCompatActivity() {
         window.exitTransition = Slide()
         FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         //テーマを設定
-        if (StatusHolder.sekigime) {
+        if (StatusHolder.mode == ModeKeys.Sekigime.key) {
             PublicMethods.setStatus(this, Theme.Sekigime.primaryColor)
         } else {
             PublicMethods.setStatus(this, Theme.Kumiwake.primaryColor)
         }
         setContentView(R.layout.normal_mode)
-        if (StatusHolder.sekigime) {
+        if (StatusHolder.mode == ModeKeys.Sekigime.key) {
             val layout = findViewById<ConstraintLayout>(R.id.normal_select_layout)
             layout.background = getDrawable(R.drawable.sekigime_background)
         }
@@ -117,7 +117,7 @@ class NormalMode : AppCompatActivity() {
             startActivity(intent)
             overridePendingTransition(R.anim.in_right, R.anim.out_left)
             //Add Firebase
-            if (StatusHolder.sekigime) {
+            if (StatusHolder.mode == ModeKeys.Sekigime.key) {
                 FirebaseAnalyticsEvents.countEvent(memberArray.size, groupNo, FirebaseAnalyticsEvents.FunctionKeys.SekigimeNormal.key)
             } else {
                 FirebaseAnalyticsEvents.countEvent(memberArray.size, groupNo, FirebaseAnalyticsEvents.FunctionKeys.KumiwakeNormal.key)

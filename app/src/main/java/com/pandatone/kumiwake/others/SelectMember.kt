@@ -19,6 +19,7 @@ import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.member.AddMember
 import com.pandatone.kumiwake.member.ChoiceMemberMain
 import com.pandatone.kumiwake.member.function.Member
+import com.pandatone.kumiwake.others.classroom.ClassroomCustom
 import com.pandatone.kumiwake.others.order.OrderResult
 import com.pandatone.kumiwake.others.role.RoleDefine
 import kotlinx.android.synthetic.main.normal_mode.*
@@ -50,13 +51,19 @@ class SelectMember : AppCompatActivity() {
         listView.adapter = adapter
         add_group_listView.numberOfSelectedMember.text = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
         val nextBtn = findViewById<Button>(R.id.normal_kumiwake_btn)
-        if (StatusHolder.order) {
-            nextBtn.text = "${getText(R.string.order)}!!"
-            nextBtn.setTextColor(PublicMethods.getColor(this, R.color.gold))
-            nextBtn.textSize = 26F
-            nextBtn.typeface = Typeface.DEFAULT_BOLD
-        } else {
-            nextBtn.text = getText(R.string.move_role_definition)
+        when (StatusHolder.mode) {
+            ModeKeys.Order.key -> {
+                nextBtn.text = "${getText(R.string.order)}!!"
+                nextBtn.setTextColor(PublicMethods.getColor(this, R.color.gold))
+                nextBtn.textSize = 26F
+                nextBtn.typeface = Typeface.DEFAULT_BOLD
+            }
+            ModeKeys.Role.key -> {
+                nextBtn.text = getText(R.string.move_role_definition)
+            }
+            else -> {
+                nextBtn.text = getText(R.string.move_custom)
+            }
         }
         nextBtn.setOnClickListener { onNextClick() }
     }
@@ -93,10 +100,12 @@ class SelectMember : AppCompatActivity() {
             errorMember.visibility = View.VISIBLE
             errorMember.setText(R.string.error_empty_member_list)
         } else {
-            val intent = if (StatusHolder.order) {
+            val intent = if (StatusHolder.mode == ModeKeys.Order.key) {
                 Intent(this, OrderResult::class.java)
-            } else {
+            } else if (StatusHolder.mode == ModeKeys.Role.key) {
                 Intent(this, RoleDefine::class.java)
+            } else {
+                Intent(this, ClassroomCustom::class.java)
             }
             intent.putExtra(KumiwakeArrayKeys.MEMBER_LIST.key, memberArray)
             startActivity(intent)
