@@ -45,6 +45,7 @@ You can seats decided from four types according to the table type of the place.
 - Order decision
 - Role decisiton
 - Drawing (pick up)
+- Classroom
 
 Please use at the time of group activities by all means! !
 
