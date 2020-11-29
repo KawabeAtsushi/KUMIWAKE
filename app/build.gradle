@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildToolsVersion '29.0.2'
 
     kotlinOptions {
@@ -18,9 +18,9 @@ android {
     defaultConfig {
         applicationId "com.pandatone.kumiwake"
         minSdkVersion 23
-        targetSdkVersion 29
-        versionCode 29
-        versionName "4.3.0"
+        targetSdkVersion 30
+        versionCode 30
+        versionName "4.3.1"
         // major update +1.0.0 / add functions +0.1.0 / debug + 0.0.1 //developing += .debug
     }
     buildTypes {
@@ -45,24 +45,24 @@ android {
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'src/main/libs')
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.navigation:navigation-fragment:2.3.0'
-    implementation 'androidx.navigation:navigation-ui:2.3.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
+    implementation 'androidx.navigation:navigation-fragment:2.3.1'
+    implementation 'androidx.navigation:navigation-ui:2.3.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.1'
     testImplementation 'junit:junit:4.12'
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.0'
-    implementation 'com.google.firebase:firebase-core:17.5.0'
-    implementation 'com.google.firebase:firebase-ads:19.3.0'
-    implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
-    implementation 'com.google.firebase:firebase-analytics:17.5.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'com.google.firebase:firebase-core:18.0.0'
+    implementation 'com.google.firebase:firebase-ads:19.5.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.3.0'
+    implementation 'com.google.firebase:firebase-analytics:18.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.airbnb.android:lottie:3.3.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation "android.arch.lifecycle:extensions:1.1.1"
-    implementation 'com.android.billingclient:billing:3.0.0'
+    implementation 'com.android.billingclient:billing:3.0.1'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0"
     implementation 'com.github.QuadFlask:colorpicker:0.0.15'
     implementation 'com.getbase:floatingactionbutton:1.10.1'

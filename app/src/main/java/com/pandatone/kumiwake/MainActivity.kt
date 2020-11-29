@@ -26,6 +26,7 @@ import com.pandatone.kumiwake.member.AddMember
 import com.pandatone.kumiwake.member.members.FragmentGroupMain
 import com.pandatone.kumiwake.member.members.MembersMain
 import com.pandatone.kumiwake.others.SelectMember
+import com.pandatone.kumiwake.others.drawing.TicketDefine
 import com.pandatone.kumiwake.setting.Help
 import com.pandatone.kumiwake.setting.PurchaseFreeAdOption
 import com.pandatone.kumiwake.setting.Settings
@@ -211,7 +212,7 @@ class MainActivity : AppCompatActivity() {
         drawingButton.setImageResource(R.drawable.ic_drawing)
         drawingButton.setOnClickListener {
             StatusHolder.mode = ModeKeys.Drawing.key
-            startActivity(Intent(this, SelectMember()::class.java))
+            startActivity(Intent(this, TicketDefine()::class.java))
             FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.Drawing.key)
         }
 

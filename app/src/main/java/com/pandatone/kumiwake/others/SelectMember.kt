@@ -20,6 +20,7 @@ import com.pandatone.kumiwake.member.AddMember
 import com.pandatone.kumiwake.member.ChoiceMemberMain
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.others.classroom.ClassroomCustom
+import com.pandatone.kumiwake.others.drawing.TicketDefine
 import com.pandatone.kumiwake.others.order.OrderResult
 import com.pandatone.kumiwake.others.role.RoleDefine
 import kotlinx.android.synthetic.main.normal_mode.*
@@ -100,12 +101,16 @@ class SelectMember : AppCompatActivity() {
             errorMember.visibility = View.VISIBLE
             errorMember.setText(R.string.error_empty_member_list)
         } else {
-            val intent = if (StatusHolder.mode == ModeKeys.Order.key) {
-                Intent(this, OrderResult::class.java)
-            } else if (StatusHolder.mode == ModeKeys.Role.key) {
-                Intent(this, RoleDefine::class.java)
-            } else {
-                Intent(this, ClassroomCustom::class.java)
+            val intent = when (StatusHolder.mode) {
+                ModeKeys.Order.key -> {
+                    Intent(this, OrderResult::class.java)
+                }
+                ModeKeys.Role.key -> {
+                    Intent(this, RoleDefine::class.java)
+                }
+                else -> {
+                    Intent(this, ClassroomCustom::class.java)
+                }
             }
             intent.putExtra(KumiwakeArrayKeys.MEMBER_LIST.key, memberArray)
             startActivity(intent)
