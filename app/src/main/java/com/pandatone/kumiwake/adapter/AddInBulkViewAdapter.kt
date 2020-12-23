@@ -39,7 +39,7 @@ class AddInBulkViewAdapter(val context: Context, val memberList: List<Member>) :
 
 
     @SuppressLint("ClickableViewAccessibility", "SetTextI18n", "InflateParams")
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var v = convertView
         val member = memberList[position]
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -152,8 +152,8 @@ class AddInBulkViewAdapter(val context: Context, val memberList: List<Member>) :
 
         for (j in 0 until this.count) {
             val item = this.getView(j, null, listView)
-            item?.measure(0, 0)
-            totalHeight += item!!.measuredHeight
+            item.measure(0, 0)
+            totalHeight += item.measuredHeight
         }
 
         listView.layoutParams.height = totalHeight + listView.dividerHeight * (this.count - 1)

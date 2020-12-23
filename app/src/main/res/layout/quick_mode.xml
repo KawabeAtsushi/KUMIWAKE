@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:paddingBottom ="50dp"
             android:orientation="vertical">
 
             <TextView
@@ -220,7 +221,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
                 android:background="@drawable/card"
                 android:orientation="vertical">
 

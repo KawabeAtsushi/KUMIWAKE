@@ -14,13 +14,13 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.member.AddMember
 import com.pandatone.kumiwake.member.ChoiceMemberMain
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.others.classroom.ClassroomCustom
-import com.pandatone.kumiwake.others.drawing.TicketDefine
 import com.pandatone.kumiwake.others.order.OrderResult
 import com.pandatone.kumiwake.others.role.RoleDefine
 import kotlinx.android.synthetic.main.normal_mode.*
@@ -43,7 +43,7 @@ class SelectMember : AppCompatActivity() {
         setContentView(R.layout.normal_mode)
         memberArray = ArrayList()
         val layout = findViewById<ConstraintLayout>(R.id.normal_select_layout)
-        layout.background = getDrawable(R.drawable.top_background)
+        layout.background = ContextCompat.getDrawable(this,R.drawable.top_background)
         findViews()
         findViewById<LinearLayout>(R.id.layout_group_no).visibility = View.GONE
         add_group_listView.member_add_btn.setOnClickListener { moveMemberMain() }

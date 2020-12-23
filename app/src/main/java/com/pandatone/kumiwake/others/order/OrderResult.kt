@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ShareCompat
+import androidx.core.content.ContextCompat
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeMethods
 import com.pandatone.kumiwake.member.function.Member
@@ -41,7 +42,7 @@ class OrderResult : AppCompatActivity() {
         findViewById<TextView>(R.id.result_title).text = resultTitle
         findViewById<View>(R.id.tabLayout).visibility = View.GONE
         val layout = findViewById<ConstraintLayout>(R.id.result_view)
-        layout.background = getDrawable(R.drawable.top_background)
+        layout.background = ContextCompat.getDrawable(this,R.drawable.top_background)
 
         PublicMethods.showAd(this)
         val i = intent

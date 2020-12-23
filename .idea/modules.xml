@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/KUMIWAKE.iml" filepath="$PROJECT_DIR$/.idea/KUMIWAKE.iml" group="KUMIWAKE" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="KUMIWAKE/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/KUMIWAKE.iml" filepath="$PROJECT_DIR$/.idea/KUMIWAKE.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/KUMIWAKE.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/KUMIWAKE.app.iml" />
     </modules>
   </component>
 </project>

@@ -42,7 +42,7 @@ class EditGroupViewAdapter(val context: Context, val groupList: List<Group>, pri
 
 
     @SuppressLint("ClickableViewAccessibility", "SetTextI18n", "InflateParams")
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val nameEditText: EditText
         val belongNoEditText: EditText
         val leader: TextView
@@ -95,6 +95,7 @@ class EditGroupViewAdapter(val context: Context, val groupList: List<Group>, pri
             }
 
             override fun afterTextChanged(text: Editable?) {
+
                 if (text.toString() != "" && text.toString() != "-") {
                     afterNo = Integer.parseInt(text.toString())
 
@@ -113,6 +114,10 @@ class EditGroupViewAdapter(val context: Context, val groupList: List<Group>, pri
                     autoChange = true
                     changeBelongNo(position, addNo)
                     autoChange = false
+                }
+
+                if (text.toString() == "-") {
+                    belongNoEditText.setText("")
                 }
             }
 
@@ -179,8 +184,8 @@ class EditGroupViewAdapter(val context: Context, val groupList: List<Group>, pri
 
         for (j in 0 until this.count) {
             val item = this.getView(j, null, listView)
-            item?.measure(0, 0)
-            totalHeight += item!!.measuredHeight
+            item.measure(0, 0)
+            totalHeight += item.measuredHeight
         }
 
         listView.layoutParams.height = totalHeight + listView.dividerHeight * (this.count - 1)

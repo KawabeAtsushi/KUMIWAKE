@@ -16,6 +16,7 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputLayout
@@ -315,7 +316,7 @@ class SekigimeResult : AppCompatActivity() {
         groupNameView.text = groupName
         groupNameView.setTextColor(Color.DKGRAY)
         groupNameView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20.0f)
-        groupNameView.background = getDrawable(R.drawable.table_name_background)
+        groupNameView.background = ContextCompat.getDrawable(this,R.drawable.table_name_background)
         groupNameView.gravity = Gravity.CENTER
         val lp = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)

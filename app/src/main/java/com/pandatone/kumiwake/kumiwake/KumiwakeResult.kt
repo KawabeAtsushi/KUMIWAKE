@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ShareCompat
+import androidx.core.content.ContextCompat
 import com.google.android.material.tabs.TabLayout
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
@@ -61,7 +62,7 @@ class KumiwakeResult : AppCompatActivity() {
         setContentView(R.layout.kumiwake_result)
         if (StatusHolder.mode == ModeKeys.Sekigime.key) {
             val layout = findViewById<ConstraintLayout>(R.id.result_view)
-            layout.background = getDrawable(R.drawable.sekigime_background)
+            layout.background = ContextCompat.getDrawable(this,R.drawable.sekigime_background)
         }
 
         tabLayout = findViewById(R.id.tabLayout)

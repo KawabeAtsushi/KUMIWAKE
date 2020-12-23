@@ -13,6 +13,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.viewpager.widget.ViewPager
 import com.pandatone.kumiwake.PublicMethods.setStatus
@@ -30,7 +31,7 @@ class MembersMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         setContentView(R.layout.member_main)
         val toolbar = findViewById<View>(R.id.toolbar2) as Toolbar
         setSupportActionBar(toolbar)
-        supportActionBar!!.setBackgroundDrawable(getDrawable(Theme.Member.primaryColor))
+        supportActionBar!!.setBackgroundDrawable(ContextCompat.getDrawable(this,Theme.Member.primaryColor))
         setStatus(this, Theme.Member.primaryColor)
 
         supportActionBar!!.title = getString(R.string.member_list)

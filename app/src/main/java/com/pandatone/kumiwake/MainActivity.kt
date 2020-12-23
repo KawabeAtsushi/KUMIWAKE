@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.updatePadding
 import com.getbase.floatingactionbutton.FloatingActionsMenu
 import com.getbase.floatingactionbutton.FloatingActionsMenu.OnFloatingActionsMenuUpdateListener
@@ -58,7 +56,6 @@ class MainActivity : AppCompatActivity() {
                     .addTestDevice(getString(R.string.device_id)).build()
             mAdView.loadAd(adRequest)
         }
-        setUpToolbar()
     }
 
     override fun onResume() {
@@ -113,9 +110,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setClickListeners() {
-        //toHomepage
-        val kumiwakeIcon: ImageView = findViewById(R.id.kumiwake_icon)
-        kumiwakeIcon.setOnClickListener { PublicMethods.toWebSite(this, supportFragmentManager) }
 
         //組分けボタン
         val kNormalUnit: View = findViewById(R.id.kumiwake_normal_unit)
@@ -135,7 +129,7 @@ class MainActivity : AppCompatActivity() {
         val kQuickUnit: View = findViewById(R.id.kumiwake_quick_unit)
         val kQuickButton: ImageButton = kQuickUnit.findViewById(R.id.icon_button)
         (kQuickUnit.findViewById(R.id.button_text) as TextView).setText(R.string.quick_mode)
-        kQuickButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.green_title))
+        kQuickButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.theme_red))
         kQuickButton.setImageResource(R.drawable.ic_kumiwake_24px)
         kQuickButton.updatePadding(top = PublicMethods.setByDp(17.0f, this), bottom = PublicMethods.setByDp(22.0f, this))
         kQuickButton.setOnClickListener {
@@ -149,7 +143,7 @@ class MainActivity : AppCompatActivity() {
         val sNormalUnit: View = findViewById(R.id.sekigime_normal_unit)
         val sNormalButton: ImageButton = sNormalUnit.findViewById(R.id.icon_button)
         (sNormalUnit.findViewById(R.id.button_text) as TextView).setText(R.string.normal_mode)
-        sNormalButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.theme_red))
+        sNormalButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.green_title))
         sNormalButton.setImageResource(R.drawable.ic_sekigime_24px)
         sNormalButton.setOnClickListener {
             StatusHolder.mode = ModeKeys.Sekigime.key
@@ -246,13 +240,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, Settings::class.java))
         }
 
-    }
-
-    //ツールバー初期表示
-    private fun setUpToolbar() {
-        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
-        toolbar.title = ""
-        setSupportActionBar(toolbar)
     }
 
     companion object {

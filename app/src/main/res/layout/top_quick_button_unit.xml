@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/icon_button_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/icon_button"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/circle_background"
+            android:backgroundTint="@color/gray"
+            android:contentDescription="@null"
+            android:padding="20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_help_outline_dark_24dp"
+            android:tint="@android:color/white" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_quick"
+        app:layout_constraintBottom_toTopOf="@id/button_text"
+        app:layout_constraintEnd_toEndOf="@id/icon_button_view"
+        app:tint="#FFD75E" />
+
+    <TextView
+        android:id="@+id/button_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/app_name"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@id/icon_button_view"
+        app:layout_constraintStart_toStartOf="@id/icon_button_view"
+        app:layout_constraintTop_toBottomOf="@id/icon_button_view" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

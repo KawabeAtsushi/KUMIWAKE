@@ -35,7 +35,7 @@ class GroupFragmentViewAdapter(private val context: Context, private val groupLi
 
 
     @SuppressLint("InflateParams", "SetTextI18n", "ViewHolder")
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val nameTextView: TextView
         val numberOfMemberTextView: TextView
         val v: View?

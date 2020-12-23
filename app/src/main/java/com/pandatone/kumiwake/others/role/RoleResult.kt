@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ShareCompat
+import androidx.core.content.ContextCompat
 import com.google.android.material.tabs.TabLayout
 import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
@@ -53,7 +54,7 @@ class RoleResult : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kumiwake_result)
         val layout = findViewById<ConstraintLayout>(R.id.result_view)
-        layout.background = getDrawable(R.drawable.top_background)
+        layout.background = ContextCompat.getDrawable(this,R.drawable.top_background)
 
         resultTitle = getString(R.string.role_decision) + getString(R.string.result)
         findViewById<TextView>(R.id.result_title).text = resultTitle

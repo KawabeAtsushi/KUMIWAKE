@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import com.google.android.material.button.MaterialButton
 import com.pandatone.kumiwake.*
@@ -82,7 +83,7 @@ class HistoryInfo(val c: Activity) {
         val adapter = SmallMBListAdapter(c, resultArray[i])
         arrayList.adapter = adapter
         v.layoutParams = PublicMethods.setMargin(c, 4, 6, 4, 6)
-        v.background = c.getDrawable(R.drawable.group_review_layout)
+        v.background = ContextCompat.getDrawable(c,R.drawable.group_review_layout)
         adapter.setRowHeight(arrayList)
     }
 

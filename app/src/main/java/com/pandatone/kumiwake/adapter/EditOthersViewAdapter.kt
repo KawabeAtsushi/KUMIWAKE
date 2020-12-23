@@ -44,7 +44,7 @@ class EditOthersViewAdapter(val context: Context, val groupList: List<Group>, pr
 
 
     @SuppressLint("ClickableViewAccessibility", "SetTextI18n", "InflateParams")
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val nameEditText: EditText
         val numberEditText: EditText
         var v = convertView
@@ -141,8 +141,8 @@ class EditOthersViewAdapter(val context: Context, val groupList: List<Group>, pr
 
         for (j in 0 until this.count) {
             val item = this.getView(j, null, listView)
-            item?.measure(0, 0)
-            totalHeight += item!!.measuredHeight
+            item.measure(0, 0)
+            totalHeight += item.measuredHeight
         }
 
         listView.layoutParams.height = totalHeight + listView.dividerHeight * (this.count - 1)

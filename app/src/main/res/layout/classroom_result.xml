@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/flooring"
-    android:backgroundTint="#30FFFFFF"
+    android:backgroundTint="#607E460A"
     android:backgroundTintMode="src_atop">
 
     <ScrollView
@@ -27,14 +27,14 @@
                 android:id="@+id/annotation"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="#D3FFFFFF"
                 android:layout_margin="10dp"
+                android:background="#D3FFFFFF"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="5dp"
                 android:text="@string/classroom_annotation"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:layout_width="0dp"

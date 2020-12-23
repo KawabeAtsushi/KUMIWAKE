@@ -3,11 +3,13 @@ package com.pandatone.kumiwake.history
 import android.app.Activity
 import android.content.Context
 import android.text.format.DateFormat
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -88,12 +90,16 @@ object HistoryMethods {
     fun changeDateFormat(dateStr: String): String {
         var name = dateStr
         if (dateStr.length == 19) { //タイムスタンプなら
-            val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-            val dt = df.parse(dateStr)
-            val locale = Locale.getDefault()
-            val format = DateFormat.getBestDateTimePattern(locale, "yyyyMMMdHHm")
-            val dateFormat = SimpleDateFormat(format, locale)
-            name = dateFormat.format(dt)
+            try {
+                val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                val dt = df.parse(dateStr)
+                val locale = Locale.getDefault()
+                val format = DateFormat.getBestDateTimePattern(locale, "yyyyMMMdHHm")
+                val dateFormat = SimpleDateFormat(format, locale)
+                name = dateFormat.format(dt)
+            } catch (e: ParseException) {
+                Log.d("Caused ParseException", e.toString())
+            }
         }
         return name
     }
@@ -139,8 +145,8 @@ object HistoryMethods {
                 val extraNo = extraMemberCount[i][oldGroupNo]
                 extraNoArray.add(extraNo)
             }
-            min = extraNoArray.min()!!
-            max = extraNoArray.max()!!
+            min = extraNoArray.minOrNull()!!
+            max = extraNoArray.maxOrNull()!!
         }
 
         for (oldGroupNo in historyResultArray.indices) {
@@ -151,7 +157,7 @@ object HistoryMethods {
                     val maxIndex = it.indexOf(max)
                     extraMemberCount[minIndex].let { minExtraList ->
                         //足りていないグループのなかで一番余っているグループ番号
-                        val minIndexExtraNo = minExtraList.indexOf(minExtraList.max())
+                        val minIndexExtraNo = minExtraList.indexOf(minExtraList.maxOrNull())
                         //Swap　(1)一番足りているグループ→(2)足りないグループ、　(2)の一番余っているメンバー→(1)
                         this.swapMaxAndMin(oldGroupNo, minIndex, maxIndex, oldGroups, minIndexExtraNo)
                     }

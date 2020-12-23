@@ -18,6 +18,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import com.airbnb.lottie.LottieAnimationView
 import com.pandatone.kumiwake.MainActivity
@@ -237,7 +238,7 @@ class DrawingResult : AppCompatActivity() {
     }
 
     private fun gradViewColor(textView: TextView, startColor: Int, endColor: Int) {
-        val drawable: GradientDrawable = getDrawable(R.drawable.ticket) as GradientDrawable
+        val drawable: GradientDrawable = ContextCompat.getDrawable(this,R.drawable.ticket) as GradientDrawable
         drawable.colors = intArrayOf(startColor, endColor)
         textView.background = drawable
     }

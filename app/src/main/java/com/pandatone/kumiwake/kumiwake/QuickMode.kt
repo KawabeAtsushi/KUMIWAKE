@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.GestureDetectorCompat
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.pandatone.kumiwake.*
@@ -47,7 +48,7 @@ class QuickMode : AppCompatActivity(), TextWatcher {
         setContentView(R.layout.quick_mode)
         if (StatusHolder.mode == ModeKeys.Sekigime.key) {
             val layout = findViewById<ConstraintLayout>(R.id.quick_layout)
-            layout.background = getDrawable(R.drawable.sekigime_background)
+            layout.background = ContextCompat.getDrawable(this,R.drawable.sekigime_background)
         }
         sex_seekBar.isEnabled = false
         member_no_form.addTextChangedListener(this)

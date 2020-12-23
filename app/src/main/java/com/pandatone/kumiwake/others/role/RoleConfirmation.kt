@@ -7,6 +7,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import com.pandatone.kumiwake.KumiwakeArrayKeys
 import com.pandatone.kumiwake.KumiwakeCustomKeys
 import com.pandatone.kumiwake.R
@@ -33,7 +34,7 @@ class RoleConfirmation : AppCompatActivity() {
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.kumiwake_confirmation)
         val layout = findViewById<ConstraintLayout>(R.id.confirmation_view)
-        layout.background = getDrawable(R.drawable.top_background)
+        layout.background = ContextCompat.getDrawable(this,R.drawable.top_background)
         val nextButton = findViewById<Button>(R.id.kumiwake_btn)
         val buttonTxt = "${getString(R.string.role_decision)}!!"
         nextButton.text = buttonTxt

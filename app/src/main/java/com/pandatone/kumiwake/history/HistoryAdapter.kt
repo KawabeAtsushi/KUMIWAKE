@@ -28,7 +28,7 @@ class HistoryAdapter(context: Context) : ArrayAdapter<History>(context, 0) {
         @SuppressLint("Recycle")
         get() {
             open()
-            val c = db.rawQuery("SELECT * FROM ${TABLE_NAME}" +
+            val c = db.rawQuery("SELECT * FROM $TABLE_NAME" +
                     " WHERE ${HS_ID}=(SELECT MAX(${HS_ID}) FROM ${TABLE_NAME});", null)
             c.moveToFirst()
             val history = History(
@@ -55,7 +55,7 @@ class HistoryAdapter(context: Context) : ArrayAdapter<History>(context, 0) {
         override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
             if (oldVersion < 2) {
                 Toast.makeText(context, "Database Upgraded Ver.$oldVersion to $newVersion", Toast.LENGTH_LONG).show()
-                db.execSQL("ALTER TABLE $TABLE_NAME ADD COLUMN $HS_RESULT_GP TEXT DEFAULT \"\";");
+                db.execSQL("ALTER TABLE $TABLE_NAME ADD COLUMN $HS_RESULT_GP TEXT DEFAULT \"\";")
             }
         }
     }
