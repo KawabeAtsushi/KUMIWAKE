@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/top_background">
@@ -233,7 +232,6 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         app:fab_addButtonColorNormal="@color/blue_title"
-        app:fab_addButtonColorPressed="#0398DC"
         app:fab_labelStyle="@style/menu_labels_style"
         app:layout_constraintBottom_toTopOf="@id/adView"
         app:layout_constraintEnd_toEndOf="parent">
@@ -243,7 +241,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="@color/blue_title"
-            app:fab_colorPressed="#0398DC"
             app:fab_icon="@drawable/ic_members_24"
             app:fab_size="normal"
             app:fab_title="@string/member_list" />
@@ -270,6 +267,17 @@
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
+    <ImageView
+        android:id="@+id/overlay_member_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginBottom="25dp"
+        android:background="@color/blue_title"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_members_24"
+        app:layout_constraintBottom_toBottomOf="@id/multiple_member_fab"
+        app:layout_constraintRight_toRightOf="@id/multiple_member_fab" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"

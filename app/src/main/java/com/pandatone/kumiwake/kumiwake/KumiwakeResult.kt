@@ -62,7 +62,7 @@ class KumiwakeResult : AppCompatActivity() {
         setContentView(R.layout.kumiwake_result)
         if (StatusHolder.mode == ModeKeys.Sekigime.key) {
             val layout = findViewById<ConstraintLayout>(R.id.result_view)
-            layout.background = ContextCompat.getDrawable(this,R.drawable.sekigime_background)
+            layout.background = ContextCompat.getDrawable(this, R.drawable.sekigime_background)
         }
 
         tabLayout = findViewById(R.id.tabLayout)

@@ -238,7 +238,7 @@ class DrawingResult : AppCompatActivity() {
     }
 
     private fun gradViewColor(textView: TextView, startColor: Int, endColor: Int) {
-        val drawable: GradientDrawable = ContextCompat.getDrawable(this,R.drawable.ticket) as GradientDrawable
+        val drawable: GradientDrawable = ContextCompat.getDrawable(this, R.drawable.ticket) as GradientDrawable
         drawable.colors = intArrayOf(startColor, endColor)
         textView.background = drawable
     }

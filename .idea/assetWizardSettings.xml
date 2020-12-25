@@ -134,7 +134,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/fast_forward/baseline_fast_forward_24.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/sync/baseline_sync_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -144,9 +144,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_quick" />
+                            <entry key="outputName" value="ic_switch_mode" />
                             <entry key="sourceFile" value="C:\Users\KAWABE\Downloads\早送りボタン.svg" />
                           </map>
                         </option>

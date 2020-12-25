@@ -31,12 +31,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/request_background"
                     android:text="@string/add_member_title"
                     android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="@id/switch_continuously_mode"
                     app:layout_constraintEnd_toStartOf="@id/switch_continuously_mode"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@id/switch_continuously_mode" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/switch_continuously_mode"
@@ -44,8 +44,12 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="#9BE6A1"
                     android:maxLines="1"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="9dp"
                     android:text="@string/continuously_button"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+                    app:icon="@drawable/ic_switch_mode"
+                    app:iconPadding="2dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/add_member_title"
                     app:layout_constraintTop_toTopOf="parent" />

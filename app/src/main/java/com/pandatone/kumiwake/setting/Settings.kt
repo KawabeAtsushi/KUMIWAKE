@@ -178,7 +178,7 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
     private fun removeAdsTemp() {
 
         dialog.decisionDialog(getString(R.string.delete_ad_temporary), getString(R.string.delete_ad_temporary_description), getString(R.string.watch_ad), getString(R.string.close)) {
-            dimmer = findViewById<View>(R.id.dimmer_layout)
+            dimmer = findViewById(R.id.dimmer_layout)
             dimmer.visibility = View.VISIBLE
             loadingAnim = findViewById(R.id.loading_anim)
             loadingAnim.visibility = View.VISIBLE

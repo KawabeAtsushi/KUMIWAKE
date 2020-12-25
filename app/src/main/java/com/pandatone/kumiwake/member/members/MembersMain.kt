@@ -31,7 +31,7 @@ class MembersMain : AppCompatActivity(), SearchView.OnQueryTextListener {
         setContentView(R.layout.member_main)
         val toolbar = findViewById<View>(R.id.toolbar2) as Toolbar
         setSupportActionBar(toolbar)
-        supportActionBar!!.setBackgroundDrawable(ContextCompat.getDrawable(this,Theme.Member.primaryColor))
+        supportActionBar!!.setBackgroundDrawable(ContextCompat.getDrawable(this, Theme.Member.primaryColor))
         setStatus(this, Theme.Member.primaryColor)
 
         supportActionBar!!.title = getString(R.string.member_list)

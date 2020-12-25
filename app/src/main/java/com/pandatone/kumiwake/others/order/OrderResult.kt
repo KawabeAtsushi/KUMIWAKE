@@ -42,7 +42,7 @@ class OrderResult : AppCompatActivity() {
         findViewById<TextView>(R.id.result_title).text = resultTitle
         findViewById<View>(R.id.tabLayout).visibility = View.GONE
         val layout = findViewById<ConstraintLayout>(R.id.result_view)
-        layout.background = ContextCompat.getDrawable(this,R.drawable.top_background)
+        layout.background = ContextCompat.getDrawable(this, R.drawable.top_background)
 
         PublicMethods.showAd(this)
         val i = intent

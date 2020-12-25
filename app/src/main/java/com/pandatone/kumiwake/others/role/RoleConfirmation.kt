@@ -34,7 +34,7 @@ class RoleConfirmation : AppCompatActivity() {
         setTheme(StatusHolder.nowTheme)
         setContentView(R.layout.kumiwake_confirmation)
         val layout = findViewById<ConstraintLayout>(R.id.confirmation_view)
-        layout.background = ContextCompat.getDrawable(this,R.drawable.top_background)
+        layout.background = ContextCompat.getDrawable(this, R.drawable.top_background)
         val nextButton = findViewById<Button>(R.id.kumiwake_btn)
         val buttonTxt = "${getString(R.string.role_decision)}!!"
         nextButton.text = buttonTxt

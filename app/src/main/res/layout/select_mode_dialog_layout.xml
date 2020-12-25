@@ -5,17 +5,15 @@
     android:id="@+id/info_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingTop="20dp">
+    android:padding="10dp">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/kumiwake_select_button"
         style="?android:attr/buttonBarButtonStyle"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
-        android:backgroundTint="@color/theme_red"
+        android:backgroundTint="@color/red_title"
         android:gravity="bottom|center"
         android:paddingBottom="5dp"
         android:text="@string/kumiwake"
@@ -45,8 +43,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
         android:backgroundTint="@color/green_title"
         android:gravity="bottom|center"
         android:paddingBottom="5dp"
@@ -75,7 +71,6 @@
         android:id="@+id/duplicate_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:text="@string/avoid_duplication"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

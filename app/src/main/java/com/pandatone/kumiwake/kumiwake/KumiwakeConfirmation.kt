@@ -39,7 +39,7 @@ class KumiwakeConfirmation : AppCompatActivity() {
         setContentView(R.layout.kumiwake_confirmation)
         if (StatusHolder.mode == ModeKeys.Sekigime.key) {
             val layout = findViewById<ConstraintLayout>(R.id.confirmation_view)
-            layout.background = ContextCompat.getDrawable(this,R.drawable.sekigime_background)
+            layout.background = ContextCompat.getDrawable(this, R.drawable.sekigime_background)
         }
         findViewById<Button>(R.id.kumiwake_btn).setOnClickListener { doKumiwake() }
 

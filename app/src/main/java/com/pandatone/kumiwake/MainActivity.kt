@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.updatePadding
@@ -76,7 +77,7 @@ class MainActivity : AppCompatActivity() {
 
     //メンバーのFABの処理
     private fun memberFabSetting() {
-        val menuMultipleActions = findViewById<View>(R.id.multiple_member_fab) as FloatingActionsMenu
+        val menuMultipleActions = findViewById<FloatingActionsMenu>(R.id.multiple_member_fab)
         val actionMemberList = findViewById<View>(R.id.member_list_button)
         actionMemberList.setOnClickListener {
             startActivity(Intent(this, MembersMain::class.java))
@@ -95,16 +96,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         val dimmer = findViewById<View>(R.id.dimmer_layout)
+        val overlayIcon = findViewById<ImageView>(R.id.overlay_member_icon)
         dimmer.setOnClickListener {
             menuMultipleActions.collapse()
         }
         menuMultipleActions.setOnFloatingActionsMenuUpdateListener(object : OnFloatingActionsMenuUpdateListener {
             override fun onMenuExpanded() {
                 dimmer.visibility = View.VISIBLE
+                overlayIcon.visibility = View.GONE
             }
 
             override fun onMenuCollapsed() {
                 dimmer.visibility = View.GONE
+                overlayIcon.visibility = View.VISIBLE
             }
         })
     }
@@ -115,7 +119,7 @@ class MainActivity : AppCompatActivity() {
         val kNormalUnit: View = findViewById(R.id.kumiwake_normal_unit)
         val kNormalButton: ImageButton = kNormalUnit.findViewById(R.id.icon_button)
         (kNormalUnit.findViewById(R.id.button_text) as TextView).setText(R.string.normal_mode)
-        kNormalButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.theme_red))
+        kNormalButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.red_title))
         kNormalButton.setImageResource(R.drawable.ic_kumiwake_24px)
         kNormalButton.updatePadding(top = PublicMethods.setByDp(17.0f, this), bottom = PublicMethods.setByDp(22.0f, this))
         kNormalButton.setOnClickListener {
@@ -129,7 +133,7 @@ class MainActivity : AppCompatActivity() {
         val kQuickUnit: View = findViewById(R.id.kumiwake_quick_unit)
         val kQuickButton: ImageButton = kQuickUnit.findViewById(R.id.icon_button)
         (kQuickUnit.findViewById(R.id.button_text) as TextView).setText(R.string.quick_mode)
-        kQuickButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.theme_red))
+        kQuickButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.red_title))
         kQuickButton.setImageResource(R.drawable.ic_kumiwake_24px)
         kQuickButton.updatePadding(top = PublicMethods.setByDp(17.0f, this), bottom = PublicMethods.setByDp(22.0f, this))
         kQuickButton.setOnClickListener {

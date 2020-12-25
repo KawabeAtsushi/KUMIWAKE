@@ -9,40 +9,43 @@
     android:parentActivityName=".MemberMain">
 
     <TextView
-        android:id="@+id/add_member_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="10dp"
         android:text="@string/continuously_button"
         android:textColor="#70DF79"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@id/add_member_title"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@id/add_member_title"
+        app:layout_constraintStart_toStartOf="@id/add_member_title" />
 
     <TextView
         android:id="@+id/add_member_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/request_background"
         android:text="@string/add_member_title"
         android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/switch_single_mode"
         app:layout_constraintEnd_toStartOf="@id/switch_single_mode"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_member_subtitle" />
+        app:layout_constraintTop_toTopOf="@id/switch_single_mode" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/switch_single_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:backgroundTint="#9BE6A1"
         android:maxLines="1"
+        android:paddingStart="6dp"
+        android:paddingEnd="9dp"
         android:text="@string/one_by_one_button"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        app:icon="@drawable/ic_switch_mode"
+        app:iconPadding="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/add_member_title"
-        app:layout_constraintTop_toBottomOf="@id/add_member_subtitle" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/indexes_layout"

@@ -64,7 +64,7 @@
         android:text="@string/member_create"
         android:textColor="@android:color/white"
         android:textStyle="bold"
-        app:backgroundTint="#6FF1B2"
+        app:backgroundTint="@color/thin_gray"
         app:icon="@drawable/ic_add_white_24dp"
         app:layout_constraintBottom_toBottomOf="@id/member_add_btn"
         app:layout_constraintEnd_toEndOf="parent"

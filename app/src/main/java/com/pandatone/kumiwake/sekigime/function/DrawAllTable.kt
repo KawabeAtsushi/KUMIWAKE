@@ -351,7 +351,7 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
         val nameInitial: String = if (StatusHolder.normalMode) {
             teamArray[drawTableNo][i].name[0].toString()
         } else {
-            val member = teamArray[DrawTableView.tableNo][i]
+            val member = teamArray[drawTableNo][i]
             if (member.sex == context.getString(R.string.woman)) {
                 (member.id - 1000).toString()   //QuickMode id規則：女メンバー = id+1000
             } else {
