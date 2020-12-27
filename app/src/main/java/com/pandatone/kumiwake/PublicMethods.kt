@@ -36,7 +36,7 @@ object PublicMethods {
     //広告の表示
     fun showAd(activity: Activity) {
         val mAdView = activity.findViewById<View>(R.id.adView) as AdView
-        if (StatusHolder.adDeleated) {
+        if (StatusHolder.adDeleted) {
             mAdView.visibility = View.GONE
         } else {
             MobileAds.initialize(activity)
@@ -90,7 +90,7 @@ object PublicMethods {
 
     //webサイトへ
     fun toWebSite(context: Context, fragmentManager: FragmentManager) {
-        DialogWarehouse(fragmentManager).decisionDialog(context.getString(R.string.move_kumiwake_site), context.getString(R.string.move_kumiwake_site_discription)) {
+        DialogWarehouse(fragmentManager).decisionDialog(context.getString(R.string.move_kumiwake_site), context.getString(R.string.move_kumiwake_site_description)) {
             val uri = Uri.parse(context.getString(R.string.url_homepage))
             val intent = Intent(Intent.ACTION_VIEW, uri)
             context.startActivity(intent)

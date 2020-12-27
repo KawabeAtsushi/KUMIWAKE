@@ -169,13 +169,13 @@
     <string name="cancel_purchase">購入をキャンセルしました。</string>
     <string name="ad_deleted_already">広告は削除済みです。</string>
     <string name="move_kumiwake_site">KUMIWAKE公式サイト</string>
-    <string name="move_kumiwake_site_discription">KUMIWAKE公式サイトへ移動します。</string>
+    <string name="move_kumiwake_site_description">KUMIWAKE公式サイトへ移動します。</string>
     <string name="purchased">を購入しました！！</string>
     <string name="double_tap">画面をダブルタップで入力を開始</string>
     <string name="member_create">新規作成</string>
     <string name="more_details">さらに詳しく</string>
     <string name="release_note">リリースノート</string>
-    <string name="deleted_mamber">削除されたメンバー</string>
+    <string name="deleted_member">削除されたメンバー</string>
     <string name="creation_date">作成日時</string>
     <string name="title">タイトル</string>
     <string name="how_to_history">・クリックすると組み分けの履歴を確認できます。

@@ -29,9 +29,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/form_marginStart"
+            android:layout_marginHorizontal="5dp"
             android:layout_marginTop="@dimen/form_marginTop"
-            android:layout_marginEnd="@dimen/form_marginEnd"
             android:hint="@string/group_name"
             app:helperText="@string/input_required"
             app:helperTextTextColor="@color/red">

@@ -112,7 +112,7 @@ class AddMemberInBulk : AppCompatActivity() {
             FirebaseAnalyticsEvents.memberRegisterEvent(newMember)
         }
 
-        Toast.makeText(this, getText(R.string.member).toString() + memberListView.count + getText(R.string.people) + getText(R.string.registered), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getText(R.string.member).toString() + " " + memberListView.count + getText(R.string.people) + " " + getText(R.string.registered), Toast.LENGTH_SHORT).show()
 
         if (finish) {
             finish()

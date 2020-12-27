@@ -25,7 +25,7 @@ class CustomDialogSekigime : DialogFragment() {
     private var fmDeploy: CheckBox? = null
 
     //onClickリスナ
-    private val mOnClickLisner = View.OnClickListener { dismiss() }
+    private val mOnClickListener = View.OnClickListener { dismiss() }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AppCompatDialog {
         val dialog = activity?.let { AppCompatDialog(it) }
@@ -55,7 +55,7 @@ class CustomDialogSekigime : DialogFragment() {
         positiveBt.setOnClickListener(mPositiveBtnListener)
 
         // いいえボタンのリスナ
-        dialog.findViewById<Button>(R.id.negative_button)!!.setOnClickListener(mOnClickLisner)
+        dialog.findViewById<Button>(R.id.negative_button)!!.setOnClickListener(mOnClickListener)
         return dialog
     }
 

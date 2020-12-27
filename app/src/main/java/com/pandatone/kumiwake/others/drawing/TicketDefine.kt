@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.ticket_difinition.*
  */
 class TicketDefine : AppCompatActivity() {
     private lateinit var ticketListView: ListView
-    private lateinit var totalAssinedTextView: TextView
+    private lateinit var totalAssignedTextView: TextView
     private var editTicketAdapter: EditOthersViewAdapter? = null
     private var ticketArray: ArrayList<Group> = ArrayList()
     private var screenHeight = 0
@@ -41,7 +41,7 @@ class TicketDefine : AppCompatActivity() {
         PublicMethods.setStatus(this, Theme.Others.primaryColor)
         setContentView(R.layout.ticket_difinition)
         findViews()
-        editTicketAdapter = EditOthersViewAdapter(this, ticketArray, totalAssinedTextView, true)
+        editTicketAdapter = EditOthersViewAdapter(this, ticketArray, totalAssignedTextView, true)
         onAddTicket()
         setViews()
         ticketListView.adapter = editTicketAdapter
@@ -53,9 +53,9 @@ class TicketDefine : AppCompatActivity() {
     //View宣言
     private fun findViews() {
         ticketListView = findViewById(R.id.ticketListView)
-        totalAssinedTextView = findViewById(R.id.total_ticket_no)
+        totalAssignedTextView = findViewById(R.id.total_ticket_no)
         val totalStr = getString(R.string.ticket_number) + "0"
-        totalAssinedTextView.text = totalStr
+        totalAssignedTextView.text = totalStr
     }
 
     //View初期化

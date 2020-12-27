@@ -42,9 +42,8 @@ object ShareViewImage {
     }
 
     private fun getShareImageFilePath(context: Context): String {
-        val fname = "/result.png"
         // ファイル保存先 (SDカード)
-        return (context.getExternalFilesDir(null).toString() + fname)
+        return (context.getExternalFilesDir(null).toString() + "/result.png")
     }
 
     /**

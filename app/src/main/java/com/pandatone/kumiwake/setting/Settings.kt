@@ -77,7 +77,7 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
                 //行をクリックした時の処理
                 when (pos) {
                     1 -> {
-                        StatusHolder.cheakStatus = true
+                        StatusHolder.checkStatus = true
                         startActivity(Intent(this, PurchaseFreeAdOption::class.java))
                     }
                 }
@@ -209,7 +209,7 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
     //報酬対象になったとき
     override fun onRewarded(p0: com.google.android.gms.ads.reward.RewardItem?) {
         rewarded = true
-        StatusHolder.adDeleated = true
+        StatusHolder.adDeleted = true
         MainActivity.mAdView.visibility = View.GONE
     }
 

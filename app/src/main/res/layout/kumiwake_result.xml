@@ -177,7 +177,7 @@
                 android:padding="12dp"
                 android:text="@string/go_sekigime"
                 android:textColor="@android:color/white"
-                app:backgroundTint="@color/light_green"
+                app:backgroundTint="@color/green_title"
                 app:icon="@drawable/ic_sekigime_24px"
                 app:iconTint="@android:color/white"
                 app:layout_constraintEnd_toEndOf="parent"

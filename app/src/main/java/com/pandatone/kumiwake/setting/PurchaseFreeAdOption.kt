@@ -72,8 +72,8 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
             val responseCode = billingResult.responseCode
             if (responseCode == BillingClient.BillingResponseCode.OK) { // 後の購入手続きのためにSkuの詳細を保持
                 mySkuDetailsList = skuDetailsList
-                if (StatusHolder.cheakStatus) {
-                    StatusHolder.cheakStatus = false
+                if (StatusHolder.checkStatus) {
+                    StatusHolder.checkStatus = false
                 } else {
                     startPurchase(StatusHolder.ad_free_sku)  //購入
                 }
@@ -140,7 +140,7 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
 
     // 購入済みアイテムを問い合わせる（キャッシュ処理）
     private fun queryOwned() {
-        val history = findViewById<TextView>(R.id.purchsed_history)
+        val history = findViewById<TextView>(R.id.purchased_history)
         val purchasesResult = billingClient!!.queryPurchases(BillingClient.SkuType.INAPP)
         val responseCode = purchasesResult.responseCode
         if (responseCode == BillingClient.BillingResponseCode.OK) {
@@ -217,7 +217,7 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
 
     //広告非表示処理
     private fun deleteAd() {
-        StatusHolder.adDeleated = true
+        StatusHolder.adDeleted = true
         MainActivity.mAdView.visibility = View.GONE
     }
 }

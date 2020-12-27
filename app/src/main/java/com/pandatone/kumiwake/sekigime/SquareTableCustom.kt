@@ -14,7 +14,7 @@ import kotlin.math.ceil
  */
 class SquareTableCustom : AppCompatActivity() {
     private var seatNo = 0
-    private var mingroupNo = 1000
+    private var minGroupNo = 1000
     private var doubleDeploy: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,24 +25,24 @@ class SquareTableCustom : AppCompatActivity() {
         val array = SekigimeResult.teamArray
         for (item in array) {
             val size = item.size
-            if (size < mingroupNo) {
-                mingroupNo = size
+            if (size < minGroupNo) {
+                minGroupNo = size
             }
         }
 
-        square_seek_bar.max = mingroupNo / 4
-        if (mingroupNo < 4) {
+        square_seek_bar.max = minGroupNo / 4
+        if (minGroupNo < 4) {
             square_seek_bar.isEnabled = false
         }
         doubleSquareType.setOnCheckedChangeListener { _, _ ->
             if (doubleSquareType.isChecked) {
-                square_seek_bar.max = mingroupNo / 4
-                if (mingroupNo < 4) {
+                square_seek_bar.max = minGroupNo / 4
+                if (minGroupNo < 4) {
                     square_seek_bar.isEnabled = false
                 }
             } else {
-                square_seek_bar.max = ceil(mingroupNo / 3.toDouble()).toInt()
-                square_seek_bar.isEnabled = mingroupNo >= 3
+                square_seek_bar.max = ceil(minGroupNo / 3.toDouble()).toInt()
+                square_seek_bar.isEnabled = minGroupNo >= 3
             }
         }
 

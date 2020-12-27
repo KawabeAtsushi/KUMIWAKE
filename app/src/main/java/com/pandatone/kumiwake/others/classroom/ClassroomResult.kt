@@ -197,7 +197,7 @@ class ClassroomResult : AppCompatActivity() {
                         val member = memberArray[total]
                         seatNameTv.text = member.name
                         if (member.sex == getText(R.string.man)) {
-                            seatNameTv.setTextColor(PublicMethods.getColor(this, R.color.man))
+                            seatNameTv.setTextColor(PublicMethods.getColor(this, R.color.blue_title))
                         } else if (member.sex == getText(R.string.woman)) {
                             seatNameTv.setTextColor(PublicMethods.getColor(this, R.color.woman))
                         }
@@ -293,9 +293,7 @@ class ClassroomResult : AppCompatActivity() {
     //画像でシェア
     private fun shareImage() {
         val shareLayout = findViewById<LinearLayout>(R.id.whole_result_layout)
-        shareLayout.setBackgroundResource(R.drawable.flooring)
         ShareViewImage.shareView(this, shareLayout, getString(R.string.classroom_result))
-        shareLayout.setBackgroundResource(0)
     }
 
     companion object {

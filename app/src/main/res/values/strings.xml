@@ -164,9 +164,9 @@
     <string name="purchased_history">Purchase history</string>
     <string name="ad_delete">Ad delete</string>
     <string name="cancel_purchase">Cancel purchase</string>
-    <string name="ad_deleted_already">Ad deleated already</string>
+    <string name="ad_deleted_already">Ad deleted already</string>
     <string name="move_kumiwake_site">Move official site</string>
-    <string name="move_kumiwake_site_discription">Go to the KUMIWAKE official site.\nIs it OK? (Japanese only)</string>
+    <string name="move_kumiwake_site_description">Go to the KUMIWAKE official site.\nIs it OK? (Japanese only)</string>
     <string name="purchased">purchased!!</string>
     <string name="show_detail">Show Individual</string>
     <string name="double_tap">Double tap display to start typing</string>
@@ -175,7 +175,7 @@
     <string name="url_homepage" translatable="false">https://peraichi.com/landing_pages/view/kumiwake</string>
     <string name="url_release_note" translatable="false">https://peraichi.com/landing_pages/view/kumiwake/#section-34</string>
     <string name="release_note">Release Note</string>
-    <string name="deleted_mamber">Deleted member</string>
+    <string name="deleted_member">Deleted member</string>
     <string name="creation_date">Creation date</string>
     <string name="title">Title</string>
     <string name="how_to_history">・Click to see the grouping history.
@@ -244,7 +244,7 @@
     <string name="share_option">share options</string>
     <string name="input_comment">Input comment</string>
     <string name="add_info">Add info</string>
-    <string name="classroom">classroom</string>
+    <string name="classroom">Classroom</string>
     <string name="classroom_result">Classroom seats</string>
     <string name="classroom_hint">Class-〇\'s seats</string>
     <string name="go_classroom">Go classroom!</string>

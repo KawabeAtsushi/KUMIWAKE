@@ -8,6 +8,7 @@
         android:id="@+id/icon_button_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingStart="0dp"
         android:paddingEnd="10dp"
         android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"

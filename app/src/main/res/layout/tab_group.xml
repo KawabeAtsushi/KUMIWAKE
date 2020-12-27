@@ -35,7 +35,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add_group_24"
-        app:tint="@android:color/white" />
+        app:tint="@android:color/white"
+        android:contentDescription="@null" />
 
     <TextView
         android:id="@+id/advice_in_fg"

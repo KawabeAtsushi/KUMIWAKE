@@ -144,9 +144,10 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_switch_mode" />
-                            <entry key="sourceFile" value="C:\Users\KAWABE\Downloads\早送りボタン.svg" />
+                            <entry key="outputName" value="frame_kokuban" />
+                            <entry key="sourceFile" value="C:\Users\Surface3-1\Downloads\frame-kokuban.svg" />
                           </map>
                         </option>
                       </PersistentState>

@@ -63,7 +63,7 @@ object HistoryMethods {
 
     //メンバーリストからメンバーを検索
     private fun pickMember(context: Context, id: String, memberList: ArrayList<Member>): Member {
-        val noMember = Member(-1, context.getString(R.string.deleted_mamber), "none", -1, "", "", -1)
+        val noMember = Member(-1, context.getString(R.string.deleted_member), "none", -1, "", "", -1)
         val member = memberList.find { it.id.toString() == id }
         member?.let { it ->
             // memberがnullでないときだけ実行

@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, PurchaseFreeAdOption::class.java))
         }
 
-        if (StatusHolder.adDeleated) {
+        if (StatusHolder.adDeleted) {
             mAdView.visibility = View.GONE
         } else {
             MobileAds.initialize(this)

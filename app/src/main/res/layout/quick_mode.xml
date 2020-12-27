@@ -29,8 +29,6 @@
                 android:textColor="@color/gray"
                 android:textSize="25sp" />
 
-            <include layout="@layout/title_divider" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -91,8 +89,6 @@
                 android:text="@string/number_of_member"
                 android:textColor="@color/gray"
                 android:textSize="25sp" />
-
-            <include layout="@layout/title_divider" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -215,8 +211,6 @@
                 android:text="@string/kumiwake_conditions"
                 android:textColor="@color/gray"
                 android:textSize="25sp" />
-
-            <include layout="@layout/title_divider" />
 
             <LinearLayout
                 android:layout_width="match_parent"

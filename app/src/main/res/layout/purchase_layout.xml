@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/purchsed_history_title"
+        android:id="@+id/purchased_history_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -27,13 +27,13 @@
         app:layout_constraintTop_toBottomOf="@id/text_purchase" />
 
     <TextView
-        android:id="@+id/purchsed_history"
+        android:id="@+id/purchased_history"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/nothing"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@id/purchsed_history_title"
-        app:layout_constraintTop_toBottomOf="@id/purchsed_history_title" />
+        app:layout_constraintStart_toStartOf="@id/purchased_history_title"
+        app:layout_constraintTop_toBottomOf="@id/purchased_history_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

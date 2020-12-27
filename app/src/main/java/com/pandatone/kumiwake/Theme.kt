@@ -20,7 +20,7 @@ import androidx.annotation.ColorRes
 
 /**
  * Usually this should be done via attributes and [android.view.ContextThemeWrapper]s.
- * In one case in Topeka it is more performant to work like this.
+ * In one case in Topeka it is more perform to work like this.
  * This case involves a trade-off between statically loading these themes versus inflation
  * in an adapter backed view without recycling.
  */

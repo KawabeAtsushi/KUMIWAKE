@@ -16,7 +16,7 @@ https://panda-tone.jimdosite.com/
 ## Easy grouping in favorite conditions!
 ## You can also determined seats allocation!
 
-Determine group every time when the circle with sesh, allot the seats are uncomfortable...
+Determine group every time when activities, allot the seats are uncomfortable...
 
 I want to grouping so as to age is equalized...
 
@@ -43,7 +43,7 @@ You can seats decided from four types according to the table type of the place.
 ### ◆ Others
 
 - Order decision
-- Role decisiton
+- Role decision
 - Drawing (pick up)
 - Classroom
 

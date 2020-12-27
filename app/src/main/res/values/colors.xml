@@ -8,7 +8,6 @@
     <color name="yellow">#fff000</color>
     <color name="gold">#ffd700</color>
     <color name="checked_list">#DFF6FE</color>
-    <color name="light_green">#78ff84</color>
     <color name="thin_green">#5078ff84</color>
     <color name="thin_orange">#50ffc02e</color>
     <color name="thin_white">#50FFFFFF</color>
@@ -33,6 +32,6 @@
     <color name="red_title">#ff7777</color>
 
     <color name="yellow_background">#60ffff8d</color>
-    <color name="yellow_title">#ffeb3b</color>
+    <color name="yellow_title">#FFF758</color>
 
 </resources>

@@ -73,10 +73,10 @@ class NormalMode : AppCompatActivity() {
 
     //Viewの宣言
     private fun findViews() {
-        listView = findViewById<View>(R.id.add_group_listView).findViewById<View>(R.id.memberListView) as ListView
+        listView = findViewById<View>(R.id.add_group_listView).findViewById(R.id.memberListView)
         listView.emptyView = findViewById<View>(R.id.add_group_listView).findViewById(R.id.emptyMemberList)
-        gpNoEditText = findViewById<View>(R.id.group_no_form) as AppCompatEditText
-        errorGroup = findViewById<View>(R.id.error_group_no_txt) as TextView
+        gpNoEditText = findViewById(R.id.group_no_form)
+        errorGroup = findViewById(R.id.error_group_no_txt)
     }
 
     //MemberMainに遷移

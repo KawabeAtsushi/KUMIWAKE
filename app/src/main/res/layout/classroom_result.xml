@@ -4,8 +4,7 @@
     android:id="@+id/result_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/flooring"
-    android:backgroundTint="#607E460A"
+    android:background="#FFF6DC"
     android:backgroundTintMode="src_atop">
 
     <ScrollView
@@ -41,7 +40,7 @@
                 android:layout_height="0dp"
                 android:contentDescription="@null"
                 android:scaleType="fitXY"
-                android:src="@drawable/ribbon"
+                android:src="@drawable/frame_blackboard"
                 app:layout_constraintBottom_toBottomOf="@id/result_title"
                 app:layout_constraintEnd_toEndOf="@id/result_title"
                 app:layout_constraintStart_toStartOf="@id/result_title"
@@ -99,6 +98,7 @@
                     android:id="@+id/whole_result_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="#FFF6DC"
                     android:orientation="vertical">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -110,7 +110,7 @@
                             android:layout_height="0dp"
                             android:contentDescription="@null"
                             android:scaleType="fitXY"
-                            android:src="@drawable/ribbon"
+                            android:src="@drawable/frame_blackboard"
                             app:layout_constraintBottom_toBottomOf="@id/inner_result_title"
                             app:layout_constraintEnd_toEndOf="@id/inner_result_title"
                             app:layout_constraintStart_toStartOf="@id/inner_result_title"

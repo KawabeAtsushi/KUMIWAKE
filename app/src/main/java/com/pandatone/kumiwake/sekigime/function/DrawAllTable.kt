@@ -199,7 +199,6 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
         val tableHeight = tableTop + (130 * (seatsNo / 2f).roundToInt() + 50) * dp //四捨五入
 
         // 机
-        //val bmp = BitmapFactory.decodeResource(resources, R.drawable.mokume)
         cPaint.isAntiAlias = true
         val rectRight = dispWidth - 180 * dp
         cPaint.color = Color.parseColor(tableStrokeColor)

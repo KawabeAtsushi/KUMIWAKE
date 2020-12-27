@@ -30,7 +30,7 @@ import kotlinx.android.synthetic.main.ticket_difinition.*
  */
 class RoleDefine : AppCompatActivity() {
     private lateinit var roleListView: ListView
-    private lateinit var totalAssinedTextView: TextView
+    private lateinit var totalAssignedTextView: TextView
     private var editRoleAdapter: EditOthersViewAdapter? = null
     private lateinit var memberArray: ArrayList<Member>
     private var roleArray: ArrayList<Group> = ArrayList()
@@ -46,7 +46,7 @@ class RoleDefine : AppCompatActivity() {
             memberArray = intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>
         }
         findViews()
-        editRoleAdapter = EditOthersViewAdapter(this, roleArray, totalAssinedTextView, false)
+        editRoleAdapter = EditOthersViewAdapter(this, roleArray, totalAssignedTextView, false)
         onAddRole()
         setViews()
         roleListView.adapter = editRoleAdapter
@@ -59,9 +59,9 @@ class RoleDefine : AppCompatActivity() {
         val title = getString(R.string.member) + " " + memberArray.size + getString(R.string.people)
         findViewById<TextView>(R.id.member_no_txt).text = title
         roleListView = findViewById(R.id.ticketListView)
-        totalAssinedTextView = findViewById(R.id.total_ticket_no)
+        totalAssignedTextView = findViewById(R.id.total_ticket_no)
         val totalStr = getString(R.string.assigned) + "0" + getString(R.string.people)
-        totalAssinedTextView.text = totalStr
+        totalAssignedTextView.text = totalStr
     }
 
     //View初期化

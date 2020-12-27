@@ -7,9 +7,9 @@ import com.pandatone.kumiwake.adapter.MemberAdapter
 object StatusHolder {
 
     //ad status
-    var adDeleated = false //広告は非表示か
+    var adDeleted = false //広告は非表示か
     var adCheck = true //広告削除購入済みかチェック
-    var cheakStatus = false //購入履歴チェックモード
+    var checkStatus = false //購入履歴チェックモード
 
     //mode
     var normalMode: Boolean = true //true: ノーマルモード, false: クイックモード
