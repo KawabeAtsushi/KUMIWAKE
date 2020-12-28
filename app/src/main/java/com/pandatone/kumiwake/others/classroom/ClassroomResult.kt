@@ -75,8 +75,8 @@ class ClassroomResult : AppCompatActivity() {
 
     //男女となり
     private fun createAlterArray() {
-        val manArray = memberArray.filter { it.sex == getString(R.string.man) }
-        val womanArray = memberArray.filter { it.sex == getString(R.string.woman) }
+        val manArray = memberArray.filter { PublicMethods.isMan(it.sex) }
+        val womanArray = memberArray.filter { !PublicMethods.isMan(it.sex) }
         memberArray.clear()
         var count = 0
         var manCount = 0
@@ -196,9 +196,9 @@ class ClassroomResult : AppCompatActivity() {
                         val seatNameTv = seat.findViewById<TextView>(R.id.seat_name)
                         val member = memberArray[total]
                         seatNameTv.text = member.name
-                        if (member.sex == getText(R.string.man)) {
+                        if (PublicMethods.isMan(member.sex)) {
                             seatNameTv.setTextColor(PublicMethods.getColor(this, R.color.blue_title))
-                        } else if (member.sex == getText(R.string.woman)) {
+                        } else if (PublicMethods.isMan(member.sex)) {
                             seatNameTv.setTextColor(PublicMethods.getColor(this, R.color.woman))
                         }
                         tableRow.addView(seat)

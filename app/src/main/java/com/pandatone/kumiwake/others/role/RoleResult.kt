@@ -126,17 +126,17 @@ class RoleResult : AppCompatActivity() {
             createFmArray()    //男女それぞれの配列を作成
             KumiwakeMethods.arrangeByAge(manArray)
             KumiwakeMethods.arrangeByAge(womanArray)
-            KumiwakeMethods.evenManDistribute(memberArray.size, resultArray, manArray, groupArray, getString(R.string.man))
+            KumiwakeMethods.evenManDistribute(memberArray.size, resultArray, manArray, groupArray)
             KumiwakeMethods.evenWomanDistribute(resultArray, womanArray, groupArray)
         } else if (evenFmRatio) {
             createFmArray()    //男女それぞれの配列を作成
-            KumiwakeMethods.evenManDistribute(memberArray.size, resultArray, manArray, groupArray, getString(R.string.man))
+            KumiwakeMethods.evenManDistribute(memberArray.size, resultArray, manArray, groupArray)
             KumiwakeMethods.evenWomanDistribute(resultArray, womanArray, groupArray)
         } else if (evenAgeRatio) {
             KumiwakeMethods.arrangeByAge(memberArray)
-            KumiwakeMethods.kumiwakeAll(resultArray, memberArray, groupArray, ArrayList(), emptyArray())
+            KumiwakeMethods.kumiwakeAll(resultArray, memberArray, groupArray, ArrayList())
         } else {
-            KumiwakeMethods.kumiwakeAll(resultArray, memberArray, groupArray, ArrayList(), emptyArray())
+            KumiwakeMethods.kumiwakeAll(resultArray, memberArray, groupArray, ArrayList())
         }
 
         Thread(DrawTask(this, groupCount)).start()
@@ -145,7 +145,7 @@ class RoleResult : AppCompatActivity() {
     //男女配列作成
     private fun createFmArray() {
         for (member in memberArray) {
-            if (member.sex == getText(R.string.man)) {
+            if (PublicMethods.isMan(member.sex)) {
                 manArray.add(member)
             } else {
                 womanArray.add(member)

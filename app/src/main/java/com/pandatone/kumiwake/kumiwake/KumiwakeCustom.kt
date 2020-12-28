@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Point
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.WindowManager
@@ -20,7 +21,6 @@ import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
 import kotlinx.android.synthetic.main.kumiwake_custom.*
 import kotlinx.android.synthetic.main.part_review_listview.*
-import java.util.*
 
 
 /**
@@ -34,7 +34,7 @@ class KumiwakeCustom : AppCompatActivity() {
     private lateinit var memberArray: ArrayList<Member>
     private lateinit var groupArray: ArrayList<Group>
     private lateinit var newGroupArray: ArrayList<Group>
-    private var leaderNoList: Array<Int?> = emptyArray()
+    private var leaderArray: ArrayList<Member?> = ArrayList()
     private var screenHeight = 0
     private var nextSet = 0
 
@@ -67,7 +67,8 @@ class KumiwakeCustom : AppCompatActivity() {
             memberListView.requestFocus()
             changeLeader(position)
         }
-        leaderNoList = arrayOfNulls(groupArray.size) //n番目にグループnのリーダーのidを格納
+        val leaderArrayB: Array<Member?> = arrayOfNulls(groupArray.size) //n番目にグループnのリーダーを格納
+        leaderArray = leaderArrayB.toCollection(ArrayList())
     }
 
     //View宣言
@@ -110,7 +111,7 @@ class KumiwakeCustom : AppCompatActivity() {
             val intent = Intent(this, KumiwakeConfirmation::class.java)
             intent.putExtra(KumiwakeArrayKeys.MEMBER_LIST.key, memberArray)
             intent.putExtra(KumiwakeArrayKeys.GROUP_LIST.key, newGroupArray)
-            intent.putExtra(KumiwakeArrayKeys.LEADER_NO_LIST.key, leaderNoList)
+            intent.putExtra(KumiwakeArrayKeys.LEADER_LIST.key, leaderArray)
             intent.putExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, even_fm_ratio_check.isChecked)
             intent.putExtra(KumiwakeCustomKeys.EVEN_AGE_RATIO.key, even_age_ratio_check.isChecked)
             startActivity(intent)
@@ -135,23 +136,22 @@ class KumiwakeCustom : AppCompatActivity() {
     //リーダーの選択・解除処理
     @SuppressLint("SetTextI18n")
     fun changeLeader(position: Int) {
-        val id = memberArray[position].id
-        val name = memberArray[position].name
+        val selectedMember = memberArray[position]
         //リーダー解除
-        if (leaderNoList.contains(id)) {
-            nextSet = leaderNoList.indexOf(id)
-            leaderNoList[nextSet] = null
+        if (leaderArray.contains(selectedMember)) {
+            nextSet = leaderArray.indexOf(selectedMember)
+            leaderArray[nextSet] = null
             val leader = groupListView.getChildAt(nextSet).findViewById<View>(R.id.leader) as TextView
             leader.text = getText(R.string.leader).toString() + ":" + getText(R.string.nothing)
         } else if (nextSet != -1) {//最大数登録したら終わり(indexが-1返される)
             //リーダー登録
-            leaderNoList[nextSet] = id
+            leaderArray[nextSet] = selectedMember
             val leader = groupListView.getChildAt(nextSet).findViewById<View>(R.id.leader) as TextView
-            leader.text = getText(R.string.leader).toString() + ":" + name
-            nextSet = leaderNoList.indexOfFirst { it == null }
+            leader.text = getText(R.string.leader).toString() + ":" + selectedMember.name
+            nextSet = leaderArray.indexOfFirst { it == null }
         }
 
-        mbAdapter = SmallMBListAdapter(this, memberArray, leaderNoList = leaderNoList, showLeaderNo = true)
+        mbAdapter = SmallMBListAdapter(this, memberArray, leaderArray = leaderArray, showLeaderNo = true)
         memberListView.adapter = mbAdapter
     }
 

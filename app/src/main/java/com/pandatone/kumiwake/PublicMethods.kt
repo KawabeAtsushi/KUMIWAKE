@@ -119,6 +119,11 @@ object PublicMethods {
         val scale = context.resources.displayMetrics.density
         return (dp * scale + 0.5f).toInt()
     }
+
+    //性別判別（男ならtrueを返す）
+    fun isMan(sex: String): Boolean {
+        return sex == "Man" || sex == "男"
+    }
 }
 
 class MyGestureListener(private val imm: InputMethodManager, private val et: EditText) : GestureDetector.SimpleOnGestureListener() {

@@ -3,7 +3,9 @@ package com.pandatone.kumiwake.kumiwake.function
 import android.app.Activity
 import android.view.View
 import android.widget.TextView
+import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
 import java.util.*
@@ -12,9 +14,39 @@ import kotlin.random.Random
 
 object KumiwakeMethods {
 
+    // 組み分け
+    fun kumiwake(resultArray: ArrayList<ArrayList<Member>>, memberArray: ArrayList<Member>, groupArray: ArrayList<Group>, leaderArray: ArrayList<Member?>, evenFmRatio: Boolean, evenAgeRatio: Boolean) {
+
+        val manArray: ArrayList<Member> = ArrayList()
+        val womanArray: ArrayList<Member> = ArrayList()
+
+        if (evenFmRatio && evenAgeRatio) {
+            createFmArray(memberArray, manArray, womanArray)    //男女それぞれの配列を作成
+            arrangeByAge(manArray)
+            arrangeByAge(womanArray)
+            setLeader(resultArray, leaderArray)
+            evenManDistribute(memberArray.size, resultArray, manArray, groupArray)
+            evenWomanDistribute(resultArray, womanArray, groupArray)
+        } else if (evenFmRatio) {
+            createFmArray(memberArray, manArray, womanArray)    //男女それぞれの配列を作成
+            setLeader(resultArray, leaderArray)
+            evenManDistribute(memberArray.size, resultArray, manArray, groupArray)
+            evenWomanDistribute(resultArray, womanArray, groupArray)
+        } else if (evenAgeRatio) {
+            arrangeByAge(memberArray)
+            kumiwakeAll(resultArray, memberArray, groupArray, leaderArray)
+        } else {
+            if (StatusHolder.normalMode) {
+                kumiwakeAll(resultArray, memberArray, groupArray, leaderArray)
+            } else {
+                kumiwakeAllQuick(resultArray, memberArray, groupArray)
+            }
+        }
+    }
+
     //for normal mode
-    fun kumiwakeAll(resultArray: ArrayList<ArrayList<Member>>, memberArray: ArrayList<Member>, groupArray: ArrayList<Group>, leaderArray: ArrayList<Member>, leaderNoList: Array<Int?>) {
-        setLeader(resultArray, leaderArray, leaderNoList) //リーダを先にセット
+    fun kumiwakeAll(resultArray: ArrayList<ArrayList<Member>>, memberArray: ArrayList<Member>, groupArray: ArrayList<Group>, leaderArray: ArrayList<Member?>) {
+        setLeader(resultArray, leaderArray) //リーダを先にセット
 
         val groupCount = groupArray.size
         val escapeArray = ArrayList<Member>() //復帰用
@@ -27,7 +59,7 @@ object KumiwakeMethods {
     }
 
     //for quick mode
-    fun kumiwakeAllQuick(resultArray: ArrayList<ArrayList<Member>>, memberArray: ArrayList<Member>, groupArray: ArrayList<Group>) {
+    private fun kumiwakeAllQuick(resultArray: ArrayList<ArrayList<Member>>, memberArray: ArrayList<Member>, groupArray: ArrayList<Group>) {
         val groupCount = groupArray.size
         var memberNo = 0
 
@@ -41,12 +73,22 @@ object KumiwakeMethods {
 
     }
 
-    //リーダーをresultArrayに追加
-    fun setLeader(resultArray: ArrayList<ArrayList<Member>>, leaderArray: ArrayList<Member>, leaderNoList: Array<Int?>) {
+    //男女配列作成
+    private fun createFmArray(memberArray: ArrayList<Member>, manArray: ArrayList<Member>, womanArray: ArrayList<Member>) {
+        for (member in memberArray) {
+            if (PublicMethods.isMan(member.sex)) {
+                manArray.add(member)
+            } else {
+                womanArray.add(member)
+            }
+        }
+    }
 
-        for (leader in leaderArray) {
-            val id = leader.id
-            resultArray[leaderNoList.indexOf(id)].add(leader)
+    //リーダーをresultArrayに追加
+    private fun setLeader(resultArray: ArrayList<ArrayList<Member>>, leaderArray: ArrayList<Member?>) {
+
+        for (leader in leaderArray.filterNotNull()) {
+            resultArray[leaderArray.indexOf(leader)].add(leader)
         }
     }
 
@@ -54,21 +96,6 @@ object KumiwakeMethods {
     fun arrangeByAge(array: ArrayList<Member>) {
         array.shuffle()
         Collections.sort(array, KumiwakeComparator.AgeComparator())
-    }
-
-    //resultArray[i]を作るメソッド
-    private fun kumiwakeCreateGroup(array: ArrayList<Member>, addNo: Int, escapeArray: ArrayList<Member>): ArrayList<Member> {
-        val result = ArrayList<Member>()
-        val addIndexes = properAgeIndexes(addNo, array.size)
-
-        for (i in 0 until addNo) {
-            val member = array[addIndexes[i]]
-            result.add(member)
-        }
-        //追加したメンバー削除 & escape
-        escapeArray.addAll(result)
-        array.removeAll(result)
-        return result
     }
 
     /*
@@ -80,7 +107,7 @@ object KumiwakeMethods {
     * （最終周は小数点以下の大きさで決まる。それまでは整数部の大きさで決まる。）
      */
     //manArrayが均等に配分されるようにresultArrayに追加
-    fun evenManDistribute(memberCount: Int, resultArray: ArrayList<ArrayList<Member>>, manArray: ArrayList<Member>, groupArray: ArrayList<Group>, man: String) {
+    fun evenManDistribute(memberCount: Int, resultArray: ArrayList<ArrayList<Member>>, manArray: ArrayList<Member>, groupArray: ArrayList<Group>) {
         val groupCount = groupArray.size
         val groupCapacity = DoubleArray(groupCount)
         val escapeArray = ArrayList<Member>() //復帰用
@@ -92,14 +119,14 @@ object KumiwakeMethods {
 
         //leaderの男分を先にひく
         for (i in 0 until groupCount) {
-            if (resultArray[i].isNotEmpty() && resultArray[i][0].sex == man) {
+            if (resultArray[i].isNotEmpty() && PublicMethods.isMan(resultArray[i][0].sex)) {
                 groupCapacity[i]--
             }
         }
 
         //順番に追加していく
         while (0 < manArray.size) {
-            val addGroupNo = groupCapacity.maxOrNull()?.let { groupCapacity.indexOfFirst { it == it } } //最大許容数のGroupNoを取得
+            val addGroupNo = groupCapacity.max()?.let { groupCapacity.indexOf(it) } //最大許容数のGroupNoを取得 //deprecated変更したら動かない
             val member = manArray[0]
             resultArray[addGroupNo!!].add(member) //メンバー追加
             escapeArray.add(member)
@@ -117,20 +144,36 @@ object KumiwakeMethods {
 
         var memberSum = 0
         for (i in 0 until groupCount) {
-            val addNo = groupArray[i].belongNo - resultArray[i].size  //追加する人数＝グループの規定人数－グループの現在数
+            val addNo = groupArray[i].belongNo - resultArray[i].size  //追加する人数＝グループの所属人数－結果グループの現在数（すでに入っている男の数）
             resultArray[i].addAll(kumiwakeCreateGroup(womanArray, addNo, escapeArray))
             memberSum += addNo //既に追加した人数
         }
         womanArray.addAll(escapeArray)
     }
 
+    //resultArray[i]を作るメソッド
+    private fun kumiwakeCreateGroup(array: ArrayList<Member>, addNo: Int, escapeArray: ArrayList<Member>): ArrayList<Member> {
+        val result = ArrayList<Member>()
+        val addIndexes = properAgeIndexes(addNo, array.size)
+
+        for (i in 0 until addNo) {
+            val member = array[addIndexes[i]]
+            result.add(member)
+        }
+        //追加したメンバー削除 & escape
+        escapeArray.addAll(result)
+        array.removeAll(result)
+        return result
+    }
+
     //元配列を飛ばし飛ばしでとって、そのIndex配列を返す -> 年齢が均等にとれる
-    private fun properAgeIndexes(toArraySize: Int, fromArraySize: Int): IntArray {
-        val pickIndexes = IntArray(toArraySize)
-        if (toArraySize != 0) {
-            val interval = fromArraySize / toArraySize
+    //fromArraySize 組み分けするメンバー数
+    private fun properAgeIndexes(addNo: Int, fromArraySize: Int): IntArray {
+        val pickIndexes = IntArray(addNo)
+        if (addNo != 0) {
+            val interval = fromArraySize / addNo
             val asc = Random.nextBoolean()
-            for (i in 0 until toArraySize) {
+            for (i in 0 until addNo) {
                 if (asc) {
                     pickIndexes[i] = interval * i
                 } else {

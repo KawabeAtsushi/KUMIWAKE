@@ -8,10 +8,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import com.pandatone.kumiwake.KumiwakeArrayKeys
-import com.pandatone.kumiwake.KumiwakeCustomKeys
-import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.StatusHolder
+import com.pandatone.kumiwake.*
 import com.pandatone.kumiwake.adapter.SmallGPListAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeComparator
@@ -76,7 +73,7 @@ class RoleConfirmation : AppCompatActivity() {
     private fun countManNo(): Int {
         var manNo = 0
         for (member in memberArray) {
-            if (member.sex == getText(R.string.man)) {
+            if (PublicMethods.isMan(member.sex)) {
                 manNo++
             }
         }

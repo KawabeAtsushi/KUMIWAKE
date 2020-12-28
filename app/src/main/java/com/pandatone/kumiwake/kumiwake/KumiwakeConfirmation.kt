@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -26,9 +27,8 @@ import kotlin.collections.ArrayList
 class KumiwakeConfirmation : AppCompatActivity() {
     private lateinit var memberArray: ArrayList<Member>
     private lateinit var groupArray: ArrayList<Group>
-    private var leaderNoList: Array<Int?> = emptyArray()
     private var newMemberArray: ArrayList<Member> = ArrayList()
-    private var leaderArray: ArrayList<Member> = ArrayList()
+    private var leaderArray: ArrayList<Member?> = ArrayList()
     private var evenFmRatio: Boolean = false
     private var evenAgeRatio: Boolean = false
 
@@ -50,9 +50,12 @@ class KumiwakeConfirmation : AppCompatActivity() {
         if (i.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) != null) {
             groupArray = i.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) as ArrayList<Group>
         }
-        if (i.getSerializableExtra(KumiwakeArrayKeys.LEADER_NO_LIST.key) != null) {
-            leaderNoList = i.getSerializableExtra(KumiwakeArrayKeys.LEADER_NO_LIST.key) as Array<Int?>
+        if (i.getSerializableExtra(KumiwakeArrayKeys.LEADER_LIST.key) != null) {
+            leaderArray = i.getSerializableExtra(KumiwakeArrayKeys.LEADER_LIST.key) as ArrayList<Member?>
+            Log.d("leaderArrayIntended",leaderArray.size.toString())
         }
+
+        Log.d("leaderArraySize",leaderArray.size.toString())
 
         evenFmRatio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, false)
         evenAgeRatio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_AGE_RATIO.key, false)
@@ -89,7 +92,7 @@ class KumiwakeConfirmation : AppCompatActivity() {
     private fun countManNo(): Int {
         var manNo = 0
         for (member in memberArray) {
-            if (member.sex == getText(R.string.man)) {
+            if (PublicMethods.isMan(member.sex)) {
                 manNo++
             }
         }
@@ -102,17 +105,15 @@ class KumiwakeConfirmation : AppCompatActivity() {
         newMemberArray.clear()
 
         if (StatusHolder.normalMode) {
-            var id: Int
             for (member in memberArray) {
-                id = member.id
-                if (leaderNoList.contains(id)) {
-                    member.leader = leaderNoList.indexOf(id)
+                if (leaderArray.contains(member)) {
+                    member.leader = leaderArray.indexOf(member)
                     leaderArray.add(member)
                 } else {
                     newMemberArray.add(member) //リーダーを除いたmemberArray
                 }
             }
-            Collections.sort(leaderArray, KumiwakeComparator.LeaderComparator())
+            Collections.sort(leaderArray.filterNotNull(), KumiwakeComparator.LeaderComparator())
         } else {
             newMemberArray.addAll(memberArray)
         }
@@ -122,9 +123,9 @@ class KumiwakeConfirmation : AppCompatActivity() {
     private fun setViews() {
         Collections.sort(newMemberArray, KumiwakeComparator.ViewComparator())
         memberArray.clear()
-        memberArray.addAll(leaderArray)
+        memberArray.addAll(leaderArray.filterNotNull())
         memberArray.addAll(newMemberArray)
-        val mbAdapter = SmallMBListAdapter(this, memberArray, leaderNoList = leaderNoList, showLeaderNo = true)
+        val mbAdapter = SmallMBListAdapter(this, memberArray, leaderArray = leaderArray, showLeaderNo = true)
         val gpAdapter = SmallGPListAdapter(this, groupArray)
         kumiwake_member_listView.adapter = mbAdapter
         groupListView.adapter = gpAdapter
@@ -157,7 +158,6 @@ class KumiwakeConfirmation : AppCompatActivity() {
         intent.putExtra(KumiwakeArrayKeys.MEMBER_LIST.key, newMemberArray)
         intent.putExtra(KumiwakeArrayKeys.GROUP_LIST.key, groupArray)
         intent.putExtra(KumiwakeArrayKeys.LEADER_LIST.key, leaderArray)
-        intent.putExtra(KumiwakeArrayKeys.LEADER_NO_LIST.key, leaderNoList)
         intent.putExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, evenFmRatio)
         intent.putExtra(KumiwakeCustomKeys.EVEN_AGE_RATIO.key, evenAgeRatio)
         startActivity(intent)

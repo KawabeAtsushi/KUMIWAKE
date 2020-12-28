@@ -383,7 +383,7 @@ class SekigimeResult : AppCompatActivity() {
         for (i in teamArray.indices) {
             for (j in teamArray[i].indices) {
                 item = teamArray[i][j]
-                if (item.sex == getText(R.string.man)) {
+                if (PublicMethods.isMan(item.sex)) {
                     teamArrayMan[i].add(item)
                 } else {
                     teamArrayWoman[i].add(item)

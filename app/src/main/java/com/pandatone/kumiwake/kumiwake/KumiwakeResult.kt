@@ -37,15 +37,12 @@ import kotlin.collections.ArrayList
 class KumiwakeResult : AppCompatActivity() {
 
     private lateinit var memberArray: ArrayList<Member>
-    private lateinit var leaderArray: ArrayList<Member>
+    private lateinit var leaderArray: ArrayList<Member?>
     private lateinit var groupArray: ArrayList<Group>
-    private lateinit var leaderNoList: Array<Int?>
     private lateinit var resultArray: ArrayList<ArrayList<Member>>
-    private lateinit var manArray: ArrayList<Member>
-    private lateinit var womanArray: ArrayList<Member>
-    private var groupCount: Int = 0
     private var evenFmRatio: Boolean = false
     private var evenAgeRatio: Boolean = false
+    private var groupCount: Int = 0
     private var v = 0
     private lateinit var tabLayout: TabLayout
 
@@ -78,16 +75,14 @@ class KumiwakeResult : AppCompatActivity() {
         if (i.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) != null) {
             groupArray = i.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) as ArrayList<Group>
         }
-        if (i.getSerializableExtra(KumiwakeArrayKeys.LEADER_NO_LIST.key) != null) {
-            leaderNoList = i.getSerializableExtra(KumiwakeArrayKeys.LEADER_NO_LIST.key) as Array<Int?>
-        }
         if (i.getSerializableExtra(KumiwakeArrayKeys.LEADER_LIST.key) != null) {
-            leaderArray = i.getSerializableExtra(KumiwakeArrayKeys.LEADER_LIST.key) as ArrayList<Member>
+            leaderArray = i.getSerializableExtra(KumiwakeArrayKeys.LEADER_LIST.key) as ArrayList<Member?>
         }
+
+        groupCount = groupArray.size
 
         evenFmRatio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, false)
         evenAgeRatio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_AGE_RATIO.key, false)
-        groupCount = groupArray.size
 
         startMethod(false)
 
@@ -140,35 +135,13 @@ class KumiwakeResult : AppCompatActivity() {
         memberArray.shuffle()
 
         resultArray = ArrayList(groupCount)
-        manArray = ArrayList()
-        womanArray = ArrayList()
 
         for (g in 0 until groupCount) {
             resultArray.add(ArrayList())
         }
 
-        if (evenFmRatio && evenAgeRatio) {
-            createFmArray()    //男女それぞれの配列を作成
-            KumiwakeMethods.arrangeByAge(manArray)
-            KumiwakeMethods.arrangeByAge(womanArray)
-            KumiwakeMethods.setLeader(resultArray, leaderArray, leaderNoList)
-            KumiwakeMethods.evenManDistribute(memberArray.size, resultArray, manArray, groupArray, getString(R.string.man))
-            KumiwakeMethods.evenWomanDistribute(resultArray, womanArray, groupArray)
-        } else if (evenFmRatio) {
-            createFmArray()    //男女それぞれの配列を作成
-            KumiwakeMethods.setLeader(resultArray, leaderArray, leaderNoList)
-            KumiwakeMethods.evenManDistribute(memberArray.size, resultArray, manArray, groupArray, getString(R.string.man))
-            KumiwakeMethods.evenWomanDistribute(resultArray, womanArray, groupArray)
-        } else if (evenAgeRatio) {
-            KumiwakeMethods.arrangeByAge(memberArray)
-            KumiwakeMethods.kumiwakeAll(resultArray, memberArray, groupArray, leaderArray, leaderNoList)
-        } else {
-            if (StatusHolder.normalMode) {
-                KumiwakeMethods.kumiwakeAll(resultArray, memberArray, groupArray, leaderArray, leaderNoList)
-            } else {
-                KumiwakeMethods.kumiwakeAllQuick(resultArray, memberArray, groupArray)
-            }
-        }
+        //組み分け実行
+        KumiwakeMethods.kumiwake(resultArray, memberArray, groupArray, leaderArray, evenFmRatio, evenAgeRatio)
 
         //かぶりが出ないように調整
         if (StatusHolder.notDuplicate) {
@@ -186,17 +159,6 @@ class KumiwakeResult : AppCompatActivity() {
                 HistoryMethods.saveResultToHistory(this, resultArray, groupArray, 1, false)
             } else {
                 HistoryMethods.saveResultToHistory(this, resultArray, groupArray, 0, again)
-            }
-        }
-    }
-
-    //男女配列作成
-    private fun createFmArray() {
-        for (member in memberArray) {
-            if (member.sex == getText(R.string.man)) {
-                manArray.add(member)
-            } else {
-                womanArray.add(member)
             }
         }
     }
@@ -271,7 +233,7 @@ class KumiwakeResult : AppCompatActivity() {
     }
 
     //以下、ボタンの処理
-
+    //再組分け
     private fun onReKumiwake() {
         v = 0
         val title = getString(R.string.retry_title)
@@ -279,6 +241,7 @@ class KumiwakeResult : AppCompatActivity() {
         DialogWarehouse(supportFragmentManager).decisionDialog(title, message, function = this::reKumiwake)
     }
 
+    //再組分け処理
     private fun reKumiwake() {
         val scrollView = findViewById<View>(R.id.kumiwake_scroll) as ScrollView
         scrollView.scrollTo(0, 0)
@@ -287,10 +250,12 @@ class KumiwakeResult : AppCompatActivity() {
         Toast.makeText(applicationContext, getText(R.string.re_kumiwake_finished), Toast.LENGTH_SHORT).show()
     }
 
+    //結果の共有
     private fun shareResult() {
         shareOptionDialog()
     }
 
+    //作ったグループで席決め
     private fun onGoSekigime() {
         val groupNameArray = ArrayList<String>(groupCount)
         for (j in 0 until groupCount) {
@@ -303,6 +268,7 @@ class KumiwakeResult : AppCompatActivity() {
         startActivity(intent)
     }
 
+    //ホーム画面へ
     private fun onGoHome() {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -313,6 +279,7 @@ class KumiwakeResult : AppCompatActivity() {
     ///////                                 描画メソッド                                             ////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    //結果描画
     fun addResultView(i: Int) {
         val groupName: TextView
         val arrayList: ListView
@@ -325,7 +292,7 @@ class KumiwakeResult : AppCompatActivity() {
         groupName = v.findViewById<View>(R.id.result_group) as TextView
         groupName.text = groupArray[i].name
         arrayList = v.findViewById<View>(R.id.result_member_listView) as ListView
-        val adapter = SmallMBListAdapter(this, resultArray[i], leaderNoList = leaderNoList)
+        val adapter = SmallMBListAdapter(this, resultArray[i], leaderArray = leaderArray)
         arrayList.adapter = adapter
         setBackGround(v, i)
         adapter.setRowHeight(arrayList)
@@ -355,7 +322,7 @@ class KumiwakeResult : AppCompatActivity() {
         memberArray.forEach {
             resultArrayByMember.add(memberIncludeGroups(it))
         }
-        leaderArray.forEach {
+        leaderArray.filterNotNull().forEach {
             resultArrayByMember.add(memberIncludeGroups(it))
         }
         //描画
@@ -368,7 +335,7 @@ class KumiwakeResult : AppCompatActivity() {
         annotation.text = getText(R.string.kumiwake_order_annotation)
         annotation.textSize = 15F
         arrayList = v.findViewById<View>(R.id.result_member_listView) as ListView
-        val adapter = SmallMBListAdapter(this, resultArrayByMember, leaderNoList = leaderNoList, nameIsSpanned = true)
+        val adapter = SmallMBListAdapter(this, resultArrayByMember, leaderArray = leaderArray, nameIsSpanned = true)
         arrayList.adapter = adapter
         setBackGround(v, -1)
         adapter.setRowHeight(arrayList)
@@ -488,7 +455,7 @@ class KumiwakeResult : AppCompatActivity() {
                         setLeader = true
                         resultTxt.append("☆")
                     }
-                    member.sex == getString(R.string.man) -> resultTxt.append("♠")
+                    PublicMethods.isMan(member.sex) -> resultTxt.append("♠")
                     else -> resultTxt.append("♡")
                 }
                 resultTxt.append("${member.name}\n")
