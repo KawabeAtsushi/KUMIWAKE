@@ -189,16 +189,21 @@ class ClassroomResult : AppCompatActivity() {
                         if (attachSeat) {
                             if (column % 2 == 0) {
                                 seat.updatePadding(right = 0)
+                                //奇数列で最後の列の場合はpadding2倍要る
+                                if (column == columnCount - 1) {
+                                    seat.updatePadding(right = 20)
+                                }
                             } else {
                                 seat.updatePadding(left = 0)
                             }
+
                         }
                         val seatNameTv = seat.findViewById<TextView>(R.id.seat_name)
                         val member = memberArray[total]
                         seatNameTv.text = member.name
                         if (PublicMethods.isMan(member.sex)) {
                             seatNameTv.setTextColor(PublicMethods.getColor(this, R.color.blue_title))
-                        } else if (PublicMethods.isMan(member.sex)) {
+                        } else if (PublicMethods.isWoman(member.sex)) {
                             seatNameTv.setTextColor(PublicMethods.getColor(this, R.color.woman))
                         }
                         tableRow.addView(seat)

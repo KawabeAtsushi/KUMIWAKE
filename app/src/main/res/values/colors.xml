@@ -15,6 +15,7 @@
     <color name="thin_gray">#aaa</color>
     <color name="background_gray">#EDEDED</color>
     <color name="top_primary">#06DBC4</color>
+    <color name="classroom_floor">#FFF6DC</color>
 
     <color name="man">#33b5e5</color>
     <color name="woman">#fc7373</color>

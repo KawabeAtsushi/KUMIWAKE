@@ -31,12 +31,6 @@ object KumiwakeComparator {
         }
     }
 
-    internal class LeaderComparator : Comparator<Member> {
-        override fun compare(n1: Member, n2: Member): Int {
-            return comparedValue(n1.leader, n2.leader)
-        }
-    }
-
     //ジェネリクス（宣言時に引数の型定義ができるもの。引数の型推定もできる）
     fun <T> comparedValue(n1: T, n2: T): Int {
         var value = 0

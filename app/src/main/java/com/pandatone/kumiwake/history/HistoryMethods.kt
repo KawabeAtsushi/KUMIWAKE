@@ -123,6 +123,9 @@ object HistoryMethods {
     //履歴の結果とかぶらないようにする
     lateinit var historyResultArray: ArrayList<ArrayList<Member>>
 
+    // 永久ループ防止用
+    private var loop = 0
+
     //重複解除処理 グループごとに足りない数を補充する形でメンバー入れ替え
     fun ArrayList<ArrayList<Member>>.avoidDuplicate(memberNo: Float) {
         //resultArrayの(メンバー,元のグループ番号)のペア
@@ -163,6 +166,8 @@ object HistoryMethods {
                     }
                 }
 
+                if (loop > this.size) break
+
                 oldGroups = getOldGroups(this)
                 duplicateNo = getDuplicatedNos(oldGroups)
                 extraMemberCount = arraySubtraction(duplicateNo, needNoArray)
@@ -174,10 +179,15 @@ object HistoryMethods {
 
     //足りないところに補充するようにメンバーを入れ替え
     private fun ArrayList<ArrayList<Member>>.swapMaxAndMin(oldGroupNo: Int, minIndex: Int, maxIndex: Int, oldGroups: ArrayList<ArrayList<Pair<Member, Int>>>, extraGroupNo: Int) {
-        val maxSwapMember = oldGroups[maxIndex].find { it.second == oldGroupNo }?.first
-        //一番余っているメンバー
-        val minSwapMember = oldGroups[minIndex].find { it.second == extraGroupNo }?.first
-        this.swap(minSwapMember!!, maxSwapMember!!)
+        //一番余っているメンバー＆＆リーダーでない
+        val maxSwapMember = oldGroups[maxIndex].find { it.second == oldGroupNo && it.first.leader < 0 }?.first
+        //一番足りないメンバー＆＆リーダーでない
+        val minSwapMember = oldGroups[minIndex].find { it.second == extraGroupNo && it.first.leader < 0 }?.first
+        if (minSwapMember != null && maxSwapMember != null) {
+            this.swap(minSwapMember, maxSwapMember)
+        } else {
+            loop++
+        }
     }
 
     //ArrayList同士の減算

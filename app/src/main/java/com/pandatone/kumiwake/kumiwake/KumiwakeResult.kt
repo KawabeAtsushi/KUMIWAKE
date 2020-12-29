@@ -36,8 +36,8 @@ import kotlin.collections.ArrayList
  */
 class KumiwakeResult : AppCompatActivity() {
 
-    private lateinit var memberArray: ArrayList<Member>
-    private lateinit var leaderArray: ArrayList<Member?>
+    private lateinit var memberArray: ArrayList<Member> //memberArrayの扱い：リーダーを除いたArray
+    private lateinit var leaderArray: ArrayList<Member?> //LeaderArrayの扱い：Indexがグループ番号、リーダーがいないグループ番号はnull
     private lateinit var groupArray: ArrayList<Group>
     private lateinit var resultArray: ArrayList<ArrayList<Member>>
     private var evenFmRatio: Boolean = false
@@ -283,15 +283,15 @@ class KumiwakeResult : AppCompatActivity() {
     fun addResultView(i: Int) {
         val groupName: TextView
         val arrayList: ListView
-        val layout = findViewById<View>(R.id.result_layout) as LinearLayout
+        val layout = findViewById<LinearLayout>(R.id.result_layout)
         val v = layoutInflater.inflate(R.layout.result_parts, null)
         if (i == 0) {
             layout.removeAllViews()
         }
         layout.addView(v)
-        groupName = v.findViewById<View>(R.id.result_group) as TextView
+        groupName = v.findViewById(R.id.result_group)
         groupName.text = groupArray[i].name
-        arrayList = v.findViewById<View>(R.id.result_member_listView) as ListView
+        arrayList = v.findViewById(R.id.result_member_listView)
         val adapter = SmallMBListAdapter(this, resultArray[i], leaderArray = leaderArray)
         arrayList.adapter = adapter
         setBackGround(v, i)
@@ -331,10 +331,10 @@ class KumiwakeResult : AppCompatActivity() {
         layout.removeAllViews()
         val v = layoutInflater.inflate(R.layout.result_parts, null)
         layout.addView(v)
-        val annotation = v.findViewById<View>(R.id.result_group) as TextView
+        val annotation = v.findViewById<TextView>(R.id.result_group)
         annotation.text = getText(R.string.kumiwake_order_annotation)
         annotation.textSize = 15F
-        arrayList = v.findViewById<View>(R.id.result_member_listView) as ListView
+        arrayList = v.findViewById(R.id.result_member_listView)
         val adapter = SmallMBListAdapter(this, resultArrayByMember, leaderArray = leaderArray, nameIsSpanned = true)
         arrayList.adapter = adapter
         setBackGround(v, -1)

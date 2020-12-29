@@ -120,9 +120,15 @@ object PublicMethods {
         return (dp * scale + 0.5f).toInt()
     }
 
-    //性別判別（男ならtrueを返す）
+    //性別判別
+    // （男ならtrueを返す）
     fun isMan(sex: String): Boolean {
         return sex == "Man" || sex == "男"
+    }
+
+    //（女ならtrueを返す）
+    fun isWoman(sex: String): Boolean {
+        return sex == "Woman" || sex == "女"
     }
 }
 

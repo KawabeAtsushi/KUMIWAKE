@@ -2,7 +2,6 @@ package com.pandatone.kumiwake.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,11 +68,12 @@ class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Mem
 
     private fun setSexIcon(memberIcon: ImageView, position: Int) {
 
-        when (listElements[position].sex) {
-            context.getText(R.string.man) -> {
+        val sex = listElements[position].sex
+        when {
+            PublicMethods.isMan(sex) -> {
                 memberIcon.setColorFilter(PublicMethods.getColor(context, R.color.man))
             }
-            context.getText(R.string.woman) -> {
+            PublicMethods.isWoman(sex) -> {
                 memberIcon.setColorFilter(PublicMethods.getColor(context, R.color.woman))
             }
             else -> {
@@ -83,25 +83,25 @@ class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Mem
     }
 
     private fun setStarIcon(leaderArray: ArrayList<Member?>, memberIcon: ImageView, starIcon: ImageView, leaderNo: TextView, position: Int) {
-        when (listElements[position].sex) {
-            context.getText(R.string.man) -> {
+        val sex = listElements[position].sex
+        when {
+            PublicMethods.isMan(sex) -> {
                 starIcon.setColorFilter(PublicMethods.getColor(context, R.color.man))
             }
-            context.getText(R.string.woman) -> {
+            PublicMethods.isWoman(sex) -> {
                 starIcon.setColorFilter(PublicMethods.getColor(context, R.color.woman))
             }
         }
 
-        val memberId = listElements[position].id
-        val leaderIdArray = leaderArray.filterNotNull().map { it.id }
-        if (leaderIdArray.contains(memberId)) {
+        val member = listElements[position]
+        if (leaderArray.contains(member)) {
             memberIcon.visibility = View.GONE
             starIcon.visibility = View.VISIBLE
             leaderNo.visibility = View.GONE
 
             if (showLeaderNo) {
                 leaderNo.visibility = View.VISIBLE
-                leaderNo.text = (leaderIdArray.indexOf(memberId) + 1).toString()
+                leaderNo.text = (leaderArray.indexOf(member) + 1).toString()
             }
         }
     }

@@ -2,7 +2,6 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="form_marginTop">30dp</dimen>
     <dimen name="form_marginStart">15dp</dimen>
-    <dimen name="form_marginEnd">15dp</dimen>
     <dimen name="form_between_margin">5dp</dimen>
     <dimen name="info_margin">7dp</dimen>
     <dimen name="form_textSize">15sp</dimen>

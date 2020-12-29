@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -27,7 +26,7 @@ import kotlin.collections.ArrayList
 class KumiwakeConfirmation : AppCompatActivity() {
     private lateinit var memberArray: ArrayList<Member>
     private lateinit var groupArray: ArrayList<Group>
-    private var newMemberArray: ArrayList<Member> = ArrayList()
+    private lateinit var notLeadersArray: ArrayList<Member>
     private var leaderArray: ArrayList<Member?> = ArrayList()
     private var evenFmRatio: Boolean = false
     private var evenAgeRatio: Boolean = false
@@ -52,15 +51,12 @@ class KumiwakeConfirmation : AppCompatActivity() {
         }
         if (i.getSerializableExtra(KumiwakeArrayKeys.LEADER_LIST.key) != null) {
             leaderArray = i.getSerializableExtra(KumiwakeArrayKeys.LEADER_LIST.key) as ArrayList<Member?>
-            Log.d("leaderArrayIntended",leaderArray.size.toString())
         }
-
-        Log.d("leaderArraySize",leaderArray.size.toString())
 
         evenFmRatio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, false)
         evenAgeRatio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_AGE_RATIO.key, false)
 
-        createLeaderArray()
+        createExcludeLeaderArray()
         findViews()
         setViews()
         scrollView.post { scrollView.scrollTo(0, 0) }
@@ -100,31 +96,25 @@ class KumiwakeConfirmation : AppCompatActivity() {
     }
 
     //リーダーArray作成
-    private fun createLeaderArray() {
-        leaderArray.clear()
-        newMemberArray.clear()
+    private fun createExcludeLeaderArray() {
+        notLeadersArray = ArrayList()
+        notLeadersArray.addAll(memberArray)
 
         if (StatusHolder.normalMode) {
-            for (member in memberArray) {
-                if (leaderArray.contains(member)) {
-                    member.leader = leaderArray.indexOf(member)
-                    leaderArray.add(member)
-                } else {
-                    newMemberArray.add(member) //リーダーを除いたmemberArray
-                }
+            notLeadersArray.minusAssign(leaderArray.filterNotNull()) //リーダーを除いたmemberArray
+            for (leader in leaderArray) {
+                leader?.leader = leaderArray.indexOf(leader)
             }
-            Collections.sort(leaderArray.filterNotNull(), KumiwakeComparator.LeaderComparator())
-        } else {
-            newMemberArray.addAll(memberArray)
         }
+
     }
 
     //Viewの初期化処理
     private fun setViews() {
-        Collections.sort(newMemberArray, KumiwakeComparator.ViewComparator())
+        Collections.sort(notLeadersArray, KumiwakeComparator.ViewComparator())
         memberArray.clear()
         memberArray.addAll(leaderArray.filterNotNull())
-        memberArray.addAll(newMemberArray)
+        memberArray.addAll(notLeadersArray)
         val mbAdapter = SmallMBListAdapter(this, memberArray, leaderArray = leaderArray, showLeaderNo = true)
         val gpAdapter = SmallGPListAdapter(this, groupArray)
         kumiwake_member_listView.adapter = mbAdapter
@@ -155,7 +145,7 @@ class KumiwakeConfirmation : AppCompatActivity() {
             }
         }
         val intent = Intent(this, KumiwakeResult::class.java)
-        intent.putExtra(KumiwakeArrayKeys.MEMBER_LIST.key, newMemberArray)
+        intent.putExtra(KumiwakeArrayKeys.MEMBER_LIST.key, notLeadersArray)
         intent.putExtra(KumiwakeArrayKeys.GROUP_LIST.key, groupArray)
         intent.putExtra(KumiwakeArrayKeys.LEADER_LIST.key, leaderArray)
         intent.putExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, evenFmRatio)
