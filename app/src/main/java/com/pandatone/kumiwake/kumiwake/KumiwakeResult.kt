@@ -456,7 +456,7 @@ class KumiwakeResult : AppCompatActivity() {
                         resultTxt.append("☆")
                     }
                     PublicMethods.isMan(member.sex) -> resultTxt.append("♠")
-                    else -> resultTxt.append("♡")
+                    PublicMethods.isWoman(member.sex) -> resultTxt.append("♡")
                 }
                 resultTxt.append("${member.name}\n")
             }

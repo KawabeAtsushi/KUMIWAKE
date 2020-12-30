@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.updatePadding
 import com.pandatone.kumiwake.ClassroomCustomKeys
 import com.pandatone.kumiwake.KumiwakeArrayKeys
 import com.pandatone.kumiwake.R
@@ -20,6 +21,7 @@ class ClassroomCustom : AppCompatActivity() {
     private var columnCount = 0
     private var rowCount = 0
     private lateinit var memberArray: ArrayList<Member>
+    private lateinit var attachCheckBox: CheckBox
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +34,8 @@ class ClassroomCustom : AppCompatActivity() {
 
         seatNo = memberArray.size
 
+        attachCheckBox = findViewById(R.id.attach_seat_check)
+
         val rowSeekBar = findViewById<SeekBar>(R.id.row_seat_seek_bar)
         rowSeekBar.max = seatNo
         rowSeekBar.progress = sqrt(seatNo.toDouble()).toInt()
@@ -40,7 +44,7 @@ class ClassroomCustom : AppCompatActivity() {
         columnCount = rowSeekBar.progress
         rowCount = ceil(seatNo.toDouble() / columnCount.toDouble()).toInt()
         seatCountTv.text = columnCount.toString()
-        drawPreview()
+        drawPreview(attachCheckBox.isChecked)
 
         rowSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onStartTrackingTouch(rowSeekBar: SeekBar) {}
@@ -56,12 +60,15 @@ class ClassroomCustom : AppCompatActivity() {
             }
 
             override fun onStopTrackingTouch(rowSeekBar: SeekBar) {
-                drawPreview()
+                drawPreview(attachCheckBox.isChecked)
             }
         })
+
+        attachCheckBox.setOnCheckedChangeListener { _, isChecked -> drawPreview(isChecked) }
+
     }
 
-    private fun drawPreview() {
+    private fun drawPreview(attachSeat: Boolean) {
         val layout = findViewById<View>(R.id.seats_preview_layout) as GridLayout
         layout.removeAllViews()
         layout.columnCount = columnCount
@@ -75,6 +82,17 @@ class ClassroomCustom : AppCompatActivity() {
                 params.columnSpec = GridLayout.spec(column, GridLayout.FILL, 1f)
                 params.rowSpec = GridLayout.spec(row, GridLayout.FILL, 1f)
                 seat.layoutParams = params
+                if (attachSeat) {
+                    if (column % 2 == 0) {
+                        seat.updatePadding(right = 0)
+                        if (column == ClassroomResult.columnCount - 1) {
+                            seat.updatePadding(right = 6)
+                        }
+                    } else {
+                        seat.updatePadding(left = 0)
+                    }
+
+                }
                 layout.addView(seat)
                 seatCount++
                 if (seatCount == seatNo) break
@@ -85,7 +103,6 @@ class ClassroomCustom : AppCompatActivity() {
 
     private fun onNext() {
         val alterCheckBox = findViewById<CheckBox>(R.id.alter_fm_check)
-        val attachCheckBox = findViewById<CheckBox>(R.id.attach_seat_check)
         ClassroomResult.columnCount = columnCount
         ClassroomResult.rowCount = rowCount
         val intent = Intent(applicationContext, ClassroomResult::class.java)

@@ -414,9 +414,9 @@ class RoleResult : AppCompatActivity() {
             resultTxt.append("《${groupArray[i].name}》\n")
 
             for (member in array) {
-                when (member.sex) {
-                    getString(R.string.man) -> resultTxt.append("♠")
-                    else -> resultTxt.append("♡")
+                when {
+                    PublicMethods.isMan(member.sex) -> resultTxt.append("♠")
+                    PublicMethods.isWoman(member.sex) -> resultTxt.append("♡")
                 }
                 resultTxt.append("${member.name}\n")
             }

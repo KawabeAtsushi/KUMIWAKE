@@ -76,7 +76,7 @@ class ClassroomResult : AppCompatActivity() {
     //男女となり
     private fun createAlterArray() {
         val manArray = memberArray.filter { PublicMethods.isMan(it.sex) }
-        val womanArray = memberArray.filter { !PublicMethods.isMan(it.sex) }
+        val womanArray = memberArray.filter { PublicMethods.isWoman(it.sex) }
         memberArray.clear()
         var count = 0
         var manCount = 0

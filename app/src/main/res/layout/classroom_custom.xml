@@ -24,11 +24,28 @@
             android:layout_gravity="top"
             android:text="@string/preview" />
 
-        <GridLayout
-            android:id="@+id/seats_preview_layout"
-            android:layout_width="wrap_content"
+        <HorizontalScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="@drawable/listview_background"
+            android:padding="2dp">
+
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:fillViewport="true">
+
+                <GridLayout
+                    android:id="@+id/seats_preview_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+            </ScrollView>
+        </HorizontalScrollView>
     </LinearLayout>
 
     <LinearLayout

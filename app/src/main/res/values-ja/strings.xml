@@ -253,6 +253,6 @@
     <string name="arrangement_conditions">配席の条件</string>
     <string name="fm_placed_next_seats">男女をとなりの席にする</string>
     <string name="attach_in_pair">２人１組で座席をくっつける</string>
-    <string name="preview">プレビュー（※画面からはみ出る場合は確認できません。）</string>
+    <string name="preview">プレビュー（※画面からはみ出る場合はスクロールで確認）</string>
     <string name="classroom_annotation">一度に全体を見る場合には下のボタンから「結果をシェア」してください。</string>
 </resources>
