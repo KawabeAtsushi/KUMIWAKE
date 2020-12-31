@@ -12,7 +12,7 @@
         android:layout_margin="10dp"
         android:background="@android:color/white"
         android:orientation="vertical"
-        android:paddingHorizontal="10dp"
+        android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@id/custom_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,16 +25,17 @@
             android:text="@string/preview" />
 
         <HorizontalScrollView
+
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:background="@drawable/listview_background"
             android:padding="2dp">
 
             <ScrollView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
                 android:layout_gravity="center"
                 android:fillViewport="true">
 
@@ -42,7 +43,7 @@
                     android:id="@+id/seats_preview_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center" />
+                    android:padding="5dp"/>
 
             </ScrollView>
         </HorizontalScrollView>

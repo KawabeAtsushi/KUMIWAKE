@@ -17,9 +17,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:text="@string/square_custom_description"
             android:textSize="20sp" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="130dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:src="@drawable/square_colored"
+            android:contentDescription="@null" />
 
         <TextView
             android:layout_width="wrap_content"

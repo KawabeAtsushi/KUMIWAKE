@@ -105,7 +105,7 @@
     <string name="double_square_type">両側</string>
     <string name="square_custom_description">テーブルの短辺における座席の設定を行います。</string>
     <string name="square_custom_deployment">座席の配置</string>
-    <string name="square_custom_deployment_description">短辺の座席が向かい合っている場合は「両側」を、片側のみの場合は「片側」を選択してください。</string>
+    <string name="square_custom_deployment_description">短辺の座席が両側にある場合は「両側」を、片側のみの場合は「片側」を選択してください。</string>
     <string name="square_custom_select_no">座席数の指定</string>
     <string name="square_custom_select_no_description">短辺(一辺あたり)の座席数を指定してください。</string>
     <string name="seat_no">座席数</string>
@@ -248,7 +248,7 @@
     <string name="classroom_result">教室座席結果</string>
     <string name="classroom_hint">〇年〇組の座席</string>
     <string name="go_classroom">登校する！</string>
-    <string name="column_count">1列の席数</string>
+    <string name="column_count">横1列の席数</string>
     <string name="arrangement">配置</string>
     <string name="arrangement_conditions">配席の条件</string>
     <string name="fm_placed_next_seats">男女をとなりの席にする</string>

@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.marginStart
+import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
+import androidx.core.view.updatePaddingRelative
 import com.pandatone.kumiwake.ClassroomCustomKeys
 import com.pandatone.kumiwake.KumiwakeArrayKeys
 import com.pandatone.kumiwake.R
@@ -69,14 +72,14 @@ class ClassroomCustom : AppCompatActivity() {
     }
 
     private fun drawPreview(attachSeat: Boolean) {
-        val layout = findViewById<View>(R.id.seats_preview_layout) as GridLayout
-        layout.removeAllViews()
-        layout.columnCount = columnCount
-        layout.rowCount = rowCount
+        val gridLayout = findViewById<GridLayout>(R.id.seats_preview_layout)
+        gridLayout.removeAllViews()
+        gridLayout.columnCount = columnCount
+        gridLayout.rowCount = rowCount
         var seatCount = 0
 
-        for (row in 0 until layout.rowCount) {
-            for (column in 0 until layout.columnCount) {
+        for (row in 0 until gridLayout.rowCount) {
+            for (column in 0 until gridLayout.columnCount) {
                 val seat = layoutInflater.inflate(R.layout.classroom_seats_preview, null)
                 val params: GridLayout.LayoutParams = GridLayout.LayoutParams()
                 params.columnSpec = GridLayout.spec(column, GridLayout.FILL, 1f)
@@ -93,7 +96,7 @@ class ClassroomCustom : AppCompatActivity() {
                     }
 
                 }
-                layout.addView(seat)
+                gridLayout.addView(seat)
                 seatCount++
                 if (seatCount == seatNo) break
             }
