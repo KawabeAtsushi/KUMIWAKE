@@ -2,13 +2,9 @@ package com.pandatone.kumiwake.others.classroom
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.marginStart
-import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
-import androidx.core.view.updatePaddingRelative
 import com.pandatone.kumiwake.ClassroomCustomKeys
 import com.pandatone.kumiwake.KumiwakeArrayKeys
 import com.pandatone.kumiwake.R

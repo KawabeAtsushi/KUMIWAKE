@@ -35,15 +35,15 @@
             <ScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
                 android:layout_gravity="center"
-                android:fillViewport="true">
+                android:fillViewport="true"
+                android:padding="5dp">
 
                 <GridLayout
                     android:id="@+id/seats_preview_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"/>
+                    android:padding="5dp" />
 
             </ScrollView>
         </HorizontalScrollView>
