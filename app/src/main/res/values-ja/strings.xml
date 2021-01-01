@@ -255,4 +255,5 @@
     <string name="attach_in_pair">２人１組で座席をくっつける</string>
     <string name="preview">プレビュー（※画面からはみ出る場合はスクロールで確認）</string>
     <string name="classroom_annotation">一度に全体を見る場合には下のボタンから「結果をシェア」してください。</string>
+    <string name="updated_age">年齢を更新しました</string>
 </resources>

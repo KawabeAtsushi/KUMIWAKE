@@ -35,7 +35,11 @@ object MemberMethods {
                 mbAdapter.updateAge(listId.toString(), newAge.toString())
             } else {
                 val nowAge = member.age
-                mbAdapter.updateAge(listId.toString(), (nowAge + newAge).toString())
+                if (nowAge + newAge >= 0) {
+                    mbAdapter.updateAge(listId.toString(), (nowAge + newAge).toString())
+                } else { //0歳以下になるなら
+                    mbAdapter.updateAge(listId.toString(), "0")
+                }
             }
         }
     }

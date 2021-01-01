@@ -255,4 +255,5 @@
     <string name="fm_placed_next_seats">Put men and women in the next seat</string>
     <string name="preview">preview (*If it goes off the screen, scroll to check.)</string>
     <string name="classroom_annotation">If you want to see the whole at once, please "share result" from the button below.</string>
+    <string name="updated_age">Updated age</string>
 </resources>

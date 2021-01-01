@@ -357,6 +357,7 @@ class FragmentMemberMain : ListFragment() {
                 MemberMethods.updateAge(requireContext(), checkedMemberList(), newAge, define)     // 年齢更新
                 loadName()
                 dialog.dismiss()
+                Toast.makeText(context, getText(R.string.updated_age), Toast.LENGTH_LONG).show()
             } else {
                 Toast.makeText(context, getText(R.string.error_empty_no), Toast.LENGTH_LONG).show()
             }
