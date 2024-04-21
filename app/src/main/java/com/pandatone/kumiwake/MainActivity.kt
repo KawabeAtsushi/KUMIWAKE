@@ -250,7 +250,7 @@ class MainActivity : AppCompatActivity() {
         val helpButton: ImageButton = helpUnit.findViewById(R.id.icon_button)
         (helpUnit.findViewById<TextView>(R.id.button_text)!!).setText(R.string.help)
         helpButton.backgroundTintList =
-            ColorStateList.valueOf(PublicMethods.getColor(this, R.color.yellow_title))
+            ColorStateList.valueOf(PublicMethods.getColor(this, R.color.orange))
         helpButton.setImageResource(R.drawable.ic_help_outline_dark_24dp)
         helpButton.setOnClickListener {
             startActivity(Intent(this, Help::class.java))
@@ -260,7 +260,7 @@ class MainActivity : AppCompatActivity() {
         val settingsButton: ImageButton = settingsUnit.findViewById(R.id.icon_button)
         (settingsUnit.findViewById<TextView>(R.id.button_text)!!).setText(R.string.settings)
         settingsButton.backgroundTintList =
-            ColorStateList.valueOf(PublicMethods.getColor(this, R.color.yellow_title))
+            ColorStateList.valueOf(PublicMethods.getColor(this, R.color.orange))
         settingsButton.setImageResource(R.drawable.ic_settings_24dp)
         settingsButton.setOnClickListener {
             startActivity(Intent(this, Settings::class.java))

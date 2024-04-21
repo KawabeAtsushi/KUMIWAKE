@@ -154,9 +154,7 @@ object KumiwakeMethods {
 
         //順番に追加していく
         while (0 < manArray.size) {
-            val addGroupNo =
-                groupCapacity.maxOrNull()?.let { groupCapacity.indexOfFirst { it == it } }
-                    ?: 0 //最大許容数のGroupNoを取得 //deprecated変更したら動かない
+            val addGroupNo = groupCapacity.indices.maxByOrNull { groupCapacity[it] } ?: 0 //最大許容数のGroupNoを取得
             val member = manArray[0]
             resultArray[addGroupNo].add(member) //メンバー追加
             escapeArray.add(member)

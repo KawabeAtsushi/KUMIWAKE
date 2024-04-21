@@ -14,10 +14,10 @@
         android:padding="20dp"
         android:scaleType="fitXY"
         android:src="@drawable/ic_help_outline_dark_24dp"
-        android:tint="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@android:color/white" />
 
     <TextView
         android:id="@+id/button_text"
