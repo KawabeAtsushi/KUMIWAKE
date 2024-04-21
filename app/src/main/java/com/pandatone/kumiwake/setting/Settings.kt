@@ -1,12 +1,14 @@
 package com.pandatone.kumiwake.setting
 
 import android.Manifest
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -17,10 +19,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import com.airbnb.lottie.LottieAnimationView
+import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.reward.RewardedVideoAd
-import com.google.android.gms.ads.reward.RewardedVideoAdListener
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.OnUserEarnedRewardListener
+import com.google.android.gms.ads.rewarded.RewardItem
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.pandatone.kumiwake.FirebaseAnalyticsEvents
 import com.pandatone.kumiwake.MainActivity
@@ -33,7 +39,7 @@ import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import java.io.File
 
 
-class Settings : AppCompatActivity(), RewardedVideoAdListener {
+class Settings : AppCompatActivity() {
 
     private lateinit var backupAdapter: ArrayAdapter<String>
     private lateinit var otherAdapter: ArrayAdapter<String>
@@ -41,7 +47,7 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
     private lateinit var otherStr: Array<String>
 
     private lateinit var dimmer: View
-    private lateinit var mRewardedVideoAd: RewardedVideoAd
+    private var rewardedAd: RewardedAd? = null
     private lateinit var loadingAnim: LottieAnimationView
     private var rewarded = false
 
@@ -209,12 +215,22 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
             loadingAnim = findViewById(R.id.loading_anim)
             loadingAnim.visibility = View.VISIBLE
             loadingAnim.playAnimation()
-            mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this)
-            mRewardedVideoAd.rewardedVideoAdListener = this
-            mRewardedVideoAd.loadAd(
-                getString(R.string.adVideoUnit_id),
-                AdRequest.Builder().addTestDevice(getString(R.string.device_id)).build()
-            )
+            var adRequest = AdRequest.Builder().build()
+            RewardedAd.load(
+                this,
+                "ca-app-pub-3940256099942544/5224354917",
+                adRequest,
+                object : RewardedAdLoadCallback() {
+                    override fun onAdFailedToLoad(adError: LoadAdError) {
+                        rewardedAd = null
+                    }
+
+                    override fun onAdLoaded(ad: RewardedAd) {
+                        rewardedAd = ad
+                        onRewardedVideoAdLoaded(ad)
+                    }
+
+                })
             FirebaseAnalyticsEvents.support("CLICKED")
         }
     }
@@ -229,21 +245,53 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
     ////////////////////リワード広告のオーバーライド////////////////////////////////////////////
 
     // 広告の準備が完了したとき
-    override fun onRewardedVideoAdLoaded() {
-        mRewardedVideoAd.show()
-        loadingAnim.visibility = View.GONE
-        loadingAnim.cancelAnimation()
+    private fun onRewardedVideoAdLoaded(ad: RewardedAd) {
+        ad.fullScreenContentCallback = object : FullScreenContentCallback() {
+            override fun onAdClicked() {
+                // Called when a click is recorded for an ad.
+                Log.d(TAG, "Ad was clicked.")
+            }
+
+            override fun onAdDismissedFullScreenContent() {
+                // Called when ad is dismissed.
+                // Set the ad reference to null so you don't show the ad a second time.
+                Log.d(TAG, "Ad dismissed fullscreen content.")
+                rewardedAd = null
+                onRewardedVideoAdClosed()
+            }
+
+            override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                // Called when ad fails to show.
+                Log.e(TAG, "Ad failed to show fullscreen content.")
+                rewardedAd = null
+            }
+
+            override fun onAdImpression() {
+                // Called when an impression is recorded for an ad.
+                Log.d(TAG, "Ad recorded an impression.")
+            }
+
+            override fun onAdShowedFullScreenContent() {
+                // Called when ad is shown.
+                Log.d(TAG, "Ad showed fullscreen content.")
+                loadingAnim.visibility = View.GONE
+                loadingAnim.cancelAnimation()
+            }
+        }
+        ad.show(this@Settings, OnUserEarnedRewardListener { rewardItem ->
+            onRewarded(rewardItem)
+        })
     }
 
     //報酬対象になったとき
-    override fun onRewarded(p0: com.google.android.gms.ads.reward.RewardItem?) {
+    private fun onRewarded(p0: RewardItem?) {
         rewarded = true
         StatusHolder.adDeleted = true
         MainActivity.mAdView.visibility = View.GONE
     }
 
     //広告が閉じられたとき
-    override fun onRewardedVideoAdClosed() {
+    fun onRewardedVideoAdClosed() {
         dimmer.visibility = View.GONE
 
         if (rewarded) {
@@ -253,12 +301,6 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
             FirebaseAnalyticsEvents.support("REWARDED")
         }
     }
-
-    override fun onRewardedVideoAdOpened() {}
-    override fun onRewardedVideoStarted() {}
-    override fun onRewardedVideoAdLeftApplication() {}
-    override fun onRewardedVideoAdFailedToLoad(errorCode: Int) {}
-    override fun onRewardedVideoCompleted() {}
 
     /////////////////////////パーミッション/////////////////////////////////////////////////
 
@@ -295,6 +337,7 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
         permissions: Array<String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == permission) {
             // 使用が許可された
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {

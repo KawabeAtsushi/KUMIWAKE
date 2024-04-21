@@ -130,7 +130,9 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener,
         ) {
             for (purchase in purchases) { //購入したら呼ばれる
                 //ステータスをとれる　val state = handlePurchase(purchase)
-                resultStr.append(skuToName(purchase.sku)).append("\n")
+                purchase.skus.forEach {
+                    resultStr.append(skuToName(it)).append("\n")
+                }
                 resultStr.append(getString(R.string.purchased))
                 deleteAd()
             }
@@ -152,19 +154,19 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener,
     // 購入済みアイテムを問い合わせる（キャッシュ処理）
     private fun queryOwned() {
         val history = findViewById<TextView>(R.id.purchased_history)
-        val purchasesResult = billingClient!!.queryPurchases(BillingClient.SkuType.INAPP)
-        val responseCode = purchasesResult.responseCode
-        if (responseCode == BillingClient.BillingResponseCode.OK) {
-            val purchases = purchasesResult.purchasesList
-            if (purchases!!.isEmpty()) {
-                history.text = getString(R.string.nothing)
-            } else {
-                for (purchase in purchases) {
-                    history.text = (skuToName(purchase.sku) + "\n")
+        billingClient?.queryPurchasesAsync(BillingClient.SkuType.INAPP) { result, list ->
+            val responseCode = result.responseCode
+            if (responseCode == BillingClient.BillingResponseCode.OK) {
+                if (list.isEmpty()) {
+                    history.text = getString(R.string.nothing)
+                } else {
+                    for (purchase in list) {
+                        (skuToName(purchase.skus.first()) + "\n").also { history.text = it }
+                    }
                 }
+            } else {
+                showResponseCode(responseCode)
             }
-        } else {
-            showResponseCode(responseCode)
         }
     }
 
@@ -174,18 +176,17 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener,
             override fun onBillingSetupFinished(billingResult: BillingResult) {
                 val responseCodeB = billingResult.responseCode
                 if (responseCodeB == BillingClient.BillingResponseCode.OK) {
-                    val purchasesResult =
-                        billingClient!!.queryPurchases(BillingClient.SkuType.INAPP)
-                    val responseCodeP = purchasesResult.responseCode
-                    if (responseCodeP == BillingClient.BillingResponseCode.OK) {
-                        val purchases = purchasesResult.purchasesList
-                        for (purchase in purchases!!) {
-                            if (purchase.sku == StatusHolder.ad_free_sku) {
-                                deleteAd()
-                            } //広告削除済みか判定
+                    billingClient!!.queryPurchasesAsync(BillingClient.SkuType.INAPP) { result, list ->
+                        val responseCodeP = result.responseCode
+                        if (responseCodeP == BillingClient.BillingResponseCode.OK) {
+                            for (purchase in list) {
+                                if (purchase.skus.first() == StatusHolder.ad_free_sku) {
+                                    deleteAd()
+                                } //広告削除済みか判定
+                            }
+                        } else {
+                            showResponseCode(responseCodeP)
                         }
-                    } else {
-                        showResponseCode(responseCodeP)
                     }
                 } else {
                     showResponseCode(responseCodeB)
