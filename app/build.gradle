@@ -4,7 +4,6 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion '29.0.2'
 
     kotlinOptions {
         jvmTarget = '1.8'
@@ -41,6 +40,7 @@ android {
 
         }
     }
+    namespace 'com.pandatone.kumiwake'
 }
 
 dependencies {
