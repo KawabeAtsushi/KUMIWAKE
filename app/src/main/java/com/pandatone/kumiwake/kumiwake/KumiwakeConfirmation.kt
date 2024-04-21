@@ -19,25 +19,17 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.SmallGPListAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
+import com.pandatone.kumiwake.databinding.KumiwakeConfirmationBinding
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeComparator
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
-import kotlinx.android.synthetic.main.kumiwake_confirmation.arrow1
-import kotlinx.android.synthetic.main.kumiwake_confirmation.arrow2
-import kotlinx.android.synthetic.main.kumiwake_confirmation.between_arrows_txt
-import kotlinx.android.synthetic.main.kumiwake_confirmation.confirmation_title_txt
-import kotlinx.android.synthetic.main.kumiwake_confirmation.custom_review_txt
-import kotlinx.android.synthetic.main.kumiwake_confirmation.groupListView
-import kotlinx.android.synthetic.main.kumiwake_confirmation.group_no_txt
-import kotlinx.android.synthetic.main.kumiwake_confirmation.kumiwake_member_listView
-import kotlinx.android.synthetic.main.kumiwake_confirmation.member_no_txt
-import kotlinx.android.synthetic.main.kumiwake_confirmation.scrollView
 import java.util.Collections
 
 /**
  * Created by atsushi_2 on 2016/05/08.
  */
 class KumiwakeConfirmation : AppCompatActivity() {
+    private lateinit var binding: KumiwakeConfirmationBinding
     private lateinit var memberArray: ArrayList<Member>
     private lateinit var groupArray: ArrayList<Group>
     private lateinit var notLeadersArray: ArrayList<Member>
@@ -49,7 +41,8 @@ class KumiwakeConfirmation : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         setTheme(StatusHolder.nowTheme)
-        setContentView(R.layout.kumiwake_confirmation)
+        binding = KumiwakeConfirmationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         if (StatusHolder.mode == ModeKeys.Sekigime.key) {
             val layout = findViewById<ConstraintLayout>(R.id.confirmation_view)
             layout.background = ContextCompat.getDrawable(this, R.drawable.sekigime_background)
@@ -76,11 +69,11 @@ class KumiwakeConfirmation : AppCompatActivity() {
         createExcludeLeaderArray()
         findViews()
         setViews()
-        scrollView.post { scrollView.scrollTo(0, 0) }
+        binding.scrollView.post { binding.scrollView.scrollTo(0, 0) }
 
         val animation = AnimationUtils.loadAnimation(this, R.anim.arrow_move)
-        arrow1.startAnimation(animation)
-        arrow2.startAnimation(animation)
+        binding.arrow1.startAnimation(animation)
+        binding.arrow2.startAnimation(animation)
     }
 
     @SuppressLint("SetTextI18n")
@@ -88,19 +81,19 @@ class KumiwakeConfirmation : AppCompatActivity() {
 
         if (StatusHolder.mode == ModeKeys.Sekigime.key) {
             val button = findViewById<Button>(R.id.kumiwake_btn)
-            confirmation_title_txt.setText(R.string.sekigime_confirm)
-            between_arrows_txt.text = getText(R.string.sekigime)
+            binding.confirmationTitleTxt.setText(R.string.sekigime_confirm)
+            binding.betweenArrowsTxt.text = getText(R.string.sekigime)
             button.setText(R.string.go_select_seats_type)
             button.typeface = Typeface.DEFAULT
             button.setTextColor(PublicMethods.getColor(this, android.R.color.white))
             button.textSize = 20F
         }
-        member_no_txt.text = (memberArray.size.toString() + " " + getText(R.string.people)
+        binding.memberNoTxt.text = (memberArray.size.toString() + " " + getText(R.string.people)
                 + "(" + getText(R.string.man) + ":" + countManNo().toString() + getText(R.string.people)
                 + "," + getText(R.string.woman) + ":" + (memberArray.size - countManNo()).toString() + getText(
             R.string.people
         ) + ")")
-        group_no_txt.text = groupArray.size.toString() + " " + getText(R.string.group)
+        binding.groupNoTxt.text = groupArray.size.toString() + " " + getText(R.string.group)
     }
 
     //Manの数
@@ -137,8 +130,8 @@ class KumiwakeConfirmation : AppCompatActivity() {
         val mbAdapter =
             SmallMBListAdapter(this, memberArray, leaderArray = leaderArray, showLeaderNo = true)
         val gpAdapter = SmallGPListAdapter(this, groupArray)
-        kumiwake_member_listView.adapter = mbAdapter
-        groupListView.adapter = gpAdapter
+        binding.kumiwakeMemberListView.adapter = mbAdapter
+        binding.groupListView.adapter = gpAdapter
 
         val customText = StringBuilder()
         if (evenFmRatio) {
@@ -147,9 +140,9 @@ class KumiwakeConfirmation : AppCompatActivity() {
         if (evenAgeRatio) {
             customText.append("☆" + getText(R.string.even_out_age_ratio) + "\n")
         }
-        custom_review_txt.text = customText.toString()
-        mbAdapter.setRowHeight(kumiwake_member_listView)
-        gpAdapter.setRowHeight(groupListView)
+        binding.customReviewTxt.text = customText.toString()
+        mbAdapter.setRowHeight(binding.kumiwakeMemberListView)
+        gpAdapter.setRowHeight(binding.groupListView)
     }
 
     //組み分け実行

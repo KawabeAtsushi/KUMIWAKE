@@ -26,15 +26,15 @@ import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.DrawingHistoryListAdapter
 import com.pandatone.kumiwake.adapter.SmallDrawingHistoryListAdapter
+import com.pandatone.kumiwake.databinding.DrawingResultBinding
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
-import kotlinx.android.synthetic.main.drawing_result.animation_views
 
 
 /**
  * Created by atsushi_2 on 2016/05/10.
  */
 class DrawingResult : AppCompatActivity() {
-
+    private lateinit var binding: DrawingResultBinding
     private lateinit var soundPool: SoundPool
     private lateinit var tapHandler: Handler
     private lateinit var historyListView: ListView
@@ -56,7 +56,8 @@ class DrawingResult : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.drawing_result)
+        binding = DrawingResultBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val i = intent
         if (i.getSerializableExtra("tickets") != null) {
@@ -74,7 +75,7 @@ class DrawingResult : AppCompatActivity() {
         drawingAnim.setOnClickListener {
             if (!shaking) {//振動開始
                 if (pickCount >= tickets.size) {//最終結果
-                    animation_views.visibility = View.GONE
+                    binding.animationViews.visibility = View.GONE
                     countTextView.text = getString(R.string.result)
                 } else {
                     val countStr = "${pickCount + 1}${getString(R.string.th_time)}"
@@ -120,7 +121,7 @@ class DrawingResult : AppCompatActivity() {
 
     //ビューの初期化
     private fun initializeViews() {
-        animation_views.visibility = View.VISIBLE
+        binding.animationViews.visibility = View.VISIBLE
         val countStr = "1${getString(R.string.th_time)}"
         countTextView.text = countStr
         val remainStr =

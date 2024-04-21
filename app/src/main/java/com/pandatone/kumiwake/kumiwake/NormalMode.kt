@@ -32,18 +32,16 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.Theme
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
+import com.pandatone.kumiwake.databinding.NormalModeBinding
 import com.pandatone.kumiwake.member.AddMember
 import com.pandatone.kumiwake.member.ChoiceMemberMain
 import com.pandatone.kumiwake.member.function.Member
-import kotlinx.android.synthetic.main.normal_mode.add_group_listView
-import kotlinx.android.synthetic.main.part_review_listview.view.member_add_btn
-import kotlinx.android.synthetic.main.part_review_listview.view.member_register_and_add_btn
-import kotlinx.android.synthetic.main.part_review_listview.view.numberOfSelectedMember
 
 /**
  * Created by atsushi_2 on 2016/05/02.
  */
 class NormalMode : AppCompatActivity() {
+    private lateinit var binding: NormalModeBinding
     private var adapter: SmallMBListAdapter? = null
     private lateinit var gpNoEditText: AppCompatEditText
     private lateinit var errorGroup: TextView
@@ -62,17 +60,18 @@ class NormalMode : AppCompatActivity() {
         } else {
             PublicMethods.setStatus(this, Theme.Kumiwake.primaryColor)
         }
-        setContentView(R.layout.normal_mode)
+        binding = NormalModeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         if (StatusHolder.mode == ModeKeys.Sekigime.key) {
             val layout = findViewById<ConstraintLayout>(R.id.normal_select_layout)
             layout.background = ContextCompat.getDrawable(this, R.drawable.sekigime_background)
         }
         findViews()
-        add_group_listView.member_add_btn.setOnClickListener { moveMemberMain() }
-        add_group_listView.member_register_and_add_btn.setOnClickListener { moveAddMember() }
+        binding.addGroupListView.memberAddBtn.setOnClickListener { moveMemberMain() }
+        binding.addGroupListView.memberRegisterAndAddBtn.setOnClickListener { moveAddMember() }
         adapter = SmallMBListAdapter(this, memberArray)
         listView.adapter = adapter
-        add_group_listView.numberOfSelectedMember.text =
+        binding.addGroupListView.numberOfSelectedMember.text =
             "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
         findViewById<Button>(R.id.normal_kumiwake_btn).setOnClickListener { onNextClick() }
 
@@ -158,7 +157,7 @@ class NormalMode : AppCompatActivity() {
         listView.adapter = adapter
         val selectedTxt =
             "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
-        add_group_listView.numberOfSelectedMember.text = selectedTxt
+        binding.addGroupListView.numberOfSelectedMember.text = selectedTxt
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {

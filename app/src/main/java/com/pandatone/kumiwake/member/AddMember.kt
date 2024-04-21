@@ -34,6 +34,7 @@ import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
+import com.pandatone.kumiwake.databinding.AddMemberBinding
 import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
@@ -43,14 +44,14 @@ import com.pandatone.kumiwake.member.members.FragmentGroupMain
 import com.pandatone.kumiwake.member.members.FragmentMemberMain
 import com.pandatone.kumiwake.others.SelectMember
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
-import kotlinx.android.synthetic.main.add_member.member_registration_continue_btn
-import kotlinx.android.synthetic.main.add_member.switch_continuously_mode
 
 
 /**
  * Created by atsushi_2 on 2016/02/24.
  */
 class AddMember : AppCompatActivity() {
+    private lateinit var binding: AddMemberBinding
+
     private var beforeBelong: Array<String>? = null
     private var afterBelong: Array<String>? = null
     private var nameEditText: AppCompatEditText? = null
@@ -73,7 +74,8 @@ class AddMember : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         setTheme(StatusHolder.nowTheme)
-        setContentView(R.layout.add_member)
+        binding = AddMemberBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         mbAdapter = MemberAdapter(this)
         FragmentGroupMain.gpAdapter = GroupAdapter(this)
         FragmentGroupMain.listAdp = GroupFragmentViewAdapter(this, groupList)
@@ -97,9 +99,9 @@ class AddMember : AppCompatActivity() {
             }
         }
         if (member != null) {
-            switch_continuously_mode.visibility = View.GONE
+            binding.switchContinuouslyMode.visibility = View.GONE
             setItem(member)
-            member_registration_continue_btn.visibility = View.GONE
+            binding.memberRegistrationContinueBtn.visibility = View.GONE
         }
 
         var yomigana = ""
@@ -124,7 +126,7 @@ class AddMember : AppCompatActivity() {
     }
 
     //スクロールビューの場合こっち呼ぶ
-    override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         super.dispatchTouchEvent(event)
         mDetector.onTouchEvent(event)
         return super.onTouchEvent(event)

@@ -24,21 +24,16 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.EditGroupViewAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
+import com.pandatone.kumiwake.databinding.KumiwakeCustomBinding
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
-import kotlinx.android.synthetic.main.kumiwake_custom.error_member_no_txt
-import kotlinx.android.synthetic.main.kumiwake_custom.even_age_ratio_check
-import kotlinx.android.synthetic.main.kumiwake_custom.even_fm_ratio_check
-import kotlinx.android.synthetic.main.kumiwake_custom.group_no_txt
-import kotlinx.android.synthetic.main.part_review_listview.member_add_btn
-import kotlinx.android.synthetic.main.part_review_listview.member_register_and_add_btn
-import kotlinx.android.synthetic.main.part_review_listview.numberOfSelectedMember
 
 
 /**
  * Created by atsushi_2 on 2016/05/27.
  */
 class KumiwakeCustom : AppCompatActivity() {
+    private lateinit var binding: KumiwakeCustomBinding
     private lateinit var memberListView: ListView
     private lateinit var groupListView: ListView
     private var mbAdapter: SmallMBListAdapter? = null
@@ -54,7 +49,8 @@ class KumiwakeCustom : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         setTheme(StatusHolder.nowTheme)
-        setContentView(R.layout.kumiwake_custom)
+        binding = KumiwakeCustomBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         if (StatusHolder.mode == ModeKeys.Sekigime.key) {
             val layout = findViewById<ConstraintLayout>(R.id.custom_root_layout)
             layout.background = ContextCompat.getDrawable(this, R.drawable.sekigime_background)
@@ -95,12 +91,13 @@ class KumiwakeCustom : AppCompatActivity() {
     //View初期化
     @SuppressLint("SetTextI18n")
     fun setViews() {
-        member_add_btn.visibility = View.GONE
-        member_register_and_add_btn.visibility = View.GONE
+        binding.addGroupListView.memberAddBtn.visibility = View.GONE
+        binding.addGroupListView.memberRegisterAndAddBtn.visibility = View.GONE
         mbAdapter?.setRowHeight(memberListView)
         editGPAdapter?.setRowHeight(groupListView)
-        numberOfSelectedMember.text = memberArray.size.toString() + getString(R.string.people)
-        group_no_txt.text = groupArray.size.toString() + " " + getText(R.string.group)
+        binding.addGroupListView.numberOfSelectedMember.text =
+            memberArray.size.toString() + getString(R.string.people)
+        binding.groupNoTxt.text = groupArray.size.toString() + " " + getText(R.string.group)
         val size = Point()
         windowManager.defaultDisplay.getSize(size)
         screenHeight = size.y
@@ -126,12 +123,18 @@ class KumiwakeCustom : AppCompatActivity() {
             intent.putExtra(KumiwakeArrayKeys.MEMBER_LIST.key, memberArray)
             intent.putExtra(KumiwakeArrayKeys.GROUP_LIST.key, newGroupArray)
             intent.putExtra(KumiwakeArrayKeys.LEADER_LIST.key, leaderArray)
-            intent.putExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, even_fm_ratio_check.isChecked)
-            intent.putExtra(KumiwakeCustomKeys.EVEN_AGE_RATIO.key, even_age_ratio_check.isChecked)
+            intent.putExtra(
+                KumiwakeCustomKeys.EVEN_FM_RATIO.key,
+                binding.evenFmRatioCheck.isChecked
+            )
+            intent.putExtra(
+                KumiwakeCustomKeys.EVEN_AGE_RATIO.key,
+                binding.evenAgeRatioCheck.isChecked
+            )
             startActivity(intent)
             overridePendingTransition(R.anim.in_right, R.anim.out_left)
         } else {
-            error_member_no_txt.visibility = View.VISIBLE
+            binding.errorMemberNoTxt.visibility = View.VISIBLE
         }
     }
 

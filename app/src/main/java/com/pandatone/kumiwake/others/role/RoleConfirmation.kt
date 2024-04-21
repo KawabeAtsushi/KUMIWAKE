@@ -15,26 +15,18 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.SmallGPListAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
+import com.pandatone.kumiwake.databinding.KumiwakeConfirmationBinding
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeComparator
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
-import kotlinx.android.synthetic.main.kumiwake_confirmation.arrow1
-import kotlinx.android.synthetic.main.kumiwake_confirmation.arrow2
-import kotlinx.android.synthetic.main.kumiwake_confirmation.between_arrows_txt
-import kotlinx.android.synthetic.main.kumiwake_confirmation.confirmation_title_txt
-import kotlinx.android.synthetic.main.kumiwake_confirmation.custom_review_txt
-import kotlinx.android.synthetic.main.kumiwake_confirmation.groupListView
-import kotlinx.android.synthetic.main.kumiwake_confirmation.group_no_txt
-import kotlinx.android.synthetic.main.kumiwake_confirmation.group_tag
-import kotlinx.android.synthetic.main.kumiwake_confirmation.kumiwake_member_listView
-import kotlinx.android.synthetic.main.kumiwake_confirmation.member_no_txt
-import kotlinx.android.synthetic.main.kumiwake_confirmation.scrollView
 import java.util.Collections
 
 /**
  * Created by atsushi_2 on 2016/05/08.
  */
 class RoleConfirmation : AppCompatActivity() {
+    private lateinit var binding: KumiwakeConfirmationBinding
+
     private lateinit var memberArray: ArrayList<Member>
     private lateinit var groupArray: ArrayList<Group>
     private var evenFmRatio: Boolean = false
@@ -43,7 +35,8 @@ class RoleConfirmation : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(StatusHolder.nowTheme)
-        setContentView(R.layout.kumiwake_confirmation)
+        binding = KumiwakeConfirmationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         val layout = findViewById<ConstraintLayout>(R.id.confirmation_view)
         layout.background = ContextCompat.getDrawable(this, R.drawable.top_background)
         val nextButton = findViewById<Button>(R.id.kumiwake_btn)
@@ -65,26 +58,26 @@ class RoleConfirmation : AppCompatActivity() {
 
         findViews()
         setViews()
-        scrollView.post { scrollView.scrollTo(0, 0) }
+        binding.scrollView.post { binding.scrollView.scrollTo(0, 0) }
 
         val animation = AnimationUtils.loadAnimation(this, R.anim.arrow_move)
-        arrow1.startAnimation(animation)
-        arrow2.startAnimation(animation)
+        binding.arrow1.startAnimation(animation)
+        binding.arrow2.startAnimation(animation)
     }
 
     @SuppressLint("SetTextI18n")
     private fun findViews() {
 
-        member_no_txt.text = (memberArray.size.toString() + " " + getText(R.string.people)
+        binding.memberNoTxt.text = (memberArray.size.toString() + " " + getText(R.string.people)
                 + "(" + getText(R.string.man) + ":" + countManNo().toString() + getText(R.string.people)
                 + "," + getText(R.string.woman) + ":" + (memberArray.size - countManNo()).toString() + getText(
             R.string.people
         ) + ")")
         if (groupArray.last().id == 1) {//割り当てなしがある場合
-            group_no_txt.text =
+            binding.groupNoTxt.text =
                 "${groupArray.size - 1} ${getText(R.string.kinds)} + ${getText(R.string.other)}"
         } else {
-            group_no_txt.text = "${groupArray.size} ${getText(R.string.kinds)}"
+            binding.groupNoTxt.text = "${groupArray.size} ${getText(R.string.kinds)}"
         }
     }
 
@@ -105,8 +98,8 @@ class RoleConfirmation : AppCompatActivity() {
         Collections.sort(memberArray, KumiwakeComparator.ViewComparator())
         val mbAdapter = SmallMBListAdapter(this, memberArray)
         val gpAdapter = SmallGPListAdapter(this, groupArray, true)
-        kumiwake_member_listView.adapter = mbAdapter
-        groupListView.adapter = gpAdapter
+        binding.kumiwakeMemberListView.adapter = mbAdapter
+        binding.groupListView.adapter = gpAdapter
 
         val customText = StringBuilder()
         if (evenFmRatio) {
@@ -115,12 +108,12 @@ class RoleConfirmation : AppCompatActivity() {
         if (evenAgeRatio) {
             customText.append("☆" + getText(R.string.even_out_age_ratio) + "\n")
         }
-        custom_review_txt.text = customText.toString()
-        confirmation_title_txt.text = getString(R.string.execute_role_confirm)
-        between_arrows_txt.text = getString(R.string.assign)
-        group_tag.text = getString(R.string.role)
-        mbAdapter.setRowHeight(kumiwake_member_listView)
-        gpAdapter.setRowHeight(groupListView)
+        binding.customReviewTxt.text = customText.toString()
+        binding.confirmationTitleTxt.text = getString(R.string.execute_role_confirm)
+        binding.betweenArrowsTxt.text = getString(R.string.assign)
+        binding.groupTag.text = getString(R.string.role)
+        mbAdapter.setRowHeight(binding.kumiwakeMemberListView)
+        gpAdapter.setRowHeight(binding.groupListView)
     }
 
     //役割決め実行

@@ -26,18 +26,17 @@ import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
+import com.pandatone.kumiwake.databinding.AddGroupBinding
 import com.pandatone.kumiwake.member.function.GroupMethods
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.member.members.FragmentGroupMain
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
-import kotlinx.android.synthetic.main.part_review_listview.member_register_and_add_btn
-import kotlinx.android.synthetic.main.part_review_listview.numberOfSelectedMember
-
 
 /**
  * Created by atsushi_2 on 2016/02/24.
  */
 class AddGroup : AppCompatActivity() {
+    private lateinit var binding: AddGroupBinding
     private var textInputLayout: TextInputLayout? = null
     private var nextId = FragmentGroupMain.gpAdapter.maxId + 1 //FragmentGroupMainなしだとX
     private lateinit var adapter: SmallMBListAdapter
@@ -62,7 +61,8 @@ class AddGroup : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         setTheme(StatusHolder.nowTheme)
-        setContentView(R.layout.add_group)
+        binding = AddGroupBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         gpAdapter = GroupAdapter(this)
         mbAdapter = MemberAdapter(this)
         findViews()
@@ -90,7 +90,7 @@ class AddGroup : AppCompatActivity() {
             findViewById<View>(R.id.add_group_listView).findViewById<View>(R.id.memberListView) as ListView
         listView.emptyView =
             findViewById<View>(R.id.add_group_listView).findViewById(R.id.emptyMemberList)
-        member_register_and_add_btn.visibility = View.GONE
+        binding.addGroupListView.memberRegisterAndAddBtn.visibility = View.GONE
         findViewById<View>(R.id.add_group_listView).findViewById<View>(R.id.member_add_btn)
             .setOnClickListener { moveMemberMain() }
         findViewById<View>(R.id.group_registration_btn).setOnClickListener { register() } //登録ボタンの処理
@@ -102,7 +102,7 @@ class AddGroup : AppCompatActivity() {
         super.onStart()
         adapter = SmallMBListAdapter(this@AddGroup, members)
         listView.adapter = adapter
-        numberOfSelectedMember.text =
+        binding.addGroupListView.numberOfSelectedMember.text =
             adapter.count.toString() + getString(R.string.people) + getString(R.string.selected)
     }
 
@@ -256,7 +256,7 @@ class AddGroup : AppCompatActivity() {
         listView.adapter = adapter
         val selectedTxt =
             adapter.count.toString() + getString(R.string.people) + getString(R.string.selected)
-        numberOfSelectedMember.text = selectedTxt
+        binding.addGroupListView.numberOfSelectedMember.text = selectedTxt
     }
 
 }

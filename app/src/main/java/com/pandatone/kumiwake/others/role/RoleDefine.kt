@@ -19,17 +19,17 @@ import com.pandatone.kumiwake.KumiwakeArrayKeys
 import com.pandatone.kumiwake.KumiwakeCustomKeys
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.EditOthersViewAdapter
+import com.pandatone.kumiwake.databinding.RoleDifinitionBinding
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
-import kotlinx.android.synthetic.main.kumiwake_custom.even_age_ratio_check
-import kotlinx.android.synthetic.main.kumiwake_custom.even_fm_ratio_check
-import kotlinx.android.synthetic.main.ticket_difinition.error_incorrect_number
 
 
 /**
  * Created by atsushi_2 on 2016/05/27.
  */
 class RoleDefine : AppCompatActivity() {
+    private lateinit var binding: RoleDifinitionBinding
+
     private lateinit var roleListView: ListView
     private lateinit var totalAssignedTextView: TextView
     private var editRoleAdapter: EditOthersViewAdapter? = null
@@ -41,7 +41,8 @@ class RoleDefine : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        setContentView(R.layout.role_difinition)
+        binding = RoleDifinitionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) != null) {
             memberArray =
@@ -93,12 +94,18 @@ class RoleDefine : AppCompatActivity() {
             val intent = Intent(this, RoleConfirmation::class.java)
             intent.putExtra(KumiwakeArrayKeys.MEMBER_LIST.key, memberArray)
             intent.putExtra(KumiwakeArrayKeys.GROUP_LIST.key, createNextRoleArray())
-            intent.putExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, even_fm_ratio_check.isChecked)
-            intent.putExtra(KumiwakeCustomKeys.EVEN_AGE_RATIO.key, even_age_ratio_check.isChecked)
+            intent.putExtra(
+                KumiwakeCustomKeys.EVEN_FM_RATIO.key,
+                binding.evenFmRatioCheck.isChecked
+            )
+            intent.putExtra(
+                KumiwakeCustomKeys.EVEN_AGE_RATIO.key,
+                binding.evenAgeRatioCheck.isChecked
+            )
             startActivity(intent)
             overridePendingTransition(R.anim.in_right, R.anim.out_left)
         } else {
-            error_incorrect_number.visibility = View.VISIBLE
+            binding.errorIncorrectNumber.visibility = View.VISIBLE
         }
     }
 
