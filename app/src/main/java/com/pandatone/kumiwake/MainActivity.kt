@@ -15,6 +15,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu.OnFloatingActionsMen
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.history.HistoryMain
@@ -53,8 +54,13 @@ class MainActivity : AppCompatActivity() {
             mAdView.visibility = View.GONE
         } else {
             MobileAds.initialize(this)
-            val adRequest = AdRequest.Builder()
-                .addTestDevice(getString(R.string.device_id)).build()
+            val testDevices: MutableList<String> = ArrayList()
+            testDevices.add(AdRequest.DEVICE_ID_EMULATOR)
+            val requestConfiguration = RequestConfiguration.Builder()
+                .setTestDeviceIds(testDevices)
+                .build()
+            MobileAds.setRequestConfiguration(requestConfiguration)
+            val adRequest = AdRequest.Builder().build()
             mAdView.loadAd(adRequest)
         }
     }

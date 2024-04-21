@@ -40,8 +40,7 @@ object PublicMethods {
             mAdView.visibility = View.GONE
         } else {
             MobileAds.initialize(activity)
-            val adRequest = AdRequest.Builder()
-                .addTestDevice(activity.getString(R.string.device_id)).build()
+            val adRequest = AdRequest.Builder().build()
             mAdView.loadAd(adRequest)
         }
     }
