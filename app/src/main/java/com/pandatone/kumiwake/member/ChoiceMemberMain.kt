@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager
 import com.pandatone.kumiwake.AddGroupKeys
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.CustomPagerAdapter
+import com.pandatone.kumiwake.extension.getSerializable
 import com.pandatone.kumiwake.member.function.Member
 
 
@@ -32,10 +33,8 @@ class ChoiceMemberMain : AppCompatActivity() {
         supportActionBar!!.title = "      0" + getString(R.string.selected)
         supportActionBar!!.setDisplayShowTitleEnabled(true)
 
-        val i = intent
-        if (i.getSerializableExtra(AddGroupKeys.MEMBER_ARRAY.key) != null) {
-            memberArray = i.getSerializableExtra(AddGroupKeys.MEMBER_ARRAY.key) as ArrayList<Member>
-        }
+        intent.getSerializable<ArrayList<Member>>(AddGroupKeys.MEMBER_ARRAY.key)
+            ?.let { memberArray = it }
 
         setViews()
     }

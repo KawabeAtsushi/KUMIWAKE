@@ -25,6 +25,7 @@ import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.EditGroupViewAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.databinding.KumiwakeCustomBinding
+import com.pandatone.kumiwake.extension.getSerializable
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
 
@@ -56,14 +57,11 @@ class KumiwakeCustom : AppCompatActivity() {
             layout.background = ContextCompat.getDrawable(this, R.drawable.sekigime_background)
         }
 
-        if (intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) != null) {
-            memberArray =
-                intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>
-        }
-        if (intent.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) != null) {
-            groupArray =
-                intent.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) as ArrayList<Group>
-        }
+        intent.getSerializable<ArrayList<Member>>(KumiwakeArrayKeys.MEMBER_LIST.key)
+            ?.let { memberArray = it }
+        intent.getSerializable<ArrayList<Group>>(KumiwakeArrayKeys.GROUP_LIST.key)
+            ?.let { groupArray = it }
+
         findViews()
         mbAdapter = SmallMBListAdapter(this, memberArray, showLeaderNo = true)
         editGPAdapter = EditGroupViewAdapter(this, groupArray, groupListView)

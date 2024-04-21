@@ -27,6 +27,7 @@ import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.databinding.AddGroupBinding
+import com.pandatone.kumiwake.extension.getSerializable
 import com.pandatone.kumiwake.member.function.GroupMethods
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.member.members.FragmentGroupMain
@@ -250,7 +251,8 @@ class AddGroup : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, i)
 
         if (resultCode == Activity.RESULT_OK) {
-            members = i!!.getSerializableExtra(AddGroupKeys.MEMBER_ARRAY.key) as ArrayList<Member>
+            i?.getSerializable<ArrayList<Member>>(AddGroupKeys.MEMBER_ARRAY.key)
+                ?.let { members = it }
         }
         adapter = SmallMBListAdapter(this@AddGroup, members)
         listView.adapter = adapter

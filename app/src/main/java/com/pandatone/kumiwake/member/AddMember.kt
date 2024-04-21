@@ -35,6 +35,7 @@ import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.databinding.AddMemberBinding
+import com.pandatone.kumiwake.extension.getSerializable
 import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
@@ -84,7 +85,7 @@ class AddMember : AppCompatActivity() {
         findViews()
         ageEditText!!.setText("")
         val i = intent
-        val member = i.getSerializableExtra(AddMemberKeys.MEMBER.key) as Member?
+        val member = i.getSerializable<Member?>(AddMemberKeys.MEMBER.key)
         fromMode = i.getStringExtra(AddMemberKeys.FROM_MODE.key)
         val memberImg = findViewById<ImageView>(R.id.memberIcon)
         sexGroup!!.setOnCheckedChangeListener { _, checkedId: Int ->

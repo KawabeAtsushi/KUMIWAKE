@@ -20,6 +20,7 @@ import com.pandatone.kumiwake.KumiwakeCustomKeys
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.EditOthersViewAdapter
 import com.pandatone.kumiwake.databinding.RoleDifinitionBinding
+import com.pandatone.kumiwake.extension.getSerializable
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
 
@@ -44,10 +45,8 @@ class RoleDefine : AppCompatActivity() {
         binding = RoleDifinitionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) != null) {
-            memberArray =
-                intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>
-        }
+        intent.getSerializable<ArrayList<Member>>(KumiwakeArrayKeys.MEMBER_LIST.key)
+            ?.let { memberArray = it }
         findViews()
         editRoleAdapter = EditOthersViewAdapter(this, roleArray, totalAssignedTextView, false)
         onAddRole()

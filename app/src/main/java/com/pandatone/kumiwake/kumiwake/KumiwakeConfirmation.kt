@@ -20,6 +20,7 @@ import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.SmallGPListAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.databinding.KumiwakeConfirmationBinding
+import com.pandatone.kumiwake.extension.getSerializable
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeComparator
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
@@ -50,18 +51,12 @@ class KumiwakeConfirmation : AppCompatActivity() {
         findViewById<Button>(R.id.kumiwake_btn).setOnClickListener { doKumiwake() }
 
         val i = intent
-        if (i.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) != null) {
-            memberArray =
-                i.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>
-        }
-        if (i.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) != null) {
-            groupArray =
-                i.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) as ArrayList<Group>
-        }
-        if (i.getSerializableExtra(KumiwakeArrayKeys.LEADER_LIST.key) != null) {
-            leaderArray =
-                i.getSerializableExtra(KumiwakeArrayKeys.LEADER_LIST.key) as ArrayList<Member?>
-        }
+        i.getSerializable<ArrayList<Member>>(KumiwakeArrayKeys.MEMBER_LIST.key)
+            ?.let { memberArray = it }
+        i.getSerializable<ArrayList<Group>>(KumiwakeArrayKeys.GROUP_LIST.key)
+            ?.let { groupArray = it }
+        i.getSerializable<ArrayList<Member?>>(KumiwakeArrayKeys.LEADER_LIST.key)
+            ?.let { leaderArray = it }
 
         evenFmRatio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, false)
         evenAgeRatio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_AGE_RATIO.key, false)

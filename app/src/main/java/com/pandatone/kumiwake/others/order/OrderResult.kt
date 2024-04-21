@@ -25,6 +25,7 @@ import com.pandatone.kumiwake.MainActivity
 import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.ShareViewImage
+import com.pandatone.kumiwake.extension.getSerializable
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeMethods
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
@@ -56,11 +57,9 @@ class OrderResult : AppCompatActivity() {
         layout.background = ContextCompat.getDrawable(this, R.drawable.top_background)
 
         PublicMethods.showAd(this)
-        val i = intent
-        if (i.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) != null) {
-            memberArray =
-                i.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>
-        }
+
+        intent.getSerializable<ArrayList<Member>>(KumiwakeArrayKeys.MEMBER_LIST.key)
+            ?.let { memberArray = it }
 
         //結果表示
         startMethod()

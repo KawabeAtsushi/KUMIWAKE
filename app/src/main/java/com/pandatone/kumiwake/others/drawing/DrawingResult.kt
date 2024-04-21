@@ -27,6 +27,7 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.DrawingHistoryListAdapter
 import com.pandatone.kumiwake.adapter.SmallDrawingHistoryListAdapter
 import com.pandatone.kumiwake.databinding.DrawingResultBinding
+import com.pandatone.kumiwake.extension.getSerializable
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 
 
@@ -59,10 +60,7 @@ class DrawingResult : AppCompatActivity() {
         binding = DrawingResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val i = intent
-        if (i.getSerializableExtra("tickets") != null) {
-            tickets = i.getSerializableExtra("tickets") as ArrayList<Ticket>
-        }
+        intent.getSerializable<ArrayList<Ticket>>("tickets")?.let { tickets = it }
 
         val kinds = tickets.distinctBy { it.id }
 

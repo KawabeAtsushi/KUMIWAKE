@@ -25,6 +25,7 @@ import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.Theme
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.databinding.NormalModeBinding
+import com.pandatone.kumiwake.extension.getSerializable
 import com.pandatone.kumiwake.member.AddMember
 import com.pandatone.kumiwake.member.ChoiceMemberMain
 import com.pandatone.kumiwake.member.function.Member
@@ -138,8 +139,8 @@ class SelectMember : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, i)
 
         if (resultCode == Activity.RESULT_OK) {
-            memberArray =
-                i!!.getSerializableExtra(AddGroupKeys.MEMBER_ARRAY.key) as ArrayList<Member>
+            i?.getSerializable<ArrayList<Member>>(AddGroupKeys.MEMBER_ARRAY.key)
+                ?.let { memberArray = it }
         }
 
         adapter = SmallMBListAdapter(this, memberArray)
