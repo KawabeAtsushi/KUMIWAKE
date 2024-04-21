@@ -2,15 +2,25 @@ package com.pandatone.kumiwake.sekigime.function
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.graphics.RadialGradient
+import android.graphics.RectF
+import android.graphics.Shader
 import android.view.MotionEvent
 import android.view.View
 import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.sekigime.SekigimeResult
-import java.util.*
-import kotlin.math.*
+import kotlin.math.abs
+import kotlin.math.cos
+import kotlin.math.floor
+import kotlin.math.roundToInt
+import kotlin.math.sin
 
 
 /**
@@ -63,6 +73,7 @@ class DrawTableView(context: Context) : View(context) {
                     280 + (130 * ((seatsNo - squareNo) / 2f).roundToInt() + 50)
                 }
             }
+
             "parallel" -> height = 130 * (seatsNo / 2f).roundToInt() + 200
             "circle" -> height = 860
             "counter" -> height = seatsNo * 132 + 100
@@ -152,10 +163,26 @@ class DrawTableView(context: Context) : View(context) {
         cPaint.isAntiAlias = true
         cPaint.style = Paint.Style.STROKE
         val rectRight = dispWidth - 180 * dp
-        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight, tableRound, tableRound, cPaint)
+        canvas.drawRoundRect(
+            180 * dp,
+            tableTop,
+            rectRight,
+            tableHeight,
+            tableRound,
+            tableRound,
+            cPaint
+        )
         cPaint.color = Color.parseColor(tableColor)
         cPaint.style = Paint.Style.FILL
-        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight, tableRound, tableRound, cPaint)
+        canvas.drawRoundRect(
+            180 * dp,
+            tableTop,
+            rectRight,
+            tableHeight,
+            tableRound,
+            tableRound,
+            cPaint
+        )
 
         //椅子
         sPaint.color = Color.parseColor(chairStrokeColor)
@@ -270,10 +297,26 @@ class DrawTableView(context: Context) : View(context) {
         cPaint.color = Color.parseColor(tableStrokeColor)
         cPaint.strokeWidth = tableStrokeWidth * dp
         cPaint.style = Paint.Style.STROKE
-        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight, tableRound, tableRound, cPaint)
+        canvas.drawRoundRect(
+            180 * dp,
+            tableTop,
+            rectRight,
+            tableHeight,
+            tableRound,
+            tableRound,
+            cPaint
+        )
         cPaint.color = Color.parseColor(tableColor)
         cPaint.style = Paint.Style.FILL
-        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight, tableRound, tableRound, cPaint)
+        canvas.drawRoundRect(
+            180 * dp,
+            tableTop,
+            rectRight,
+            tableHeight,
+            tableRound,
+            tableRound,
+            cPaint
+        )
 //        val rect = RectF(180 * dp, 100 * dp, rectRight, tableHeight)
 //        canvas.drawBitmap(bmp, null, rect, cPaint)
 
@@ -349,11 +392,13 @@ class DrawTableView(context: Context) : View(context) {
                 centerY = -centerX * 0.625f - 80 * dp
                 sPaint.strokeWidth = 7 * dp
             }
+
             seatsNo < 21 -> {
                 r = 40 * dp
                 centerY = -centerX * 0.625f - 60 * dp
                 sPaint.strokeWidth = 5 * dp
             }
+
             else -> {
                 r = 30 * dp
                 centerY = -centerX * 0.625f - 50 * dp
@@ -433,8 +478,12 @@ class DrawTableView(context: Context) : View(context) {
 
         for (i in startNo until endNo) {
             when (teamArray[tableNo][i].sex) {
-                resources.getText(R.string.man) -> sPaint.color = PublicMethods.getColor(context, R.color.thin_man)
-                resources.getText(R.string.woman) -> sPaint.color = PublicMethods.getColor(context, R.color.thin_woman)
+                resources.getText(R.string.man) -> sPaint.color =
+                    PublicMethods.getColor(context, R.color.thin_man)
+
+                resources.getText(R.string.woman) -> sPaint.color =
+                    PublicMethods.getColor(context, R.color.thin_woman)
+
                 else -> sPaint.color = PublicMethods.getColor(context, R.color.thin_white)
             }
 
@@ -449,8 +498,10 @@ class DrawTableView(context: Context) : View(context) {
     private fun setFocusGradation(canvas: Canvas) {
         val xP = x[point] - lastX
         val yP = y[point] - lastY
-        val gradient = RadialGradient(xP, yP, 1.5f * r, Color.parseColor("#ffaa00"),
-                Color.argb(0, 0, 0, 0), Shader.TileMode.CLAMP)
+        val gradient = RadialGradient(
+            xP, yP, 1.5f * r, Color.parseColor("#ffaa00"),
+            Color.argb(0, 0, 0, 0), Shader.TileMode.CLAMP
+        )
         val graPaint = Paint()
         graPaint.isDither = true
         ///端を滑らかにする。
@@ -495,28 +546,33 @@ class DrawTableView(context: Context) : View(context) {
                         textStartX = textCenterToStartX(text, xP, textPaint)
                         textBottomY = yP + 150 * dp
                     }
+
                     point < a -> {
                         //底辺
                         textStartX = textCenterToStartX(text, xP, textPaint)
                         textBottomY = yP - 110 * dp
                     }
+
                     point < (seatsNo + a) / 2 -> textStartX = (xP + 140 * dp) //左辺
                     else -> textStartX = (xP - (90 * dp) - textWidth - r) //右辺
                 }
             }
+
             "parallel" -> {
                 textStartX =
-                        if (point < seatsNo / 2) {
-                            (xP + 140 * dp)
-                        } else {
-                            (xP - (90 * dp) - textWidth - r)
-                        }
+                    if (point < seatsNo / 2) {
+                        (xP + 140 * dp)
+                    } else {
+                        (xP - (90 * dp) - textWidth - r)
+                    }
                 textBottomY = textCenterToBottomY(yP, textPaint)
             }
+
             "circle" -> {
                 textStartX = textCenterToStartX(text, 0f, textPaint)
                 textBottomY = textCenterToBottomY(0f, textPaint)
             }
+
             else -> {
                 textStartX = (xP + 150 * dp)
                 textBottomY = textCenterToBottomY(yP, textPaint)
@@ -527,8 +583,12 @@ class DrawTableView(context: Context) : View(context) {
         val balloonPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         balloonPaint.textSize = textSize
         when (teamArray[tableNo][point].sex) {
-            resources.getText(R.string.man) -> balloonPaint.color = PublicMethods.getColor(context, R.color.man)
-            resources.getText(R.string.woman) -> balloonPaint.color = PublicMethods.getColor(context, R.color.woman)
+            resources.getText(R.string.man) -> balloonPaint.color =
+                PublicMethods.getColor(context, R.color.man)
+
+            resources.getText(R.string.woman) -> balloonPaint.color =
+                PublicMethods.getColor(context, R.color.woman)
+
             else -> balloonPaint.color = PublicMethods.getColor(context, R.color.green)
         }
 
@@ -553,7 +613,12 @@ class DrawTableView(context: Context) : View(context) {
         val balloonEnd = textStartToEndX(text, textStartX, paint) + r
         val balloonTop = textBottomToTopY(textBottomY, paint) - r / 2
         val balloonBottom = textBottomY + r / 2
-        return RectF(balloonStart, balloonTop, balloonEnd, balloonBottom) //(left, top, right, bottom)
+        return RectF(
+            balloonStart,
+            balloonTop,
+            balloonEnd,
+            balloonBottom
+        ) //(left, top, right, bottom)
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////

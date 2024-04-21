@@ -22,7 +22,13 @@ class DialogWarehouse(private var fragmentManager: FragmentManager?) {
     }
 
     //positive, negativeのダイアログ
-    fun decisionDialog(title: String, message: CharSequence, positiveTxt: String = "", negativeTxt: String = "", function: () -> Unit) {
+    fun decisionDialog(
+        title: String,
+        message: CharSequence,
+        positiveTxt: String = "",
+        negativeTxt: String = "",
+        function: () -> Unit
+    ) {
         val customDialog = CustomDialog(title, message)
         if (positiveTxt != "") {
             customDialog.positiveTxt = positiveTxt
@@ -57,19 +63,19 @@ class DialogWarehouse(private var fragmentManager: FragmentManager?) {
             }
         }
         ColorPickerDialogBuilder
-                .with(context)
-                .setTitle(context.getString(R.string.choose_color))
-                .lightnessSliderOnly()
-                .initialColor(initialColor)
-                .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
-                .density(6)
-                .setPositiveButton("OK") { _, selectedColor, _ ->
-                    TicketDefine.ticketColors[position] = selectedColor
-                    icon.setColorFilter(selectedColor)
-                }
-                .setNegativeButton(context.getString(R.string.cancel)) { _, _ -> }
-                .build()
-                .show()
+            .with(context)
+            .setTitle(context.getString(R.string.choose_color))
+            .lightnessSliderOnly()
+            .initialColor(initialColor)
+            .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
+            .density(6)
+            .setPositiveButton("OK") { _, selectedColor, _ ->
+                TicketDefine.ticketColors[position] = selectedColor
+                icon.setColorFilter(selectedColor)
+            }
+            .setNegativeButton(context.getString(R.string.cancel)) { _, _ -> }
+            .build()
+            .show()
     }
 
 }

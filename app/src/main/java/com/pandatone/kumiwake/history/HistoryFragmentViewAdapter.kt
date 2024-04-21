@@ -16,7 +16,10 @@ import com.pandatone.kumiwake.R
 /**
  * Created by atsushi_2 on 2016/03/20.
  */
-class HistoryFragmentViewAdapter(private val context: Context, private val historyList: List<History>) : BaseAdapter() {
+class HistoryFragmentViewAdapter(
+    private val context: Context,
+    private val historyList: List<History>
+) : BaseAdapter() {
 
     @SuppressLint("UseSparseArrays")
     private var gSelection = SparseBooleanArray()
@@ -44,7 +47,8 @@ class HistoryFragmentViewAdapter(private val context: Context, private val histo
         v = inflater.inflate(R.layout.row_history, null)
 
         if (gSelection.get(history.id)) {
-            v.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(context, R.color.checked_list))
+            v.backgroundTintList =
+                ColorStateList.valueOf(PublicMethods.getColor(context, R.color.checked_list))
         }
 
         setModeIcon(v, position)

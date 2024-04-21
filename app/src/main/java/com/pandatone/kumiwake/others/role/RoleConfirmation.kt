@@ -8,14 +8,28 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import com.pandatone.kumiwake.*
+import com.pandatone.kumiwake.KumiwakeArrayKeys
+import com.pandatone.kumiwake.KumiwakeCustomKeys
+import com.pandatone.kumiwake.PublicMethods
+import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.SmallGPListAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeComparator
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
-import kotlinx.android.synthetic.main.kumiwake_confirmation.*
-import java.util.*
+import kotlinx.android.synthetic.main.kumiwake_confirmation.arrow1
+import kotlinx.android.synthetic.main.kumiwake_confirmation.arrow2
+import kotlinx.android.synthetic.main.kumiwake_confirmation.between_arrows_txt
+import kotlinx.android.synthetic.main.kumiwake_confirmation.confirmation_title_txt
+import kotlinx.android.synthetic.main.kumiwake_confirmation.custom_review_txt
+import kotlinx.android.synthetic.main.kumiwake_confirmation.groupListView
+import kotlinx.android.synthetic.main.kumiwake_confirmation.group_no_txt
+import kotlinx.android.synthetic.main.kumiwake_confirmation.group_tag
+import kotlinx.android.synthetic.main.kumiwake_confirmation.kumiwake_member_listView
+import kotlinx.android.synthetic.main.kumiwake_confirmation.member_no_txt
+import kotlinx.android.synthetic.main.kumiwake_confirmation.scrollView
+import java.util.Collections
 
 /**
  * Created by atsushi_2 on 2016/05/08.
@@ -39,10 +53,12 @@ class RoleConfirmation : AppCompatActivity() {
 
         val i = intent
         if (i.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) != null) {
-            memberArray = i.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>
+            memberArray =
+                i.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>
         }
         if (i.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) != null) {
-            groupArray = i.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) as ArrayList<Group>
+            groupArray =
+                i.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) as ArrayList<Group>
         }
         evenFmRatio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, false)
         evenAgeRatio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_AGE_RATIO.key, false)
@@ -61,9 +77,12 @@ class RoleConfirmation : AppCompatActivity() {
 
         member_no_txt.text = (memberArray.size.toString() + " " + getText(R.string.people)
                 + "(" + getText(R.string.man) + ":" + countManNo().toString() + getText(R.string.people)
-                + "," + getText(R.string.woman) + ":" + (memberArray.size - countManNo()).toString() + getText(R.string.people) + ")")
+                + "," + getText(R.string.woman) + ":" + (memberArray.size - countManNo()).toString() + getText(
+            R.string.people
+        ) + ")")
         if (groupArray.last().id == 1) {//割り当てなしがある場合
-            group_no_txt.text = "${groupArray.size - 1} ${getText(R.string.kinds)} + ${getText(R.string.other)}"
+            group_no_txt.text =
+                "${groupArray.size - 1} ${getText(R.string.kinds)} + ${getText(R.string.other)}"
         } else {
             group_no_txt.text = "${groupArray.size} ${getText(R.string.kinds)}"
         }

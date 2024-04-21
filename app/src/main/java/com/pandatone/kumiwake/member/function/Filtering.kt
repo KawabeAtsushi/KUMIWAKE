@@ -6,8 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.pandatone.kumiwake.R
@@ -26,10 +31,15 @@ class Filtering(val activity: Activity, private val memberList: ArrayList<Member
     fun showFilterDialog(activity: Activity, listAdp: MemberFragmentViewAdapter) {
         val builder = AlertDialog.Builder(activity)
         val inflater = activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val layout = inflater.inflate(R.layout.filter_member, activity.findViewById<View>(R.id.filter_member) as? ViewGroup)
-        val belongDropdown = layout.findViewById<View>(R.id.filter_belong_dropdown) as AutoCompleteTextView
+        val layout = inflater.inflate(
+            R.layout.filter_member,
+            activity.findViewById<View>(R.id.filter_member) as? ViewGroup
+        )
+        val belongDropdown =
+            layout.findViewById<View>(R.id.filter_belong_dropdown) as AutoCompleteTextView
         belongDropdown.onItemClickListener = OnItemClickListener { _, _, _, _ ->
-            val manager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val manager =
+                activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             manager.hideSoftInputFromWindow(belongDropdown.windowToken, 0)
         }
         val adapter = ArrayAdapter<String>(activity, R.layout.dropdown_item_layout)

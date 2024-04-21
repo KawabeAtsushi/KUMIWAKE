@@ -9,22 +9,34 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.ListView
+import android.widget.ScrollView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.tabs.TabLayout
-import com.pandatone.kumiwake.*
+import com.pandatone.kumiwake.KumiwakeArrayKeys
+import com.pandatone.kumiwake.KumiwakeCustomKeys
+import com.pandatone.kumiwake.MainActivity
+import com.pandatone.kumiwake.PublicMethods
+import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.ShareViewImage
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeComparator
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeMethods
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Collections
 
 /**
  * Created by atsushi_2 on 2016/05/10.
@@ -67,10 +79,12 @@ class RoleResult : AppCompatActivity() {
         PublicMethods.showAd(this)
         val i = intent
         if (i.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) != null) {
-            memberArray = i.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>
+            memberArray =
+                i.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>
         }
         if (i.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) != null) {
-            groupArray = i.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) as ArrayList<Group>
+            groupArray =
+                i.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) as ArrayList<Group>
         }
 
         evenFmRatio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, false)
@@ -162,6 +176,7 @@ class RoleResult : AppCompatActivity() {
                     v = 0
                     Thread(DrawTask(this@RoleResult, groupCount)).start()
                 }
+
                 1 -> {//メンバーごと
                     addResultViewByMember()
                 }
@@ -176,7 +191,10 @@ class RoleResult : AppCompatActivity() {
     private fun editInfoDialog() {
         val builder = AlertDialog.Builder(this)
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.edit_result_dialog_layout, findViewById<View>(R.id.info_layout) as ViewGroup?)
+        val view = inflater.inflate(
+            R.layout.edit_result_dialog_layout,
+            findViewById<View>(R.id.info_layout) as ViewGroup?
+        )
         val etTitle = view.findViewById<EditText>(R.id.edit_title)
         etTitle.hint = resultTitle
         if (title != "") etTitle.setText(this.title)
@@ -185,13 +203,13 @@ class RoleResult : AppCompatActivity() {
         view.findViewById<CheckBox>(R.id.include_title_check).visibility = View.GONE
         view.findViewById<CheckBox>(R.id.include_comment_check).visibility = View.GONE
         builder.setTitle(getString(R.string.add_info))
-                .setView(view)
-                .setPositiveButton(R.string.change) { _, _ ->
-                    changeInfo(etTitle.text.toString(), etComment.text.toString())
-                }
-                .setNegativeButton(R.string.cancel) { dialog, _ ->
-                    dialog.dismiss()
-                }
+            .setView(view)
+            .setPositiveButton(R.string.change) { _, _ ->
+                changeInfo(etTitle.text.toString(), etComment.text.toString())
+            }
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
         val dialog = builder.create()
         dialog.show()
     }
@@ -221,15 +239,21 @@ class RoleResult : AppCompatActivity() {
     private fun onRetry() {
         v = 0
         val title = getString(R.string.retry_title)
-        val message = getString(R.string.re_assign_description) + getString(R.string.run_confirmation)
-        DialogWarehouse(supportFragmentManager).decisionDialog(title, message, function = this::retry)
+        val message =
+            getString(R.string.re_assign_description) + getString(R.string.run_confirmation)
+        DialogWarehouse(supportFragmentManager).decisionDialog(
+            title,
+            message,
+            function = this::retry
+        )
     }
 
     private fun retry() {
         val scrollView = findViewById<View>(R.id.kumiwake_scroll) as ScrollView
         scrollView.scrollTo(0, 0)
         startMethod()
-        Toast.makeText(applicationContext, getText(R.string.retry_finished), Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, getText(R.string.retry_finished), Toast.LENGTH_SHORT)
+            .show()
     }
 
     private fun shareResult() {
@@ -316,8 +340,17 @@ class RoleResult : AppCompatActivity() {
             }
         }
         val colorStr = KumiwakeMethods.getResultColorStr(groupNo, groupArray.size)
-        val newName = member.name + " → <strong><font color='#" + colorStr + "'>" + groupArray[groupNo].name + "</font></strong>"
-        return Member(member.id, newName, member.sex, member.age, member.belong, member.read, member.leader)
+        val newName =
+            member.name + " → <strong><font color='#" + colorStr + "'>" + groupArray[groupNo].name + "</font></strong>"
+        return Member(
+            member.id,
+            newName,
+            member.sex,
+            member.age,
+            member.belong,
+            member.read,
+            member.leader
+        )
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -328,7 +361,10 @@ class RoleResult : AppCompatActivity() {
     private fun shareOptionDialog() {
         val builder = AlertDialog.Builder(this)
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.edit_result_dialog_layout, findViewById<View>(R.id.info_layout) as ViewGroup?)
+        val view = inflater.inflate(
+            R.layout.edit_result_dialog_layout,
+            findViewById<View>(R.id.info_layout) as ViewGroup?
+        )
         val indexTitle = view.findViewById<TextView>(R.id.title_index)
         val etTitle = view.findViewById<EditText>(R.id.edit_title)
         indexTitle.visibility = View.GONE
@@ -364,28 +400,34 @@ class RoleResult : AppCompatActivity() {
         }
 
         builder.setTitle(getString(R.string.share_option))
-                .setView(view)
-                .setPositiveButton(R.string.share) { _, _ ->
-                    changeInfo(etTitle.text.toString(), etComment.text.toString())
-                    val tvTitle = findViewById<TextView>(R.id.inner_result_title)
-                    val tvComment = findViewById<TextView>(R.id.comment_view)
-                    includeTitle = includeTitleCheck.isChecked
-                    includeComment = includeCommentCheck.isChecked
-                    if (includeTitle) {
-                        tvTitle.visibility = View.VISIBLE
-                    } else {
-                        tvTitle.visibility = View.GONE
-                    }
-                    if (includeComment && comment != "") {
-                        tvComment.visibility = View.VISIBLE
-                    } else {
-                        tvComment.visibility = View.GONE
-                    }
-                    KumiwakeMethods.shareResult(this, tvTitle, tvComment, this::shareText, this::shareImage)
+            .setView(view)
+            .setPositiveButton(R.string.share) { _, _ ->
+                changeInfo(etTitle.text.toString(), etComment.text.toString())
+                val tvTitle = findViewById<TextView>(R.id.inner_result_title)
+                val tvComment = findViewById<TextView>(R.id.comment_view)
+                includeTitle = includeTitleCheck.isChecked
+                includeComment = includeCommentCheck.isChecked
+                if (includeTitle) {
+                    tvTitle.visibility = View.VISIBLE
+                } else {
+                    tvTitle.visibility = View.GONE
                 }
-                .setNegativeButton(R.string.cancel) { dialog, _ ->
-                    dialog.dismiss()
+                if (includeComment && comment != "") {
+                    tvComment.visibility = View.VISIBLE
+                } else {
+                    tvComment.visibility = View.GONE
                 }
+                KumiwakeMethods.shareResult(
+                    this,
+                    tvTitle,
+                    tvComment,
+                    this::shareText,
+                    this::shareImage
+                )
+            }
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
         val dialog = builder.create()
         dialog.show()
     }

@@ -21,7 +21,7 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.Theme
 import com.pandatone.kumiwake.adapter.EditOthersViewAdapter
 import com.pandatone.kumiwake.member.function.Group
-import kotlinx.android.synthetic.main.ticket_difinition.*
+import kotlinx.android.synthetic.main.ticket_difinition.error_incorrect_number
 
 
 /**
@@ -132,7 +132,8 @@ class TicketDefine : AppCompatActivity() {
     private fun setKeyboardListener() {
         val activityRootView = findViewById<View>(R.id.custom_root_layout)
         val view = findViewById<View>(R.id.drawing_result_button)
-        activityRootView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        activityRootView.viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
             private val r = Rect()
 
             override fun onGlobalLayout() {

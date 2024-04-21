@@ -11,12 +11,15 @@ import android.widget.ListView
 import android.widget.TextView
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.function.Group
-import java.util.*
 
 /**
  * Created by atsushi_2 on 2016/04/16.
  */
-class SmallGPListAdapter(private val context: Context, val groupList: ArrayList<Group>, private val roleMode: Boolean = false) : BaseAdapter() {
+class SmallGPListAdapter(
+    private val context: Context,
+    val groupList: ArrayList<Group>,
+    private val roleMode: Boolean = false
+) : BaseAdapter() {
 
     override fun getCount(): Int {
         return groupList.size
@@ -53,7 +56,8 @@ class SmallGPListAdapter(private val context: Context, val groupList: ArrayList<
         memberNoTextView = v.findViewById<View>(R.id.memberNo) as TextView
         memberNoTextView.visibility = View.VISIBLE
         nameTextView.text = groupList[position].name
-        memberNoTextView.text = groupList[position].belongNo.toString() + context.getString(R.string.people)
+        memberNoTextView.text =
+            groupList[position].belongNo.toString() + context.getString(R.string.people)
 
         return v
     }

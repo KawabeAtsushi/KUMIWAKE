@@ -7,18 +7,27 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.BaseAdapter
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.ListView
+import android.widget.TextView
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
-import java.util.*
 
 /**
  * Created by atsushi_2 on 2016/03/20.
  */
-class EditOthersViewAdapter(val context: Context, val groupList: List<Group>, private val totalCountTextView: TextView, private val drawingMode: Boolean) : BaseAdapter() {
+class EditOthersViewAdapter(
+    val context: Context,
+    val groupList: List<Group>,
+    private val totalCountTextView: TextView,
+    private val drawingMode: Boolean
+) : BaseAdapter() {
 
-    private val name = if (drawingMode) context.getString(R.string.ticket) else context.getString(R.string.role)
+    private val name =
+        if (drawingMode) context.getString(R.string.ticket) else context.getString(R.string.role)
     private val totalStrInit = if (drawingMode) {
         context.getString(R.string.ticket_number)
     } else {
@@ -73,7 +82,13 @@ class EditOthersViewAdapter(val context: Context, val groupList: List<Group>, pr
         val icon = v.findViewById<ImageView>(R.id.rowIconGroup)
         icon.setImageResource(R.drawable.ic_star_circle_24dp)
         if (drawingMode) {
-            icon.setOnClickListener { DialogWarehouse(null).colorPickerDialog(context, position, icon) }
+            icon.setOnClickListener {
+                DialogWarehouse(null).colorPickerDialog(
+                    context,
+                    position,
+                    icon
+                )
+            }
         }
 
         nameEditTextList[position] = nameEditText

@@ -2,8 +2,6 @@ package com.pandatone.kumiwake.member.function
 
 import android.content.Context
 import com.pandatone.kumiwake.adapter.MemberAdapter
-import java.util.*
-import kotlin.collections.ArrayList
 
 object GroupMethods {
 
@@ -14,7 +12,8 @@ object GroupMethods {
         val members = MemberAdapter(context).getAllMembers()
         members.forEach { member ->
             val belongText = member.belong
-            val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val belongArray =
+                belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             if (listOf(*belongArray).contains(belongId)) {
                 memberArrayByBelong.add(member)
             }
@@ -34,9 +33,15 @@ object GroupMethods {
     }
 
     //メンバー(member)を所属グループ(groupIdのグループ)から脱退
-    private fun deleteBelongInfo(member: Member, groupId: Int, listId: Int, mbAdapter: MemberAdapter) {
+    private fun deleteBelongInfo(
+        member: Member,
+        groupId: Int,
+        listId: Int,
+        mbAdapter: MemberAdapter
+    ) {
         val belongText = member.belong
-        val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        val belongArray =
+            belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         val list = ArrayList(listOf(*belongArray))
         val hs = HashSet<String>()
         hs.addAll(list)

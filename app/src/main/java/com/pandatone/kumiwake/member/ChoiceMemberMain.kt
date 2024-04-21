@@ -49,7 +49,11 @@ class ChoiceMemberMain : AppCompatActivity() {
 
         viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             //スクロール中（page切り替え中）に呼ばれる
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
                 //tableNo:遷移中pageのindex
                 //positionOffset:遷移前→遷移後のoffset割合を0~1で返す
                 //positionOffsetPixels:positionOffsetをpixelで返す
@@ -58,7 +62,8 @@ class ChoiceMemberMain : AppCompatActivity() {
                 } else {
                     decision.visibility = View.GONE
                 }
-                decision.translationY = 1000 * positionOffset * (1 - 2 * position) //0to1->up,1to0->down
+                decision.translationY =
+                    1000 * positionOffset * (1 - 2 * position) //0to1->up,1to0->down
             }
         })
     }

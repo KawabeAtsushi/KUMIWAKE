@@ -7,12 +7,23 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import com.google.android.material.button.MaterialButton
-import com.pandatone.kumiwake.*
+import com.pandatone.kumiwake.FirebaseAnalyticsEvents
+import com.pandatone.kumiwake.ModeKeys
+import com.pandatone.kumiwake.PublicMethods
+import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
+import com.pandatone.kumiwake.Theme
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.member.function.Member
@@ -35,7 +46,10 @@ class HistoryInfo(val c: Activity) {
     fun infoDialog(item: History) {
         val builder = AlertDialog.Builder(c)
         val inflater = c.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.history_info, c.findViewById<View>(R.id.info_layout) as ViewGroup?)
+        val view = inflater.inflate(
+            R.layout.history_info,
+            c.findViewById<View>(R.id.info_layout) as ViewGroup?
+        )
 
         history = view.findViewById(R.id.infoName)
         date = view.findViewById(R.id.infoDate)
@@ -107,7 +121,10 @@ class HistoryInfo(val c: Activity) {
     private fun selectModeDialog() {
         val builder = AlertDialog.Builder(c)
         val inflater = c.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.select_mode_dialog_layout, c.findViewById<View>(R.id.info_layout) as ViewGroup?)
+        val view = inflater.inflate(
+            R.layout.select_mode_dialog_layout,
+            c.findViewById<View>(R.id.info_layout) as ViewGroup?
+        )
 
         val kumiwakeButton = view.findViewById<Button>(R.id.kumiwake_select_button)
         val duplicateCheckBox = view.findViewById<CheckBox>(R.id.duplicate_check)
@@ -125,10 +142,10 @@ class HistoryInfo(val c: Activity) {
             FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.SekigimeHistory.key)
         }
         builder.setTitle(R.string.mode_selection)
-                .setView(view)
-                .setNegativeButton(R.string.cancel) { dialog, _ ->
-                    dialog.dismiss()
-                }
+            .setView(view)
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
         val dialog = builder.create()
         dialog.show()
     }
@@ -137,26 +154,29 @@ class HistoryInfo(val c: Activity) {
     fun editTextDialog(item: History) {
         val builder = AlertDialog.Builder(c)
         val inflater = c.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.edittext_dialog_layout, c.findViewById<View>(R.id.info_layout) as ViewGroup?)
+        val view = inflater.inflate(
+            R.layout.edittext_dialog_layout,
+            c.findViewById<View>(R.id.info_layout) as ViewGroup?
+        )
 
         val editText = view.findViewById<EditText>(R.id.edit_name)
         editText.hint = HistoryMethods.changeDateFormat(item.name)
         builder.setTitle(R.string.edit_title)
-                .setView(view)
-                .setPositiveButton(R.string.change) { _, _ ->
-                    val newName = editText.text.toString()
-                    if (newName != "") {
-                        HistoryAdapter(c).updateHistoryState(item, editText.text.toString(), false)
-                        if (::history.isInitialized) {
-                            history.text = newName
-                        }
-                        FragmentHistory().loadName()
-                        FragmentKeeps().loadName()
+            .setView(view)
+            .setPositiveButton(R.string.change) { _, _ ->
+                val newName = editText.text.toString()
+                if (newName != "") {
+                    HistoryAdapter(c).updateHistoryState(item, editText.text.toString(), false)
+                    if (::history.isInitialized) {
+                        history.text = newName
                     }
+                    FragmentHistory().loadName()
+                    FragmentKeeps().loadName()
                 }
-                .setNegativeButton(R.string.cancel) { dialog, _ ->
-                    dialog.dismiss()
-                }
+            }
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
         val dialog = builder.create()
         dialog.show()
     }

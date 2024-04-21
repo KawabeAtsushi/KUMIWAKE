@@ -7,7 +7,11 @@ import android.os.Bundle
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.widget.*
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialog
 import androidx.fragment.app.DialogFragment
 import com.pandatone.kumiwake.R
@@ -32,8 +36,10 @@ class CustomDialogSekigime : DialogFragment() {
         // タイトル非表示
         dialog?.window!!.requestFeature(Window.FEATURE_NO_TITLE)
         // フルスクリーン
-        dialog.window!!.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
+        dialog.window!!.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+        )
         dialog.setContentView(R.layout.custom_dialog_layout_sekigime)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         fmDeploy = dialog.findViewById<View>(R.id.even_fm_deploy_check) as CheckBox
@@ -80,16 +86,19 @@ class CustomDialogSekigime : DialogFragment() {
                 widthDp = 180
                 heightDp = 250
             }
+
             2 -> {
                 iv!!.setImageResource(R.drawable.img_table_parallel)
                 widthDp = 150
                 heightDp = 180
             }
+
             3 -> {
                 iv!!.setImageResource(R.drawable.img_table_circle)
                 widthDp = 200
                 heightDp = 200
             }
+
             4 -> {
                 iv!!.setImageResource(R.drawable.img_table_counter)
                 widthDp = 60

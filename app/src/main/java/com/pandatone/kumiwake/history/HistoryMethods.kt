@@ -11,8 +11,7 @@ import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Locale
 
 object HistoryMethods {
 
@@ -31,12 +30,14 @@ object HistoryMethods {
 
     //文字列を結果配列に
     fun stringToResultArray(context: Context, resultStr: String): ArrayList<ArrayList<Member>> {
-        val groups = resultStr.split(",/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray().toCollection(ArrayList())
+        val groups = resultStr.split(",/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            .toCollection(ArrayList())
         groups.removeAll { it.count() == 0 } //空配列を削除
         val resultArray = ArrayList<ArrayList<Member>>()
         val memberList = MemberAdapter(context).getAllMembers()
         groups.forEach { group ->
-            val resultNoArray = group.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val resultNoArray =
+                group.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             val result = ArrayList<Member>()
             resultNoArray.forEach { id ->
                 result.add(pickMember(context, id, memberList))
@@ -63,7 +64,8 @@ object HistoryMethods {
 
     //メンバーリストからメンバーを検索
     private fun pickMember(context: Context, id: String, memberList: ArrayList<Member>): Member {
-        val noMember = Member(-1, context.getString(R.string.deleted_member), "none", -1, "", "", -1)
+        val noMember =
+            Member(-1, context.getString(R.string.deleted_member), "none", -1, "", "", -1)
         val member = memberList.find { it.id.toString() == id }
         member?.let { it ->
             // memberがnullでないときだけ実行
@@ -75,7 +77,13 @@ object HistoryMethods {
     }
 
     //kumiwake結果を履歴に保存
-    fun saveResultToHistory(context: Context, resultArray: ArrayList<ArrayList<Member>>, groupArray: ArrayList<Group>, mode: Int, again: Boolean) {
+    fun saveResultToHistory(
+        context: Context,
+        resultArray: ArrayList<ArrayList<Member>>,
+        groupArray: ArrayList<Group>,
+        mode: Int,
+        again: Boolean
+    ) {
         val hsAdapter = HistoryAdapter(context)
         val resultStr = resultArrayToString(resultArray)
         val groupStr = resultGroupArrayToString(groupArray)
@@ -106,7 +114,11 @@ object HistoryMethods {
 
     //ソート
     var sortType = "ASC"
-    fun historySort(activity: Activity, historyList: ArrayList<History>, listAdp: HistoryFragmentViewAdapter) {
+    fun historySort(
+        activity: Activity,
+        historyList: ArrayList<History>,
+        listAdp: HistoryFragmentViewAdapter
+    ) {
         val hsAdapter = HistoryAdapter(activity)
         sortType = if (sortType == "ASC") {
             "DESC"
@@ -162,7 +174,13 @@ object HistoryMethods {
                         //足りていないグループのなかで一番余っているグループ番号
                         val minIndexExtraNo = minExtraList.indexOf(minExtraList.maxOrNull())
                         //Swap　(1)一番足りているグループ→(2)足りないグループ、　(2)の一番余っているメンバー→(1)
-                        this.swapMaxAndMin(oldGroupNo, minIndex, maxIndex, oldGroups, minIndexExtraNo)
+                        this.swapMaxAndMin(
+                            oldGroupNo,
+                            minIndex,
+                            maxIndex,
+                            oldGroups,
+                            minIndexExtraNo
+                        )
                     }
                 }
 
@@ -178,11 +196,19 @@ object HistoryMethods {
     }
 
     //足りないところに補充するようにメンバーを入れ替え
-    private fun ArrayList<ArrayList<Member>>.swapMaxAndMin(oldGroupNo: Int, minIndex: Int, maxIndex: Int, oldGroups: ArrayList<ArrayList<Pair<Member, Int>>>, extraGroupNo: Int) {
+    private fun ArrayList<ArrayList<Member>>.swapMaxAndMin(
+        oldGroupNo: Int,
+        minIndex: Int,
+        maxIndex: Int,
+        oldGroups: ArrayList<ArrayList<Pair<Member, Int>>>,
+        extraGroupNo: Int
+    ) {
         //一番余っているメンバー＆＆リーダーでない
-        val maxSwapMember = oldGroups[maxIndex].find { it.second == oldGroupNo && it.first.leader < 0 }?.first
+        val maxSwapMember =
+            oldGroups[maxIndex].find { it.second == oldGroupNo && it.first.leader < 0 }?.first
         //一番足りないメンバー＆＆リーダーでない
-        val minSwapMember = oldGroups[minIndex].find { it.second == extraGroupNo && it.first.leader < 0 }?.first
+        val minSwapMember =
+            oldGroups[minIndex].find { it.second == extraGroupNo && it.first.leader < 0 }?.first
         if (minSwapMember != null && maxSwapMember != null) {
             this.swap(minSwapMember, maxSwapMember)
         } else {
@@ -191,7 +217,10 @@ object HistoryMethods {
     }
 
     //ArrayList同士の減算
-    private fun arraySubtraction(before: ArrayList<ArrayList<Int>>, after: ArrayList<ArrayList<Int>>): ArrayList<ArrayList<Int>> {
+    private fun arraySubtraction(
+        before: ArrayList<ArrayList<Int>>,
+        after: ArrayList<ArrayList<Int>>
+    ): ArrayList<ArrayList<Int>> {
         val needNoArray = ArrayList(before)
         for (i in before.indices) {
             for (j in before[i].indices) {
@@ -253,7 +282,10 @@ object HistoryMethods {
     }
 
     //最低でも割り当てるべき人数
-    private fun needNos(resultArray: ArrayList<ArrayList<Member>>, memberNo: Float): ArrayList<ArrayList<Int>> {
+    private fun needNos(
+        resultArray: ArrayList<ArrayList<Member>>,
+        memberNo: Float
+    ): ArrayList<ArrayList<Int>> {
         val needNoArray: ArrayList<ArrayList<Int>> = ArrayList()
         resultArray.forEach { list ->
             val needNoRow: ArrayList<Int> = ArrayList()
@@ -267,14 +299,23 @@ object HistoryMethods {
     }
 
     //行のロングクリックの処理
-    fun onLongClick(history: History, activity: Activity, hsAdapter: HistoryAdapter, pageIsKeeps: Boolean) {
+    fun onLongClick(
+        history: History,
+        activity: Activity,
+        hsAdapter: HistoryAdapter,
+        pageIsKeeps: Boolean
+    ) {
         val builder = AlertDialog.Builder(activity)
         val favoriteText = if (history.keep == -1) {
             activity.getText(R.string.add_favorite)
         } else {
             activity.getText(R.string.remove_favorite)
         }
-        val items = arrayOf(activity.getText(R.string.edit_title), favoriteText, activity.getText(R.string.delete))
+        val items = arrayOf(
+            activity.getText(R.string.edit_title),
+            favoriteText,
+            activity.getText(R.string.delete)
+        )
         builder.setTitle(changeDateFormat(history.name))
         builder.setItems(items) { _, which ->
             when (which) {
@@ -284,10 +325,13 @@ object HistoryMethods {
                     FragmentHistory().loadName()
                     FragmentKeeps().loadName()
                     if (pageIsKeeps) {
-                        FragmentKeeps.toolbarTitle = activity.getString(R.string.favorite) + " " + FragmentKeeps.historyList.count().toString() + "♥s"
+                        FragmentKeeps.toolbarTitle =
+                            activity.getString(R.string.favorite) + " " + FragmentKeeps.historyList.count()
+                                .toString() + "♥s"
                         HistoryMain.toolbar.title = FragmentKeeps.toolbarTitle
                     }
                 }
+
                 2 -> {
                     deleteHistory(history, activity, hsAdapter, pageIsKeeps)
                 }
@@ -298,7 +342,12 @@ object HistoryMethods {
     }
 
     //履歴削除
-    private fun deleteHistory(history: History, activity: Activity, hsAdapter: HistoryAdapter, pageIsKeeps: Boolean) {
+    private fun deleteHistory(
+        history: History,
+        activity: Activity,
+        hsAdapter: HistoryAdapter,
+        pageIsKeeps: Boolean
+    ) {
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(changeDateFormat(history.name))
         builder.setMessage(R.string.Do_delete)
@@ -308,8 +357,12 @@ object HistoryMethods {
             hsAdapter.selectDelete(listId.toString())
             FragmentHistory().loadName()
             FragmentKeeps().loadName()
-            FragmentHistory.toolbarTitle = activity.getString(R.string.history) + " " + FragmentHistory.historyList.count().toString() + "times"
-            FragmentKeeps.toolbarTitle = activity.getString(R.string.favorite) + " " + FragmentKeeps.historyList.count().toString() + "♥s"
+            FragmentHistory.toolbarTitle =
+                activity.getString(R.string.history) + " " + FragmentHistory.historyList.count()
+                    .toString() + "times"
+            FragmentKeeps.toolbarTitle =
+                activity.getString(R.string.favorite) + " " + FragmentKeeps.historyList.count()
+                    .toString() + "♥s"
             if (pageIsKeeps) {
                 HistoryMain.toolbar.title = FragmentKeeps.toolbarTitle
             } else {

@@ -11,16 +11,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.ScrollView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputLayout
-import com.pandatone.kumiwake.*
+import com.pandatone.kumiwake.MainActivity
+import com.pandatone.kumiwake.PublicMethods
+import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.ShareViewImage
+import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.history.HistoryAdapter
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.sekigime.function.DrawAllTable
@@ -119,6 +131,7 @@ class SekigimeResult : AppCompatActivity() {
                     shareButton.visibility = View.GONE
                     resultLayout.addView(draw)
                 }
+
                 1 -> {//全表示
                     dropdown.visibility = View.GONE
                     shareButton.visibility = View.VISIBLE
@@ -135,7 +148,10 @@ class SekigimeResult : AppCompatActivity() {
     private fun editInfoDialog() {
         val builder = AlertDialog.Builder(this)
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.edit_result_dialog_layout, findViewById<View>(R.id.info_layout) as ViewGroup?)
+        val view = inflater.inflate(
+            R.layout.edit_result_dialog_layout,
+            findViewById<View>(R.id.info_layout) as ViewGroup?
+        )
         val etTitle = view.findViewById<EditText>(R.id.edit_title)
         etTitle.hint = getString(R.string.sekigime_result)
         if (title != "") etTitle.setText(this.title)
@@ -144,29 +160,29 @@ class SekigimeResult : AppCompatActivity() {
         view.findViewById<CheckBox>(R.id.include_title_check).visibility = View.GONE
         view.findViewById<CheckBox>(R.id.include_comment_check).visibility = View.GONE
         builder.setTitle(getString(R.string.add_info))
-                .setView(view)
-                .setPositiveButton(R.string.change) { _, _ ->
-                    changeInfo(etTitle.text.toString(), etComment.text.toString())
-                    val tvTitle = findViewById<TextView>(R.id.inner_result_title)
-                    if (title != "") {
-                        tvTitle.visibility = View.VISIBLE
-                        if (StatusHolder.normalMode) {
-                            val hsAdapter = HistoryAdapter(this)
-                            hsAdapter.updateHistoryState(hsAdapter.latestHistory, title, false)
-                        }
-                    } else {
-                        tvTitle.visibility = View.GONE
+            .setView(view)
+            .setPositiveButton(R.string.change) { _, _ ->
+                changeInfo(etTitle.text.toString(), etComment.text.toString())
+                val tvTitle = findViewById<TextView>(R.id.inner_result_title)
+                if (title != "") {
+                    tvTitle.visibility = View.VISIBLE
+                    if (StatusHolder.normalMode) {
+                        val hsAdapter = HistoryAdapter(this)
+                        hsAdapter.updateHistoryState(hsAdapter.latestHistory, title, false)
                     }
-                    val tvComment = findViewById<TextView>(R.id.comment_view)
-                    if (comment != "") {
-                        tvComment.visibility = View.VISIBLE
-                    } else {
-                        tvComment.visibility = View.GONE
-                    }
+                } else {
+                    tvTitle.visibility = View.GONE
                 }
-                .setNegativeButton(R.string.cancel) { dialog, _ ->
-                    dialog.dismiss()
+                val tvComment = findViewById<TextView>(R.id.comment_view)
+                if (comment != "") {
+                    tvComment.visibility = View.VISIBLE
+                } else {
+                    tvComment.visibility = View.GONE
                 }
+            }
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
         val dialog = builder.create()
         dialog.show()
     }
@@ -193,9 +209,14 @@ class SekigimeResult : AppCompatActivity() {
     //ボタンの処理
     //再席決め
     private fun onReSekigime() {
-        val message = getString(R.string.re_sekigime_description) + getString(R.string.run_confirmation)
+        val message =
+            getString(R.string.re_sekigime_description) + getString(R.string.run_confirmation)
         val title = getString(R.string.retry_title)
-        DialogWarehouse(supportFragmentManager).decisionDialog(title, message, function = this::reSekigime)
+        DialogWarehouse(supportFragmentManager).decisionDialog(
+            title,
+            message,
+            function = this::reSekigime
+        )
     }
 
     //ホームに戻る
@@ -214,7 +235,10 @@ class SekigimeResult : AppCompatActivity() {
     private fun shareOptionDialog() {
         val builder = AlertDialog.Builder(this)
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.edit_result_dialog_layout, findViewById<View>(R.id.info_layout) as ViewGroup?)
+        val view = inflater.inflate(
+            R.layout.edit_result_dialog_layout,
+            findViewById<View>(R.id.info_layout) as ViewGroup?
+        )
         val indexTitle = view.findViewById<TextView>(R.id.title_index)
         val etTitle = view.findViewById<EditText>(R.id.edit_title)
         indexTitle.visibility = View.GONE
@@ -261,25 +285,35 @@ class SekigimeResult : AppCompatActivity() {
             }
         }
 
-        etTitle.doAfterTextChanged { changeInfo(etTitle.text.toString(), etComment.text.toString()) }
-        etComment.doAfterTextChanged { changeInfo(etTitle.text.toString(), etComment.text.toString()) }
+        etTitle.doAfterTextChanged {
+            changeInfo(
+                etTitle.text.toString(),
+                etComment.text.toString()
+            )
+        }
+        etComment.doAfterTextChanged {
+            changeInfo(
+                etTitle.text.toString(),
+                etComment.text.toString()
+            )
+        }
 
         builder.setTitle(getString(R.string.share_option))
-                .setView(view)
-                .setPositiveButton(R.string.share) { _, _ ->
-                    if (StatusHolder.normalMode) {
-                        val hsAdapter = HistoryAdapter(this)
-                        hsAdapter.updateHistoryState(hsAdapter.latestHistory, title, false)
-                    }
-                    shareImage()
+            .setView(view)
+            .setPositiveButton(R.string.share) { _, _ ->
+                if (StatusHolder.normalMode) {
+                    val hsAdapter = HistoryAdapter(this)
+                    hsAdapter.updateHistoryState(hsAdapter.latestHistory, title, false)
                 }
-                .setNegativeButton(R.string.cancel) { dialog, _ ->
-                    tvTitle.visibility = View.GONE
-                    if (tvComment.text != "") {
-                        tvComment.visibility = View.VISIBLE
-                    }
-                    dialog.dismiss()
+                shareImage()
+            }
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                tvTitle.visibility = View.GONE
+                if (tvComment.text != "") {
+                    tvComment.visibility = View.VISIBLE
                 }
+                dialog.dismiss()
+            }
         val dialog = builder.create()
         dialog.show()
     }
@@ -307,7 +341,11 @@ class SekigimeResult : AppCompatActivity() {
             DrawTableView.point = 0
             draw.reDraw()
         }
-        Toast.makeText(applicationContext, getText(R.string.re_sekigime_finished), Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            applicationContext,
+            getText(R.string.re_sekigime_finished),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     //グループ名前のTextView生成
@@ -319,7 +357,8 @@ class SekigimeResult : AppCompatActivity() {
         groupNameView.background = ContextCompat.getDrawable(this, R.drawable.table_name_background)
         groupNameView.gravity = Gravity.CENTER
         val lp = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+        )
         val mlp = lp as MarginLayoutParams
         if (i == 0) {//最初だけTopマージンなし
             mlp.setMargins(70, 30, 70, 0)

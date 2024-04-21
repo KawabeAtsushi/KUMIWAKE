@@ -19,7 +19,6 @@ import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.setting.RefreshData
 import java.io.IOException
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class MemberAdapter(val context: Context) : BaseAdapter() {
@@ -57,7 +56,8 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
     }
 
     // SQLiteOpenHelper
-    private class DatabaseHelper(private val context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
+    private class DatabaseHelper(private val context: Context) :
+        SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
 
         override fun onCreate(db: SQLiteDatabase) {
             db.execSQL(CREATE_TABLE)
@@ -68,7 +68,11 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
             if (oldVersion < 3) {
                 //テーブル作り替え(columnをdropできないため)
                 //https://phicdy.hatenablog.com/entry/delete-android-sqlite-table
-                Toast.makeText(context, "Database Upgraded Ver.$oldVersion to $newVersion", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    context,
+                    "Database Upgraded Ver.$oldVersion to $newVersion",
+                    Toast.LENGTH_LONG
+                ).show()
                 //前のテーブルからデータを取得
                 val escapeMembers = RefreshData.getOldMembers(db)
                 //前のテーブルを削除
@@ -99,17 +103,20 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
         @SuppressLint("Recycle")
         get() {
             open()
-            val c = db.rawQuery("SELECT * FROM $TABLE_NAME" +
-                    " WHERE $MB_ID=(SELECT MAX($MB_ID) FROM $TABLE_NAME);", null)
+            val c = db.rawQuery(
+                "SELECT * FROM $TABLE_NAME" +
+                        " WHERE $MB_ID=(SELECT MAX($MB_ID) FROM $TABLE_NAME);", null
+            )
             c.moveToFirst()
             val member = Member(
-                    c.getInt(0),
-                    c.getString(1),
-                    c.getString(2),
-                    c.getInt(3),
-                    c.getString(4),
-                    c.getString(5),
-                    -1)
+                c.getInt(0),
+                c.getString(1),
+                c.getString(2),
+                c.getInt(3),
+                c.getString(4),
+                c.getString(5),
+                -1
+            )
             close()
             return member
         }
@@ -151,7 +158,13 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
     }
 
     @Throws(IOException::class)
-    fun filterName(sex: String, minAge: Int, maxAge: Int, belongNo: String, memberList: ArrayList<Member>) {
+    fun filterName(
+        sex: String,
+        minAge: Int,
+        maxAge: Int,
+        belongNo: String,
+        memberList: ArrayList<Member>
+    ) {
         open()
         val query = "SELECT * FROM " + TABLE_NAME +
                 " WHERE " + MB_SEX + " like '" + sex + "%' AND (" + MB_AGE + " BETWEEN " + minAge + " AND " + maxAge +
@@ -173,35 +186,38 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
                     //頭文字帯用要素の追加
                     member = if (read != "ￚ no data ￚ" && read.isNotEmpty()) {
                         Member(
-                                0,
-                                null.toString(),
-                                StatusHolder.index,
-                                c.getInt(3),
-                                null.toString(),
-                                read.toUpperCase(Locale.getDefault())[0].toString(),
-                                -1)
+                            0,
+                            null.toString(),
+                            StatusHolder.index,
+                            c.getInt(3),
+                            null.toString(),
+                            read.uppercase(Locale.getDefault())[0].toString(),
+                            -1
+                        )
                     } else {
                         Member(
-                                0,
-                                null.toString(),
-                                StatusHolder.index,
-                                c.getInt(3),
-                                null.toString(),
-                                "ￚ no data ￚ",
-                                -1)
+                            0,
+                            null.toString(),
+                            StatusHolder.index,
+                            c.getInt(3),
+                            null.toString(),
+                            "ￚ no data ￚ",
+                            -1
+                        )
                     }
                     memberList.add(member)          // 取得した要素をnameListに追加
                 }
 
                 //member rowを追加
                 member = Member(
-                        c.getInt(0),
-                        c.getString(1),
-                        c.getString(2),
-                        c.getInt(3),
-                        c.getString(4),
-                        c.getString(5),
-                        -1)
+                    c.getInt(0),
+                    c.getString(1),
+                    c.getString(2),
+                    c.getInt(3),
+                    c.getString(4),
+                    c.getString(5),
+                    -1
+                )
 
                 memberList.add(member)          // 取得した要素をnameListに追加
 

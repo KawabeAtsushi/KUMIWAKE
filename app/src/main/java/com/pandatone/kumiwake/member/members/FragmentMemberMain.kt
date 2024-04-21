@@ -41,9 +41,17 @@ class FragmentMemberMain : ListFragment() {
         loadName()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.tab_member, container, false)
-        (view.findViewById<View>(R.id.member_fab) as FloatingActionButton).setOnClickListener { moveAddMember(null) }
+        (view.findViewById<View>(R.id.member_fab) as FloatingActionButton).setOnClickListener {
+            moveAddMember(
+                null
+            )
+        }
 
         // Fragmentとlayoutを紐付ける
         super.onCreateView(inflater, container, savedInstanceState)
@@ -66,12 +74,20 @@ class FragmentMemberMain : ListFragment() {
             //行をクリックした時の処理
             val builder = AlertDialog.Builder(requireActivity())
             val builder2 = AlertDialog.Builder(requireActivity())
-            val inflater = requireActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val view2 = inflater.inflate(R.layout.member_info, requireActivity().findViewById<View>(R.id.info_layout) as ViewGroup?)
+            val inflater =
+                requireActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val view2 = inflater.inflate(
+                R.layout.member_info,
+                requireActivity().findViewById<View>(R.id.info_layout) as ViewGroup?
+            )
             val memberName = memberList[position].name
             FragmentGroupMain().loadName()
 
-            val items = arrayOf(getText(R.string.information), getText(R.string.edit), getText(R.string.delete))
+            val items = arrayOf(
+                getText(R.string.information),
+                getText(R.string.edit),
+                getText(R.string.delete)
+            )
             builder.setTitle(memberName)
             builder.setItems(items) { _, which ->
                 when (which) {
@@ -82,6 +98,7 @@ class FragmentMemberMain : ListFragment() {
                         dialog2.show()
                         MemberClick.okBt.setOnClickListener { dialog2.dismiss() }
                     }
+
                     1 -> moveAddMember(memberList[position])
                     2 -> deleteSingleMember(position, memberName)
                 }
@@ -122,7 +139,10 @@ class FragmentMemberMain : ListFragment() {
             }
 
             R.id.item_filter -> {
-                Filtering(requireActivity(), memberList).showFilterDialog(requireActivity(), listAdp)
+                Filtering(requireActivity(), memberList).showFilterDialog(
+                    requireActivity(),
+                    listAdp
+                )
             }
         }
 
@@ -169,7 +189,11 @@ class FragmentMemberMain : ListFragment() {
             mode.title = checkedCount.toString() + getString(R.string.selected)
             viewPager = MembersMain.viewPager
             listener = object : ViewPager.SimpleOnPageChangeListener() {
-                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
                     super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                     viewPager.currentItem = 0
                 }
@@ -205,7 +229,10 @@ class FragmentMemberMain : ListFragment() {
 
                 R.id.item_filter -> {
                     clearSelection(mode)
-                    Filtering(requireActivity(), memberList).showFilterDialog(requireActivity(), listAdp)
+                    Filtering(requireActivity(), memberList).showFilterDialog(
+                        requireActivity(),
+                        listAdp
+                    )
                 }
 
                 R.id.item_change_age -> {
@@ -227,8 +254,10 @@ class FragmentMemberMain : ListFragment() {
         }
 
         //選択状態が変更されたとき
-        override fun onItemCheckedStateChanged(mode: ActionMode,
-                                               position: Int, id: Long, checked: Boolean) {
+        override fun onItemCheckedStateChanged(
+            mode: ActionMode,
+            position: Int, id: Long, checked: Boolean
+        ) {
             // アクションモード時のアイテムの選択状態変更時
             checkedCount = lv.checkedItemCount
 
@@ -258,7 +287,11 @@ class FragmentMemberMain : ListFragment() {
         private fun deleteMultiMember(mode: ActionMode) {
             // アラートダイアログ表示
             val builder = AlertDialog.Builder(requireActivity())
-            builder.setTitle(checkedCount.toString() + " " + getString(R.string.member) + getString(R.string.delete))
+            builder.setTitle(
+                checkedCount.toString() + " " + getString(R.string.member) + getString(
+                    R.string.delete
+                )
+            )
             builder.setMessage(R.string.Do_delete)
             // OKの時の処理
             builder.setPositiveButton("OK") { _, _ ->
@@ -329,7 +362,10 @@ class FragmentMemberMain : ListFragment() {
         val activity = requireActivity()
         val builder = AlertDialog.Builder(activity)
         val inflater = activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val layout = inflater.inflate(R.layout.change_age_dialog, activity.findViewById<View>(R.id.change_age_dialog) as? ViewGroup)
+        val layout = inflater.inflate(
+            R.layout.change_age_dialog,
+            activity.findViewById<View>(R.id.change_age_dialog) as? ViewGroup
+        )
         builder.setTitle(activity.getText(R.string.change_age))
         builder.setView(layout)
         builder.setPositiveButton("OK", null)
@@ -352,9 +388,15 @@ class FragmentMemberMain : ListFragment() {
         okButton.setOnClickListener {
             if (newAgeET.text!!.isNotEmpty()) {
                 val newAge = Integer.parseInt(method + newAgeET.text.toString())
-                val conditionButton = layout.findViewById<View>(conditionGroup.checkedRadioButtonId) as RadioButton
+                val conditionButton =
+                    layout.findViewById<View>(conditionGroup.checkedRadioButtonId) as RadioButton
                 val define = (conditionButton.id == R.id.define)
-                MemberMethods.updateAge(requireContext(), checkedMemberList(), newAge, define)     // 年齢更新
+                MemberMethods.updateAge(
+                    requireContext(),
+                    checkedMemberList(),
+                    newAge,
+                    define
+                )     // 年齢更新
                 loadName()
                 dialog.dismiss()
                 Toast.makeText(context, getText(R.string.updated_age), Toast.LENGTH_LONG).show()

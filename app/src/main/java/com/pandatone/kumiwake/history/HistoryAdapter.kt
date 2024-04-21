@@ -28,25 +28,28 @@ class HistoryAdapter(context: Context) : ArrayAdapter<History>(context, 0) {
         @SuppressLint("Recycle")
         get() {
             open()
-            val c = db.rawQuery("SELECT * FROM $TABLE_NAME" +
-                    " WHERE ${HS_ID}=(SELECT MAX(${HS_ID}) FROM ${TABLE_NAME});", null)
+            val c = db.rawQuery(
+                "SELECT * FROM $TABLE_NAME" +
+                        " WHERE ${HS_ID}=(SELECT MAX(${HS_ID}) FROM ${TABLE_NAME});", null
+            )
             c.moveToFirst()
             val history = History(
-                    c.getInt(0),
-                    c.getString(c.getColumnIndex(HS_TIME)),
-                    c.getString(c.getColumnIndex(HS_NAME)),
-                    c.getString(c.getColumnIndex(HS_RESULT)),
-                    c.getString(c.getColumnIndex(HS_RESULT_GP)),
-                    c.getInt(c.getColumnIndex(HS_MODE)),
-                    c.getInt(c.getColumnIndex(HS_KEEP)),
-                    c.getInt(c.getColumnIndex(HS_PARENT))
+                c.getInt(0),
+                c.getString(c.getColumnIndex(HS_TIME)),
+                c.getString(c.getColumnIndex(HS_NAME)),
+                c.getString(c.getColumnIndex(HS_RESULT)),
+                c.getString(c.getColumnIndex(HS_RESULT_GP)),
+                c.getInt(c.getColumnIndex(HS_MODE)),
+                c.getInt(c.getColumnIndex(HS_KEEP)),
+                c.getInt(c.getColumnIndex(HS_PARENT))
             )
             close()
             return history
         }
 
 
-    private class DatabaseHelper(private val context: Context) : SQLiteOpenHelper(context, TABLE_NAME, null, DB_VERSION) {
+    private class DatabaseHelper(private val context: Context) :
+        SQLiteOpenHelper(context, TABLE_NAME, null, DB_VERSION) {
 
         override fun onCreate(db: SQLiteDatabase) {
             db.execSQL(CREATE_TABLE)
@@ -54,7 +57,11 @@ class HistoryAdapter(context: Context) : ArrayAdapter<History>(context, 0) {
 
         override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
             if (oldVersion < 2) {
-                Toast.makeText(context, "Database Upgraded Ver.$oldVersion to $newVersion", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    context,
+                    "Database Upgraded Ver.$oldVersion to $newVersion",
+                    Toast.LENGTH_LONG
+                ).show()
                 db.execSQL("ALTER TABLE $TABLE_NAME ADD COLUMN $HS_RESULT_GP TEXT DEFAULT \"\";")
             }
         }
@@ -86,14 +93,14 @@ class HistoryAdapter(context: Context) : ArrayAdapter<History>(context, 0) {
         if (c.moveToFirst()) {
             do {
                 history = History(
-                        c.getInt(0),
-                        c.getString(c.getColumnIndex(HS_TIME)),
-                        c.getString(c.getColumnIndex(HS_NAME)),
-                        c.getString(c.getColumnIndex(HS_RESULT)),
-                        c.getString(c.getColumnIndex(HS_RESULT_GP)),
-                        c.getInt(c.getColumnIndex(HS_MODE)),
-                        c.getInt(c.getColumnIndex(HS_KEEP)),
-                        c.getInt(c.getColumnIndex(HS_PARENT))
+                    c.getInt(0),
+                    c.getString(c.getColumnIndex(HS_TIME)),
+                    c.getString(c.getColumnIndex(HS_NAME)),
+                    c.getString(c.getColumnIndex(HS_RESULT)),
+                    c.getString(c.getColumnIndex(HS_RESULT_GP)),
+                    c.getInt(c.getColumnIndex(HS_MODE)),
+                    c.getInt(c.getColumnIndex(HS_KEEP)),
+                    c.getInt(c.getColumnIndex(HS_PARENT))
                 )
                 historyList.add(history)          // 取得した要素をgroupListに追加
 

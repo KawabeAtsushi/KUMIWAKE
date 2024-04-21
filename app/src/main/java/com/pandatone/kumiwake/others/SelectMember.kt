@@ -15,7 +15,14 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import com.pandatone.kumiwake.*
+import com.pandatone.kumiwake.AddGroupKeys
+import com.pandatone.kumiwake.AddMemberKeys
+import com.pandatone.kumiwake.KumiwakeArrayKeys
+import com.pandatone.kumiwake.ModeKeys
+import com.pandatone.kumiwake.PublicMethods
+import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
+import com.pandatone.kumiwake.Theme
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.member.AddMember
 import com.pandatone.kumiwake.member.ChoiceMemberMain
@@ -23,8 +30,10 @@ import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.others.classroom.ClassroomCustom
 import com.pandatone.kumiwake.others.order.OrderResult
 import com.pandatone.kumiwake.others.role.RoleDefine
-import kotlinx.android.synthetic.main.normal_mode.*
-import kotlinx.android.synthetic.main.part_review_listview.view.*
+import kotlinx.android.synthetic.main.normal_mode.add_group_listView
+import kotlinx.android.synthetic.main.part_review_listview.view.member_add_btn
+import kotlinx.android.synthetic.main.part_review_listview.view.member_register_and_add_btn
+import kotlinx.android.synthetic.main.part_review_listview.view.numberOfSelectedMember
 
 /**
  * Created by atsushi_2 on 2016/05/02.
@@ -50,7 +59,8 @@ class SelectMember : AppCompatActivity() {
         add_group_listView.member_register_and_add_btn.setOnClickListener { moveAddMember() }
         adapter = SmallMBListAdapter(this, memberArray)
         listView.adapter = adapter
-        add_group_listView.numberOfSelectedMember.text = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
+        add_group_listView.numberOfSelectedMember.text =
+            "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
         val nextBtn = findViewById<Button>(R.id.normal_kumiwake_btn)
         when (StatusHolder.mode) {
             ModeKeys.Order.key -> {
@@ -59,9 +69,11 @@ class SelectMember : AppCompatActivity() {
                 nextBtn.textSize = 26F
                 nextBtn.typeface = Typeface.DEFAULT_BOLD
             }
+
             ModeKeys.Role.key -> {
                 nextBtn.text = getText(R.string.move_role_definition)
             }
+
             else -> {
                 nextBtn.text = getText(R.string.move_custom)
             }
@@ -71,8 +83,10 @@ class SelectMember : AppCompatActivity() {
 
     //Viewの宣言
     private fun findViews() {
-        listView = findViewById<View>(R.id.add_group_listView).findViewById<View>(R.id.memberListView) as ListView
-        listView.emptyView = findViewById<View>(R.id.add_group_listView).findViewById(R.id.emptyMemberList)
+        listView =
+            findViewById<View>(R.id.add_group_listView).findViewById<View>(R.id.memberListView) as ListView
+        listView.emptyView =
+            findViewById<View>(R.id.add_group_listView).findViewById(R.id.emptyMemberList)
         errorMember = findViewById<View>(R.id.error_member_no_txt) as TextView
     }
 
@@ -105,9 +119,11 @@ class SelectMember : AppCompatActivity() {
                 ModeKeys.Order.key -> {
                     Intent(this, OrderResult::class.java)
                 }
+
                 ModeKeys.Role.key -> {
                     Intent(this, RoleDefine::class.java)
                 }
+
                 else -> {
                     Intent(this, ClassroomCustom::class.java)
                 }
@@ -122,12 +138,14 @@ class SelectMember : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, i)
 
         if (resultCode == Activity.RESULT_OK) {
-            memberArray = i!!.getSerializableExtra(AddGroupKeys.MEMBER_ARRAY.key) as ArrayList<Member>
+            memberArray =
+                i!!.getSerializableExtra(AddGroupKeys.MEMBER_ARRAY.key) as ArrayList<Member>
         }
 
         adapter = SmallMBListAdapter(this, memberArray)
         listView.adapter = adapter
-        val selectedTxt = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
+        val selectedTxt =
+            "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
         add_group_listView.numberOfSelectedMember.text = selectedTxt
     }
 

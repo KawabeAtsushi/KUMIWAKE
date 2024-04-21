@@ -14,7 +14,12 @@ import com.pandatone.kumiwake.others.drawing.Ticket
 /**
  * Created by atsushi_2 on 2016/04/16.
  */
-class DrawingHistoryListAdapter(private val context: Context, private val kinds: List<Ticket>, private val tickets: ArrayList<Ticket>, private val picked: ArrayList<Ticket>) : BaseAdapter() {
+class DrawingHistoryListAdapter(
+    private val context: Context,
+    private val kinds: List<Ticket>,
+    private val tickets: ArrayList<Ticket>,
+    private val picked: ArrayList<Ticket>
+) : BaseAdapter() {
 
     override fun getCount(): Int {
         return kinds.size

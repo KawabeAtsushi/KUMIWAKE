@@ -40,7 +40,11 @@ class FragmentGroupChoiceMode : ListFragment() {
 
     // 必須*
     // Fragmentが初めてUIを描画する時にシステムが呼び出す
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.tab_group, container, false)
         val adviceInFG = view.findViewById<View>(R.id.advice_in_fg) as TextView
         val fab = view.findViewById<View>(R.id.group_fab) as FloatingActionButton

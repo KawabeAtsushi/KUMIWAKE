@@ -18,7 +18,11 @@ import com.pandatone.kumiwake.R
  * Created by atsushi_2 on 2016/11/11.
  */
 
-class CustomDialog(private var mTitle: String, private var mMessage: CharSequence, private val linkChar: CharSequence = "") : DialogFragment() {
+class CustomDialog(
+    private var mTitle: String,
+    private var mMessage: CharSequence,
+    private val linkChar: CharSequence = ""
+) : DialogFragment() {
 
     //onClickリスナ(Positive)
     var mPositiveBtnListener: View.OnClickListener? = null
@@ -30,8 +34,10 @@ class CustomDialog(private var mTitle: String, private var mMessage: CharSequenc
         // タイトル非表示
         dialog?.window!!.requestFeature(Window.FEATURE_NO_TITLE)
         // フルスクリーン
-        dialog.window!!.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
+        dialog.window!!.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+        )
         dialog.setContentView(R.layout.custom_dialog_layout)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         // タイトル設定

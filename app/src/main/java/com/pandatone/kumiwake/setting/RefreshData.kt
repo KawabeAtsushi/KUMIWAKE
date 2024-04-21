@@ -19,13 +19,14 @@ object RefreshData {
             do {
                 //member rowを追加
                 val member = Member(
-                        c.getInt(0),
-                        c.getString(1),
-                        c.getString(2),
-                        c.getInt(3),
-                        c.getString(5),
-                        c.getString(7),
-                        -1)
+                    c.getInt(0),
+                    c.getString(1),
+                    c.getString(2),
+                    c.getInt(3),
+                    c.getString(5),
+                    c.getString(7),
+                    -1
+                )
 
                 memberList.add(member)          // 取得した要素をnameListに追加
 

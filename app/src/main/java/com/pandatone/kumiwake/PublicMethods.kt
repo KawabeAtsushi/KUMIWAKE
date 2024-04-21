@@ -41,7 +41,7 @@ object PublicMethods {
         } else {
             MobileAds.initialize(activity)
             val adRequest = AdRequest.Builder()
-                    .addTestDevice(activity.getString(R.string.device_id)).build()
+                .addTestDevice(activity.getString(R.string.device_id)).build()
             mAdView.loadAd(adRequest)
         }
     }
@@ -64,16 +64,23 @@ object PublicMethods {
     }
 
     //Kumiwake 初期グループ生成（人数均等）
-    fun initialGroupArray(context: Context, groupNo: Int, memberNo: Int, normalMode: Boolean): ArrayList<Group> {
+    fun initialGroupArray(
+        context: Context,
+        groupNo: Int,
+        memberNo: Int,
+        normalMode: Boolean
+    ): ArrayList<Group> {
         val groupArray = ArrayList<Group>()
         val eachMemberNo = memberNo / groupNo
         val remain = memberNo % groupNo
         for (i in 0 until remain) {
-            val group = if (normalMode) "" else context.getText(R.string.group).toString() + " " + (i + 1).toString()
+            val group = if (normalMode) "" else context.getText(R.string.group)
+                .toString() + " " + (i + 1).toString()
             groupArray.add(Group(i, group, "", eachMemberNo + 1))
         }
         for (i in remain until groupNo) {
-            val group = if (normalMode) "" else context.getText(R.string.group).toString() + " " + (i + 1).toString()
+            val group = if (normalMode) "" else context.getText(R.string.group)
+                .toString() + " " + (i + 1).toString()
             groupArray.add(Group(i, group, "", eachMemberNo))
         }
         return groupArray
@@ -90,7 +97,10 @@ object PublicMethods {
 
     //webサイトへ
     fun toWebSite(context: Context, fragmentManager: FragmentManager) {
-        DialogWarehouse(fragmentManager).decisionDialog(context.getString(R.string.move_kumiwake_site), context.getString(R.string.move_kumiwake_site_description)) {
+        DialogWarehouse(fragmentManager).decisionDialog(
+            context.getString(R.string.move_kumiwake_site),
+            context.getString(R.string.move_kumiwake_site_description)
+        ) {
             val uri = Uri.parse(context.getString(R.string.url_homepage))
             val intent = Intent(Intent.ACTION_VIEW, uri)
             context.startActivity(intent)
@@ -104,13 +114,22 @@ object PublicMethods {
     }
 
     //Viewにマージンを設定
-    fun setMargin(c: Context, leftDp: Int, topDp: Int, rightDp: Int, bottomDp: Int): LinearLayout.LayoutParams {
+    fun setMargin(
+        c: Context,
+        leftDp: Int,
+        topDp: Int,
+        rightDp: Int,
+        bottomDp: Int
+    ): LinearLayout.LayoutParams {
         val scale = c.resources.displayMetrics.density //画面のdensityを指定。
         val left = (leftDp * scale + 0.5f).toInt()
         val top = (topDp * scale + 0.5f).toInt()
         val right = (rightDp * scale + 0.5f).toInt()
         val bottom = (bottomDp * scale + 0.5f).toInt()
-        val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        val layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
         layoutParams.setMargins(left, top, right, bottom)
         return layoutParams
     }
@@ -132,7 +151,8 @@ object PublicMethods {
     }
 }
 
-class MyGestureListener(private val imm: InputMethodManager, private val et: EditText) : GestureDetector.SimpleOnGestureListener() {
+class MyGestureListener(private val imm: InputMethodManager, private val et: EditText) :
+    GestureDetector.SimpleOnGestureListener() {
 
     //ダブルタップイベント
     override fun onDoubleTap(event: MotionEvent): Boolean {

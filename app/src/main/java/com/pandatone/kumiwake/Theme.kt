@@ -24,10 +24,12 @@ import androidx.annotation.ColorRes
  * This case involves a trade-off between statically loading these themes versus inflation
  * in an adapter backed view without recycling.
  */
-enum class Theme(@get:ColorRes
-                 val primaryColor: Int,
-                 @get:ColorRes
-                 val backgroundColor: Int) {
+enum class Theme(
+    @get:ColorRes
+    val primaryColor: Int,
+    @get:ColorRes
+    val backgroundColor: Int
+) {
     Default(R.color.top_primary, android.R.color.white),
     Kumiwake(R.color.red_title, R.color.red_background),
     Sekigime(R.color.green_title, R.color.green_background),

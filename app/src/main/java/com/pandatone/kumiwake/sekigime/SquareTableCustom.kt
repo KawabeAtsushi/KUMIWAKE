@@ -6,7 +6,9 @@ import android.widget.Button
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import com.pandatone.kumiwake.R
-import kotlinx.android.synthetic.main.square_custom.*
+import kotlinx.android.synthetic.main.square_custom.doubleSquareType
+import kotlinx.android.synthetic.main.square_custom.seat_number
+import kotlinx.android.synthetic.main.square_custom.square_seek_bar
 import kotlin.math.ceil
 
 /**
@@ -50,7 +52,11 @@ class SquareTableCustom : AppCompatActivity() {
         square_seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onStartTrackingTouch(square_seek_bar: SeekBar) {}
 
-            override fun onProgressChanged(square_seek_bar: SeekBar, progress: Int, fromTouch: Boolean) {
+            override fun onProgressChanged(
+                square_seek_bar: SeekBar,
+                progress: Int,
+                fromTouch: Boolean
+            ) {
                 seatNo = progress
                 seat_number.text = seatNo.toString()
             }

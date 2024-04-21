@@ -3,7 +3,12 @@ package com.pandatone.kumiwake.member
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.ActionMode
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.AdapterView
 import android.widget.ListView
@@ -38,7 +43,11 @@ class FragmentMemberChoiceMode : ListFragment() {
         loadName()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.tab_member, container, false)
         val fab = view.findViewById<View>(R.id.member_fab) as FloatingActionButton
         fab.hide()
@@ -95,7 +104,10 @@ class FragmentMemberChoiceMode : ListFragment() {
             }
 
             R.id.item_filter -> {
-                Filtering(requireActivity(), memberList).showFilterDialog(requireActivity(), listAdp)
+                Filtering(requireActivity(), memberList).showFilterDialog(
+                    requireActivity(),
+                    listAdp
+                )
             }
         }
 
@@ -149,7 +161,8 @@ class FragmentMemberChoiceMode : ListFragment() {
                 lv.setItemChecked(position, !listAdp.isPositionChecked(memberList[position].id))
             }
 
-            ChoiceMemberMain.viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+            ChoiceMemberMain.viewPager.addOnPageChangeListener(object :
+                ViewPager.SimpleOnPageChangeListener() {
                 override fun onPageScrollStateChanged(state: Int) {
                     page = ChoiceMemberMain.viewPager.currentItem
                     val itemFilter = menu.findItem(R.id.item_filter)
@@ -183,14 +196,21 @@ class FragmentMemberChoiceMode : ListFragment() {
                     if (page == 0) {
                         Sort.memberSort(requireActivity(), memberList, listAdp)
                     } else {
-                        Sort.groupSort(requireActivity(), FragmentGroupChoiceMode.groupList, FragmentGroupChoiceMode.listAdp)
+                        Sort.groupSort(
+                            requireActivity(),
+                            FragmentGroupChoiceMode.groupList,
+                            FragmentGroupChoiceMode.listAdp
+                        )
                         FragmentGroupChoiceMode.listAdp.notifyDataSetChanged()
                     }
                 }
 
                 R.id.item_filter -> {
                     clearSelection(mode)
-                    Filtering(requireActivity(), memberList).showFilterDialog(requireActivity(), listAdp)
+                    Filtering(requireActivity(), memberList).showFilterDialog(
+                        requireActivity(),
+                        listAdp
+                    )
                 }
             }
             return false
@@ -204,8 +224,10 @@ class FragmentMemberChoiceMode : ListFragment() {
             return true
         }
 
-        override fun onItemCheckedStateChanged(mode: ActionMode,
-                                               position: Int, id: Long, checked: Boolean) {
+        override fun onItemCheckedStateChanged(
+            mode: ActionMode,
+            position: Int, id: Long, checked: Boolean
+        ) {
             // アクションモード時のアイテムの選択状態変更時(変更後)
             checkedCount = lv.checkedItemCount
 
@@ -230,7 +252,8 @@ class FragmentMemberChoiceMode : ListFragment() {
         while (i < listAdp.count) {
             val member: Member = memberList[i]
             val belongText = member.belong
-            val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val belongArray =
+                belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             val list = ArrayList(listOf(*belongArray))
             if (list.contains(groupId.toString())) {
                 lv.setItemChecked(i, true)

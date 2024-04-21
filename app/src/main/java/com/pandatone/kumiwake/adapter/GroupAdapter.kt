@@ -36,7 +36,8 @@ class GroupAdapter(context: Context) : ArrayAdapter<Group>(context, 0) {
     }
 
 
-    private class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, TABLE_NAME, null, DB_VERSION) {
+    private class DatabaseHelper(context: Context) :
+        SQLiteOpenHelper(context, TABLE_NAME, null, DB_VERSION) {
 
         override fun onCreate(db: SQLiteDatabase) {
             db.execSQL(CREATE_TABLE)
@@ -44,8 +45,10 @@ class GroupAdapter(context: Context) : ArrayAdapter<Group>(context, 0) {
 
         override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
             if (oldVersion == 1 && newVersion == 2) {
-                db.execSQL("ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + GP_READ
-                        + " TEXT DEFAULT 'no data'")
+                db.execSQL(
+                    "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + GP_READ
+                            + " TEXT DEFAULT 'no data'"
+                )
             }
         }
     }
@@ -93,10 +96,10 @@ class GroupAdapter(context: Context) : ArrayAdapter<Group>(context, 0) {
         if (c.moveToFirst()) {
             do {
                 group = Group(
-                        c.getInt(c.getColumnIndex(GP_ID)),
-                        c.getString(c.getColumnIndex(GP_NAME)),
-                        c.getString(c.getColumnIndex(GP_READ)),
-                        c.getInt(c.getColumnIndex(GP_BELONG))
+                    c.getInt(c.getColumnIndex(GP_ID)),
+                    c.getString(c.getColumnIndex(GP_NAME)),
+                    c.getString(c.getColumnIndex(GP_READ)),
+                    c.getInt(c.getColumnIndex(GP_BELONG))
                 )
                 groupList.add(group)          // 取得した要素をgroupListに追加
 

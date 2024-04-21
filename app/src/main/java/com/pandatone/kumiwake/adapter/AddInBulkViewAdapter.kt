@@ -7,11 +7,14 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.BaseAdapter
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.ListView
+import android.widget.TextView
 import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.function.Member
-import java.util.*
 
 /**
  * Created by atsushi_2 on 2016/03/20.
@@ -98,7 +101,8 @@ class AddInBulkViewAdapter(val context: Context, val memberList: List<Member>) :
                 if (s.matches("^[a-zA-Z0-9ぁ-ん\\s]+$".toRegex())) {
                     yomigana = s.toString()
                 } else if (s.toString() == "") {
-                    yomigana = context.getString(R.string.hira_member) + " " + (position + 1).toString()
+                    yomigana =
+                        context.getString(R.string.hira_member) + " " + (position + 1).toString()
                 }
                 readText.text = yomigana
             }
@@ -112,7 +116,8 @@ class AddInBulkViewAdapter(val context: Context, val memberList: List<Member>) :
 
     //i番目の名前を取得
     fun getName(position: Int, allowEmpty: Boolean): String {
-        var name = if (allowEmpty) "" else context.getString(R.string.member) + " " + (position + 1).toString()
+        var name =
+            if (allowEmpty) "" else context.getString(R.string.member) + " " + (position + 1).toString()
         val nameEditText = nameEditTextList[position]
         if (nameEditText!!.text.isNotEmpty()) {
             name = nameEditText.text.toString()

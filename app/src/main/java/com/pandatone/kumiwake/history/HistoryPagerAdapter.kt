@@ -11,7 +11,8 @@ import com.pandatone.kumiwake.R
 /**
  * Created by atsushi_2 on 2016/02/23.
  */
-class HistoryPagerAdapter(private var context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class HistoryPagerAdapter(private var context: Context, fm: FragmentManager) :
+    FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment {
         when (position) {

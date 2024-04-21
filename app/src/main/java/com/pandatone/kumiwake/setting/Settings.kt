@@ -22,8 +22,13 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.reward.RewardedVideoAd
 import com.google.android.gms.ads.reward.RewardedVideoAdListener
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.pandatone.kumiwake.*
+import com.pandatone.kumiwake.FirebaseAnalyticsEvents
+import com.pandatone.kumiwake.MainActivity
+import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.PublicMethods.setStatus
+import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
+import com.pandatone.kumiwake.Theme
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 import java.io.File
 
@@ -73,25 +78,38 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
                 4 -> shareApp()
                 5 -> toPrivacyPolicy()
             }
-            otherList.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, pos, _ ->
-                //行をクリックした時の処理
-                when (pos) {
-                    1 -> {
-                        StatusHolder.checkStatus = true
-                        startActivity(Intent(this, PurchaseFreeAdOption::class.java))
+            otherList.onItemLongClickListener =
+                AdapterView.OnItemLongClickListener { _, _, pos, _ ->
+                    //行をクリックした時の処理
+                    when (pos) {
+                        1 -> {
+                            StatusHolder.checkStatus = true
+                            startActivity(Intent(this, PurchaseFreeAdOption::class.java))
+                        }
                     }
+                    false
                 }
-                false
-            }
         }
 
         setViews()
     }
 
     private fun setViews() {
-        backupStr = arrayOf(getString(R.string.back_up_db), getString(R.string.import_db), getString(R.string.delete_backup))
-        otherStr = arrayOf(getString(R.string.app_version), getString(R.string.advertise_delete), getString(R.string.delete_ad_temporary), getString(R.string.contact_us), getString(R.string.share_app), getString(R.string.privacy_policy))
-        backupAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, backupStr)
+        backupStr = arrayOf(
+            getString(R.string.back_up_db),
+            getString(R.string.import_db),
+            getString(R.string.delete_backup)
+        )
+        otherStr = arrayOf(
+            getString(R.string.app_version),
+            getString(R.string.advertise_delete),
+            getString(R.string.delete_ad_temporary),
+            getString(R.string.contact_us),
+            getString(R.string.share_app),
+            getString(R.string.privacy_policy)
+        )
+        backupAdapter =
+            ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, backupStr)
         otherAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, otherStr)
 
         backupList.adapter = backupAdapter
@@ -136,7 +154,10 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
         }
-        val releaseNoteLink = PublicMethods.getLinkChar(getString(R.string.url_release_note), getString(R.string.release_note))
+        val releaseNoteLink = PublicMethods.getLinkChar(
+            getString(R.string.url_release_note),
+            getString(R.string.release_note)
+        )
         dialog.confirmationDialog(getString(R.string.app_version), versionName, releaseNoteLink)
     }
 
@@ -177,7 +198,12 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
 
     private fun removeAdsTemp() {
 
-        dialog.decisionDialog(getString(R.string.delete_ad_temporary), getString(R.string.delete_ad_temporary_description), getString(R.string.watch_ad), getString(R.string.close)) {
+        dialog.decisionDialog(
+            getString(R.string.delete_ad_temporary),
+            getString(R.string.delete_ad_temporary_description),
+            getString(R.string.watch_ad),
+            getString(R.string.close)
+        ) {
             dimmer = findViewById(R.id.dimmer_layout)
             dimmer.visibility = View.VISIBLE
             loadingAnim = findViewById(R.id.loading_anim)
@@ -185,14 +211,17 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
             loadingAnim.playAnimation()
             mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this)
             mRewardedVideoAd.rewardedVideoAdListener = this
-            mRewardedVideoAd.loadAd(getString(R.string.adVideoUnit_id),
-                    AdRequest.Builder().addTestDevice(getString(R.string.device_id)).build())
+            mRewardedVideoAd.loadAd(
+                getString(R.string.adVideoUnit_id),
+                AdRequest.Builder().addTestDevice(getString(R.string.device_id)).build()
+            )
             FirebaseAnalyticsEvents.support("CLICKED")
         }
     }
 
     private fun toPrivacyPolicy() {
-        val uri = Uri.parse("https://gist.githubusercontent.com/KawabeAtsushi/39f3ea332b05a6b053b263784a77cd51/raw")
+        val uri =
+            Uri.parse("https://gist.githubusercontent.com/KawabeAtsushi/39f3ea332b05a6b053b263784a77cd51/raw")
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
     }
@@ -218,7 +247,8 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
         dimmer.visibility = View.GONE
 
         if (rewarded) {
-            Toast.makeText(this, getString(R.string.ads_removed_temporarily), Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.ads_removed_temporarily), Toast.LENGTH_LONG)
+                .show()
             rewarded = false
             FirebaseAnalyticsEvents.support("REWARDED")
         }
@@ -239,8 +269,11 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
     private fun checkPermission(c: Context, pos: Int) {
         position = pos
 
-        if (ContextCompat.checkSelfPermission(c,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                c,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             // 既に許可している
             when (position) {
                 0 -> onBackup()
@@ -249,15 +282,19 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
             }
         } else {
             // 拒否していた場合,許可を求める
-            ActivityCompat.requestPermissions(this,
-                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    permission)
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                permission
+            )
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>,
-                                            grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         if (requestCode == permission) {
             // 使用が許可された
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -269,8 +306,10 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
 
             } else {
                 // それでも拒否された時の対応
-                val toast = Toast.makeText(this.baseContext,
-                        getText(R.string.please_permit), Toast.LENGTH_SHORT)
+                val toast = Toast.makeText(
+                    this.baseContext,
+                    getText(R.string.please_permit), Toast.LENGTH_SHORT
+                )
                 toast.show()
             }
         }

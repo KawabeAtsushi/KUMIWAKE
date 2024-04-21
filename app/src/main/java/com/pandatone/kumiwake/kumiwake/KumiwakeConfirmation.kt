@@ -10,15 +10,29 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.pandatone.kumiwake.*
+import com.pandatone.kumiwake.FirebaseAnalyticsEvents
+import com.pandatone.kumiwake.KumiwakeArrayKeys
+import com.pandatone.kumiwake.KumiwakeCustomKeys
+import com.pandatone.kumiwake.ModeKeys
+import com.pandatone.kumiwake.PublicMethods
+import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.SmallGPListAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeComparator
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
-import kotlinx.android.synthetic.main.kumiwake_confirmation.*
-import java.util.*
-import kotlin.collections.ArrayList
+import kotlinx.android.synthetic.main.kumiwake_confirmation.arrow1
+import kotlinx.android.synthetic.main.kumiwake_confirmation.arrow2
+import kotlinx.android.synthetic.main.kumiwake_confirmation.between_arrows_txt
+import kotlinx.android.synthetic.main.kumiwake_confirmation.confirmation_title_txt
+import kotlinx.android.synthetic.main.kumiwake_confirmation.custom_review_txt
+import kotlinx.android.synthetic.main.kumiwake_confirmation.groupListView
+import kotlinx.android.synthetic.main.kumiwake_confirmation.group_no_txt
+import kotlinx.android.synthetic.main.kumiwake_confirmation.kumiwake_member_listView
+import kotlinx.android.synthetic.main.kumiwake_confirmation.member_no_txt
+import kotlinx.android.synthetic.main.kumiwake_confirmation.scrollView
+import java.util.Collections
 
 /**
  * Created by atsushi_2 on 2016/05/08.
@@ -44,13 +58,16 @@ class KumiwakeConfirmation : AppCompatActivity() {
 
         val i = intent
         if (i.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) != null) {
-            memberArray = i.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>
+            memberArray =
+                i.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>
         }
         if (i.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) != null) {
-            groupArray = i.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) as ArrayList<Group>
+            groupArray =
+                i.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) as ArrayList<Group>
         }
         if (i.getSerializableExtra(KumiwakeArrayKeys.LEADER_LIST.key) != null) {
-            leaderArray = i.getSerializableExtra(KumiwakeArrayKeys.LEADER_LIST.key) as ArrayList<Member?>
+            leaderArray =
+                i.getSerializableExtra(KumiwakeArrayKeys.LEADER_LIST.key) as ArrayList<Member?>
         }
 
         evenFmRatio = i.getBooleanExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, false)
@@ -80,7 +97,9 @@ class KumiwakeConfirmation : AppCompatActivity() {
         }
         member_no_txt.text = (memberArray.size.toString() + " " + getText(R.string.people)
                 + "(" + getText(R.string.man) + ":" + countManNo().toString() + getText(R.string.people)
-                + "," + getText(R.string.woman) + ":" + (memberArray.size - countManNo()).toString() + getText(R.string.people) + ")")
+                + "," + getText(R.string.woman) + ":" + (memberArray.size - countManNo()).toString() + getText(
+            R.string.people
+        ) + ")")
         group_no_txt.text = groupArray.size.toString() + " " + getText(R.string.group)
     }
 
@@ -115,7 +134,8 @@ class KumiwakeConfirmation : AppCompatActivity() {
         memberArray.clear()
         memberArray.addAll(leaderArray.filterNotNull())
         memberArray.addAll(notLeadersArray)
-        val mbAdapter = SmallMBListAdapter(this, memberArray, leaderArray = leaderArray, showLeaderNo = true)
+        val mbAdapter =
+            SmallMBListAdapter(this, memberArray, leaderArray = leaderArray, showLeaderNo = true)
         val gpAdapter = SmallGPListAdapter(this, groupArray)
         kumiwake_member_listView.adapter = mbAdapter
         groupListView.adapter = gpAdapter

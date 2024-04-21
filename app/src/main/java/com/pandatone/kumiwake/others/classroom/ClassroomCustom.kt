@@ -2,7 +2,11 @@ package com.pandatone.kumiwake.others.classroom
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.*
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.GridLayout
+import android.widget.SeekBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.updatePadding
 import com.pandatone.kumiwake.ClassroomCustomKeys
@@ -28,7 +32,8 @@ class ClassroomCustom : AppCompatActivity() {
         findViewById<Button>(R.id.move_result).setOnClickListener { onNext() }
 
         if (intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) != null) {
-            memberArray = intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>
+            memberArray =
+                intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>
         }
 
         seatNo = memberArray.size

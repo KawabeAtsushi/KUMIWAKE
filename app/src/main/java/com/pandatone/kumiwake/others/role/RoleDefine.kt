@@ -21,8 +21,9 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.EditOthersViewAdapter
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
-import kotlinx.android.synthetic.main.kumiwake_custom.*
-import kotlinx.android.synthetic.main.ticket_difinition.*
+import kotlinx.android.synthetic.main.kumiwake_custom.even_age_ratio_check
+import kotlinx.android.synthetic.main.kumiwake_custom.even_fm_ratio_check
+import kotlinx.android.synthetic.main.ticket_difinition.error_incorrect_number
 
 
 /**
@@ -43,7 +44,8 @@ class RoleDefine : AppCompatActivity() {
         setContentView(R.layout.role_difinition)
 
         if (intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) != null) {
-            memberArray = intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>
+            memberArray =
+                intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>
         }
         findViews()
         editRoleAdapter = EditOthersViewAdapter(this, roleArray, totalAssignedTextView, false)
@@ -134,7 +136,14 @@ class RoleDefine : AppCompatActivity() {
             FirebaseAnalyticsEvents.roleNames(roleName)
         }
         if (total < memberArray.size) {
-            nextRoleArray.add(Group(1, getString(R.string.no_assigned), "", memberArray.size - total))
+            nextRoleArray.add(
+                Group(
+                    1,
+                    getString(R.string.no_assigned),
+                    "",
+                    memberArray.size - total
+                )
+            )
         }
         return nextRoleArray
     }
@@ -143,7 +152,8 @@ class RoleDefine : AppCompatActivity() {
     private fun setKeyboardListener() {
         val activityRootView = findViewById<View>(R.id.custom_root_layout)
         val view = findViewById<View>(R.id.normal_kumiwake_button)
-        activityRootView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        activityRootView.viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
             private val r = Rect()
 
             override fun onGlobalLayout() {

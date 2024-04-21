@@ -5,7 +5,15 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.android.billingclient.api.*
+import com.android.billingclient.api.AcknowledgePurchaseResponseListener
+import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingClientStateListener
+import com.android.billingclient.api.BillingFlowParams
+import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.PurchasesUpdatedListener
+import com.android.billingclient.api.SkuDetails
+import com.android.billingclient.api.SkuDetailsParams
 import com.pandatone.kumiwake.MainActivity
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
@@ -20,7 +28,8 @@ queryPurchaseHistory()
  */
 
 
-class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, AcknowledgePurchaseResponseListener {
+class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener,
+    AcknowledgePurchaseResponseListener {
     private var billingClient: BillingClient? = null
     private var mySkuDetailsList: List<SkuDetails>? = null
 
@@ -30,7 +39,7 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
 
         // BillingClientを準備する
         billingClient = BillingClient.newBuilder(this)
-                .setListener(this).enablePendingPurchases().build()
+            .setListener(this).enablePendingPurchases().build()
         if (StatusHolder.adCheck) {
             adStatusCheck()
             StatusHolder.adCheck = false
@@ -67,7 +76,8 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
         skuList.add(StatusHolder.ad_free_sku)
         val params = SkuDetailsParams.newBuilder()
         params.setSkusList(skuList).setType(BillingClient.SkuType.INAPP)
-        billingClient!!.querySkuDetailsAsync(params.build()
+        billingClient!!.querySkuDetailsAsync(
+            params.build()
         ) { billingResult, skuDetailsList ->
             val responseCode = billingResult.responseCode
             if (responseCode == BillingClient.BillingResponseCode.OK) { // 後の購入手続きのためにSkuの詳細を保持
@@ -88,8 +98,8 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
         val skuDetails = getSkuDetails(sku)
         if (skuDetails != null) {
             val params = BillingFlowParams.newBuilder()
-                    .setSkuDetails(skuDetails)
-                    .build()
+                .setSkuDetails(skuDetails)
+                .build()
             val billingResult = billingClient!!.launchBillingFlow(this, params)
             showResponseCode(billingResult.responseCode)
         }
@@ -116,7 +126,8 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
         val resultStr = StringBuffer("")
         val billingResultCode = billingResult.responseCode
         if (billingResultCode == BillingClient.BillingResponseCode.OK
-                && purchases != null) {
+            && purchases != null
+        ) {
             for (purchase in purchases) { //購入したら呼ばれる
                 //ステータスをとれる　val state = handlePurchase(purchase)
                 resultStr.append(skuToName(purchase.sku)).append("\n")
@@ -163,7 +174,8 @@ class PurchaseFreeAdOption : AppCompatActivity(), PurchasesUpdatedListener, Ackn
             override fun onBillingSetupFinished(billingResult: BillingResult) {
                 val responseCodeB = billingResult.responseCode
                 if (responseCodeB == BillingClient.BillingResponseCode.OK) {
-                    val purchasesResult = billingClient!!.queryPurchases(BillingClient.SkuType.INAPP)
+                    val purchasesResult =
+                        billingClient!!.queryPurchases(BillingClient.SkuType.INAPP)
                     val responseCodeP = purchasesResult.responseCode
                     if (responseCodeP == BillingClient.BillingResponseCode.OK) {
                         val purchases = purchasesResult.purchasesList

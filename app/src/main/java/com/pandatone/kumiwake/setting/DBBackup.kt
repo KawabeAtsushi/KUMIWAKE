@@ -103,8 +103,9 @@ object DBBackup {
         } else {
             Toast.makeText(c, "Error : $err", Toast.LENGTH_SHORT).show()
             // メッセージ設定
-            (dialog.findViewById<View>(R.id.dialog_message) as TextView).text = c.getString(R.string.nothing_file) + "\n" + path +
-                    "\n\n" + c.getString(R.string.failed_import)
+            (dialog.findViewById<View>(R.id.dialog_message) as TextView).text =
+                c.getString(R.string.nothing_file) + "\n" + path +
+                        "\n\n" + c.getString(R.string.failed_import)
         }
     }
 
@@ -120,10 +121,18 @@ object DBBackup {
             src.copyTo(dest, overwrite = true)
         } catch (e: FileNotFoundException) {
             err = 1
-            Toast.makeText(c, c.getString(R.string.error_has_occurred) + "\n(FileNotFoundException)", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                c,
+                c.getString(R.string.error_has_occurred) + "\n(FileNotFoundException)",
+                Toast.LENGTH_SHORT
+            ).show()
         } catch (e: IOException) {
             err = 2
-            Toast.makeText(c, c.getString(R.string.error_has_occurred) + "\n(IOException)", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                c,
+                c.getString(R.string.error_has_occurred) + "\n(IOException)",
+                Toast.LENGTH_SHORT
+            ).show()
         }
         return err
     }

@@ -22,15 +22,21 @@ import com.pandatone.kumiwake.setting.DBBackup
  * Created by atsushi_2 on 2016/11/11.
  */
 
-class FileManagerDialog(private var mTitle: String, private var mMessage: CharSequence, private val backup: Boolean) : DialogFragment() {
+class FileManagerDialog(
+    private var mTitle: String,
+    private var mMessage: CharSequence,
+    private val backup: Boolean
+) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AppCompatDialog {
         val dialog = activity?.let { AppCompatDialog(it) }!!
         // タイトル非表示
         dialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
         // フルスクリーン
-        dialog.window!!.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
+        dialog.window!!.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+        )
         dialog.setContentView(R.layout.custom_dialog_layout)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         // タイトル設定
@@ -59,7 +65,8 @@ class FileManagerDialog(private var mTitle: String, private var mMessage: CharSe
         // メッセージ設定
         val pathTextView = mDialog.findViewById<View>(R.id.dialog_path) as TextView
         pathTextView.visibility = View.VISIBLE
-        (mDialog.findViewById<View>(R.id.dialog_message) as TextView).text = getString(R.string.failed_to_mkdirs)
+        (mDialog.findViewById<View>(R.id.dialog_message) as TextView).text =
+            getString(R.string.failed_to_mkdirs)
         pathTextView.text = path
         // OKボタンのリスナ
         (mDialog.findViewById<View>(R.id.positive_button) as TextView).setOnClickListener {
@@ -78,7 +85,8 @@ class FileManagerDialog(private var mTitle: String, private var mMessage: CharSe
         val messageTextView = mDialog.findViewById<View>(R.id.dialog_message) as TextView
         val pathTextView = mDialog.findViewById<View>(R.id.dialog_path) as TextView
         pathTextView.visibility = View.VISIBLE
-        val warningTxt = getString(R.string.nothing_file) + "\n" + DBBackup.dir_path + "\n\n" + getString(R.string.failed_import)
+        val warningTxt =
+            getString(R.string.nothing_file) + "\n" + DBBackup.dir_path + "\n\n" + getString(R.string.failed_import)
         messageTextView.text = warningTxt
         pathTextView.text = path
 
