@@ -70,8 +70,11 @@ class Settings : AppCompatActivity() {
 
         backupList = findViewById(R.id.back_up_list)
         backupList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            //行をクリックした時の処理
-            checkPermission(this.baseContext, position)
+            when (position) {
+                0 -> onBackup()
+                1 -> onImport()
+                2 -> onDeleteBackup()
+            }
         }
         otherList = findViewById(R.id.other_list)
         otherList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
@@ -302,59 +305,4 @@ class Settings : AppCompatActivity() {
         }
     }
 
-    /////////////////////////パーミッション/////////////////////////////////////////////////
-
-    private val permission = 1000
-    private var position = 0
-
-    // ストレージ許可の確認
-    private fun checkPermission(c: Context, pos: Int) {
-        position = pos
-
-        if (ContextCompat.checkSelfPermission(
-                c,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            // 既に許可している
-            when (position) {
-                0 -> onBackup()
-                1 -> onImport()
-                2 -> onDeleteBackup()
-            }
-        } else {
-            // 拒否していた場合,許可を求める
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                permission
-            )
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == permission) {
-            // 使用が許可された
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                when (position) {
-                    0 -> onBackup()
-                    1 -> onImport()
-                    2 -> onDeleteBackup()
-                }
-
-            } else {
-                // それでも拒否された時の対応
-                val toast = Toast.makeText(
-                    this.baseContext,
-                    getText(R.string.please_permit), Toast.LENGTH_SHORT
-                )
-                toast.show()
-            }
-        }
-    }
 }
