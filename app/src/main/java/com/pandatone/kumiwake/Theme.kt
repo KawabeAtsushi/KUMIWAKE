@@ -35,5 +35,5 @@ enum class Theme(
     Sekigime(R.color.green_title, R.color.green_background),
     Others(R.color.gray, R.color.background_gray),
     Member(R.color.blue_title, R.color.blue_background),
-    Setting(R.color.yellow_title, R.color.yellow_background)
+    Setting(R.color.orange_title, R.color.orange_background)
 }

@@ -259,7 +259,7 @@
             android:id="@+id/group_add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/orange"
+            app:fab_colorNormal="@color/orange_title"
             app:fab_colorPressed="#DDA82C"
             app:fab_icon="@drawable/ic_add_group_24"
             app:fab_size="mini"

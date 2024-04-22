@@ -73,7 +73,6 @@ class Settings : AppCompatActivity() {
             when (position) {
                 0 -> onBackup()
                 1 -> onImport()
-                2 -> onDeleteBackup()
             }
         }
         otherList = findViewById(R.id.other_list)
@@ -107,7 +106,6 @@ class Settings : AppCompatActivity() {
         backupStr = arrayOf(
             getString(R.string.back_up_db),
             getString(R.string.import_db),
-            getString(R.string.delete_backup)
         )
         otherStr = arrayOf(
             getString(R.string.app_version),
@@ -137,23 +135,6 @@ class Settings : AppCompatActivity() {
         dialog.fmDialog(title, message, false)
     }
 
-    private fun onDeleteBackup() {
-        val title = getString(R.string.delete_backup)
-        val message = getString(R.string.delete_backup_attention)
-        dialog.decisionDialog(title, message, function = this::deleteBackup)
-    }
-
-    private fun deleteBackup() {
-
-        val dir = File(Environment.getExternalStorageDirectory().path + "/KUMIWAKE_Backup")
-
-        if (!dir.exists()) {
-            Toast.makeText(this, getString(R.string.not_exist_file), Toast.LENGTH_SHORT).show()
-        } else {
-            dir.deleteRecursively()
-            Toast.makeText(this, getString(R.string.deleted_backup_file), Toast.LENGTH_SHORT).show()
-        }
-    }
 
     private fun showVersionName() {
         var versionName = ""

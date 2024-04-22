@@ -48,12 +48,12 @@
 
     <!-- Member ChoiceMode theme. -->
     <style name="SettingsTheme" parent="Theme.AppCompat.Light">
-        <item name="android:colorPrimaryDark">@color/yellow_title</item>
+        <item name="android:colorPrimaryDark">@color/orange_title</item>
         <item name="actionBarStyle">@style/SettingsActionBarStyle</item>
     </style>
 
     <style name="SettingsActionBarStyle" parent="Widget.AppCompat.ActionBar.Solid">
-        <item name="android:background">@color/yellow_title</item>
+        <item name="android:background">@color/orange_title</item>
     </style>
 
     <style name="NoCloseButtonActionModeStyle">
