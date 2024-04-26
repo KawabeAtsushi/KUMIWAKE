@@ -4,20 +4,16 @@ import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
-import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.history.HistoryAdapter
 import java.io.File
 import java.io.FileInputStream
-import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
-
 
 @SuppressLint("StaticFieldLeak")
 object DBBackup {
@@ -72,13 +68,12 @@ object DBBackup {
         }
     }
 
+    // Backup
     fun addBackupFiles(c: Context, zipOutputStream: ZipOutputStream) {
-        Log.d(TAG, "addBackupFiles")
         context = c
         val backupFile = createFolderWithFiles(context, mb_db_file, gp_db_file, hs_db_file)
         addFolderToZip(backupFile, zipOutputStream)
         zipOutputStream.finish()
-        backupFile.copyTo(File(c.getExternalFilesDir(null), "kumiwake_backup"), overwrite = true)
     }
 
     private fun createFolderWithFiles(context: Context, vararg filePaths: String): File {
@@ -124,6 +119,7 @@ object DBBackup {
         }
     }
 
+    // Import
     fun readFile(c: Context, zipInputStream: ZipInputStream) {
         context = c
         val buffer = ByteArray(1024)
@@ -141,34 +137,6 @@ object DBBackup {
         }
         zipInputStream.closeEntry()
         zipInputStream.close()
-    }
-
-
-    //ファイルのコピー（チャネルを使用）
-    private fun fileCopy(src_path: String, dest_path: String, c: Context): Int {
-        var err = 0
-
-        val src = File(src_path)
-        val dest = File(dest_path)
-
-        try {
-            src.copyTo(dest, overwrite = true)
-        } catch (e: FileNotFoundException) {
-            err = 1
-            Toast.makeText(
-                c,
-                c.getString(R.string.error_has_occurred) + "\n(FileNotFoundException)",
-                Toast.LENGTH_SHORT
-            ).show()
-        } catch (e: IOException) {
-            err = 2
-            Toast.makeText(
-                c,
-                c.getString(R.string.error_has_occurred) + "\n(IOException)",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-        return err
     }
 
 }
