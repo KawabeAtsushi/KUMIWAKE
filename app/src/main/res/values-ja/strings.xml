@@ -78,7 +78,7 @@
     <string name="data">データ</string>
     <string name="back_up_db">データのバックアップ</string>
     <string name="import_db">データのインポート</string>
-    <string name="back_up_attention">"メンバーデータとグループデータのバックアップを行います。\n\nバックアップを行うと現在保存されているバックアップデータは破棄され、新しいデータに上書きされます。（データはSDカードに書き込まれます。）\n "</string>
+    <string name="back_up_attention">"メンバーデータとグループデータのバックアップを行います。\n"</string>
     <string name="import_attention">バックアップデータのインポートを行います。\n\nデータのインポートを行うと現在のメンバーデータとグループデータは破棄され、新しいデータに上書きされます。\n</string>
     <string name="run_confirmation">\n実行します。よろしいですか？</string>
     <string name="back_up_completed">バックアップが完了しました。</string>
@@ -147,9 +147,8 @@
     <string name="hint">ヒント</string>
     <string name="error_has_occurred">エラーが発生しました。</string>
     <string name="error">エラー</string>
-    <string name="nothing_file">\"KUMIWAKE_Backup\"フォルダーは以下のパスにありませんでした。</string>
-    <string name="failed_import">以下のパスにバックアップデータを配置し、\"OK\"を押してインポートを再実行して下さい。</string>
-    <string name="failed_to_mkdirs">バックアップディレクトリの作成に失敗しました。\n\"OK\"を押すと以下のパスでバックアップを再実行します。</string>
+    <string name="failed_import">バックアップファイルのインポートに失敗しました。</string>
+    <string name="failed_to_mkdirs">バックアップディレクトリの作成に失敗しました。</string>
     <string name="app_exit_confirmation">アプリを終了しますか？</string>
     <string name="edit_exit_confirmation">編集画面を閉じますか？\n編集情報は破棄されます。</string>
     <string name="show_all">全表示</string>
