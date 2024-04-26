@@ -21,16 +21,37 @@ import com.pandatone.kumiwake.member.function.Sort
  * Created by atsushi_2 on 2016/02/23.
  */
 class FragmentGroupChoiceMode : ListFragment() {
+    private var _gpAdapter: GroupAdapter? = null
+    private val gpAdapter: GroupAdapter
+        get() {
+            if (_gpAdapter == null) {
+                throw Exception("MemberFragmentViewAdapter not initialized")
+            }
+            return _gpAdapter!!
+        }
+
+    private var _listAdp: GroupFragmentViewAdapter? = null
+    val listAdp: GroupFragmentViewAdapter
+        get() {
+            if (_listAdp == null) {
+                throw Exception("MemberFragmentView ListAdapter not initialized")
+            }
+            return _listAdp!!
+        }
     private var groupList: ArrayList<Group> = ArrayList()
 
     // 必須*
     // Fragment生成時にシステムが呼び出す
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        gpAdapter = GroupAdapter(requireContext())
-        listAdp = GroupFragmentViewAdapter(requireContext(), groupList)
+        init()
         StatusHolder.gpNowSort = GroupAdapter.GP_ID
         StatusHolder.gpSortType = "ASC"
+    }
+
+    private fun init() {
+        _gpAdapter = GroupAdapter(requireContext())
+        _listAdp = GroupFragmentViewAdapter(requireContext(), groupList)
     }
 
     override fun onStart() {
@@ -70,7 +91,9 @@ class FragmentGroupChoiceMode : ListFragment() {
         listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
             ChoiceMemberMain.viewPager.setCurrentItem(0, true)
-            FragmentMemberChoiceMode().checkByGroup(groupList[position].id)
+            fragmentMemberChoiceMode?.checkByGroup(
+                groupList[position].id
+            )
         }
     }
 
@@ -97,9 +120,7 @@ class FragmentGroupChoiceMode : ListFragment() {
     }
 
     companion object {
-        //最初から存在してほしいのでprivateのcompanionにする（じゃないと落ちる。コルーチンとか使えばいけるかも）
-        private lateinit var gpAdapter: GroupAdapter
-        internal lateinit var listAdp: GroupFragmentViewAdapter
+        var fragmentMemberChoiceMode: FragmentMemberChoiceMode? = null
         internal var groupList: ArrayList<Group> = ArrayList()
     }
 

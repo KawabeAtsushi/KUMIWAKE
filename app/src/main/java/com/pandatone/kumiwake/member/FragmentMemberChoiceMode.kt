@@ -25,23 +25,38 @@ import com.pandatone.kumiwake.member.function.Filtering
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.member.function.Sort
 
-
 /**
  * Created by atsushi_2 on 2016/02/23.
  */
 class FragmentMemberChoiceMode : ListFragment() {
+    private var _lv: ListView? = null
+    private val lv: ListView
+        get() {
+            if (_lv == null) {
+                throw Exception("listview not initialized")
+            }
+            return _lv!!
+        }
+
+    private var _mbAdapter: MemberAdapter? = null
+    private val mbAdapter: MemberAdapter
+        get() {
+            if (_mbAdapter == null) {
+                throw Exception("mbAdapter not initialized")
+            }
+            return _mbAdapter!!
+        }
+
+    private var _listAdp: MemberFragmentViewAdapter? = null
+    private val listAdp: MemberFragmentViewAdapter
+        get() {
+            if (_listAdp == null) {
+                throw Exception("MemberFragmentViewAdapter not initialized")
+            }
+            return _listAdp!!
+        }
     private var memberArray = ChoiceMemberMain.memberArray
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mbAdapter = MemberAdapter(requireContext())
-        memberList = mbAdapter.getAllMembers()
-        listAdp = MemberFragmentViewAdapter(requireContext(), memberList)
-        StatusHolder.mbNowSort = MemberAdapter.MB_ID
-        StatusHolder.mbSortType = "ASC"
-        Sort.initial = 0
-        loadName()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,25 +66,39 @@ class FragmentMemberChoiceMode : ListFragment() {
         val view = inflater.inflate(R.layout.tab_member, container, false)
         val fab = view.findViewById<View>(R.id.member_fab) as FloatingActionButton
         fab.hide()
-
         // Fragmentとlayoutを紐付ける
         super.onCreateView(inflater, container, savedInstanceState)
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        lv = listView
-        lv.choiceMode = ListView.CHOICE_MODE_MULTIPLE_MODAL
-        lv.setMultiChoiceModeListener(CallbackMB())
-        lv.isFastScrollEnabled = true
-        lv.isTextFilterEnabled = true
+        super.onViewCreated(view, savedInstanceState)
+        init()
+        initListView()
+        FragmentGroupChoiceMode.fragmentMemberChoiceMode = this
+    }
 
+    private fun init() {
+        _mbAdapter = MemberAdapter(requireContext())
+        memberList = _mbAdapter!!.getAllMembers()
+        _listAdp = MemberFragmentViewAdapter(requireContext(), memberList)
+        StatusHolder.mbNowSort = MemberAdapter.MB_ID
+        StatusHolder.mbSortType = "ASC"
+        Sort.initial = 0
+        loadName()
+    }
+
+    private fun initListView() {
+        _lv = listView
+        _lv!!.choiceMode = ListView.CHOICE_MODE_MULTIPLE_MODAL
+        _lv!!.setMultiChoiceModeListener(CallbackMB())
+        _lv!!.isFastScrollEnabled = true
+        _lv!!.isTextFilterEnabled = true
     }
 
     override fun onStart() {
         super.onStart()
         loadName()
-        FragmentGroupChoiceMode().loadName()
         val toolbar = requireActivity().findViewById<View>(R.id.toolbar2) as Toolbar
         toolbar.startActionMode(CallbackMB())
         //初期の選択済みのメンバーをチェックする
@@ -193,16 +222,7 @@ class FragmentMemberChoiceMode : ListFragment() {
 
                 R.id.item_sort -> {
                     clearSelection(mode)
-                    if (page == 0) {
-                        Sort.memberSort(requireActivity(), memberList, listAdp)
-                    } else {
-                        Sort.groupSort(
-                            requireActivity(),
-                            FragmentGroupChoiceMode.groupList,
-                            FragmentGroupChoiceMode.listAdp
-                        )
-                        FragmentGroupChoiceMode.listAdp.notifyDataSetChanged()
-                    }
+                    Sort.memberSort(requireActivity(), memberList, listAdp)
                 }
 
                 R.id.item_filter -> {
@@ -230,11 +250,12 @@ class FragmentMemberChoiceMode : ListFragment() {
         ) {
             // アクションモード時のアイテムの選択状態変更時(変更後)
             checkedCount = lv.checkedItemCount
+            val member = memberList[position]
 
             if (checked) {
-                listAdp.setNewSelection(memberList[position].id, checked)
+                listAdp.setNewSelection(member.id, true)
             } else {
-                listAdp.removeSelection(memberList[position].id)
+                listAdp.removeSelection(member.id)
             }
             mode.title = checkedCount.toString() + getString(R.string.selected)
         }
@@ -273,10 +294,6 @@ class FragmentMemberChoiceMode : ListFragment() {
     }
 
     companion object {
-        //最初から存在してほしいのでprivateのcompanionにする（じゃないと落ちる。コルーチンとか使えばいけるかも）
-        private lateinit var mbAdapter: MemberAdapter
-        private lateinit var listAdp: MemberFragmentViewAdapter
-        lateinit var lv: ListView
         private var memberList: ArrayList<Member> = ArrayList()
     }
 
