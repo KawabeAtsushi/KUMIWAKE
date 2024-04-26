@@ -24,7 +24,7 @@
             <ListView
                 android:id="@+id/back_up_list"
                 android:layout_width="match_parent"
-                android:layout_height="210dp"
+                android:layout_height="140dp"
                 tools:ignore="NestedScrolling" />
 
             <TextView
