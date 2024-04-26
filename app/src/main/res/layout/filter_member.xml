@@ -89,9 +89,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/min_age"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:ems="3"
                 android:inputType="number"
                 android:maxLength="3"
                 android:maxLines="1"
@@ -132,9 +131,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/max_age"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:ems="3"
                 android:inputType="number"
                 android:maxLength="3"
                 android:maxLines="1"
