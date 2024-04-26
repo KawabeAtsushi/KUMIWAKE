@@ -34,6 +34,8 @@ class FileManagerDialog(
     private lateinit var backupZipLauncher: ActivityResultLauncher<String>
     private lateinit var importZipLauncher: ActivityResultLauncher<String>
 
+    private lateinit var dialog: AppCompatDialog
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         backupZipLauncher =
@@ -56,7 +58,7 @@ class FileManagerDialog(
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AppCompatDialog {
-        val dialog = AppCompatDialog(requireContext())
+        dialog = AppCompatDialog(requireContext())
         // タイトル非表示
         dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         // フルスクリーン
@@ -121,7 +123,6 @@ class FileManagerDialog(
 
     //成功/エラーの際のダイアログ生成
     private fun showDialog(title: String, message: String) {
-        val dialog = AppCompatDialog(requireContext())
         dialog.setContentView(R.layout.custom_dialog_layout)
         // タイトル設定
         (dialog.findViewById<View>(R.id.dialog_title) as TextView).text = title
