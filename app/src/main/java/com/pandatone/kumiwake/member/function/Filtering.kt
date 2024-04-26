@@ -119,13 +119,9 @@ class Filtering(val activity: Activity, private val memberList: ArrayList<Member
             if (belong == activity.getString(R.string.no_selected)) {
                 belongId = ""
             } else {
-                for (group in groupList) {
-                    if (belong == group.name) {
-                        belongId = group.id.toString() + ","
-                    }
-                }
+                groupList.firstOrNull { it.name == belong }
+                    ?.let { belongId = "," + it.id.toString() }
             }
-
             mbAdapter.filterName(sex, minAge, maxAge, belongId, memberList)
         }
     }
