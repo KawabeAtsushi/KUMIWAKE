@@ -232,7 +232,7 @@ class FragmentMemberMain : ListFragment() {
                         memberList,
                         listAdp,
                         mbAdapter
-                    )
+                    ) { clearSelection(mode) }
                 }
 
                 R.id.item_filter -> {
@@ -351,20 +351,6 @@ class FragmentMemberMain : ListFragment() {
 
         return checkedMemberList
     }
-
-//    //メンバー再選択処理(今後の課題)
-//    fun reChecked() {
-//        var i = 0
-//        val members = memberList
-//        val boolArray = SparseBooleanArray()
-//        while (i < listAdp.count) {
-//            val member = members[i]
-//            if (boolArray.get(member.id)) {
-//                listAdp.setNewSelection(member.id, true)
-//            }
-//            i += 2
-//        }
-//    }
 
     //年齢変更ボタンクリック
     fun changeAge() {

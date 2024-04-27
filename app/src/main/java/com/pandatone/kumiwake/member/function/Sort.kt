@@ -24,7 +24,8 @@ object Sort {
         activity: Activity,
         memberList: ArrayList<Member>,
         listAdp: MemberFragmentViewAdapter,
-        mbAdapter: MemberAdapter
+        mbAdapter: MemberAdapter,
+        onStarted: (() -> Unit)? = null
     ) {
         val builder = androidx.appcompat.app.AlertDialog.Builder(activity)
 
@@ -41,6 +42,7 @@ object Sort {
         builder.setSingleChoiceItems(items, initial) { _, which -> initial = which }
 
         builder.setPositiveButton("OK") { _, _ ->
+            onStarted?.invoke()
             when (initial) {
                 0 -> {
                     mbNowSort = MemberAdapter.MB_ID

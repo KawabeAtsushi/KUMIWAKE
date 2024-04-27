@@ -212,7 +212,7 @@ class FragmentMemberChoiceMode : ListFragment() {
                         memberList,
                         listAdp,
                         mbAdapter
-                    )
+                    ) { clearSelection(mode) }
                 }
 
                 R.id.item_filter -> {
