@@ -249,4 +249,5 @@
     <string name="preview">preview (*If it goes off the screen, scroll to check.)</string>
     <string name="classroom_annotation">If you want to see the whole at once, please "share result" from the button below.</string>
     <string name="updated_age">Updated age</string>
+    <string name="all_member">All Member</string>
 </resources>

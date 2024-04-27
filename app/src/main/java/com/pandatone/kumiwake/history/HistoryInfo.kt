@@ -4,9 +4,14 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -41,6 +46,8 @@ class HistoryInfo(val c: Activity) {
     private lateinit var goToBt: MaterialButton
     private lateinit var editNameBt: ImageButton
     private var resultArray: ArrayList<ArrayList<Member>> = ArrayList()
+    private var groupNameArray: Array<String> = emptyArray()
+    private var newMemberArray: ArrayList<Member> = ArrayList()
 
     //履歴クリック時の情報表示ダイアログ
     fun infoDialog(item: History) {
@@ -74,7 +81,7 @@ class HistoryInfo(val c: Activity) {
         history.text = HistoryMethods.changeDateFormat(item.name)
         date.text = HistoryMethods.changeDateFormat(item.time)
         resultArray = HistoryMethods.stringToResultArray(c, item.result)
-        val groupNameArray = HistoryMethods.stringToResultGroupArray(item.resultGp)
+        groupNameArray = HistoryMethods.stringToResultGroupArray(item.resultGp)
         //setView
         for (i in resultArray.indices) {
             try {
@@ -104,17 +111,25 @@ class HistoryInfo(val c: Activity) {
     //メンバーを利用して組み分け/席決め
     private fun goTo(notDuplicate: Boolean) {
         StatusHolder.normalMode = true
-        val memberArray = ArrayList<Member>()
-        resultArray.forEach { result ->
-            memberArray.addAll(result)
-        }
-        memberArray.removeAll { it.id == -1 }
-        NormalMode.memberArray = memberArray
+        NormalMode.memberArray = newMemberArray
         startActivity(c, Intent(c, NormalMode::class.java), null)
         StatusHolder.notDuplicate = notDuplicate
         if (notDuplicate) {
             HistoryMethods.historyResultArray = resultArray
         }
+    }
+
+    private fun setNewMemberArray(position: Int) {
+        var memberArray = ArrayList<Member>()
+        if (position == 0) {
+            resultArray.forEach { result ->
+                memberArray.addAll(result)
+            }
+        } else {
+            memberArray = resultArray[position - 1]
+        }
+        memberArray.removeAll { it.id == -1 }
+        newMemberArray = memberArray
     }
 
     //メンバーを利用選択ダイアログ
@@ -126,15 +141,31 @@ class HistoryInfo(val c: Activity) {
             c.findViewById<View>(R.id.info_layout) as ViewGroup?
         )
 
-        val kumiwakeButton = view.findViewById<Button>(R.id.kumiwake_select_button)
+        setupGroupDropDown(view)
+
         val duplicateCheckBox = view.findViewById<CheckBox>(R.id.duplicate_check)
+
+        // 組分け
+        val kumiwakeUnit: View = view.findViewById(R.id.kumiwake_select_button)
+        val kumiwakeButton: ImageButton = kumiwakeUnit.findViewById(R.id.icon_button)
+        (kumiwakeUnit.findViewById<TextView>(R.id.button_text)!!).setText(R.string.kumiwake)
+        kumiwakeButton.backgroundTintList =
+            ColorStateList.valueOf(PublicMethods.getColor(c, R.color.red_title))
+        kumiwakeButton.setImageResource(R.drawable.ic_kumiwake_24px)
         kumiwakeButton.setOnClickListener {
             StatusHolder.mode = ModeKeys.Kumiwake.key
             PublicMethods.setStatus(this.c, Theme.Kumiwake.primaryColor)
             goTo(duplicateCheckBox.isChecked)
             FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.KumiwakeHistory.key)
         }
-        val sekigimeButton = view.findViewById<Button>(R.id.sekigime_select_button)
+
+        //　席決め
+        val sekigimeUnit: View = view.findViewById<Button>(R.id.sekigime_select_button)
+        val sekigimeButton: ImageButton = sekigimeUnit.findViewById(R.id.icon_button)
+        (sekigimeUnit.findViewById<TextView>(R.id.button_text)!!).setText(R.string.sekigime)
+        sekigimeButton.backgroundTintList =
+            ColorStateList.valueOf(PublicMethods.getColor(c, R.color.green_title))
+        sekigimeButton.setImageResource(R.drawable.ic_sekigime_24px)
         sekigimeButton.setOnClickListener {
             StatusHolder.mode = ModeKeys.Sekigime.key
             PublicMethods.setStatus(this.c, Theme.Sekigime.primaryColor)
@@ -148,6 +179,27 @@ class HistoryInfo(val c: Activity) {
             }
         val dialog = builder.create()
         dialog.show()
+    }
+
+    private fun setupGroupDropDown(view: View) {
+        val groupDropdown = view.findViewById<View>(R.id.group_dropdown) as AutoCompleteTextView
+        groupDropdown.onItemClickListener = AdapterView.OnItemClickListener { _, _, _, _ ->
+            val manager = c.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            manager.hideSoftInputFromWindow(groupDropdown.windowToken, 0)
+        }
+        val adapter = ArrayAdapter<String>(c, R.layout.dropdown_item_layout)
+        val list = ArrayList<String>()
+        list.add(c.getString(R.string.all_member))
+        for (group in groupNameArray) {
+            list.add(group)
+        }
+        setNewMemberArray(0)
+        adapter.addAll(list)
+        groupDropdown.setAdapter(adapter)
+        groupDropdown.hint = list[0]
+        groupDropdown.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+            setNewMemberArray(position)
+        }
     }
 
     //名前変更ダイアログ
