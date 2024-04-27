@@ -1,34 +1,39 @@
 package com.pandatone.kumiwake.setting
 
-import android.Manifest
-import android.content.Context
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.app.ShareCompat
-import androidx.core.content.ContextCompat
 import com.airbnb.lottie.LottieAnimationView
+import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.reward.RewardedVideoAd
-import com.google.android.gms.ads.reward.RewardedVideoAdListener
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.OnUserEarnedRewardListener
+import com.google.android.gms.ads.rewarded.RewardItem
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.pandatone.kumiwake.*
+import com.pandatone.kumiwake.FirebaseAnalyticsEvents
+import com.pandatone.kumiwake.MainActivity
+import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.PublicMethods.setStatus
+import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
+import com.pandatone.kumiwake.Theme
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
-import java.io.File
 
 
-class Settings : AppCompatActivity(), RewardedVideoAdListener {
+class Settings : AppCompatActivity() {
 
     private lateinit var backupAdapter: ArrayAdapter<String>
     private lateinit var otherAdapter: ArrayAdapter<String>
@@ -36,7 +41,7 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
     private lateinit var otherStr: Array<String>
 
     private lateinit var dimmer: View
-    private lateinit var mRewardedVideoAd: RewardedVideoAd
+    private var rewardedAd: RewardedAd? = null
     private lateinit var loadingAnim: LottieAnimationView
     private var rewarded = false
 
@@ -59,8 +64,10 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
 
         backupList = findViewById(R.id.back_up_list)
         backupList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            //行をクリックした時の処理
-            checkPermission(this.baseContext, position)
+            when (position) {
+                0 -> onBackup()
+                1 -> onImport()
+            }
         }
         otherList = findViewById(R.id.other_list)
         otherList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
@@ -73,25 +80,37 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
                 4 -> shareApp()
                 5 -> toPrivacyPolicy()
             }
-            otherList.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, pos, _ ->
-                //行をクリックした時の処理
-                when (pos) {
-                    1 -> {
-                        StatusHolder.checkStatus = true
-                        startActivity(Intent(this, PurchaseFreeAdOption::class.java))
+            otherList.onItemLongClickListener =
+                AdapterView.OnItemLongClickListener { _, _, pos, _ ->
+                    //行をクリックした時の処理
+                    when (pos) {
+                        1 -> {
+                            StatusHolder.checkStatus = true
+                            startActivity(Intent(this, PurchaseFreeAdOption::class.java))
+                        }
                     }
+                    false
                 }
-                false
-            }
         }
 
         setViews()
     }
 
     private fun setViews() {
-        backupStr = arrayOf(getString(R.string.back_up_db), getString(R.string.import_db), getString(R.string.delete_backup))
-        otherStr = arrayOf(getString(R.string.app_version), getString(R.string.advertise_delete), getString(R.string.delete_ad_temporary), getString(R.string.contact_us), getString(R.string.share_app), getString(R.string.privacy_policy))
-        backupAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, backupStr)
+        backupStr = arrayOf(
+            getString(R.string.back_up_db),
+            getString(R.string.import_db),
+        )
+        otherStr = arrayOf(
+            getString(R.string.app_version),
+            getString(R.string.advertise_delete),
+            getString(R.string.delete_ad_temporary),
+            getString(R.string.contact_us),
+            getString(R.string.share_app),
+            getString(R.string.privacy_policy)
+        )
+        backupAdapter =
+            ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, backupStr)
         otherAdapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, otherStr)
 
         backupList.adapter = backupAdapter
@@ -110,23 +129,6 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
         dialog.fmDialog(title, message, false)
     }
 
-    private fun onDeleteBackup() {
-        val title = getString(R.string.delete_backup)
-        val message = getString(R.string.delete_backup_attention)
-        dialog.decisionDialog(title, message, function = this::deleteBackup)
-    }
-
-    private fun deleteBackup() {
-
-        val dir = File(Environment.getExternalStorageDirectory().path + "/KUMIWAKE_Backup")
-
-        if (!dir.exists()) {
-            Toast.makeText(this, getString(R.string.not_exist_file), Toast.LENGTH_SHORT).show()
-        } else {
-            dir.deleteRecursively()
-            Toast.makeText(this, getString(R.string.deleted_backup_file), Toast.LENGTH_SHORT).show()
-        }
-    }
 
     private fun showVersionName() {
         var versionName = ""
@@ -136,7 +138,10 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
         }
-        val releaseNoteLink = PublicMethods.getLinkChar(getString(R.string.url_release_note), getString(R.string.release_note))
+        val releaseNoteLink = PublicMethods.getLinkChar(
+            getString(R.string.url_release_note),
+            getString(R.string.release_note)
+        )
         dialog.confirmationDialog(getString(R.string.app_version), versionName, releaseNoteLink)
     }
 
@@ -177,22 +182,40 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
 
     private fun removeAdsTemp() {
 
-        dialog.decisionDialog(getString(R.string.delete_ad_temporary), getString(R.string.delete_ad_temporary_description), getString(R.string.watch_ad), getString(R.string.close)) {
+        dialog.decisionDialog(
+            getString(R.string.delete_ad_temporary),
+            getString(R.string.delete_ad_temporary_description),
+            getString(R.string.watch_ad),
+            getString(R.string.close)
+        ) {
             dimmer = findViewById(R.id.dimmer_layout)
             dimmer.visibility = View.VISIBLE
             loadingAnim = findViewById(R.id.loading_anim)
             loadingAnim.visibility = View.VISIBLE
             loadingAnim.playAnimation()
-            mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this)
-            mRewardedVideoAd.rewardedVideoAdListener = this
-            mRewardedVideoAd.loadAd(getString(R.string.adVideoUnit_id),
-                    AdRequest.Builder().addTestDevice(getString(R.string.device_id)).build())
+            var adRequest = AdRequest.Builder().build()
+            RewardedAd.load(
+                this,
+                "ca-app-pub-3940256099942544/5224354917",
+                adRequest,
+                object : RewardedAdLoadCallback() {
+                    override fun onAdFailedToLoad(adError: LoadAdError) {
+                        rewardedAd = null
+                    }
+
+                    override fun onAdLoaded(ad: RewardedAd) {
+                        rewardedAd = ad
+                        onRewardedVideoAdLoaded(ad)
+                    }
+
+                })
             FirebaseAnalyticsEvents.support("CLICKED")
         }
     }
 
     private fun toPrivacyPolicy() {
-        val uri = Uri.parse("https://gist.githubusercontent.com/KawabeAtsushi/39f3ea332b05a6b053b263784a77cd51/raw")
+        val uri =
+            Uri.parse("https://gist.githubusercontent.com/KawabeAtsushi/39f3ea332b05a6b053b263784a77cd51/raw")
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
     }
@@ -200,79 +223,61 @@ class Settings : AppCompatActivity(), RewardedVideoAdListener {
     ////////////////////リワード広告のオーバーライド////////////////////////////////////////////
 
     // 広告の準備が完了したとき
-    override fun onRewardedVideoAdLoaded() {
-        mRewardedVideoAd.show()
-        loadingAnim.visibility = View.GONE
-        loadingAnim.cancelAnimation()
+    private fun onRewardedVideoAdLoaded(ad: RewardedAd) {
+        ad.fullScreenContentCallback = object : FullScreenContentCallback() {
+            override fun onAdClicked() {
+                // Called when a click is recorded for an ad.
+                Log.d(TAG, "Ad was clicked.")
+            }
+
+            override fun onAdDismissedFullScreenContent() {
+                // Called when ad is dismissed.
+                // Set the ad reference to null so you don't show the ad a second time.
+                Log.d(TAG, "Ad dismissed fullscreen content.")
+                rewardedAd = null
+                onRewardedVideoAdClosed()
+            }
+
+            override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                // Called when ad fails to show.
+                Log.e(TAG, "Ad failed to show fullscreen content.")
+                rewardedAd = null
+            }
+
+            override fun onAdImpression() {
+                // Called when an impression is recorded for an ad.
+                Log.d(TAG, "Ad recorded an impression.")
+            }
+
+            override fun onAdShowedFullScreenContent() {
+                // Called when ad is shown.
+                Log.d(TAG, "Ad showed fullscreen content.")
+                loadingAnim.visibility = View.GONE
+                loadingAnim.cancelAnimation()
+            }
+        }
+        ad.show(this@Settings, OnUserEarnedRewardListener { rewardItem ->
+            onRewarded(rewardItem)
+        })
     }
 
     //報酬対象になったとき
-    override fun onRewarded(p0: com.google.android.gms.ads.reward.RewardItem?) {
+    private fun onRewarded(p0: RewardItem?) {
         rewarded = true
         StatusHolder.adDeleted = true
         MainActivity.mAdView.visibility = View.GONE
     }
 
     //広告が閉じられたとき
-    override fun onRewardedVideoAdClosed() {
+    fun onRewardedVideoAdClosed() {
         dimmer.visibility = View.GONE
 
         if (rewarded) {
-            Toast.makeText(this, getString(R.string.ads_removed_temporarily), Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.ads_removed_temporarily), Toast.LENGTH_LONG)
+                .show()
             rewarded = false
             FirebaseAnalyticsEvents.support("REWARDED")
         }
     }
 
-    override fun onRewardedVideoAdOpened() {}
-    override fun onRewardedVideoStarted() {}
-    override fun onRewardedVideoAdLeftApplication() {}
-    override fun onRewardedVideoAdFailedToLoad(errorCode: Int) {}
-    override fun onRewardedVideoCompleted() {}
-
-    /////////////////////////パーミッション/////////////////////////////////////////////////
-
-    private val permission = 1000
-    private var position = 0
-
-    // ストレージ許可の確認
-    private fun checkPermission(c: Context, pos: Int) {
-        position = pos
-
-        if (ContextCompat.checkSelfPermission(c,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            // 既に許可している
-            when (position) {
-                0 -> onBackup()
-                1 -> onImport()
-                2 -> onDeleteBackup()
-            }
-        } else {
-            // 拒否していた場合,許可を求める
-            ActivityCompat.requestPermissions(this,
-                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    permission)
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>,
-                                            grantResults: IntArray) {
-        if (requestCode == permission) {
-            // 使用が許可された
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                when (position) {
-                    0 -> onBackup()
-                    1 -> onImport()
-                    2 -> onDeleteBackup()
-                }
-
-            } else {
-                // それでも拒否された時の対応
-                val toast = Toast.makeText(this.baseContext,
-                        getText(R.string.please_permit), Toast.LENGTH_SHORT)
-                toast.show()
-            }
-        }
-    }
 }

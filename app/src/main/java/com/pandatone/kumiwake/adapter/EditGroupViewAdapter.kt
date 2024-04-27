@@ -16,12 +16,15 @@ import android.widget.TextView
 import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.member.function.Group
-import java.util.*
 
 /**
  * Created by atsushi_2 on 2016/03/20.
  */
-class EditGroupViewAdapter(val context: Context, val groupList: List<Group>, private val groupListView: ListView) : BaseAdapter() {
+class EditGroupViewAdapter(
+    val context: Context,
+    val groupList: List<Group>,
+    private val groupListView: ListView
+) : BaseAdapter() {
     private var beforeNo: Int = 0
     private var afterNo: Int = 0
     private var autoChange: Boolean = false
@@ -65,7 +68,8 @@ class EditGroupViewAdapter(val context: Context, val groupList: List<Group>, pri
             nameEditText.setText(group.name)
         }
         belongNoEditText.setText(group.belongNo.toString())
-        leader.text = "${context.getString(R.string.leader)} : ${context.getString(R.string.nothing)}"
+        leader.text =
+            "${context.getString(R.string.leader)} : ${context.getString(R.string.nothing)}"
         nameEditTextList[position] = nameEditText
         belongEditTextList[position] = belongNoEditText
 
@@ -133,7 +137,8 @@ class EditGroupViewAdapter(val context: Context, val groupList: List<Group>, pri
         val et: EditText = if (position == groupListView.count - 1) {
             groupListView.getChildAt(0).findViewById<View>(R.id.editTheNumberOfMember) as EditText
         } else {
-            groupListView.getChildAt(position + 1).findViewById<View>(R.id.editTheNumberOfMember) as EditText
+            groupListView.getChildAt(position + 1)
+                .findViewById<View>(R.id.editTheNumberOfMember) as EditText
         }
         var nowNo = 0
         val newNo: Int

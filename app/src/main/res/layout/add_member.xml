@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/form_marginStart"
+    android:padding="@dimen/form_marginStart"
     android:parentActivityName=".MemberMain">
 
     <ScrollView
@@ -42,7 +42,7 @@
                     android:id="@+id/switch_continuously_mode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#9BE6A1"
+                    android:backgroundTint="#81DE89"
                     android:maxLines="1"
                     android:paddingStart="6dp"
                     android:paddingEnd="9dp"
@@ -159,9 +159,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_age"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:ems="4"
                     android:importantForAutofill="no"
                     android:inputType="number"
                     android:maxLength="2"

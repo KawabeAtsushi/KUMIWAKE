@@ -11,7 +11,13 @@ import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.AutoCompleteTextView
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
@@ -19,10 +25,17 @@ import androidx.core.view.GestureDetectorCompat
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.pandatone.kumiwake.*
+import com.pandatone.kumiwake.AddMemberKeys
+import com.pandatone.kumiwake.FirebaseAnalyticsEvents
+import com.pandatone.kumiwake.MyGestureListener
+import com.pandatone.kumiwake.PublicMethods
+import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
+import com.pandatone.kumiwake.databinding.AddMemberBinding
+import com.pandatone.kumiwake.extension.getSerializable
 import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
@@ -32,13 +45,14 @@ import com.pandatone.kumiwake.member.members.FragmentGroupMain
 import com.pandatone.kumiwake.member.members.FragmentMemberMain
 import com.pandatone.kumiwake.others.SelectMember
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
-import kotlinx.android.synthetic.main.add_member.*
 
 
 /**
  * Created by atsushi_2 on 2016/02/24.
  */
 class AddMember : AppCompatActivity() {
+    private lateinit var binding: AddMemberBinding
+
     private var beforeBelong: Array<String>? = null
     private var afterBelong: Array<String>? = null
     private var nameEditText: AppCompatEditText? = null
@@ -61,7 +75,8 @@ class AddMember : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         setTheme(StatusHolder.nowTheme)
-        setContentView(R.layout.add_member)
+        binding = AddMemberBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         mbAdapter = MemberAdapter(this)
         FragmentGroupMain.gpAdapter = GroupAdapter(this)
         FragmentGroupMain.listAdp = GroupFragmentViewAdapter(this, groupList)
@@ -70,19 +85,24 @@ class AddMember : AppCompatActivity() {
         findViews()
         ageEditText!!.setText("")
         val i = intent
-        val member = i.getSerializableExtra(AddMemberKeys.MEMBER.key) as Member?
+        val member = i.getSerializable<Member?>(AddMemberKeys.MEMBER.key)
         fromMode = i.getStringExtra(AddMemberKeys.FROM_MODE.key)
         val memberImg = findViewById<ImageView>(R.id.memberIcon)
         sexGroup!!.setOnCheckedChangeListener { _, checkedId: Int ->
             when (checkedId) {
                 R.id.manBtn -> memberImg.setColorFilter(PublicMethods.getColor(this, R.color.man))
-                R.id.womanBtn -> memberImg.setColorFilter(PublicMethods.getColor(this, R.color.woman))
+                R.id.womanBtn -> memberImg.setColorFilter(
+                    PublicMethods.getColor(
+                        this,
+                        R.color.woman
+                    )
+                )
             }
         }
         if (member != null) {
-            switch_continuously_mode.visibility = View.GONE
+            binding.switchContinuouslyMode.visibility = View.GONE
             setItem(member)
-            member_registration_continue_btn.visibility = View.GONE
+            binding.memberRegistrationContinueBtn.visibility = View.GONE
         }
 
         var yomigana = ""
@@ -107,7 +127,7 @@ class AddMember : AppCompatActivity() {
     }
 
     //スクロールビューの場合こっち呼ぶ
-    override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         super.dispatchTouchEvent(event)
         mDetector.onTouchEvent(event)
         return super.onTouchEvent(event)
@@ -121,9 +141,19 @@ class AddMember : AppCompatActivity() {
         sexGroup = findViewById<View>(R.id.sexGroup) as RadioGroup
         ageEditText = findViewById<View>(R.id.input_age) as EditText
         belongDropdown = findViewById<View>(R.id.select_group_choicer) as AutoCompleteTextView
-        belongDropdown?.let { button -> button.setOnClickListener { onSelectGroupDropdownClicked(button) } }
+        belongDropdown?.let { button ->
+            button.setOnClickListener {
+                onSelectGroupDropdownClicked(
+                    button
+                )
+            }
+        }
         findViewById<Button>(R.id.member_registration_finish_btn).setOnClickListener { register(true) }
-        findViewById<Button>(R.id.member_registration_continue_btn).setOnClickListener { register(false) }
+        findViewById<Button>(R.id.member_registration_continue_btn).setOnClickListener {
+            register(
+                false
+            )
+        }
         findViewById<Button>(R.id.member_cancel_btn).setOnClickListener { finish() }
         findViewById<Button>(R.id.switch_continuously_mode).setOnClickListener {
             val intent = Intent(this, AddMemberInBulk::class.java)
@@ -163,7 +193,8 @@ class AddMember : AppCompatActivity() {
             dialogShown = true
             // 選択中の候補を取得
             val buttonText = belongDropdown!!.text.toString()
-            val textArray = buttonText.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val textArray =
+                buttonText.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             // 候補リスト
             val list = ArrayList<String>()
             for (group in groupList) {
@@ -212,7 +243,10 @@ class AddMember : AppCompatActivity() {
     //バックキーの処理
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            DialogWarehouse(supportFragmentManager).decisionDialog("KUMIWAKE", getString(R.string.edit_exit_confirmation)) { finish() }
+            DialogWarehouse(supportFragmentManager).decisionDialog(
+                "KUMIWAKE",
+                getString(R.string.edit_exit_confirmation)
+            ) { finish() }
             return true
         }
         return false
@@ -226,7 +260,8 @@ class AddMember : AppCompatActivity() {
             textInputLayout!!.error = getText(R.string.error_empty_name)
         } else {
             saveItem()
-            afterBelong = belongDropdown!!.text.toString().split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            afterBelong = belongDropdown!!.text.toString().split(", ".toRegex())
+                .dropLastWhile { it.isEmpty() }.toTypedArray()
             MemberMethods.updateBelongNo(this)
             val newMember = MemberAdapter(this).latestMember
 
@@ -235,7 +270,11 @@ class AddMember : AppCompatActivity() {
                 "others" -> SelectMember.memberArray.add(newMember)
             }
 
-            Toast.makeText(this, getText(R.string.member).toString() + " \"" + name + "\" " + getText(R.string.registered), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getText(R.string.member).toString() + " \"" + name + "\" " + getText(R.string.registered),
+                Toast.LENGTH_SHORT
+            ).show()
             FirebaseAnalyticsEvents.memberRegisterEvent(newMember)
 
             if (finish) {
@@ -272,9 +311,14 @@ class AddMember : AppCompatActivity() {
                 textInputLayout!!.error = getText(R.string.error_empty_name)
             } else {
                 updateItem(listId)
-                afterBelong = belongDropdown!!.text.toString().split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                afterBelong = belongDropdown!!.text.toString().split(", ".toRegex())
+                    .dropLastWhile { it.isEmpty() }.toTypedArray()
                 MemberMethods.updateBelongNo(this)
-                Toast.makeText(applicationContext, getText(R.string.member).toString() + " \"" + name + "\" " + getText(R.string.updated), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext,
+                    getText(R.string.member).toString() + " \"" + name + "\" " + getText(R.string.updated),
+                    Toast.LENGTH_SHORT
+                ).show()
                 finish()
             }
         }

@@ -14,7 +14,10 @@ import com.pandatone.kumiwake.others.drawing.Ticket
 /**
  * Created by atsushi_2 on 2016/04/16.
  */
-class SmallDrawingHistoryListAdapter(private val context: Context, private val picked: MutableList<Ticket>) : BaseAdapter() {
+class SmallDrawingHistoryListAdapter(
+    private val context: Context,
+    private val picked: MutableList<Ticket>
+) : BaseAdapter() {
 
     override fun getCount(): Int {
         return picked.size
@@ -42,7 +45,10 @@ class SmallDrawingHistoryListAdapter(private val context: Context, private val p
         numberTextView = v!!.findViewById<View>(R.id.pickNo) as TextView
         nameTextView = v.findViewById<View>(R.id.ticketName) as TextView
         numberTextView.text = (count - position).toString()
-        nameTextView.text = HtmlCompat.fromHtml(getTicketNameWithColor(picked[position]), HtmlCompat.FROM_HTML_MODE_COMPACT)
+        nameTextView.text = HtmlCompat.fromHtml(
+            getTicketNameWithColor(picked[position]),
+            HtmlCompat.FROM_HTML_MODE_COMPACT
+        )
 
         return v
     }

@@ -11,7 +11,11 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.sekigime.SekigimeResult
 import com.pandatone.kumiwake.sekigime.function.DrawTableView.Companion.tableType
-import kotlin.math.*
+import kotlin.math.abs
+import kotlin.math.cos
+import kotlin.math.floor
+import kotlin.math.roundToInt
+import kotlin.math.sin
 
 /**
  * Created by atsushi_2 on 2016/07/15.
@@ -50,6 +54,7 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
                     280 + (130 * ((seatsNo - squareNo) / 2f).roundToInt() + 50)
                 }
             }
+
             "parallel" -> height = 130 * (seatsNo / 2f).roundToInt() + 170
             "circle" -> height = 860
             "counter" -> height = seatsNo * 132 + 100
@@ -95,10 +100,26 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
         cPaint.isAntiAlias = true
         cPaint.style = Paint.Style.STROKE
         val rectRight = dispWidth - 180 * dp
-        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight, tableRound, tableRound, cPaint)
+        canvas.drawRoundRect(
+            180 * dp,
+            tableTop,
+            rectRight,
+            tableHeight,
+            tableRound,
+            tableRound,
+            cPaint
+        )
         cPaint.color = Color.parseColor(tableColor)
         cPaint.style = Paint.Style.FILL
-        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight, tableRound, tableRound, cPaint)
+        canvas.drawRoundRect(
+            180 * dp,
+            tableTop,
+            rectRight,
+            tableHeight,
+            tableRound,
+            tableRound,
+            cPaint
+        )
 
         //椅子
         sPaint.color = Color.parseColor(chairStrokeColor)
@@ -204,10 +225,26 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
         cPaint.color = Color.parseColor(tableStrokeColor)
         cPaint.strokeWidth = tableStrokeWidth * dp
         cPaint.style = Paint.Style.STROKE
-        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight, tableRound, tableRound, cPaint)
+        canvas.drawRoundRect(
+            180 * dp,
+            tableTop,
+            rectRight,
+            tableHeight,
+            tableRound,
+            tableRound,
+            cPaint
+        )
         cPaint.color = Color.parseColor(tableColor)
         cPaint.style = Paint.Style.FILL
-        canvas.drawRoundRect(180 * dp, tableTop, rectRight, tableHeight, tableRound, tableRound, cPaint)
+        canvas.drawRoundRect(
+            180 * dp,
+            tableTop,
+            rectRight,
+            tableHeight,
+            tableRound,
+            tableRound,
+            cPaint
+        )
 //        val rect = RectF(180 * dp, 100 * dp, rectRight, tableHeight)
 //        canvas.drawBitmap(bmp, null, rect, cPaint)
 
@@ -285,11 +322,13 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
                 centerY = -centerX * 0.625f - 80 * dp
                 sPaint.strokeWidth = 7 * dp
             }
+
             seatsNo < 21 -> {
                 r = 40 * dp
                 centerY = -centerX * 0.625f - 60 * dp
                 sPaint.strokeWidth = 5 * dp
             }
+
             else -> {
                 r = 30 * dp
                 centerY = -centerX * 0.625f - 50 * dp
@@ -370,8 +409,12 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
 
         for (i in startNo until endNo) {
             when (teamArray[drawTableNo][i].sex) {
-                resources.getText(R.string.man) -> sPaint.color = PublicMethods.getColor(context, R.color.thin_man)
-                resources.getText(R.string.woman) -> sPaint.color = PublicMethods.getColor(context, R.color.thin_woman)
+                resources.getText(R.string.man) -> sPaint.color =
+                    PublicMethods.getColor(context, R.color.thin_man)
+
+                resources.getText(R.string.woman) -> sPaint.color =
+                    PublicMethods.getColor(context, R.color.thin_woman)
+
                 else -> sPaint.color = PublicMethods.getColor(context, R.color.thin_white)
             }
 
@@ -414,6 +457,7 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
                             textBottomY = nonOverlapSquare(point, yP, textPaint)
                         }
                     }
+
                     point < a -> {
                         //底辺
                         textStartX = textCenterToStartX(text, xP, textPaint)
@@ -421,25 +465,29 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
                             textBottomY = nonOverlapSquare(point, yP, textPaint)
                         }
                     }
+
                     point < (seatsNo + a) / 2 -> textStartX = 50 * dp //左辺
                     else -> textStartX = textEndToStartX(text, dispWidth - 50 * dp, textPaint) //右辺
                 }
             }
+
             "parallel" -> {
                 textStartX =
-                        if (point < seatsNo / 2) {
-                            50 * dp //左辺
-                        } else {
-                            textEndToStartX(text, dispWidth - 50 * dp, textPaint) //右辺
-                        }
+                    if (point < seatsNo / 2) {
+                        50 * dp //左辺
+                    } else {
+                        textEndToStartX(text, dispWidth - 50 * dp, textPaint) //右辺
+                    }
                 textBottomY = textCenterToBottomY(yP, textPaint)
             }
+
             "circle" -> {
                 val startX = textCenterToStartX(text, xP, textPaint)
                 textStartX = nonProtrudeCircle(text, startX, textPaint)
                 val bottomY = textCenterToBottomY(yP, textPaint)
                 textBottomY = nonOverlapCircle(bottomY, textStartX, point, textPaint)
             }
+
             else -> {
                 r = 60 * dp
                 textSize += 10 * dp
@@ -453,8 +501,12 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
         val balloonPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         balloonPaint.textSize = textSize
         when (teamArray[drawTableNo][point].sex) {
-            resources.getText(R.string.man) -> balloonPaint.color = PublicMethods.getColor(context, R.color.man)
-            resources.getText(R.string.woman) -> balloonPaint.color = PublicMethods.getColor(context, R.color.woman)
+            resources.getText(R.string.man) -> balloonPaint.color =
+                PublicMethods.getColor(context, R.color.man)
+
+            resources.getText(R.string.woman) -> balloonPaint.color =
+                PublicMethods.getColor(context, R.color.woman)
+
             else -> balloonPaint.color = PublicMethods.getColor(context, R.color.green)
         }
 
@@ -501,9 +553,11 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
             endX > dispWidth / 2 - 10 * dp -> {
                 startX - (endX - dispWidth / 2 + 10 * dp) //元の値-はみ出た分-マージン
             }
+
             startX < -dispWidth / 2 + 10 * dp -> {
                 -dispWidth / 2 + r / 2 + 10 * dp //ディスプレイの左端から10dpの位置
             }
+
             else -> {
                 startX
             }
@@ -511,7 +565,12 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
     }
 
     //circleのバルーンが重ならないように描画
-    private fun nonOverlapCircle(bottomY: Float, startX: Float, point: Int, textPaint: Paint): Float {
+    private fun nonOverlapCircle(
+        bottomY: Float,
+        startX: Float,
+        point: Int,
+        textPaint: Paint
+    ): Float {
         if (y.size > point + 1) {
             val nextCenterY = y[point + 1] - lastY
             when (point) {
@@ -523,12 +582,15 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
                         bottomY
                     }
                 }
+
                 seatsNo / 2 -> { //一番下の席
-                    val dist = abs(textBottomToTopY(bottomY, textPaint) - nextCenterY) * dp //上辺と次の席の中心点の距離
+                    val dist =
+                        abs(textBottomToTopY(bottomY, textPaint) - nextCenterY) * dp //上辺と次の席の中心点の距離
                     if (y[point] - y[point + 1] == 0f) {//下の席が並んでいる場合
                         val nowCenterX = x[point] - lastX
                         val nextCenterX = x[point + 1] - lastX
-                        val distHorizon = abs(startX - +r / 2 - nowCenterX) * dp //バルーンの先頭と今の席のの中心点の距離
+                        val distHorizon =
+                            abs(startX - +r / 2 - nowCenterX) * dp //バルーンの先頭と今の席のの中心点の距離
                         val wantDist = (abs(nextCenterX - nowCenterX) + 10) * dp //今の席と次の席の理想とする距離
                         return if (wantDist / 2 < distHorizon) { //次のバルーンと重なりそう
                             bottomY + (75 * dp - dist) //重ならない位置　+ マージン
@@ -543,6 +605,7 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
                         }
                     }
                 }
+
                 else -> {
                     return bottomY
                 }

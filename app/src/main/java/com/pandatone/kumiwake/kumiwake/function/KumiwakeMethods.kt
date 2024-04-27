@@ -8,14 +8,20 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Collections
 import kotlin.random.Random
 
 object KumiwakeMethods {
 
     // 組み分け
-    fun kumiwake(resultArray: ArrayList<ArrayList<Member>>, memberArray: ArrayList<Member>, groupArray: ArrayList<Group>, leaderArray: ArrayList<Member?>, evenFmRatio: Boolean, evenAgeRatio: Boolean) {
+    fun kumiwake(
+        resultArray: ArrayList<ArrayList<Member>>,
+        memberArray: ArrayList<Member>,
+        groupArray: ArrayList<Group>,
+        leaderArray: ArrayList<Member?>,
+        evenFmRatio: Boolean,
+        evenAgeRatio: Boolean
+    ) {
 
         val manArray: ArrayList<Member> = ArrayList()
         val womanArray: ArrayList<Member> = ArrayList()
@@ -45,7 +51,12 @@ object KumiwakeMethods {
     }
 
     //for normal mode
-    fun kumiwakeAll(resultArray: ArrayList<ArrayList<Member>>, memberArray: ArrayList<Member>, groupArray: ArrayList<Group>, leaderArray: ArrayList<Member?>) {
+    fun kumiwakeAll(
+        resultArray: ArrayList<ArrayList<Member>>,
+        memberArray: ArrayList<Member>,
+        groupArray: ArrayList<Group>,
+        leaderArray: ArrayList<Member?>
+    ) {
         setLeader(resultArray, leaderArray) //リーダを先にセット
 
         val groupCount = groupArray.size
@@ -59,7 +70,11 @@ object KumiwakeMethods {
     }
 
     //for quick mode
-    private fun kumiwakeAllQuick(resultArray: ArrayList<ArrayList<Member>>, memberArray: ArrayList<Member>, groupArray: ArrayList<Group>) {
+    private fun kumiwakeAllQuick(
+        resultArray: ArrayList<ArrayList<Member>>,
+        memberArray: ArrayList<Member>,
+        groupArray: ArrayList<Group>
+    ) {
         val groupCount = groupArray.size
         var memberNo = 0
 
@@ -74,7 +89,11 @@ object KumiwakeMethods {
     }
 
     //男女配列作成
-    private fun createFmArray(memberArray: ArrayList<Member>, manArray: ArrayList<Member>, womanArray: ArrayList<Member>) {
+    private fun createFmArray(
+        memberArray: ArrayList<Member>,
+        manArray: ArrayList<Member>,
+        womanArray: ArrayList<Member>
+    ) {
         for (member in memberArray) {
             if (PublicMethods.isMan(member.sex)) {
                 manArray.add(member)
@@ -85,7 +104,10 @@ object KumiwakeMethods {
     }
 
     //リーダーをresultArrayに追加
-    private fun setLeader(resultArray: ArrayList<ArrayList<Member>>, leaderArray: ArrayList<Member?>) {
+    private fun setLeader(
+        resultArray: ArrayList<ArrayList<Member>>,
+        leaderArray: ArrayList<Member?>
+    ) {
 
         for (leader in leaderArray.filterNotNull()) {
             resultArray[leaderArray.indexOf(leader)].add(leader)
@@ -107,14 +129,20 @@ object KumiwakeMethods {
     * （最終周は小数点以下の大きさで決まる。それまでは整数部の大きさで決まる。）
      */
     //manArrayが均等に配分されるようにresultArrayに追加
-    fun evenManDistribute(memberCount: Int, resultArray: ArrayList<ArrayList<Member>>, manArray: ArrayList<Member>, groupArray: ArrayList<Group>) {
+    fun evenManDistribute(
+        memberCount: Int,
+        resultArray: ArrayList<ArrayList<Member>>,
+        manArray: ArrayList<Member>,
+        groupArray: ArrayList<Group>
+    ) {
         val groupCount = groupArray.size
         val groupCapacity = DoubleArray(groupCount)
         val escapeArray = ArrayList<Member>() //復帰用
 
         //配属予想数配列を作成
         for (i in 0 until groupCount) {
-            groupCapacity[i] = groupArray[i].belongNo.toDouble() * (manArray.size / memberCount.toDouble()) //許容数 = グループの人数 × 男の割合
+            groupCapacity[i] =
+                groupArray[i].belongNo.toDouble() * (manArray.size / memberCount.toDouble()) //許容数 = グループの人数 × 男の割合
         }
 
         //leaderの男分を先にひく
@@ -126,9 +154,10 @@ object KumiwakeMethods {
 
         //順番に追加していく
         while (0 < manArray.size) {
-            val addGroupNo = groupCapacity.max()?.let { groupCapacity.indexOf(it) } //最大許容数のGroupNoを取得 //deprecated変更したら動かない
+            val addGroupNo =
+                groupCapacity.indices.maxByOrNull { groupCapacity[it] } ?: 0 //最大許容数のGroupNoを取得
             val member = manArray[0]
-            resultArray[addGroupNo!!].add(member) //メンバー追加
+            resultArray[addGroupNo].add(member) //メンバー追加
             escapeArray.add(member)
             manArray.remove(member)
             groupCapacity[addGroupNo]--
@@ -138,13 +167,18 @@ object KumiwakeMethods {
     }
 
     //womanArrayを残り全てのresultArrayに追加
-    fun evenWomanDistribute(resultArray: ArrayList<ArrayList<Member>>, womanArray: ArrayList<Member>, groupArray: ArrayList<Group>) {
+    fun evenWomanDistribute(
+        resultArray: ArrayList<ArrayList<Member>>,
+        womanArray: ArrayList<Member>,
+        groupArray: ArrayList<Group>
+    ) {
         val groupCount = groupArray.size
         val escapeArray = ArrayList<Member>() //復帰用
 
         var memberSum = 0
         for (i in 0 until groupCount) {
-            val addNo = groupArray[i].belongNo - resultArray[i].size  //追加する人数＝グループの所属人数－結果グループの現在数（すでに入っている男の数）
+            val addNo =
+                groupArray[i].belongNo - resultArray[i].size  //追加する人数＝グループの所属人数－結果グループの現在数（すでに入っている男の数）
             resultArray[i].addAll(kumiwakeCreateGroup(womanArray, addNo, escapeArray))
             memberSum += addNo //既に追加した人数
         }
@@ -152,7 +186,11 @@ object KumiwakeMethods {
     }
 
     //resultArray[i]を作るメソッド
-    private fun kumiwakeCreateGroup(array: ArrayList<Member>, addNo: Int, escapeArray: ArrayList<Member>): ArrayList<Member> {
+    private fun kumiwakeCreateGroup(
+        array: ArrayList<Member>,
+        addNo: Int,
+        escapeArray: ArrayList<Member>
+    ): ArrayList<Member> {
         val result = ArrayList<Member>()
         val addIndexes = properAgeIndexes(addNo, array.size)
 
@@ -185,11 +223,18 @@ object KumiwakeMethods {
     }
 
     //結果共有方法選択       ?関数型: () -> T を持ちます。つまり、パラメータを取らず、型 T の値を返す関数
-    fun shareResult(activity: Activity, titleView: View, commentView: TextView, choice1: () -> Unit, choice2: () -> Unit) {
+    fun shareResult(
+        activity: Activity,
+        titleView: View,
+        commentView: TextView,
+        choice1: () -> Unit,
+        choice2: () -> Unit
+    ) {
         val builder = androidx.appcompat.app.AlertDialog.Builder(activity)
         val items = arrayOf(
-                activity.getString(R.string.share_with_text),
-                activity.getString(R.string.share_with_image))
+            activity.getString(R.string.share_with_text),
+            activity.getString(R.string.share_with_image)
+        )
 
         builder.setTitle(R.string.share_result)
         var checked = 0
@@ -220,9 +265,9 @@ object KumiwakeMethods {
 
     //結果背景の色を生成
     private val colorList = listOf(
-            "ffb7b7", "ffb7db", "ffb7ff", "dbb7ff",
-            "b7b7ff", "b7dbff", "b7ffff", "b7ffdb",
-            "b7ffb7", "dbffb7", "ffffb7", "ffdbb7"
+        "ffb7b7", "ffb7db", "ffb7ff", "dbb7ff",
+        "b7b7ff", "b7dbff", "b7ffff", "b7ffdb",
+        "b7ffb7", "dbffb7", "ffffb7", "ffdbb7"
     )
 
     //組み分け結果背景用に色変換

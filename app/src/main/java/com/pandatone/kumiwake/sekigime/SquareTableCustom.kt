@@ -6,20 +6,23 @@ import android.widget.Button
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import com.pandatone.kumiwake.R
-import kotlinx.android.synthetic.main.square_custom.*
+import com.pandatone.kumiwake.databinding.SquareCustomBinding
 import kotlin.math.ceil
 
 /**
  * Created by atsushi_2 on 2016/07/15.
  */
 class SquareTableCustom : AppCompatActivity() {
+    private lateinit var binding: SquareCustomBinding
+
     private var seatNo = 0
     private var minGroupNo = 1000
     private var doubleDeploy: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.square_custom)
+        binding = SquareCustomBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         findViewById<Button>(R.id.move_result).setOnClickListener { onNext() }
 
         val array = SekigimeResult.teamArray
@@ -30,38 +33,42 @@ class SquareTableCustom : AppCompatActivity() {
             }
         }
 
-        square_seek_bar.max = minGroupNo / 4
+        binding.squareSeekBar.max = minGroupNo / 4
         if (minGroupNo < 4) {
-            square_seek_bar.isEnabled = false
+            binding.squareSeekBar.isEnabled = false
         }
-        doubleSquareType.setOnCheckedChangeListener { _, _ ->
-            if (doubleSquareType.isChecked) {
-                square_seek_bar.max = minGroupNo / 4
+        binding.doubleSquareType.setOnCheckedChangeListener { _, _ ->
+            if (binding.doubleSquareType.isChecked) {
+                binding.squareSeekBar.max = minGroupNo / 4
                 if (minGroupNo < 4) {
-                    square_seek_bar.isEnabled = false
+                    binding.squareSeekBar.isEnabled = false
                 }
             } else {
-                square_seek_bar.max = ceil(minGroupNo / 3.toDouble()).toInt()
-                square_seek_bar.isEnabled = minGroupNo >= 3
+                binding.squareSeekBar.max = ceil(minGroupNo / 3.toDouble()).toInt()
+                binding.squareSeekBar.isEnabled = minGroupNo >= 3
             }
         }
 
 
-        square_seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onStartTrackingTouch(square_seek_bar: SeekBar) {}
+        binding.squareSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onStartTrackingTouch(squareSeekBar: SeekBar) {}
 
-            override fun onProgressChanged(square_seek_bar: SeekBar, progress: Int, fromTouch: Boolean) {
+            override fun onProgressChanged(
+                squareSeekBar: SeekBar,
+                progress: Int,
+                fromTouch: Boolean
+            ) {
                 seatNo = progress
-                seat_number.text = seatNo.toString()
+                binding.seatNumber.text = seatNo.toString()
             }
 
-            override fun onStopTrackingTouch(square_seek_bar: SeekBar) {}
+            override fun onStopTrackingTouch(squareSeekBar: SeekBar) {}
         })
     }
 
     private fun onNext() {
         SekigimeResult.square_no = seatNo
-        doubleDeploy = doubleSquareType.isChecked
+        doubleDeploy = binding.doubleSquareType.isChecked
         SekigimeResult.doubleDeploy = doubleDeploy
         val intent = Intent(applicationContext, SekigimeResult::class.java)
         startActivity(intent)

@@ -42,7 +42,11 @@ class FragmentGroupMain : ListFragment() {
 
     // 必須*
     // Fragmentが初めてUIを描画する時にシステムが呼び出す
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.tab_group, container, false)
         (view.findViewById<View>(R.id.group_fab) as FloatingActionButton).setOnClickListener { moveAddGroup() }
 
@@ -53,7 +57,10 @@ class FragmentGroupMain : ListFragment() {
 
     override fun onStart() {
         super.onStart()
-        listAdp = GroupFragmentViewAdapter(requireContext(), groupList) //notifyDataSet..ではメンバー追加した際にグループ数が反映されなかったので
+        listAdp = GroupFragmentViewAdapter(
+            requireContext(),
+            groupList
+        ) //notifyDataSet..ではメンバー追加した際にグループ数が反映されなかったので
         loadName()
     }
 
@@ -70,18 +77,30 @@ class FragmentGroupMain : ListFragment() {
                 MembersMain.searchView.onActionViewCollapsed()
             FragmentMemberMain().loadName()
 
-            val items = arrayOf(getString(R.string.information), getString(R.string.edit), getString(R.string.delete))
+            val items = arrayOf(
+                getString(R.string.information),
+                getString(R.string.edit),
+                getString(R.string.delete)
+            )
             builder.setTitle(groupName)
             builder.setItems(items) { _, which ->
                 when (which) {
                     0 -> {
-                        GroupClick(requireActivity()).infoDialog(groupList[position], GroupMethods.searchBelong(requireContext(), groupList[position].id.toString()))
+                        GroupClick(requireActivity()).infoDialog(
+                            groupList[position],
+                            GroupMethods.searchBelong(
+                                requireContext(),
+                                groupList[position].id.toString()
+                            )
+                        )
                     }
+
                     1 -> {
                         val i = Intent(activity, AddGroup::class.java)
                         i.putExtra(AddGroupKeys.EDIT_ID.key, groupList[position].id)
                         startActivity(i)
                     }
+
                     2 -> deleteSingleGroup(position, groupName)
                 }
             }
@@ -91,10 +110,14 @@ class FragmentGroupMain : ListFragment() {
 
         listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE_MODAL
         listView.setMultiChoiceModeListener(Callback())
-        listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
-            listView.setItemChecked(position, !listAdp.isPositionChecked(groupList[position].id))
-            false
-        }
+        listView.onItemLongClickListener =
+            AdapterView.OnItemLongClickListener { _, _, position, _ ->
+                listView.setItemChecked(
+                    position,
+                    !listAdp.isPositionChecked(groupList[position].id)
+                )
+                false
+            }
 
         listView.isTextFilterEnabled = true
     }
@@ -167,7 +190,11 @@ class FragmentGroupMain : ListFragment() {
             menu.findItem(R.id.item_all_select).isVisible = true
             viewPager = MembersMain.viewPager
             listener = object : ViewPager.SimpleOnPageChangeListener() {
-                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
                     super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                     viewPager.currentItem = 1
                 }
@@ -222,8 +249,10 @@ class FragmentGroupMain : ListFragment() {
             return true
         }
 
-        override fun onItemCheckedStateChanged(mode: ActionMode,
-                                               position: Int, id: Long, checked: Boolean) {
+        override fun onItemCheckedStateChanged(
+            mode: ActionMode,
+            position: Int, id: Long, checked: Boolean
+        ) {
             // アクションモード時のアイテムの選択状態変更時
 
             checkedCount = listView.checkedItemCount

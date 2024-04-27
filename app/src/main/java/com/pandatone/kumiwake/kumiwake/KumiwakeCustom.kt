@@ -9,23 +9,32 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.WindowManager
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import com.pandatone.kumiwake.*
+import com.pandatone.kumiwake.KumiwakeArrayKeys
+import com.pandatone.kumiwake.KumiwakeCustomKeys
+import com.pandatone.kumiwake.ModeKeys
+import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.EditGroupViewAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
+import com.pandatone.kumiwake.databinding.KumiwakeCustomBinding
+import com.pandatone.kumiwake.extension.getSerializable
 import com.pandatone.kumiwake.member.function.Group
 import com.pandatone.kumiwake.member.function.Member
-import kotlinx.android.synthetic.main.kumiwake_custom.*
-import kotlinx.android.synthetic.main.part_review_listview.*
 
 
 /**
  * Created by atsushi_2 on 2016/05/27.
  */
 class KumiwakeCustom : AppCompatActivity() {
+    private lateinit var binding: KumiwakeCustomBinding
     private lateinit var memberListView: ListView
     private lateinit var groupListView: ListView
     private var mbAdapter: SmallMBListAdapter? = null
@@ -41,18 +50,18 @@ class KumiwakeCustom : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         setTheme(StatusHolder.nowTheme)
-        setContentView(R.layout.kumiwake_custom)
+        binding = KumiwakeCustomBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         if (StatusHolder.mode == ModeKeys.Sekigime.key) {
             val layout = findViewById<ConstraintLayout>(R.id.custom_root_layout)
             layout.background = ContextCompat.getDrawable(this, R.drawable.sekigime_background)
         }
 
-        if (intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) != null) {
-            memberArray = intent.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>
-        }
-        if (intent.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) != null) {
-            groupArray = intent.getSerializableExtra(KumiwakeArrayKeys.GROUP_LIST.key) as ArrayList<Group>
-        }
+        intent.getSerializable<ArrayList<Member>>(KumiwakeArrayKeys.MEMBER_LIST.key)
+            ?.let { memberArray = it }
+        intent.getSerializable<ArrayList<Group>>(KumiwakeArrayKeys.GROUP_LIST.key)
+            ?.let { groupArray = it }
+
         findViews()
         mbAdapter = SmallMBListAdapter(this, memberArray, showLeaderNo = true)
         editGPAdapter = EditGroupViewAdapter(this, groupArray, groupListView)
@@ -80,12 +89,13 @@ class KumiwakeCustom : AppCompatActivity() {
     //View初期化
     @SuppressLint("SetTextI18n")
     fun setViews() {
-        member_add_btn.visibility = View.GONE
-        member_register_and_add_btn.visibility = View.GONE
+        binding.addGroupListView.memberAddBtn.visibility = View.GONE
+        binding.addGroupListView.memberRegisterAndAddBtn.visibility = View.GONE
         mbAdapter?.setRowHeight(memberListView)
         editGPAdapter?.setRowHeight(groupListView)
-        numberOfSelectedMember.text = memberArray.size.toString() + getString(R.string.people)
-        group_no_txt.text = groupArray.size.toString() + " " + getText(R.string.group)
+        binding.addGroupListView.numberOfSelectedMember.text =
+            memberArray.size.toString() + getString(R.string.people)
+        binding.groupNoTxt.text = groupArray.size.toString() + " " + getText(R.string.group)
         val size = Point()
         windowManager.defaultDisplay.getSize(size)
         screenHeight = size.y
@@ -111,12 +121,18 @@ class KumiwakeCustom : AppCompatActivity() {
             intent.putExtra(KumiwakeArrayKeys.MEMBER_LIST.key, memberArray)
             intent.putExtra(KumiwakeArrayKeys.GROUP_LIST.key, newGroupArray)
             intent.putExtra(KumiwakeArrayKeys.LEADER_LIST.key, leaderArray)
-            intent.putExtra(KumiwakeCustomKeys.EVEN_FM_RATIO.key, even_fm_ratio_check.isChecked)
-            intent.putExtra(KumiwakeCustomKeys.EVEN_AGE_RATIO.key, even_age_ratio_check.isChecked)
+            intent.putExtra(
+                KumiwakeCustomKeys.EVEN_FM_RATIO.key,
+                binding.evenFmRatioCheck.isChecked
+            )
+            intent.putExtra(
+                KumiwakeCustomKeys.EVEN_AGE_RATIO.key,
+                binding.evenAgeRatioCheck.isChecked
+            )
             startActivity(intent)
             overridePendingTransition(R.anim.in_right, R.anim.out_left)
         } else {
-            error_member_no_txt.visibility = View.VISIBLE
+            binding.errorMemberNoTxt.visibility = View.VISIBLE
         }
     }
 
@@ -124,7 +140,8 @@ class KumiwakeCustom : AppCompatActivity() {
     private fun onBCClicked() {
         var et: EditText
         for (i in 0 until groupListView.count) {
-            et = groupListView.getChildAt(i).findViewById<View>(R.id.editTheNumberOfMember) as EditText
+            et = groupListView.getChildAt(i)
+                .findViewById<View>(R.id.editTheNumberOfMember) as EditText
             et.isFocusable = false
             et.setText(groupArray[i].belongNo.toString())
             et.isFocusableInTouchMode = true
@@ -140,17 +157,20 @@ class KumiwakeCustom : AppCompatActivity() {
         if (leaderArray.contains(selectedMember)) {
             nextSet = leaderArray.indexOf(selectedMember)
             leaderArray[nextSet] = null
-            val leader = groupListView.getChildAt(nextSet).findViewById<View>(R.id.leader) as TextView
+            val leader =
+                groupListView.getChildAt(nextSet).findViewById<View>(R.id.leader) as TextView
             leader.text = getText(R.string.leader).toString() + ":" + getText(R.string.nothing)
         } else if (nextSet != -1) {//最大数登録したら終わり(indexが-1返される)
             //リーダー登録
             leaderArray[nextSet] = selectedMember
-            val leader = groupListView.getChildAt(nextSet).findViewById<View>(R.id.leader) as TextView
+            val leader =
+                groupListView.getChildAt(nextSet).findViewById<View>(R.id.leader) as TextView
             leader.text = getText(R.string.leader).toString() + ":" + selectedMember.name
             nextSet = leaderArray.indexOfFirst { it == null }
         }
 
-        mbAdapter = SmallMBListAdapter(this, memberArray, leaderArray = leaderArray, showLeaderNo = true)
+        mbAdapter =
+            SmallMBListAdapter(this, memberArray, leaderArray = leaderArray, showLeaderNo = true)
         memberListView.adapter = mbAdapter
     }
 
@@ -168,7 +188,8 @@ class KumiwakeCustom : AppCompatActivity() {
     private fun setKeyboardListener() {
         val activityRootView = findViewById<View>(R.id.custom_root_layout)
         val view = findViewById<View>(R.id.normal_kumiwake_button)
-        activityRootView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        activityRootView.viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
             private val r = Rect()
 
             override fun onGlobalLayout() {

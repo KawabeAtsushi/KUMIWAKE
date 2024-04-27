@@ -20,14 +20,16 @@ import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.Theme
 import com.pandatone.kumiwake.adapter.EditOthersViewAdapter
+import com.pandatone.kumiwake.databinding.TicketDifinitionBinding
 import com.pandatone.kumiwake.member.function.Group
-import kotlinx.android.synthetic.main.ticket_difinition.*
 
 
 /**
  * Created by atsushi_2 on 2016/05/27.
  */
 class TicketDefine : AppCompatActivity() {
+    private lateinit var binding: TicketDifinitionBinding
+
     private lateinit var ticketListView: ListView
     private lateinit var totalAssignedTextView: TextView
     private var editTicketAdapter: EditOthersViewAdapter? = null
@@ -39,7 +41,8 @@ class TicketDefine : AppCompatActivity() {
         FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         PublicMethods.setStatus(this, Theme.Others.primaryColor)
-        setContentView(R.layout.ticket_difinition)
+        binding = TicketDifinitionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         findViews()
         editTicketAdapter = EditOthersViewAdapter(this, ticketArray, totalAssignedTextView, true)
         onAddTicket()
@@ -87,7 +90,7 @@ class TicketDefine : AppCompatActivity() {
             startActivity(intent)
             overridePendingTransition(R.anim.in_right, R.anim.out_left)
         } else {
-            error_incorrect_number.visibility = View.VISIBLE
+            binding.errorIncorrectNumber.visibility = View.VISIBLE
         }
     }
 
@@ -132,7 +135,8 @@ class TicketDefine : AppCompatActivity() {
     private fun setKeyboardListener() {
         val activityRootView = findViewById<View>(R.id.custom_root_layout)
         val view = findViewById<View>(R.id.drawing_result_button)
-        activityRootView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        activityRootView.viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
             private val r = Rect()
 
             override fun onGlobalLayout() {

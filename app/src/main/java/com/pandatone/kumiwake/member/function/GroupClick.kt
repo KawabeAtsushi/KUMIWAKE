@@ -29,7 +29,10 @@ class GroupClick(val c: Activity) {
     fun infoDialog(item: Group, memberByBelong: ArrayList<Member>) {
         val builder = AlertDialog.Builder(c)
         val inflater = c.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.group_info, c.findViewById<View>(R.id.info_layout) as ViewGroup?)
+        val view = inflater.inflate(
+            R.layout.group_info,
+            c.findViewById<View>(R.id.info_layout) as ViewGroup?
+        )
 
         group = view.findViewById<View>(R.id.infoName) as TextView
         number = view.findViewById<View>(R.id.infoMBNo) as TextView

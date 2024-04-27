@@ -1,27 +1,22 @@
 package com.pandatone.kumiwake.setting
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.content.Context
-import android.os.Environment
-import android.view.View
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatDialog
-import com.pandatone.kumiwake.R
+import android.util.Log
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.history.HistoryAdapter
 import java.io.File
-import java.io.FileNotFoundException
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.io.IOException
+import java.util.zip.ZipEntry
+import java.util.zip.ZipInputStream
+import java.util.zip.ZipOutputStream
 
 @SuppressLint("StaticFieldLeak")
 object DBBackup {
-    val dir_path: String
-        get() {
-            val sdDir = Environment.getExternalStorageDirectory().path     //SDカードディレクトリ
-            return "$sdDir/KUMIWAKE_Backup"
-        }
     private val mb_db_file: String
         get() {
             MemberAdapter(context).also {
@@ -50,92 +45,98 @@ object DBBackup {
             return HistoryAdapter.db.path   //DBのディレクトリとファイル名
         }
     private lateinit var context: Context
-    private var b: Boolean = false
 
-    @SuppressLint("SetTextI18n")
-    fun dbBackup(c: Context, path: String, dialog: AppCompatDialog) {
+    private fun getFileNameByDB(dbFilePath: String): String {
+        return when (dbFilePath) {
+            File(mb_db_file).name -> "mb.db"
+            File(gp_db_file).name -> "gp.db"
+            File(hs_db_file).name -> "hs.db"
+            else -> {
+                throw Exception("Invalid File")
+            }
+        }
+    }
+
+    private fun getDBByFileName(fileName: String): String {
+        return when (fileName) {
+            "mb.db" -> mb_db_file
+            "gp.db" -> gp_db_file
+            "hs.db" -> hs_db_file
+            else -> {
+                throw Exception("Invalid File Name")
+            }
+        }
+    }
+
+    // Backup
+    fun addBackupFiles(c: Context, zipOutputStream: ZipOutputStream) {
         context = c
-        checkSDStatus(context)
+        val backupFile = createFolderWithFiles(context, mb_db_file, gp_db_file, hs_db_file)
+        addFolderToZip(backupFile, zipOutputStream)
+        zipOutputStream.finish()
+    }
 
-        val f = File(path)
+    private fun createFolderWithFiles(context: Context, vararg filePaths: String): File {
+        val folderName = "kumiwake_backup"
+        val filesDir = context.getExternalFilesDir(null)
+        val folder = File(filesDir, folderName)
 
-        b = f.exists()           //SDカードにkumiwakeディレクトリがあるか。
-        if (!b) {          //ディレクトリが存在しないので作成。
-            b = f.mkdirs()    //　sdcard/kumiwakeディレクトリを作ってみる。
-            if (!b) {
-                Toast.makeText(c, c.getString(R.string.failed_to_mkdirs), Toast.LENGTH_SHORT).show()
-                return          //ディレクトリ作成失敗
+        if (!folder.exists()) {
+            val created = folder.mkdirs()
+            if (!created) {
+                Log.e(TAG, "Cannot create backup folder")
             }
         }
 
-        var err = 0
-        err += fileCopy(mb_db_file, "$path/mb.db", c)
-        err += fileCopy(gp_db_file, "$path/gp.db", c)
-        err += fileCopy(hs_db_file, "$path/hs.db", c)//DBのファイルをSDにコピー
-
-        if (err == 0) {
-            Toast.makeText(c, c.getString(R.string.back_up_completed), Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(c, c.getString(R.string.failed_backup), Toast.LENGTH_SHORT).show()
+        for (filePath in filePaths) {
+            val file = File(filePath)
+            if (file.exists()) {
+                val destinationFile = File(folder, getFileNameByDB(file.name))
+                try {
+                    file.copyTo(destinationFile, overwrite = true)
+                } catch (e: IOException) {
+                    Log.e(TAG, "Failed to copy file: ${file.name}", e)
+                }
+            }
         }
-        dialog.dismiss()
+
+        return folder
     }
 
-    @SuppressLint("SetTextI18n")
-    fun dbImport(c: Context, path: String, dialog: AppCompatDialog) {
+    private fun addFolderToZip(folder: File, zipOutputStream: ZipOutputStream) {
+        folder.listFiles()?.forEach { file ->
+            val filePath = file.name
+            try {
+                FileInputStream(file).use { fileInputStream ->
+                    val zipEntry = ZipEntry(filePath)
+                    zipOutputStream.putNextEntry(zipEntry)
+                    fileInputStream.copyTo(zipOutputStream)
+                    zipOutputStream.closeEntry()
+                }
+            } catch (e: IOException) {
+                Log.e(TAG, "Failed to add file to zip: $filePath", e)
+            }
+        }
+    }
+
+    // Import
+    fun readFile(c: Context, zipInputStream: ZipInputStream) {
         context = c
-        checkSDStatus(context)
-
-        var err = 0
-        val f = File(path)
-        b = f.exists()           //SDカードにkumiwakeディレクトリがあるか。
-        if (!b) {
-            Toast.makeText(c, c.getString(R.string.not_exist_file), Toast.LENGTH_SHORT).show()
-            return
+        val buffer = ByteArray(1024)
+        var entry = zipInputStream.nextEntry
+        while (entry != null) {
+            val fileName = entry.name
+            val file = File(getDBByFileName(fileName))
+            val outputStream = FileOutputStream(file)
+            var len: Int
+            while (zipInputStream.read(buffer).also { len = it } > 0) {
+                outputStream.write(buffer, 0, len)
+            }
+            outputStream.close()
+            entry = zipInputStream.nextEntry
         }
-
-        err += fileCopy("$path/mb.db", mb_db_file, c)
-        err += fileCopy("$path/gp.db", gp_db_file, c)//DBのファイルをインポート
-
-        if (err == 0) {
-            dialog.dismiss()
-            Toast.makeText(c, c.getString(R.string.import_completed), Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(c, "Error : $err", Toast.LENGTH_SHORT).show()
-            // メッセージ設定
-            (dialog.findViewById<View>(R.id.dialog_message) as TextView).text = c.getString(R.string.nothing_file) + "\n" + path +
-                    "\n\n" + c.getString(R.string.failed_import)
-        }
-    }
-
-
-    //ファイルのコピー（チャネルを使用）
-    private fun fileCopy(src_path: String, dest_path: String, c: Context): Int {
-        var err = 0
-
-        val src = File(src_path)
-        val dest = File(dest_path)
-
-        try {
-            src.copyTo(dest, overwrite = true)
-        } catch (e: FileNotFoundException) {
-            err = 1
-            Toast.makeText(c, c.getString(R.string.error_has_occurred) + "\n(FileNotFoundException)", Toast.LENGTH_SHORT).show()
-        } catch (e: IOException) {
-            err = 2
-            Toast.makeText(c, c.getString(R.string.error_has_occurred) + "\n(IOException)", Toast.LENGTH_SHORT).show()
-        }
-        return err
-    }
-
-    private fun checkSDStatus(c: Context) {
-
-        b = Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED     //SDカードの状態
-        if (!b) {  //書込み状態でマウントされていない。
-            Toast.makeText(c, c.getString(R.string.not_mounted), Toast.LENGTH_SHORT).show()
-            return          //ディレクトリ作成失敗
-        }
-
+        zipInputStream.closeEntry()
+        zipInputStream.close()
     }
 
 }

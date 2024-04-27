@@ -21,19 +21,28 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.GestureDetectorCompat
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.pandatone.kumiwake.*
+import com.pandatone.kumiwake.AddGroupKeys
+import com.pandatone.kumiwake.AddMemberKeys
+import com.pandatone.kumiwake.FirebaseAnalyticsEvents
+import com.pandatone.kumiwake.KumiwakeArrayKeys
+import com.pandatone.kumiwake.ModeKeys
+import com.pandatone.kumiwake.MyGestureListener
+import com.pandatone.kumiwake.PublicMethods
+import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
+import com.pandatone.kumiwake.Theme
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
+import com.pandatone.kumiwake.databinding.NormalModeBinding
+import com.pandatone.kumiwake.extension.getSerializable
 import com.pandatone.kumiwake.member.AddMember
 import com.pandatone.kumiwake.member.ChoiceMemberMain
 import com.pandatone.kumiwake.member.function.Member
-import kotlinx.android.synthetic.main.normal_mode.*
-import kotlinx.android.synthetic.main.part_review_listview.view.*
-import java.util.*
 
 /**
  * Created by atsushi_2 on 2016/05/02.
  */
 class NormalMode : AppCompatActivity() {
+    private lateinit var binding: NormalModeBinding
     private var adapter: SmallMBListAdapter? = null
     private lateinit var gpNoEditText: AppCompatEditText
     private lateinit var errorGroup: TextView
@@ -52,17 +61,19 @@ class NormalMode : AppCompatActivity() {
         } else {
             PublicMethods.setStatus(this, Theme.Kumiwake.primaryColor)
         }
-        setContentView(R.layout.normal_mode)
+        binding = NormalModeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         if (StatusHolder.mode == ModeKeys.Sekigime.key) {
             val layout = findViewById<ConstraintLayout>(R.id.normal_select_layout)
             layout.background = ContextCompat.getDrawable(this, R.drawable.sekigime_background)
         }
         findViews()
-        add_group_listView.member_add_btn.setOnClickListener { moveMemberMain() }
-        add_group_listView.member_register_and_add_btn.setOnClickListener { moveAddMember() }
+        binding.addGroupListView.memberAddBtn.setOnClickListener { moveMemberMain() }
+        binding.addGroupListView.memberRegisterAndAddBtn.setOnClickListener { moveAddMember() }
         adapter = SmallMBListAdapter(this, memberArray)
         listView.adapter = adapter
-        add_group_listView.numberOfSelectedMember.text = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
+        binding.addGroupListView.numberOfSelectedMember.text =
+            "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
         findViewById<Button>(R.id.normal_kumiwake_btn).setOnClickListener { onNextClick() }
 
         Toast.makeText(this, getText(R.string.double_tap), Toast.LENGTH_SHORT).show()
@@ -74,7 +85,8 @@ class NormalMode : AppCompatActivity() {
     //Viewの宣言
     private fun findViews() {
         listView = findViewById<View>(R.id.add_group_listView).findViewById(R.id.memberListView)
-        listView.emptyView = findViewById<View>(R.id.add_group_listView).findViewById(R.id.emptyMemberList)
+        listView.emptyView =
+            findViewById<View>(R.id.add_group_listView).findViewById(R.id.emptyMemberList)
         gpNoEditText = findViewById(R.id.group_no_form)
         errorGroup = findViewById(R.id.error_group_no_txt)
     }
@@ -119,9 +131,17 @@ class NormalMode : AppCompatActivity() {
             overridePendingTransition(R.anim.in_right, R.anim.out_left)
             //Add Firebase
             if (StatusHolder.mode == ModeKeys.Sekigime.key) {
-                FirebaseAnalyticsEvents.countEvent(memberArray.size, groupNo, FirebaseAnalyticsEvents.FunctionKeys.SekigimeNormal.key)
+                FirebaseAnalyticsEvents.countEvent(
+                    memberArray.size,
+                    groupNo,
+                    FirebaseAnalyticsEvents.FunctionKeys.SekigimeNormal.key
+                )
             } else {
-                FirebaseAnalyticsEvents.countEvent(memberArray.size, groupNo, FirebaseAnalyticsEvents.FunctionKeys.KumiwakeNormal.key)
+                FirebaseAnalyticsEvents.countEvent(
+                    memberArray.size,
+                    groupNo,
+                    FirebaseAnalyticsEvents.FunctionKeys.KumiwakeNormal.key
+                )
             }
         }
     }
@@ -130,13 +150,15 @@ class NormalMode : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, i)
 
         if (resultCode == Activity.RESULT_OK) {
-            memberArray = i!!.getSerializableExtra(AddGroupKeys.MEMBER_ARRAY.key) as ArrayList<Member>
+            i?.getSerializable<ArrayList<Member>>(AddGroupKeys.MEMBER_ARRAY.key)
+                ?.let { memberArray = it }
         }
 
         adapter = SmallMBListAdapter(this, memberArray)
         listView.adapter = adapter
-        val selectedTxt = "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
-        add_group_listView.numberOfSelectedMember.text = selectedTxt
+        val selectedTxt =
+            "${memberArray.size}${getString(R.string.people)}${getString(R.string.selected)}"
+        binding.addGroupListView.numberOfSelectedMember.text = selectedTxt
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {

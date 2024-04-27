@@ -26,9 +26,10 @@ object ShareViewImage {
 
         // ファイルを示すインテントを作成する
         val uri = FileProvider.getUriForFile(
-                context,
-                context.packageName + ".provider",
-                File(fileFullPath))
+            context,
+            context.packageName + ".provider",
+            File(fileFullPath)
+        )
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "image/png" // PNG image
         intent.putExtra(Intent.EXTRA_STREAM, uri)

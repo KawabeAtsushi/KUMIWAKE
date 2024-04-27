@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager
 import com.pandatone.kumiwake.AddGroupKeys
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.CustomPagerAdapter
+import com.pandatone.kumiwake.extension.getSerializable
 import com.pandatone.kumiwake.member.function.Member
 
 
@@ -32,10 +33,8 @@ class ChoiceMemberMain : AppCompatActivity() {
         supportActionBar!!.title = "      0" + getString(R.string.selected)
         supportActionBar!!.setDisplayShowTitleEnabled(true)
 
-        val i = intent
-        if (i.getSerializableExtra(AddGroupKeys.MEMBER_ARRAY.key) != null) {
-            memberArray = i.getSerializableExtra(AddGroupKeys.MEMBER_ARRAY.key) as ArrayList<Member>
-        }
+        intent.getSerializable<ArrayList<Member>>(AddGroupKeys.MEMBER_ARRAY.key)
+            ?.let { memberArray = it }
 
         setViews()
     }
@@ -49,7 +48,11 @@ class ChoiceMemberMain : AppCompatActivity() {
 
         viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             //スクロール中（page切り替え中）に呼ばれる
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
                 //tableNo:遷移中pageのindex
                 //positionOffset:遷移前→遷移後のoffset割合を0~1で返す
                 //positionOffsetPixels:positionOffsetをpixelで返す
@@ -58,7 +61,8 @@ class ChoiceMemberMain : AppCompatActivity() {
                 } else {
                     decision.visibility = View.GONE
                 }
-                decision.translationY = 1000 * positionOffset * (1 - 2 * position) //0to1->up,1to0->down
+                decision.translationY =
+                    1000 * positionOffset * (1 - 2 * position) //0to1->up,1to0->down
             }
         })
     }

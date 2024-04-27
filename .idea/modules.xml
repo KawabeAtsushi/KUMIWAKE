@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/KUMIWAKE.iml" filepath="$PROJECT_DIR$/.idea/KUMIWAKE.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/KUMIWAKE.iml" filepath="$PROJECT_DIR$/.idea/modules/KUMIWAKE.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/KUMIWAKE.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/KUMIWAKE.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/KUMIWAKE.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/KUMIWAKE.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/KUMIWAKE.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/KUMIWAKE.app.unitTest.iml" />
     </modules>
   </component>
 </project>

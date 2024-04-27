@@ -15,6 +15,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu.OnFloatingActionsMen
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.history.HistoryMain
@@ -53,8 +54,13 @@ class MainActivity : AppCompatActivity() {
             mAdView.visibility = View.GONE
         } else {
             MobileAds.initialize(this)
-            val adRequest = AdRequest.Builder()
-                    .addTestDevice(getString(R.string.device_id)).build()
+            val testDevices: MutableList<String> = ArrayList()
+            testDevices.add(AdRequest.DEVICE_ID_EMULATOR)
+            val requestConfiguration = RequestConfiguration.Builder()
+                .setTestDeviceIds(testDevices)
+                .build()
+            MobileAds.setRequestConfiguration(requestConfiguration)
+            val adRequest = AdRequest.Builder().build()
             mAdView.loadAd(adRequest)
         }
     }
@@ -67,7 +73,10 @@ class MainActivity : AppCompatActivity() {
     // 戻るボタンが押されたとき
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            DialogWarehouse(supportFragmentManager).decisionDialog("KUMIWAKE", getString(R.string.app_exit_confirmation)) {
+            DialogWarehouse(supportFragmentManager).decisionDialog(
+                "KUMIWAKE",
+                getString(R.string.app_exit_confirmation)
+            ) {
                 finishAndRemoveTask()
             }
             return true
@@ -100,7 +109,8 @@ class MainActivity : AppCompatActivity() {
         dimmer.setOnClickListener {
             menuMultipleActions.collapse()
         }
-        menuMultipleActions.setOnFloatingActionsMenuUpdateListener(object : OnFloatingActionsMenuUpdateListener {
+        menuMultipleActions.setOnFloatingActionsMenuUpdateListener(object :
+            OnFloatingActionsMenuUpdateListener {
             override fun onMenuExpanded() {
                 dimmer.visibility = View.VISIBLE
                 overlayIcon.visibility = View.GONE
@@ -118,10 +128,14 @@ class MainActivity : AppCompatActivity() {
         //組分けボタン
         val kNormalUnit: View = findViewById(R.id.kumiwake_normal_unit)
         val kNormalButton: ImageButton = kNormalUnit.findViewById(R.id.icon_button)
-        (kNormalUnit.findViewById(R.id.button_text) as TextView).setText(R.string.normal_mode)
-        kNormalButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.red_title))
+        (kNormalUnit.findViewById<TextView>(R.id.button_text)!!).setText(R.string.normal_mode)
+        kNormalButton.backgroundTintList =
+            ColorStateList.valueOf(PublicMethods.getColor(this, R.color.red_title))
         kNormalButton.setImageResource(R.drawable.ic_kumiwake_24px)
-        kNormalButton.updatePadding(top = PublicMethods.setByDp(17.0f, this), bottom = PublicMethods.setByDp(22.0f, this))
+        kNormalButton.updatePadding(
+            top = PublicMethods.setByDp(17.0f, this),
+            bottom = PublicMethods.setByDp(22.0f, this)
+        )
         kNormalButton.setOnClickListener {
             StatusHolder.mode = ModeKeys.Kumiwake.key
             StatusHolder.normalMode = true
@@ -132,10 +146,14 @@ class MainActivity : AppCompatActivity() {
 
         val kQuickUnit: View = findViewById(R.id.kumiwake_quick_unit)
         val kQuickButton: ImageButton = kQuickUnit.findViewById(R.id.icon_button)
-        (kQuickUnit.findViewById(R.id.button_text) as TextView).setText(R.string.quick_mode)
-        kQuickButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.red_title))
+        (kQuickUnit.findViewById<TextView>(R.id.button_text)!!).setText(R.string.quick_mode)
+        kQuickButton.backgroundTintList =
+            ColorStateList.valueOf(PublicMethods.getColor(this, R.color.red_title))
         kQuickButton.setImageResource(R.drawable.ic_kumiwake_24px)
-        kQuickButton.updatePadding(top = PublicMethods.setByDp(17.0f, this), bottom = PublicMethods.setByDp(22.0f, this))
+        kQuickButton.updatePadding(
+            top = PublicMethods.setByDp(17.0f, this),
+            bottom = PublicMethods.setByDp(22.0f, this)
+        )
         kQuickButton.setOnClickListener {
             StatusHolder.mode = ModeKeys.Kumiwake.key
             StatusHolder.normalMode = false
@@ -146,8 +164,9 @@ class MainActivity : AppCompatActivity() {
         //席決めボタン
         val sNormalUnit: View = findViewById(R.id.sekigime_normal_unit)
         val sNormalButton: ImageButton = sNormalUnit.findViewById(R.id.icon_button)
-        (sNormalUnit.findViewById(R.id.button_text) as TextView).setText(R.string.normal_mode)
-        sNormalButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.green_title))
+        (sNormalUnit.findViewById<TextView>(R.id.button_text)!!).setText(R.string.normal_mode)
+        sNormalButton.backgroundTintList =
+            ColorStateList.valueOf(PublicMethods.getColor(this, R.color.green_title))
         sNormalButton.setImageResource(R.drawable.ic_sekigime_24px)
         sNormalButton.setOnClickListener {
             StatusHolder.mode = ModeKeys.Sekigime.key
@@ -159,8 +178,9 @@ class MainActivity : AppCompatActivity() {
 
         val sQuickUnit: View = findViewById(R.id.sekigime_quick_unit)
         val sQuickButton: ImageButton = sQuickUnit.findViewById(R.id.icon_button)
-        (sQuickUnit.findViewById(R.id.button_text) as TextView).setText(R.string.quick_mode)
-        sQuickButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.green_title))
+        (sQuickUnit.findViewById<TextView>(R.id.button_text)!!).setText(R.string.quick_mode)
+        sQuickButton.backgroundTintList =
+            ColorStateList.valueOf(PublicMethods.getColor(this, R.color.green_title))
         sQuickButton.setImageResource(R.drawable.ic_sekigime_24px)
         sQuickButton.setOnClickListener {
             StatusHolder.mode = ModeKeys.Sekigime.key
@@ -174,7 +194,7 @@ class MainActivity : AppCompatActivity() {
         //履歴
         val historyUnit: View = findViewById(R.id.history_unit)
         val historyButton: ImageButton = historyUnit.findViewById(R.id.icon_button)
-        (historyUnit.findViewById(R.id.button_text) as TextView).setText(R.string.history)
+        (historyUnit.findViewById<TextView>(R.id.button_text)!!).setText(R.string.history)
         historyButton.setImageResource(R.drawable.ic_history_black_24dp)
         historyButton.setOnClickListener {
             startActivity(Intent(this, HistoryMain::class.java))
@@ -184,7 +204,7 @@ class MainActivity : AppCompatActivity() {
         //順番決め
         val orderUnit: View = findViewById(R.id.order_unit)
         val orderButton: ImageButton = orderUnit.findViewById(R.id.icon_button)
-        (orderUnit.findViewById(R.id.button_text) as TextView).setText(R.string.order)
+        (orderUnit.findViewById<TextView>(R.id.button_text)!!).setText(R.string.order)
         orderButton.setImageResource(R.drawable.ic_order)
         orderButton.setOnClickListener {
             StatusHolder.mode = ModeKeys.Order.key
@@ -195,7 +215,7 @@ class MainActivity : AppCompatActivity() {
         //役割決め
         val roleUnit: View = findViewById(R.id.role_unit)
         val roleButton: ImageButton = roleUnit.findViewById(R.id.icon_button)
-        (roleUnit.findViewById(R.id.button_text) as TextView).setText(R.string.role)
+        (roleUnit.findViewById<TextView>(R.id.button_text)!!).setText(R.string.role)
         roleButton.setImageResource(R.drawable.ic_role)
         roleButton.setOnClickListener {
             StatusHolder.mode = ModeKeys.Role.key
@@ -206,7 +226,7 @@ class MainActivity : AppCompatActivity() {
         //くじ引き
         val drawingUnit: View = findViewById(R.id.drawing_unit)
         val drawingButton: ImageButton = drawingUnit.findViewById(R.id.icon_button)
-        (drawingUnit.findViewById(R.id.button_text) as TextView).setText(R.string.drawing)
+        (drawingUnit.findViewById<TextView>(R.id.button_text)!!).setText(R.string.drawing)
         drawingButton.setImageResource(R.drawable.ic_drawing)
         drawingButton.setOnClickListener {
             StatusHolder.mode = ModeKeys.Drawing.key
@@ -217,7 +237,7 @@ class MainActivity : AppCompatActivity() {
         //クラスルーム
         val classroomUnit: View = findViewById(R.id.classroom_unit)
         val classroomButton: ImageButton = classroomUnit.findViewById(R.id.icon_button)
-        (classroomUnit.findViewById(R.id.button_text) as TextView).setText(R.string.classroom)
+        (classroomUnit.findViewById<TextView>(R.id.button_text)!!).setText(R.string.classroom)
         classroomButton.setImageResource(R.drawable.ic_school)
         classroomButton.setOnClickListener {
             StatusHolder.mode = ModeKeys.Classroom.key
@@ -228,8 +248,9 @@ class MainActivity : AppCompatActivity() {
         //設定・ヘルプ
         val helpUnit: View = findViewById(R.id.help_unit)
         val helpButton: ImageButton = helpUnit.findViewById(R.id.icon_button)
-        (helpUnit.findViewById(R.id.button_text) as TextView).setText(R.string.help)
-        helpButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.yellow_title))
+        (helpUnit.findViewById<TextView>(R.id.button_text)!!).setText(R.string.help)
+        helpButton.backgroundTintList =
+            ColorStateList.valueOf(PublicMethods.getColor(this, R.color.orange))
         helpButton.setImageResource(R.drawable.ic_help_outline_dark_24dp)
         helpButton.setOnClickListener {
             startActivity(Intent(this, Help::class.java))
@@ -237,8 +258,9 @@ class MainActivity : AppCompatActivity() {
 
         val settingsUnit: View = findViewById(R.id.settings_unit)
         val settingsButton: ImageButton = settingsUnit.findViewById(R.id.icon_button)
-        (settingsUnit.findViewById(R.id.button_text) as TextView).setText(R.string.settings)
-        settingsButton.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(this, R.color.yellow_title))
+        (settingsUnit.findViewById<TextView>(R.id.button_text)!!).setText(R.string.settings)
+        settingsButton.backgroundTintList =
+            ColorStateList.valueOf(PublicMethods.getColor(this, R.color.orange))
         settingsButton.setImageResource(R.drawable.ic_settings_24dp)
         settingsButton.setOnClickListener {
             startActivity(Intent(this, Settings::class.java))

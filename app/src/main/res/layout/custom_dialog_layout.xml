@@ -56,17 +56,6 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/dialog_path"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:lineSpacingExtra="6dp"
-                    android:text=""
-                    android:textColor="#55f"
-                    android:textSize="14sp"
-                    android:visibility="gone" />
-
-                <TextView
                     android:id="@+id/dialog_link"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -74,15 +63,6 @@
                     android:layout_marginTop="5dp"
                     android:lineSpacingExtra="6dp"
                     android:text=""
-                    android:visibility="gone" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/copy_path_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/copy_path"
                     android:visibility="gone" />
 
             </LinearLayout>

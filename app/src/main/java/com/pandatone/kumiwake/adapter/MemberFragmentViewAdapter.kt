@@ -19,7 +19,10 @@ import com.pandatone.kumiwake.member.function.Member
 
 //FragmentMember用リストadapter
 
-class MemberFragmentViewAdapter(private val context: Context, private val memberList: List<Member>) : BaseAdapter() {
+class MemberFragmentViewAdapter(
+    private val context: Context,
+    private val memberList: List<Member>
+) : BaseAdapter() {
     private var params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(0, 1)
     private var nowData = "ￚ no data ￚ"
     private var preData = "ￚ no data ￚ"
@@ -52,8 +55,9 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
 
             v = inflater.inflate(R.layout.row_member, null)
 
-            if (mSelection.get(member.id)) {
-                v?.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(context, R.color.checked_list))
+            if (isMemberChecked(member.id)) {
+                v?.backgroundTintList =
+                    ColorStateList.valueOf(PublicMethods.getColor(context, R.color.checked_list))
             }
 
             setSexIcon(v!!, position)
@@ -126,7 +130,7 @@ class MemberFragmentViewAdapter(private val context: Context, private val member
         notifyDataSetChanged()
     }
 
-    fun isPositionChecked(id: Int): Boolean {
+    fun isMemberChecked(id: Int): Boolean {
         return mSelection.get(id)
     }
 

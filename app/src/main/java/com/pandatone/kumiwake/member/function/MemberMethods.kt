@@ -15,7 +15,8 @@ object MemberMethods {
             val groupId = group.id.toString()
             var belongNo = 0
             members.forEach { member ->
-                val belongArray = member.belong.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                val belongArray =
+                    member.belong.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                 val list = ArrayList(listOf(*belongArray))
                 if (list.contains(groupId)) {
                     belongNo++
@@ -46,7 +47,8 @@ object MemberMethods {
 
     //グループ名をグループIDに変換
     fun belongConvertToNo(belongText: String, groupList: ArrayList<Group>): String {
-        val belongTextArray = belongText.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        val belongTextArray =
+            belongText.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         // groupListの中からそのnameがbelongTextArrayに含まれているものをコレクションで返す
         val belongGroups = groupList.filter { belongTextArray.contains(it.name) }
         // 返されたgroupsのidを連結した文字列

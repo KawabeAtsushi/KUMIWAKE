@@ -20,43 +20,55 @@ object Sort {
     private const val DESC = "DESC" //降順 (3.2.1....)
     internal var initial = 0
 
-    fun memberSort(activity: Activity, memberList: ArrayList<Member>, listAdp: MemberFragmentViewAdapter) {
+    fun memberSort(
+        activity: Activity,
+        memberList: ArrayList<Member>,
+        listAdp: MemberFragmentViewAdapter,
+        mbAdapter: MemberAdapter,
+        onStarted: (() -> Unit)? = null
+    ) {
         val builder = androidx.appcompat.app.AlertDialog.Builder(activity)
-        val mbAdapter = MemberAdapter(activity)
 
         val items = arrayOf(
-                activity.getString(R.string.registration_ascending),
-                activity.getString(R.string.registration_descending),
-                activity.getString(R.string.name_ascending),
-                activity.getString(R.string.name_descending),
-                activity.getString(R.string.age_ascending),
-                activity.getString(R.string.age_descending))
+            activity.getString(R.string.registration_ascending),
+            activity.getString(R.string.registration_descending),
+            activity.getString(R.string.name_ascending),
+            activity.getString(R.string.name_descending),
+            activity.getString(R.string.age_ascending),
+            activity.getString(R.string.age_descending)
+        )
 
         builder.setTitle(R.string.sorting)
         builder.setSingleChoiceItems(items, initial) { _, which -> initial = which }
 
         builder.setPositiveButton("OK") { _, _ ->
+            onStarted?.invoke()
             when (initial) {
                 0 -> {
                     mbNowSort = MemberAdapter.MB_ID
                     mbSortType = ASC
                 }
+
                 1 -> {
                     mbNowSort = MemberAdapter.MB_ID
                     mbSortType = DESC
                 }
+
                 2 -> {
                     mbNowSort = MemberAdapter.MB_READ
                     mbSortType = ASC
                 }
+
                 3 -> {
                     mbNowSort = MemberAdapter.MB_READ
                     mbSortType = DESC
                 }
+
                 4 -> {
                     mbNowSort = MemberAdapter.MB_AGE
                     mbSortType = ASC
                 }
+
                 5 -> {
                     mbNowSort = MemberAdapter.MB_AGE
                     mbSortType = DESC
@@ -73,17 +85,22 @@ object Sort {
         builder.show()
     }
 
-    fun groupSort(activity: Activity, groupList: ArrayList<Group>, listAdp: GroupFragmentViewAdapter) {
+    fun groupSort(
+        activity: Activity,
+        groupList: ArrayList<Group>,
+        listAdp: GroupFragmentViewAdapter
+    ) {
         val builder = androidx.appcompat.app.AlertDialog.Builder(activity)
         val gpAdapter = GroupAdapter(activity)
 
         val items = arrayOf(
-                activity.getString(R.string.registration_ascending),
-                activity.getString(R.string.registration_descending),
-                activity.getString(R.string.name_ascending),
-                activity.getString(R.string.name_descending),
-                activity.getString(R.string.member_ascending),
-                activity.getString(R.string.member_descending))
+            activity.getString(R.string.registration_ascending),
+            activity.getString(R.string.registration_descending),
+            activity.getString(R.string.name_ascending),
+            activity.getString(R.string.name_descending),
+            activity.getString(R.string.member_ascending),
+            activity.getString(R.string.member_descending)
+        )
         builder.setTitle(R.string.sorting)
         builder.setSingleChoiceItems(items, initial) { _, which -> initial = which }
 
@@ -93,22 +110,27 @@ object Sort {
                     gpNowSort = GroupAdapter.GP_ID
                     gpSortType = ASC
                 }
+
                 1 -> {
                     gpNowSort = GroupAdapter.GP_ID
                     gpSortType = DESC
                 }
+
                 2 -> {
                     gpNowSort = GroupAdapter.GP_NAME
                     gpSortType = ASC
                 }
+
                 3 -> {
                     gpNowSort = GroupAdapter.GP_NAME
                     gpSortType = DESC
                 }
+
                 4 -> {
                     gpNowSort = GroupAdapter.GP_BELONG
                     gpSortType = ASC
                 }
+
                 5 -> {
                     gpNowSort = GroupAdapter.GP_BELONG
                     gpSortType = DESC

@@ -50,7 +50,8 @@ object MemberClick {
     fun viewBelong(member: Member, groupList: ArrayList<Group>): String {
         val result: String
         val belongText = member.belong
-        val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        val belongArray =
+            belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 
         // groupListの中からそのidがbelongArrayに含まれているものをコレクションで返す
         val groups = groupList.filter { belongArray.contains(it.id.toString()) }

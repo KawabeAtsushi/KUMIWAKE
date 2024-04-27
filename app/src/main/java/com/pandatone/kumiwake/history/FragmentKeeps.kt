@@ -33,12 +33,17 @@ class FragmentKeeps : ListFragment() {
     override fun onStart() {
         super.onStart()
         loadName()
-        toolbarTitle = context?.getString(R.string.favorite) + " " + historyList.count().toString() + "♥s"
+        toolbarTitle =
+            context?.getString(R.string.favorite) + " " + historyList.count().toString() + "♥s"
     }
 
     // 必須*
     // Fragmentが初めてUIを描画する時にシステムが呼び出す
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.tab_favorite, container, false)
         // Fragmentとlayoutを紐付ける
         super.onCreateView(inflater, container, savedInstanceState)
@@ -60,12 +65,13 @@ class FragmentKeeps : ListFragment() {
             HistoryInfo(requireActivity()).infoDialog(historyList[position])
         }
         //行をロングクリックした時の処理
-        listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
-            val history = historyList[position]
-            //行をロングクリックした時の処理
-            HistoryMethods.onLongClick(history, requireActivity(), hsAdapter, true)
-            true //trueにするとイベントが消費される falseだと次のonClickも呼ばれる
-        }
+        listView.onItemLongClickListener =
+            AdapterView.OnItemLongClickListener { _, _, position, _ ->
+                val history = historyList[position]
+                //行をロングクリックした時の処理
+                HistoryMethods.onLongClick(history, requireActivity(), hsAdapter, true)
+                true //trueにするとイベントが消費される falseだと次のonClickも呼ばれる
+            }
     }
 
     // アクションアイテム選択時
@@ -77,7 +83,11 @@ class FragmentKeeps : ListFragment() {
                 HistoryMethods.historySort(requireActivity(), historyList, listAdp)
                 toFavoList()
             }
-            R.id.menu_help -> dialog.confirmationDialog(getString(R.string.history), getString(R.string.how_to_history))
+
+            R.id.menu_help -> dialog.confirmationDialog(
+                getString(R.string.history),
+                getString(R.string.how_to_history)
+            )
         }
         return false
     }

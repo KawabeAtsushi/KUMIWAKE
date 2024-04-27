@@ -1,7 +1,6 @@
 package com.pandatone.kumiwake.kumiwake.function
 
 import com.pandatone.kumiwake.member.function.Member
-import java.util.*
 
 object KumiwakeComparator {
 

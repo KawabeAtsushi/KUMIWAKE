@@ -18,23 +18,26 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.GestureDetectorCompat
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.pandatone.kumiwake.*
+import com.pandatone.kumiwake.AddGroupKeys
+import com.pandatone.kumiwake.FirebaseAnalyticsEvents
+import com.pandatone.kumiwake.MyGestureListener
+import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
+import com.pandatone.kumiwake.databinding.AddGroupBinding
+import com.pandatone.kumiwake.extension.getSerializable
 import com.pandatone.kumiwake.member.function.GroupMethods
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.member.members.FragmentGroupMain
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
-import kotlinx.android.synthetic.main.part_review_listview.*
-import java.util.*
-import kotlin.collections.ArrayList
-
 
 /**
  * Created by atsushi_2 on 2016/02/24.
  */
 class AddGroup : AppCompatActivity() {
+    private lateinit var binding: AddGroupBinding
     private var textInputLayout: TextInputLayout? = null
     private var nextId = FragmentGroupMain.gpAdapter.maxId + 1 //FragmentGroupMainなしだとX
     private lateinit var adapter: SmallMBListAdapter
@@ -59,7 +62,8 @@ class AddGroup : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         FirebaseAnalyticsEvents.firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         setTheme(StatusHolder.nowTheme)
-        setContentView(R.layout.add_group)
+        binding = AddGroupBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         gpAdapter = GroupAdapter(this)
         mbAdapter = MemberAdapter(this)
         findViews()
@@ -83,10 +87,13 @@ class AddGroup : AppCompatActivity() {
     private fun findViews() {
         groupEditText = findViewById<View>(R.id.input_group) as AppCompatEditText
         textInputLayout = findViewById<View>(R.id.group_form_input_layout) as TextInputLayout
-        listView = findViewById<View>(R.id.add_group_listView).findViewById<View>(R.id.memberListView) as ListView
-        listView.emptyView = findViewById<View>(R.id.add_group_listView).findViewById(R.id.emptyMemberList)
-        member_register_and_add_btn.visibility = View.GONE
-        findViewById<View>(R.id.add_group_listView).findViewById<View>(R.id.member_add_btn).setOnClickListener { moveMemberMain() }
+        listView =
+            findViewById<View>(R.id.add_group_listView).findViewById<View>(R.id.memberListView) as ListView
+        listView.emptyView =
+            findViewById<View>(R.id.add_group_listView).findViewById(R.id.emptyMemberList)
+        binding.addGroupListView.memberRegisterAndAddBtn.visibility = View.GONE
+        findViewById<View>(R.id.add_group_listView).findViewById<View>(R.id.member_add_btn)
+            .setOnClickListener { moveMemberMain() }
         findViewById<View>(R.id.group_registration_btn).setOnClickListener { register() } //登録ボタンの処理
         findViewById<View>(R.id.group_cancel_btn).setOnClickListener { finish() } //cancelボタンの処理
     }
@@ -96,13 +103,17 @@ class AddGroup : AppCompatActivity() {
         super.onStart()
         adapter = SmallMBListAdapter(this@AddGroup, members)
         listView.adapter = adapter
-        numberOfSelectedMember.text = adapter.count.toString() + getString(R.string.people) + getString(R.string.selected)
+        binding.addGroupListView.numberOfSelectedMember.text =
+            adapter.count.toString() + getString(R.string.people) + getString(R.string.selected)
     }
 
     //バックキーの処理
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            DialogWarehouse(supportFragmentManager).decisionDialog("KUMIWAKE", getString(R.string.edit_exit_confirmation)) { finish() }
+            DialogWarehouse(supportFragmentManager).decisionDialog(
+                "KUMIWAKE",
+                getString(R.string.edit_exit_confirmation)
+            ) { finish() }
             return true
         }
         return false
@@ -130,7 +141,11 @@ class AddGroup : AppCompatActivity() {
         } else {
             saveItem()
             cleanUpBelong()
-            Toast.makeText(this, getString(R.string.group) + " \"" + group + "\" " + getString(R.string.registered), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(R.string.group) + " \"" + group + "\" " + getString(R.string.registered),
+                Toast.LENGTH_SHORT
+            ).show()
             FirebaseAnalyticsEvents.groupRegisterEvent(group, adapter.count)
             finish()
         }
@@ -155,7 +170,11 @@ class AddGroup : AppCompatActivity() {
             } else {
                 updateItem(listId)
                 cleanUpBelong()
-                Toast.makeText(applicationContext, getText(R.string.group).toString() + " \"" + group + "\" " + getText(R.string.updated), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext,
+                    getText(R.string.group).toString() + " \"" + group + "\" " + getText(R.string.updated),
+                    Toast.LENGTH_SHORT
+                ).show()
                 finish()
             }
         }
@@ -194,7 +213,8 @@ class AddGroup : AppCompatActivity() {
     //指定したremoveIdのBelongを削除
     private fun deleteBelongInfo(member: Member, removeId: Int, listId: Int) {
         val belongText = member.belong
-        val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        val belongArray =
+            belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         val list = java.util.ArrayList(listOf(*belongArray))
         val hs = HashSet<String>()
         hs.addAll(list)
@@ -213,7 +233,8 @@ class AddGroup : AppCompatActivity() {
         nameList.forEach { member ->
             val listId = member.id
             val belongText = member.belong
-            val belongArray = belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val belongArray =
+                belongText.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             val list = ArrayList(listOf(*belongArray))
             //HashSetによって重複を削除
             val hs = HashSet<String>()
@@ -230,12 +251,14 @@ class AddGroup : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, i)
 
         if (resultCode == Activity.RESULT_OK) {
-            members = i!!.getSerializableExtra(AddGroupKeys.MEMBER_ARRAY.key) as ArrayList<Member>
+            i?.getSerializable<ArrayList<Member>>(AddGroupKeys.MEMBER_ARRAY.key)
+                ?.let { members = it }
         }
         adapter = SmallMBListAdapter(this@AddGroup, members)
         listView.adapter = adapter
-        val selectedTxt = adapter.count.toString() + getString(R.string.people) + getString(R.string.selected)
-        numberOfSelectedMember.text = selectedTxt
+        val selectedTxt =
+            adapter.count.toString() + getString(R.string.people) + getString(R.string.selected)
+        binding.addGroupListView.numberOfSelectedMember.text = selectedTxt
     }
 
 }

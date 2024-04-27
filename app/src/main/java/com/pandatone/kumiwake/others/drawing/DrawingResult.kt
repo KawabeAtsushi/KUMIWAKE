@@ -26,15 +26,16 @@ import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.adapter.DrawingHistoryListAdapter
 import com.pandatone.kumiwake.adapter.SmallDrawingHistoryListAdapter
+import com.pandatone.kumiwake.databinding.DrawingResultBinding
+import com.pandatone.kumiwake.extension.getSerializable
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
-import kotlinx.android.synthetic.main.drawing_result.*
 
 
 /**
  * Created by atsushi_2 on 2016/05/10.
  */
 class DrawingResult : AppCompatActivity() {
-
+    private lateinit var binding: DrawingResultBinding
     private lateinit var soundPool: SoundPool
     private lateinit var tapHandler: Handler
     private lateinit var historyListView: ListView
@@ -56,12 +57,10 @@ class DrawingResult : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.drawing_result)
+        binding = DrawingResultBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val i = intent
-        if (i.getSerializableExtra("tickets") != null) {
-            tickets = i.getSerializableExtra("tickets") as ArrayList<Ticket>
-        }
+        intent.getSerializable<ArrayList<Ticket>>("tickets")?.let { tickets = it }
 
         val kinds = tickets.distinctBy { it.id }
 
@@ -74,7 +73,7 @@ class DrawingResult : AppCompatActivity() {
         drawingAnim.setOnClickListener {
             if (!shaking) {//振動開始
                 if (pickCount >= tickets.size) {//最終結果
-                    animation_views.visibility = View.GONE
+                    binding.animationViews.visibility = View.GONE
                     countTextView.text = getString(R.string.result)
                 } else {
                     val countStr = "${pickCount + 1}${getString(R.string.th_time)}"
@@ -120,10 +119,11 @@ class DrawingResult : AppCompatActivity() {
 
     //ビューの初期化
     private fun initializeViews() {
-        animation_views.visibility = View.VISIBLE
+        binding.animationViews.visibility = View.VISIBLE
         val countStr = "1${getString(R.string.th_time)}"
         countTextView.text = countStr
-        val remainStr = "${getString(R.string.remain)} ${tickets.size}${getString(R.string.ticket_unit)}"
+        val remainStr =
+            "${getString(R.string.remain)} ${tickets.size}${getString(R.string.ticket_unit)}"
         remainTextView.text = remainStr
         historyListViewAdapter.notifyDataSetChanged()
         pickedTickets.clear()
@@ -140,14 +140,14 @@ class DrawingResult : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         val audioAttributes = AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_UNKNOWN)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .build()
+            .setUsage(AudioAttributes.USAGE_UNKNOWN)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build()
 
         soundPool = SoundPool.Builder()
-                .setAudioAttributes(audioAttributes) // ストリーム数に応じて
-                .setMaxStreams(1)
-                .build()
+            .setAudioAttributes(audioAttributes) // ストリーム数に応じて
+            .setMaxStreams(1)
+            .build()
 
         // sound.oggをロード
         soundShake = soundPool.load(this, R.raw.shake, 1)
@@ -228,7 +228,8 @@ class DrawingResult : AppCompatActivity() {
         pickedTickets.add(picked)
         pickCount++
         historyListViewAdapter.notifyDataSetChanged()
-        val remainStr = "${getString(R.string.remain)} ${tickets.size - pickCount}${getString(R.string.ticket_unit)}"
+        val remainStr =
+            "${getString(R.string.remain)} ${tickets.size - pickCount}${getString(R.string.ticket_unit)}"
         remainTextView.text = remainStr
     }
 
@@ -238,7 +239,8 @@ class DrawingResult : AppCompatActivity() {
     }
 
     private fun gradViewColor(textView: TextView, startColor: Int, endColor: Int) {
-        val drawable: GradientDrawable = ContextCompat.getDrawable(this, R.drawable.ticket) as GradientDrawable
+        val drawable: GradientDrawable =
+            ContextCompat.getDrawable(this, R.drawable.ticket) as GradientDrawable
         drawable.colors = intArrayOf(startColor, endColor)
         textView.background = drawable
     }
@@ -251,7 +253,10 @@ class DrawingResult : AppCompatActivity() {
     private fun onHistory(kinds: List<Ticket>) {
         val builder = AlertDialog.Builder(this)
         val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.drawing_history, findViewById<View>(R.id.info_layout) as ViewGroup?)
+        val view = inflater.inflate(
+            R.layout.drawing_history,
+            findViewById<View>(R.id.info_layout) as ViewGroup?
+        )
 
         val historyList = view.findViewById<View>(R.id.historyList) as ListView
         val okBt = view.findViewById<View>(R.id.closeBt) as Button
@@ -271,8 +276,13 @@ class DrawingResult : AppCompatActivity() {
     private fun onRetry() {
         v = 0
         val title = getString(R.string.retry_title)
-        val message = getString(R.string.re_drawing_description) + getString(R.string.run_confirmation)
-        DialogWarehouse(supportFragmentManager).decisionDialog(title, message, function = this::initializeViews)
+        val message =
+            getString(R.string.re_drawing_description) + getString(R.string.run_confirmation)
+        DialogWarehouse(supportFragmentManager).decisionDialog(
+            title,
+            message,
+            function = this::initializeViews
+        )
     }
 
     //ホームに戻る

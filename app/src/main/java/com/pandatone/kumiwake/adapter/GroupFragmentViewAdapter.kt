@@ -16,7 +16,8 @@ import com.pandatone.kumiwake.member.function.Group
 /**
  * Created by atsushi_2 on 2016/03/20.
  */
-class GroupFragmentViewAdapter(private val context: Context, private val groupList: List<Group>) : BaseAdapter() {
+class GroupFragmentViewAdapter(private val context: Context, private val groupList: List<Group>) :
+    BaseAdapter() {
 
     @SuppressLint("UseSparseArrays")
     private var gSelection = SparseBooleanArray()
@@ -45,7 +46,8 @@ class GroupFragmentViewAdapter(private val context: Context, private val groupLi
         v = inflater.inflate(R.layout.row_group, null)
 
         if (gSelection.get(group.id)) {
-            v!!.backgroundTintList = ColorStateList.valueOf(PublicMethods.getColor(context, R.color.checked_list))
+            v!!.backgroundTintList =
+                ColorStateList.valueOf(PublicMethods.getColor(context, R.color.checked_list))
         }
 
         nameTextView = v?.findViewById<View>(R.id.groupName) as TextView

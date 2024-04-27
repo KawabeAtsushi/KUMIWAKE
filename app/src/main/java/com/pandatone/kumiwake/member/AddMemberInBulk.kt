@@ -6,8 +6,17 @@ import android.content.Intent
 import android.graphics.Point
 import android.graphics.Rect
 import android.os.Bundle
-import android.view.*
-import android.widget.*
+import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.view.WindowManager
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.ListView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -57,8 +66,16 @@ class AddMemberInBulk : AppCompatActivity() {
         screenHeight = size.y
         findViewById<ImageButton>(R.id.add_member).setOnClickListener { onAddMember() }
         findViewById<Button>(R.id.list_input_btn).setOnClickListener { listInputDialog() }
-        findViewById<Button>(R.id.member_registration_finish_btn).setOnClickListener { registerMembers(true) }
-        findViewById<Button>(R.id.member_registration_continue_btn).setOnClickListener { registerMembers(false) }
+        findViewById<Button>(R.id.member_registration_finish_btn).setOnClickListener {
+            registerMembers(
+                true
+            )
+        }
+        findViewById<Button>(R.id.member_registration_continue_btn).setOnClickListener {
+            registerMembers(
+                false
+            )
+        }
         findViewById<Button>(R.id.member_cancel_btn).setOnClickListener { finish() }
         findViewById<Button>(R.id.switch_single_mode).setOnClickListener {
             val intent = Intent(this, AddMember::class.java)
@@ -112,7 +129,13 @@ class AddMemberInBulk : AppCompatActivity() {
             FirebaseAnalyticsEvents.memberRegisterEvent(newMember)
         }
 
-        Toast.makeText(this, getText(R.string.member).toString() + " " + memberListView.count + getText(R.string.people) + " " + getText(R.string.registered), Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this,
+            getText(R.string.member).toString() + " " + memberListView.count + getText(R.string.people) + " " + getText(
+                R.string.registered
+            ),
+            Toast.LENGTH_SHORT
+        ).show()
 
         if (finish) {
             finish()
@@ -128,19 +151,22 @@ class AddMemberInBulk : AppCompatActivity() {
     private fun listInputDialog() {
         val builder = AlertDialog.Builder(this)
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.list_input_dialog_layout, findViewById<View>(R.id.info_layout) as ViewGroup?)
+        val view = inflater.inflate(
+            R.layout.list_input_dialog_layout,
+            findViewById<View>(R.id.info_layout) as ViewGroup?
+        )
 
         val listEditText = view.findViewById<EditText>(R.id.name_list)
 
         builder.setTitle(R.string.list_input)
-                .setView(view)
-                .setPositiveButton(R.string.add_member) { _, _ ->
-                    val listText = listEditText.text.toString()
-                    addByListInput(listText)
-                }
-                .setNegativeButton(R.string.cancel) { dialog, _ ->
-                    dialog.dismiss()
-                }
+            .setView(view)
+            .setPositiveButton(R.string.add_member) { _, _ ->
+                val listText = listEditText.text.toString()
+                addByListInput(listText)
+            }
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
         val dialog = builder.create()
         dialog.show()
     }
@@ -157,7 +183,10 @@ class AddMemberInBulk : AppCompatActivity() {
     //バックキーの処理
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            DialogWarehouse(supportFragmentManager).decisionDialog("KUMIWAKE", getString(R.string.edit_exit_confirmation)) { finish() }
+            DialogWarehouse(supportFragmentManager).decisionDialog(
+                "KUMIWAKE",
+                getString(R.string.edit_exit_confirmation)
+            ) { finish() }
             return true
         }
         return false
@@ -168,7 +197,8 @@ class AddMemberInBulk : AppCompatActivity() {
     private fun setKeyboardListener() {
         val activityRootView = findViewById<View>(R.id.custom_root_layout)
         val view = findViewById<View>(R.id.button_unit)
-        activityRootView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        activityRootView.viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
             private val r = Rect()
 
             override fun onGlobalLayout() {

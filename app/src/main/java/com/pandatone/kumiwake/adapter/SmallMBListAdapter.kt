@@ -17,7 +17,13 @@ import com.pandatone.kumiwake.member.function.Member
 /**
  * Created by atsushi_2 on 2016/04/16.
  */
-class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Member>, private val leaderArray: ArrayList<Member?> = ArrayList(), val showLeaderNo: Boolean = false, val nameIsSpanned: Boolean = false) : BaseAdapter() {
+class SmallMBListAdapter(
+    private val context: Context,
+    memberList: ArrayList<Member>,
+    private val leaderArray: ArrayList<Member?> = ArrayList(),
+    val showLeaderNo: Boolean = false,
+    val nameIsSpanned: Boolean = false
+) : BaseAdapter() {
     private val inflater: LayoutInflater
     private var listElements: ArrayList<Member> = ArrayList()
 
@@ -58,7 +64,8 @@ class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Mem
         }
         setSexIcon(memberIcon, position)
         if (nameIsSpanned) {
-            nameTextView.text = HtmlCompat.fromHtml(listElements[position].name, HtmlCompat.FROM_HTML_MODE_COMPACT)
+            nameTextView.text =
+                HtmlCompat.fromHtml(listElements[position].name, HtmlCompat.FROM_HTML_MODE_COMPACT)
         } else {
             nameTextView.text = listElements[position].name
         }
@@ -73,21 +80,30 @@ class SmallMBListAdapter(private val context: Context, memberList: ArrayList<Mem
             PublicMethods.isMan(sex) -> {
                 memberIcon.setColorFilter(PublicMethods.getColor(context, R.color.man))
             }
+
             PublicMethods.isWoman(sex) -> {
                 memberIcon.setColorFilter(PublicMethods.getColor(context, R.color.woman))
             }
+
             else -> {
                 memberIcon.setColorFilter(PublicMethods.getColor(context, R.color.gray))
             }
         }
     }
 
-    private fun setStarIcon(leaderArray: ArrayList<Member?>, memberIcon: ImageView, starIcon: ImageView, leaderNo: TextView, position: Int) {
+    private fun setStarIcon(
+        leaderArray: ArrayList<Member?>,
+        memberIcon: ImageView,
+        starIcon: ImageView,
+        leaderNo: TextView,
+        position: Int
+    ) {
         val sex = listElements[position].sex
         when {
             PublicMethods.isMan(sex) -> {
                 starIcon.setColorFilter(PublicMethods.getColor(context, R.color.man))
             }
+
             PublicMethods.isWoman(sex) -> {
                 starIcon.setColorFilter(PublicMethods.getColor(context, R.color.woman))
             }

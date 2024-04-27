@@ -32,7 +32,7 @@
     <color name="red_background">#ffd6dc</color>
     <color name="red_title">#ff7777</color>
 
-    <color name="yellow_background">#60ffff8d</color>
-    <color name="yellow_title">#FFF758</color>
+    <color name="orange_background">#60ffff8d</color>
+    <color name="orange_title">#ffc02e</color>
 
 </resources>

@@ -5,7 +5,15 @@ import java.io.Serializable
 /**
  * Created by atsushi_2 on 2016/03/02.
  */
-class Member(id: Int, name: String, sex: String, age: Int, belong: String, read: String, leader: Int) : Serializable {
+class Member(
+    id: Int,
+    name: String,
+    sex: String,
+    age: Int,
+    belong: String,
+    read: String,
+    leader: Int
+) : Serializable {
     var id: Int = 0
         private set
     var name: String

@@ -1,137 +1,136 @@
 package com.pandatone.kumiwake.ui.dialogs
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context.CLIPBOARD_SERVICE
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.CreateDocument
 import androidx.appcompat.app.AppCompatDialog
 import androidx.fragment.app.DialogFragment
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.setting.DBBackup
-
+import java.util.zip.ZipInputStream
+import java.util.zip.ZipOutputStream
 
 /**
  * Created by atsushi_2 on 2016/11/11.
  */
 
-class FileManagerDialog(private var mTitle: String, private var mMessage: CharSequence, private val backup: Boolean) : DialogFragment() {
+class FileManagerDialog(
+    private var mTitle: String,
+    private var mMessage: CharSequence,
+    private val backup: Boolean
+) : DialogFragment() {
+
+    private val mimeType = "application/zip"
+
+    private lateinit var backupZipLauncher: ActivityResultLauncher<String>
+    private lateinit var importZipLauncher: ActivityResultLauncher<String>
+
+    private lateinit var dialog: AppCompatDialog
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        backupZipLauncher =
+            registerForActivityResult(CreateDocument(mimeType)) { uri ->
+                if (uri != null) {
+                    backupZipFile(uri)
+                } else {
+                    showBackupErrorDialog()
+                }
+            }
+
+        importZipLauncher =
+            registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+                if (uri != null) {
+                    importZipFile(uri)
+                } else {
+                    showImportErrorDialog()
+                }
+            }
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AppCompatDialog {
-        val dialog = activity?.let { AppCompatDialog(it) }!!
+        dialog = AppCompatDialog(requireContext())
         // タイトル非表示
-        dialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
+        dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         // フルスクリーン
-        dialog.window!!.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
+        dialog.window?.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+        )
         dialog.setContentView(R.layout.custom_dialog_layout)
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        // タイトル設定
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         (dialog.findViewById<View>(R.id.dialog_title) as TextView).text = mTitle
-        // メッセージ設定
         (dialog.findViewById<View>(R.id.dialog_message) as TextView).text = mMessage
-        // OK ボタンのリスナ
         (dialog.findViewById<View>(R.id.positive_button) as TextView).setOnClickListener {
-            val path = requireContext().getExternalFilesDir(null).toString() + "/KUMIWAKE_Backup"
             if (backup) {
-                setMkdirErrorView(dialog, path)
+                backupZipLauncher.launch("kumiwake_backup.zip")
             } else {
-                setImportErrorView(dialog, path)
+                importZipLauncher.launch(mimeType)
             }
         }
-        // いいえボタンのリスナ
         (dialog.findViewById<View>(R.id.negative_button) as TextView).setOnClickListener { dismiss() }
 
         return dialog
     }
 
-    //バックアップエラーの際のダイアログ生成
-    private fun setMkdirErrorView(mDialog: AppCompatDialog, path: String) {
+    private fun backupZipFile(uri: Uri) {
+        requireContext().contentResolver.openOutputStream(uri)?.use { outputStream ->
+            try {
+                ZipOutputStream(outputStream).use { zipOutputStream ->
+                    DBBackup.addBackupFiles(requireContext(), zipOutputStream)
+                }
+                showBackupCompleteDialog()
+            } catch (e: Exception) {
+                showBackupErrorDialog()
+            }
+        } ?: showBackupErrorDialog()
+    }
+
+    private fun importZipFile(uri: Uri) {
+        requireContext().contentResolver.openInputStream(uri)?.use { inputStream ->
+            try {
+                ZipInputStream(inputStream).use { zipInputStream ->
+                    DBBackup.readFile(requireContext(), zipInputStream)
+                }
+                showImportCompleteDialog()
+            } catch (e: Exception) {
+                showImportErrorDialog()
+            }
+        } ?: showImportErrorDialog()
+    }
+
+    private fun showBackupErrorDialog() =
+        showDialog(getString(R.string.error), getString(R.string.failed_backup))
+
+    private fun showImportErrorDialog() =
+        showDialog(getString(R.string.error), getString(R.string.failed_import))
+
+    private fun showBackupCompleteDialog() =
+        showDialog(getString(R.string.success), getString(R.string.back_up_completed))
+
+    private fun showImportCompleteDialog() =
+        showDialog(getString(R.string.success), getString(R.string.import_completed))
+
+
+    //成功/エラーの際のダイアログ生成
+    private fun showDialog(title: String, message: String) {
+        dialog.setContentView(R.layout.custom_dialog_layout)
         // タイトル設定
-        (mDialog.findViewById<View>(R.id.dialog_title) as TextView).text = getString(R.string.error)
+        (dialog.findViewById<View>(R.id.dialog_title) as TextView).text = title
         // メッセージ設定
-        val pathTextView = mDialog.findViewById<View>(R.id.dialog_path) as TextView
-        pathTextView.visibility = View.VISIBLE
-        (mDialog.findViewById<View>(R.id.dialog_message) as TextView).text = getString(R.string.failed_to_mkdirs)
-        pathTextView.text = path
-        // OKボタンのリスナ
-        (mDialog.findViewById<View>(R.id.positive_button) as TextView).setOnClickListener {
-            activity?.let { it1 -> DBBackup.dbBackup(it1, path, mDialog) }
-            dismiss()
-        }
-        // Cancel ボタンのリスナ
-        (mDialog.findViewById<View>(R.id.negative_button) as TextView).setOnClickListener { dismiss() }
+        (dialog.findViewById<View>(R.id.dialog_message) as TextView).text = message
+        // OKボタン
+        (dialog.findViewById<View>(R.id.positive_button) as TextView).setOnClickListener { dialog.dismiss() }
+        (dialog.findViewById<View>(R.id.negative_button) as TextView).visibility = View.GONE
+        dialog.show()
     }
-
-    //インポートエラーの際のダイアログ生成
-    private fun setImportErrorView(mDialog: AppCompatDialog, path: String) {
-        // タイトル設定
-        (mDialog.findViewById<View>(R.id.dialog_title) as TextView).text = getString(R.string.error)
-        // メッセージ設定
-        val messageTextView = mDialog.findViewById<View>(R.id.dialog_message) as TextView
-        val pathTextView = mDialog.findViewById<View>(R.id.dialog_path) as TextView
-        pathTextView.visibility = View.VISIBLE
-        val warningTxt = getString(R.string.nothing_file) + "\n" + DBBackup.dir_path + "\n\n" + getString(R.string.failed_import)
-        messageTextView.text = warningTxt
-        pathTextView.text = path
-
-        //コピーパスボタン設定
-        val copyPathButton = mDialog.findViewById<Button>(R.id.copy_path_button)
-        if (copyPathButton != null) {
-            copyPathButton.visibility = View.VISIBLE
-            copyPathButton.setOnClickListener { copyToClipboard(path) }
-        }
-
-        // OKボタンのリスナ
-        (mDialog.findViewById<View>(R.id.positive_button) as TextView).setOnClickListener {
-            val location = pathTextView.text.toString()
-            activity?.let { it1 -> DBBackup.dbImport(it1, location, mDialog) }
-            dismiss()
-        }
-        // Cancel ボタンのリスナ
-        (mDialog.findViewById<View>(R.id.negative_button) as TextView).setOnClickListener { dismiss() }
-    }
-
-    //テキストをコピー
-    private fun copyToClipboard(text: String) {
-        // copy to clipboard
-        val clipboardManager = context?.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-        clipboardManager.setPrimaryClip(ClipData.newPlainText("copyText", text))
-        Toast.makeText(activity, getString(R.string.copied_path), Toast.LENGTH_SHORT).show()
-    }
-
-//    //パスを指定 (unUsed)
-//    private fun specifyPath(pathView:TextView) {
-//        val inflater = activity?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-//        val layout = inflater.inflate(R.layout.change_age_dialog, activity?.findViewById<View>(R.id.filter_member) as? ViewGroup)
-//        val pathInputBox = layout.findViewById<View>(R.id.path_input) as TextInputEditText
-//        val builder = androidx.appcompat.app.AlertDialog.Builder(requireActivity())
-//        builder.setTitle(activity?.getText(R.string.specify_path))
-//        builder.setView(layout)
-//        builder.setPositiveButton("OK", null)
-//        builder.setNegativeButton(R.string.cancel) { _, _ -> }
-//        val dialog = builder.create()
-//        dialog.show()
-//
-//        val okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-//        okButton.setOnClickListener{
-//            if(!pathInputBox.text.isNullOrEmpty()){
-//                val location = pathInputBox.text.toString()
-//                pathView.text = location
-//            }
-//            dialog.dismiss()
-//        }
-//        val cancelBtn = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
-//        cancelBtn.setOnClickListener {
-//            dialog.dismiss()
-//        }
-//    }
-
 }

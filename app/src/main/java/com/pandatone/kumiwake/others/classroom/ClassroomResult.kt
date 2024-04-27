@@ -7,13 +7,28 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.ScrollView
+import android.widget.TableLayout
+import android.widget.TableRow
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
-import com.pandatone.kumiwake.*
+import com.pandatone.kumiwake.ClassroomCustomKeys
+import com.pandatone.kumiwake.KumiwakeArrayKeys
+import com.pandatone.kumiwake.MainActivity
+import com.pandatone.kumiwake.PublicMethods
+import com.pandatone.kumiwake.R
+import com.pandatone.kumiwake.ShareViewImage
+import com.pandatone.kumiwake.extension.getSerializable
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 
@@ -42,9 +57,8 @@ class ClassroomResult : AppCompatActivity() {
 
         PublicMethods.showAd(this)
         val i = intent
-        if (i.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) != null) {
-            memberArray = i.getSerializableExtra(KumiwakeArrayKeys.MEMBER_LIST.key) as ArrayList<Member>
-        }
+        i.getSerializable<ArrayList<Member>>(KumiwakeArrayKeys.MEMBER_LIST.key)
+            ?.let { memberArray = it }
         alterFm = i.getBooleanExtra(ClassroomCustomKeys.ALTER_FM_SEAT.key, false)
         attachSeat = i.getBooleanExtra(ClassroomCustomKeys.ATTACH_SEAT.key, false)
 
@@ -99,7 +113,10 @@ class ClassroomResult : AppCompatActivity() {
     private fun editInfoDialog() {
         val builder = AlertDialog.Builder(this)
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.edit_result_dialog_layout, findViewById<View>(R.id.info_layout) as ViewGroup?)
+        val view = inflater.inflate(
+            R.layout.edit_result_dialog_layout,
+            findViewById<View>(R.id.info_layout) as ViewGroup?
+        )
         val etTitle = view.findViewById<EditText>(R.id.edit_title)
         etTitle.hint = getString(R.string.classroom_hint)
         if (title != "") etTitle.setText(this.title)
@@ -108,13 +125,13 @@ class ClassroomResult : AppCompatActivity() {
         view.findViewById<CheckBox>(R.id.include_title_check).visibility = View.GONE
         view.findViewById<CheckBox>(R.id.include_comment_check).visibility = View.GONE
         builder.setTitle(getString(R.string.add_info))
-                .setView(view)
-                .setPositiveButton(R.string.change) { _, _ ->
-                    changeInfo(etTitle.text.toString(), etComment.text.toString(), false)
-                }
-                .setNegativeButton(R.string.cancel) { dialog, _ ->
-                    dialog.dismiss()
-                }
+            .setView(view)
+            .setPositiveButton(R.string.change) { _, _ ->
+                changeInfo(etTitle.text.toString(), etComment.text.toString(), false)
+            }
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
         val dialog = builder.create()
         dialog.show()
     }
@@ -148,15 +165,21 @@ class ClassroomResult : AppCompatActivity() {
     //以下、ボタンの処理
     private fun onRetry() {
         val title = getString(R.string.retry_title)
-        val message = getString(R.string.re_classroom_description) + getString(R.string.run_confirmation)
-        DialogWarehouse(supportFragmentManager).decisionDialog(title, message, function = this::retry)
+        val message =
+            getString(R.string.re_classroom_description) + getString(R.string.run_confirmation)
+        DialogWarehouse(supportFragmentManager).decisionDialog(
+            title,
+            message,
+            function = this::retry
+        )
     }
 
     private fun retry() {
         val scrollView = findViewById<View>(R.id.classroom_scroll) as ScrollView
         scrollView.scrollTo(0, 0)
         startMethod()
-        Toast.makeText(applicationContext, getText(R.string.retry_finished), Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, getText(R.string.retry_finished), Toast.LENGTH_SHORT)
+            .show()
     }
 
     //結果画像共有
@@ -202,7 +225,12 @@ class ClassroomResult : AppCompatActivity() {
                         val member = memberArray[total]
                         seatNameTv.text = member.name
                         if (PublicMethods.isMan(member.sex)) {
-                            seatNameTv.setTextColor(PublicMethods.getColor(this, R.color.blue_title))
+                            seatNameTv.setTextColor(
+                                PublicMethods.getColor(
+                                    this,
+                                    R.color.blue_title
+                                )
+                            )
                         } else if (PublicMethods.isWoman(member.sex)) {
                             seatNameTv.setTextColor(PublicMethods.getColor(this, R.color.woman))
                         }
@@ -229,7 +257,10 @@ class ClassroomResult : AppCompatActivity() {
     private fun shareOptionDialog() {
         val builder = AlertDialog.Builder(this)
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.edit_result_dialog_layout, findViewById<View>(R.id.info_layout) as ViewGroup?)
+        val view = inflater.inflate(
+            R.layout.edit_result_dialog_layout,
+            findViewById<View>(R.id.info_layout) as ViewGroup?
+        )
         val indexTitle = view.findViewById<TextView>(R.id.title_index)
         val etTitle = view.findViewById<EditText>(R.id.edit_title)
         indexTitle.visibility = View.GONE
@@ -276,21 +307,33 @@ class ClassroomResult : AppCompatActivity() {
             }
         }
 
-        etTitle.doAfterTextChanged { changeInfo(etTitle.text.toString(), etComment.text.toString(), true) }
-        etComment.doAfterTextChanged { changeInfo(etTitle.text.toString(), etComment.text.toString(), true) }
+        etTitle.doAfterTextChanged {
+            changeInfo(
+                etTitle.text.toString(),
+                etComment.text.toString(),
+                true
+            )
+        }
+        etComment.doAfterTextChanged {
+            changeInfo(
+                etTitle.text.toString(),
+                etComment.text.toString(),
+                true
+            )
+        }
 
         builder.setTitle(getString(R.string.share_option))
-                .setView(view)
-                .setPositiveButton(R.string.share) { _, _ ->
-                    shareImage()
-                    tvTitle.visibility = View.GONE
-                    tvComment.visibility = View.GONE
-                }
-                .setNegativeButton(R.string.cancel) { dialog, _ ->
-                    tvTitle.visibility = View.GONE
-                    tvComment.visibility = View.GONE
-                    dialog.dismiss()
-                }
+            .setView(view)
+            .setPositiveButton(R.string.share) { _, _ ->
+                shareImage()
+                tvTitle.visibility = View.GONE
+                tvComment.visibility = View.GONE
+            }
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                tvTitle.visibility = View.GONE
+                tvComment.visibility = View.GONE
+                dialog.dismiss()
+            }
         val dialog = builder.create()
         dialog.show()
     }
