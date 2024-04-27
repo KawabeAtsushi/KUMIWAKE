@@ -52,6 +52,8 @@ class SelectMember : AppCompatActivity() {
         binding = NormalModeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         memberArray = ArrayList()
+        intent.getSerializable<ArrayList<Member>>(KumiwakeArrayKeys.MEMBER_LIST.key)
+            ?.let { memberArray = it }
         val layout = findViewById<ConstraintLayout>(R.id.normal_select_layout)
         layout.background = ContextCompat.getDrawable(this, R.drawable.top_background)
         findViews()
@@ -151,7 +153,7 @@ class SelectMember : AppCompatActivity() {
     }
 
     companion object {
-        internal var memberArray: java.util.ArrayList<Member> = java.util.ArrayList()
+        internal var memberArray: ArrayList<Member> = ArrayList()
     }
 
 }

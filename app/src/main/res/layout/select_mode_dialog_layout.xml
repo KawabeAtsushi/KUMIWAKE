@@ -53,22 +53,51 @@
         app:layout_constraintTop_toBottomOf="@id/duplicate_check" />
 
     <include
-        android:id="@+id/kumiwake_select_button"
+        android:id="@+id/kumiwake_select_unit"
         layout="@layout/top_button_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@id/sekigime_select_button"
+        app:layout_constraintEnd_toStartOf="@id/sekigime_select_unit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spacer" />
 
     <include
-        android:id="@+id/sekigime_select_button"
+        android:id="@+id/sekigime_select_unit"
         layout="@layout/top_button_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/kumiwake_select_button"
+        app:layout_constraintStart_toEndOf="@id/kumiwake_select_unit"
         app:layout_constraintTop_toBottomOf="@id/spacer" />
 
+    <include
+        android:id="@+id/order_select_unit"
+        layout="@layout/top_button_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20.dp"
+        app:layout_constraintEnd_toStartOf="@id/role_select_unit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/kumiwake_select_unit" />
+
+    <include
+        android:id="@+id/role_select_unit"
+        layout="@layout/top_button_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20.dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/kumiwake_select_unit"
+        app:layout_constraintTop_toBottomOf="@id/sekigime_select_unit" />
+
+    <include
+        android:id="@+id/classroom_select_unit"
+        layout="@layout/top_button_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20.dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/order_select_unit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
