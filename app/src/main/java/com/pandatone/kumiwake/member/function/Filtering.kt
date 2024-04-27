@@ -22,9 +22,12 @@ import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter
 
 
-class Filtering(val activity: Activity, private val memberList: ArrayList<Member>) {
+class Filtering(
+    val activity: Activity,
+    private val mbAdapter: MemberAdapter,
+    private val memberList: ArrayList<Member>
+) {
 
-    private val mbAdapter = MemberAdapter(activity)
     private val groupList: ArrayList<Group> = GroupAdapter(activity).getAllGroups()
 
     //filterダイアログ生成
@@ -120,7 +123,7 @@ class Filtering(val activity: Activity, private val memberList: ArrayList<Member
                 belongId = ""
             } else {
                 groupList.firstOrNull { it.name == belong }
-                    ?.let { belongId = "," + it.id.toString() }
+                    ?.let { belongId = it.id.toString() }
             }
             mbAdapter.filterName(sex, minAge, maxAge, belongId, memberList)
         }
