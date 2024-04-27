@@ -3,6 +3,7 @@ package com.pandatone.kumiwake.member
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.ActionMode
 import android.view.LayoutInflater
 import android.view.Menu
@@ -56,7 +57,6 @@ class FragmentMemberChoiceMode : ListFragment() {
             return _listAdp!!
         }
     private var memberArray = ChoiceMemberMain.memberArray
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -129,11 +129,11 @@ class FragmentMemberChoiceMode : ListFragment() {
             }
 
             R.id.item_sort -> {
-                Sort.memberSort(requireActivity(), memberList, listAdp)
+                Sort.memberSort(requireActivity(), memberList, listAdp, mbAdapter)
             }
 
             R.id.item_filter -> {
-                Filtering(requireActivity(), memberList).showFilterDialog(
+                Filtering(requireActivity(), mbAdapter, memberList).showFilterDialog(
                     requireActivity(),
                     listAdp
                 )
@@ -153,22 +153,8 @@ class FragmentMemberChoiceMode : ListFragment() {
         private var page: Int = 0 //current Tab
 
         private val decisionClicked = View.OnClickListener {
-
-            val booleanArray = lv.checkedItemPositions
-
-            //メンバー決定
-            memberArray.clear()
-            var i = 1
-            while (i < listAdp.count) {
-                val checked = booleanArray.get(i)
-                val member: Member = memberList[i]
-                if (checked && member.sex != StatusHolder.index) {
-                    memberArray.add(member)
-                }
-                i += 2
-            }
             val intent = Intent()
-            intent.putExtra(AddGroupKeys.MEMBER_ARRAY.key, memberArray)
+            intent.putExtra(AddGroupKeys.MEMBER_ARRAY.key, getCheckedMemberList())
             requireActivity().setResult(Activity.RESULT_OK, intent)
             requireActivity().finish()
             listAdp.clearSelection()
@@ -221,13 +207,16 @@ class FragmentMemberChoiceMode : ListFragment() {
                 }
 
                 R.id.item_sort -> {
-                    clearSelection(mode)
-                    Sort.memberSort(requireActivity(), memberList, listAdp)
+                    Sort.memberSort(
+                        requireActivity(),
+                        memberList,
+                        listAdp,
+                        mbAdapter
+                    )
                 }
 
                 R.id.item_filter -> {
-                    clearSelection(mode)
-                    Filtering(requireActivity(), memberList).showFilterDialog(
+                    Filtering(requireActivity(), mbAdapter, memberList).showFilterDialog(
                         requireActivity(),
                         listAdp
                     )
@@ -266,6 +255,24 @@ class FragmentMemberChoiceMode : ListFragment() {
             checkedCount = 0
             mode.title = "0" + getString(R.string.selected)
         }
+    }
+
+    //選択されているメンバーをリストで取得
+    fun getCheckedMemberList(): ArrayList<Member> {
+        val allMemberList: ArrayList<Member> = _mbAdapter!!.getAllMembers()
+        val checkedMemberList = ArrayList<Member>()
+        val booleanArray = lv.checkedItemPositions
+
+        for (i in 0 until mbAdapter.count) {
+            val memberIndex = i * 2 + 1
+            val checked = booleanArray.get(memberIndex)
+            val member: Member = allMemberList[i]
+            if (checked && member.sex != StatusHolder.index) {
+                checkedMemberList.add(member)
+            }
+        }
+
+        return checkedMemberList
     }
 
     fun checkByGroup(groupId: Int) {

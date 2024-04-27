@@ -23,10 +23,10 @@ object Sort {
     fun memberSort(
         activity: Activity,
         memberList: ArrayList<Member>,
-        listAdp: MemberFragmentViewAdapter
+        listAdp: MemberFragmentViewAdapter,
+        mbAdapter: MemberAdapter
     ) {
         val builder = androidx.appcompat.app.AlertDialog.Builder(activity)
-        val mbAdapter = MemberAdapter(activity)
 
         val items = arrayOf(
             activity.getString(R.string.registration_ascending),

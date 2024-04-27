@@ -26,6 +26,10 @@ import java.io.IOException
  */
 class FragmentMemberMain : ListFragment() {
 
+    private lateinit var mbAdapter: MemberAdapter
+    private lateinit var listAdp: MemberFragmentViewAdapter
+    private lateinit var lv: ListView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mbAdapter = MemberAdapter(requireContext())
@@ -135,11 +139,11 @@ class FragmentMemberMain : ListFragment() {
             }
 
             R.id.item_sort -> {
-                Sort.memberSort(requireActivity(), memberList, listAdp)
+                Sort.memberSort(requireActivity(), memberList, listAdp, mbAdapter)
             }
 
             R.id.item_filter -> {
-                Filtering(requireActivity(), memberList).showFilterDialog(
+                Filtering(requireActivity(), mbAdapter, memberList).showFilterDialog(
                     requireActivity(),
                     listAdp
                 )
@@ -223,13 +227,16 @@ class FragmentMemberMain : ListFragment() {
                 }
 
                 R.id.item_sort -> {
-                    clearSelection(mode)
-                    Sort.memberSort(requireActivity(), memberList, listAdp)
+                    Sort.memberSort(
+                        requireActivity(),
+                        memberList,
+                        listAdp,
+                        mbAdapter
+                    )
                 }
 
                 R.id.item_filter -> {
-                    clearSelection(mode)
-                    Filtering(requireActivity(), memberList).showFilterDialog(
+                    Filtering(requireActivity(), mbAdapter, memberList).showFilterDialog(
                         requireActivity(),
                         listAdp
                     )
@@ -295,7 +302,7 @@ class FragmentMemberMain : ListFragment() {
             builder.setMessage(R.string.Do_delete)
             // OKの時の処理
             builder.setPositiveButton("OK") { _, _ ->
-                val checkedMembers = checkedMemberList()
+                val checkedMembers = getCheckedMemberList()
                 checkedMembers.forEach { member ->
                     val listId = member.id
                     mbAdapter.selectDelete(listId.toString())     // DBから取得したIDが入っているデータを削除する
@@ -326,20 +333,22 @@ class FragmentMemberMain : ListFragment() {
         listAdp.notifyDataSetChanged()
     }
 
+
     //選択されているメンバーをリストで取得
-    fun checkedMemberList(): ArrayList<Member> {
-        val booleanArray = lv.checkedItemPositions
+    fun getCheckedMemberList(): ArrayList<Member> {
+        val allMemberList: ArrayList<Member> = mbAdapter.getAllMembers()
         val checkedMemberList = ArrayList<Member>()
-        var i = 1
-        val members = memberList
-        while (i < listAdp.count) {
-            val checked = booleanArray.get(i)
-            if (checked) {
-                val member: Member = members[i]
+        val booleanArray = lv.checkedItemPositions
+
+        for (i in 0 until mbAdapter.count) {
+            val memberIndex = i * 2 + 1
+            val checked = booleanArray.get(memberIndex)
+            val member: Member = allMemberList[i]
+            if (checked && member.sex != StatusHolder.index) {
                 checkedMemberList.add(member)
             }
-            i += 2
         }
+
         return checkedMemberList
     }
 
@@ -393,7 +402,7 @@ class FragmentMemberMain : ListFragment() {
                 val define = (conditionButton.id == R.id.define)
                 MemberMethods.updateAge(
                     requireContext(),
-                    checkedMemberList(),
+                    getCheckedMemberList(),
                     newAge,
                     define
                 )     // 年齢更新
@@ -418,10 +427,6 @@ class FragmentMemberMain : ListFragment() {
     }
 
     companion object {
-        //最初から存在してほしいのでprivateのcompanionにする（じゃないと落ちる。コルーチンとか使えばいけるかも）
-        private lateinit var mbAdapter: MemberAdapter
-        private lateinit var listAdp: MemberFragmentViewAdapter
-        private lateinit var lv: ListView
         internal var memberList: ArrayList<Member> = ArrayList() //searchMemberの関係
     }
 }

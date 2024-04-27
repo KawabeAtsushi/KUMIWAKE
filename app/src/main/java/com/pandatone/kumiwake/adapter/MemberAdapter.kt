@@ -23,7 +23,6 @@ import java.util.*
 
 class MemberAdapter(val context: Context) : BaseAdapter() {
 
-
     private var dbHelper: DatabaseHelper
 
     //DB取得

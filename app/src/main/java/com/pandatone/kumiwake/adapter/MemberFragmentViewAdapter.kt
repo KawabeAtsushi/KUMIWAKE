@@ -55,7 +55,7 @@ class MemberFragmentViewAdapter(
 
             v = inflater.inflate(R.layout.row_member, null)
 
-            if (mSelection.get(member.id)) {
+            if (isPositionChecked(member.id)) {
                 v?.backgroundTintList =
                     ColorStateList.valueOf(PublicMethods.getColor(context, R.color.checked_list))
             }
