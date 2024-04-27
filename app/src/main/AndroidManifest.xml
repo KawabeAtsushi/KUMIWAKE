@@ -27,12 +27,9 @@
         <activity
             android:name=".kumiwake.NormalMode"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".kumiwake.KumiwakeCustom"/>
-        <activity
-            android:name=".kumiwake.KumiwakeConfirmation"/>
-        <activity
-            android:name=".kumiwake.KumiwakeResult"/>
+        <activity android:name=".kumiwake.KumiwakeCustom" />
+        <activity android:name=".kumiwake.KumiwakeConfirmation" />
+        <activity android:name=".kumiwake.KumiwakeResult" />
         <activity
             android:name=".history.HistoryMain"
             android:windowSoftInputMode="adjustPan" />
@@ -80,10 +77,8 @@
         <activity
             android:name=".others.classroom.ClassroomResult"
             android:theme="@style/OthersTheme" />
-        <activity
-            android:name=".member.AddMember"/>
-        <activity
-            android:name=".member.AddMemberInBulk"/>
+        <activity android:name=".member.AddMember" />
+        <activity android:name=".member.AddMemberInBulk" />
         <activity
             android:name=".member.AddGroup"
             android:windowSoftInputMode="adjustPan" />

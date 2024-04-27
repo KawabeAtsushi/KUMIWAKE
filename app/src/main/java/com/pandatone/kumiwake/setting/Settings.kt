@@ -1,13 +1,10 @@
 package com.pandatone.kumiwake.setting
 
-import android.Manifest
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -15,9 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.app.ShareCompat
-import androidx.core.content.ContextCompat
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
@@ -36,7 +31,6 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.Theme
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
-import java.io.File
 
 
 class Settings : AppCompatActivity() {
