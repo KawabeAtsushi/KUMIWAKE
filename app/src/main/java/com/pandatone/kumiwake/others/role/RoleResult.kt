@@ -97,7 +97,7 @@ class RoleResult : AppCompatActivity() {
         retryButton.setOnClickListener { onRetry() }
         findViewById<ImageButton>(R.id.edit_result_title).setOnClickListener { editInfoDialog() }
         findViewById<Button>(R.id.share_result).setOnClickListener { shareResult() }
-        findViewById<Button>(R.id.go_sekigime).visibility = View.GONE
+        findViewById<Button>(R.id.re_use_members).visibility = View.GONE
         findViewById<Button>(R.id.go_home).setOnClickListener { onGoHome() }
     }
 

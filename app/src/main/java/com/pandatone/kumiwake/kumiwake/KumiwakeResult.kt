@@ -37,6 +37,7 @@ import com.pandatone.kumiwake.extension.getSerializable
 import com.pandatone.kumiwake.history.HistoryAdapter
 import com.pandatone.kumiwake.history.HistoryMethods
 import com.pandatone.kumiwake.history.HistoryMethods.avoidDuplicate
+import com.pandatone.kumiwake.history.ReKumiwake
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeComparator
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeMethods
 import com.pandatone.kumiwake.member.function.Group
@@ -119,7 +120,7 @@ class KumiwakeResult : AppCompatActivity() {
         findViewById<ImageButton>(R.id.edit_result_title).setOnClickListener { editInfoDialog() }
         findViewById<Button>(R.id.re_kumiwake).setOnClickListener { onReKumiwake() }
         findViewById<Button>(R.id.share_result).setOnClickListener { shareResult() }
-        findViewById<Button>(R.id.go_sekigime).setOnClickListener { onGoSekigime() }
+        findViewById<Button>(R.id.re_use_members).setOnClickListener { onClickReuse() }
         findViewById<Button>(R.id.go_home).setOnClickListener { onGoHome() }
     }
 
@@ -288,17 +289,14 @@ class KumiwakeResult : AppCompatActivity() {
         shareOptionDialog()
     }
 
-    //作ったグループで席決め
-    private fun onGoSekigime() {
+    //作ったグループを再利用
+    private fun onClickReuse() {
         val groupNameArray = ArrayList<String>(groupCount)
         for (j in 0 until groupCount) {
             groupNameArray.add(groupArray[j].name)
             resultArray[j].shuffle()
         }
-        val intent = Intent(this, SelectTableType::class.java)
-        SekigimeResult.groupArray = groupNameArray
-        SekigimeResult.teamArray = resultArray
-        startActivity(intent)
+        ReKumiwake(this, resultArray, groupNameArray.toTypedArray()).selectModeDialog()
     }
 
     //ホーム画面へ
