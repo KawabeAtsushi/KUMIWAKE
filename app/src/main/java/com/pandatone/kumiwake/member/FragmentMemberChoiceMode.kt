@@ -3,7 +3,6 @@ package com.pandatone.kumiwake.member
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.ActionMode
 import android.view.LayoutInflater
 import android.view.Menu
@@ -107,7 +106,7 @@ class FragmentMemberChoiceMode : ListFragment() {
             while (i < listAdp.count) {
                 val listItem: Member = memberList[i]
                 if (listItem.id == member.id) {
-                    lv.setItemChecked(i, !listAdp.isPositionChecked(listItem.id))
+                    lv.setItemChecked(i, !listAdp.isMemberChecked(listItem.id))
                 }
                 i += 2
             }
@@ -173,7 +172,8 @@ class FragmentMemberChoiceMode : ListFragment() {
             mode.title = checkedCount.toString() + getString(R.string.selected)
             lv.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                 //行をクリックした時の処理
-                lv.setItemChecked(position, !listAdp.isPositionChecked(memberList[position].id))
+                val memberId = listAdp.getItem(position).id
+                lv.setItemChecked(position, !listAdp.isMemberChecked(memberId))
             }
 
             ChoiceMemberMain.viewPager.addOnPageChangeListener(object :
@@ -235,7 +235,9 @@ class FragmentMemberChoiceMode : ListFragment() {
 
         override fun onItemCheckedStateChanged(
             mode: ActionMode,
-            position: Int, id: Long, checked: Boolean
+            position: Int,
+            id: Long,
+            checked: Boolean
         ) {
             // アクションモード時のアイテムの選択状態変更時(変更後)
             checkedCount = lv.checkedItemCount

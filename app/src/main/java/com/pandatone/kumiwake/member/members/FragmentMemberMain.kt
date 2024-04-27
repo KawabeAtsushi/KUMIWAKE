@@ -113,7 +113,7 @@ class FragmentMemberMain : ListFragment() {
 
         // 行を長押しした時の処理
         lv.onItemLongClickListener = AdapterView.OnItemLongClickListener { _, _, position, _ ->
-            lv.setItemChecked(position, !listAdp.isPositionChecked(memberList[position].id))
+            lv.setItemChecked(position, !listAdp.isMemberChecked(memberList[position].id))
             false
         }
 
