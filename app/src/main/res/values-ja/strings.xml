@@ -184,7 +184,6 @@
     <string name="others">便利機能</string>
     <string name="by_member">メンバーごと</string>
     <string name="by_group">グループごと</string>
-    <string name="kumiwake_order_annotation">（並びは男女ごとの年齢順です）</string>
     <string name="mode_selection">機能選択</string>
     <string name="drawing">くじ引き</string>
     <string name="role_decision">役割決め</string>
@@ -250,4 +249,12 @@
     <string name="preview">プレビュー（※画面からはみ出る場合はスクロールで確認）</string>
     <string name="classroom_annotation">一度に全体を見る場合には下のボタンから「結果をシェア」してください。</string>
     <string name="updated_age">年齢を更新しました</string>
+    <string name="change_result_display_style">スタイルを変更</string>
+    <string name="icon_display_title">アイコン表示</string>
+    <string name="show_sex_icon">性別アイコンを表示する</string>
+    <string name="show_number_icon">番号を表示する</string>
+    <string name="sort_by_name">名前順（読み仮名）</string>
+    <string name="sort_by_age">年齢順</string>
+    <string name="sort_by_sex">性別順</string>
+    <string name="sort_by_default">デフォルト（リーダー優先）</string>
 </resources>

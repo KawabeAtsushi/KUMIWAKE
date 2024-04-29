@@ -94,7 +94,7 @@ class HistoryAdapter(context: Context) : ArrayAdapter<History>(context, 0) {
             do {
                 history = History(
                     c.getInt(0),
-                    c.getString(c.getColumnIndex(HS_TIME)),
+                    c.getString(c.run { getColumnIndex(HS_TIME) }),
                     c.getString(c.getColumnIndex(HS_NAME)),
                     c.getString(c.getColumnIndex(HS_RESULT)),
                     c.getString(c.getColumnIndex(HS_RESULT_GP)),

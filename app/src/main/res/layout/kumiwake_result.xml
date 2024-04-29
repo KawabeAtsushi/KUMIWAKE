@@ -57,33 +57,31 @@
                 android:background="@drawable/circle_button_background"
                 android:contentDescription="@string/edit_title"
                 android:src="@drawable/ic_edit_24dp"
-                android:tint="@color/gray"
                 app:layout_constraintBottom_toBottomOf="@id/result_title"
                 app:layout_constraintStart_toEndOf="@id/result_title"
-                app:layout_constraintTop_toTopOf="@id/result_title" />
+                app:layout_constraintTop_toTopOf="@id/result_title"
+                app:tint="@color/gray" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayout"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/custom_display_style"
+                style="@style/Button.Transparent.Rounded"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_margin="10dp"
                 android:background="@drawable/tab_background"
+                android:paddingHorizontal="30dp"
+                android:text="@string/change_result_display_style"
+                android:textColor="@android:color/primary_text_light"
+                app:backgroundTint="#aaaaaa"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/result_title"
-                app:tabBackground="@drawable/tab_selector"
-                app:tabIndicatorHeight="0dp"
-                app:tabPaddingEnd="10dp"
-                app:tabPaddingStart="10dp"
-                app:tabRippleColor="@null"
-                app:tabSelectedTextColor="@android:color/black" />
+                app:layout_constraintTop_toBottomOf="@id/result_title" />
 
             <LinearLayout
                 android:id="@+id/whole_result_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@id/tabLayout">
+                app:layout_constraintTop_toBottomOf="@id/custom_display_style">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

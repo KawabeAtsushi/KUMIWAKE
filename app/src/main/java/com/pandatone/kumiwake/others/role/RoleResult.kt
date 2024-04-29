@@ -23,7 +23,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
-import com.google.android.material.tabs.TabLayout
 import com.pandatone.kumiwake.KumiwakeArrayKeys
 import com.pandatone.kumiwake.KumiwakeCustomKeys
 import com.pandatone.kumiwake.MainActivity
@@ -32,6 +31,7 @@ import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.ShareViewImage
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
 import com.pandatone.kumiwake.extension.getSerializable
+import com.pandatone.kumiwake.kumiwake.function.CustomResultDisplayStyle
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeComparator
 import com.pandatone.kumiwake.kumiwake.function.KumiwakeMethods
 import com.pandatone.kumiwake.member.function.Group
@@ -52,9 +52,13 @@ class RoleResult : AppCompatActivity() {
     private var groupCount: Int = 0
     private var evenFmRatio: Boolean = false
     private var evenAgeRatio: Boolean = false
-    private var v = 0
-    private lateinit var tabLayout: TabLayout
     private var resultTitle: String = ""
+
+    // DisplayStyle
+    private var selectedTab = 0
+    private var showSexIcons = true
+    private var showNumberIcons = false
+    private var sortType = KumiwakeComparator.SortType.DEFAULT
 
     //結果タイトル&コメント
     private var title = ""
@@ -72,10 +76,26 @@ class RoleResult : AppCompatActivity() {
         resultTitle = getString(R.string.role_decision) + getString(R.string.result)
         findViewById<TextView>(R.id.result_title).text = resultTitle
 
-        tabLayout = findViewById(R.id.tabLayout)
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.by_group))
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.by_member))
-        tabLayout.addOnTabSelectedListener(tabItemSelectedListener)
+        findViewById<Button>(R.id.custom_display_style).setOnClickListener {
+            CustomResultDisplayStyle.createDisplayStyleDialog(
+                this, sortType, showSexIcons, showNumberIcons, selectedTab
+            ) { newShowSexIcons, newShowNumberIcons, newSortType, newByGroup ->
+                showSexIcons = newShowSexIcons
+                showNumberIcons = newShowNumberIcons
+                sortType = newSortType
+                if (newByGroup) {
+                    selectedTab = 0
+                    //並べ替え
+                    resultArray.forEach {
+                        Collections.sort(it, KumiwakeComparator.ViewComparator(sortType))
+                    }
+                    Thread(DrawTask(this, groupCount)).start()
+                } else {
+                    selectedTab = 1
+                    addResultViewByMember()
+                }
+            }
+        }
 
         PublicMethods.showAd(this)
         val i = intent
@@ -120,7 +140,6 @@ class RoleResult : AppCompatActivity() {
 
 
     private fun startMethod() {
-        tabLayout.selectTab(tabLayout.getTabAt(0))
 
         memberArray.shuffle()
 
@@ -161,26 +180,6 @@ class RoleResult : AppCompatActivity() {
                 womanArray.add(member)
             }
         }
-    }
-
-    //表示形式切り替え
-    private val tabItemSelectedListener = object : TabLayout.OnTabSelectedListener {
-
-        override fun onTabSelected(tab: TabLayout.Tab) {
-            when (tab.position) {
-                0 -> {//グループごと
-                    v = 0
-                    Thread(DrawTask(this@RoleResult, groupCount)).start()
-                }
-
-                1 -> {//メンバーごと
-                    addResultViewByMember()
-                }
-            }
-        }
-
-        override fun onTabUnselected(tab: TabLayout.Tab) {}
-        override fun onTabReselected(tab: TabLayout.Tab) {}
     }
 
     //情報変更ダイアログ
@@ -233,7 +232,6 @@ class RoleResult : AppCompatActivity() {
 
     //以下、ボタンの処理
     private fun onRetry() {
-        v = 0
         val title = getString(R.string.retry_title)
         val message =
             getString(R.string.re_assign_description) + getString(R.string.run_confirmation)
@@ -309,14 +307,15 @@ class RoleResult : AppCompatActivity() {
             resultArrayByMember.add(memberIncludeGroups(it))
         }
         //描画
-        Collections.sort(resultArrayByMember, KumiwakeComparator.ViewComparator())
+        Collections.sort(
+            resultArrayByMember,
+            KumiwakeComparator.ViewComparator(sortType)
+        )
         val layout = findViewById<View>(R.id.result_layout) as LinearLayout
         layout.removeAllViews()
         val v = layoutInflater.inflate(R.layout.result_parts, null)
         layout.addView(v)
-        val annotation = v.findViewById<View>(R.id.result_group) as TextView
-        annotation.text = getText(R.string.kumiwake_order_annotation)
-        annotation.textSize = 15F
+        v.findViewById<TextView>(R.id.result_group).visibility = View.GONE
         arrayList = v.findViewById<View>(R.id.result_member_listView) as ListView
         val adapter = SmallMBListAdapter(this, resultArrayByMember, nameIsSpanned = true)
         arrayList.adapter = adapter

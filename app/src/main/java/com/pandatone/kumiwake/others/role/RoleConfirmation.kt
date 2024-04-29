@@ -92,7 +92,10 @@ class RoleConfirmation : AppCompatActivity() {
 
     //Viewの初期化処理
     private fun setViews() {
-        Collections.sort(memberArray, KumiwakeComparator.ViewComparator())
+        Collections.sort(
+            memberArray,
+            KumiwakeComparator.ViewComparator(KumiwakeComparator.SortType.DEFAULT)
+        )
         val mbAdapter = SmallMBListAdapter(this, memberArray)
         val gpAdapter = SmallGPListAdapter(this, groupArray, true)
         binding.kumiwakeMemberListView.adapter = mbAdapter

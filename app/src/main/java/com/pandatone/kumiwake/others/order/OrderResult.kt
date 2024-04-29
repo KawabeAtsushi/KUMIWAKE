@@ -52,7 +52,7 @@ class OrderResult : AppCompatActivity() {
 
         resultTitle = getString(R.string.order) + getString(R.string.result)
         findViewById<TextView>(R.id.result_title).text = resultTitle
-        findViewById<View>(R.id.tabLayout).visibility = View.GONE
+        findViewById<View>(R.id.custom_display_style).visibility = View.GONE
         val layout = findViewById<ConstraintLayout>(R.id.result_view)
         layout.background = ContextCompat.getDrawable(this, R.drawable.top_background)
 
@@ -175,7 +175,7 @@ class OrderResult : AppCompatActivity() {
         }
         layout.addView(v)
         number = v.findViewById(R.id.order_number_textView)
-        number.text = (i + 1).toString()
+        (i + 1).toString().also { number.text = it }
         name = v.findViewById(R.id.order_name_textView)
         name.text = memberArray[i].name
     }
