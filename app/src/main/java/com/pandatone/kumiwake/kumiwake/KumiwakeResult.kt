@@ -414,15 +414,13 @@ class KumiwakeResult : AppCompatActivity() {
             R.layout.edit_result_dialog_layout,
             findViewById<View>(R.id.info_layout) as ViewGroup?
         )
-        val indexTitle = view.findViewById<TextView>(R.id.title_index)
-        val etTitle = view.findViewById<EditText>(R.id.edit_title)
-        indexTitle.visibility = View.GONE
-        etTitle.visibility = View.GONE
+        val titleContainer = view.findViewById<View>(R.id.title_container)
+        val etTitle = titleContainer.findViewById<EditText>(R.id.edit_title)
+        titleContainer.visibility = View.GONE
         if (title != "") etTitle.setText(this.title)
-        val indexComment = view.findViewById<TextView>(R.id.comment_index)
-        val etComment = view.findViewById<EditText>(R.id.edit_comment)
-        indexComment.visibility = View.GONE
-        etComment.visibility = View.GONE
+        val commentContainer = view.findViewById<View>(R.id.comment_container)
+        val etComment = commentContainer.findViewById<EditText>(R.id.edit_comment)
+        commentContainer.visibility = View.GONE
         if (comment != "") etComment.setText(this.comment)
 
         val includeTitleCheck = view.findViewById<CheckBox>(R.id.include_title_check)
@@ -430,20 +428,16 @@ class KumiwakeResult : AppCompatActivity() {
 
         includeTitleCheck.setOnCheckedChangeListener { _, checked ->
             if (checked) {
-                indexTitle.visibility = View.VISIBLE
-                etTitle.visibility = View.VISIBLE
+                titleContainer.visibility = View.VISIBLE
             } else {
-                indexTitle.visibility = View.GONE
-                etTitle.visibility = View.GONE
+                titleContainer.visibility = View.GONE
             }
         }
         includeCommentCheck.setOnCheckedChangeListener { _, checked ->
             if (checked) {
-                indexComment.visibility = View.VISIBLE
-                etComment.visibility = View.VISIBLE
+                commentContainer.visibility = View.VISIBLE
             } else {
-                indexComment.visibility = View.GONE
-                etComment.visibility = View.GONE
+                commentContainer.visibility = View.GONE
             }
         }
 

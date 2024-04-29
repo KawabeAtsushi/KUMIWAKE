@@ -16,31 +16,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/title_index"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/title_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:background="@drawable/index_background"
-        android:text="@string/title"
+        android:layout_marginHorizontal="15dp"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/include_title_check" />
+        app:layout_constraintTop_toBottomOf="@id/include_title_check">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/index_background"
+            android:text="@string/title" />
 
-    <EditText
-        android:id="@+id/edit_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/edittext_outline"
-        android:hint="@string/kumiwake_result"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title_index" />
+        <EditText
+            android:id="@+id/edit_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/edittext_outline"
+            android:hint="@string/kumiwake_result"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+    </LinearLayout>
 
     <Space
         android:id="@+id/erd_space"
@@ -48,7 +48,7 @@
         android:layout_height="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_title" />
+        app:layout_constraintTop_toBottomOf="@id/title_container" />
 
     <CheckBox
         android:id="@+id/include_comment_check"
@@ -60,33 +60,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/erd_space" />
 
-    <TextView
-        android:id="@+id/comment_index"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/comment_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/index_background"
-        android:text="@string/comment"
+        android:layout_marginHorizontal="15dp"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/include_comment_check" />
+        app:layout_constraintTop_toBottomOf="@id/include_comment_check">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/index_background"
+            android:text="@string/comment" />
 
 
-    <EditText
-        android:id="@+id/edit_comment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/edittext_outline"
-        android:gravity="top|start"
-        android:hint="@string/input_comment"
-        android:importantForAutofill="no"
-        android:inputType="textMultiLine"
-        android:lines="5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/comment_index" />
+        <EditText
+            android:id="@+id/edit_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/edittext_outline"
+            android:gravity="top|start"
+            android:hint="@string/input_comment"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:lines="5" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

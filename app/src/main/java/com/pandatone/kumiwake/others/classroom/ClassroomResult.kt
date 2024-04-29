@@ -2,6 +2,10 @@ package com.pandatone.kumiwake.others.classroom
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Shader
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -19,7 +23,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import com.pandatone.kumiwake.ClassroomCustomKeys
@@ -53,7 +57,6 @@ class ClassroomResult : AppCompatActivity() {
         setContentView(R.layout.classroom_result)
 
         resultTitle = getString(R.string.classroom_result)
-        val layout = findViewById<ConstraintLayout>(R.id.result_view)
 
         PublicMethods.showAd(this)
         val i = intent
@@ -69,6 +72,7 @@ class ClassroomResult : AppCompatActivity() {
 
         val scrollView = findViewById<View>(R.id.classroom_scroll) as ScrollView
         scrollView.post { scrollView.fullScroll(ScrollView.FOCUS_UP) }
+        setBackground(scrollView)
 
         val retryButton = findViewById<Button>(R.id.re_kumiwake)
         retryButton.text = getString(R.string.retry)
@@ -249,6 +253,26 @@ class ClassroomResult : AppCompatActivity() {
         layout.addView(tableLayout)
     }
 
+    private fun setBackground(backgroundView: View) {
+        val vectorDrawable = ContextCompat.getDrawable(this, R.drawable.classroom_floor_tile)
+        val bitmap = Bitmap.createBitmap(
+            vectorDrawable!!.intrinsicWidth,
+            vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap)
+        vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
+        vectorDrawable.draw(canvas)
+
+        // ビットマップをタイル状に繰り返す
+        val bitmapDrawable = BitmapDrawable(resources, bitmap).apply {
+            tileModeX = Shader.TileMode.REPEAT
+            tileModeY = Shader.TileMode.REPEAT
+        }
+
+        // 背景に設定
+        backgroundView.background = bitmapDrawable
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////                                   結果共有メソッド                                              ////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -261,16 +285,14 @@ class ClassroomResult : AppCompatActivity() {
             R.layout.edit_result_dialog_layout,
             findViewById<View>(R.id.info_layout) as ViewGroup?
         )
-        val indexTitle = view.findViewById<TextView>(R.id.title_index)
-        val etTitle = view.findViewById<EditText>(R.id.edit_title)
-        indexTitle.visibility = View.GONE
-        etTitle.visibility = View.GONE
+        val titleContainer = view.findViewById<View>(R.id.title_container)
+        val etTitle = titleContainer.findViewById<EditText>(R.id.edit_title)
+        titleContainer.visibility = View.GONE
         etTitle.hint = getString(R.string.classroom_hint)
         if (title != "") etTitle.setText(this.title)
-        val indexComment = view.findViewById<TextView>(R.id.comment_index)
-        val etComment = view.findViewById<EditText>(R.id.edit_comment)
-        indexComment.visibility = View.GONE
-        etComment.visibility = View.GONE
+        val commentContainer = view.findViewById<View>(R.id.comment_container)
+        val etComment = commentContainer.findViewById<EditText>(R.id.edit_comment)
+        commentContainer.visibility = View.GONE
         if (comment != "") etComment.setText(this.comment)
 
         val includeTitleCheck = view.findViewById<CheckBox>(R.id.include_title_check)
@@ -282,27 +304,21 @@ class ClassroomResult : AppCompatActivity() {
 
         includeTitleCheck.setOnCheckedChangeListener { _, checked ->
             if (checked) {
-                indexTitle.visibility = View.VISIBLE
-                etTitle.visibility = View.VISIBLE
+                titleContainer.visibility = View.VISIBLE
                 tvTitle.visibility = View.VISIBLE
             } else {
-                indexTitle.visibility = View.GONE
-                etTitle.visibility = View.GONE
+                titleContainer.visibility = View.GONE
                 tvTitle.visibility = View.GONE
             }
         }
+
         includeCommentCheck.setOnCheckedChangeListener { _, checked ->
 
             if (checked) {
-                indexComment.visibility = View.VISIBLE
-                etComment.visibility = View.VISIBLE
-                if (tvComment.text != "") {
-                    tvComment.visibility = View.VISIBLE
-                }
-
+                commentContainer.visibility = View.VISIBLE
+                tvComment.visibility = View.VISIBLE
             } else {
-                indexComment.visibility = View.GONE
-                etComment.visibility = View.GONE
+                commentContainer.visibility = View.GONE
                 tvComment.visibility = View.GONE
             }
         }
@@ -341,6 +357,7 @@ class ClassroomResult : AppCompatActivity() {
     //画像でシェア
     private fun shareImage() {
         val shareLayout = findViewById<LinearLayout>(R.id.whole_result_layout)
+        setBackground(shareLayout)
         ShareViewImage.shareView(this, shareLayout, getString(R.string.classroom_result))
     }
 
