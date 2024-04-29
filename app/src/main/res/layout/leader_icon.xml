@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/starIcon"
+        android:layout_width="@dimen/mini_icon_size"
+        android:layout_height="@dimen/mini_icon_size"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_star" />
+
+    <TextView
+        android:id="@+id/leaderNo"
+        android:layout_width="@dimen/mini_icon_size"
+        android:layout_height="@dimen/mini_icon_size"
+        android:layout_centerInParent="true"
+        android:maxLines="1"
+        android:padding="6dp"
+        android:text="0"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+</RelativeLayout>

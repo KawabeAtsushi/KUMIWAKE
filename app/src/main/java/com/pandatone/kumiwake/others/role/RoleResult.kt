@@ -276,7 +276,11 @@ class RoleResult : AppCompatActivity() {
         groupName = v.findViewById<View>(R.id.result_group) as TextView
         groupName.text = groupArray[i].name
         arrayList = v.findViewById<View>(R.id.result_member_listView) as ListView
-        val adapter = SmallMBListAdapter(this, resultArray[i])
+        val adapter = SmallMBListAdapter(
+            this, resultArray[i],
+            showSexIcon = showSexIcons,
+            showNumberIcon = showNumberIcons,
+        )
         arrayList.adapter = adapter
         setBackGround(v, i)
         adapter.setRowHeight(arrayList)
@@ -317,7 +321,11 @@ class RoleResult : AppCompatActivity() {
         layout.addView(v)
         v.findViewById<TextView>(R.id.result_group).visibility = View.GONE
         arrayList = v.findViewById<View>(R.id.result_member_listView) as ListView
-        val adapter = SmallMBListAdapter(this, resultArrayByMember, nameIsSpanned = true)
+        val adapter = SmallMBListAdapter(
+            this, resultArrayByMember, nameIsSpanned = true,
+            showSexIcon = showSexIcons,
+            showNumberIcon = showNumberIcons,
+        )
         arrayList.adapter = adapter
         setBackGround(v, -1)
         adapter.setRowHeight(arrayList)

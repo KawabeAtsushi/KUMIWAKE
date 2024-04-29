@@ -5,46 +5,33 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/memberIcon"
+    <include
+        android:id="@+id/numberIcon"
+        layout="@layout/number_icon"
         android:layout_width="@dimen/mini_icon_size"
         android:layout_height="@dimen/mini_icon_size"
         android:layout_marginStart="3dp"
         android:contentDescription="@null"
         android:padding="3dp"
-        android:src="@drawable/ic_human"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/starIcon"
-        android:layout_width="@dimen/mini_icon_size"
-        android:layout_height="@dimen/mini_icon_size"
-        android:layout_marginStart="3dp"
-        android:contentDescription="@null"
-        android:src="@drawable/ic_star"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/leaderNo"
-        android:layout_width="@dimen/mini_icon_size"
-        android:layout_height="@dimen/mini_icon_size"
-        android:maxLines="1"
-        android:padding="6dp"
-        android:text="0"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
-        android:textSize="14dp"
-        android:textStyle="bold"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/starIcon"
-        app:layout_constraintEnd_toEndOf="@id/starIcon"
-        app:layout_constraintStart_toStartOf="@id/starIcon"
-        app:layout_constraintTop_toTopOf="@id/starIcon" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/memberIconContainer"
+        android:layout_width="@dimen/mini_icon_size"
+        android:layout_height="@dimen/mini_icon_size"
+        android:contentDescription="@null"
+        android:paddingStart="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/numberIcon"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            android:id="@+id/memberIcon"
+            layout="@layout/member_icon" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/memberName"
@@ -57,7 +44,7 @@
         android:textColor="@color/gray"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/starIcon"
+        app:layout_constraintStart_toEndOf="@id/memberIconContainer"
         app:layout_constraintTop_toTopOf="parent" />
 
 

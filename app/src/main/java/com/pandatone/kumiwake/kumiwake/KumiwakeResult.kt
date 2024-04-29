@@ -319,7 +319,13 @@ class KumiwakeResult : AppCompatActivity() {
         groupName = v.findViewById(R.id.result_group)
         groupName.text = groupArray[i].name
         arrayList = v.findViewById(R.id.result_member_listView)
-        val adapter = SmallMBListAdapter(this, resultArray[i], leaderArray = leaderArray)
+        val adapter = SmallMBListAdapter(
+            this,
+            resultArray[i],
+            leaderArray = leaderArray,
+            showSexIcon = showSexIcons,
+            showNumberIcon = showNumberIcons,
+        )
         arrayList.adapter = adapter
         setBackGround(v, i)
         adapter.setRowHeight(arrayList)
@@ -364,7 +370,9 @@ class KumiwakeResult : AppCompatActivity() {
             this,
             resultArrayByMember,
             leaderArray = leaderArray,
-            nameIsSpanned = true
+            nameIsSpanned = true,
+            showSexIcon = showSexIcons,
+            showNumberIcon = showNumberIcons,
         )
         arrayList.adapter = adapter
         setBackGround(v, -1)
