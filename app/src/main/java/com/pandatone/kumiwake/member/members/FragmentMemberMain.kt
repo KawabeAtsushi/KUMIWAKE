@@ -38,6 +38,7 @@ class FragmentMemberMain : ListFragment() {
         StatusHolder.mbNowSort = MemberAdapter.MB_ID
         StatusHolder.mbSortType = "ASC"
         Sort.initial = 0
+        fragmentMemberMain = this
     }
 
     override fun onStart() {
@@ -413,6 +414,7 @@ class FragmentMemberMain : ListFragment() {
     }
 
     companion object {
+        internal lateinit var fragmentMemberMain: FragmentMemberMain
         internal var memberList: ArrayList<Member> = ArrayList() //searchMemberの関係
     }
 }

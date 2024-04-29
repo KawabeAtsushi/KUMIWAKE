@@ -75,7 +75,7 @@ class FragmentGroupMain : ListFragment() {
             val groupName = groupList[position].name
             if (MembersMain.searchView.isActivated)
                 MembersMain.searchView.onActionViewCollapsed()
-            FragmentMemberMain().loadName()
+            FragmentMemberMain.fragmentMemberMain.loadName()
 
             val items = arrayOf(
                 getString(R.string.information),
@@ -158,7 +158,7 @@ class FragmentGroupMain : ListFragment() {
             val groupId = groupList[position].id
             GroupMethods.deleteBelongInfoAll(requireContext(), groupId)
             gpAdapter.selectDelete(groupId.toString())
-            FragmentMemberMain().loadName()
+            FragmentMemberMain.fragmentMemberMain.loadName()
             loadName()
         }
 
@@ -288,7 +288,7 @@ class FragmentGroupMain : ListFragment() {
                 }
             }
             listAdp.clearSelection()
-            FragmentMemberMain().loadName()
+            FragmentMemberMain.fragmentMemberMain.loadName()
             loadName()
             mode.finish()
         }

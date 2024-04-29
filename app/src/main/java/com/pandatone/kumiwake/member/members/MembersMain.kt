@@ -101,7 +101,7 @@ class MembersMain : AppCompatActivity(), SearchView.OnQueryTextListener {
                 searchAutoComplete.setText("")
             } else {
                 searchView.onActionViewCollapsed()
-                FragmentMemberMain().loadName()
+                FragmentMemberMain.fragmentMemberMain.loadName()
                 FragmentGroupMain().loadName()
             }
             menuItemVisible(menu, true)

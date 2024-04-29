@@ -334,7 +334,7 @@ class AddMember : AppCompatActivity() {
         val belong = MemberMethods.belongConvertToNo(belongDropdown!!.text.toString(), groupList)
 
         mbAdapter!!.updateMember(listId, name, sex, age, belong, read)
-        FragmentMemberMain().loadName()
+        FragmentMemberMain.fragmentMemberMain.loadName()
     }
 
     //String to Int
