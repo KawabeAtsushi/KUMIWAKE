@@ -294,9 +294,11 @@ class ClassroomResult : AppCompatActivity() {
         val etTitle = titleContainer.findViewById<EditText>(R.id.edit_title)
         etTitle.hint = getString(R.string.classroom_hint)
         if (title != "") etTitle.setText(this.title)
+        titleContainer.visibility = View.GONE
         val commentContainer = view.findViewById<View>(R.id.comment_container)
         val etComment = commentContainer.findViewById<EditText>(R.id.edit_comment)
         if (comment != "") etComment.setText(this.comment)
+        commentContainer.visibility = View.GONE
 
         val includeTitleCheck = view.findViewById<CheckBox>(R.id.include_title_check)
         val includeCommentCheck = view.findViewById<CheckBox>(R.id.include_comment_check)

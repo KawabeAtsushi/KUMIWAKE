@@ -25,6 +25,17 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp">
 
+                <ImageButton
+                    android:id="@+id/edit_result_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circle_button_background"
+                    android:contentDescription="@string/edit_title"
+                    android:src="@drawable/ic_edit_24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/gray" />
+
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabLayout"
                     android:layout_width="150dp"
