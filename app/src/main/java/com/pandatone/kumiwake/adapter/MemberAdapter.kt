@@ -162,7 +162,7 @@ class MemberAdapter(val context: Context) : BaseAdapter() {
         minAge: Int,
         maxAge: Int,
         belongNo: String,
-        memberList: ArrayList<Member>
+        memberList: ArrayList<Member>,
     ) {
         open()
         val query = "SELECT * FROM " + TABLE_NAME +

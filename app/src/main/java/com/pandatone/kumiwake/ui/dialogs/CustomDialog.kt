@@ -21,7 +21,7 @@ import com.pandatone.kumiwake.R
 class CustomDialog(
     private var mTitle: String,
     private var mMessage: CharSequence,
-    private val linkChar: CharSequence = ""
+    private val linkChar: CharSequence = "",
 ) : DialogFragment() {
 
     //onClickリスナ(Positive)

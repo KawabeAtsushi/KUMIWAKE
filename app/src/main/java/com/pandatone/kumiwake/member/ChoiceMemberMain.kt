@@ -51,7 +51,7 @@ class ChoiceMemberMain : AppCompatActivity() {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
-                positionOffsetPixels: Int
+                positionOffsetPixels: Int,
             ) {
                 //tableNo:遷移中pageのindex
                 //positionOffset:遷移前→遷移後のoffset割合を0~1で返す

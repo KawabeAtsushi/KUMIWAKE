@@ -45,7 +45,7 @@ class FragmentGroupMain : ListFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.tab_group, container, false)
         (view.findViewById<View>(R.id.group_fab) as FloatingActionButton).setOnClickListener { moveAddGroup() }
@@ -193,7 +193,7 @@ class FragmentGroupMain : ListFragment() {
                 override fun onPageScrolled(
                     position: Int,
                     positionOffset: Float,
-                    positionOffsetPixels: Int
+                    positionOffsetPixels: Int,
                 ) {
                     super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                     viewPager.currentItem = 1
@@ -251,7 +251,7 @@ class FragmentGroupMain : ListFragment() {
 
         override fun onItemCheckedStateChanged(
             mode: ActionMode,
-            position: Int, id: Long, checked: Boolean
+            position: Int, id: Long, checked: Boolean,
         ) {
             // アクションモード時のアイテムの選択状態変更時
 

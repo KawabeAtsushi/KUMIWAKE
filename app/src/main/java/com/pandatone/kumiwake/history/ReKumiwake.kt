@@ -34,7 +34,7 @@ import com.pandatone.kumiwake.others.SelectMember
 class ReKumiwake(
     val c: Activity,
     private val resultArray: ArrayList<ArrayList<Member>>,
-    private val groupNameArray: Array<String>
+    private val groupNameArray: Array<String>,
 ) {
     private var newMemberArray: ArrayList<Member> = ArrayList()
 

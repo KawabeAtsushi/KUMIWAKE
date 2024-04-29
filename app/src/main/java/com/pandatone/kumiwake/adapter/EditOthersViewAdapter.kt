@@ -23,7 +23,7 @@ class EditOthersViewAdapter(
     val context: Context,
     val groupList: List<Group>,
     private val totalCountTextView: TextView,
-    private val drawingMode: Boolean
+    private val drawingMode: Boolean,
 ) : BaseAdapter() {
 
     private val name =

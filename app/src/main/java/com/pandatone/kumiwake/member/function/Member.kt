@@ -12,7 +12,7 @@ class Member(
     age: Int,
     belong: String,
     read: String,
-    leader: Int
+    leader: Int,
 ) : Serializable {
     var id: Int = 0
         private set

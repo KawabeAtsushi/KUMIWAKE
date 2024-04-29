@@ -64,7 +64,7 @@ class FragmentGroupChoiceMode : ListFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.tab_group, container, false)
         val adviceInFG = view.findViewById<View>(R.id.advice_in_fg) as TextView

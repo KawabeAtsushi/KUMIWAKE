@@ -23,7 +23,7 @@ import com.pandatone.kumiwake.member.function.Group
 class EditGroupViewAdapter(
     val context: Context,
     val groupList: List<Group>,
-    private val groupListView: ListView
+    private val groupListView: ListView,
 ) : BaseAdapter() {
     private var beforeNo: Int = 0
     private var afterNo: Int = 0

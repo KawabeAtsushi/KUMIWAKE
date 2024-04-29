@@ -82,7 +82,7 @@ object HistoryMethods {
         resultArray: ArrayList<ArrayList<Member>>,
         groupArray: ArrayList<Group>,
         mode: Int,
-        again: Boolean
+        again: Boolean,
     ) {
         val hsAdapter = HistoryAdapter(context)
         val resultStr = resultArrayToString(resultArray)
@@ -117,7 +117,7 @@ object HistoryMethods {
     fun historySort(
         activity: Activity,
         historyList: ArrayList<History>,
-        listAdp: HistoryFragmentViewAdapter
+        listAdp: HistoryFragmentViewAdapter,
     ) {
         val hsAdapter = HistoryAdapter(activity)
         sortType = if (sortType == "ASC") {
@@ -201,7 +201,7 @@ object HistoryMethods {
         minIndex: Int,
         maxIndex: Int,
         oldGroups: ArrayList<ArrayList<Pair<Member, Int>>>,
-        extraGroupNo: Int
+        extraGroupNo: Int,
     ) {
         //一番余っているメンバー＆＆リーダーでない
         val maxSwapMember =
@@ -219,7 +219,7 @@ object HistoryMethods {
     //ArrayList同士の減算
     private fun arraySubtraction(
         before: ArrayList<ArrayList<Int>>,
-        after: ArrayList<ArrayList<Int>>
+        after: ArrayList<ArrayList<Int>>,
     ): ArrayList<ArrayList<Int>> {
         val needNoArray = ArrayList(before)
         for (i in before.indices) {
@@ -284,7 +284,7 @@ object HistoryMethods {
     //最低でも割り当てるべき人数
     private fun needNos(
         resultArray: ArrayList<ArrayList<Member>>,
-        memberNo: Float
+        memberNo: Float,
     ): ArrayList<ArrayList<Int>> {
         val needNoArray: ArrayList<ArrayList<Int>> = ArrayList()
         resultArray.forEach { list ->
@@ -303,7 +303,7 @@ object HistoryMethods {
         history: History,
         activity: Activity,
         hsAdapter: HistoryAdapter,
-        pageIsKeeps: Boolean
+        pageIsKeeps: Boolean,
     ) {
         val builder = AlertDialog.Builder(activity)
         val favoriteText = if (history.keep == -1) {
@@ -346,7 +346,7 @@ object HistoryMethods {
         history: History,
         activity: Activity,
         hsAdapter: HistoryAdapter,
-        pageIsKeeps: Boolean
+        pageIsKeeps: Boolean,
     ) {
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(changeDateFormat(history.name))

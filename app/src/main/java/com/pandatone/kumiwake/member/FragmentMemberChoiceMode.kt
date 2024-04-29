@@ -60,7 +60,7 @@ class FragmentMemberChoiceMode : ListFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.tab_member, container, false)
         val fab = view.findViewById<View>(R.id.member_fab) as FloatingActionButton
@@ -237,7 +237,7 @@ class FragmentMemberChoiceMode : ListFragment() {
             mode: ActionMode,
             position: Int,
             id: Long,
-            checked: Boolean
+            checked: Boolean,
         ) {
             // アクションモード時のアイテムの選択状態変更時(変更後)
             checkedCount = lv.checkedItemCount

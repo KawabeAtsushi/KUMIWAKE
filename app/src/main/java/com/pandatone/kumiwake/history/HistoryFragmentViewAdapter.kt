@@ -18,7 +18,7 @@ import com.pandatone.kumiwake.R
  */
 class HistoryFragmentViewAdapter(
     private val context: Context,
-    private val historyList: List<History>
+    private val historyList: List<History>,
 ) : BaseAdapter() {
 
     @SuppressLint("UseSparseArrays")

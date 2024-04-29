@@ -67,7 +67,7 @@ object PublicMethods {
         context: Context,
         groupNo: Int,
         memberNo: Int,
-        normalMode: Boolean
+        normalMode: Boolean,
     ): ArrayList<Group> {
         val groupArray = ArrayList<Group>()
         val eachMemberNo = memberNo / groupNo
@@ -118,7 +118,7 @@ object PublicMethods {
         leftDp: Int,
         topDp: Int,
         rightDp: Int,
-        bottomDp: Int
+        bottomDp: Int,
     ): LinearLayout.LayoutParams {
         val scale = c.resources.displayMetrics.density //画面のdensityを指定。
         val left = (leftDp * scale + 0.5f).toInt()

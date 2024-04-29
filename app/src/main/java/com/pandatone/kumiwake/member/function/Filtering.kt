@@ -25,7 +25,7 @@ import com.pandatone.kumiwake.adapter.MemberFragmentViewAdapter
 class Filtering(
     val activity: Activity,
     private val mbAdapter: MemberAdapter,
-    private val memberList: ArrayList<Member>
+    private val memberList: ArrayList<Member>,
 ) {
 
     private val groupList: ArrayList<Group> = GroupAdapter(activity).getAllGroups()

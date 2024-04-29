@@ -25,7 +25,7 @@ object Sort {
         memberList: ArrayList<Member>,
         listAdp: MemberFragmentViewAdapter,
         mbAdapter: MemberAdapter,
-        onStarted: (() -> Unit)? = null
+        onStarted: (() -> Unit)? = null,
     ) {
         val builder = androidx.appcompat.app.AlertDialog.Builder(activity)
 
@@ -88,7 +88,7 @@ object Sort {
     fun groupSort(
         activity: Activity,
         groupList: ArrayList<Group>,
-        listAdp: GroupFragmentViewAdapter
+        listAdp: GroupFragmentViewAdapter,
     ) {
         val builder = androidx.appcompat.app.AlertDialog.Builder(activity)
         val gpAdapter = GroupAdapter(activity)
