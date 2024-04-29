@@ -270,14 +270,21 @@ object KumiwakeMethods {
         "b7ffb7", "dbffb7", "ffffb7", "ffdbb7"
     )
 
+    private val thickColorList = listOf(
+        "ff6666", "ff66b3", "ff66ff", "9966ff",
+        "6666ff", "66b3ff", "66ffff", "66ffb3",
+        "66ff66", "b3ff66", "ffcc66", "ff9966"
+    )
+
     //組み分け結果背景用に色変換
-    fun getResultColorStr(ver: Int, groupCount: Int): String {
-        val colorNum = colorList.size.toFloat()
+    fun getResultColorStr(ver: Int, groupCount: Int, thick: Boolean = false): String {
+        val colors = if (thick) thickColorList else colorList
+        val colorNum = colors.size.toFloat()
         var skipColBias = 1f
         if (groupCount < colorNum) {
             skipColBias = colorNum / groupCount
         }
         val element = (ver % colorNum) * skipColBias
-        return colorList[element.toInt()]
+        return colors[element.toInt()]
     }
 }

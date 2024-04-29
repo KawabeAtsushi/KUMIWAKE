@@ -74,8 +74,7 @@ object CustomResultDisplayStyle {
                     showNumberIconsVal,
                     sortTypeVal,
                     byGroupVal,
-
-                    )
+                )
                 val scrollView = activity.findViewById<View>(R.id.kumiwake_scroll) as ScrollView
                 scrollView.post { scrollView.fullScroll(ScrollView.FOCUS_UP) }
             }

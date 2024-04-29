@@ -17,7 +17,6 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
@@ -90,7 +89,6 @@ class SekigimeResult : AppCompatActivity() {
             drawView(position)
         }
 
-        findViewById<ImageButton>(R.id.edit_result_title).setOnClickListener { editInfoDialog() }
         findViewById<Button>(R.id.re_sekigime).setOnClickListener { onReSekigime() }
         findViewById<Button>(R.id.go_home).setOnClickListener { onGoHome() }
         findViewById<Button>(R.id.share_image).setOnClickListener { onShareImage() }
@@ -142,49 +140,6 @@ class SekigimeResult : AppCompatActivity() {
 
         override fun onTabUnselected(tab: TabLayout.Tab) {}
         override fun onTabReselected(tab: TabLayout.Tab) {}
-    }
-
-    //情報変更ダイアログ
-    private fun editInfoDialog() {
-        val builder = AlertDialog.Builder(this)
-        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(
-            R.layout.edit_result_dialog_layout,
-            findViewById<View>(R.id.info_layout) as ViewGroup?
-        )
-        val etTitle = view.findViewById<EditText>(R.id.edit_title)
-        etTitle.hint = getString(R.string.sekigime_result)
-        if (title != "") etTitle.setText(this.title)
-        val etComment = view.findViewById<EditText>(R.id.edit_comment)
-        if (comment != "") etComment.setText(this.comment)
-        view.findViewById<CheckBox>(R.id.include_title_check).visibility = View.GONE
-        view.findViewById<CheckBox>(R.id.include_comment_check).visibility = View.GONE
-        builder.setTitle(getString(R.string.add_info))
-            .setView(view)
-            .setPositiveButton(R.string.change) { _, _ ->
-                changeInfo(etTitle.text.toString(), etComment.text.toString())
-                val tvTitle = findViewById<TextView>(R.id.inner_result_title)
-                if (title != "") {
-                    tvTitle.visibility = View.VISIBLE
-                    if (StatusHolder.normalMode) {
-                        val hsAdapter = HistoryAdapter(this)
-                        hsAdapter.updateHistoryState(hsAdapter.latestHistory, title, false)
-                    }
-                } else {
-                    tvTitle.visibility = View.GONE
-                }
-                val tvComment = findViewById<TextView>(R.id.comment_view)
-                if (comment != "") {
-                    tvComment.visibility = View.VISIBLE
-                } else {
-                    tvComment.visibility = View.GONE
-                }
-            }
-            .setNegativeButton(R.string.cancel) { dialog, _ ->
-                dialog.dismiss()
-            }
-        val dialog = builder.create()
-        dialog.show()
     }
 
     //情報変更

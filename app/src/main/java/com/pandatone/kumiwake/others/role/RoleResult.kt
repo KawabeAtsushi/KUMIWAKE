@@ -342,7 +342,7 @@ class RoleResult : AppCompatActivity() {
                 break
             }
         }
-        val colorStr = KumiwakeMethods.getResultColorStr(groupNo, groupArray.size)
+        val colorStr = KumiwakeMethods.getResultColorStr(groupNo, groupArray.size, thick = true)
         val newName =
             member.name + " → <strong><font color='#" + colorStr + "'>" + groupArray[groupNo].name + "</font></strong>"
         return Member(
