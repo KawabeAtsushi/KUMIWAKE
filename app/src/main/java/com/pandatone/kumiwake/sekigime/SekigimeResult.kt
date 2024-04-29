@@ -241,20 +241,16 @@ class SekigimeResult : AppCompatActivity() {
         )
         val titleContainer = view.findViewById<View>(R.id.title_container)
         val etTitle = titleContainer.findViewById<EditText>(R.id.edit_title)
-        titleContainer.visibility = View.GONE
         etTitle.hint = getString(R.string.sekigime_result)
         if (title != "") etTitle.setText(this.title)
         val commentContainer = view.findViewById<View>(R.id.comment_container)
         val etComment = commentContainer.findViewById<EditText>(R.id.edit_comment)
-        commentContainer.visibility = View.GONE
         if (comment != "") etComment.setText(this.comment)
 
         val includeTitleCheck = view.findViewById<CheckBox>(R.id.include_title_check)
         val includeCommentCheck = view.findViewById<CheckBox>(R.id.include_comment_check)
         val tvTitle = findViewById<TextView>(R.id.inner_result_title)
-        tvTitle.visibility = View.GONE
         val tvComment = findViewById<TextView>(R.id.comment_view)
-        tvComment.visibility = View.GONE
 
         includeTitleCheck.setOnCheckedChangeListener { _, checked ->
             if (checked) {

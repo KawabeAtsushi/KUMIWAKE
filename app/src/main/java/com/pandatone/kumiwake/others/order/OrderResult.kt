@@ -194,12 +194,10 @@ class OrderResult : AppCompatActivity() {
         )
         val titleContainer = view.findViewById<View>(R.id.title_container)
         val etTitle = titleContainer.findViewById<EditText>(R.id.edit_title)
-        titleContainer.visibility = View.GONE
         etTitle.hint = resultTitle
         if (title != "") etTitle.setText(this.title)
         val commentContainer = view.findViewById<View>(R.id.comment_container)
         val etComment = commentContainer.findViewById<EditText>(R.id.edit_comment)
-        commentContainer.visibility = View.GONE
         if (comment != "") etComment.setText(this.comment)
 
         val includeTitleCheck = view.findViewById<CheckBox>(R.id.include_title_check)
@@ -283,7 +281,7 @@ class OrderResult : AppCompatActivity() {
         // アプリ一覧が表示されるDialogのタイトルの設定
         builder.setChooserTitle(R.string.choose_app)
         // シェアするタイトル
-        builder.setSubject(articleTitle)
+        builder.setSubject(getText(R.string.kumiwake_result).toString())
         // シェアするテキスト
         builder.setText(sharedText)
         // シェアするタイプ（他にもいっぱいあるよ）
