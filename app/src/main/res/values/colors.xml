@@ -21,6 +21,8 @@
     <color name="woman">#fc7373</color>
     <color name="thin_man">#5033b5e5</color>
     <color name="thin_woman">#50fc7373</color>
+    <color name="thick_man">#036FDC</color>
+    <color name="thick_woman">#D70A0A</color>
 
     <!-- theme colors -->
     <color name="blue_background">#f5f5f5</color>

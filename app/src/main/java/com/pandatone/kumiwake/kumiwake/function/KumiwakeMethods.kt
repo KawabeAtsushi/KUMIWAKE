@@ -20,7 +20,7 @@ object KumiwakeMethods {
         groupArray: ArrayList<Group>,
         leaderArray: ArrayList<Member?>,
         evenFmRatio: Boolean,
-        evenAgeRatio: Boolean
+        evenAgeRatio: Boolean,
     ) {
 
         val manArray: ArrayList<Member> = ArrayList()
@@ -55,7 +55,7 @@ object KumiwakeMethods {
         resultArray: ArrayList<ArrayList<Member>>,
         memberArray: ArrayList<Member>,
         groupArray: ArrayList<Group>,
-        leaderArray: ArrayList<Member?>
+        leaderArray: ArrayList<Member?>,
     ) {
         setLeader(resultArray, leaderArray) //リーダを先にセット
 
@@ -73,7 +73,7 @@ object KumiwakeMethods {
     private fun kumiwakeAllQuick(
         resultArray: ArrayList<ArrayList<Member>>,
         memberArray: ArrayList<Member>,
-        groupArray: ArrayList<Group>
+        groupArray: ArrayList<Group>,
     ) {
         val groupCount = groupArray.size
         var memberNo = 0
@@ -92,7 +92,7 @@ object KumiwakeMethods {
     private fun createFmArray(
         memberArray: ArrayList<Member>,
         manArray: ArrayList<Member>,
-        womanArray: ArrayList<Member>
+        womanArray: ArrayList<Member>,
     ) {
         for (member in memberArray) {
             if (PublicMethods.isMan(member.sex)) {
@@ -106,7 +106,7 @@ object KumiwakeMethods {
     //リーダーをresultArrayに追加
     private fun setLeader(
         resultArray: ArrayList<ArrayList<Member>>,
-        leaderArray: ArrayList<Member?>
+        leaderArray: ArrayList<Member?>,
     ) {
 
         for (leader in leaderArray.filterNotNull()) {
@@ -133,7 +133,7 @@ object KumiwakeMethods {
         memberCount: Int,
         resultArray: ArrayList<ArrayList<Member>>,
         manArray: ArrayList<Member>,
-        groupArray: ArrayList<Group>
+        groupArray: ArrayList<Group>,
     ) {
         val groupCount = groupArray.size
         val groupCapacity = DoubleArray(groupCount)
@@ -170,7 +170,7 @@ object KumiwakeMethods {
     fun evenWomanDistribute(
         resultArray: ArrayList<ArrayList<Member>>,
         womanArray: ArrayList<Member>,
-        groupArray: ArrayList<Group>
+        groupArray: ArrayList<Group>,
     ) {
         val groupCount = groupArray.size
         val escapeArray = ArrayList<Member>() //復帰用
@@ -189,7 +189,7 @@ object KumiwakeMethods {
     private fun kumiwakeCreateGroup(
         array: ArrayList<Member>,
         addNo: Int,
-        escapeArray: ArrayList<Member>
+        escapeArray: ArrayList<Member>,
     ): ArrayList<Member> {
         val result = ArrayList<Member>()
         val addIndexes = properAgeIndexes(addNo, array.size)
@@ -228,7 +228,7 @@ object KumiwakeMethods {
         titleView: View,
         commentView: TextView,
         choice1: () -> Unit,
-        choice2: () -> Unit
+        choice2: () -> Unit,
     ) {
         val builder = androidx.appcompat.app.AlertDialog.Builder(activity)
         val items = arrayOf(
@@ -270,14 +270,21 @@ object KumiwakeMethods {
         "b7ffb7", "dbffb7", "ffffb7", "ffdbb7"
     )
 
+    private val thickColorList = listOf(
+        "ff6666", "ff66b3", "ff66ff", "9966ff",
+        "6666ff", "66b3ff", "66ffff", "66ffb3",
+        "66ff66", "b3ff66", "ffcc66", "ff9966"
+    )
+
     //組み分け結果背景用に色変換
-    fun getResultColorStr(ver: Int, groupCount: Int): String {
-        val colorNum = colorList.size.toFloat()
+    fun getResultColorStr(ver: Int, groupCount: Int, thick: Boolean = false): String {
+        val colors = if (thick) thickColorList else colorList
+        val colorNum = colors.size.toFloat()
         var skipColBias = 1f
         if (groupCount < colorNum) {
             skipColBias = colorNum / groupCount
         }
         val element = (ver % colorNum) * skipColBias
-        return colorList[element.toInt()]
+        return colors[element.toInt()]
     }
 }

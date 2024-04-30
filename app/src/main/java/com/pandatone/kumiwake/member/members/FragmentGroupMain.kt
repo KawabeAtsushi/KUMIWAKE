@@ -30,12 +30,16 @@ import java.io.IOException
 class FragmentGroupMain : ListFragment() {
     private var checkedCount = 0
 
+    private lateinit var listAdp: GroupFragmentViewAdapter
+    private lateinit var gpAdapter: GroupAdapter
+
     // 必須*
     // Fragment生成時にシステムが呼び出す
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         gpAdapter = GroupAdapter(requireContext())
         listAdp = GroupFragmentViewAdapter(requireContext(), groupList)
+        fragmentGroupMain = this
         StatusHolder.gpNowSort = GroupAdapter.GP_ID
         StatusHolder.gpSortType = "ASC"
     }
@@ -45,7 +49,7 @@ class FragmentGroupMain : ListFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.tab_group, container, false)
         (view.findViewById<View>(R.id.group_fab) as FloatingActionButton).setOnClickListener { moveAddGroup() }
@@ -75,7 +79,7 @@ class FragmentGroupMain : ListFragment() {
             val groupName = groupList[position].name
             if (MembersMain.searchView.isActivated)
                 MembersMain.searchView.onActionViewCollapsed()
-            FragmentMemberMain().loadName()
+            FragmentMemberMain.fragmentMemberMain.loadName()
 
             val items = arrayOf(
                 getString(R.string.information),
@@ -135,7 +139,7 @@ class FragmentGroupMain : ListFragment() {
             }
 
             R.id.item_sort -> {
-                Sort.groupSort(requireActivity(), groupList, listAdp)
+                Sort.groupSort(requireActivity(), groupList, listAdp, gpAdapter)
             }
         }
 
@@ -158,7 +162,7 @@ class FragmentGroupMain : ListFragment() {
             val groupId = groupList[position].id
             GroupMethods.deleteBelongInfoAll(requireContext(), groupId)
             gpAdapter.selectDelete(groupId.toString())
-            FragmentMemberMain().loadName()
+            FragmentMemberMain.fragmentMemberMain.loadName()
             loadName()
         }
 
@@ -193,7 +197,7 @@ class FragmentGroupMain : ListFragment() {
                 override fun onPageScrolled(
                     position: Int,
                     positionOffset: Float,
-                    positionOffsetPixels: Int
+                    positionOffsetPixels: Int,
                 ) {
                     super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                     viewPager.currentItem = 1
@@ -224,7 +228,7 @@ class FragmentGroupMain : ListFragment() {
                     listView.clearChoices()
                     listAdp.clearSelection()
                     mode.title = "0" + getString(R.string.selected)
-                    Sort.groupSort(requireActivity(), groupList, listAdp)
+                    Sort.groupSort(requireActivity(), groupList, listAdp, gpAdapter)
                 }
             }
             return false
@@ -251,7 +255,7 @@ class FragmentGroupMain : ListFragment() {
 
         override fun onItemCheckedStateChanged(
             mode: ActionMode,
-            position: Int, id: Long, checked: Boolean
+            position: Int, id: Long, checked: Boolean,
         ) {
             // アクションモード時のアイテムの選択状態変更時
 
@@ -288,7 +292,7 @@ class FragmentGroupMain : ListFragment() {
                 }
             }
             listAdp.clearSelection()
-            FragmentMemberMain().loadName()
+            FragmentMemberMain.fragmentMemberMain.loadName()
             loadName()
             mode.finish()
         }
@@ -308,6 +312,7 @@ class FragmentGroupMain : ListFragment() {
         } else {
             gpAdapter.picGroup(newText, groupList)
         }
+        listAdp.notifyDataSetChanged()
     }
 
     //リスト表示更新
@@ -322,9 +327,7 @@ class FragmentGroupMain : ListFragment() {
     }
 
     companion object {
-        //最初から存在してほしいのでprivateのcompanionにする（じゃないと落ちる。コルーチンとか使えばいけるかも）
-        internal lateinit var listAdp: GroupFragmentViewAdapter
-        internal lateinit var gpAdapter: GroupAdapter
+        internal lateinit var fragmentGroupMain: FragmentGroupMain
         internal var groupList: ArrayList<Group> = ArrayList()
     }
 

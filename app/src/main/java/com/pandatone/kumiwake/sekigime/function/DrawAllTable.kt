@@ -569,7 +569,7 @@ class DrawAllTable(context: Context, private val drawTableNo: Int) : View(contex
         bottomY: Float,
         startX: Float,
         point: Int,
-        textPaint: Paint
+        textPaint: Paint,
     ): Float {
         if (y.size > point + 1) {
             val nextCenterY = y[point + 1] - lastY

@@ -118,7 +118,10 @@ class KumiwakeConfirmation : AppCompatActivity() {
 
     //Viewの初期化処理
     private fun setViews() {
-        Collections.sort(notLeadersArray, KumiwakeComparator.ViewComparator())
+        Collections.sort(
+            notLeadersArray,
+            KumiwakeComparator.ViewComparator(KumiwakeComparator.SortType.DEFAULT)
+        )
         memberArray.clear()
         memberArray.addAll(leaderArray.filterNotNull())
         memberArray.addAll(notLeadersArray)

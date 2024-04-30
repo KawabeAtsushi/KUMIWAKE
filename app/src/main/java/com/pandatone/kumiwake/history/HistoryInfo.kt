@@ -3,12 +3,10 @@ package com.pandatone.kumiwake.history
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
@@ -16,23 +14,15 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import com.google.android.material.button.MaterialButton
-import com.pandatone.kumiwake.FirebaseAnalyticsEvents
-import com.pandatone.kumiwake.ModeKeys
 import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
-import com.pandatone.kumiwake.StatusHolder
-import com.pandatone.kumiwake.Theme
 import com.pandatone.kumiwake.adapter.SmallMBListAdapter
-import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.member.function.Member
-
 
 /**
  * Created by atsushi_2 on 2016/04/17.
  */
-@SuppressLint("StaticFieldLeak")
 class HistoryInfo(val c: Activity) {
     private lateinit var history: TextView
     private lateinit var date: TextView
@@ -41,6 +31,7 @@ class HistoryInfo(val c: Activity) {
     private lateinit var goToBt: MaterialButton
     private lateinit var editNameBt: ImageButton
     private var resultArray: ArrayList<ArrayList<Member>> = ArrayList()
+    private var groupNameArray: Array<String> = emptyArray()
 
     //履歴クリック時の情報表示ダイアログ
     fun infoDialog(item: History) {
@@ -65,7 +56,7 @@ class HistoryInfo(val c: Activity) {
         val dialog = builder.create()
         dialog.show()
         okBt.setOnClickListener { dialog.dismiss() }
-        goToBt.setOnClickListener { selectModeDialog() }
+        goToBt.setOnClickListener { ReKumiwake(c, resultArray, groupNameArray).selectModeDialog() }
         editNameBt.setOnClickListener { editTextDialog(item) }
     }
 
@@ -74,7 +65,7 @@ class HistoryInfo(val c: Activity) {
         history.text = HistoryMethods.changeDateFormat(item.name)
         date.text = HistoryMethods.changeDateFormat(item.time)
         resultArray = HistoryMethods.stringToResultArray(c, item.result)
-        val groupNameArray = HistoryMethods.stringToResultGroupArray(item.resultGp)
+        groupNameArray = HistoryMethods.stringToResultGroupArray(item.resultGp)
         //setView
         for (i in resultArray.indices) {
             try {
@@ -99,55 +90,6 @@ class HistoryInfo(val c: Activity) {
         v.layoutParams = PublicMethods.setMargin(c, 4, 6, 4, 6)
         v.background = ContextCompat.getDrawable(c, R.drawable.group_review_layout)
         adapter.setRowHeight(arrayList)
-    }
-
-    //メンバーを利用して組み分け/席決め
-    private fun goTo(notDuplicate: Boolean) {
-        StatusHolder.normalMode = true
-        val memberArray = ArrayList<Member>()
-        resultArray.forEach { result ->
-            memberArray.addAll(result)
-        }
-        memberArray.removeAll { it.id == -1 }
-        NormalMode.memberArray = memberArray
-        startActivity(c, Intent(c, NormalMode::class.java), null)
-        StatusHolder.notDuplicate = notDuplicate
-        if (notDuplicate) {
-            HistoryMethods.historyResultArray = resultArray
-        }
-    }
-
-    //メンバーを利用選択ダイアログ
-    private fun selectModeDialog() {
-        val builder = AlertDialog.Builder(c)
-        val inflater = c.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(
-            R.layout.select_mode_dialog_layout,
-            c.findViewById<View>(R.id.info_layout) as ViewGroup?
-        )
-
-        val kumiwakeButton = view.findViewById<Button>(R.id.kumiwake_select_button)
-        val duplicateCheckBox = view.findViewById<CheckBox>(R.id.duplicate_check)
-        kumiwakeButton.setOnClickListener {
-            StatusHolder.mode = ModeKeys.Kumiwake.key
-            PublicMethods.setStatus(this.c, Theme.Kumiwake.primaryColor)
-            goTo(duplicateCheckBox.isChecked)
-            FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.KumiwakeHistory.key)
-        }
-        val sekigimeButton = view.findViewById<Button>(R.id.sekigime_select_button)
-        sekigimeButton.setOnClickListener {
-            StatusHolder.mode = ModeKeys.Sekigime.key
-            PublicMethods.setStatus(this.c, Theme.Sekigime.primaryColor)
-            goTo(duplicateCheckBox.isChecked)
-            FirebaseAnalyticsEvents.functionSelectEvent(FirebaseAnalyticsEvents.FunctionKeys.SekigimeHistory.key)
-        }
-        builder.setTitle(R.string.mode_selection)
-            .setView(view)
-            .setNegativeButton(R.string.cancel) { dialog, _ ->
-                dialog.dismiss()
-            }
-        val dialog = builder.create()
-        dialog.show()
     }
 
     //名前変更ダイアログ

@@ -37,7 +37,7 @@ object GroupMethods {
         member: Member,
         groupId: Int,
         listId: Int,
-        mbAdapter: MemberAdapter
+        mbAdapter: MemberAdapter,
     ) {
         val belongText = member.belong
         val belongArray =

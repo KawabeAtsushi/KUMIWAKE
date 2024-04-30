@@ -27,7 +27,7 @@ class DialogWarehouse(private var fragmentManager: FragmentManager?) {
         message: CharSequence,
         positiveTxt: String = "",
         negativeTxt: String = "",
-        function: () -> Unit
+        function: () -> Unit,
     ) {
         val customDialog = CustomDialog(title, message)
         if (positiveTxt != "") {

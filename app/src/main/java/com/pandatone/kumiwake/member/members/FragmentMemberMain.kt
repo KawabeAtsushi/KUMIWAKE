@@ -38,6 +38,7 @@ class FragmentMemberMain : ListFragment() {
         StatusHolder.mbNowSort = MemberAdapter.MB_ID
         StatusHolder.mbSortType = "ASC"
         Sort.initial = 0
+        fragmentMemberMain = this
     }
 
     override fun onStart() {
@@ -48,7 +49,7 @@ class FragmentMemberMain : ListFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.tab_member, container, false)
         (view.findViewById<View>(R.id.member_fab) as FloatingActionButton).setOnClickListener {
@@ -85,7 +86,7 @@ class FragmentMemberMain : ListFragment() {
                 requireActivity().findViewById<View>(R.id.info_layout) as ViewGroup?
             )
             val memberName = memberList[position].name
-            FragmentGroupMain().loadName()
+            FragmentGroupMain.fragmentGroupMain.loadName()
 
             val items = arrayOf(
                 getText(R.string.information),
@@ -165,7 +166,7 @@ class FragmentMemberMain : ListFragment() {
             mbAdapter.selectDelete(listId.toString())
             loadName()
             MemberMethods.updateBelongNo(requireContext())
-            FragmentGroupMain().loadName()
+            FragmentGroupMain.fragmentGroupMain.loadName()
         }
 
         builder.setNegativeButton(R.string.cancel) { _, _ -> }
@@ -196,7 +197,7 @@ class FragmentMemberMain : ListFragment() {
                 override fun onPageScrolled(
                     position: Int,
                     positionOffset: Float,
-                    positionOffsetPixels: Int
+                    positionOffsetPixels: Int,
                 ) {
                     super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                     viewPager.currentItem = 0
@@ -263,7 +264,7 @@ class FragmentMemberMain : ListFragment() {
         //選択状態が変更されたとき
         override fun onItemCheckedStateChanged(
             mode: ActionMode,
-            position: Int, id: Long, checked: Boolean
+            position: Int, id: Long, checked: Boolean,
         ) {
             // アクションモード時のアイテムの選択状態変更時
             checkedCount = lv.checkedItemCount
@@ -310,7 +311,7 @@ class FragmentMemberMain : ListFragment() {
                 listAdp.clearSelection()
                 loadName()
                 MemberMethods.updateBelongNo(requireContext())
-                FragmentGroupMain().loadName()
+                FragmentGroupMain.fragmentGroupMain.loadName()
                 mode.finish()
             }
 
@@ -413,6 +414,7 @@ class FragmentMemberMain : ListFragment() {
     }
 
     companion object {
+        internal lateinit var fragmentMemberMain: FragmentMemberMain
         internal var memberList: ArrayList<Member> = ArrayList() //searchMemberの関係
     }
 }

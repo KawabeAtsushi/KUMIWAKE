@@ -109,7 +109,7 @@ class QuickMode : AppCompatActivity(), TextWatcher {
             override fun onProgressChanged(
                 sexSeekbar: SeekBar,
                 progress: Int,
-                fromTouch: Boolean
+                fromTouch: Boolean,
             ) {
                 manNo = progress
                 womanNo = memberNo - manNo

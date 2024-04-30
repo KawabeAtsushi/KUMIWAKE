@@ -239,48 +239,40 @@ class SekigimeResult : AppCompatActivity() {
             R.layout.edit_result_dialog_layout,
             findViewById<View>(R.id.info_layout) as ViewGroup?
         )
-        val indexTitle = view.findViewById<TextView>(R.id.title_index)
-        val etTitle = view.findViewById<EditText>(R.id.edit_title)
-        indexTitle.visibility = View.GONE
-        etTitle.visibility = View.GONE
+        val titleContainer = view.findViewById<View>(R.id.title_container)
+        val etTitle = titleContainer.findViewById<EditText>(R.id.edit_title)
         etTitle.hint = getString(R.string.sekigime_result)
         if (title != "") etTitle.setText(this.title)
-        val indexComment = view.findViewById<TextView>(R.id.comment_index)
-        val etComment = view.findViewById<EditText>(R.id.edit_comment)
-        indexComment.visibility = View.GONE
-        etComment.visibility = View.GONE
+        titleContainer.visibility = View.GONE
+        val commentContainer = view.findViewById<View>(R.id.comment_container)
+        val etComment = commentContainer.findViewById<EditText>(R.id.edit_comment)
         if (comment != "") etComment.setText(this.comment)
+        commentContainer.visibility = View.GONE
 
         val includeTitleCheck = view.findViewById<CheckBox>(R.id.include_title_check)
         val includeCommentCheck = view.findViewById<CheckBox>(R.id.include_comment_check)
         val tvTitle = findViewById<TextView>(R.id.inner_result_title)
-        tvTitle.visibility = View.GONE
         val tvComment = findViewById<TextView>(R.id.comment_view)
-        tvComment.visibility = View.GONE
 
         includeTitleCheck.setOnCheckedChangeListener { _, checked ->
             if (checked) {
-                indexTitle.visibility = View.VISIBLE
-                etTitle.visibility = View.VISIBLE
+                titleContainer.visibility = View.VISIBLE
                 tvTitle.visibility = View.VISIBLE
             } else {
-                indexTitle.visibility = View.GONE
-                etTitle.visibility = View.GONE
+                titleContainer.visibility = View.GONE
                 tvTitle.visibility = View.GONE
             }
         }
         includeCommentCheck.setOnCheckedChangeListener { _, checked ->
 
             if (checked) {
-                indexComment.visibility = View.VISIBLE
-                etComment.visibility = View.VISIBLE
+                commentContainer.visibility = View.VISIBLE
                 if (tvComment.text != "") {
                     tvComment.visibility = View.VISIBLE
                 }
 
             } else {
-                indexComment.visibility = View.GONE
-                etComment.visibility = View.GONE
+                commentContainer.visibility = View.GONE
                 tvComment.visibility = View.GONE
             }
         }

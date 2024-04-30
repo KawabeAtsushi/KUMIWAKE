@@ -56,7 +56,7 @@ class SquareTableCustom : AppCompatActivity() {
             override fun onProgressChanged(
                 squareSeekBar: SeekBar,
                 progress: Int,
-                fromTouch: Boolean
+                fromTouch: Boolean,
             ) {
                 seatNo = progress
                 binding.seatNumber.text = seatNo.toString()

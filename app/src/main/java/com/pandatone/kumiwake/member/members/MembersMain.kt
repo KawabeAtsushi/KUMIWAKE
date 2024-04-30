@@ -101,8 +101,8 @@ class MembersMain : AppCompatActivity(), SearchView.OnQueryTextListener {
                 searchAutoComplete.setText("")
             } else {
                 searchView.onActionViewCollapsed()
-                FragmentMemberMain().loadName()
-                FragmentGroupMain().loadName()
+                FragmentMemberMain.fragmentMemberMain.loadName()
+                FragmentGroupMain.fragmentGroupMain.loadName()
             }
             menuItemVisible(menu, true)
         }
@@ -118,7 +118,7 @@ class MembersMain : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val adapter = CustomPagerAdapter(this, supportFragmentManager, true)
-        adapter.findFragmentByPosition(viewPager, page).onOptionsItemSelected(item)
+        adapter.findFragmentByPosition(viewPager).onOptionsItemSelected(item)
         return false
     }
 
@@ -130,9 +130,9 @@ class MembersMain : AppCompatActivity(), SearchView.OnQueryTextListener {
     override fun onQueryTextChange(newText: String): Boolean {
         try {
             if (page == 0) {
-                FragmentMemberMain().searchMember(newText)
+                FragmentMemberMain.fragmentMemberMain.searchMember(newText)
             } else {
-                FragmentGroupMain().searchGroup(newText)
+                FragmentGroupMain.fragmentGroupMain.searchGroup(newText)
             }
         } catch (e: IOException) {
             e.printStackTrace()

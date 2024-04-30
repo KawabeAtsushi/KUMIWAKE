@@ -2,6 +2,10 @@ package com.pandatone.kumiwake.others.classroom
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Shader
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -19,7 +23,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import com.pandatone.kumiwake.ClassroomCustomKeys
@@ -29,8 +33,10 @@ import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.ShareViewImage
 import com.pandatone.kumiwake.extension.getSerializable
+import com.pandatone.kumiwake.kumiwake.function.KumiwakeComparator
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
+import java.util.Collections
 
 /**
  * Created by atsushi_2 on 2016/05/10.
@@ -38,7 +44,6 @@ import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 class ClassroomResult : AppCompatActivity() {
 
     private lateinit var memberArray: ArrayList<Member>
-    private var resultTitle: String = ""
     private var alterFm = false
     private var attachSeat = false
     private var memberNo = 0
@@ -51,9 +56,6 @@ class ClassroomResult : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.classroom_result)
-
-        resultTitle = getString(R.string.classroom_result)
-        val layout = findViewById<ConstraintLayout>(R.id.result_view)
 
         PublicMethods.showAd(this)
         val i = intent
@@ -69,11 +71,15 @@ class ClassroomResult : AppCompatActivity() {
 
         val scrollView = findViewById<View>(R.id.classroom_scroll) as ScrollView
         scrollView.post { scrollView.fullScroll(ScrollView.FOCUS_UP) }
+        setBackground(scrollView)
 
         val retryButton = findViewById<Button>(R.id.re_kumiwake)
         retryButton.text = getString(R.string.retry)
         retryButton.setOnClickListener { onRetry() }
         findViewById<ImageButton>(R.id.edit_result_title).setOnClickListener { editInfoDialog() }
+        findViewById<Button>(R.id.class_roster).setOnClickListener {
+            showClassRosterDialog(memberArray)
+        }
         findViewById<Button>(R.id.share_result).setOnClickListener { onShareImage() }
         findViewById<Button>(R.id.go_home).setOnClickListener { onGoHome() }
     }
@@ -107,6 +113,39 @@ class ClassroomResult : AppCompatActivity() {
                 count++
             }
         }
+    }
+
+    //クラス名簿ダイアログ
+    private fun showClassRosterDialog(students: ArrayList<Member>) {
+        val builder = AlertDialog.Builder(this)
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.class_roster_dialog_layout, null)
+        val tableLayout = view.findViewById<TableLayout>(R.id.tableLayout)
+        val titleView = view.findViewById<TextView>(R.id.roster_title)
+        titleView.text = title
+        Collections.sort(
+            students,
+            KumiwakeComparator.ViewComparator(KumiwakeComparator.SortType.NAME)
+        )
+        for ((index, student) in students.withIndex()) {
+            val tableRow = inflater.inflate(R.layout.class_roster_row_item, null) as TableRow
+            val tvNumber = tableRow.findViewById<TextView>(R.id.tvNumber)
+            val tvName = tableRow.findViewById<TextView>(R.id.tvName)
+            val tvGender = tableRow.findViewById<TextView>(R.id.tvGender)
+
+            (index + 1).toString().also { tvNumber.text = it }
+            tvName.text = student.name
+            tvGender.text = student.sex
+
+            tableLayout.addView(tableRow)
+        }
+        builder
+            .setView(view)
+            .setPositiveButton(R.string.close) { dialog, _ ->
+                dialog.dismiss()
+            }
+        val dialog = builder.create()
+        dialog.show()
     }
 
     //情報変更ダイアログ
@@ -228,11 +267,16 @@ class ClassroomResult : AppCompatActivity() {
                             seatNameTv.setTextColor(
                                 PublicMethods.getColor(
                                     this,
-                                    R.color.blue_title
+                                    R.color.thick_man
                                 )
                             )
                         } else if (PublicMethods.isWoman(member.sex)) {
-                            seatNameTv.setTextColor(PublicMethods.getColor(this, R.color.woman))
+                            seatNameTv.setTextColor(
+                                PublicMethods.getColor(
+                                    this,
+                                    R.color.thick_woman
+                                )
+                            )
                         }
                         tableRow.addView(seat)
                         total++
@@ -249,6 +293,26 @@ class ClassroomResult : AppCompatActivity() {
         layout.addView(tableLayout)
     }
 
+    private fun setBackground(backgroundView: View) {
+        val vectorDrawable = ContextCompat.getDrawable(this, R.drawable.classroom_floor_tile)
+        val bitmap = Bitmap.createBitmap(
+            vectorDrawable!!.intrinsicWidth,
+            vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap)
+        vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
+        vectorDrawable.draw(canvas)
+
+        // ビットマップをタイル状に繰り返す
+        val bitmapDrawable = BitmapDrawable(resources, bitmap).apply {
+            tileModeX = Shader.TileMode.REPEAT
+            tileModeY = Shader.TileMode.REPEAT
+        }
+
+        // 背景に設定
+        backgroundView.background = bitmapDrawable
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////                                   結果共有メソッド                                              ////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -261,48 +325,37 @@ class ClassroomResult : AppCompatActivity() {
             R.layout.edit_result_dialog_layout,
             findViewById<View>(R.id.info_layout) as ViewGroup?
         )
-        val indexTitle = view.findViewById<TextView>(R.id.title_index)
-        val etTitle = view.findViewById<EditText>(R.id.edit_title)
-        indexTitle.visibility = View.GONE
-        etTitle.visibility = View.GONE
+        val titleContainer = view.findViewById<View>(R.id.title_container)
+        val etTitle = titleContainer.findViewById<EditText>(R.id.edit_title)
         etTitle.hint = getString(R.string.classroom_hint)
         if (title != "") etTitle.setText(this.title)
-        val indexComment = view.findViewById<TextView>(R.id.comment_index)
-        val etComment = view.findViewById<EditText>(R.id.edit_comment)
-        indexComment.visibility = View.GONE
-        etComment.visibility = View.GONE
+        titleContainer.visibility = View.GONE
+        val commentContainer = view.findViewById<View>(R.id.comment_container)
+        val etComment = commentContainer.findViewById<EditText>(R.id.edit_comment)
         if (comment != "") etComment.setText(this.comment)
+        commentContainer.visibility = View.GONE
 
         val includeTitleCheck = view.findViewById<CheckBox>(R.id.include_title_check)
         val includeCommentCheck = view.findViewById<CheckBox>(R.id.include_comment_check)
         val tvTitle = findViewById<TextView>(R.id.inner_result_title)
-        tvTitle.visibility = View.GONE
         val tvComment = findViewById<TextView>(R.id.inner_comment_view)
-        tvComment.visibility = View.GONE
 
         includeTitleCheck.setOnCheckedChangeListener { _, checked ->
             if (checked) {
-                indexTitle.visibility = View.VISIBLE
-                etTitle.visibility = View.VISIBLE
+                titleContainer.visibility = View.VISIBLE
                 tvTitle.visibility = View.VISIBLE
             } else {
-                indexTitle.visibility = View.GONE
-                etTitle.visibility = View.GONE
+                titleContainer.visibility = View.GONE
                 tvTitle.visibility = View.GONE
             }
         }
+
         includeCommentCheck.setOnCheckedChangeListener { _, checked ->
-
             if (checked) {
-                indexComment.visibility = View.VISIBLE
-                etComment.visibility = View.VISIBLE
-                if (tvComment.text != "") {
-                    tvComment.visibility = View.VISIBLE
-                }
-
+                commentContainer.visibility = View.VISIBLE
+                tvComment.visibility = View.VISIBLE
             } else {
-                indexComment.visibility = View.GONE
-                etComment.visibility = View.GONE
+                commentContainer.visibility = View.GONE
                 tvComment.visibility = View.GONE
             }
         }
@@ -341,6 +394,7 @@ class ClassroomResult : AppCompatActivity() {
     //画像でシェア
     private fun shareImage() {
         val shareLayout = findViewById<LinearLayout>(R.id.whole_result_layout)
+        setBackground(shareLayout)
         ShareViewImage.shareView(this, shareLayout, getString(R.string.classroom_result))
     }
 

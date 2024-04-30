@@ -52,7 +52,7 @@ class OrderResult : AppCompatActivity() {
 
         resultTitle = getString(R.string.order) + getString(R.string.result)
         findViewById<TextView>(R.id.result_title).text = resultTitle
-        findViewById<View>(R.id.tabLayout).visibility = View.GONE
+        findViewById<View>(R.id.custom_display_style).visibility = View.GONE
         val layout = findViewById<ConstraintLayout>(R.id.result_view)
         layout.background = ContextCompat.getDrawable(this, R.drawable.top_background)
 
@@ -72,7 +72,7 @@ class OrderResult : AppCompatActivity() {
         retryButton.setOnClickListener { onRetry() }
         findViewById<ImageButton>(R.id.edit_result_title).setOnClickListener { editInfoDialog() }
         findViewById<Button>(R.id.share_result).setOnClickListener { shareResult() }
-        findViewById<Button>(R.id.go_sekigime).visibility = View.GONE
+        findViewById<Button>(R.id.re_use_members).visibility = View.GONE
         findViewById<Button>(R.id.go_home).setOnClickListener { onGoHome() }
     }
 
@@ -175,7 +175,7 @@ class OrderResult : AppCompatActivity() {
         }
         layout.addView(v)
         number = v.findViewById(R.id.order_number_textView)
-        number.text = (i + 1).toString()
+        (i + 1).toString().also { number.text = it }
         name = v.findViewById(R.id.order_name_textView)
         name.text = memberArray[i].name
     }
@@ -192,37 +192,31 @@ class OrderResult : AppCompatActivity() {
             R.layout.edit_result_dialog_layout,
             findViewById<View>(R.id.info_layout) as ViewGroup?
         )
-        val indexTitle = view.findViewById<TextView>(R.id.title_index)
-        val etTitle = view.findViewById<EditText>(R.id.edit_title)
+        val titleContainer = view.findViewById<View>(R.id.title_container)
+        val etTitle = titleContainer.findViewById<EditText>(R.id.edit_title)
         etTitle.hint = resultTitle
-        indexTitle.visibility = View.GONE
-        etTitle.visibility = View.GONE
         if (title != "") etTitle.setText(this.title)
-        val indexComment = view.findViewById<TextView>(R.id.comment_index)
-        val etComment = view.findViewById<EditText>(R.id.edit_comment)
-        indexComment.visibility = View.GONE
-        etComment.visibility = View.GONE
+        titleContainer.visibility = View.GONE
+        val commentContainer = view.findViewById<View>(R.id.comment_container)
+        val etComment = commentContainer.findViewById<EditText>(R.id.edit_comment)
         if (comment != "") etComment.setText(this.comment)
+        commentContainer.visibility = View.GONE
 
         val includeTitleCheck = view.findViewById<CheckBox>(R.id.include_title_check)
         val includeCommentCheck = view.findViewById<CheckBox>(R.id.include_comment_check)
 
         includeTitleCheck.setOnCheckedChangeListener { _, checked ->
             if (checked) {
-                indexTitle.visibility = View.VISIBLE
-                etTitle.visibility = View.VISIBLE
+                titleContainer.visibility = View.VISIBLE
             } else {
-                indexTitle.visibility = View.GONE
-                etTitle.visibility = View.GONE
+                titleContainer.visibility = View.GONE
             }
         }
         includeCommentCheck.setOnCheckedChangeListener { _, checked ->
             if (checked) {
-                indexComment.visibility = View.VISIBLE
-                etComment.visibility = View.VISIBLE
+                commentContainer.visibility = View.VISIBLE
             } else {
-                indexComment.visibility = View.GONE
-                etComment.visibility = View.GONE
+                commentContainer.visibility = View.GONE
             }
         }
 
@@ -289,7 +283,7 @@ class OrderResult : AppCompatActivity() {
         // アプリ一覧が表示されるDialogのタイトルの設定
         builder.setChooserTitle(R.string.choose_app)
         // シェアするタイトル
-        builder.setSubject(articleTitle)
+        builder.setSubject(getText(R.string.kumiwake_result).toString())
         // シェアするテキスト
         builder.setText(sharedText)
         // シェアするタイプ（他にもいっぱいあるよ）

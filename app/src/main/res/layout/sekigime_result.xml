@@ -32,9 +32,9 @@
                     android:background="@drawable/circle_button_background"
                     android:contentDescription="@string/edit_title"
                     android:src="@drawable/ic_edit_24dp"
-                    android:tint="@color/gray"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/gray" />
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabLayout"

@@ -18,7 +18,7 @@ import com.pandatone.kumiwake.member.function.Group
 class SmallGPListAdapter(
     private val context: Context,
     val groupList: ArrayList<Group>,
-    private val roleMode: Boolean = false
+    private val roleMode: Boolean = false,
 ) : BaseAdapter() {
 
     override fun getCount(): Int {

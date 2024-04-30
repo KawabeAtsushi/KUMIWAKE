@@ -16,7 +16,7 @@ import com.pandatone.kumiwake.others.drawing.Ticket
  */
 class SmallDrawingHistoryListAdapter(
     private val context: Context,
-    private val picked: MutableList<Ticket>
+    private val picked: MutableList<Ticket>,
 ) : BaseAdapter() {
 
     override fun getCount(): Int {

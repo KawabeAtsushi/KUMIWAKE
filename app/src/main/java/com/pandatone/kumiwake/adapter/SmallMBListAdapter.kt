@@ -22,7 +22,9 @@ class SmallMBListAdapter(
     memberList: ArrayList<Member>,
     private val leaderArray: ArrayList<Member?> = ArrayList(),
     val showLeaderNo: Boolean = false,
-    val nameIsSpanned: Boolean = false
+    val nameIsSpanned: Boolean = false,
+    private val showSexIcon: Boolean = true,
+    private val showNumberIcon: Boolean = false,
 ) : BaseAdapter() {
     private val inflater: LayoutInflater
     private var listElements: ArrayList<Member> = ArrayList()
@@ -54,71 +56,80 @@ class SmallMBListAdapter(
 
         val v = inflater.inflate(R.layout.mini_row_member, null)
 
-        val memberIcon: ImageView = v.findViewById(R.id.memberIcon)
-        val leaderNo: TextView = v.findViewById(R.id.leaderNo)
+        val numberIcon: View = v.findViewById(R.id.numberIcon)
+        val memberIconContainer: ViewGroup = v.findViewById(R.id.memberIconContainer)
         val nameTextView = v.findViewById<TextView>(R.id.memberName)
 
-        if (leaderArray.isNotEmpty()) {
-            val starIcon: ImageView = v.findViewById(R.id.starIcon)
-            setStarIcon(leaderArray, memberIcon, starIcon, leaderNo, position)
+        val member: Member = listElements[position]
+
+        if (showNumberIcon) {
+            val numberTextView = numberIcon.findViewById<TextView>(R.id.number_textView)
+            (position + 1).toString().also { numberTextView.text = it }
+            numberIcon.visibility = View.VISIBLE
         }
-        setSexIcon(memberIcon, position)
-        if (nameIsSpanned) {
-            nameTextView.text =
-                HtmlCompat.fromHtml(listElements[position].name, HtmlCompat.FROM_HTML_MODE_COMPACT)
+        if (showSexIcon) {
+            if (leaderArray.contains(member)) {
+                setLeaderIcon(context, leaderArray, memberIconContainer, member)
+            } else {
+                setSexIcon(memberIconContainer, member)
+            }
         } else {
-            nameTextView.text = listElements[position].name
+            memberIconContainer.visibility = View.GONE
+        }
+        if (nameIsSpanned) {
+            nameTextView.text = HtmlCompat.fromHtml(member.name, HtmlCompat.FROM_HTML_MODE_COMPACT)
+        } else {
+            nameTextView.text = member.name
         }
 
         return v
     }
 
-    private fun setSexIcon(memberIcon: ImageView, position: Int) {
+    private fun setSexIcon(memberIconContainer: ViewGroup, member: Member) {
+        val sexIcon = memberIconContainer.findViewById<ImageView>(R.id.memberSexIcon)
 
-        val sex = listElements[position].sex
         when {
-            PublicMethods.isMan(sex) -> {
-                memberIcon.setColorFilter(PublicMethods.getColor(context, R.color.man))
+            PublicMethods.isMan(member.sex) -> {
+                sexIcon.setColorFilter(PublicMethods.getColor(context, R.color.man))
             }
 
-            PublicMethods.isWoman(sex) -> {
-                memberIcon.setColorFilter(PublicMethods.getColor(context, R.color.woman))
+            PublicMethods.isWoman(member.sex) -> {
+                sexIcon.setColorFilter(PublicMethods.getColor(context, R.color.woman))
             }
 
             else -> {
-                memberIcon.setColorFilter(PublicMethods.getColor(context, R.color.gray))
+                sexIcon.setColorFilter(PublicMethods.getColor(context, R.color.gray))
             }
         }
     }
 
-    private fun setStarIcon(
+    private fun setLeaderIcon(
+        context: Context,
         leaderArray: ArrayList<Member?>,
-        memberIcon: ImageView,
-        starIcon: ImageView,
-        leaderNo: TextView,
-        position: Int
+        memberIconContainer: ViewGroup,
+        member: Member,
     ) {
-        val sex = listElements[position].sex
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater?
+        val leaderIcon: View =
+            inflater?.inflate(R.layout.leader_icon, null)
+                ?: throw Exception()
+        memberIconContainer.removeAllViews()
+        memberIconContainer.addView(leaderIcon, memberIconContainer.layoutParams)
+        val starIcon = leaderIcon.findViewById<ImageView>(R.id.starIcon)
+        val leaderNo = leaderIcon.findViewById<TextView>(R.id.leaderNo)
         when {
-            PublicMethods.isMan(sex) -> {
+            PublicMethods.isMan(member.sex) -> {
                 starIcon.setColorFilter(PublicMethods.getColor(context, R.color.man))
             }
 
-            PublicMethods.isWoman(sex) -> {
+            PublicMethods.isWoman(member.sex) -> {
                 starIcon.setColorFilter(PublicMethods.getColor(context, R.color.woman))
             }
         }
 
-        val member = listElements[position]
-        if (leaderArray.contains(member)) {
-            memberIcon.visibility = View.GONE
-            starIcon.visibility = View.VISIBLE
-            leaderNo.visibility = View.GONE
-
-            if (showLeaderNo) {
-                leaderNo.visibility = View.VISIBLE
-                leaderNo.text = (leaderArray.indexOf(member) + 1).toString()
-            }
+        if (showLeaderNo) {
+            leaderNo.visibility = View.VISIBLE
+            (leaderArray.indexOf(member) + 1).toString().also { leaderNo.text = it }
         }
     }
 

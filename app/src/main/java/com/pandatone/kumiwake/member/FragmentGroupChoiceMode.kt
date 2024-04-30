@@ -31,7 +31,7 @@ class FragmentGroupChoiceMode : ListFragment() {
         }
 
     private var _listAdp: GroupFragmentViewAdapter? = null
-    val listAdp: GroupFragmentViewAdapter
+    private val listAdp: GroupFragmentViewAdapter
         get() {
             if (_listAdp == null) {
                 throw Exception("MemberFragmentView ListAdapter not initialized")
@@ -47,6 +47,7 @@ class FragmentGroupChoiceMode : ListFragment() {
         init()
         StatusHolder.gpNowSort = GroupAdapter.GP_ID
         StatusHolder.gpSortType = "ASC"
+        fragmentGroupChoiceMode = this
     }
 
     private fun init() {
@@ -64,7 +65,7 @@ class FragmentGroupChoiceMode : ListFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.tab_group, container, false)
         val adviceInFG = view.findViewById<View>(R.id.advice_in_fg) as TextView
@@ -91,7 +92,7 @@ class FragmentGroupChoiceMode : ListFragment() {
         listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             //行をクリックした時の処理
             ChoiceMemberMain.viewPager.setCurrentItem(0, true)
-            fragmentMemberChoiceMode?.checkByGroup(
+            FragmentMemberChoiceMode.fragmentMemberChoiceMode?.checkByGroup(
                 groupList[position].id
             )
         }
@@ -102,7 +103,7 @@ class FragmentGroupChoiceMode : ListFragment() {
 
         when (item.itemId) {
             R.id.item_sort -> {
-                Sort.groupSort(requireActivity(), groupList, listAdp)
+                Sort.groupSort(requireActivity(), groupList, listAdp, gpAdapter)
             }
         }
         return false
@@ -119,8 +120,13 @@ class FragmentGroupChoiceMode : ListFragment() {
         listAdp.notifyDataSetChanged()
     }
 
+    fun groupSortFromMemberFragment() {
+        // MemberFragmentから呼ぶ用
+        Sort.groupSort(requireActivity(), groupList, listAdp, gpAdapter)
+    }
+
     companion object {
-        var fragmentMemberChoiceMode: FragmentMemberChoiceMode? = null
+        internal lateinit var fragmentGroupChoiceMode: FragmentGroupChoiceMode
         internal var groupList: ArrayList<Group> = ArrayList()
     }
 

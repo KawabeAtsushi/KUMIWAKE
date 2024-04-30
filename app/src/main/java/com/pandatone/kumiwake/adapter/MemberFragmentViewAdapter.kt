@@ -21,7 +21,7 @@ import com.pandatone.kumiwake.member.function.Member
 
 class MemberFragmentViewAdapter(
     private val context: Context,
-    private val memberList: List<Member>
+    private val memberList: List<Member>,
 ) : BaseAdapter() {
     private var params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(0, 1)
     private var nowData = "ￚ no data ￚ"

@@ -26,7 +26,7 @@ import java.util.zip.ZipOutputStream
 class FileManagerDialog(
     private var mTitle: String,
     private var mMessage: CharSequence,
-    private val backup: Boolean
+    private val backup: Boolean,
 ) : DialogFragment() {
 
     private val mimeType = "application/zip"

@@ -82,10 +82,10 @@
                 android:background="@drawable/circle_button_background"
                 android:contentDescription="@string/edit_title"
                 android:src="@drawable/ic_edit_24dp"
-                android:tint="@color/gray"
                 app:layout_constraintBottom_toBottomOf="@id/result_title"
                 app:layout_constraintStart_toEndOf="@id/result_title"
-                app:layout_constraintTop_toTopOf="@id/result_title" />
+                app:layout_constraintTop_toTopOf="@id/result_title"
+                app:tint="@color/gray" />
 
             <HorizontalScrollView
                 android:id="@+id/classroom_horizontal_scroll"
@@ -98,7 +98,6 @@
                     android:id="@+id/whole_result_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/classroom_floor"
                     android:orientation="vertical">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -154,6 +153,25 @@
             </HorizontalScrollView>
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/class_roster"
+                style="@style/Button.Transparent.Rounded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="12dp"
+                android:text="@string/class_roster"
+                android:textColor="@color/gray"
+                android:textStyle="bold"
+                app:backgroundTint="@android:color/white"
+                app:icon="@drawable/list_alt"
+                app:iconTint="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/classroom_horizontal_scroll"
+                app:strokeColor="@color/gray"
+                app:strokeWidth="2dp" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/re_kumiwake"
                 style="@style/Button.Transparent.Rounded"
                 android:layout_width="wrap_content"
@@ -167,7 +185,7 @@
                 app:iconTint="@android:color/white"
                 app:layout_constraintEnd_toStartOf="@id/share_result"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/classroom_horizontal_scroll" />
+                app:layout_constraintTop_toBottomOf="@id/class_roster" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/share_result"

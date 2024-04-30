@@ -184,7 +184,6 @@
     <string name="others">Others</string>
     <string name="by_member">by member</string>
     <string name="by_group">by group</string>
-    <string name="kumiwake_order_annotation">(The order is according to age by gender)</string>
     <string name="mode_selection">Select function</string>
     <string name="drawing">Drawing</string>
     <string name="role_decision">Role</string>
@@ -249,4 +248,15 @@
     <string name="preview">preview (*If it goes off the screen, scroll to check.)</string>
     <string name="classroom_annotation">If you want to see the whole at once, please "share result" from the button below.</string>
     <string name="updated_age">Updated age</string>
+    <string name="all_member">All Member</string>
+    <string name="change_result_display_style">Change Style</string>
+    <string name="icon_display_title">Icons</string>
+    <string name="show_sex_icon">Show sex icons</string>
+    <string name="show_number_icon">Show number icon</string>
+    <string name="sort_by_name">Sort by name</string>
+    <string name="sort_by_age">Sort by age</string>
+    <string name="sort_by_sex">Sort by sex</string>
+    <string name="sort_by_default">Default (Leader first)</string>
+    <string name="class_roster">Class roster</string>
+    <string name="student_number">No.</string>
 </resources>

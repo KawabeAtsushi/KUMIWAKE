@@ -18,7 +18,7 @@ class DrawingHistoryListAdapter(
     private val context: Context,
     private val kinds: List<Ticket>,
     private val tickets: ArrayList<Ticket>,
-    private val picked: ArrayList<Ticket>
+    private val picked: ArrayList<Ticket>,
 ) : BaseAdapter() {
 
     override fun getCount(): Int {

@@ -19,26 +19,27 @@ object ShareViewImage {
 
     fun shareView(context: Context, view: View, message: String) {
 
-        writeBitmapExternalStorage(context, view)
+        writeBitmapExternalStorage(context, view).run {
 
-        // ファイル保存先 (SDカード)
-        val fileFullPath = getShareImageFilePath(context)
+            // ファイル保存先 (SDカード)
+            val fileFullPath = getShareImageFilePath(context)
 
-        // ファイルを示すインテントを作成する
-        val uri = FileProvider.getUriForFile(
-            context,
-            context.packageName + ".provider",
-            File(fileFullPath)
-        )
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.type = "image/png" // PNG image
-        intent.putExtra(Intent.EXTRA_STREAM, uri)
-        intent.putExtra(Intent.EXTRA_TEXT, message)
-        // 外部アプリを起動する
-        try {
-            context.startActivity(Intent.createChooser(intent, null)) // 常に送信先を選択させる
-        } catch (e: ActivityNotFoundException) {
-            Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show()
+            // ファイルを示すインテントを作成する
+            val uri = FileProvider.getUriForFile(
+                context,
+                context.packageName + ".provider",
+                File(fileFullPath)
+            )
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "image/png" // PNG image
+            intent.putExtra(Intent.EXTRA_STREAM, uri)
+            intent.putExtra(Intent.EXTRA_TEXT, message)
+            // 外部アプリを起動する
+            try {
+                context.startActivity(Intent.createChooser(intent, null)) // 常に送信先を選択させる
+            } catch (e: ActivityNotFoundException) {
+                Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show()
+            }
         }
     }
 

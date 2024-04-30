@@ -10,7 +10,7 @@ class History(
     resultGp: String,
     mode: Int,
     keep: Int,
-    parent: Int
+    parent: Int,
 ) : Serializable {
     var id: Int //ID
         private set
