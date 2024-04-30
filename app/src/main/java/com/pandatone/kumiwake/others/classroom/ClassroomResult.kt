@@ -33,8 +33,10 @@ import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.ShareViewImage
 import com.pandatone.kumiwake.extension.getSerializable
+import com.pandatone.kumiwake.kumiwake.function.KumiwakeComparator
 import com.pandatone.kumiwake.member.function.Member
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
+import java.util.Collections
 
 /**
  * Created by atsushi_2 on 2016/05/10.
@@ -78,6 +80,12 @@ class ClassroomResult : AppCompatActivity() {
         retryButton.text = getString(R.string.retry)
         retryButton.setOnClickListener { onRetry() }
         findViewById<ImageButton>(R.id.edit_result_title).setOnClickListener { editInfoDialog() }
+        findViewById<Button>(R.id.class_roster).setOnClickListener {
+            showClassRosterDialog(
+                resultTitle,
+                memberArray,
+            )
+        }
         findViewById<Button>(R.id.share_result).setOnClickListener { onShareImage() }
         findViewById<Button>(R.id.go_home).setOnClickListener { onGoHome() }
     }
@@ -111,6 +119,39 @@ class ClassroomResult : AppCompatActivity() {
                 count++
             }
         }
+    }
+
+    //クラス名簿ダイアログ
+    private fun showClassRosterDialog(title: String, students: ArrayList<Member>) {
+        val builder = AlertDialog.Builder(this)
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.class_roster_dialog_layout, null)
+        val tableLayout = view.findViewById<TableLayout>(R.id.tableLayout)
+        val titleView = view.findViewById<TextView>(R.id.roster_title)
+        titleView.text = title
+        Collections.sort(
+            students,
+            KumiwakeComparator.ViewComparator(KumiwakeComparator.SortType.NAME)
+        )
+        for ((index, student) in students.withIndex()) {
+            val tableRow = inflater.inflate(R.layout.class_roster_row_item, null) as TableRow
+            val tvNumber = tableRow.findViewById<TextView>(R.id.tvNumber)
+            val tvName = tableRow.findViewById<TextView>(R.id.tvName)
+            val tvGender = tableRow.findViewById<TextView>(R.id.tvGender)
+
+            (index + 1).toString().also { tvNumber.text = it }
+            tvName.text = student.name
+            tvGender.text = student.sex
+
+            tableLayout.addView(tableRow)
+        }
+        builder
+            .setView(view)
+            .setPositiveButton(R.string.close) { dialog, _ ->
+                dialog.dismiss()
+            }
+        val dialog = builder.create()
+        dialog.show()
     }
 
     //情報変更ダイアログ

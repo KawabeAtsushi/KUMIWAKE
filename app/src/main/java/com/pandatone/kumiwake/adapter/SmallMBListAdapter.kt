@@ -64,7 +64,7 @@ class SmallMBListAdapter(
 
         if (showNumberIcon) {
             val numberTextView = numberIcon.findViewById<TextView>(R.id.number_textView)
-            numberTextView.text = position.toString()
+            (position + 1).toString().also { numberTextView.text = it }
             numberIcon.visibility = View.VISIBLE
         }
         if (showSexIcon) {

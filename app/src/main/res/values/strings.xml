@@ -257,4 +257,6 @@
     <string name="sort_by_age">Sort by age</string>
     <string name="sort_by_sex">Sort by sex</string>
     <string name="sort_by_default">Default (Leader first)</string>
+    <string name="class_roster">Class roster</string>
+    <string name="student_number">No.</string>
 </resources>

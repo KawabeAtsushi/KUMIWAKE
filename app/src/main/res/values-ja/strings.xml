@@ -257,4 +257,6 @@
     <string name="sort_by_age">年齢順</string>
     <string name="sort_by_sex">性別順</string>
     <string name="sort_by_default">デフォルト（リーダー優先）</string>
+    <string name="class_roster">クラス名簿</string>
+    <string name="student_number">出席番号</string>
 </resources>
