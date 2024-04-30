@@ -44,7 +44,6 @@ import java.util.Collections
 class ClassroomResult : AppCompatActivity() {
 
     private lateinit var memberArray: ArrayList<Member>
-    private var resultTitle: String = ""
     private var alterFm = false
     private var attachSeat = false
     private var memberNo = 0
@@ -57,8 +56,6 @@ class ClassroomResult : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.classroom_result)
-
-        resultTitle = getString(R.string.classroom_result)
 
         PublicMethods.showAd(this)
         val i = intent
@@ -81,10 +78,7 @@ class ClassroomResult : AppCompatActivity() {
         retryButton.setOnClickListener { onRetry() }
         findViewById<ImageButton>(R.id.edit_result_title).setOnClickListener { editInfoDialog() }
         findViewById<Button>(R.id.class_roster).setOnClickListener {
-            showClassRosterDialog(
-                resultTitle,
-                memberArray,
-            )
+            showClassRosterDialog(memberArray)
         }
         findViewById<Button>(R.id.share_result).setOnClickListener { onShareImage() }
         findViewById<Button>(R.id.go_home).setOnClickListener { onGoHome() }
@@ -122,7 +116,7 @@ class ClassroomResult : AppCompatActivity() {
     }
 
     //クラス名簿ダイアログ
-    private fun showClassRosterDialog(title: String, students: ArrayList<Member>) {
+    private fun showClassRosterDialog(students: ArrayList<Member>) {
         val builder = AlertDialog.Builder(this)
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(R.layout.class_roster_dialog_layout, null)

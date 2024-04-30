@@ -130,7 +130,7 @@ class MembersMain : AppCompatActivity(), SearchView.OnQueryTextListener {
     override fun onQueryTextChange(newText: String): Boolean {
         try {
             if (page == 0) {
-                FragmentMemberMain().searchMember(newText)
+                FragmentMemberMain.fragmentMemberMain.searchMember(newText)
             } else {
                 FragmentGroupMain().searchGroup(newText)
             }
