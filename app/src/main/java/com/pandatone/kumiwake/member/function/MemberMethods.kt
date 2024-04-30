@@ -24,7 +24,7 @@ object MemberMethods {
             }
             gpAdapter.updateBelongNo(groupId, belongNo)
         }
-        FragmentGroupMain().loadName()
+        FragmentGroupMain.fragmentGroupMain.loadName()
     }
 
     //memberのAgeを更新

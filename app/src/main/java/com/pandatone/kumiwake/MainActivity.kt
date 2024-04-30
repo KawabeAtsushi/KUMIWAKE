@@ -17,13 +17,11 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.pandatone.kumiwake.adapter.GroupAdapter
 import com.pandatone.kumiwake.history.HistoryMain
 import com.pandatone.kumiwake.kumiwake.NormalMode
 import com.pandatone.kumiwake.kumiwake.QuickMode
 import com.pandatone.kumiwake.member.AddGroup
 import com.pandatone.kumiwake.member.AddMember
-import com.pandatone.kumiwake.member.members.FragmentGroupMain
 import com.pandatone.kumiwake.member.members.MembersMain
 import com.pandatone.kumiwake.others.SelectMember
 import com.pandatone.kumiwake.others.drawing.TicketDefine
@@ -99,7 +97,6 @@ class MainActivity : AppCompatActivity() {
         }
         val actionAddGroup = findViewById<View>(R.id.group_add_button)
         actionAddGroup.setOnClickListener {
-            FragmentGroupMain.gpAdapter = GroupAdapter(this)
             startActivity(Intent(this, AddGroup::class.java))
             menuMultipleActions.collapse()
         }

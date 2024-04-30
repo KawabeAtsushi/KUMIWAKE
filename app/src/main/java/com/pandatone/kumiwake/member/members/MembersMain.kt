@@ -102,7 +102,7 @@ class MembersMain : AppCompatActivity(), SearchView.OnQueryTextListener {
             } else {
                 searchView.onActionViewCollapsed()
                 FragmentMemberMain.fragmentMemberMain.loadName()
-                FragmentGroupMain().loadName()
+                FragmentGroupMain.fragmentGroupMain.loadName()
             }
             menuItemVisible(menu, true)
         }
@@ -132,7 +132,7 @@ class MembersMain : AppCompatActivity(), SearchView.OnQueryTextListener {
             if (page == 0) {
                 FragmentMemberMain.fragmentMemberMain.searchMember(newText)
             } else {
-                FragmentGroupMain().searchGroup(newText)
+                FragmentGroupMain.fragmentGroupMain.searchGroup(newText)
             }
         } catch (e: IOException) {
             e.printStackTrace()

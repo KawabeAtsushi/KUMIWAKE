@@ -30,12 +30,16 @@ import java.io.IOException
 class FragmentGroupMain : ListFragment() {
     private var checkedCount = 0
 
+    private lateinit var listAdp: GroupFragmentViewAdapter
+    private lateinit var gpAdapter: GroupAdapter
+
     // 必須*
     // Fragment生成時にシステムが呼び出す
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         gpAdapter = GroupAdapter(requireContext())
         listAdp = GroupFragmentViewAdapter(requireContext(), groupList)
+        fragmentGroupMain = this
         StatusHolder.gpNowSort = GroupAdapter.GP_ID
         StatusHolder.gpSortType = "ASC"
     }
@@ -135,7 +139,7 @@ class FragmentGroupMain : ListFragment() {
             }
 
             R.id.item_sort -> {
-                Sort.groupSort(requireActivity(), groupList, listAdp)
+                Sort.groupSort(requireActivity(), groupList, listAdp, gpAdapter)
             }
         }
 
@@ -224,7 +228,7 @@ class FragmentGroupMain : ListFragment() {
                     listView.clearChoices()
                     listAdp.clearSelection()
                     mode.title = "0" + getString(R.string.selected)
-                    Sort.groupSort(requireActivity(), groupList, listAdp)
+                    Sort.groupSort(requireActivity(), groupList, listAdp, gpAdapter)
                 }
             }
             return false
@@ -308,6 +312,7 @@ class FragmentGroupMain : ListFragment() {
         } else {
             gpAdapter.picGroup(newText, groupList)
         }
+        listAdp.notifyDataSetChanged()
     }
 
     //リスト表示更新
@@ -322,9 +327,7 @@ class FragmentGroupMain : ListFragment() {
     }
 
     companion object {
-        //最初から存在してほしいのでprivateのcompanionにする（じゃないと落ちる。コルーチンとか使えばいけるかも）
-        internal lateinit var listAdp: GroupFragmentViewAdapter
-        internal lateinit var gpAdapter: GroupAdapter
+        internal lateinit var fragmentGroupMain: FragmentGroupMain
         internal var groupList: ArrayList<Group> = ArrayList()
     }
 

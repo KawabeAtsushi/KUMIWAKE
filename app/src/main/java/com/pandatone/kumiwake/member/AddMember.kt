@@ -32,7 +32,6 @@ import com.pandatone.kumiwake.PublicMethods
 import com.pandatone.kumiwake.R
 import com.pandatone.kumiwake.StatusHolder
 import com.pandatone.kumiwake.adapter.GroupAdapter
-import com.pandatone.kumiwake.adapter.GroupFragmentViewAdapter
 import com.pandatone.kumiwake.adapter.MemberAdapter
 import com.pandatone.kumiwake.databinding.AddMemberBinding
 import com.pandatone.kumiwake.extension.getSerializable
@@ -78,8 +77,6 @@ class AddMember : AppCompatActivity() {
         binding = AddMemberBinding.inflate(layoutInflater)
         setContentView(binding.root)
         mbAdapter = MemberAdapter(this)
-        FragmentGroupMain.gpAdapter = GroupAdapter(this)
-        FragmentGroupMain.listAdp = GroupFragmentViewAdapter(this, groupList)
         beforeBelong = null
         afterBelong = null
         findViews()

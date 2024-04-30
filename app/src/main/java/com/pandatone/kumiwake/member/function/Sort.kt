@@ -89,9 +89,9 @@ object Sort {
         activity: Activity,
         groupList: ArrayList<Group>,
         listAdp: GroupFragmentViewAdapter,
+        gpAdapter: GroupAdapter,
     ) {
         val builder = androidx.appcompat.app.AlertDialog.Builder(activity)
-        val gpAdapter = GroupAdapter(activity)
 
         val items = arrayOf(
             activity.getString(R.string.registration_ascending),

@@ -86,7 +86,7 @@ class FragmentMemberMain : ListFragment() {
                 requireActivity().findViewById<View>(R.id.info_layout) as ViewGroup?
             )
             val memberName = memberList[position].name
-            FragmentGroupMain().loadName()
+            FragmentGroupMain.fragmentGroupMain.loadName()
 
             val items = arrayOf(
                 getText(R.string.information),
@@ -166,7 +166,7 @@ class FragmentMemberMain : ListFragment() {
             mbAdapter.selectDelete(listId.toString())
             loadName()
             MemberMethods.updateBelongNo(requireContext())
-            FragmentGroupMain().loadName()
+            FragmentGroupMain.fragmentGroupMain.loadName()
         }
 
         builder.setNegativeButton(R.string.cancel) { _, _ -> }
@@ -311,7 +311,7 @@ class FragmentMemberMain : ListFragment() {
                 listAdp.clearSelection()
                 loadName()
                 MemberMethods.updateBelongNo(requireContext())
-                FragmentGroupMain().loadName()
+                FragmentGroupMain.fragmentGroupMain.loadName()
                 mode.finish()
             }
 

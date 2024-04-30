@@ -30,7 +30,6 @@ import com.pandatone.kumiwake.databinding.AddGroupBinding
 import com.pandatone.kumiwake.extension.getSerializable
 import com.pandatone.kumiwake.member.function.GroupMethods
 import com.pandatone.kumiwake.member.function.Member
-import com.pandatone.kumiwake.member.members.FragmentGroupMain
 import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 
 /**
@@ -39,7 +38,7 @@ import com.pandatone.kumiwake.ui.dialogs.DialogWarehouse
 class AddGroup : AppCompatActivity() {
     private lateinit var binding: AddGroupBinding
     private var textInputLayout: TextInputLayout? = null
-    private var nextId = FragmentGroupMain.gpAdapter.maxId + 1 //FragmentGroupMainなしだとX
+    private var nextId: Int = 0
     private lateinit var adapter: SmallMBListAdapter
     private lateinit var listView: ListView
     private var editId: Int = 0
@@ -66,6 +65,7 @@ class AddGroup : AppCompatActivity() {
         setContentView(binding.root)
         gpAdapter = GroupAdapter(this)
         mbAdapter = MemberAdapter(this)
+        nextId = gpAdapter.maxId + 1
         findViews()
         editId = intent.getIntExtra(AddGroupKeys.EDIT_ID.key, nextId)
         if (editId != nextId) {

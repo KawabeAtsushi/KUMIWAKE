@@ -65,6 +65,6 @@ class GroupClick(val c: Activity) {
         val id: Int = item.id
         belongNo = adapter.count
         gpAdapter.updateBelongNo(id.toString(), belongNo)
-        FragmentGroupMain().loadName()
+        FragmentGroupMain.fragmentGroupMain.loadName()
     }
 }
