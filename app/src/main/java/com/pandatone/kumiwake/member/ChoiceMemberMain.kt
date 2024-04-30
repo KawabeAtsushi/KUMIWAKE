@@ -91,7 +91,7 @@ class ChoiceMemberMain : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val viewPager = findViewById<View>(R.id.view_pager) as ViewPager
         val adapter = CustomPagerAdapter(this, manager, false)
-        adapter.findFragmentByPosition(viewPager, page).onOptionsItemSelected(item)
+        adapter.findFragmentByPosition(viewPager).onOptionsItemSelected(item)
 
         return false
     }

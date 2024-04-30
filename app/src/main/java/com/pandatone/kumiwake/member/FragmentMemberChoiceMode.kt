@@ -74,7 +74,7 @@ class FragmentMemberChoiceMode : ListFragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
         initListView()
-        FragmentGroupChoiceMode.fragmentMemberChoiceMode = this
+        fragmentMemberChoiceMode = this
     }
 
     private fun init() {
@@ -207,12 +207,16 @@ class FragmentMemberChoiceMode : ListFragment() {
                 }
 
                 R.id.item_sort -> {
-                    Sort.memberSort(
-                        requireActivity(),
-                        memberList,
-                        listAdp,
-                        mbAdapter
-                    ) { clearSelection(mode) }
+                    if (page == 0) {
+                        Sort.memberSort(
+                            requireActivity(),
+                            memberList,
+                            listAdp,
+                            mbAdapter
+                        ) { clearSelection(mode) }
+                    } else {
+                        FragmentGroupChoiceMode.fragmentGroupChoiceMode.groupSortFromMemberFragment()
+                    }
                 }
 
                 R.id.item_filter -> {
@@ -303,6 +307,7 @@ class FragmentMemberChoiceMode : ListFragment() {
     }
 
     companion object {
+        var fragmentMemberChoiceMode: FragmentMemberChoiceMode? = null
         private var memberList: ArrayList<Member> = ArrayList()
     }
 

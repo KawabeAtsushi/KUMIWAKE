@@ -54,8 +54,8 @@ class CustomPagerAdapter(private var context: Context, fm: FragmentManager, val 
         return null
     }
 
-    fun findFragmentByPosition(viewPager: ViewPager, position: Int): Fragment {
-        return instantiateItem(viewPager, position) as Fragment
+    fun findFragmentByPosition(viewPager: ViewPager): Fragment {
+        return instantiateItem(viewPager, viewPager.currentItem) as Fragment
     }
 
 }

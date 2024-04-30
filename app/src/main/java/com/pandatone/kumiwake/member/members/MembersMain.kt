@@ -118,7 +118,7 @@ class MembersMain : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val adapter = CustomPagerAdapter(this, supportFragmentManager, true)
-        adapter.findFragmentByPosition(viewPager, page).onOptionsItemSelected(item)
+        adapter.findFragmentByPosition(viewPager).onOptionsItemSelected(item)
         return false
     }
 
